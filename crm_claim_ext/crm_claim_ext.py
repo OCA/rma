@@ -4,7 +4,7 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn						#
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -20,26 +20,24 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
+from osv import fields, osv
+#from crm import crm
+#from datetime import datetime
+#from dateutil.relativedelta import relativedelta
+#import time
 
-{
-    'name': 'Product warranty',
-    'version': '1.0',
-    'category': 'Generic Modules/Product',
-    'description': """
-Extend the product warranty management with warranty details on product / supplier relation
-    """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
-    'depends': ['product'],
-    'init_xml': [],
-    'update_xml': [
-        'product_warranty_view.xml',
-    ],
-    'demo_xml': [], 
-    'test': [], 
-    'installable': True,
-    'active': False,
-    'certificate' : '',
-}
+class crm_claim_ext(osv.osv):
+    """
+    Crm claim field extension
+    """
+    _name = "crm.claim"
+    _description = "Add some fields to crm_claim"
+    _inherit = 'crm.claim'
+    _columns = {
+        'canal_id': fields.many2one('res.partner.canal', 'Channel'),
+        'som': fields.many2one('res.partner.som', 'State of Mind'),
+
+    }
+crm_claim_ext()    
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

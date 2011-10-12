@@ -22,18 +22,18 @@
 
 
 {
-    'name': 'Product warranty',
+    'name': 'CRM claim extension',
     'version': '1.0',
-    'category': 'Generic Modules/Product',
+    'category': 'Generic Modules/CRM & SRM',
     'description': """
-Extend the product warranty management with warranty details on product / supplier relation
+Add some fields to CRM claim : canal, spirit
     """,
     'author': 'Akretion',
     'website': 'http://www.akretion.com',
-    'depends': ['product'],
+    'depends': ['crm_claim'],
     'init_xml': [],
     'update_xml': [
-        'product_warranty_view.xml',
+        'crm_claim_ext_view.xml',
     ],
     'demo_xml': [], 
     'test': [], 

@@ -4,7 +4,7 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn			#
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -20,26 +20,4 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-
-{
-    'name': 'Product warranty',
-    'version': '1.0',
-    'category': 'Generic Modules/Product',
-    'description': """
-Extend the product warranty management with warranty details on product / supplier relation
-    """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
-    'depends': ['product'],
-    'init_xml': [],
-    'update_xml': [
-        'product_warranty_view.xml',
-    ],
-    'demo_xml': [], 
-    'test': [], 
-    'installable': True,
-    'active': False,
-    'certificate' : '',
-}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import crm_claim_ext
