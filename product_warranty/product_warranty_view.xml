@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+
+<openerp>
+    <data>
+<!-- return instructions -->
+       <!-- supplier info tree view -->
+		<record model="ir.ui.view" id="product_return_instructions_tree_view">
+			<field name="name">product.return.instructions.tree</field>
+			<field name="model">return.instruction</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Return instructions">
+					<field name="name"/>
+					<field name="instructions"/>
+					<field name="is_default"/>
+				</tree>
+			</field>
+		</record>
+		
+		<!-- supplier info form view -->
+		<record model="ir.ui.view" id="product_return_instructions_form_view">
+			<field name="name">product.return.instructions.form</field>
+			<field name="model">return.instruction</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Return instructions">
+					<field name="name"/>
+					<field name="is_default"/>
+					<separator string="Instructions" colspan="4"/>
+					<field name="instructions" nolabel="1" colspan="4"/>
+				</form>
+			</field>
+		</record>
+
+        <record id="product_return_instructions_action" model="ir.actions.act_window">
+            <field name="name">Products return instructions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">return.instruction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="product_return_instructions_tree_view"/>
+        </record>
+        
+		<menuitem action="product_return_instructions_action"
+            groups="base.group_extended"
+            id="menu_product_return_instructions_action"
+            parent="product.prod_config_main" sequence="3"/>		
+<!-- supplier info -->
+        <!-- supplier info tree view -->
+		<record model="ir.ui.view" id="product_supplierinfo_warranty_tree_view">
+			<field name="name">product.supplierinfo.warranty.tree</field>
+			<field name="model">product.supplierinfo</field>
+			<field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field position="after" name="delay">
+					<field name="warranty_duration"/>
+					<field name="warranty_return_partner"/>
+					<field name="active_supplier"/>
+					<field name="return_instructions"/>
+				</field>
+			</field>
+		</record>
+		
+		<!-- supplier info form view -->
+		<record model="ir.ui.view" id="product_supplierinfo_warranty_form_view">
+			<field name="name">product.supplierinfo.warranty.form</field>
+			<field name="model">product.supplierinfo</field>
+			<field name="inherit_id" ref="product.product_supplierinfo_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field position="after" name="delay">
+					<field name="warranty_duration"/>
+					<field name="warranty_return_partner" readonly="0"/>
+					<field name="active_supplier"/>
+					<field name="return_instructions"/>
+				</field>
+			</field>
+		</record>
+
+     </data>
+</openerp>
