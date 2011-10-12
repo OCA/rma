@@ -1,0 +1,889 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* crm_claim_rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-07-13 16:35+0000\n"
+"PO-Revision-Date: 2011-07-13 16:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_claim_rma
+#: view:return.line:0
+msgid "Returned good"
+msgstr "Marchandise retournée"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_picking_out_from_exchange_lines
+msgid "action_picking_out_from_exchange_lines"
+msgstr "action_picking_out_from_exchange_lines"
+
+#. module: crm_claim_rma
+#: help:return.line,claim_descr:0
+msgid "More precise description of the problem"
+msgstr "Description détaillée du problème"
+
+#. module: crm_claim_rma
+#: field:return.line,guarantee_limit:0
+msgid "Warranty limit"
+msgstr "Limite de garantie"
+
+#. module: crm_claim_rma
+#: selection:return.line,guarantee_type:0
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: crm_claim_rma
+#: field:crm.claim,return_line_ids:0
+#: field:returned_lines_from_invoice_line.wizard,return_line_ids:0
+msgid "Return lines"
+msgstr "Ligne de retour marchandise"
+
+#. module: crm_claim_rma
+#: selection:return.line,state:0
+msgid "Exchanged"
+msgstr "Echangé"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+msgid "Claim short description"
+msgstr "Description courte de la réclamation"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+#: view:product.exchange:0
+msgid "Product exchange"
+msgstr "Echange marchandise"
+
+#. module: crm_claim_rma
+#: view:product.exchange:0
+#: field:product.exchange,replacement_product:0
+#: view:temp.exchange.line:0
+#: field:temp.exchange.line,replacement_product_id:0
+msgid "Replacement product"
+msgstr "Produit de remplacement"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Order cancellation"
+msgstr "Annulation de commande"
+
+#. module: crm_claim_rma
+#: view:product.exchange:0
+#: field:product.exchange,returned_product:0
+#: help:return.line,product_id:0
+#: view:temp.exchange.line:0
+#: field:temp.exchange.line,returned_product_id:0
+msgid "Returned product"
+msgstr "Produit retourné"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_refund_from_returned_lines_wizard
+msgid "Wizard to create an refund for selected product return lines"
+msgstr "Wizard de création d'un avoir pour les lignes de retour sélectionnées"
+
+#. module: crm_claim_rma
+#: view:picking_in_from_returned_lines.wizard:0
+#: view:picking_out_from_exchange_lines.wizard:0
+#: view:picking_out_from_returned_lines.wizard:0
+msgid "Create picking"
+msgstr "Créer l'envoi"
+
+#. module: crm_claim_rma
+#: view:return.line:0
+msgid "Calculate warranty state"
+msgstr "Calculer l'état de la garantie"
+
+#. module: crm_claim_rma
+#: view:refund_from_returned_lines.wizard:0
+msgid "Select return lines to refund"
+msgstr "Sélectionner les lignes de retour à rembourser"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_refund_from_returned_lines
+msgid "action_refund_from_returned_lines"
+msgstr "action_refund_from_returned_lines"
+
+#. module: crm_claim_rma
+#: field:picking_in_from_returned_lines.wizard,return_line_ids:0
+#: field:picking_out_from_returned_lines.wizard,return_line_ids:0
+#: field:refund_from_returned_lines.wizard,return_line_ids:0
+msgid "Selected return lines"
+msgstr "Lignes de retour sélectionnées"
+
+#. module: crm_claim_rma
+#: view:picking_out_from_exchange_lines.wizard:0
+msgid "Select exchange lines to add in picking"
+msgstr "Sélectionner les lignes de retour à ajouter à l'envoi"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_invoice.wizard:0
+msgid "Select lines to return"
+msgstr "Sélectionner les lignes à retourner"
+
+#. module: crm_claim_rma
+#: view:return.line:0
+#: field:return.line,warning:0
+msgid "Warranty"
+msgstr "Garantie"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Returned goods"
+msgstr "Marchandises retournées"
+
+#. module: crm_claim_rma
+#: help:product.exchange,returned_product_qty:0
+#: help:return.line,product_returned_quantity:0
+#: help:temp.exchange.line,returned_product_quantity:0
+#: help:temp.return.line,product_returned_quantity:0
+msgid "Quantity of product returned"
+msgstr "Quantité de produit returnée"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_line.wizard:0
+msgid "Create selected returns"
+msgstr "Créer les retours sélectionnés"
+
+#. module: crm_claim_rma
+#: field:crm.claim,planned_cost:0
+msgid "Expected cost"
+msgstr "Coût prévisionnel"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_serial_wizard
+msgid "Wizard to create product return lines from serial numbers"
+msgstr "Wizard to create product return lines from serial numbers"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "New picking OUT from exchange"
+msgstr "Nouvelle expédition à partir de l'échange"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_line.wizard:0
+msgid "Select return lines to create                                                                              "
+msgstr "Sélectionner les lignes de retour à créer                                                                              "
+
+#. module: crm_claim_rma
+#: model:ir.module.module,shortdesc:crm_claim_rma.module_meta_information
+msgid "CRM Product Return"
+msgstr "Retour marchandise"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Main informations"
+msgstr "Gestion des retours"
+
+#. module: crm_claim_rma
+#: help:returned_lines_from_serial.wizard,claim_1:0
+msgid "To describe the product problem"
+msgstr "Description du problème"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_invoice_invoice.wizard,partner_id:0
+#: field:returned_lines_from_serial.wizard,partner_id:0
+msgid "Partner"
+msgstr "Client"
+
+#. module: crm_claim_rma
+#: field:product.exchange,replacement_product_serial:0
+msgid "Replacement serial/Lot n°"
+msgstr "Lot de remplacement"
+
+#. module: crm_claim_rma
+#: selection:product.exchange,state:0
+#: selection:return.line,state:0
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_create_return_serial
+msgid "action_create_return_serial"
+msgstr "action_create_return_serial"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Not specified"
+msgstr "Non spécifié"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "New picking IN"
+msgstr "Nouvelle réception"
+
+#. module: crm_claim_rma
+#: field:temp.return.line,invoice_line_id:0
+msgid "Invoice line"
+msgstr "Ligne de facture"
+
+#. module: crm_claim_rma
+#: field:product.exchange,state:0
+#: view:return.line:0
+#: field:return.line,state:0
+msgid "State"
+msgstr "Etat"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice
+msgid "Partner invoices"
+msgstr "Factures client"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
+msgid "Partner picking IN"
+msgstr "Réceptions client"
+
+#. module: crm_claim_rma
+#: help:return.line,name:0
+#: help:returned_lines_from_serial.wizard,claim_2:0
+#: help:returned_lines_from_serial.wizard,claim_3:0
+#: help:returned_lines_from_serial.wizard,claim_4:0
+#: help:returned_lines_from_serial.wizard,claim_5:0
+#: help:temp.exchange.line,name:0
+#: help:temp.return.line,name:0
+msgid "To describe the line product problem"
+msgstr "Description du problème"
+
+#. module: crm_claim_rma
+#: help:picking_in_from_returned_lines.wizard,return_line_location:0
+msgid "Location where the system will stock the returned products."
+msgstr "Emplacement de destination des marchandises retournées"
+
+#. module: crm_claim_rma
+#: help:product.exchange,selected:0
+#: help:return.line,selected:0
+msgid "Check to select"
+msgstr "Cocher la case pour sélectionner"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Legal retractation"
+msgstr "Retractation légale"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_invoice.wizard:0
+msgid "Return all invoice lines"
+msgstr "Retourner toutes les lignes de facture"
+
+#. module: crm_claim_rma
+#: field:product.exchange,returned_product_serial:0
+msgid "Returned serial/Lot n°"
+msgstr "Lot retourné"
+
+#. module: crm_claim_rma
+#: field:return.line,name:0
+#: field:returned_lines_from_serial.wizard,claim_1:0
+#: field:returned_lines_from_serial.wizard,claim_2:0
+#: field:returned_lines_from_serial.wizard,claim_3:0
+#: field:returned_lines_from_serial.wizard,claim_4:0
+#: field:returned_lines_from_serial.wizard,claim_5:0
+#: field:temp.return.line,name:0
+msgid "Claim Subject"
+msgstr "Objet de la réclamation"
+
+#. module: crm_claim_rma
+#: field:crm.claim,real_cost:0
+msgid "Real cost"
+msgstr "Coût réél"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_invoice.wizard:0
+msgid "Select invoice"
+msgstr "Sélectionner la facture"
+
+#. module: crm_claim_rma
+#: view:picking.follow:0
+msgid "Picking follows"
+msgstr "Suivi des envois"
+
+#. module: crm_claim_rma
+#: help:return.line,claim_id:0
+msgid "To link to the case.claim object"
+msgstr "Lien vers l'objet case.claim"
+
+#. module: crm_claim_rma
+#: selection:return.line,state:0
+msgid "Waiting product"
+msgstr "En attente produit"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "New exchange"
+msgstr "Nouvel échange"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+msgid "Save and new"
+msgstr "Enregistrer et nouveau"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,prodlot_id_2:0
+msgid "Serial / Lot Number 2"
+msgstr "N° de série/lot 2"
+
+#. module: crm_claim_rma
+#: field:crm.claim,planned_revenue:0
+msgid "Expected revenue"
+msgstr "Revenu attendu"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "None"
+msgstr "Aucun"
+
+#. module: crm_claim_rma
+#: view:exchange_from_returned_lines.wizard:0
+msgid "Select lines for picking. DON'T FORGET TO SELECT THE REPLACEMENT PRODUCT.                                                                                                                                                      "
+msgstr "Sélectionner les lignes de remplacement. N'OUBLIEZ PAS DE SELECTIONNER UN PRODUIT DE REMPLACEMENT !                                                                                                                                                      "
+
+#. module: crm_claim_rma
+#: field:crm.claim,product_exchange_ids:0
+#: view:product.exchange:0
+msgid "Product exchanges"
+msgstr "Echanges de produit"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,qty_5:0
+msgid "Quantity 5"
+msgstr "Quantité 5"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,qty_4:0
+msgid "Quantity 4"
+msgstr "Quantité 4"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,qty_1:0
+msgid "Quantity 1"
+msgstr "Quantité 1"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,qty_3:0
+msgid "Quantity 3"
+msgstr "Quantité 3"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,qty_2:0
+msgid "Quantity 2"
+msgstr "Quantité 2"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Shipping error"
+msgstr "Erreur d'expédition"
+
+#. module: crm_claim_rma
+#: view:product.exchange:0
+#: field:product.exchange,name:0
+#: field:temp.exchange.line,name:0
+msgid "Comment"
+msgstr "Commentaire"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Create from selected return lines"
+msgstr "Créer à partir des lignes de retour sélectionnées"
+
+#. module: crm_claim_rma
+#: field:product.exchange,claim_return_id:0
+#: field:return.line,claim_id:0
+msgid "Related claim"
+msgstr "Réclamation liée"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+msgid "Quantity returned"
+msgstr "Quantité returnée"
+
+#. module: crm_claim_rma
+#: field:exchange_from_returned_lines.wizard,exchange_line_ids:0
+#: field:picking_out_from_exchange_lines.wizard,exchange_line_ids:0
+msgid "Selected exchange lines"
+msgstr "Lignes d'échange sélectionnées"
+
+#. module: crm_claim_rma
+#: field:product.exchange,selected:0
+#: field:return.line,selected:0
+msgid "s"
+msgstr "s"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,prodlot_id_4:0
+msgid "Serial / Lot Number 4"
+msgstr "N° de série/lot 4"
+
+#. module: crm_claim_rma
+#: help:return.line,prodlot_id:0
+msgid "The serial/lot of the returned product"
+msgstr "N° de série/lot du produit retourné"
+
+#. module: crm_claim_rma
+#: view:picking.follow:0
+msgid "Picking follow"
+msgstr "Suivi d'envoi"
+
+#. module: crm_claim_rma
+#: field:return.line,claim_descr:0
+msgid "Claim description"
+msgstr "Description de la réclamation"
+
+#. module: crm_claim_rma
+#: view:picking_out_from_exchange_lines.wizard:0
+msgid "Select lines for picking out                                                                                                                                                        "
+msgstr "Sélectionner les lignes pour l'expédition                                                                                                                                                        "
+
+#. module: crm_claim_rma
+#: field:product.exchange,replacement_product_qty:0
+#: field:temp.exchange.line,replacement_product_quantity:0
+#: help:temp.exchange.line,replacement_product_quantity:0
+msgid "Replacement quantity"
+msgstr "Quantité de Remplacement"
+
+#. module: crm_claim_rma
+#: field:crm.claim,real_revenue:0
+msgid "Real revenue"
+msgstr "Revenu réél"
+
+#. module: crm_claim_rma
+#: help:product.exchange,replacement_product_qty:0
+msgid "Quantity of product replaced"
+msgstr "Quantité de produit remplacé"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Lost during transport"
+msgstr "Perte durant le transport"
+
+#. module: crm_claim_rma
+#: view:refund_from_returned_lines.wizard:0
+msgid "Create refund"
+msgstr "Créer un avoir"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,prodlot_id_1:0
+msgid "Serial / Lot Number 1"
+msgstr "N° de série/lot 1"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+msgid "Save and close"
+msgstr "Enregistrer et fermer"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,prodlot_id_3:0
+msgid "Serial / Lot Number 3"
+msgstr "N° de série/lot 3"
+
+#. module: crm_claim_rma
+#: selection:product.exchange,state:0
+#: selection:return.line,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: crm_claim_rma
+#: field:returned_lines_from_serial.wizard,prodlot_id_5:0
+msgid "Serial / Lot Number 5"
+msgstr "N° de série/lot 5"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_return_line
+#: model:ir.model,name:crm_claim_rma.model_temp_return_line
+msgid "List of product to return"
+msgstr "Liste des produits retournés"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Communication & History"
+msgstr "Communication et historique"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_create_return_inv
+msgid "action_create_return_invoice"
+msgstr "action_create_return_invoice"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_picking_out_from_exchange_lines_wizard
+msgid "Wizard to create a picking out from selected exchange lines"
+msgstr "Wizard to create a picking out from selected exchange lines"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Mass return from serial/lot n°"
+msgstr "Retour en masse par n° de série/lot "
+
+#. module: crm_claim_rma
+#: selection:return.line,state:0
+msgid "Refunded"
+msgstr "Remboursé"
+
+#. module: crm_claim_rma
+#: field:product.exchange,exchange_send_date:0
+msgid "Exchange date"
+msgstr "Date d'échange"
+
+#. module: crm_claim_rma
+#: field:return.line,guarantee_type:0
+msgid "Warranty type"
+msgstr "Type de garantie"
+
+#. module: crm_claim_rma
+#: view:refund_from_returned_lines.wizard:0
+msgid "Select lines for picking                                                                              "
+msgstr "Sélectionner les lignes d'envoi                                                                              "
+
+#. module: crm_claim_rma
+#: view:return.line:0
+msgid "Returned line"
+msgstr "Ligne retournée"
+
+#. module: crm_claim_rma
+#: view:picking_in_from_returned_lines.wizard:0
+msgid "Select lines for picking                                                                                                        "
+msgstr "Sélectionner les lignes d'envoi                                                                                                        "
+
+#. module: crm_claim_rma
+#: selection:return.line,state:0
+msgid "IN to exchange"
+msgstr "Reçu à échanger"
+
+#. module: crm_claim_rma
+#: view:exchange_from_returned_lines.wizard:0
+msgid "Create exchange"
+msgstr "Créer l'échange"
+
+#. module: crm_claim_rma
+#: view:return.line:0
+msgid "Returned lines"
+msgstr "Lignes retournées"
+
+#. module: crm_claim_rma
+#: selection:return.line,guarantee_type:0
+msgid "Manufacturer"
+msgstr "Fabricant"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_picking_in_from_returned_lines_wizard
+msgid "Wizard to create a picking in from selected return lines"
+msgstr "Wizard to create a picking in from selected return lines"
+
+#. module: crm_claim_rma
+#: field:return.line,prodlot_id:0
+msgid "Serial/Lot n°"
+msgstr "N° de série/lot"
+
+#. module: crm_claim_rma
+#: view:picking_in_from_returned_lines.wizard:0
+msgid "Destination location"
+msgstr "Emplacement de destination"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Damaged delivered product"
+msgstr "Produit endommagé"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Product return"
+msgstr "Retour marchandise"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
+msgid "Partner sale orders"
+msgstr "Commandes client"
+
+#. module: crm_claim_rma
+#: view:return.line:0
+msgid "Problem"
+msgstr "Problème"
+
+#. module: crm_claim_rma
+#: field:return.line,product_returned_quantity:0
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_refunds
+msgid "Partner refunds"
+msgstr "Remboursements client"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Réclamation"
+
+#. module: crm_claim_rma
+#: view:temp.exchange.line:0
+msgid "Temp product exchange"
+msgstr "Temp product exchange"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Returned lines selection"
+msgstr "sélection des lignes de retour"
+
+#. module: crm_claim_rma
+#: selection:return.line,guarantee_type:0
+msgid "Saler"
+msgstr "Vendeur"
+
+#. module: crm_claim_rma
+#: help:return.line,guarantee_limit:0
+msgid "The warranty limit is computed as: invoice date + warranty defined on selected product."
+msgstr "La limite de garantie est calculée par: date de facture + garantie définie sur le produit sélectionné."
+
+#. module: crm_claim_rma
+#: model:ir.module.module,description:crm_claim_rma.module_meta_information
+msgid "\n"
+"Add product return functionalities, product exchange and aftersale outsourcing to CRM claim\n"
+"    "
+msgstr "\n"
+"Ajout des fonctionalités de retour de marchandise, échange de produit et sous traitance de la réclamation\n"
+"    "
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "Mass return from invoice"
+msgstr "Retour en masse depuis une facture"
+
+#. module: crm_claim_rma
+#: field:return.line,invoice_id:0
+#: field:returned_lines_from_invoice_invoice.wizard,invoice_id:0
+#: field:temp.return.line,invoice_id:0
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: crm_claim_rma
+#: view:exchange_from_returned_lines.wizard:0
+#: view:picking_in_from_returned_lines.wizard:0
+#: view:picking_out_from_exchange_lines.wizard:0
+#: view:picking_out_from_returned_lines.wizard:0
+#: view:refund_from_returned_lines.wizard:0
+#: view:returned_lines_from_invoice_invoice.wizard:0
+#: view:returned_lines_from_invoice_line.wizard:0
+#: view:returned_lines_from_serial.wizard:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: crm_claim_rma
+#: field:picking_in_from_returned_lines.wizard,return_line_location:0
+msgid "Dest. Location"
+msgstr "Emplacement destination"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Exchange request"
+msgstr "Demande d'échange"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: crm_claim_rma
+#: selection:return.line,name:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+#: selection:temp.return.line,name:0
+msgid "Other"
+msgstr "Autre"
+
+#. module: crm_claim_rma
+#: field:temp.exchange.line,returned_prodlot_id:0
+msgid "Returned serial/Lot"
+msgstr "N° de série/lot retournés"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_picking_out_from_returned_lines_wizard
+msgid "Wizard to create a picking out from selected return lines"
+msgstr "Wizard to create a picking out from selected return lines"
+
+#. module: crm_claim_rma
+#: field:return.line,product_id:0
+#: field:temp.return.line,product_id:0
+msgid "Product"
+msgstr "Produit"
+
+#. module: crm_claim_rma
+#: view:exchange_from_returned_lines.wizard:0
+#: view:picking_in_from_returned_lines.wizard:0
+#: view:picking_out_from_returned_lines.wizard:0
+msgid "Select return lines to add in picking"
+msgstr "Sélectionner les lignes de retour à ajouter à l'envoi"
+
+#. module: crm_claim_rma
+#: view:picking_out_from_returned_lines.wizard:0
+msgid "Select lines for picking out                                                                                                                "
+msgstr "Sélectionnner les lignes pour expédition                                                                                                                 "
+
+#. module: crm_claim_rma
+#: help:return.line,invoice_id:0
+msgid "The invoice related to the returned product"
+msgstr "Facture liée au produit retourné"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_invoice_invoice_wizard
+#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_invoice_line_wizard
+msgid "Wizard to create product return lines from invoice"
+msgstr "Wizard to create product return lines from invoice"
+
+#. module: crm_claim_rma
+#: selection:product.exchange,state:0
+msgid "Sent"
+msgstr "Expédié"
+
+#. module: crm_claim_rma
+#: help:return.line,warning:0
+msgid "If warranty has expired"
+msgstr "Si la garantie a expirée"
+
+#. module: crm_claim_rma
+#: field:temp.exchange.line,replacement_prodlot_id:0
+msgid "Replacement serial/Lot"
+msgstr "N° de série/lot de remplacement"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+msgid "Select serial numbers to create"
+msgstr "Sélectionner les n° de série/lot à créer"
+
+#. module: crm_claim_rma
+#: selection:return.line,state:0
+msgid "IN to refund"
+msgstr "Reçu à rembourser"
+
+#. module: crm_claim_rma
+#: view:temp.return.line:0
+msgid "Confirm return lines"
+msgstr "Confirmer les lignes de retour"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "New refund"
+msgstr "Nouvel avoir"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_out
+msgid "Partner picking OUT"
+msgstr "Expéditions client"
+
+#. module: crm_claim_rma
+#: view:temp.exchange.line:0
+msgid "Confirm exchange lines"
+msgstr "Confirmer les lignes d'échange"
+
+#. module: crm_claim_rma
+#: field:product.exchange,returned_product_qty:0
+#: field:temp.exchange.line,returned_product_quantity:0
+#: field:temp.return.line,product_returned_quantity:0
+msgid "Returned quantity"
+msgstr "Quantité retournée"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "New picking OUT"
+msgstr "Nouvelle expédition"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_exchange_from_returned_lines_wizard
+msgid "Wizard to create an exchange from selected return lines"
+msgstr "Wizard to create an exchange from selected return lines"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_picking_out_from_returned_lines
+msgid "action_picking_out_from_returned_lines"
+msgstr "action_picking_out_from_returned_lines"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+msgid "All"
+msgstr "Tout"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_picking_in_from_returned_lines
+msgid "action_picking_in_from_returned_lines"
+msgstr "action_picking_in_from_returned_lines"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_product_exchange
+msgid "exchange history line"
+msgstr "Historique de l'échange"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_invoice_line.wizard:0
+msgid "Select return lines to create"
+msgstr "Sélectionner les lignes de retour à créer"
+
+#. module: crm_claim_rma
+#: selection:product.exchange,state:0
+msgid "To send"
+msgstr "A envoyer"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_exchange_from_returned_lines
+msgid "action_exchange_from_returned_lines"
+msgstr "action_exchange_from_returned_lines"
+
+#. module: crm_claim_rma
+#: view:returned_lines_from_serial.wizard:0
+#: field:temp.return.line,prodlot_id:0
+msgid "Serial / Lot Number"
+msgstr "N° de série/lot"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_temp_exchange_line
+msgid "List of product to exchange"
+msgstr "Liste des produits à échanger"
+
