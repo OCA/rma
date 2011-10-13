@@ -26,6 +26,7 @@
     'version': '1.0',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
+Akretion - Emmanuel Samyn
 Add some fields to CRM claim : canal, spirit
     """,
     'author': 'Akretion',

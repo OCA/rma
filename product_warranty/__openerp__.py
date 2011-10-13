@@ -26,7 +26,10 @@
     'version': '1.0',
     'category': 'Generic Modules/Product',
     'description': """
+Akretion - Emmanuel Samyn
 Extend the product warranty management with warranty details on product / supplier relation
+* supplier warranty duration
+* return product to company, supplier, brand, other
     """,
     'author': 'Akretion',
     'website': 'http://www.akretion.com',
@@ -40,6 +43,7 @@ Extend the product warranty management with warranty details on product / suppli
     'installable': True,
     'active': False,
     'certificate' : '',
+    'images': ['images/product_warranty.png'],
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

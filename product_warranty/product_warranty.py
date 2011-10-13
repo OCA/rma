@@ -30,11 +30,13 @@ class product_supplierinfo(osv.osv):
             return [
                 ('company','Company'),
                 ('supplier','Supplier'),
-                ('brand','Brand manufacturer'),]
+                ('brand','Brand manufacturer'),
+                ('other','Other'),]
         else:
             return [
                 ('company','Company'),
-                ('brand','Brand manufacturer'),]
+                ('brand','Brand manufacturer'),
+                ('other','Other'),]
             
     _columns = {
         "warranty_duration" : fields.float('Warranty', help="Warranty in month for this product/supplier relation. Only for company/supplier relation (purchase order) ; the customer/company relation (sale order) always use the product main warranty field"),
