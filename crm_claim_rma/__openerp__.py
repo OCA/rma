@@ -36,6 +36,8 @@ Upgrade the standard crm_claim module to add :
 * product refund
 * product exchange
 * access to related customer data (orders, invoices, refunds, picking in/out)
+
+THIS MODULE REPLACES Akretion stock_rma from V6.0
     """,
     'author': 'Akretion',
     'website': 'http://www.akretion.com',
