@@ -145,7 +145,7 @@ class return_line(osv.osv):
         	            print "brand"
         	    else :
         	        print "popup erreur suppl"
-        	    
+# raise osv.except        	    
         self.write(cr,uid,ids,{'warranty_return_partner' : return_address}) 
         return True
                

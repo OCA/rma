@@ -27,11 +27,19 @@
     'version': '1.0',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
-Add product return functionalities, product exchange and aftersale outsourcing to CRM claim
+Akretion - Emmanuel Samyn
+Management of Return Merchandise Authorization (RMA) in OpenERP.
+Upgrade the standard crm_claim module to add :
+* product returns (one by one, mass return by lot, mass return by invoice)
+* warranty control & return address (based on invoice date and product form)
+* product picking in / out
+* product refund
+* product exchange
+* access to related customer data (orders, invoices, refunds, picking in/out)
     """,
-    'author': 'Akretion - Emmanuel Samyn',
+    'author': 'Akretion',
     'website': 'http://www.akretion.com',
-    'depends': ['sale','stock','crm_claim'],
+    'depends': ['sale','stock','crm_claim','product_warranty'],
     'init_xml': ['rma_substate_data.xml',],
     'update_xml': [
                 'wizard/returned_lines_from_serial_wizard_view.xml',
@@ -43,7 +51,6 @@ Add product return functionalities, product exchange and aftersale outsourcing t
                 'wizard/get_empty_serial_view.xml',
                 'crm_claim_rma_view.xml',
                 
-
 #        'security/ir.model.access.csv',
  #       'report/crm_claim_report_view.xml',
     ],
@@ -51,6 +58,7 @@ Add product return functionalities, product exchange and aftersale outsourcing t
  #       'crm_claim_demo.xml',
     ], 
 #    'test': ['test/test_crm_claim.yml'], 
+    'images': ['images/product_return.png', 'images/claim.png','images/return_line.png','images/exchange.png'],
     'installable': True,
     'active': False,
 }
