@@ -40,11 +40,12 @@ class refund_from_returned_lines(osv.osv_memory):
         for line in returned_lines:
             if line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
-					    'name' : "#",
+					    'claim_origine' : "none",
 					    'invoice_id' : line.invoice_id.id,
 					    'product_id' : line.product_id.id,
 					    'product_returned_quantity' : line.product_returned_quantity,
-					    #'prodlot_id' : invoice_line.,
+					    'prodlot_id' : line.prodlot_id.id,
+					    'price_unit' :  line.unit_sale_price,
 				    }))
         return M2M    
 
@@ -72,7 +73,7 @@ class refund_from_returned_lines(osv.osv_memory):
             partner_id = claim_id.partner_id.id
             # create invoice
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
-					    'name' : "#",
+					    'claim_origine' : "none",
 					    'origin' : claim_id.id,
 					    'type' : 'out_refund',
 					    'state' : 'draft',
@@ -98,13 +99,13 @@ class refund_from_returned_lines(osv.osv_memory):
 					    'uos_id' : refund_line.product_id.uom_id.id,
 					    'product_id':refund_line.product_id.id,
 					    'account_id': claim_id.partner_id.property_account_receivable.id, # refund_line.product_id.property_account_expense.id,
-					    'price_unit':1.0, # to get from invoice line
+					    'price_unit':refund_line.price_unit,
 					    'quantity': refund_line.product_returned_quantity,
 #					    'discount':
 #					    'invoice_line_tax_id':
 #					    'account_analytic_id':
-#					    'company_id' : claim_id.company_id.id,
-#					    'partner_id' : claim_id.partner_id.id,
+					    'company_id' : claim_id.company_id.id,
+					    'partner_id' : refund_line.invoice_id.partner_id.id,
 					    'note': 'RMA Refound',                        
 				    })
         return {

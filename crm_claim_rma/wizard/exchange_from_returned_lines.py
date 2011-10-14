@@ -39,9 +39,8 @@ class exchange_from_returned_lines(osv.osv_memory):
         M2M = []
         for line in returned_lines:
             if line.selected:
-                print "_get_selected : ",line.unit_sale_price
                 M2M.append(self.pool.get('temp.exchange.line').create(cr, uid, {
-					    'name' : "#",
+					    'name' : "none",
 					    'returned_product_id' : line.product_id.id,
 					    'returned_product_quantity' : line.product_returned_quantity,
 					    'returned_prodlot_id' : line.prodlot_id.id,
@@ -63,7 +62,6 @@ class exchange_from_returned_lines(osv.osv_memory):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             # create exchange
             for line in exchange.exchange_line_ids:
-                print "for : ",line.returned_unit_sale_price
                 exchange_id = self.pool.get('product.exchange').create(cr, uid, {
 					    'name' : "#",
 					    'state': 'draft',
