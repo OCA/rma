@@ -26,8 +26,9 @@ from crm import crm
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import time
+from tools.translate import _
 
-#=====     TO REFACTOR IN A GENERIC MODULE 
+#=====     TO REFACTORED IN A GENERIC MODULE 
 class substate_substate(osv.osv): 
     """
     To precise a state (state=refused; substates= reason 1, 2,...)
@@ -82,6 +83,7 @@ class return_line(osv.osv):
         'applicable_guarantee': fields.selection([('us','Us'),('supplier','Supplier'),('brand','Brand manufacturer')], 'Warranty type'),# METTRE CHAMP FONCTION; type supplier might generate an auto draft forward to the supplier
         'guarantee_limit': fields.date('Warranty limit', help="The warranty limit is computed as: invoice date + warranty defined on selected product.", readonly=True),
         'warning': fields.char('Warranty', size=64, readonly=True,help="If warranty has expired"), #select=1,
+        'warranty_type': fields.char('Warranty type', size=64, readonly=True,help="from product form"),
         "warranty_return_partner" : fields.many2one('res.partner.address', 'Warranty return',help="Where the customer has to send back the product(s)"),        
         'claim_id': fields.many2one('crm.claim', 'Related claim',help="To link to the case.claim object"),
         'selected' : fields.boolean('s', help="Check to select"),
@@ -113,50 +115,60 @@ class return_line(osv.osv):
         return True
 
     # Method to return the partner delivery address or if none, the default address
-    def _get_partner_address(self, cr, uid, ids, context,partner):
-        print "IN GET COMP"
-        print "partner: ",partner
-        delivery_address_id = self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','delivery')])
-        if delivery_address_id:
-            print delivery_address_id
-            return delivery_address_id
-        else:
-            print "default address : ",self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','default')])
-            return self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','default')])
+    def _get_partner_address(self, cr, uid, ids, context,partner):       
+        # dedicated_delivery_address stand for the case a new type of address more particularly dedicated to return delivery would be implemented.
+        dedicated_delivery_address_id = self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','dedicated_delivery')])
+        if dedicated_delivery_address_id:
+            return dedicated_delivery_address_id
+        else:           
+            delivery_address_id = self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','delivery')])
+            if delivery_address_id: # if delivery address set, use it 
+                return delivery_address_id
+            else:
+                default_address_id = self.pool.get('res.partner.address').search(cr, uid, [('partner_id','=',partner.id),('type','like','default')])
+                if default_address_id: # if default address set, use it                   
+                    return default_address_id
+                else:
+                    raise osv.except_osv(_('Error !'), _('Cannot find any address for this product partner !'))
         
     # Method to calculate warranty return address
     def set_warranty_return_address(self, cr, uid, ids,context,return_line):
-        print "IN WAR ADDRESS : ",return_line
         return_address = None
+        warranty_type = 'company'
         if return_line.prodlot_id :
             # multi supplier method
-            print "true"
+            print "TO BE IMPLEMENTED"
         else :
             # first supplier method
         	if return_line.product_id.seller_ids[0]:
         	    if return_line.product_id.seller_ids[0].warranty_return_partner:
         	        return_partner = return_line.product_id.seller_ids[0].warranty_return_partner
-        	        print "adresse retour : ",return_partner
         	        if return_partner == 'company': 
         	            return_address = self._get_partner_address(cr, uid, ids, context,return_line.claim_id.company_id.partner_id)[0]       	                    
         	        elif return_partner == 'supplier':
         	            return_address = self._get_partner_address(cr, uid, ids, context,return_line.product_id.seller_ids[0].name)[0]
+        	            warranty_type = 'supplier'
+        	        elif return_partner == 'brand':
+        	            return_address = self._get_partner_address(cr, uid, ids, context, return_line.product_id.product_brand_id.partner_id)[0]
+        	            warranty_type = 'brand'
         	        else :
-        	            print "brand"
+        	            warranty_type = 'other'
+        	            # TO BE IMPLEMENTED if something to do...
         	    else :
-        	        print "popup erreur suppl"
-# raise osv.except        	    
-        self.write(cr,uid,ids,{'warranty_return_partner' : return_address}) 
+        	        raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
+        	else : 
+        	    raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))        	    
+        self.write(cr,uid,ids,{'warranty_return_partner':return_address,'warranty_type':warranty_type}) 
         return True
                
     # Method to calculate warranty limit and validity
-    def set_warranty(self, cr, uid, ids,context):
+    def set_warranty(self, cr, uid, ids,context=None):
         for return_line in self.browse(cr,uid,ids):             
         	if return_line.product_id and return_line.invoice_id:
         	    self.set_warranty_limit(cr, uid, ids,context,return_line)
         	    self.set_warranty_return_address(cr, uid, ids,context,return_line)
         	else:
-        	    self.write(cr,uid,ids,{'warning' : "PLEASE SET PRODUCT & INVOICE",})        	    
+        	    raise osv.except_osv(_('Error !'), _('PLEASE SET PRODUCT & INVOICE!'))        	    
         return True 
 
 return_line()

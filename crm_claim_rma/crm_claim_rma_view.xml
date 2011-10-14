@@ -24,6 +24,7 @@
 <openerp>
     <data>
 <!-- Return line -->
+        <!-- SEARCH -->
         <record id="view_crm_return_lines_filter" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">return.line</field>
@@ -69,8 +70,8 @@
                 </search>
             </field>
         </record>
-
-
+        
+		<!-- TREE -->
         <record model="ir.ui.view" id="crm_return_line_tree_view">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">return.line</field>
@@ -91,6 +92,7 @@
             </field>
         </record>
 
+		<!-- FORM -->
         <record model="ir.ui.view" id="crm_return_line_form_view">
             <field name="name">CRM - Claim product return line Form</field>
             <field name="model">return.line</field>
@@ -115,7 +117,7 @@
 			<field name="guarantee_limit"/>
 			<field name="warning"/>	
 			<field name="warranty_return_partner"/>
-			<!-- field name="guarantee_type"/ -->
+			<field name="warranty_type"/>
 			<separator string="State" colspan="4"/>	
 			<group col="6" colspan="4">
 				<field name="state"/>
@@ -127,7 +129,7 @@
         </record>
 
 <!-- Picking follow -->
-
+		<!-- TREE -->
         <record model="ir.ui.view" id="crm_picking_follow_tree_view">
             <field name="name">CRM - Picking follow Tree</field>
             <field name="model">picking.follow</field>
@@ -143,21 +145,23 @@
             </field>
         </record>
 
+		<!-- FORM -->
         <record model="ir.ui.view" id="crm_picking_follow_form_view">
             <field name="name">CRM - Picking follow Form</field>
             <field name="model">picking.follow</field>
             <field name="arch" type="xml">
-		<form string="Picking follow">
-			<field name="picking_id"/>
-            <field name="related_picking_state"/> 
-            <field name="related_picking_due_date"/>
-            <field name="related_picking_delivered_date"/> 
-            <field name="name"/>		
-		</form>
+				<form string="Picking follow">
+					<field name="picking_id"/>
+            		<field name="related_picking_state"/> 
+            		<field name="related_picking_due_date"/>
+            		<field name="related_picking_delivered_date"/> 
+            		<field name="name"/>		
+				</form>
             </field>
         </record>
 
 <!-- PRODUCT EXCHANGE -->
+	<!-- TREE -->
 	<record model="ir.ui.view" id="crm_product_exchange_tree_view">
 		<field name="name">CRM - Product exchange Tree</field>
 		<field name="model">product.exchange</field>
@@ -178,6 +182,7 @@
 		</field>
 	</record>
 
+	<!-- FORM -->
 	<record model="ir.ui.view" id="crm_product_exchange_form_view">
     	<field name="name">CRM - Product exchange Form</field>
     	<field name="model">product.exchange</field>

@@ -58,22 +58,20 @@ class returned_lines_from_invoice_invoice(osv.osv_memory):
         invoice_lines_ids = invoice_line_pool.search(cr, uid, [('invoice_id', '=', inv_id)])       
         # Get invoice lines from invoice line ids
         for invoice_line in invoice_line_pool.browse(cr,uid,invoice_lines_ids):
-            context
-            warranty = invoice_line.get_garantee_limit(cr, uid, context)
-            self.pool.get('return.line').create(cr, uid, {
-					'name' : "none",
+            return_line_pool = self.pool.get('return.line')
+            line_id = return_line_pool.create(cr, uid, {
+					'claim_origine' : "none",
 					'invoice_id' : invoice_line.invoice_id.id,
 					'product_id' : invoice_line.product_id.id,
 					'product_returned_quantity' : invoice_line.quantity,
 					'unit_sale_price' : invoice_line.price_unit,
 					#'prodlot_id' : invoice_line.,
-					#'guarantee_type':
-					'guarantee_limit' : warranty['value']['guarantee_limit'],
-					'warning' : warranty['value']['warning'],
 					'claim_id' : context['active_id'],
 					'selected' : False,
 					'state' : 'draft',			
 				})
+            for line in return_line_pool.browse(cr,uid,[line_id],context):
+                line.set_warranty()
         return {'type': 'ir.actions.act_window_close',}
                         
     # If "Select lines" button pressed
@@ -111,12 +109,13 @@ class returned_lines_from_invoice_lines(osv.osv_memory):
         # Create return lines from invoice lines
         for invoice_line in self.pool.get('account.invoice.line').browse(cr,uid,invoice_lines_ids):
             M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
-					'name' : "none",
+					'claim_origine' : "none",
 					'invoice_id' : invoice_line.invoice_id.id,
 					'invoice_line_id' : invoice_line.id,
 					'product_id' : invoice_line.product_id.id,
 					'product_returned_quantity' : invoice_line.quantity,
 					#'prodlot_id' : invoice_line.,
+					'price_unit': invoice_line.price_unit,
 				}))
         return M2M
 
@@ -132,21 +131,21 @@ class returned_lines_from_invoice_lines(osv.osv_memory):
     def action_create_returns(self, cr, uid, ids, context=None):
         for wiz_obj in self.browse(cr,uid,ids):
             for line in wiz_obj.return_line_ids:
-                warranty = line.invoice_line_id.get_garantee_limit(cr, uid, context)
-                self.pool.get('return.line').create(cr, uid, {
-					'name' : line.name,
+                return_line_pool = self.pool.get('return.line')
+                line_id = return_line_pool.create(cr, uid, {
+					'claim_origine' : line.claim_origine,
 					'invoice_id' : line.invoice_id.id,
 					'product_id' : line.product_id.id,
 					'product_returned_quantity' : line.product_returned_quantity,
-					'unit_sale_price' : invoice_line.price_unit,
+					'unit_sale_price' : line.price_unit,
 					#'prodlot_id' : invoice_line.,
-					#'guarantee_type':
-					'guarantee_limit' : warranty['value']['guarantee_limit'],
-					'warning' : warranty['value']['warning'],
 					'claim_id' : context['active_id'],
 					'selected' : False,		
 					'state' : 'draft',	
-				})   
+				}) 
+            for line in return_line_pool.browse(cr,uid,[line_id],context):
+                line.set_warranty()
+				
         return {
                 'type': 'ir.actions.act_window_close',
         }
@@ -161,7 +160,7 @@ class temp_return_line(osv.osv_memory):
     _name = "temp.return.line"
     _description = "List of product to return"
     _columns = {
-        'name': fields.selection([('none','Not specified'),
+        'claim_origine': fields.selection([('none','Not specified'),
                                     ('legal','Legal retractation'),
                                     ('cancellation','Order cancellation'),
                                     ('damaged','Damaged delivered product'),                                    
@@ -174,6 +173,7 @@ class temp_return_line(osv.osv_memory):
         'product_id': fields.many2one('product.product', 'Product'),
         'product_returned_quantity' : fields.float('Returned quantity', digits=(12,2), help="Quantity of product returned"),
         'prodlot_id': fields.many2one('stock.production.lot', 'Serial / Lot Number'),
+        'price_unit': fields.float('Unit sale price', digits=(12,2),),
     }
     
 temp_return_line()
