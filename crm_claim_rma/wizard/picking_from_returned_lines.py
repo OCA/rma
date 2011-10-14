@@ -41,11 +41,12 @@ class picking_in_from_returned_lines(osv.osv_memory):
         for line in returned_lines:
             if line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
-					    'name' : "#",
+					    'claim_origine' : "none",
 					    'invoice_id' : line.invoice_id.id,
 					    'product_id' : line.product_id.id,
 					    'product_returned_quantity' : line.product_returned_quantity,
 					    'prodlot_id' : line.prodlot_id.id,
+					    'price_unit' :  line.unit_sale_price,
 				    }))
         return M2M    
 
@@ -57,7 +58,6 @@ class picking_in_from_returned_lines(osv.osv_memory):
         'return_line_ids': _get_selected_lines,
         'return_line_location' : _get_dest_loc,
     }    
-
         
     # If "Cancel" button pressed
     def action_cancel(self,cr,uid,ids,conect=None):
@@ -67,8 +67,6 @@ class picking_in_from_returned_lines(osv.osv_memory):
     def action_create_picking(self, cr, uid, ids, context=None):
         partner_id = 0
         for picking in self.browse(cr, uid,ids):
-            print "picking dest : ", picking.return_line_location.id
-            picking.return_line_location
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
             # create picking
@@ -101,7 +99,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
 					    # 'tracking_id': 
 					    'picking_id': picking_id,
 					    'state': 'draft',
-					    # 'price_unit': 1.0, # to get from invoice line
+					    'price_unit': picking_line.price_unit,
 					    # 'price_currency_id': claim_id.company_id.currency_id.id, # from invoice ???
 					    'company_id': claim_id.company_id.id,
 					    'location_id': claim_id.partner_id.property_stock_customer.id,
@@ -137,11 +135,12 @@ class picking_out_from_returned_lines(osv.osv_memory):
         for line in returned_lines:
             if line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
-					    'name' : "#",
+					    'claim_origine' : "none",
 					    'invoice_id' : line.invoice_id.id,
 					    'product_id' : line.product_id.id,
 					    'product_returned_quantity' : line.product_returned_quantity,
 					    'prodlot_id' :  line.prodlot_id.id,
+					    'price_unit' :  line.unit_sale_price,
 				    }))
         return M2M    
    
@@ -191,7 +190,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
 					    # 'tracking_id': 
 					    'picking_id': picking_id,
 					    'state': 'draft',
-					    # 'price_unit': 1.0, # to get from invoice line
+					    'price_unit': picking_line.price_unit,
 					    # 'price_currency_id': claim_id.company_id.currency_id.id, # from invoice ???
 					    'company_id': claim_id.company_id.id,
 					    'location_id': self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0],
