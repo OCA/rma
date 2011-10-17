@@ -238,6 +238,9 @@ class crm_claim_product_return(osv.osv):
     _inherit = 'crm.claim'
     _columns = {
         'sequence': fields.char('Sequence', size=128, required=True,readonly=True, help="Company internal claim unique number"),
+        'claim_type': fields.selection([('customer','Customer'),
+                                    ('supplier','Supplier'),
+                                    ('other','Other')], 'Claim type', required=True, help="customer = from customer to company ; supplier = from company to supplier"),
         'return_line_ids' : fields.one2many('return.line', 'claim_id', 'Return lines'),
         'product_exchange_ids': fields.one2many('product.exchange', 'claim_return_id', 'Product exchanges'),
         # Aftersale outsourcing        
@@ -251,7 +254,8 @@ class crm_claim_product_return(osv.osv):
         'real_cost': fields.float('Real cost'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?       
     }
     _defaults = {
-        'sequence': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim.rma'),}
+        'sequence': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim.rma'),
+        'claim_type': lambda *a: 'customer',}
        
     #===== Method to select all returned lines =====
     def select_all(self,cr, uid, ids,context):

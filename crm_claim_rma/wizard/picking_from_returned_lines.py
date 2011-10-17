@@ -69,6 +69,12 @@ class picking_in_from_returned_lines(osv.osv_memory):
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
+            # location type
+            location = -1
+            if claim_id.claim_type == "customer":
+                location = claim_id.partner_id.property_stock_customer.id
+            else:
+                location = claim_id.partner_id.property_stock_supplier.id
             # create picking
             picking_id = self.pool.get('stock.picking').create(cr, uid, {
 					    'origin': "RMA/"+`claim_id.id`,
@@ -79,7 +85,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         'address_id': claim_id.partner_address_id.id,
                         'invoice_state': "none",
                         'company_id': claim_id.company_id.id,
-                        'location_id': claim_id.partner_id.property_stock_customer.id,
+                        'location_id': location,
                         'location_dest_id': picking.return_line_location.id,
 					    'note' : 'RMA picking in',                        
 				    })
@@ -102,7 +108,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
 					    'price_unit': picking_line.price_unit,
 					    # 'price_currency_id': claim_id.company_id.currency_id.id, # from invoice ???
 					    'company_id': claim_id.company_id.id,
-					    'location_id': claim_id.partner_id.property_stock_customer.id,
+					    'location_id': location,
 					    'location_dest_id': picking.return_line_location.id,
 					    #self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0],
 					    'note': 'RMA Refound',                        
@@ -158,6 +164,12 @@ class picking_out_from_returned_lines(osv.osv_memory):
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
+                        # location type
+            location = -1
+            if claim_id.claim_type == "customer":
+                location = claim_id.partner_id.property_stock_customer.id
+            else:
+                location = claim_id.partner_id.property_stock_supplier.id
             # create picking
             picking_id = self.pool.get('stock.picking').create(cr, uid, {
 					    'origin': "RMA/"+`claim_id.id`,
@@ -170,7 +182,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
                         'company_id': claim_id.company_id.id,
                         # 'stock_journal_id': fields.many2one('stock.journal','Stock Journal', select=True),
                         'location_id': self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0],
-                        'location_dest_id': claim_id.partner_id.property_stock_customer.id,
+                        'location_dest_id': location,
 					    'note' : 'RMA picking in',                        
 				    })   		    
 				    			    
@@ -194,7 +206,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
 					    # 'price_currency_id': claim_id.company_id.currency_id.id, # from invoice ???
 					    'company_id': claim_id.company_id.id,
 					    'location_id': self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0],
-					    'location_dest_id': claim_id.partner_id.property_stock_customer.id,
+					    'location_dest_id': location,
 					    'note': 'RMA Refound',                        
 				    })
 

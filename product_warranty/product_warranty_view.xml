@@ -31,6 +31,7 @@
 				<field position="after" name="delay">
 					<field name="warranty_duration"/>
 					<field name="warranty_return_partner"/>
+					<field name="active_supplier"/>
 				</field>
 			</field>
 		</record>
@@ -45,6 +46,7 @@
 				<field position="after" name="delay">
 					<field name="warranty_duration"/>
 					<field name="warranty_return_partner" readonly="0"/>
+					<field name="active_supplier"/>
 				</field>
 			</field>
 		</record>

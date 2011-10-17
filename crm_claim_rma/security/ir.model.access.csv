@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_substate_substate_user","substate.substate.user","model_crm_claim_substate_substate","base.group_sale_salesman",1,1,1,1
+"access_return_line_user","return.line.user","return_line","base.group_sale_salesman",1,1,1,1
+"access_product_exchange_user","product.exchange.user","product_exchange","base.group_sale_salesman",1,1,1,1
+"access_substate_substate_manager","substate.substate.manager","substate_substate","base.group_sale_manager",1,1,1,1
+"access_return_line_manager","return.line.manager","return_line","base.group_sale_manager",1,1,1,1
+"access_product_exchange_manager","product.exchange.manager","product_exchange","base.group_sale_manager",1,1,1,1
