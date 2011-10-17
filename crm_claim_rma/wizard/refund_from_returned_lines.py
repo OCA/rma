@@ -71,6 +71,10 @@ class refund_from_returned_lines(osv.osv_memory):
         for refund in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
+            # invoice type
+            invoice_type = 'out_refund'
+            if claim_id.claim_type == "supplier":
+                invoice_type = 'in_refund'
             # create invoice
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
 					    'claim_origine' : "none",
@@ -112,7 +116,7 @@ class refund_from_returned_lines(osv.osv_memory):
             'name': 'Customer Refounds',
             'view_type': 'form',
             'view_mode': 'tree,form',
-            'domain' : "[('type', '=', 'out_refund'),('partner_id','=',%s)]"%partner_id,
+            'domain' : "[('type', '=', %s),('partner_id','=',%s)]"%(invoice_type,partner_id),
             'res_model': 'account.invoice',
             'type': 'ir.actions.act_window',
         }

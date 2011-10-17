@@ -164,7 +164,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
-                        # location type
+            # location type
             location = -1
             if claim_id.claim_type == "customer":
                 location = claim_id.partner_id.property_stock_customer.id
