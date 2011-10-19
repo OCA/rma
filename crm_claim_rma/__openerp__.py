@@ -42,7 +42,7 @@ THIS MODULE REPLACES Akretion stock_rma from V6.0
     'author': 'Akretion',
     'website': 'http://www.akretion.com',
     'depends': ['sale','stock','crm_claim','product_warranty'],
-    'init_xml': ['rma_substate_data.xml',],
+    'init_xml': ['rma_data.xml',],
     'update_xml': [
                 'wizard/returned_lines_from_serial_wizard_view.xml',
                 'wizard/returned_lines_from_invoice_wizard_view.xml',

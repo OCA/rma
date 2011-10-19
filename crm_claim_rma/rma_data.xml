@@ -1,7 +1,20 @@
 <?xml version="1.0" ?>
-<!-- STANDARD SUBSTATE FOR CLAIM RMA -->
 <openerp>
 	<data>
+<!-- Sequences for crm.claim -->
+        <record id="seq_type_crm_claim" model="ir.sequence.type">
+            <field name="name">CRM claim</field>
+            <field name="code">crm.claim</field>
+        </record>
+
+        <record id="seq_crm_claim" model="ir.sequence">
+            <field name="name">CRM claim</field>
+            <field name="code">crm.claim</field>
+            <field name="prefix">CL/%(year)s/</field>
+            <field name="padding">5</field>
+        </record>
+        
+<!-- STANDARD SUBSTATE FOR CLAIM RMA -->        
 <!-- TO TREATE -->
 		<record id="rma_to_treate_refund" model="substate.substate">
 			<field name="name" eval="&quot;&quot;&quot;To refund&quot;&quot;&quot;"/>
