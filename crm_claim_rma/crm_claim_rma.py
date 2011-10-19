@@ -105,7 +105,13 @@ class return_line(osv.osv):
     # Method to calculate warranty limit
     def set_warranty_limit(self, cr, uid, ids,context,return_line):
         warning = "Valid"
-        limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.warranty))).strftime('%Y-%m-%d')       	            		
+        if return_line.claim_id.claim_type == 'supplier':
+            if return_line.prodlot_id :
+                limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') # TO BE IMPLEMENTED !!!
+            else :
+                limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') 
+        else :
+            limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.warranty))).strftime('%Y-%m-%d')      	            		
         if limit < return_line.claim_id.date:
             warning = 'Expired'
         self.write(cr,uid,ids,{
