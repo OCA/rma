@@ -22,6 +22,18 @@
 
 from osv import fields, osv
 
+#=====     
+class return_instruction(osv.osv): 
+    _name = "return.instruction"
+    _description = "Instructions for product return"
+    _columns = {
+        'name': fields.char('Title', size=128, required=True),
+        'instructions' : fields.text('Instructions', help="Instructions for product return"), 
+        'is_default' : fields.boolean('Is default', help="If is default, will be use to set the default value in supplier infos. Be careful to have only one default"),
+        }
+return_instruction()
+
+#=====
 class product_supplierinfo(osv.osv):
     _inherit = "product.supplierinfo"
 
@@ -41,6 +53,7 @@ class product_supplierinfo(osv.osv):
     _columns = {
         "warranty_duration" : fields.float('Warranty', help="Warranty in month for this product/supplier relation. Only for company/supplier relation (purchase order) ; the customer/company relation (sale order) always use the product main warranty field"),
         "warranty_return_partner" :  fields.selection(get_warranty_return_partner, 'Warrantee return', size=128, help="Who is in charge of the warranty return treatment toward the end customer. Company will use the current compagny delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty"),
+        'return_instructions': fields.many2one('return.instruction', 'Instructions',help="Instructions for product return"),
         'active_supplier' : fields.boolean('Active supplier', help=""),
         }
     _defaults = {
