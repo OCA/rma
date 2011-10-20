@@ -80,7 +80,7 @@ class return_line(osv.osv):
         'unit_sale_price' : fields.float('Unit sale price', digits=(12,2), help="Unit sale price of the product. Auto filed if retrun done by invoice selection. BE CAREFUL AND CHECK the automatic value as don't take into account previous refounds, invoice discount, can be for 0 if product for free,..."),
         'return_value' : fields.function(_line_total_amount, method=True, string='Total return', type='float', help="Quantity returned * Unit sold price",),
         'prodlot_id': fields.many2one('stock.production.lot', 'Serial/Lot n°',help="The serial/lot of the returned product"),
-        'applicable_guarantee': fields.selection([('us','Us'),('supplier','Supplier'),('brand','Brand manufacturer')], 'Warranty type'),# METTRE CHAMP FONCTION; type supplier might generate an auto draft forward to the supplier
+        'applicable_guarantee': fields.selection([('us','Company'),('supplier','Supplier'),('brand','Brand manufacturer')], 'Warranty type'),# METTRE CHAMP FONCTION; type supplier might generate an auto draft forward to the supplier
         'guarantee_limit': fields.date('Warranty limit', help="The warranty limit is computed as: invoice date + warranty defined on selected product.", readonly=True),
         'warning': fields.char('Warranty', size=64, readonly=True,help="If warranty has expired"), #select=1,
         'warranty_type': fields.char('Warranty type', size=64, readonly=True,help="from product form"),
@@ -260,7 +260,7 @@ class crm_claim_product_return(osv.osv):
         'real_cost': fields.float('Real cost'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?       
     }
     _defaults = {
-        'sequence': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim.rma'),
+        'sequence': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim'),
         'claim_type': lambda *a: 'customer',}
        
     #===== Method to select all returned lines =====
