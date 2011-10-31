@@ -30,7 +30,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
     _description='Wizard to create a picking in from selected return lines'
     _columns = {
         'return_line_location' : fields.many2one('stock.location', 'Dest. Location',help="Location where the system will stock the returned products.", select=True),
-        'return_line_ids' : fields.many2many('temp.return.line', 'return_rel_refund', 'wizard_id', 'temp_return_line_id', 'Selected return lines'),
+        'return_line_ids' : fields.many2many('temp.return.line',string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
@@ -130,7 +130,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
     _name='picking_out_from_returned_lines.wizard'
     _description='Wizard to create a picking out from selected return lines'
     _columns = {
-        'return_line_ids' : fields.many2many('temp.return.line', 'return_rel_refund', 'wizard_id', 'temp_return_line_id', 'Selected return lines'),
+        'return_line_ids' : fields.many2many('temp.return.line', string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
@@ -155,7 +155,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
     }    
 
     # If "Cancel" button pressed
-    def action_cancel(self,cr,uid,ids,conect=None):
+    def action_cancel(self,cr,uid,ids,context=None):
         return {'type': 'ir.actions.act_window_close',}
 
     # If "Create" button pressed

@@ -82,7 +82,7 @@ class returned_lines_from_serial(osv.osv_memory):
     
     # Get partner from case is set to filter serials
     def _get_default_partner_id(self, cr, uid, context):
-        return self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['partner_id'])['partner_id']      
+        return self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['partner_id'])['partner_id'][0]    
 
     _defaults = {
         'qty_1': lambda *a: 1.0,
@@ -134,7 +134,7 @@ class returned_lines_from_serial(osv.osv_memory):
         # Refactor code : create 1 "createmethode" called by each if with values as parameters    
         return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
-                    'name': result.claim_1,
+                    'claim_origine': result.claim_1,
                     'product_id' : self.get_product_id(cr, uid,ids,result.prodlot_id_1.id,context),
                     #'invoice_id' : self.prodlot_2_invoice(cr, uid,[result.prodlot_id_1.id],[result.prodlot_id_1.product_id.id]), #PRODLOT_ID can be in many invoice !!
                     'product_returned_quantity' : result.qty_1,
@@ -147,7 +147,7 @@ class returned_lines_from_serial(osv.osv_memory):
         if result.prodlot_id_2.id : 
             return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
-                    'name': result.claim_2,
+                    'claim_origine': result.claim_2,
                     'product_id' : self.get_product_id(cr, uid,ids,result.prodlot_id_2.id,context),
 #                    'invoice_id' : self.prodlot_2_invoice(cr, uid,[result.prodlot_id_1.id]),
                     'product_returned_quantity' : result.qty_2,
@@ -160,7 +160,7 @@ class returned_lines_from_serial(osv.osv_memory):
         if result.prodlot_id_3.id : 
             return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
-                    'name': result.claim_3,
+                    'claim_origine': result.claim_3,
                     'product_id' : self.get_product_id(cr, uid,ids,result.prodlot_id_3.id,context),
 #                    'invoice_id' : self.prodlot_2_invoice(cr, uid,[result.prodlot_id_1.id]),
                     'product_returned_quantity' : result.qty_3,
@@ -173,7 +173,7 @@ class returned_lines_from_serial(osv.osv_memory):
         if result.prodlot_id_4.id : 
             return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
-                    'name': result.claim_4,
+                    'claim_origine': result.claim_4,
                     'product_id' : self.get_product_id(cr, uid,ids,result.prodlot_id_4.id,context),
 #                    'invoice_id' : self.prodlot_2_invoice(cr, uid,[result.prodlot_id_1.id]),
                     'product_returned_quantity' : result.qty_4,
@@ -186,7 +186,7 @@ class returned_lines_from_serial(osv.osv_memory):
         if result.prodlot_id_5.id : 
             return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
-                    'name': result.claim_5,
+                    'claim_origine': result.claim_5,
                     'product_id' : self.get_product_id(cr, uid,ids,result.prodlot_id_5.id,context),
 #                    'invoice_id' : self.prodlot_2_invoice(cr, uid,[result.prodlot_id_1.id],[result.prodlot_id_1.product_id.id]),
                     'product_returned_quantity' : result.qty_5,

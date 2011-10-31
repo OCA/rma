@@ -101,7 +101,7 @@
 			<field name="name"/>
 			<separator string="Returned good" colspan="4"/>
 			<group col="6" colspan="4">
-				<field name="invoice_id" domain="[('type', '=', 'out_invoice')]" />
+				<field name="invoice_id"/> <!-- domain="[('type', '=', 'out_invoice')]" -->
 				<field name="product_id"/> 
 				<field name="prodlot_id"/>
 				<field name="product_returned_quantity"/>
@@ -283,18 +283,34 @@
         <act_window 
         context="{'search_default_partner_id': [partner_id],}"
         domain="[('type', '=', 'out_invoice')]"
-        id="act_crm_claim_rma_invoice" 
-        name="Partner invoices" 
+        id="act_crm_claim_rma_invoice_out" 
+        name="Partner invoices out" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/>
+<!-- Right side link to invoices -->
+        <act_window 
+        context="{'search_default_partner_id': [partner_id],}"
+        domain="[('type', '=', 'in_invoice')]"
+        id="act_crm_claim_rma_invoice_in" 
+        name="Partner invoices in" 
         res_model="account.invoice" 
         src_model="crm.claim"/>
 <!-- Right side link to refunds -->
         <act_window 
         context="{'search_default_partner_id': [partner_id],}"
         domain="[('type', '=', 'out_refund')]"
-        id="act_crm_claim_rma_refunds" 
-        name="Partner refunds" 
+        id="act_crm_claim_rma_refunds_out" 
+        name="Partner refunds out" 
         res_model="account.invoice" 
         src_model="crm.claim"/>    
+<!-- Right side link to refunds -->
+        <act_window 
+        context="{'search_default_partner_id': [partner_id],}"
+        domain="[('type', '=', 'in_refund')]"
+        id="act_crm_claim_rma_refunds_in" 
+        name="Partner refunds in" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/> 
 <!-- Right side link to picking in --> 
         <act_window  
         domain="[('type', '=', 'in'),('partner_id', 'in', [partner_id])]"

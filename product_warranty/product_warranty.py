@@ -47,7 +47,7 @@ class product_supplierinfo(osv.osv):
         else:
             return [
                 ('company','Company'),
-                ('brand','Brand manufacturer'),
+                ('supplier','Supplier'),
                 ('other','Other'),]
 
     # Get selected lines to add to exchange

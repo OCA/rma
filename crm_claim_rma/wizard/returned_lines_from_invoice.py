@@ -98,7 +98,7 @@ class returned_lines_from_invoice_lines(osv.osv_memory):
     _name='returned_lines_from_invoice_line.wizard'
     _description='Wizard to create product return lines from invoice'
     _columns = {
-        'return_line_ids' : fields.many2many('temp.return.line', 'return_rel', 'wizard_id', 'temp_return_line_id', 'Return lines'),
+        'return_line_ids' : fields.many2many('temp.return.line', string='Return lines'),
     }
     
     # Get possible returns from invoice

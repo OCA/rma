@@ -29,7 +29,7 @@ class exchange_from_returned_lines(osv.osv_memory):
     _name='exchange_from_returned_lines.wizard'
     _description='Wizard to create an exchange from selected return lines'
     _columns = {
-        'exchange_line_ids' : fields.many2many('temp.exchange.line', 'exchange_rel_refund', 'wizard_id', 'temp_exchange_line_id', 'Selected exchange lines'),
+        'exchange_line_ids' : fields.many2many('temp.exchange.line', string='Selected exchange lines'),
     }
     
     # Get selected lines to add to exchange
@@ -45,6 +45,8 @@ class exchange_from_returned_lines(osv.osv_memory):
 					    'returned_product_quantity' : line.product_returned_quantity,
 					    'returned_prodlot_id' : line.prodlot_id.id,
 					    'returned_unit_sale_price' : line.unit_sale_price,
+					    'replacement_product_id': line.product_id.id,
+					    'replacement_product_quantity' : line.product_returned_quantity,
 				    }))
         return M2M    
    

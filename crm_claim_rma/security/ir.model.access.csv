@@ -1,7 +1,10 @@
 "id","name","model_id","group_id","perm_read","perm_write","perm_create","perm_unlink"
-"access_substate_user","substate.substate.user","substate.substate","Sales / User","True","True","True",
-"access_return_line_user","return.line.user","return.line","Sales / User","True","True","True",
-"access_exchange_user","product.exchange.user","product.exchange","Sales / User","True","True","True",
+"access_substate_user","substate.substate.user","substate.substate","Sales / User - All Leads","True","True","True",
+"access_return_line_user","return.line.user","return.line","Sales / User - All Leads","True","True","True",
+"access_exchange_user","product.exchange.user","product.exchange","Sales / User - All Leads","True","True","True",
 "access_substate_manager","substate.substate.manager","substate.substate","Sales / Manager","True","True","True","True"
 "access_return_line_manager","return.line.manager","return.line","Sales / Manager","True","True","True","True"
 "access_exchange_manager","product.exchange.manager","product.exchange","Sales / Manager","True","True","True","True"
+"access_substate_user","substate.substate.user","substate.substate","Sales / User - Own Leads Only","True","True","True",
+"access_return_line_user","return.line.user","return.line","Sales / User - Own Leads Only","True","True","True",
+"access_exchange_user","product.exchange.user","product.exchange","Sales / User - Own Leads Only","True","True","True",

@@ -29,7 +29,7 @@ class refund_from_returned_lines(osv.osv_memory):
     _description='Wizard to create an refund for selected product return lines'
     _columns = {
         'refund_journal' : fields.many2one('account.journal', 'Refund journal', select=True),
-        'return_line_ids' : fields.many2many('temp.return.line', 'return_rel_refund', 'wizard_id', 'temp_return_line_id', 'Selected return lines'),
+        'return_line_ids' : fields.many2many('temp.return.line', string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
@@ -53,7 +53,6 @@ class refund_from_returned_lines(osv.osv_memory):
     def _get_journal(self, cr, uid,context):
         #('company_id','=',claim_id.company_id.id)
         # ,('refund_journal','=','True')
-        print "get journal with refund_journal=True: ",self.pool.get('account.journal').search(cr, uid, [('type','=','sale_refund'),('refund_journal','=','True')],limit=1)
         return self.pool.get('account.journal').search(cr, uid, [('type','=','sale_refund')],limit=1)[0] 
    
     _defaults = {
@@ -62,7 +61,7 @@ class refund_from_returned_lines(osv.osv_memory):
     }    
 
     # On "Cancel" button
-    def action_cancel(self,cr,uid,ids,conect=None):
+    def action_cancel(self,cr,uid,ids,context=None):
         return {'type': 'ir.actions.act_window_close',}
 
     # On "Create" button
@@ -79,7 +78,7 @@ class refund_from_returned_lines(osv.osv_memory):
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
 					    'claim_origine' : "none",
 					    'origin' : claim_id.id,
-					    'type' : 'out_refund',
+					    'type' : invoice_type,
 					    'state' : 'draft',
 					    'partner_id' : claim_id.partner_id.id,
 					    'user_id' : uid,
@@ -96,7 +95,8 @@ class refund_from_returned_lines(osv.osv_memory):
 				    })				    
             # Create invoice lines        
             for refund_line in refund.return_line_ids:             
-                invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
+                if refund_line.invoice_id:
+                    invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
 					    'name' : refund_line.product_id.name_template,
 					    'origin' : claim_id.id,					    
 					    'invoice_id' : invoice_id,					    
@@ -111,7 +111,9 @@ class refund_from_returned_lines(osv.osv_memory):
 					    'company_id' : claim_id.company_id.id,
 					    'partner_id' : refund_line.invoice_id.partner_id.id,
 					    'note': 'RMA Refound',                        
-				    })
+				        })
+                else:
+                    raise osv.except_osv(_('Error !'), _('Cannot find any invoice for the return line!'))
         return {
             'name': 'Customer Refounds',
             'view_type': 'form',

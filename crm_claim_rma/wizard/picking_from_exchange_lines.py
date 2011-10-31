@@ -25,11 +25,11 @@ import pooler
 import time
 
 # Class to create a picking out from selected exchange lines
-class picking_out_from_returned_lines(osv.osv_memory):
+class picking_out_from_exchange_lines(osv.osv_memory):
     _name='picking_out_from_exchange_lines.wizard'
     _description='Wizard to create a picking out from selected exchange lines'
     _columns = {
-        'exchange_line_ids' : fields.many2many('temp.exchange.line', 'return_rel_exchange', 'wizard_id', 'temp_exchange_line_id', 'Selected exchange lines'),
+        'exchange_line_ids' : fields.many2many('temp.exchange.line', string='Selected exchange lines'),
     }
     
     # Get selected lines to add to picking in
@@ -111,6 +111,6 @@ class picking_out_from_returned_lines(osv.osv_memory):
         }
         return view
                               
-picking_out_from_returned_lines()
+picking_out_from_exchange_lines()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
