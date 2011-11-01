@@ -71,9 +71,9 @@ class refund_from_returned_lines(osv.osv_memory):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
             # invoice type
-            invoice_type = 'out_refund'
+            invoice_type = "out_refund"
             if claim_id.claim_type == "supplier":
-                invoice_type = 'in_refund'
+                invoice_type = "in_refund"
             # create invoice
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
 					    'claim_origine' : "none",
@@ -110,7 +110,7 @@ class refund_from_returned_lines(osv.osv_memory):
 #					    'account_analytic_id':
 					    'company_id' : claim_id.company_id.id,
 					    'partner_id' : refund_line.invoice_id.partner_id.id,
-					    'note': 'RMA Refound',                        
+					    'note': 'RMA Refund',                        
 				        })
                 else:
                     raise osv.except_osv(_('Error !'), _('Cannot find any invoice for the return line!'))
@@ -118,7 +118,7 @@ class refund_from_returned_lines(osv.osv_memory):
             'name': 'Customer Refounds',
             'view_type': 'form',
             'view_mode': 'tree,form',
-            'domain' : "[('type', '=', %s),('partner_id','=',%s)]"%(invoice_type,partner_id),
+            'domain' : "[('type', '=', '"+invoice_type+"'),('partner_id','=',"+str(partner_id)+")]",
             'res_model': 'account.invoice',
             'type': 'ir.actions.act_window',
         }

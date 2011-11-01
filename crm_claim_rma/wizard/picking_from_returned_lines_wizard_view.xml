@@ -51,8 +51,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field> 
-            <!--  field name="domain">['claim_id','=',claim_id}</field -->
-            <field name="context">{'claim_id':claim_id}</field> 
+            <!--  field name="domain">['claim_id','=',claim_id}</field 
+            <field name="context">{'claim_id':claim_id}</field> -->
         </record>	  
 
 
@@ -82,7 +82,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field> 
-            <field name="context">{'claim_id':claim_id}</field> 
+            <!--  <field name="context">{'claim_id':claim_id}</field> -->
         </record>
         		
     </data>
