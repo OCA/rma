@@ -36,10 +36,11 @@ Extend the product warranty management with warranty details on product / suppli
     'depends': ['product'],
     'init_xml': [],
     'update_xml': [
+        'security/ir.model.access.csv',
         'product_warranty_view.xml',
     ],
-    'demo_xml': [], 
-    'test': [], 
+    'demo_xml': [],
+    'test': [],
     'installable': True,
     'active': False,
     'certificate' : '',
