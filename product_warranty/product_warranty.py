@@ -54,7 +54,9 @@ class product_supplierinfo(osv.osv):
     def _get_default_instructions(self, cr, uid,context):
         instruction_ids = self.pool.get('return.instruction').search(cr, uid, [('is_default','=','FALSE')])
         if instruction_ids:
-            return instruction_ids[0]     
+            return instruction_ids[0]    
+            # TO DO f(supplier) + other... 
+        return False
                     
     _columns = {
         "warranty_duration" : fields.float('Warranty', help="Warranty in month for this product/supplier relation. Only for company/supplier relation (purchase order) ; the customer/company relation (sale order) always use the product main warranty field"),
