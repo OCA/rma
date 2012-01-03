@@ -326,6 +326,15 @@
         res_model="stock.picking" 
         src_model="crm.claim"/>  
 
+
+ <!-- act_window
+
+            context="{'search_default_account_id':[active_id], 'search_default_unreconciled':1, 'default_account_id': active_id}"
+            src_model="account.account"/>
+
+        <act_window domain="[('reconcile_id', '=', active_id)]" id="act_account_acount_move_line_reconcile_open" 
+        name="Reconciled entries" res_model="account.move.line" src_model="account.move.reconcile"/ -->
+        
 <!-- Menu -->
 	<!-- return lines action -->
         <record model="ir.actions.act_window" id="act_crm_case_return_lines">

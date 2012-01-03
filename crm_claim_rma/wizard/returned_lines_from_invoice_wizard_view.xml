@@ -25,7 +25,7 @@
     <data>
 <!-- SELECT INVOICE FORM VIEW -->
         <record id="view_create_return_invoice_form" model="ir.ui.view">
-            <field name="name">returned_lines_from_invoice_wiew</field>
+            <field name="name">returned_lines_from_invoice_view</field>
             <field name="model">returned_lines_from_invoice_invoice.wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
