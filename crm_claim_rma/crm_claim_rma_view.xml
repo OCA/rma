@@ -48,10 +48,10 @@
                     <field name="prodlot_id" select='1'/>
                     <newline/>
                     <group expand="0" string="More">
-                    	<field name="last_state_change" select='1'/>
-                    	<field name="guarantee_limit" select='1'/>
-                    	<field name="return_value" select='1'/>	
-                    	<field name="name" select='1'/>
+                        <field name="last_state_change" select='1'/>
+                        <field name="guarantee_limit" select='1'/>
+                        <field name="return_value" select='1'/>    
+                        <field name="name" select='1'/>
                     </group>
                     <newline/>
                     <group expand="0" string="Group By...">
@@ -71,7 +71,7 @@
             </field>
         </record>
         
-		<!-- TREE -->
+        <!-- TREE -->
         <record model="ir.ui.view" id="crm_return_line_tree_view">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">return.line</field>
@@ -87,49 +87,49 @@
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
                     <field name="product_returned_quantity"/>
-                    <field name="claim_origine"/>	
+                    <field name="claim_origine"/>    
                 </tree>
             </field>
         </record>
 
-		<!-- FORM -->
+        <!-- FORM -->
         <record model="ir.ui.view" id="crm_return_line_form_view">
             <field name="name">CRM - Claim product return line Form</field>
             <field name="model">return.line</field>
             <field name="arch" type="xml">
-			<form string="Returned line">
-			<field name="name"/>
-			<separator string="Returned good" colspan="4"/>
-			<group col="6" colspan="4">
-				<field name="invoice_id"/> <!-- domain="[('type', '=', 'out_invoice')]" -->
-				<field name="product_id"/> 
-				<field name="prodlot_id"/>
-				<field name="product_returned_quantity"/>
-				<field name="unit_sale_price"/>
-				<field name="return_value"/>				
-			</group>
-			<!-- button name="%(action_get_empty_serial)d" string="Get possible values for empty serial" states="draft,confirmed" type="action" target="new"/ -->
-			<separator string="Problem" colspan="4"/>
-			<field name="claim_origine" nolabel="1" colspan="4"/>	
-			<field name="claim_descr" nolabel="1" colspan="4"/>
-			<separator string="Warranty" colspan="4"/>
-			<button name="set_warranty" string="Calculate warranty state" type="object" colspan="4"/>		
-			<field name="guarantee_limit"/>
-			<field name="warning"/>	
-			<field name="warranty_return_partner"/>
-			<field name="warranty_type"/>
-			<separator string="State" colspan="4"/>	
-			<group col="6" colspan="4">
-				<field name="state"/>
-				<field name="substate_id" widget='selection' />
-				<field name="last_state_change"/>	
-			</group>	
-		</form>
+            <form string="Returned line">
+            <field name="name"/>
+            <separator string="Returned good" colspan="4"/>
+            <group col="6" colspan="4">
+                <field name="invoice_id"/> <!-- domain="[('type', '=', 'out_invoice')]" -->
+                <field name="product_id"/> 
+                <field name="prodlot_id"/>
+                <field name="product_returned_quantity"/>
+                <field name="unit_sale_price"/>
+                <field name="return_value"/>                
+            </group>
+            <!-- button name="%(action_get_empty_serial)d" string="Get possible values for empty serial" states="draft,confirmed" type="action" target="new"/ -->
+            <separator string="Problem" colspan="4"/>
+            <field name="claim_origine" nolabel="1" colspan="4"/>    
+            <field name="claim_descr" nolabel="1" colspan="4"/>
+            <separator string="Warranty" colspan="4"/>
+            <button name="set_warranty" string="Calculate warranty state" type="object" colspan="4"/>        
+            <field name="guarantee_limit"/>
+            <field name="warning"/>    
+            <field name="warranty_return_partner"/>
+            <field name="warranty_type"/>
+            <separator string="State" colspan="4"/>    
+            <group col="6" colspan="4">
+                <field name="state"/>
+                <field name="substate_id" widget='selection' />
+                <field name="last_state_change"/>    
+            </group>    
+        </form>
             </field>
         </record>
 
 <!-- Picking follow -->
-		<!-- TREE -->
+        <!-- TREE -->
         <record model="ir.ui.view" id="crm_picking_follow_tree_view">
             <field name="name">CRM - Picking follow Tree</field>
             <field name="model">picking.follow</field>
@@ -140,138 +140,138 @@
                     <field name="related_picking_state"/>
                     <field name="related_picking_due_date"/>
                     <field name="related_picking_delivered_date"/> 
-                    <field name="name"/>	
+                    <field name="name"/>    
                 </tree>
             </field>
         </record>
 
-		<!-- FORM -->
+        <!-- FORM -->
         <record model="ir.ui.view" id="crm_picking_follow_form_view">
             <field name="name">CRM - Picking follow Form</field>
             <field name="model">picking.follow</field>
             <field name="arch" type="xml">
-				<form string="Picking follow">
-					<field name="picking_id"/>
-            		<field name="related_picking_state"/> 
-            		<field name="related_picking_due_date"/>
-            		<field name="related_picking_delivered_date"/> 
-            		<field name="name"/>		
-				</form>
+                <form string="Picking follow">
+                    <field name="picking_id"/>
+                    <field name="related_picking_state"/> 
+                    <field name="related_picking_due_date"/>
+                    <field name="related_picking_delivered_date"/> 
+                    <field name="name"/>        
+                </form>
             </field>
         </record>
 
 <!-- PRODUCT EXCHANGE -->
-	<!-- TREE -->
-	<record model="ir.ui.view" id="crm_product_exchange_tree_view">
-		<field name="name">CRM - Product exchange Tree</field>
-		<field name="model">product.exchange</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-		<tree string="Product exchanges" editable="top" >
-			<field name="selected"/>
-			<field name="state"/>
-			<field name="exchange_send_date"/>
-			<field name="returned_product"/> 
-			<field name="returned_product_serial"/>
-			<field name="replacement_product"/>
-			<field name="replacement_product_serial"/>
-			<field name="returned_value"/>
-        	<field name="replacement_value"/>
-			<field name="name"/>	
-		</tree>
-		</field>
-	</record>
-
-	<!-- FORM -->
-	<record model="ir.ui.view" id="crm_product_exchange_form_view">
-    	<field name="name">CRM - Product exchange Form</field>
-    	<field name="model">product.exchange</field>
-    	<field name="arch" type="xml">
-		<form string="Product exchange">
-			<field name="state"/>
-			<field name="exchange_send_date"/>
-			<separator string="Returned product" colspan="2"/>
-			<separator string="Replacement product" colspan="2"/>
-			<field name="returned_product"/> 
-			<field name="replacement_product"/>
-			<field name="returned_product_serial"/>
-			<field name="replacement_product_serial"/> 
-			<field name="returned_product_qty"/>		
-			<field name="replacement_product_qty"/>
-			<field name="returned_unit_sale_price"/>
-        	<field name="replacement_unit_sale_price"/>
-        	<field name="returned_value"/>
-        	<field name="replacement_value"/>
-			<separator string="Comment" colspan="2"/>
-			<field name="name" colspan="4" nolabel="1"/>		
-		</form>
+    <!-- TREE -->
+    <record model="ir.ui.view" id="crm_product_exchange_tree_view">
+        <field name="name">CRM - Product exchange Tree</field>
+        <field name="model">product.exchange</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        <tree string="Product exchanges" editable="top" >
+            <field name="selected"/>
+            <field name="state"/>
+            <field name="exchange_send_date"/>
+            <field name="returned_product"/> 
+            <field name="returned_product_serial"/>
+            <field name="replacement_product"/>
+            <field name="replacement_product_serial"/>
+            <field name="returned_value"/>
+            <field name="replacement_value"/>
+            <field name="name"/>    
+        </tree>
         </field>
-	</record>
+    </record>
+
+    <!-- FORM -->
+    <record model="ir.ui.view" id="crm_product_exchange_form_view">
+        <field name="name">CRM - Product exchange Form</field>
+        <field name="model">product.exchange</field>
+        <field name="arch" type="xml">
+        <form string="Product exchange">
+            <field name="state"/>
+            <field name="exchange_send_date"/>
+            <separator string="Returned product" colspan="2"/>
+            <separator string="Replacement product" colspan="2"/>
+            <field name="returned_product"/> 
+            <field name="replacement_product"/>
+            <field name="returned_product_serial"/>
+            <field name="replacement_product_serial"/> 
+            <field name="returned_product_qty"/>        
+            <field name="replacement_product_qty"/>
+            <field name="returned_unit_sale_price"/>
+            <field name="replacement_unit_sale_price"/>
+            <field name="returned_value"/>
+            <field name="replacement_value"/>
+            <separator string="Comment" colspan="2"/>
+            <field name="name" colspan="4" nolabel="1"/>        
+        </form>
+        </field>
+    </record>
         
 <!-- CLAIM VIEWS -->
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
-	    <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
             <page string="Communication &amp; History" position="after">
-            	<page string="Product return">
-						<field name="return_line_ids" nolabel="1" colspan="4"/>					
-						<group col="1" rowspan="3">
-							<separator string="Add lines" colspan="4"/>
-							<button name="%(action_create_return_serial)d" string="Mass return from serial/lot n°" states="draft,open" type="action" target="new"/>
-							<button name="%(action_create_return_inv)d" string="Mass return from invoice" states="draft,open" type="action" target="new"/>
-						</group>
-						<group col="1" rowspan="3">
-							<separator string="Line selection" colspan="4"/>
-							<button name="select_all" string="Select all" states="draft,open" type="object"/>
-							<button name="unselect_all" string="Select none" states="draft,open" type="object"/>
-						</group>	
-						<group col="2" rowspan="3">
-							<separator string="From selected lines" colspan="4"/>
-							<button name="%(action_picking_in_from_returned_lines)d" string="New picking IN" states="draft,open" type="action" target="new"/>							
-							<button name="%(action_picking_out_from_returned_lines)d" string="New picking OUT" states="draft,open" type="action" target="new"/>				
-							<button name="%(action_refund_from_returned_lines)d" string="New refund" states="draft,open"  type="action" target="new"/>
-							<button name="%(action_exchange_from_returned_lines)d" string="New exchange" states="draft,open"  type="action" target="new"/>
-						</group>						
-			</page>
-			<page string="Product exchange">
-            	<field name="product_exchange_ids" nolabel="1" colspan="4"/>
+                <page string="Product return">
+                        <field name="return_line_ids" nolabel="1" colspan="4"/>                    
+                        <group col="1" rowspan="3">
+                            <separator string="Add lines" colspan="4"/>
+                            <button name="%(action_create_return_serial)d" string="Mass return from serial/lot n°" states="draft,open" type="action" target="new"/>
+                            <button name="%(action_create_return_inv)d" string="Mass return from invoice" states="draft,open" type="action" target="new"/>
+                        </group>
+                        <group col="1" rowspan="3">
+                            <separator string="Line selection" colspan="4"/>
+                            <button name="select_all" string="Select all" states="draft,open" type="object"/>
+                            <button name="unselect_all" string="Select none" states="draft,open" type="object"/>
+                        </group>    
+                        <group col="2" rowspan="3">
+                            <separator string="From selected lines" colspan="4"/>
+                            <button name="%(action_picking_in_from_returned_lines)d" string="New picking IN" states="draft,open" type="action" target="new"/>                            
+                            <button name="%(action_picking_out_from_returned_lines)d" string="New picking OUT" states="draft,open" type="action" target="new"/>                
+                            <button name="%(action_refund_from_returned_lines)d" string="New refund" states="draft,open"  type="action" target="new"/>
+                            <button name="%(action_exchange_from_returned_lines)d" string="New exchange" states="draft,open"  type="action" target="new"/>
+                        </group>                        
+            </page>
+            <page string="Product exchange">
+                <field name="product_exchange_ids" nolabel="1" colspan="4"/>
                 <button name="%(action_picking_out_from_exchange_lines)d" string="New picking OUT from exchange" states="draft,open" type="action" target="new"/>
             </page>
             <!-- page string="Aftersale outsourcing">  
-                		<button name="create_picking_out" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
-                	</page -->
-                	<!-- page string="Repairs">  
-                		<button name="create_repair" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
-                	</page -->
-                	<!-- page string="Loans">  
-                		<button name="create_loan" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
-                	</page -->
-			<!-- page string="Financial management">
-				<!separator string="Costs and Incomes" colspan="4"/>
-				<field name="planned_revenue"/>
-				<field name="planned_cost"/>
-				<field name="real_revenue" readonly="1"/>
-				<field name="real_cost" readonly="1"/ -->
-			<!-- /page -->
-		</page>
+                        <button name="create_picking_out" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
+                    </page -->
+                    <!-- page string="Repairs">  
+                        <button name="create_repair" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
+                    </page -->
+                    <!-- page string="Loans">  
+                        <button name="create_loan" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
+                    </page -->
+            <!-- page string="Financial management">
+                <!separator string="Costs and Incomes" colspan="4"/>
+                <field name="planned_revenue"/>
+                <field name="planned_cost"/>
+                <field name="real_revenue" readonly="1"/>
+                <field name="real_cost" readonly="1"/ -->
+            <!-- /page -->
+        </page>
             </field>
-	</record>
+    </record>
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
-	    <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
-            	<field name="date_deadline" position="after">
-            		<field name="sequence"/>
-            		<field name="claim_type"/>
-            	</field>
+                <field name="date_deadline" position="after">
+                    <field name="sequence"/>
+                    <field name="claim_type"/>
+                </field>
             </field>
-	</record>
-	            
+    </record>
+                
 <!-- Right side link to orders -->
         <act_window 
         context="{'search_default_partner_id': [partner_id]}"
@@ -336,7 +336,7 @@
         name="Reconciled entries" res_model="account.move.line" src_model="account.move.reconcile"/ -->
         
 <!-- Menu -->
-	<!-- return lines action -->
+    <!-- return lines action -->
         <record model="ir.actions.act_window" id="act_crm_case_return_lines">
             <field name="name">Return lines</field>
             <field name="res_model">return.line</field>
@@ -346,17 +346,17 @@
             <!-- field name="context">{'search_default_section_id': section_id, "search_default_current":1,"search_default_user_id":uid, "stage_type":'claim'}</field -->
             <field name="search_view_id" ref="view_crm_return_lines_filter"/>
         </record>
-	<!-- substates action -->
-		<record id="act_crm_claim_substates" model="ir.actions.act_window">
+    <!-- substates action -->
+        <record id="act_crm_claim_substates" model="ir.actions.act_window">
             <field name="name">Return line substates</field>
             <field name="res_model">substate.substate</field>
             <field name="view_type">form</field>
             <!-- field name="view_id" ref="crm.crm_case_categ_tree-view"/ -->
         </record>
     <!-- Menu -->          
-		<menuitem name="Return lines" id="menu_crm_case_claims_return_lines"
+        <menuitem name="Return lines" id="menu_crm_case_claims_return_lines"
             parent="base.menu_aftersale" action="act_crm_case_return_lines" sequence="2"/>
-		<menuitem name="Returned line substates" id="menu_crm_case_claims_return_line_substates"
+        <menuitem name="Returned line substates" id="menu_crm_case_claims_return_line_substates"
             parent="crm_claim.menu_config_claim" action="act_crm_claim_substates" sequence="2"/>                        
      </data>
 </openerp>
