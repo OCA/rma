@@ -4,8 +4,8 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn							#
+# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau,     #
+# Emmanuel Samyn                            #
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -54,15 +54,15 @@ class return_line(osv.osv):
     def _line_total_amount(self, cr, uid, ids, field_name, arg,context):
         res = {}
         for line in self.browse(cr,uid,ids):            
-        	res[line.id] = line.unit_sale_price*line.product_returned_quantity
+            res[line.id] = line.unit_sale_price*line.product_returned_quantity
         return res 
         
     def _get_claim_seq(self, cr, uid, ids, field_name, arg,context):
         res = {}
         for line in self.browse(cr,uid,ids):            
-        	res[line.id] = line.claim_id.sequence
+            res[line.id] = line.claim_id.sequence
         return res          
-            	
+                
     _columns = {
         'name': fields.function(_get_claim_seq, method=True, string='Claim n°', type='char', size=64,store=True),
         'claim_origine': fields.selection([('none','Not specified'),
@@ -112,13 +112,13 @@ class return_line(osv.osv):
                 else :
                     limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') 
             else :
-                limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.warranty))).strftime('%Y-%m-%d')      	            		
+                limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.warranty))).strftime('%Y-%m-%d')                              
             if limit < return_line.claim_id.date:
                 warning = 'Expired'
             self.write(cr,uid,ids,{
-        	        'guarantee_limit' : limit,
-        	        'warning' : warning,
-        	        })
+                    'guarantee_limit' : limit,
+                    'warning' : warning,
+                    })
         else:
             raise osv.except_osv(_('Error !'), _('Cannot find any date for invoice ! Must be a validated invoice !'))
         return True
@@ -144,40 +144,42 @@ class return_line(osv.osv):
     def set_warranty_return_address(self, cr, uid, ids,context,return_line):
         return_address = None
         warranty_type = 'company'
-        if return_line.prodlot_id :
-            # multi supplier method
-            print "TO BE IMPLEMENTED"
-        else :
-            # first supplier method
-        	if return_line.product_id.seller_ids[0]:
-        	    if return_line.product_id.seller_ids[0].warranty_return_partner:
-        	        return_partner = return_line.product_id.seller_ids[0].warranty_return_partner
-        	        if return_partner == 'company': 
-        	            return_address = self._get_partner_address(cr, uid, ids, context,return_line.claim_id.company_id.partner_id)[0]       	                    
-        	        elif return_partner == 'supplier':
-        	            return_address = self._get_partner_address(cr, uid, ids, context,return_line.product_id.seller_ids[0].name)[0]
-        	            warranty_type = 'supplier'
-        	        elif return_partner == 'brand':
-        	            return_address = self._get_partner_address(cr, uid, ids, context, return_line.product_id.product_brand_id.partner_id)[0]
-        	            warranty_type = 'brand'
-        	        else :
-        	            warranty_type = 'other'
-        	            # TO BE IMPLEMENTED if something to do...
-        	    else :
-        	        raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
-        	else : 
-        	    raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))        	    
+        if return_line.product_id.seller_ids:
+            # default : use first supplier method
+            seller = return_line.product_id.seller_ids[0]
+            if len(return_line.product_id.seller_ids) > 1 :
+                # multi supplier method
+                print "TO BE IMPLEMENTED"
+                print "lenght: ",len(return_line.product_id.seller_ids)
+                #seller = set right seller line
+            if seller.warranty_return_partner:
+                return_partner = seller.warranty_return_partner
+                if return_partner == 'company': 
+                    return_address = self._get_partner_address(cr, uid, ids, context,return_line.claim_id.company_id.partner_id)[0]
+                elif return_partner == 'supplier':
+                    return_address = self._get_partner_address(cr, uid, ids, context,return_line.product_id.seller_ids[0].name)[0]
+                    warranty_type = 'supplier'
+                elif return_partner == 'brand':
+                    return_address = self._get_partner_address(cr, uid, ids, context, return_line.product_id.product_brand_id.partner_id)[0]
+                    warranty_type = 'brand'
+                else :
+                    warranty_type = 'other'
+                    # TO BE IMPLEMENTED if something to do...
+            else :
+                raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
+        else : 
+            raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))                
         self.write(cr,uid,ids,{'warranty_return_partner':return_address,'warranty_type':warranty_type}) 
         return True
                
     # Method to calculate warranty limit and validity
     def set_warranty(self, cr, uid, ids,context=None):
         for return_line in self.browse(cr,uid,ids):             
-        	if return_line.product_id and return_line.invoice_id:
-        	    self.set_warranty_limit(cr, uid, ids,context,return_line)
-        	    self.set_warranty_return_address(cr, uid, ids,context,return_line)
-        	else:
-        	    raise osv.except_osv(_('Error !'), _('PLEASE SET PRODUCT & INVOICE!'))        	    
+            if return_line.product_id and return_line.invoice_id:
+                self.set_warranty_limit(cr, uid, ids,context,return_line)
+                self.set_warranty_return_address(cr, uid, ids,context,return_line)
+            else:
+                raise osv.except_osv(_('Error !'), _('PLEASE SET PRODUCT & INVOICE!'))                
         return True 
 
 return_line()
@@ -194,21 +196,21 @@ class product_exchange(osv.osv):
     def total_amount_returned(self, cr, uid, ids, field_name, arg,context):
         res = {}
         for line in self.browse(cr,uid,ids):            
-        	res[line.id] = line.returned_unit_sale_price*line.returned_product_qty
+            res[line.id] = line.returned_unit_sale_price*line.returned_product_qty
         return res 
 
     # Method to calculate total amount of the line : qty*UP
     def total_amount_replacement(self, cr, uid, ids, field_name, arg,context):
         res = {}
         for line in self.browse(cr,uid,ids):            
-        	res[line.id] = line.replacement_unit_sale_price*line.replacement_product_qty
+            res[line.id] = line.replacement_unit_sale_price*line.replacement_product_qty
         return res 
 
     # Method to get the replacement product unit price
     def get_replacement_price(self, cr, uid, ids, field_name, arg,context):
         res = {}
         for line in self.browse(cr,uid,ids):            
-        	res[line.id] = line.replacement_product.list_price
+            res[line.id] = line.replacement_product.list_price
         return res 
                         
     _columns = {
