@@ -66,6 +66,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
     # If "Create" button pressed
     def action_create_picking(self, cr, uid, ids, context=None):
         partner_id = 0
+        wf_service = netsvc.LocalService("workflow")
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
@@ -77,7 +78,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                 location = claim_id.partner_id.property_stock_supplier.id
             # create picking
             picking_id = self.pool.get('stock.picking').create(cr, uid, {
-                        'origin': claim_id.sequence,
+                        'origin': "RMA/"+`claim_id.sequence`,
                         'type': 'in',
                         'move_type': 'one', # direct
                         'state': 'draft',
@@ -88,6 +89,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         'location_id': location,
                         'location_dest_id': picking.return_line_location.id,
                         'note' : 'RMA picking in',
+                        'claim_id': claim_id.id,
                     })
             # Create picking lines
             for picking_line in picking.return_line_ids:

@@ -53,6 +53,8 @@ THIS MODULE REPLACES Akretion stock_rma from V6.0
                 'wizard/get_empty_serial_view.xml',
                 'crm_claim_rma_view.xml',
                 'security/ir.model.access.csv',
+                'account_invoice_view.xml',
+                'stock_view.xml',
  #       'report/crm_claim_report_view.xml',
     ],
     'demo_xml': [

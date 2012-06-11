@@ -263,6 +263,8 @@ class crm_claim_product_return(osv.osv):
         'planned_cost': fields.float('Expected cost'),
         'real_revenue': fields.float('Real revenue'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?
         'real_cost': fields.float('Real cost'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?       
+        'invoice_ids': fields.one2many('account.invoice', 'claim_id', 'Refunds'),
+        'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA')
     }
     _defaults = {
         'sequence': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim'),

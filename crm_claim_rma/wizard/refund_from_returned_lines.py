@@ -77,7 +77,7 @@ class refund_from_returned_lines(osv.osv_memory):
             # create invoice
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
 					    'claim_origine' : "none",
-					    'origin' : claim_id.id,
+					    'origin' : claim_id.sequence,
 					    'type' : invoice_type,
 					    'state' : 'draft',
 					    'partner_id' : claim_id.partner_id.id,
@@ -91,14 +91,15 @@ class refund_from_returned_lines(osv.osv_memory):
                         'currency_id' : claim_id.company_id.currency_id.id, # from invoice ???
                         'journal_id' : refund.refund_journal.id,
                         'company_id' : claim_id.company_id.id,
-					    'comment' : 'RMA Refound',                        
+					    'comment' : 'RMA Refund',
+                        'claim_id': claim_id,
 				    })				    
             # Create invoice lines        
             for refund_line in refund.return_line_ids:             
                 if refund_line.invoice_id:
                     invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
 					    'name' : refund_line.product_id.name_template,
-					    'origin' : claim_id.id,					    
+					    'origin' : claim_id.sequence,					    
 					    'invoice_id' : invoice_id,					    
 					    'uos_id' : refund_line.product_id.uom_id.id,
 					    'product_id':refund_line.product_id.id,

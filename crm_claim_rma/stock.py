@@ -5,7 +5,7 @@
 #########################################################################
 #                                                                       #
 # Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn														#
+# Emmanuel Samyn, Benoît Guillot                                        #
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -21,7 +21,13 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-import wizard
-import crm_claim_rma
-import account_invoice
-import stock
+from osv import fields, osv
+
+class stock_picking(osv.osv):
+
+    _inherit = "stock.picking"
+    
+
+    _columns = {
+        'claim_id': fields.many2one('crm.claim', 'Claim'),
+    }
