@@ -66,7 +66,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
     # If "Create" button pressed
     def action_create_picking(self, cr, uid, ids, context=None):
         partner_id = 0
-        wf_service = netsvc.LocalService("workflow")
+#        wf_service = netsvc.LocalService("workflow")
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
