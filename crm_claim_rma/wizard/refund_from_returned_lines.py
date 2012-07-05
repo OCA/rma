@@ -40,13 +40,13 @@ class refund_from_returned_lines(osv.osv_memory):
         for line in returned_lines:
             if line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
-					    'claim_origine' : "none",
-					    'invoice_id' : line.invoice_id.id,
-					    'product_id' : line.product_id.id,
-					    'product_returned_quantity' : line.product_returned_quantity,
-					    'prodlot_id' : line.prodlot_id.id,
-					    'price_unit' :  line.unit_sale_price,
-				    }))
+                        'claim_origine' : "none",
+                        'invoice_id' : line.invoice_id.id,
+                        'product_id' : line.product_id.id,
+                        'product_returned_quantity' : line.product_returned_quantity,
+                        'prodlot_id' : line.prodlot_id.id,
+                        'price_unit' :  line.unit_sale_price,
+                    }))
         return M2M    
 
     # Get default journal
@@ -76,13 +76,13 @@ class refund_from_returned_lines(osv.osv_memory):
                 invoice_type = "in_refund"
             # create invoice
             invoice_id = self.pool.get('account.invoice').create(cr, uid, {
-					    'claim_origine' : "none",
-					    'origin' : claim_id.sequence,
-					    'type' : invoice_type,
-					    'state' : 'draft',
-					    'partner_id' : claim_id.partner_id.id,
-					    'user_id' : uid,
-					    'reference_type': 'none',
+                        'claim_origine' : "none",
+                        'origin' : claim_id.sequence,
+                        'type' : invoice_type,
+                        'state' : 'draft',
+                        'partner_id' : claim_id.partner_id.id,
+                        'user_id' : uid,
+                        'reference_type': 'none',
                         'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S'),
                         # 'date_due':
                         'address_contact_id' : claim_id.partner_address_id.id,
@@ -91,28 +91,28 @@ class refund_from_returned_lines(osv.osv_memory):
                         'currency_id' : claim_id.company_id.currency_id.id, # from invoice ???
                         'journal_id' : refund.refund_journal.id,
                         'company_id' : claim_id.company_id.id,
-					    'comment' : 'RMA Refund',
-                        'claim_id': claim_id,
-				    })				    
+                        'comment' : 'RMA Refund',
+                        'claim_id': claim_id.id,
+                    })                    
             # Create invoice lines        
             for refund_line in refund.return_line_ids:             
                 if refund_line.invoice_id:
                     invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
-					    'name' : refund_line.product_id.name_template,
-					    'origin' : claim_id.sequence,					    
-					    'invoice_id' : invoice_id,					    
-					    'uos_id' : refund_line.product_id.uom_id.id,
-					    'product_id':refund_line.product_id.id,
-					    'account_id': claim_id.partner_id.property_account_receivable.id, # refund_line.product_id.property_account_expense.id,
-					    'price_unit':refund_line.price_unit,
-					    'quantity': refund_line.product_returned_quantity,
-#					    'discount':
-#					    'invoice_line_tax_id':
-#					    'account_analytic_id':
-					    'company_id' : claim_id.company_id.id,
-					    'partner_id' : refund_line.invoice_id.partner_id.id,
-					    'note': 'RMA Refund',                        
-				        })
+                        'name' : refund_line.product_id.name_template,
+                        'origin' : claim_id.sequence,                        
+                        'invoice_id' : invoice_id,                        
+                        'uos_id' : refund_line.product_id.uom_id.id,
+                        'product_id':refund_line.product_id.id,
+                        'account_id': claim_id.partner_id.property_account_receivable.id, # refund_line.product_id.property_account_expense.id,
+                        'price_unit':refund_line.price_unit,
+                        'quantity': refund_line.product_returned_quantity,
+#                        'discount':
+#                        'invoice_line_tax_id':
+#                        'account_analytic_id':
+                        'company_id' : claim_id.company_id.id,
+                        'partner_id' : refund_line.invoice_id.partner_id.id,
+                        'note': 'RMA Refund',                        
+                        })
                 else:
                     raise osv.except_osv(_('Error !'), _('Cannot find any invoice for the return line!'))
         return {
