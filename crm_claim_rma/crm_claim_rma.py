@@ -75,6 +75,7 @@ class return_line(osv.osv):
                                     ('other','Other')], 'Claim Subject', required=True, help="To describe the line product problem"),
         'claim_descr' : fields.text('Claim description', help="More precise description of the problem"),  
         'invoice_id': fields.many2one('account.invoice', 'Invoice',help="The invoice related to the returned product"),
+        
         'product_id': fields.many2one('product.product', 'Product',help="Returned product"),
         'product_returned_quantity' : fields.float('Quantity', digits=(12,2), help="Quantity of product returned"),
         'unit_sale_price' : fields.float('Unit sale price', digits=(12,2), help="Unit sale price of the product. Auto filed if retrun done by invoice selection. BE CAREFUL AND CHECK the automatic value as don't take into account previous refounds, invoice discount, can be for 0 if product for free,..."),
@@ -166,9 +167,16 @@ class return_line(osv.osv):
                     warranty_type = 'other'
                     # TO BE IMPLEMENTED if something to do...
             else :
-                raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
+                #TODO fix me use default address
+                self.write(cr,uid,ids,{'warranty_return_partner':1,'warranty_type': 'company'})
+                return True
+
+                #raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
         else : 
-            raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))                
+            #TODO fix me use default address
+            self.write(cr,uid,ids,{'warranty_return_partner':1,'warranty_type': 'company'})
+            return True
+            #raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))                
         self.write(cr,uid,ids,{'warranty_return_partner':return_address,'warranty_type':warranty_type}) 
         return True
                
@@ -283,6 +291,15 @@ class crm_claim_product_return(osv.osv):
         for line in self.browse(cr,uid,ids)[0].return_line_ids:
             return_obj.write(cr,uid,line.id,{'selected':False})
         return True
+        
+    def refund(self, cr, uid, ids, context=None):
+        mod_obj = self.pool.get('ir.model.data')
+        xml_id = 'action_account_invoice_refund'
+        result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, id, context=context)
+        print 'result', result
+        return result
     
 crm_claim_product_return() 
 

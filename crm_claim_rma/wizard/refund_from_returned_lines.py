@@ -38,7 +38,7 @@ class refund_from_returned_lines(osv.osv_memory):
         returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
-            if line.selected:
+            if True: #line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,

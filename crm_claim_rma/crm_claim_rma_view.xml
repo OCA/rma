@@ -236,15 +236,16 @@
                             <separator string="From selected lines" colspan="4"/>
                             <button name="%(action_picking_in_from_returned_lines)d" string="New picking IN" states="draft,open" type="action" target="new"/>                            
                             <button name="%(action_picking_out_from_returned_lines)d" string="New picking OUT" states="draft,open" type="action" target="new"/>                
-                            <button name="%(action_refund_from_returned_lines)d" string="New refund" states="draft,open"  type="action" target="new"/>
-                            <button name="%(action_exchange_from_returned_lines)d" string="New exchange" states="draft,open"  type="action" target="new"/>
+                            <button name="refund" string="New refund" states="draft,open"  type="object"/>
+                            <!--<button name="%(action_exchange_from_returned_lines)d" string="New exchange" states="draft,open"  type="action" target="new"/>-->
                         </group>                        
             </page>
+            <!--
             <page string="Product exchange">
                 <field name="product_exchange_ids" nolabel="1" colspan="4"/>
                 <button name="%(action_picking_out_from_exchange_lines)d" string="New picking OUT from exchange" states="draft,open" type="action" target="new"/>
             </page>
-            <!-- page string="Aftersale outsourcing">  
+             page string="Aftersale outsourcing">  
                         <button name="create_picking_out" string="New picking OUT from selected lines" states="draft,open" type="object"/>                                              
                     </page -->
                     <!-- page string="Repairs">  

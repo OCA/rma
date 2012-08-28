@@ -38,7 +38,7 @@ class picking_out_from_exchange_lines(osv.osv_memory):
         exchange_lines = self.pool.get('product.exchange').browse(cr, uid,exchange_line_ids)
         M2M = []
         for line in exchange_lines:
-            if line.selected:
+            if True: #line.selected:
                 M2M.append(self.pool.get('temp.exchange.line').create(cr, uid, {
 					    'name' : "#",
 					    'returned_product_id' : line.returned_product.id,

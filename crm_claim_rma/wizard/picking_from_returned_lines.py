@@ -39,7 +39,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
         returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
-            if line.selected:
+            if True: #line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,
@@ -78,7 +78,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                 location = claim_id.partner_id.property_stock_supplier.id
             # create picking
             picking_id = self.pool.get('stock.picking').create(cr, uid, {
-                        'origin': "RMA/"+`claim_id.sequence`,
+                        'origin': claim_id.sequence,
                         'type': 'in',
                         'move_type': 'one', # direct
                         'state': 'draft',
@@ -141,7 +141,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
         returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
-            if line.selected:
+            if True: # line.selected:
                 M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,
@@ -174,7 +174,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
                 location = claim_id.partner_id.property_stock_supplier.id
             # create picking
             picking_id = self.pool.get('stock.picking').create(cr, uid, {
-                        'origin': "RMA/"+`claim_id.id`,
+                        'origin': claim_id.sequence,
                         'type': 'out',
                         'move_type': 'one', # direct
                         'state': 'draft',

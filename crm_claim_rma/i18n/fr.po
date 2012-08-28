@@ -258,7 +258,7 @@ msgstr "Non spécifé"
 #. module: crm_claim_rma
 #: view:crm.claim:0
 msgid "New picking IN"
-msgstr "Nouvelle réception"
+msgstr "Nouvelle réception / perte de marchandise"
 
 #. module: crm_claim_rma
 #: field:temp.return.line,invoice_line_id:0

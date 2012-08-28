@@ -38,7 +38,7 @@ class exchange_from_returned_lines(osv.osv_memory):
         returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
-            if line.selected:
+            if True: # ADD ALL LINE line.selected:
                 M2M.append(self.pool.get('temp.exchange.line').create(cr, uid, {
 					    'name' : "none",
 					    'returned_product_id' : line.product_id.id,
