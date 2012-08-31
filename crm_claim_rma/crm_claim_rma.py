@@ -248,12 +248,7 @@ class product_exchange(osv.osv):
 product_exchange()
 
 #==========        
-class crm_claim_product_return(osv.osv):
-    """
-    Class to add RMA management on a standard crm.claim object
-    """
-    _name = "crm.claim"
-    _description = "Add product return functionalities, product exchange and aftersale outsourcing to CRM claim"
+class crm_claim(osv.osv):
     _inherit = 'crm.claim'
     _columns = {
         'sequence': fields.char('Sequence', size=128,readonly=True,states={'draft': [('readonly', False)]},required=True, help="Company internal claim unique number"),
@@ -301,6 +296,6 @@ class crm_claim_product_return(osv.osv):
         print 'result', result
         return result
     
-crm_claim_product_return() 
+crm_claim() 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
