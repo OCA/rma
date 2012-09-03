@@ -46,7 +46,7 @@
             <field name="name">action_get_empty_serial</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">get_empty_serial.wizard</field>
-			<field name="src_model">return.line</field>
+			<field name="src_model">claim.line</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field> 
