@@ -29,18 +29,18 @@ class picking_in_from_returned_lines(osv.osv_memory):
     _name='picking_in_from_returned_lines.wizard'
     _description='Wizard to create a picking in from selected return lines'
     _columns = {
-        'return_line_location' : fields.many2one('stock.location', 'Dest. Location',help="Location where the system will stock the returned products.", select=True),
-        'return_line_ids' : fields.many2many('temp.return.line',string='Selected return lines'),
+        'claim_line_location' : fields.many2one('stock.location', 'Dest. Location',help="Location where the system will stock the returned products.", select=True),
+        'claim_line_ids' : fields.many2many('temp.claim.line',string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
-        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['return_line_ids'])['return_line_ids'] 
-        returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
+        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
+        returned_lines = self.pool.get('claim.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
             if True: #line.selected:
-                M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
+                M2M.append(self.pool.get('temp.claim.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,
                         'product_id' : line.product_id.id,
@@ -55,8 +55,8 @@ class picking_in_from_returned_lines(osv.osv_memory):
         return self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0]  
            
     _defaults = {
-        'return_line_ids': _get_selected_lines,
-        'return_line_location' : _get_dest_loc,
+        'claim_line_ids': _get_selected_lines,
+        'claim_line_location' : _get_dest_loc,
     }    
         
     # If "Cancel" button pressed
@@ -65,6 +65,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
 
     # If "Create" button pressed
     def action_create_picking(self, cr, uid, ids, context=None):
+        print "context", context
         partner_id = 0
 #        wf_service = netsvc.LocalService("workflow")
         for picking in self.browse(cr, uid,ids):
@@ -87,12 +88,12 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         'invoice_state': "none",
                         'company_id': claim_id.company_id.id,
                         'location_id': location,
-                        'location_dest_id': picking.return_line_location.id,
+                        'location_dest_id': picking.claim_line_location.id,
                         'note' : 'RMA picking in',
                         'claim_id': claim_id.id,
                     })
             # Create picking lines
-            for picking_line in picking.return_line_ids:
+            for picking_line in picking.claim_line_ids:
                 move_id = self.pool.get('stock.move').create(cr, uid, {
                         'name' : picking_line.product_id.name_template, # Motif : crm id ? stock_picking_id ?
                         'priority': '0',
@@ -111,7 +112,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         # 'price_currency_id': claim_id.company_id.currency_id.id, # from invoice ???
                         'company_id': claim_id.company_id.id,
                         'location_id': location,
-                        'location_dest_id': picking.return_line_location.id,
+                        'location_dest_id': picking.claim_line_location.id,
                         #self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0],
                         'note': 'RMA Refound',
                     })
@@ -132,17 +133,17 @@ class picking_out_from_returned_lines(osv.osv_memory):
     _name='picking_out_from_returned_lines.wizard'
     _description='Wizard to create a picking out from selected return lines'
     _columns = {
-        'return_line_ids' : fields.many2many('temp.return.line', string='Selected return lines'),
+        'claim_line_ids' : fields.many2many('temp.claim.line', string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
-        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['return_line_ids'])['return_line_ids'] 
-        returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
+        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
+        returned_lines = self.pool.get('claim.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
             if True: # line.selected:
-                M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
+                M2M.append(self.pool.get('temp.claim.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,
                         'product_id' : line.product_id.id,
@@ -153,7 +154,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
         return M2M    
    
     _defaults = {
-        'return_line_ids': _get_selected_lines,
+        'claim_line_ids': _get_selected_lines,
     }    
 
     # If "Cancel" button pressed
@@ -189,7 +190,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
                     })
 
             # Create picking lines
-            for picking_line in picking.return_line_ids:
+            for picking_line in picking.claim_line_ids:
                 move_id = self.pool.get('stock.move').create(cr, uid, {
                         'name' : picking_line.product_id.name_template, # Motif : crm id ? stock_picking_id ?
                         'priority': '0',

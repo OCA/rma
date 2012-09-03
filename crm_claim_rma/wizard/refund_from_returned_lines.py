@@ -29,17 +29,17 @@ class refund_from_returned_lines(osv.osv_memory):
     _description='Wizard to create an refund for selected product return lines'
     _columns = {
         'refund_journal' : fields.many2one('account.journal', 'Refund journal', select=True),
-        'return_line_ids' : fields.many2many('temp.return.line', string='Selected return lines'),
+        'claim_line_ids' : fields.many2many('temp.claim.line', string='Selected return lines'),
     }
     
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
-        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['return_line_ids'])['return_line_ids'] 
-        returned_lines = self.pool.get('return.line').browse(cr, uid,returned_line_ids)
+        returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
+        returned_lines = self.pool.get('claim.line').browse(cr, uid,returned_line_ids)
         M2M = []
         for line in returned_lines:
             if True: #line.selected:
-                M2M.append(self.pool.get('temp.return.line').create(cr, uid, {
+                M2M.append(self.pool.get('temp.claim.line').create(cr, uid, {
                         'claim_origine' : "none",
                         'invoice_id' : line.invoice_id.id,
                         'product_id' : line.product_id.id,
@@ -56,7 +56,7 @@ class refund_from_returned_lines(osv.osv_memory):
         return self.pool.get('account.journal').search(cr, uid, [('type','=','sale_refund')],limit=1)[0] 
    
     _defaults = {
-        'return_line_ids': _get_selected_lines,
+        'claim_line_ids': _get_selected_lines,
         'refund_journal' : _get_journal,
     }    
 
@@ -95,7 +95,7 @@ class refund_from_returned_lines(osv.osv_memory):
                         'claim_id': claim_id.id,
                     })                    
             # Create invoice lines        
-            for refund_line in refund.return_line_ids:             
+            for refund_line in refund.claim_line_ids:             
                 if refund_line.invoice_id:
                     invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
                         'name' : refund_line.product_id.name_template,

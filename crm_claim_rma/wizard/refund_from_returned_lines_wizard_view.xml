@@ -24,34 +24,44 @@
 <openerp>
     <data>
 <!-- SELECT FORM VIEW -->
-        <record id="view_refund_from_returned_lines_form" model="ir.ui.view">
-            <field name="name">refund_from_returned_lines_wiew</field>
-            <field name="model">refund_from_returned_lines.wizard</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-			<form string="Select return lines to refund">
-				<separator string="Select lines for picking					                                                           														" colspan="4"/>
-				<field name="refund_journal"/>
-				<field name="return_line_ids" nolabel="1" colspan="4"/>
-                    <group col="4" colspan="2">
-                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
-                        <button name="action_create_refund" string="Create refund" icon='gtk-ok' type="object"/>
-                    </group>
-                </form>
-            </field>
-        </record> 
-		
+<!--        <record id="view_refund_from_returned_lines_form" model="ir.ui.view">-->
+<!--            <field name="name">refund_from_returned_lines_wiew</field>-->
+<!--            <field name="model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="type">form</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--			<form string="Select return lines to refund">-->
+<!--				<separator string="Select lines for picking					                                                           														" colspan="4"/>-->
+<!--				<field name="refund_journal"/>-->
+<!--				<field name="return_line_ids" nolabel="1" colspan="4"/>-->
+<!--                    <group col="4" colspan="2">-->
+<!--                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>-->
+<!--                        <button name="action_create_refund" string="Create refund" icon='gtk-ok' type="object"/>-->
+<!--                    </group>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record> -->
+<!--		-->
 <!-- SELECT ACTION -->
-        <record id="action_refund_from_returned_lines" model="ir.actions.act_window">
-            <field name="name">action_refund_from_returned_lines</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">refund_from_returned_lines.wizard</field>
-            <field name="src_model">crm.claim</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field> 
-            <!-- field name="context">{'claim_id':claim_id}</field --> 
-        </record>	  
-		
+<!--        <record id="action_refund_from_returned_lines" model="ir.actions.act_window">-->
+<!--            <field name="name">action_refund_from_returned_lines</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="src_model">crm.claim</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field> -->
+            <!-- field name="context">{'claim_id':claim_id}</field  -->
+<!--        </record>	  -->
+<!--		-->
+
+<!--        <record id="action_claim_refund" model="ir.actions.act_window">-->
+<!--            <field name="name">New Refund</field>-->
+<!--            <field name="res_model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--           <field name="view_id" ref="account.view_account_invoice_refund"/>-->
+<!--           <field name="target">new</field>-->
+<!--        </record>-->
+
     </data>
 </openerp>

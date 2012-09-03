@@ -43,11 +43,11 @@ class substate_substate(osv.osv):
 substate_substate()
 
 #=====
-class return_line(osv.osv):
+class claim_line(osv.osv):
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
-    _name = "return.line"
+    _name = "claim.line"
     _description = "List of product to return"
         
     # Method to calculate total amount of the line : qty*UP
@@ -104,17 +104,17 @@ class return_line(osv.osv):
     } 
 
     # Method to calculate warranty limit
-    def set_warranty_limit(self, cr, uid, ids,context,return_line):
-        if return_line.invoice_id.date_invoice:
+    def set_warranty_limit(self, cr, uid, ids,context,claim_line):
+        if claim_line.invoice_id.date_invoice:
             warning = "Valid"
-            if return_line.claim_id.claim_type == 'supplier':
-                if return_line.prodlot_id :
-                    limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') # TO BE IMPLEMENTED !!!
+            if claim_line.claim_id.claim_type == 'supplier':
+                if claim_line.prodlot_id :
+                    limit = (datetime.strptime(claim_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(claim_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') # TO BE IMPLEMENTED !!!
                 else :
-                    limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') 
+                    limit = (datetime.strptime(claim_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(claim_line.product_id.seller_ids[0].warranty_duration))).strftime('%Y-%m-%d') 
             else :
-                limit = (datetime.strptime(return_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(return_line.product_id.warranty))).strftime('%Y-%m-%d')                              
-            if limit < return_line.claim_id.date:
+                limit = (datetime.strptime(claim_line.invoice_id.date_invoice, '%Y-%m-%d') + relativedelta(months=int(claim_line.product_id.warranty))).strftime('%Y-%m-%d')                              
+            if limit < claim_line.claim_id.date:
                 warning = 'Expired'
             self.write(cr,uid,ids,{
                     'guarantee_limit' : limit,
@@ -142,26 +142,26 @@ class return_line(osv.osv):
                     raise osv.except_osv(_('Error !'), _('Cannot find any address for this product partner !'))
         
     # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids,context,return_line):
+    def set_warranty_return_address(self, cr, uid, ids,context,claim_line):
         return_address = None
         warranty_type = 'company'
-        if return_line.product_id.seller_ids:
+        if claim_line.product_id.seller_ids:
             # default : use first supplier method
-            seller = return_line.product_id.seller_ids[0]
-            if len(return_line.product_id.seller_ids) > 1 :
+            seller = claim_line.product_id.seller_ids[0]
+            if len(claim_line.product_id.seller_ids) > 1 :
                 # multi supplier method
                 print "TO BE IMPLEMENTED"
-                print "lenght: ",len(return_line.product_id.seller_ids)
+                print "lenght: ",len(claim_line.product_id.seller_ids)
                 #seller = set right seller line
             if seller.warranty_return_partner:
                 return_partner = seller.warranty_return_partner
                 if return_partner == 'company': 
-                    return_address = self._get_partner_address(cr, uid, ids, context,return_line.claim_id.company_id.partner_id)[0]
+                    return_address = self._get_partner_address(cr, uid, ids, context,claim_line.claim_id.company_id.partner_id)[0]
                 elif return_partner == 'supplier':
-                    return_address = self._get_partner_address(cr, uid, ids, context,return_line.product_id.seller_ids[0].name)[0]
+                    return_address = self._get_partner_address(cr, uid, ids, context,claim_line.product_id.seller_ids[0].name)[0]
                     warranty_type = 'supplier'
                 elif return_partner == 'brand':
-                    return_address = self._get_partner_address(cr, uid, ids, context, return_line.product_id.product_brand_id.partner_id)[0]
+                    return_address = self._get_partner_address(cr, uid, ids, context, claim_line.product_id.product_brand_id.partner_id)[0]
                     warranty_type = 'brand'
                 else :
                     warranty_type = 'other'
@@ -182,15 +182,15 @@ class return_line(osv.osv):
                
     # Method to calculate warranty limit and validity
     def set_warranty(self, cr, uid, ids,context=None):
-        for return_line in self.browse(cr,uid,ids):             
-            if return_line.product_id and return_line.invoice_id:
-                self.set_warranty_limit(cr, uid, ids,context,return_line)
-                self.set_warranty_return_address(cr, uid, ids,context,return_line)
+        for claim_line in self.browse(cr,uid,ids):             
+            if claim_line.product_id and claim_line.invoice_id:
+                self.set_warranty_limit(cr, uid, ids,context,claim_line)
+                self.set_warranty_return_address(cr, uid, ids,context,claim_line)
             else:
                 raise osv.except_osv(_('Error !'), _('PLEASE SET PRODUCT & INVOICE!'))                
         return True 
 
-return_line()
+claim_line()
 
 #===== 
 class product_exchange(osv.osv): 
@@ -250,12 +250,13 @@ product_exchange()
 #==========        
 class crm_claim(osv.osv):
     _inherit = 'crm.claim'
+
     _columns = {
         'sequence': fields.char('Sequence', size=128,readonly=True,states={'draft': [('readonly', False)]},required=True, help="Company internal claim unique number"),
         'claim_type': fields.selection([('customer','Customer'),
                                     ('supplier','Supplier'),
                                     ('other','Other')], 'Claim type', required=True, help="customer = from customer to company ; supplier = from company to supplier"),
-        'return_line_ids' : fields.one2many('return.line', 'claim_id', 'Return lines'),
+        'claim_line_ids' : fields.one2many('claim.line', 'claim_id', 'Return lines'),
         'product_exchange_ids': fields.one2many('product.exchange', 'claim_return_id', 'Product exchanges'),
         # Aftersale outsourcing        
 #        'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required=False, select=True),
@@ -275,26 +276,27 @@ class crm_claim(osv.osv):
        
     #===== Method to select all returned lines =====
     def select_all(self,cr, uid, ids,context):
-        return_obj = self.pool.get('return.line')
-        for line in self.browse(cr,uid,ids)[0].return_line_ids:
+        return_obj = self.pool.get('claim.line')
+        for line in self.browse(cr,uid,ids)[0].claim_line_ids:
             return_obj.write(cr,uid,line.id,{'selected':True})
         return True
  
     #===== Method to unselect all returned lines =====
     def unselect_all(self,cr, uid, ids,context):
-        return_obj = self.pool.get('return.line')
-        for line in self.browse(cr,uid,ids)[0].return_line_ids:
+        return_obj = self.pool.get('claim.line')
+        for line in self.browse(cr,uid,ids)[0].claim_line_ids:
             return_obj.write(cr,uid,line.id,{'selected':False})
         return True
         
-    def refund(self, cr, uid, ids, context=None):
-        mod_obj = self.pool.get('ir.model.data')
-        xml_id = 'action_account_invoice_refund'
-        result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
-        id = result and result[1] or False
-        result = act_obj.read(cr, uid, id, context=context)
-        print 'result', result
-        return result
+# === deprecated if we use the refund wizard of the account module ===
+#    def refund(self, cr, uid, ids, context=None):
+#        mod_obj = self.pool.get('ir.model.data')
+#        xml_id = 'action_account_invoice_refund'
+#        result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
+#        id = result and result[1] or False
+#        result = act_obj.read(cr, uid, id, context=context)
+#        print 'result', result
+#        return result
     
 crm_claim() 
 

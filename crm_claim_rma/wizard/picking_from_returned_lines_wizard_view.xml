@@ -31,9 +31,9 @@
             <field name="arch" type="xml">
                 <form string="Select return lines to add in picking">
                 	<separator string="Destination location" colspan="4"/>
-                	<field name="return_line_location" nolabel="1" /> <!--  domain="[('usage','=','internal')]"  -->
+                	<field name="claim_line_location" nolabel="1" /> <!--  domain="[('usage','=','internal')]"  -->
 					<separator string="Select lines for picking                                                                                                        " colspan="4"/>
-					<field name="return_line_ids" nolabel="1" colspan="4"/>
+					<field name="claim_line_ids" nolabel="1" colspan="4"/>
                     <group col="4" colspan="2">
                         <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
                         <button name="action_create_picking" string="Create picking" icon='gtk-ok' type="object"/>
@@ -64,7 +64,7 @@
             <field name="arch" type="xml">
                 <form string="Select return lines to add in picking">
                 	<separator string="Select lines for picking out                                                                                                                " colspan="4"/>
-			<field name="return_line_ids" nolabel="1" colspan="4"/>
+			<field name="claim_line_ids" nolabel="1" colspan="4"/>
                     <group col="4" colspan="2">
                         <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
                         <button name="action_create_picking" string="Create picking" icon='gtk-ok' type="object"/>
