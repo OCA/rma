@@ -29,6 +29,17 @@ class account_invoice_refund(osv.osv_memory):
             context['active_ids'] = context.get('invoice_ids')
         return super(account_invoice_refund, self).compute_refund(cr, uid, ids, mode='refund', context=context)
 
+    def _get_description(self, cr, uid, context=None):
+        if context is None: context = {}
+        return context.get('description', '')
+
+    _defaults = {
+        'description': _get_description,
+    }
+
+
+
+
 account_invoice_refund()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
