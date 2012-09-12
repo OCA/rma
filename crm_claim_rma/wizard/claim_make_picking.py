@@ -24,6 +24,8 @@
 from osv import fields, osv
 import time
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+import netsvc
+
 
 class claim_make_picking(osv.osv_memory):
     _name='claim_make_picking.wizard'
@@ -70,6 +72,7 @@ class claim_make_picking(osv.osv_memory):
 
     # If "Create" button pressed
     def action_create_picking(self, cr, uid, ids, context=None):
+        picking_obj = self.pool.get('stock.picking')
         if context is None: context = {}
         view_obj = self.pool.get('ir.ui.view')
         if context.get('picking_type') in ['in', 'loss']:
@@ -98,7 +101,7 @@ class claim_make_picking(osv.osv_memory):
         claim = self.pool.get('crm.claim').browse(cr, uid, context['active_id'], context=context)
         partner_id = claim.partner_id.id
         # create picking
-        picking_id = self.pool.get('stock.picking').create(cr, uid, {
+        picking_id = picking_obj.create(cr, uid, {
                     'origin': claim.number,
                     'type': p_type,
                     'move_type': 'one', # direct
@@ -125,7 +128,7 @@ class claim_make_picking(osv.osv_memory):
                     'product_uom': wizard_claim_line.product_id.uom_id.id,
                     'address_id': claim.partner_address_id.id,
                     'prodlot_id': wizard_claim_line.prodlot_id.id,
-                    # 'tracking_id': 
+                    # 'tracking_id':
                     'picking_id': picking_id,
                     'state': 'draft',
                     'price_unit': wizard_claim_line.unit_sale_price,
@@ -135,6 +138,10 @@ class claim_make_picking(osv.osv_memory):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note': note,
                 })
+        wf_service = netsvc.LocalService("workflow")
+        if picking_id:
+            wf_service.trg_validate(uid, 'stock.picking', picking_id,'button_confirm', cr)
+            picking_obj.action_assign(cr, uid, [picking_id])
         return {
             'name': '%s' % name,
             'view_type': 'form',
