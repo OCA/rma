@@ -25,3 +25,4 @@ import wizard
 import crm_claim_rma
 import account_invoice
 import stock
+import res_company

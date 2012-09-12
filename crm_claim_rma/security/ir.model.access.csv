@@ -1,10 +1,7 @@
 "id","name","model_id","group_id","perm_read","perm_write","perm_create","perm_unlink"
 "access_substate_user","substate.substate.user","substate.substate","base.group_sale_salesman_all_leads","True","True","True",
 "access_claim_line_user","claim.line.user","claim.line","base.group_sale_salesman_all_leads","True","True","True",
-"access_exchange_user","product.exchange.user","product.exchange","base.group_sale_salesman_all_leads","True","True","True",
 "access_substate_manager","substate.substate.manager","substate.substate","base.group_sale_manager","True","True","True","True"
 "access_claim_line_manager","claim.line.manager","claim.line","base.group_sale_manager","True","True","True","True"
-"access_exchange_manager","product.exchange.manager","product.exchange","base.group_sale_manager","True","True","True","True"
 "access_substate_user","substate.substate.user","substate.substate","base.group_sale_salesman","True","True","True",
 "access_claim_line_user","claim.line.user","claim.line","base.group_sale_salesman","True","True","True",
-"access_exchange_user","product.exchange.user","product.exchange","base.group_sale_salesman","True","True","True",

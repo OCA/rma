@@ -6,16 +6,16 @@
             <field name="name">CRM Claim</field>
             <field name="code">crm.claim.rma</field>
         </record>
-        
+
         <record id="seq_claim" model="ir.sequence">
             <field name="name">CRM Claim</field>
             <field name="code">crm.claim.rma</field>
             <field eval="5" name="padding"/>
             <field name="prefix">RMA-%(year)s/</field>
         </record>
-                
+
         <!-- Claims Categories -->
-        
+
         <record model="crm.case.categ" id="categ_claim1">
             <field name="name">Factual Claims</field>
             <field name="section_id" ref="crm.section_sales_department"/>
@@ -33,11 +33,11 @@
             <field name="section_id" ref="crm.section_sales_department"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/> 
         </record>
-    
+
         <!--
         Case Category2
         -->
-        
+
         <record model="crm.case.resource.type" id="type_claim1">
             <field name="name">Corrective</field>
             <field name="section_id" ref="crm.section_sales_department"/>
@@ -47,11 +47,11 @@
             <field name="name">Preventive</field>
             <field name="section_id" ref="crm.section_sales_department"/>
         </record>
-    
+
         <!--
         Case Stage
         -->
-        
+
         <record model="crm.case.stage" id="stage_claim1">
             <field name="name">Accepted as Claim</field>
             <field name="sequence">1</field>
@@ -78,6 +78,47 @@
             <field name="name">Sales Department</field>
             <field name="code">Sales</field>
             <field name="stage_ids" eval="[(4, ref('stage_claim1')), (4, ref('stage_claim2')), (4, ref('stage_claim3')), (4, ref('stage_claim5'))]"/>
+        </record>
+
+
+        <!--
+        Default Values for : RMA Case
+        -->
+        <record id="case1" model="claim.rma.case">
+            <field name="name">No Inventory</field>
+        </record>
+        <record id="case2" model="claim.rma.case">
+            <field name="name">Customer Return</field>
+        </record>
+        <record id="case3" model="claim.rma.case">
+            <field name="name">Buyer Cancelled</field>
+        </record>
+        <record id="case4" model="claim.rma.case">
+            <field name="name">General Adjustement</field>
+        </record>
+        <record id="case5" model="claim.rma.case">
+            <field name="name">Could Not Ship</field>
+        </record>
+        <record id="case6" model="claim.rma.case">
+            <field name="name">Different Item</field>
+        </record>
+        <record id="case7" model="claim.rma.case">
+            <field name="name">Merchandise Not Received</field>
+        </record>
+        <record id="case8" model="claim.rma.case">
+            <field name="name">Merchandise Not As Described</field>
+        </record>
+        <record id="case9" model="claim.rma.case">
+            <field name="name">Pricing Error</field>
+        </record>
+        <record id="case10" model="claim.rma.case">
+            <field name="name">Shipping Address Undeliverable</field>
+        </record>
+        <record id="case11" model="claim.rma.case">
+            <field name="name">Delivered Late by Carrier</field>
+        </record>
+        <record id="case12" model="claim.rma.case">
+            <field name="name">Missed Fulfilment Promise</field>
         </record>
     </data>
 </openerp>

@@ -4,8 +4,8 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn							#
+# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau,     #
+# Emmanuel Samyn, Benoît Guillot                                        #
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -44,17 +44,21 @@ THIS MODULE REPLACES Akretion stock_rma from V6.0
     'depends': ['sale','stock','crm_claim','product_warranty'],
     'init_xml': ['rma_data.xml',],
     'update_xml': [
+                'wizard/claim_make_picking_view.xml',
                 'wizard/returned_lines_from_serial_wizard_view.xml',
-                'wizard/returned_lines_from_invoice_wizard_view.xml',
-                'wizard/picking_from_returned_lines_wizard_view.xml',
-                'wizard/refund_from_returned_lines_wizard_view.xml',
-                'wizard/exchange_from_returned_lines_wizard_view.xml',
-                'wizard/picking_from_exchange_lines_wizard_view.xml',
+#                'wizard/returned_lines_from_invoice_wizard_view.xml',
+#                'wizard/picking_from_returned_lines_wizard_view.xml',
+#                'wizard/refund_from_returned_lines_wizard_view.xml',
+#                'wizard/exchange_from_returned_lines_wizard_view.xml',
+#                'wizard/picking_from_exchange_lines_wizard_view.xml',
                 'wizard/get_empty_serial_view.xml',
                 'crm_claim_rma_view.xml',
                 'security/ir.model.access.csv',
                 'account_invoice_view.xml',
                 'stock_view.xml',
+                'res_company_view.xml',
+                'crm_claim_rma_data.xml',
+                'stock_data.xml',
  #       'report/crm_claim_report_view.xml',
     ],
     'demo_xml': [

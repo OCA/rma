@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 #########################################################################
 #                                                                       #
-#                                                                       #
-#########################################################################
-#                                                                       #
-# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn							                            #
-#                                                                       #
+# crm_claim_rma for OpenERP                                             #
+# Copyright (C) 2012  Akretion,                                         #
+#                     Benoît GUILLOT <benoit.guillot@akretion.com>      #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
 #the Free Software Foundation, either version 3 of the License, or      #
@@ -21,13 +18,15 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-import returned_lines_from_serial
-#import returned_lines_from_invoice
-#import picking_from_returned_lines
-#import refund_from_returned_lines
-#import exchange_from_returned_lines
-#import picking_from_exchange_lines
-import get_empty_serial
+from osv import fields, osv
 
-import claim_make_picking
-import account_invoice_refund
+class account_invoice_refund(osv.osv_memory):
+    _inherit = "account.invoice.refund"
+
+    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
+        context['active_ids'] = context['invoice_ids']
+        return super(account_invoice_refund, self).compute_refund(cr, uid, ids, mode='refund', context=context)
+
+account_invoice_refund()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

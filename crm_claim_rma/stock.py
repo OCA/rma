@@ -31,3 +31,14 @@ class stock_picking(osv.osv):
     _columns = {
         'claim_id': fields.many2one('crm.claim', 'Claim'),
     }
+
+class stock_warehouse(osv.osv):
+
+    _inherit = "stock.warehouse"
+    
+
+    _columns = {
+        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
+        'lot_carrier_loss_id': fields.many2one('stock.location', 'Location Carrier Loss'),
+        'lot_breakage_loss_id': fields.many2one('stock.location', 'Location Breakage Loss'),
+    }

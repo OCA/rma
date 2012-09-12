@@ -31,3 +31,15 @@ class account_invoice(osv.osv):
     _columns = {
         'claim_id': fields.many2one('crm.claim', 'Claim'),
     }
+
+    def _refund_cleanup_lines(self, cr, uid, lines, context=None):
+        new_lines = []
+        if context.get('claim_line_ids'):
+            for claim_line_id in context.get('claim_line_ids'):
+                claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity'], context=context)
+                invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
+                invoice_line_info['quantity'] = claim_info['product_returned_quantity']
+                new_lines.append(invoice_line_info)
+        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, new_lines, context=context)
+
+account_invoice()

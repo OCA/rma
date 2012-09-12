@@ -60,8 +60,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Select return lines to create">
-                <separator string="Select return lines to create					                                                           														" colspan="4"/>
-				<field name="claim_line_ids" nolabel="1" colspan="4"/>
+                <separator string="Select return lines to create" colspan="4"/>
+                <field name="claim_line_ids" nolabel="1" colspan="4"/>
                     <group col="4" colspan="2">
                         <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
                         <button name="action_create_returns" string="Create selected returns" icon='gtk-ok' type="object"/>
