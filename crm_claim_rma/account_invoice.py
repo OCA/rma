@@ -34,13 +34,18 @@ class account_invoice(osv.osv):
 
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
         new_lines = []
-        if context.get('claim_line_ids'):
+        if context.get('claim_line_ids') and lines and 'product_id' in lines[0]:#check if is an invoice_line
             for claim_line_id in context.get('claim_line_ids'):
                 claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity'], context=context)
                 invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
                 invoice_line_info['quantity'] = claim_info['product_returned_quantity']
                 new_lines.append(invoice_line_info)
             lines = new_lines
-        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
+        result = super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
+        return result
 
-account_invoice()
+    def _prepare_refund(self, cr, uid, *args, **kwargs):
+        result = super(account_invoice, self)._prepare_refund(cr, uid, *args, **kwargs)
+        if kwargs.get('context') and kwargs['context'].get('claim_id'):
+            result['claim_id'] = kwargs['context']['claim_id']
+        return result
