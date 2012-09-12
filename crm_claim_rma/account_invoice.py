@@ -26,7 +26,7 @@ from osv import fields, osv
 class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
-    
+
 
     _columns = {
         'claim_id': fields.many2one('crm.claim', 'Claim'),
@@ -40,6 +40,7 @@ class account_invoice(osv.osv):
                 invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
                 invoice_line_info['quantity'] = claim_info['product_returned_quantity']
                 new_lines.append(invoice_line_info)
-        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, new_lines, context=context)
+            lines = new_lines
+        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
 
 account_invoice()

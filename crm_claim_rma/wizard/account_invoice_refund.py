@@ -24,7 +24,9 @@ class account_invoice_refund(osv.osv_memory):
     _inherit = "account.invoice.refund"
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        context['active_ids'] = context['invoice_ids']
+        if context is None: context={}
+        if context.get('invoice_ids'):
+            context['active_ids'] = context.get('invoice_ids')
         return super(account_invoice_refund, self).compute_refund(cr, uid, ids, mode='refund', context=context)
 
 account_invoice_refund()
