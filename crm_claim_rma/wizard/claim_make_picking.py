@@ -45,8 +45,10 @@ class claim_make_picking(osv.osv_memory):
         warehouse_id = context['warehouse_id']
         if context.get('picking_type') == 'out':
             loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_stock_id'], context=context)['lot_stock_id'][0]
-        elif context.get('picking_type') in ['in', 'loss']:
-            loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_output_id'], context=context)['lot_output_id'][0]
+        elif context.get('picking_type') in ['in', 'loss'] and context.get('partner_id'):
+            loc_id = self.pool.get('res.partner').read(cr, uid, context['partner_id'],
+                                              ['property_stock_customer'],
+                                              context=context)['property_stock_customer']
         return loc_id
 
     # Get default destination location
@@ -54,7 +56,7 @@ class claim_make_picking(osv.osv_memory):
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context['warehouse_id']
         if context.get('picking_type') == 'out':
-            loc_id = self.pool.get('res.partner').read(cr, uid, context.get('customer_id'), ['property_stock_customer'], context=context)['property_stock_customer'][0]
+            loc_id = self.pool.get('res.partner').read(cr, uid, context.get('partner_id'), ['property_stock_customer'], context=context)['property_stock_customer'][0]
         elif context.get('picking_type') == 'in':
             loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_rma_id'], context=context)['lot_rma_id'][0]
         elif context.get('picking_type') == 'loss':
