@@ -39,8 +39,8 @@ Upgrade the standard crm_claim module to add :
 
 THIS MODULE REPLACES Akretion stock_rma from V6.0
     """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
+    'author': 'esamyn',
+    'website': 'http://www.erp-236.com',
     'depends': ['sale','stock','crm_claim','product_warranty'],
     'init_xml': ['rma_data.xml',],
     'update_xml': [

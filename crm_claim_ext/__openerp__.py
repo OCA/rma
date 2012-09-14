@@ -29,8 +29,8 @@
 Akretion - Emmanuel Samyn
 Add some fields to CRM claim : canal, spirit
     """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
+    'author': 'esamyn',
+    'website': 'http://www.erp-236.com',
     'depends': ['crm_claim'],
     'init_xml': [],
     'update_xml': [

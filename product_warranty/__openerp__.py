@@ -31,8 +31,8 @@ Extend the product warranty management with warranty details on product / suppli
 * supplier warranty duration
 * return product to company, supplier, brand, other
     """,
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com',
+    'author': 'esamyn',
+    'website': 'http://www.erp-236.com',
     'depends': ['product'],
     'init_xml': [],
     'update_xml': [
