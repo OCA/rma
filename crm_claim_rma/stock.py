@@ -30,6 +30,7 @@ class stock_picking(osv.osv):
 
     _columns = {
         'claim_id': fields.many2one('crm.claim', 'Claim'),
+        'claim_picking': fields.boolean('Picking from Claim'),
     }
 
 class stock_warehouse(osv.osv):
@@ -41,4 +42,5 @@ class stock_warehouse(osv.osv):
         'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
         'lot_carrier_loss_id': fields.many2one('stock.location', 'Location Carrier Loss'),
         'lot_breakage_loss_id': fields.many2one('stock.location', 'Location Breakage Loss'),
+        'lot_refurbish_id': fields.many2one('stock.location', 'Location Refurbish'),
     }

@@ -20,7 +20,8 @@
                     <field name="claim_line_ids" nolabel="1" colspan="4"/>
                     <group col="4" colspan="2">
                         <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
-                        <button name="action_create_picking" string="Create picking" icon='gtk-ok' type="object"/>
+                        <button name="action_create_picking" string="Create picking" 
+                                icon='gtk-ok' type="object"/>
                     </group>
                 </form>
             </field>

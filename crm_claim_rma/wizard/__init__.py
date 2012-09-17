@@ -31,3 +31,4 @@ import get_empty_serial
 
 import claim_make_picking
 import account_invoice_refund
+import claim_make_picking_from_picking

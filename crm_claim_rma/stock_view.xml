@@ -19,6 +19,21 @@
                 <data>
                     <xpath expr="/form/notebook/page[@string='Additional Info']/field[@name='type']" position="after">
                         <field name="claim_id" />
+                        <field name="claim_picking" invisible="1"/>
+                    </xpath>
+                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="before">
+                        <button name="%(action_stock_picking_from_claim_picking)d" 
+                                string="Product to stock" type="action" 
+                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
+                                                        ('claim_picking', '=', False)]}"/>
+                        <button name="%(action_loss_picking_from_claim_picking)d" 
+                                string="Product to Loss" type="action" 
+                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
+                                                        ('claim_picking', '=', False)]}"/>
+                        <button name="%(action_used_picking_from_claim_picking)d" 
+                                string="Product to refurbish stock" type="action" 
+                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
+                                                        ('claim_picking', '=', False)]}"/>
                     </xpath>
                 </data>
             </field>
@@ -51,6 +66,7 @@
                         <field name="lot_rma_id"/>
                         <field name="lot_carrier_loss_id"/>
                         <field name="lot_breakage_loss_id"/>
+                        <field name="lot_refurbish_id"/>
                     </xpath>
                 </data>
             </field>

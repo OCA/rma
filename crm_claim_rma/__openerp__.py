@@ -45,6 +45,7 @@ THIS MODULE REPLACES Akretion stock_rma from V6.0
     'init_xml': ['rma_data.xml',],
     'update_xml': [
                 'wizard/claim_make_picking_view.xml',
+                'wizard/claim_make_picking_from_picking_view.xml',
                 'wizard/returned_lines_from_serial_wizard_view.xml',
 #                'wizard/returned_lines_from_invoice_wizard_view.xml',
 #                'wizard/picking_from_returned_lines_wizard_view.xml',

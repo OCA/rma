@@ -41,8 +41,9 @@ class claim_make_picking(osv.osv_memory):
 
     # Get default source location
     def _get_source_loc(self, cr, uid, context):
+        if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
-        warehouse_id = context['warehouse_id']
+        warehouse_id = context.get('warehouse_id')
         if context.get('picking_type') == 'out':
             loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_stock_id'], context=context)['lot_stock_id'][0]
         elif context.get('picking_type') in ['in', 'loss'] and context.get('partner_id'):
@@ -53,8 +54,9 @@ class claim_make_picking(osv.osv_memory):
 
     # Get default destination location
     def _get_dest_loc(self, cr, uid, context):
+        if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
-        warehouse_id = context['warehouse_id']
+        warehouse_id = context.get('warehouse_id')
         if context.get('picking_type') == 'out':
             loc_id = self.pool.get('res.partner').read(cr, uid, context.get('partner_id'), ['property_stock_customer'], context=context)['property_stock_customer'][0]
         elif context.get('picking_type') == 'in':
@@ -81,6 +83,7 @@ class claim_make_picking(osv.osv_memory):
             p_type = 'in'
             view_xml_id = 'view_picking_in_form'
             view_name = 'stock.picking.in.form'
+            write_field = 'move_in_id'
             if context.get('picking_type') == 'in':
                 note = 'RMA picking in'
                 name = 'Customer picking in'
@@ -89,6 +92,7 @@ class claim_make_picking(osv.osv_memory):
                 note = 'RMA product loss'
         elif context.get('picking_type') == 'out':
             p_type = 'out'
+            write_field = 'move_out_id'
             note = 'RMA picking out'
             name = 'Customer picking out'
             view_xml_id = 'view_picking_in_form'
@@ -116,6 +120,7 @@ class claim_make_picking(osv.osv_memory):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note' : note,
                     'claim_id': claim.id,
+                    'claim_picking': True
                 })
         # Create picking lines
         for wizard_claim_line in wizard.claim_line_ids:
@@ -140,6 +145,7 @@ class claim_make_picking(osv.osv_memory):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note': note,
                 })
+            self.pool.get('claim.line').write(cr, uid, wizard_claim_line.id, {write_field: move_id}, context=context)
         wf_service = netsvc.LocalService("workflow")
         if picking_id:
             wf_service.trg_validate(uid, 'stock.picking', picking_id,'button_confirm', cr)

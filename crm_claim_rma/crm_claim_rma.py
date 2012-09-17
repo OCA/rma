@@ -100,7 +100,8 @@ class claim_line(osv.osv):
         'last_state_change': fields.date('Last change', help="To set the last state / substate change"),
         'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice Line', help='The invoice line related to the returned product'),
         'refund_line_id': fields.many2one('account.invoice.line', 'Refund Line', help='The refund line related to the returned product'),
-        'move_line_id': fields.many2one('stock.move', 'Move Line', help='The move line related to the returned product'),
+        'move_in_id': fields.many2one('stock.move', 'Move Line from picking in', help='The move line related to the returned product'),
+        'move_out_id': fields.many2one('stock.move', 'Move Line from picking out', help='The move line related to the returned product'),
     }
 
     _defaults = {
