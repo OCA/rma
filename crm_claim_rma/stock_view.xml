@@ -21,19 +21,18 @@
                         <field name="claim_id" />
                         <field name="claim_picking" invisible="1"/>
                     </xpath>
-                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="before">
-                        <button name="%(action_stock_picking_from_claim_picking)d" 
-                                string="Product to stock" type="action" 
-                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
-                                                        ('claim_picking', '=', False)]}"/>
-                        <button name="%(action_loss_picking_from_claim_picking)d" 
-                                string="Product to Loss" type="action" 
-                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
-                                                        ('claim_picking', '=', False)]}"/>
-                        <button name="%(action_used_picking_from_claim_picking)d" 
-                                string="Product to refurbish stock" type="action" 
-                                attrs="{'invisible':['|',('state','&lt;&gt;','done'),
-                                                        ('claim_picking', '=', False)]}"/>
+                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="replace">
+                        <button name="%(stock.act_stock_return_picking)d" string="Return Products" type="action" icon="gtk-execute" attrs="{'invisible':['|', ('state','&lt;&gt;','done'), ('claim_picking', '!=', False)]}"/>
+                        <group name="claim_picking_button" attrs="{'invisible':['|',
+                                                                ('state','&lt;&gt;','done'),
+                                                                ('claim_picking', '=', False)]}">
+                            <button name="%(action_stock_picking_from_claim_picking)d" 
+                                    string="Product to stock" type="action"/>
+                            <button name="%(action_loss_picking_from_claim_picking)d" 
+                                    string="Product to Loss" type="action"/>
+                            <button name="%(action_used_picking_from_claim_picking)d" 
+                                    string="Product to refurbish stock" type="action"/>
+                        </group>
                     </xpath>
                 </data>
             </field>
