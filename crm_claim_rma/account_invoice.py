@@ -32,6 +32,13 @@ class account_invoice(osv.osv):
         'claim_id': fields.many2one('crm.claim', 'Claim'),
     }
 
+    def _get_cleanup_fields(self, cr, uid, context=None):
+        fields = super(account_invoice, self)._get_cleanup_fields(cr, uid, context=context)
+        list_fields = list(fields)
+        list_fields.append('claim_line_id')
+        fields = tuple(list_fields)
+        return fields
+
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
         new_lines = []
         if context.get('claim_line_ids') and lines and 'product_id' in lines[0]:#check if is an invoice_line
@@ -39,6 +46,7 @@ class account_invoice(osv.osv):
                 claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity'], context=context)
                 invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
                 invoice_line_info['quantity'] = claim_info['product_returned_quantity']
+                invoice_line_info['claim_line_id'] = claim_line_id
                 new_lines.append(invoice_line_info)
             lines = new_lines
         result = super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
@@ -49,3 +57,17 @@ class account_invoice(osv.osv):
         if kwargs.get('context') and kwargs['context'].get('claim_id'):
             result['claim_id'] = kwargs['context']['claim_id']
         return result
+
+class account_invoice_line(osv.osv):
+
+    _inherit = "account.invoice.line"
+
+    def create(self, cr, uid, vals, context=None):
+        claim_line_id = False
+        if vals.get('claim_line_id'):
+            claim_line_id = vals['claim_line_id']
+            del vals['claim_line_id']
+        line_id = super(account_invoice_line, self).create(cr, uid, vals, context=context)
+        if claim_line_id:
+            self.pool.get('claim.line').write(cr, uid, claim_line_id, {'refund_line_id': line_id}, context=context)
+        return line_id

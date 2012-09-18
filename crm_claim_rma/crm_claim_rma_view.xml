@@ -223,38 +223,38 @@
                     <field name="invoice_id" colspan="1" on_change="onchange_invoice_id(invoice_id, context)" domain="[('partner_id','=',partner_id)]" />
                     <button name="%(action_create_return_serial)d" string="Mass return from serial/lot n°" states="draft,open" type="action" target="new"/>
                     <field name="claim_line_ids" nolabel="1" colspan="3"/>
-                    <group col="1" colspan="1">
-                        <separator string="Action" colspan="1"/>
-                        <button name="%(action_claim_picking_in)d"
-                                string="New picking IN" states="draft,open"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
+                </group>
+                <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
+                    <separator string="Action" colspan="4" />
+                    <button name="%(action_claim_picking_in)d"
+                            string="New picking IN" states="open"
+                            type="action" target="new"
+                            context="{'warehouse_id': warehouse_id,
+                                'partner_id': partner_id}"/>
 
 
-                        <button name="%(action_claim_picking_out)d"
-                                string="New picking OUT" states="draft,open"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
+                    <button name="%(action_claim_picking_out)d"
+                            string="New picking OUT" states="open"
+                            type="action" target="new"
+                            context="{'warehouse_id': warehouse_id,
+                                'partner_id': partner_id}"/>
 
-                        <button name="%(action_claim_picking_loss)d"
-                                string="New Product Loss" states="draft,open"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
+                    <button name="%(action_claim_picking_loss)d"
+                            string="New Product Loss" states="open"
+                            type="action" target="new"
+                            context="{'warehouse_id': warehouse_id,
+                                'partner_id': partner_id}"/>
 
 
-                        <button name="%(account.action_account_invoice_refund)d"
-                                type='action' string='New Refund'
-                                states='draft,open' icon="gtk-execute"
-                                context="{
-                                    'invoice_ids': [invoice_id],
-                                    'claim_line_ids': claim_line_ids,
-                                    'description': name,
-                                    'claim_id': id,
-                                    }"/>
-                    </group>
+                    <button name="%(account.action_account_invoice_refund)d"
+                            type='action' string='New Refund'
+                            states='open' icon="gtk-execute"
+                            context="{
+                                'invoice_ids': [invoice_id],
+                                'claim_line_ids': claim_line_ids,
+                                'description': name,
+                                'claim_id': id,
+                                }"/>
                 </group>
             </field>
         </field>

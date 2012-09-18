@@ -21,8 +21,11 @@
                         <field name="claim_id" />
                         <field name="claim_picking" invisible="1"/>
                     </xpath>
-                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="replace">
-                        <button name="%(stock.act_stock_return_picking)d" string="Return Products" type="action" icon="gtk-execute" attrs="{'invisible':['|', ('state','&lt;&gt;','done'), ('claim_picking', '!=', False)]}"/>
+                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="attributes">
+                        <attribute name="attrs">{'invisible':['|', ('state','&lt;&gt;','done'), ('claim_picking', '!=', False)]}</attribute>
+                        <attribute name="states"></attribute>
+                    </xpath>
+                    <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="after">
                         <group name="claim_picking_button" attrs="{'invisible':['|',
                                                                 ('state','&lt;&gt;','done'),
                                                                 ('claim_picking', '=', False)]}">
