@@ -339,7 +339,7 @@ class claim_rma_case(osv.osv):
     _description = "List of RMA cases"
 
     _columns = {
-        'name': fields.char('Description', size=64, required=True),
+        'name': fields.char('Description', size=64, required=True, translate=True),
     }
 
     _defaults = {
