@@ -25,6 +25,7 @@ from osv import fields, osv
 import time
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 import netsvc
+from tools.translate import _
 
 
 class claim_make_picking(osv.osv_memory):
@@ -37,7 +38,16 @@ class claim_make_picking(osv.osv_memory):
     }
 
     def _get_claim_lines(self, cr, uid, context):
-        return self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'], context=context)['claim_line_ids']
+        #TODO use custom states to show buttons of this wizard or not instead of raise an error
+        if context is None: context = {}
+        if context.get('picking_type') in ['in', 'loss']:
+            move_field = 'move_in_id'
+        elif context.get('picking_type') == 'out':
+            move_field = 'move_out_id'
+        line_ids =  self.pool.get('claim.line').search(cr, uid, [('claim_id', '=', context['active_id']), (move_field, '=', False)], context=context)
+        if not line_ids:
+            raise osv.except_osv(_('Error !'), _('A picking has already been created for this claim !'))
+        return line_ids
 
     # Get default source location
     def _get_source_loc(self, cr, uid, context):
@@ -79,12 +89,14 @@ class claim_make_picking(osv.osv_memory):
         picking_obj = self.pool.get('stock.picking')
         if context is None: context = {}
         view_obj = self.pool.get('ir.ui.view')
+        claim_picking = False
         if context.get('picking_type') in ['in', 'loss']:
             p_type = 'in'
             view_xml_id = 'view_picking_in_form'
             view_name = 'stock.picking.in.form'
             write_field = 'move_in_id'
             if context.get('picking_type') == 'in':
+                claim_picking = True
                 note = 'RMA picking in'
                 name = 'Customer picking in'
             elif context.get('picking_type') == 'loss':
@@ -120,7 +132,7 @@ class claim_make_picking(osv.osv_memory):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note' : note,
                     'claim_id': claim.id,
-                    'claim_picking': True
+                    'claim_picking': claim_picking
                 })
         # Create picking lines
         for wizard_claim_line in wizard.claim_line_ids:

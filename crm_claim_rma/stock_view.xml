@@ -21,9 +21,9 @@
                         <field name="claim_id" />
                         <field name="claim_picking" invisible="1"/>
                     </xpath>
+<!--                If we use crm_claim_rma we should not use the old return products anymore-->
                     <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="attributes">
-                        <attribute name="attrs">{'invisible':['|', ('state','&lt;&gt;','done'), ('claim_picking', '!=', False)]}</attribute>
-                        <attribute name="states"></attribute>
+                        <attribute name="invisible">1</attribute>
                     </xpath>
                     <xpath expr="/form/notebook/page[@string='General Information']/group/button[@string='Return Products']" position="after">
                         <group name="claim_picking_button" attrs="{'invisible':['|',
@@ -51,6 +51,10 @@
                 <data>
                     <xpath expr="/form/notebook/page[@string='Additional info']/field[@name='type']" position="after">
                         <field name="claim_id" />
+                    </xpath>
+<!--                If we use crm_claim_rma we should not use the old return products anymore-->
+                    <xpath expr="/form/notebook/page[@string='Products']/group/button[@string='Return Products']" position="attributes">
+                        <attribute name="invisible">1</attribute>
                     </xpath>
                 </data>
             </field>

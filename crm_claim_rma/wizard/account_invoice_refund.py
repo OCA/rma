@@ -31,7 +31,11 @@ class account_invoice_refund(osv.osv_memory):
 
     def _get_description(self, cr, uid, context=None):
         if context is None: context = {}
-        return context.get('description', '')
+        if context.get('description'):
+            description = self.pool.get('claim.rma.case').read(cr, uid, context.get('description'), ['name'], context=context)['name']
+        else:
+            description = ''
+        return description
 
     _defaults = {
         'description': _get_description,

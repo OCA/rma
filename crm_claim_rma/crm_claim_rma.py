@@ -269,7 +269,7 @@ class crm_claim(osv.osv):
         'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', help='Related invoice'),
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True),
-        'case_id': fields.many2one('claim.rma.case', 'Case'),
+        'name': fields.many2one('claim.rma.case', 'Claim Subject', size=128, required=True),
     }
     _defaults = {
         'number': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim'),
@@ -299,6 +299,18 @@ class crm_claim(osv.osv):
 #        result = act_obj.read(cr, uid, id, context=context)
 #        print 'result', result
 #        return result
+
+    def onchange_partner_address_id(self, cr, uid, ids, add, email=False):
+        res = super(crm_claim, self).onchange_partner_address_id(cr, uid, ids, add, email=email)
+        if add:
+            if not res['value']['email_from'] or not res['value']['partner_phone']:
+                address = self.pool.get('res.partner.address').browse(cr, uid, add)
+                for other_add in address.partner_id.address:
+                    if other_add.email and not res['value']['email_from']:
+                        res['value']['email_from'] = other_add.email
+                    if other_add.phone and not res['value']['partner_phone']:
+                        res['value']['partner_phone'] = other_add.phone
+        return res
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')

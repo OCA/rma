@@ -22,6 +22,7 @@
 #########################################################################
 
 from osv import fields, osv
+from tools.translate import _
 
 class account_invoice(osv.osv):
 
@@ -42,11 +43,15 @@ class account_invoice(osv.osv):
         new_lines = []
         if context.get('claim_line_ids') and lines and 'product_id' in lines[0]:#check if is an invoice_line
             for claim_line_id in context.get('claim_line_ids'):
-                claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity'], context=context)
-                invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
-                invoice_line_info['quantity'] = claim_info['product_returned_quantity']
-                invoice_line_info['claim_line_id'] = claim_line_id
-                new_lines.append(invoice_line_info)
+                claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity', 'refund_line_id'], context=context)
+                if not claim_info['refund_line_id']:
+                    invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
+                    invoice_line_info['quantity'] = claim_info['product_returned_quantity']
+                    invoice_line_info['claim_line_id'] = [claim_line_id[1]]
+                    new_lines.append(invoice_line_info)
+            if not new_lines:
+                #TODO use custom states to show button of this wizard or not instead of raise an error
+                raise osv.except_osv(_('Error !'), _('A refund has already been created for this claim !'))
             lines = new_lines
         result = super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
         return result

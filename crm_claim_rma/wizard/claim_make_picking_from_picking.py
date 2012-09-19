@@ -100,7 +100,6 @@ class claim_make_picking_from_picking(osv.osv_memory):
                     'location_dest_id': wizard.picking_line_dest_location.id,
                     'note' : note,
                     'claim_id': prev_picking.claim_id.id,
-                    'claim_picking': True
                 })
         # Create picking lines
         for wizard_picking_line in wizard.picking_line_ids:
