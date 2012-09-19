@@ -38,7 +38,7 @@ class account_invoice(osv.osv):
         return fields
 
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
-        if context is None ; context = {}
+        if context is None: context = {}
         new_lines = []
         if context.get('claim_line_ids') and lines and 'product_id' in lines[0]:#check if is an invoice_line
             for claim_line_id in context.get('claim_line_ids'):
