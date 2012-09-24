@@ -38,6 +38,11 @@ Upgrade the standard crm_claim module to add :
 * access to related customer data (orders, invoices, refunds, picking in/out)
 
 THIS MODULE REPLACES Akretion stock_rma from V6.0
+    
+WARNING : To use the module in V6.1 you need a refactor of the function refund
+in the module account from the addons. You can find the refactor at the revisions 6933 and 6934
+on this branch : https://code.launchpad.net/~akretion-team/openobject-addons/openobject-addons-61-akretion
+    
     """,
     'author': 'esamyn',
     'website': 'http://www.erp-236.com',
