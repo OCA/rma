@@ -24,6 +24,11 @@
             <field name="usage">internal</field>
             <field name="location_id" ref="stock.stock_location_company"/>
         </record>
+        <record id="stock_location_mistake_loss" model="stock.location">
+            <field name="name">Misstake Loss</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
         <!--
         Default Values for : Stock Warehouse
         -->

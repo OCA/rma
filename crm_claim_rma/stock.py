@@ -44,3 +44,17 @@ class stock_warehouse(osv.osv):
         'lot_breakage_loss_id': fields.many2one('stock.location', 'Location Breakage Loss'),
         'lot_refurbish_id': fields.many2one('stock.location', 'Location Refurbish'),
     }
+
+#This part concern the case of a wrong picking out. We need to create a new stock_move in a micking already open.
+#In order to don't have to confirm the stock_move we override the create and confirm it at the creation only for this case
+
+class stock_move(osv.osv):
+    
+    _inherit = "stock.move"
+
+    def create(self, cr, uid, vals, context=None):
+        move_id = super(stock_move, self).create(cr, uid, vals, context=context)
+        picking = self.pool.get('stock.picking').browse(cr, uid, vals['picking_id'], context=context)
+        if picking.claim_picking and picking.type == u'in':
+            move = self.write(cr, uid, move_id, {'state': 'confirmed'}, context=context)
+        return move_id
