@@ -98,13 +98,15 @@
             <field name="name"/>
             <separator string="Returned good" colspan="4"/>
             <group col="6" colspan="4">
-                <field name="name"/>
                 <field name="invoice_line_id"/> <!-- domain="[('type', '=', 'out_invoice')]" -->
                 <field name="product_id"/> 
                 <field name="prodlot_id"/>
                 <field name="product_returned_quantity"/>
                 <field name="unit_sale_price"/>
                 <field name="return_value"/>
+                <field name="refund_line_id"/>
+                <field name="move_in_id"/>
+                <field name="move_out_id"/>
             </group>
             <!-- button name="%(action_get_empty_serial)d" string="Get possible values for empty serial" states="draft,confirmed" type="action" target="new"/ -->
             <separator string="Problem" colspan="4"/>
