@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 09:24+0000\n"
-"PO-Revision-Date: 2012-09-27 09:24+0000\n"
-"Last-Translator: <Benoit Guillot>\n"
+"POT-Creation-Date: 2012-10-05 12:51+0000\n"
+"PO-Revision-Date: 2012-10-05 12:51+0000\n"
+"Last-Translator: <Benoît GUILLOT>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgstr "Adresse de retour des produits en réclamation"
 #. module: crm_claim_rma
 #: view:claim.line:0
 msgid "Draft and Open Claims"
-msgstr "Créer et ouvre réclamations"
+msgstr "Crée et ouvre réclamations"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
@@ -87,9 +87,9 @@ msgid "Claim short description"
 msgstr "Description courte de la réclamation"
 
 #. module: crm_claim_rma
-#: selection:claim.line,state:0
-msgid "Treated"
-msgstr "Traité"
+#: constraint:stock.move:0
+msgid "You can not move products from or to a location of the type view."
+msgstr "Vous ne pouvez pas déplacer des produits depuis ou vers un emplacement de type vue."
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
@@ -97,9 +97,14 @@ msgid "Company"
 msgstr "Société"
 
 #. module: crm_claim_rma
-#: field:claim.line,claim_descr:0
-msgid "Claim description"
-msgstr "Description de la réclamation"
+#: selection:claim.line,claim_origine:0
+#: selection:returned_lines_from_serial.wizard,claim_1:0
+#: selection:returned_lines_from_serial.wizard,claim_2:0
+#: selection:returned_lines_from_serial.wizard,claim_3:0
+#: selection:returned_lines_from_serial.wizard,claim_4:0
+#: selection:returned_lines_from_serial.wizard,claim_5:0
+msgid "Order cancellation"
+msgstr "Annulation de la commande"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_substates
@@ -109,17 +114,12 @@ msgstr "Sous-états des lignes de réclamations "
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0
 msgid "Last change"
-msgstr "Dernière modification
+msgstr "Dernière modification"
 
 #. module: crm_claim_rma
 #: help:claim.line,product_id:0
 msgid "Returned product"
 msgstr "Produit retourné"
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_refund_from_returned_lines_wizard
-msgid "Wizard to create an refund for selected product return lines"
-msgstr "Wizard de création d'un avoir pour les lignes de retour sélectionnées"
 
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:0
@@ -156,9 +156,9 @@ msgid "Claim"
 msgstr "Réclamation"
 
 #. module: crm_claim_rma
-#: model:crm.case.categ,name:crm_claim_rma.categ_claim1
-msgid "Factual Claims"
-msgstr "Réclamations factuelles"
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_line_substates
+msgid "Returned line substates"
+msgstr "Sous-états des lignes"
 
 #. module: crm_claim_rma
 #: help:claim.line,substate_id:0
@@ -166,14 +166,9 @@ msgid "Select a sub state to precise the standard state. Example 1: state = refu
 msgstr "Créer un sous-état pour préciser l'état standard. Exemple 1 : Etat = refusé; le sous-état peut être garantie expirée, pas de garantie, pas de problème,... . Exemple 2 : état = à créer; le sous-état peut être : à rembourser, à échanger, à réparer,..."
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case4
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim13
 msgid "General Adjustement"
 msgstr "Ajustement général"
-
-#. module: crm_claim_rma
-#: model:crm.case.resource.type,name:crm_claim_rma.type_claim2
-msgid "Preventive"
-msgstr "Préventive"
 
 #. module: crm_claim_rma
 #: field:claim.line,warranty_return_partner:0
@@ -192,9 +187,14 @@ msgid "If warranty has expired"
 msgstr "Si la garantie a expirée"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case2
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim11
 msgid "Customer Return"
 msgstr "Retour client"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
 
 #. module: crm_claim_rma
 #: help:claim.line,product_returned_quantity:0
@@ -266,13 +266,12 @@ msgstr "Nouvelle réception / perte de marchandise"
 #. module: crm_claim_rma
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr "Erreur ! Vous ne pouvez pas créer de sociétés récursives."
+msgstr "Erreur ! Vous ne pouvez pas créer de sociétés récursives"
 
 #. module: crm_claim_rma
-#: view:claim_make_picking.wizard:0
-#: view:claim_make_picking_from_picking.wizard:0
-msgid "Locations"
-msgstr "Emplacements"
+#: field:crm.claim,number:0
+msgid "Number"
+msgstr "Numéro"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
@@ -295,7 +294,7 @@ msgstr "Type de garantie"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_picking
 msgid "Picking List"
-msgstr "Bon de livraison"
+msgstr "Opération de manutention"
 
 #. module: crm_claim_rma
 #: field:crm.claim,warehouse_id:0
@@ -391,7 +390,7 @@ msgid "To link to the case.claim object"
 msgstr "A relier à l'objet case.claim"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case9
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim17
 msgid "Pricing Error"
 msgstr "Erreur d'établissement des prix"
 
@@ -408,7 +407,7 @@ msgstr "Enregistrer et nouveau"
 #. module: crm_claim_rma
 #: field:claim_make_picking_from_picking.wizard,picking_line_ids:0
 msgid "Picking lines"
-msgstr "Lines de picking"
+msgstr "Lignes de picking"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -488,21 +487,6 @@ msgid "Product to Loss"
 msgstr "Produit en perte"
 
 #. module: crm_claim_rma
-#: model:crm.case.stage,name:crm_claim_rma.stage_claim1
-msgid "Accepted as Claim"
-msgstr "Acceptée en tant que réclamation"
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_claim_rma_case
-msgid "List of RMA cases"
-msgstr "Liste des cas de RMA"
-
-#. module: crm_claim_rma
-#: model:crm.case.resource.type,name:crm_claim_rma.type_claim1
-msgid "Corrective"
-msgstr "Correction"
-
-#. module: crm_claim_rma
 #: field:returned_lines_from_serial.wizard,qty_4:0
 msgid "Quantity 4"
 msgstr "Quantité 4"
@@ -513,7 +497,7 @@ msgid "The invoice line related to the returned product"
 msgstr "La ligne de facture reliée au produit retourné"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case3
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim12
 msgid "Buyer Cancelled"
 msgstr "Annulation de l'acheteur"
 
@@ -540,7 +524,7 @@ msgid "Move Line from picking in"
 msgstr "Ligne de mouvement d'une réception"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case11
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim19
 msgid "Delivered Late by Carrier"
 msgstr "Livré en retard par le transporteur"
 
@@ -563,11 +547,6 @@ msgstr "Avoir client"
 #: help:claim.line,prodlot_id:0
 msgid "The serial/lot of the returned product"
 msgstr "N° de série/lot du produit retourné"
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
-msgid "Wizard to create pickings from claim lines"
-msgstr "Assistant pour créer des expédition/réceptions à partir des lignes de réclamation"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_in
@@ -596,19 +575,9 @@ msgid "Partner refunds out"
 msgstr "Avoir client"
 
 #. module: crm_claim_rma
-#: model:crm.case.categ,name:crm_claim_rma.categ_claim2
-msgid "Value Claims"
-msgstr "Réclamations sur la valeur"
-
-#. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
-#: selection:returned_lines_from_serial.wizard,claim_1:0
-#: selection:returned_lines_from_serial.wizard,claim_2:0
-#: selection:returned_lines_from_serial.wizard,claim_3:0
-#: selection:returned_lines_from_serial.wizard,claim_4:0
-#: selection:returned_lines_from_serial.wizard,claim_5:0
-msgid "Order cancellation"
-msgstr "Annulation de la commande"
+#: field:claim.line,claim_descr:0
+msgid "Claim description"
+msgstr "Description de la réclamation"
 
 #. module: crm_claim_rma
 #: view:crm.claim:0
@@ -639,7 +608,7 @@ msgstr "Reconditionnement"
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:0
 msgid "Select exchange lines to add in picking"
-msgstr "Seceltionner les lignes à ajouter dans l'expédition/réception"
+msgstr "Selectionner les lignes à ajouter dans l'expédition/réception"
 
 #. module: crm_claim_rma
 #: field:returned_lines_from_serial.wizard,prodlot_id_1:0
@@ -667,30 +636,19 @@ msgid "Serial / Lot Number 5"
 msgstr "N° de série/lot 5"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case5
-msgid "Could Not Ship"
-msgstr "Livraison impossible"
-
-#. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_claim_line
-#: model:ir.model,name:crm_claim_rma.model_temp_claim_line
 msgid "List of product to return"
 msgstr "Liste des produits à retourner"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case1
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim10
 msgid "No Inventory"
-msgstr "Plus d'inventaire"
+msgstr "Plus de stock"
 
 #. module: crm_claim_rma
 #: field:claim.line,unit_sale_price:0
 msgid "Unit sale price"
 msgstr "Prix de vente unitaire"
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_picking_out_from_exchange_lines_wizard
-msgid "Wizard to create a picking out from selected exchange lines"
-msgstr "Wizard pour créer une expédition à partir des lignes d'échange"
 
 #. module: crm_claim_rma
 #: view:crm.claim:0
@@ -703,7 +661,12 @@ msgid "The refund line related to the returned product"
 msgstr "Ligne d'avoir liée au produit retourné"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case10
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
+msgstr "Vous essayez d'affecter un lot qui n'est pas pour ce produit."
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim18
 msgid "Shipping Address Undeliverable"
 msgstr "Mauvaise adresse de livraison"
 
@@ -764,9 +727,9 @@ msgid "Brand manufacturer"
 msgstr "Marque du fabricant"
 
 #. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_picking_in_from_returned_lines_wizard
-msgid "Wizard to create a picking in from selected return lines"
-msgstr "Wizard pour créer une réception à partir des lignes de retour"
+#: model:stock.location,name:crm_claim_rma.stock_location_mistake_loss
+msgid "Mistake Loss"
+msgstr "Perte erreurs"
 
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
@@ -828,15 +791,15 @@ msgstr "Commandes partenaire"
 #. module: crm_claim_rma
 #: view:claim.line:0
 msgid "Problem"
-msgstr "Probléme"
+msgstr "Problème"
 
 #. module: crm_claim_rma
-#: model:crm.case.categ,name:crm_claim_rma.categ_claim3
-msgid "Policy Claims"
-msgstr "Réclamations de procédure"
+#: selection:claim.line,state:0
+msgid "Treated"
+msgstr "Traité"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case7
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim15
 msgid "Merchandise Not Received"
 msgstr "Marchandise non reçue"
 
@@ -890,7 +853,7 @@ msgid "Partner invoices out"
 msgstr "Facture client"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case12
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim20
 msgid "Missed Fulfilment Promise"
 msgstr "Promesse de traitement non tenue"
 
@@ -905,12 +868,17 @@ msgid "Serial / Lot Number 4"
 msgstr "N° de série/lot 4"
 
 #. module: crm_claim_rma
+#: model:crm.case.section,name:crm_claim_rma.section_after_sales_service
+msgid "After Sales Service"
+msgstr "Service-après-vente"
+
+#. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Received, to control"
 msgstr "Reçu, à contrôler"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case8
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim16
 msgid "Merchandise Not As Described"
 msgstr "Produit ne correspondant pas à sa description"
 
@@ -928,6 +896,11 @@ msgstr "Demande d'échange"
 #: model:ir.model,name:crm_claim_rma.model_substate_substate
 msgid "substate that precise a given state"
 msgstr "Sous état précisant l'état principal"
+
+#. module: crm_claim_rma
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
+msgstr "Vous devez affecter un lot de fabrication pour ce produit."
 
 #. module: crm_claim_rma
 #: view:returned_lines_from_serial.wizard:0
@@ -956,11 +929,6 @@ msgid "Picking from Claim"
 msgstr "Picking à partir d'une réclamation"
 
 #. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_picking_out_from_returned_lines_wizard
-msgid "Wizard to create a picking out from selected return lines"
-msgstr "Wizard pour créer une expédition à partir des lignes de retour sélectionnées"
-
-#. module: crm_claim_rma
 #: view:claim.line:0
 #: field:claim.line,product_id:0
 msgid "Product"
@@ -968,7 +936,6 @@ msgstr "Produit"
 
 #. module: crm_claim_rma
 #: field:claim.line,name:0
-#: field:claim.rma.case,name:0
 #: field:substate.substate,substate_descr:0
 msgid "Description"
 msgstr "Description"
@@ -994,30 +961,14 @@ msgid "Refused"
 msgstr "Refusé"
 
 #. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_invoice_invoice_wizard
-#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_invoice_line_wizard
-msgid "Wizard to create product return lines from invoice"
-msgstr "Wizard pour créer une facture à partir des lignes de retour"
-
-#. module: crm_claim_rma
 #: help:claim.line,unit_sale_price:0
 msgid "Unit sale price of the product. Auto filed if retrun done by invoice selection. BE CAREFUL AND CHECK the automatic value as don't take into account previous refounds, invoice discount, can be for 0 if product for free,..."
 msgstr "Prix de vente unitaire du produit. Remplis automatiquement si le retour est effectué avec la sélection de la facture. ETRE VIGILANT ET VERIFIER les valeurs automatiques récupérée différentes des précédents avoir, réductions sur la facture,..."
 
 #. module: crm_claim_rma
-#: field:crm.claim,number:0
-msgid "Number"
-msgstr "Numéro"
-
-#. module: crm_claim_rma
 #: field:stock.warehouse,lot_carrier_loss_id:0
 msgid "Location Carrier Loss"
 msgstr "Emplacement de perte transporteur"
-
-#. module: crm_claim_rma
-#: model:crm.case.stage,name:crm_claim_rma.stage_claim5
-msgid "Actions Defined"
-msgstr "Actions définies"
 
 #. module: crm_claim_rma
 #: selection:crm.claim,claim_type:0
@@ -1045,9 +996,10 @@ msgid "Partner picking OUT"
 msgstr "Expéditions partenaire"
 
 #. module: crm_claim_rma
-#: model:crm.case.stage,name:crm_claim_rma.stage_claim3
-msgid "Won't fix"
-msgstr "Ne sera pas résolu"
+#: view:claim_make_picking.wizard:0
+#: view:claim_make_picking_from_picking.wizard:0
+msgid "Locations"
+msgstr "Emplacements"
 
 #. module: crm_claim_rma
 #: field:claim.line,return_value:0
@@ -1077,11 +1029,6 @@ msgid "New picking OUT"
 msgstr "Nouvelle expédition"
 
 #. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_exchange_from_returned_lines_wizard
-msgid "Wizard to create an exchange from selected return lines"
-msgstr "Wizard pour créer un échange à partir des lignes sélectionnées"
-
-#. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.action_get_empty_serial
 msgid "action_get_empty_serial"
 msgstr "action_get_empty_serial"
@@ -1109,14 +1056,14 @@ msgid "Breakage Loss"
 msgstr "Perte casse"
 
 #. module: crm_claim_rma
-#: model:claim.rma.case,name:crm_claim_rma.case6
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim14
 msgid "Different Item"
 msgstr "Article différent"
 
 #. module: crm_claim_rma
-#: model:crm.case.stage,name:crm_claim_rma.stage_claim2
-msgid "Actions Done"
-msgstr "Actions terminées"
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
+msgid "Wizard to create pickings from claim lines"
+msgstr "Assistant pour créer des expédition/réceptions à partir des lignes de réclamation"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_claim_make_picking_from_picking_wizard
@@ -1134,17 +1081,7 @@ msgid "customer = from customer to company ; supplier = from company to supplier
 msgstr "client = du client vers l'entreprise ; fournisseur = de l'entreprise vers son fournisseur"
 
 #. module: crm_claim_rma
-#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_line_substates
-msgid "Returned line substates"
-msgstr "Sous-états des lignes"
-
-#. module: crm_claim_rma
 #: view:returned_lines_from_serial.wizard:0
 msgid "Serial / Lot Number"
 msgstr "N° de série/lot"
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_temp_exchange_line
-msgid "List of product to exchange"
-msgstr "Liste des produits à échanger"
 

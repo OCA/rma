@@ -269,7 +269,6 @@ class crm_claim(osv.osv):
         'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', help='Related invoice'),
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True),
-        'name': fields.many2one('claim.rma.case', 'Claim Subject', size=128, required=True),
     }
     _defaults = {
         'number': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim'),
@@ -333,19 +332,5 @@ class crm_claim(osv.osv):
         return  {'value' : {'claim_line_ids' : claim_lines}}
 
 crm_claim()
-
-class claim_rma_case(osv.osv):
-    _name = "claim.rma.case"
-    _description = "List of RMA cases"
-
-    _columns = {
-        'name': fields.char('Description', size=64, required=True, translate=True),
-    }
-
-    _defaults = {
-    } 
-
-claim_rma_case()
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
