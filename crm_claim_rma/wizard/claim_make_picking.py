@@ -40,14 +40,19 @@ class claim_make_picking(osv.osv_memory):
     def _get_claim_lines(self, cr, uid, context):
         #TODO use custom states to show buttons of this wizard or not instead of raise an error
         if context is None: context = {}
+        line_obj = self.pool.get('claim.line')
         if context.get('picking_type') in ['in', 'loss']:
             move_field = 'move_in_id'
         elif context.get('picking_type') == 'out':
             move_field = 'move_out_id'
-        line_ids =  self.pool.get('claim.line').search(cr, uid, [('claim_id', '=', context['active_id']), (move_field, '=', False)], context=context)
-        if not line_ids:
+        good_lines = []
+        line_ids =  line_obj.search(cr, uid, [('claim_id', '=', context['active_id'])], context=context)
+        for line in line_obj.browse(cr, uid, line_ids, context=context):
+            if not line[move_field] or line[move_field].state == 'cancel':
+                good_lines.append(line.id)
+        if not good_lines:
             raise osv.except_osv(_('Error !'), _('A picking has already been created for this claim !'))
-        return line_ids
+        return good_lines
 
     # Get default source location
     def _get_source_loc(self, cr, uid, context):
