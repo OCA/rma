@@ -54,7 +54,8 @@ class stock_move(osv.osv):
 
     def create(self, cr, uid, vals, context=None):
         move_id = super(stock_move, self).create(cr, uid, vals, context=context)
-        picking = self.pool.get('stock.picking').browse(cr, uid, vals['picking_id'], context=context)
-        if picking.claim_picking and picking.type == u'in':
-            move = self.write(cr, uid, move_id, {'state': 'confirmed'}, context=context)
+        if vals.get('picking_id'):
+            picking = self.pool.get('stock.picking').browse(cr, uid, vals['picking_id'], context=context)
+            if picking.claim_picking and picking.type == u'in':
+                move = self.write(cr, uid, move_id, {'state': 'confirmed'}, context=context)
         return move_id
