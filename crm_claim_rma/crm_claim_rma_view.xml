@@ -84,7 +84,10 @@
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
                     <field name="product_returned_quantity"/>
-                    <field name="claim_origine"/>    
+                    <field name="claim_origine"/>
+                    <field name="refund_line_id"/>
+                    <field name="move_in_id"/>
+                    <field name="move_out_id"/>
                 </tree>
             </field>
         </record>
