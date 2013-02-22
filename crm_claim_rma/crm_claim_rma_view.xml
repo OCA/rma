@@ -28,7 +28,6 @@
         <record id="view_crm_claim_lines_filter" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">claim.line</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Search Claims">
                     <filter icon="terp-check" string="Current" name="current"
@@ -75,7 +74,6 @@
         <record model="ir.ui.view" id="crm_claim_line_tree_view">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">claim.line</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree editable="top" string="Returned lines">
                     <field name="state"/>
@@ -133,10 +131,10 @@
 
 <!-- Picking follow -->
         <!-- TREE -->
+<!--
         <record model="ir.ui.view" id="crm_picking_follow_tree_view">
             <field name="name">CRM - Picking follow Tree</field>
             <field name="model">picking.follow</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Picking follows">
                     <field name="picking_id"/>
@@ -147,8 +145,9 @@
                 </tree>
             </field>
         </record>
-
+-->
         <!-- FORM -->
+<!--
         <record model="ir.ui.view" id="crm_picking_follow_form_view">
             <field name="name">CRM - Picking follow Form</field>
             <field name="model">picking.follow</field>
@@ -162,7 +161,7 @@
                 </form>
             </field>
         </record>
-
+-->
 <!-- PRODUCT EXCHANGE -->
     <!-- TREE -->
 <!--    <record model="ir.ui.view" id="crm_product_exchange_tree_view">-->
@@ -218,10 +217,16 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
+            <page string="Follow Up" position="after">
+                <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>
+                <field name="picking_ids" colspan="4" nolabel="1" readonly="1"/>
+	    </page>
+<!--                
             <xpath expr="/form/group/notebook/page[@string='Communication &amp; History']/field" position="after">
                 <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>
                 <field name="picking_ids" colspan="4" nolabel="1" readonly="1"/>
             </xpath>
+-->
             <field name="description" position="after">
                 <group name="Product Return" colspan="4">
                     <separator string="Product Return" colspan="4"/>

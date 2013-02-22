@@ -10,7 +10,6 @@
         <record id="view_claim_picking_from_picking" model="ir.ui.view">
             <field name="name">claim_picking</field>
             <field name="model">claim_make_picking_from_picking.wizard</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Select lines to add in picking">
                     <separator string="Locations" colspan="4"/>
