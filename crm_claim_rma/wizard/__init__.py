@@ -4,8 +4,8 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn							                            #
+# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau,     #
+# Emmanuel Samyn                                                        #
 #                                                                       #
 #This program is free software: you can redistribute it and/or modify   #
 #it under the terms of the GNU General Public License as published by   #
@@ -22,13 +22,7 @@
 #########################################################################
 
 import returned_lines_from_serial
-#import returned_lines_from_invoice
-#import picking_from_returned_lines
-#import refund_from_returned_lines
-#import exchange_from_returned_lines
-#import picking_from_exchange_lines
 import get_empty_serial
-
 import claim_make_picking
 import account_invoice_refund
 import claim_make_picking_from_picking

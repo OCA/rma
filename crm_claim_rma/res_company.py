@@ -21,13 +21,18 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 
-class res_company(osv.osv):
+
+class res_company(orm.Model):
     _inherit = "res.company"
 
     _columns = {
-        'crm_return_address_id': fields.many2one('res.partner.address', 'Crm return address', help="Default address where the customers has to send back the returned product in a crm claim. If empty the address is the company address"),
+        'crm_return_address_id': fields.many2one('res.partner.address',
+                                                 'Crm return address',
+                                                 help="Default address where the "
+                                                 "customers has to send back the "
+                                                 "returned product in a crm claim. "
+                                                 "If empty the address is the company address"),
     }
 
-res_company()

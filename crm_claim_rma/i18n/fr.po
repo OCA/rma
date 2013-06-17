@@ -124,8 +124,8 @@ msgstr "Produit retourné"
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:0
 #: view:claim_make_picking_from_picking.wizard:0
-msgid "Create picking"
-msgstr "Créer expédition/réception"
+msgid "Validate"
+msgstr "Valider"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
@@ -607,8 +607,8 @@ msgstr "Reconditionnement"
 
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:0
-msgid "Select exchange lines to add in picking"
-msgstr "Selectionner les lignes à ajouter dans l'expédition/réception"
+msgid "Select exchange lines to treat (don't modify them, do it in the picking)"
+msgstr "Selectionner les lignes à traiter (ne pas les modifer ici, le faire dans l'expédition/réception)"
 
 #. module: crm_claim_rma
 #: field:returned_lines_from_serial.wizard,prodlot_id_1:0

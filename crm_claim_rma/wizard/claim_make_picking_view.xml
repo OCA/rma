@@ -12,15 +12,20 @@
             <field name="model">claim_make_picking.wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Select exchange lines to add in picking">
+                <form string="Select exchange lines to treat (don't modify them, do it in the picking)">
                     <separator string="Locations" colspan="4"/>
                     <field name="claim_line_source_location" nolabel="1" />
                     <field name="claim_line_dest_location" nolabel="1" />
-                    <separator string="Select lines for picking" colspan="4"/>
-                    <field name="claim_line_ids" nolabel="1" colspan="4"/>
+                    <separator string="Select exchange lines to treat (don't modify them, do it in the picking)" colspan="4"/>
+                    <field name="claim_line_ids" nolabel="1" colspan="4"
+                           domain="[('claim_id', '=', context.get('claim_id'))]"/>
                     <group col="4" colspan="2">
-                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
-                        <button name="action_create_picking" string="Create picking" 
+                        <button special="cancel" string="Cancel"
+                                name="action_cancel"
+                                type="object"
+                                icon='gtk-cancel'/>
+                        <button name="action_create_picking"
+                                string="Validate"
                                 icon='gtk-ok' type="object"/>
                     </group>
                 </form>
