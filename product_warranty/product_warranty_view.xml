@@ -61,7 +61,7 @@
         </record>
         
         <menuitem action="product_return_instructions_action"
-            groups="base.group_extended"
+            groups="base.group_no_one"
             id="menu_product_return_instructions_action"
             parent="product.prod_config_main" sequence="3"/>        
 <!-- supplier info -->
