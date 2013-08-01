@@ -14,10 +14,9 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form" />
             <field eval="16" name="priority"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="/form/notebook/page[@string='Other Info']/field[@name='origin']" position="after">
+                    <xpath expr="/form/sheet/notebook/page[@string='Other Info']/group/group/field[@name='origin']" position="after">
                         <field name="claim_id" attrs="{'invisible':[('type','!=','out_refund')]}"/>
                     </xpath>
                 </data>

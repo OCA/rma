@@ -27,7 +27,7 @@ class res_company(osv.osv):
     _inherit = "res.company"
 
     _columns = {
-        'crm_return_address_id': fields.many2one('res.partner.address', 'Crm return address', help="Default address where the customers has to send back the returned product in a crm claim. If empty the address is the company address"),
+        'crm_return_address_id': fields.many2one('res.partner', 'Crm return address', help="Default address where the customers has to send back the returned product in a crm claim. If empty the address is the company address"),
     }
 
 res_company()

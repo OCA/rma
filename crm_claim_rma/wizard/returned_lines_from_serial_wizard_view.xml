@@ -27,7 +27,6 @@
         <record id="view_create_return_serial_form" model="ir.ui.view">
             <field name="name">returned_lines_from_serial_wiew</field>
             <field name="model">returned_lines_from_serial.wizard</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Select serial numbers to create">
 					<group col="3" colspan="4">
