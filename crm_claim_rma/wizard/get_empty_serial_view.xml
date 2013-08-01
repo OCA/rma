@@ -27,7 +27,6 @@
         <record id="view_get_empty_serial" model="ir.ui.view">
             <field name="name">get_empty_serial</field>
             <field name="model">get_empty_serial.wizard</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Select invoice">
 					<!-- field name="prodlot_ids"/ --> <!-- domain="[('partner_id','=',partner_id)]"/ -->

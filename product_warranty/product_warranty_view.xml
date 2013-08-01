@@ -26,7 +26,6 @@
         <record model="ir.ui.view" id="product_return_instructions_tree_view">
             <field name="name">product.return.instructions.tree</field>
             <field name="model">return.instruction</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Return instructions">
                     <field name="name"/>
@@ -40,7 +39,6 @@
         <record model="ir.ui.view" id="product_return_instructions_form_view">
             <field name="name">product.return.instructions.form</field>
             <field name="model">return.instruction</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Return instructions">
                     <field name="name"/>
@@ -53,7 +51,6 @@
 
         <record id="product_return_instructions_action" model="ir.actions.act_window">
             <field name="name">Products return instructions</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">return.instruction</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -70,7 +67,6 @@
             <field name="name">product.supplierinfo.warranty.tree</field>
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <field position="after" name="delay">
                     <field name="warranty_duration"/>
@@ -87,7 +83,6 @@
             <field name="name">product.supplierinfo.warranty.form</field>
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <field position="after" name="delay">
                     <field name="warranty_duration"/>

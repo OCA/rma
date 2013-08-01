@@ -88,7 +88,7 @@ class claim_line(osv.osv):
         'guarantee_limit': fields.date('Warranty limit', help="The warranty limit is computed as: invoice date + warranty defined on selected product.", readonly=True),
         'warning': fields.char('Warranty', size=64, readonly=True,help="If warranty has expired"), #select=1,
         'warranty_type': fields.char('Warranty type', size=64, readonly=True,help="from product form"),
-        "warranty_return_partner" : fields.many2one('res.partner.address', 'Warranty return',help="Where the customer has to send back the product(s)"),        
+        "warranty_return_partner" : fields.many2one('res.partner', 'Warranty return',help="Where the customer has to send back the product(s)"),        
         'claim_id': fields.many2one('crm.claim', 'Related claim',help="To link to the case.claim object"),
         'state' : fields.selection([('draft','Draft'),
                                     ('refused','Refused'),
@@ -303,7 +303,7 @@ class crm_claim(osv.osv):
         res = super(crm_claim, self).onchange_partner_address_id(cr, uid, ids, add, email=email)
         if add:
             if not res['value']['email_from'] or not res['value']['partner_phone']:
-                address = self.pool.get('res.partner.address').browse(cr, uid, add)
+                address = self.pool.get('res.partner').browse(cr, uid, add)
                 for other_add in address.partner_id.address:
                     if other_add.email and not res['value']['email_from']:
                         res['value']['email_from'] = other_add.email
