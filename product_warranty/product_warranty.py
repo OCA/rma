@@ -59,7 +59,7 @@ class product_supplierinfo(osv.osv):
         # Method to return the partner delivery address or if none, the default address
         # dedicated_delivery_address stand for the case a new type of address more particularly dedicated to return delivery would be implemented.
         result ={}
-        address_obj = self.pool.get('res.partner.address')
+        address_obj = self.pool.get('res.partner')
         for supplier_info in self.browse(cr, uid, ids, context=context):
             result[supplier_info.id] = {}
             address_id = False
@@ -73,14 +73,17 @@ class product_supplierinfo(osv.osv):
                     partner_id = supplier_info.product_id.product_brand_id.partner_id.id
                 else:
                     partner_id = supplier_info.company_id.partner_id.id
-                address_id = address_obj.search(cr, uid, [('partner_id', '=', partner_id), ('type', 'like', 'dedicated_delivery')], context=context)
-                if not address_id:
-                    address_id = address_obj.search(cr, uid, [('partner_id','=', partner_id), ('type','like','delivery')], context=context)
-                    if not address_id:
-                        address_id = address_obj.search(cr, uid, [('partner_id', '=', partner_id), ('type', 'like', 'default')], context=context)
-                if not address_id:
-                    raise osv.except_osv(_('Error !'), _('No address define for the %s!') % return_partner)
-                result[supplier_info.id] = address_id[0]
+# TODO : Find the partner with a delivery address, child of the partner
+# v6.1 code with res.partner.address :
+#                address_id = address_obj.search(cr, uid, [('partner_id', '=', partner_id), ('type', 'like', 'dedicated_delivery')], context=context)
+#                if not address_id:
+#                    address_id = address_obj.search(cr, uid, [('partner_id','=', partner_id), ('type','like','delivery')], context=context)
+#                    if not address_id:
+#                        address_id = address_obj.search(cr, uid, [('partner_id', '=', partner_id), ('type', 'like', 'default')], context=context)
+#                if not address_id:
+#                    raise osv.except_osv(_('Error !'), _('No address define for the %s!') % return_partner)
+#                #result[supplier_info.id] = address_id[0]
+                result[supplier_info.id] = partner_id
         return result
 
     _columns = {
@@ -88,7 +91,7 @@ class product_supplierinfo(osv.osv):
         "warranty_return_partner" :  fields.selection(get_warranty_return_partner, 'Warrantee return', size=128, help="Who is in charge of the warranty return treatment toward the end customer. Company will use the current compagny delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty"),
         'return_instructions': fields.many2one('return.instruction', 'Instructions',help="Instructions for product return"),
         'active_supplier' : fields.boolean('Active supplier', help=""),
-        'warranty_return_address': fields.function(_get_warranty_return_address, type='many2one', relation='res.partner.address', string="Warranty return address"),
+        'warranty_return_address': fields.function(_get_warranty_return_address, type='many2one', relation='res.partner', string="Warranty return address"),
         }
     _defaults = {
         'warranty_return_partner': lambda *a: 'company',
