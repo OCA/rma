@@ -93,7 +93,7 @@ class claim_make_picking_from_picking(osv.osv_memory):
                     'move_type': 'one', # direct
                     'state': 'draft',
                     'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-                    'address_id': prev_picking.address_id.id,
+                    'partner_id': prev_picking.partner_id.id,
                     'invoice_state': "none",
                     'company_id': prev_picking.company_id.id,
                     'location_id': wizard.picking_line_source_location.id,
@@ -112,7 +112,7 @@ class claim_make_picking_from_picking(osv.osv_memory):
                     'product_id': wizard_picking_line.product_id.id,
                     'product_qty': wizard_picking_line.product_qty,
                     'product_uom': wizard_picking_line.product_uom.id,
-                    'address_id': prev_picking.address_id.id,
+                    'partner_id': prev_picking.partner_id.id,
                     'prodlot_id': wizard_picking_line.prodlot_id.id,
                     # 'tracking_id':
                     'picking_id': picking_id,

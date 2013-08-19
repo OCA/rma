@@ -116,7 +116,6 @@ class claim_make_picking(osv.osv_memory):
             view_name = 'stock.picking.in.form'
         view_id = view_obj.search(cr, uid, [
                                             ('xml_id', '=', view_xml_id),
-                                            ('model', '=', 'stock.picking'),
                                             ('type', '=', 'form'),
                                             ('name', '=', view_name)
                                             ], context=context)[0]
@@ -130,7 +129,7 @@ class claim_make_picking(osv.osv_memory):
                     'move_type': 'one', # direct
                     'state': 'draft',
                     'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-                    'address_id': claim.partner_address_id.id,
+                    'partner_id': claim.partner_id.id,
                     'invoice_state': "none",
                     'company_id': claim.company_id.id,
                     'location_id': wizard.claim_line_source_location.id,
@@ -150,7 +149,7 @@ class claim_make_picking(osv.osv_memory):
                     'product_id': wizard_claim_line.product_id.id,
                     'product_qty': wizard_claim_line.product_returned_quantity,
                     'product_uom': wizard_claim_line.product_id.uom_id.id,
-                    'address_id': claim.partner_address_id.id,
+                    'partner_id': claim.partner_id.id,
                     'prodlot_id': wizard_claim_line.prodlot_id.id,
                     # 'tracking_id':
                     'picking_id': picking_id,
