@@ -20,11 +20,10 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
+from openerp.osv import orm, fields
 from tools.translate import _
 
-#=====
-class return_instruction(osv.osv):
+class return_instruction(orm.Model):
     _name = "return.instruction"
     _description = "Instructions for product return"
     _columns = {
@@ -32,10 +31,8 @@ class return_instruction(osv.osv):
         'instructions' : fields.text('Instructions', help="Instructions for product return"),
         'is_default' : fields.boolean('Is default', help="If is default, will be use to set the default value in supplier infos. Be careful to have only one default"),
         }
-return_instruction()
 
-#=====
-class product_supplierinfo(osv.osv):
+class product_supplierinfo(orm.Model):
     _inherit = "product.supplierinfo"
 
     def get_warranty_return_partner(self, cr, uid, context=None):
@@ -48,11 +45,11 @@ class product_supplierinfo(osv.osv):
         return result
 
     # Get selected lines to add to exchange
-    def _get_default_instructions(self, cr, uid,context):
+    def _get_default_instructions(self, cr, uid, context=None):
         instruction_ids = self.pool.get('return.instruction').search(cr, uid, [('is_default','=','FALSE')])
         if instruction_ids:
             return instruction_ids[0]
-            # TO DO f(supplier) + other.
+            # TODO f(supplier) + other.
         return False
 
     def _get_warranty_return_address(self, cr, uid, ids, field_names, arg, context=None):
@@ -98,6 +95,5 @@ class product_supplierinfo(osv.osv):
         'return_instructions': _get_default_instructions,
     }
 
-product_supplierinfo()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
