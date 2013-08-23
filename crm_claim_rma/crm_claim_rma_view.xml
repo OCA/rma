@@ -323,15 +323,17 @@
         res_model="account.invoice" 
         src_model="crm.claim"/> 
 <!-- Right side link to picking in --> 
-        <act_window  
-        domain="[('type', '=', 'in'),('partner_id', 'in', [partner_id])]"
+        <act_window
+        context="{'search_default_partner_id': [partner_id]}"
+        domain="[('type', '=', 'in')]"
         id="act_crm_claim_rma_picking_in" 
         name="Partner picking IN" 
         res_model="stock.picking" 
         src_model="crm.claim"/>  
 <!-- Right side link to picking out -->
         <act_window 
-        domain="[('type', '=', 'out'),('partner_id', 'in', [partner_id])]"
+        context="{'search_default_partner_id': [partner_id]}"
+        domain="[('type', '=', 'out')]"
         id="act_crm_claim_rma_picking_out" 
         name="Partner picking OUT" 
         res_model="stock.picking" 

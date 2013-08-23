@@ -21,7 +21,7 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 from crm import crm
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -29,8 +29,8 @@ import time
 from tools.translate import _
 from tools import DEFAULT_SERVER_DATE_FORMAT
 
-#=====     TO REFACTORED IN A GENERIC MODULE 
-class substate_substate(osv.osv): 
+#TODO: REFACTOR IN A GENERIC MODULE 
+class substate_substate(orm.Model): 
     """
     To precise a state (state=refused; substates= reason 1, 2,...)
     """
@@ -41,10 +41,8 @@ class substate_substate(osv.osv):
         'substate_descr' : fields.text('Description', help="To give more information about the sub state"), 
         # ADD OBJECT TO FILTER
         }
-substate_substate()
 
-#=====
-class claim_line(osv.osv):
+class claim_line(orm.Model):
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
@@ -52,21 +50,14 @@ class claim_line(osv.osv):
     _description = "List of product to return"
         
     # Method to calculate total amount of the line : qty*UP
-    def _line_total_amount(self, cr, uid, ids, field_name, arg,context):
+    def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for line in self.browse(cr,uid,ids):            
             res[line.id] = line.unit_sale_price*line.product_returned_quantity
         return res 
         
-#    def _get_claim_seq(self, cr, uid, ids, field_name, arg,context):
-#        res = {}
-#        for line in self.browse(cr,uid,ids):            
-#            res[line.id] = line.claim_id.sequence
-#        return res          
-                
     _columns = {
         'name': fields.char('Description', size=64,required=True),
-#        'name': fields.function(_get_claim_seq, method=True, string='Claim n°', type='char', size=64,store=True),
         'claim_origine': fields.selection([('none','Not specified'),
                                     ('legal','Legal retractation'),
                                     ('cancellation','Order cancellation'),
@@ -76,17 +67,14 @@ class claim_line(osv.osv):
                                     ('lost','Lost during transport'),
                                     ('other','Other')], 'Claim Subject', required=True, help="To describe the line product problem"),
         'claim_descr' : fields.text('Claim description', help="More precise description of the problem"),  
-#use the invoice line instead of the invoice
-#        'invoice_id': fields.many2one('account.invoice', 'Invoice',help="The invoice related to the returned product"),
-        
         'product_id': fields.many2one('product.product', 'Product',help="Returned product"),
         'product_returned_quantity' : fields.float('Quantity', digits=(12,2), help="Quantity of product returned"),
         'unit_sale_price' : fields.float('Unit sale price', digits=(12,2), help="Unit sale price of the product. Auto filed if retrun done by invoice selection. BE CAREFUL AND CHECK the automatic value as don't take into account previous refounds, invoice discount, can be for 0 if product for free,..."),
         'return_value' : fields.function(_line_total_amount, method=True, string='Total return', type='float', help="Quantity returned * Unit sold price",),
         'prodlot_id': fields.many2one('stock.production.lot', 'Serial/Lot n°',help="The serial/lot of the returned product"),
-        'applicable_guarantee': fields.selection([('us','Company'),('supplier','Supplier'),('brand','Brand manufacturer')], 'Warranty type'),# METTRE CHAMP FONCTION; type supplier might generate an auto draft forward to the supplier
+        'applicable_guarantee': fields.selection([('us','Company'),('supplier','Supplier'),('brand','Brand manufacturer')], 'Warranty type'),# TODO: Replace with function field. type supplier might generate an auto draft forward to the supplier
         'guarantee_limit': fields.date('Warranty limit', help="The warranty limit is computed as: invoice date + warranty defined on selected product.", readonly=True),
-        'warning': fields.char('Warranty', size=64, readonly=True,help="If warranty has expired"), #select=1,
+        'warning': fields.char('Warranty', size=64, readonly=True,help="If warranty has expired"),
         'warranty_type': fields.char('Warranty type', size=64, readonly=True,help="from product form"),
         "warranty_return_partner" : fields.many2one('res.partner', 'Warranty return',help="Where the customer has to send back the product(s)"),        
         'claim_id': fields.many2one('crm.claim', 'Related claim',help="To link to the case.claim object"),
@@ -110,13 +98,13 @@ class claim_line(osv.osv):
     } 
 
     # Method to calculate warranty limit
-    def set_warranty_limit(self, cr, uid, ids, context, claim_line):
+    def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
         if date_invoice:
             warning = "Valid"
             if claim_line.claim_id.claim_type == 'supplier':
                 if claim_line.prodlot_id :
-                    limit = (datetime.strptime(date_invoice, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(months=int(claim_line.product_id.seller_ids[0].warranty_duration))).strftime(DEFAULT_SERVER_DATE_FORMAT) # TO BE IMPLEMENTED !!!
+                    limit = (datetime.strptime(date_invoice, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(months=int(claim_line.product_id.seller_ids[0].warranty_duration))).strftime(DEFAULT_SERVER_DATE_FORMAT) # TODO: To be implemented
                 else :
                     limit = (datetime.strptime(date_invoice, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(months=int(claim_line.product_id.seller_ids[0].warranty_duration))).strftime(DEFAULT_SERVER_DATE_FORMAT) 
             else :
@@ -132,7 +120,7 @@ class claim_line(osv.osv):
         return True
 
     # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids, context, claim_line):
+    def set_warranty_return_address(self, cr, uid, ids, claim_line, context=None):
         return_address = None
         warranty_type = 'company'
         seller = claim_line.product_id.seller_info_id
@@ -177,76 +165,18 @@ class claim_line(osv.osv):
         return True
                
     # Method to calculate warranty limit and validity
-    def set_warranty(self, cr, uid, ids,context=None):
+    def set_warranty(self, cr, uid, ids, context=None):
         for claim_line in self.browse(cr, uid, ids, context=context):
             if claim_line.product_id and claim_line.invoice_line_id:
-                self.set_warranty_limit(cr, uid, ids, context, claim_line)
-                self.set_warranty_return_address(cr, uid, ids, context, claim_line)
+                self.set_warranty_limit(cr, uid, ids, claim_line, context)
+                self.set_warranty_return_address(cr, uid, ids, claim_line, context)
             else:
                 raise osv.except_osv(_('Error !'), _('PLEASE SET PRODUCT & INVOICE!'))
         return True 
 
-#TODO add the option split the claim_line in order to manage the same product separately
+#TODO add the option to split the claim_line in order to manage the same product separately
 
-claim_line()
-
-#===== deprecated everything is based on the claim_line so product_exchange is useless
-#class product_exchange(osv.osv): 
-#    """
-#    Class to manage product exchanges history
-#    """
-#    _name = "product.exchange"
-#    _description = "exchange history line"
-#    
-#    # Method to calculate total amount of the line : qty*UP
-#    def total_amount_returned(self, cr, uid, ids, field_name, arg,context):
-#        res = {}
-#        for line in self.browse(cr,uid,ids):            
-#            res[line.id] = line.returned_unit_sale_price*line.returned_product_qty
-#        return res 
-
-#    # Method to calculate total amount of the line : qty*UP
-#    def total_amount_replacement(self, cr, uid, ids, field_name, arg,context):
-#        res = {}
-#        for line in self.browse(cr,uid,ids):            
-#            res[line.id] = line.replacement_unit_sale_price*line.replacement_product_qty
-#        return res 
-
-#    # Method to get the replacement product unit price
-#    def get_replacement_price(self, cr, uid, ids, field_name, arg,context):
-#        res = {}
-#        for line in self.browse(cr,uid,ids):            
-#            res[line.id] = line.replacement_product.list_price
-#        return res 
-#                        
-#    _columns = {
-#        'name': fields.char('Comment', size=128, required=True),
-#        'exchange_send_date' : fields.date('Exchange date'),
-#        'returned_product' : fields.many2one('product.product', 'Returned product', required=True), # ADD FILTER ON RETURNED PROD
-#        'returned_product_serial' : fields.many2one('stock.production.lot', 'Returned serial/Lot n°'),
-#        'returned_product_qty' : fields.float('Returned quantity', digits=(12,2), help="Quantity of product returned"),
-#        'replacement_product' : fields.many2one('product.product', 'Replacement product', required=True), 
-#        'replacement_product_serial' : fields.many2one('stock.production.lot', 'Replacement serial/Lot n°'),
-#        'replacement_product_qty' : fields.float('Replacement quantity', digits=(12,2), help="Quantity of product replaced"),
-#        'claim_return_id' : fields.many2one('crm.claim', 'Related claim'), # To link to the case.claim object  
-#        'selected' : fields.boolean('s', help="Check to select"),
-#        'state' : fields.selection([('draft','Draft'),
-#                                    ('confirmed','Confirmed'),
-#                                    ('to_send','To send'),
-#                                    ('sent','Sent')], 'State'),  
-#        'returned_unit_sale_price' : fields.float('Unit sale price', digits=(12,2)),
-#        'returned_value' : fields.function(total_amount_returned, method=True, string='Total return', type='float', help="Quantity exchanged * Unit sold price",),
-#        'replacement_unit_sale_price' : fields.function(get_replacement_price, method=True, string='Unit sale price', type='float',),
-#        'replacement_value' : fields.function(total_amount_replacement, method=True, string='Total return', type='float', help="Quantity replaced * Unit sold price",),
-#    }
-#    _defaults = {
-#        'state': lambda *a: 'draft',
-#    }
-#    
-#product_exchange()
-#==========
-
-class crm_claim(osv.osv):
+class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
     _columns = {
@@ -263,8 +193,8 @@ class crm_claim(osv.osv):
         # Financial management
         'planned_revenue': fields.float('Expected revenue'),
         'planned_cost': fields.float('Expected cost'),
-        'real_revenue': fields.float('Real revenue'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?
-        'real_cost': fields.float('Real cost'), # A VOIR SI COMPTA ANA ou lien vers compte ana ?       
+        'real_revenue': fields.float('Real revenue'),
+        'real_cost': fields.float('Real cost'),
         'invoice_ids': fields.one2many('account.invoice', 'claim_id', 'Refunds'),
         'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', help='Related invoice'),
@@ -275,31 +205,8 @@ class crm_claim(osv.osv):
         'claim_type': lambda *a: 'customer',
         'warehouse_id': lambda *a: 1,
     }
-#    #===== Method to select all returned lines =====
-#    def select_all(self,cr, uid, ids,context):
-#        return_obj = self.pool.get('claim.line')
-#        for line in self.browse(cr,uid,ids)[0].claim_line_ids:
-#            return_obj.write(cr,uid,line.id,{'selected':True})
-#        return True
 
-#    #===== Method to unselect all returned lines =====
-#    def unselect_all(self,cr, uid, ids,context):
-#        return_obj = self.pool.get('claim.line')
-#        for line in self.browse(cr,uid,ids)[0].claim_line_ids:
-#            return_obj.write(cr,uid,line.id,{'selected':False})
-#        return True
-
-# === deprecated if we use the refund wizard of the account module ===
-#    def refund(self, cr, uid, ids, context=None):
-#        mod_obj = self.pool.get('ir.model.data')
-#        xml_id = 'action_account_invoice_refund'
-#        result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
-#        id = result and result[1] or False
-#        result = act_obj.read(cr, uid, id, context=context)
-#        print 'result', result
-#        return result
-
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False):
+    def onchange_partner_address_id(self, cr, uid, ids, add, email=False, context=None):
         res = super(crm_claim, self).onchange_partner_address_id(cr, uid, ids, add, email=email)
         if add:
             if not res['value']['email_from'] or not res['value']['partner_phone']:
@@ -330,7 +237,5 @@ class crm_claim(osv.osv):
 #            for line in claim_line_obj.browse(cr,uid,[line_id],context):
 #                line.set_warranty()
         return  {'value' : {'claim_line_ids' : claim_lines}}
-
-crm_claim()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

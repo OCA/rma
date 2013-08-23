@@ -31,7 +31,7 @@ class refund_from_returned_lines(osv.osv_memory):
         'refund_journal' : fields.many2one('account.journal', 'Refund journal', select=True),
         'claim_line_ids' : fields.many2many('temp.claim.line', string='Selected return lines'),
     }
-    
+
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
         returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
@@ -47,18 +47,18 @@ class refund_from_returned_lines(osv.osv_memory):
                         'prodlot_id' : line.prodlot_id.id,
                         'price_unit' :  line.unit_sale_price,
                     }))
-        return M2M    
+        return M2M
 
     # Get default journal
     def _get_journal(self, cr, uid,context):
         #('company_id','=',claim_id.company_id.id)
         # ,('refund_journal','=','True')
         return self.pool.get('account.journal').search(cr, uid, [('type','=','sale_refund')],limit=1)[0] 
-   
+
     _defaults = {
         'claim_line_ids': _get_selected_lines,
         'refund_journal' : _get_journal,
-    }    
+    }
 
     # On "Cancel" button
     def action_cancel(self,cr,uid,ids,context=None):
@@ -85,22 +85,22 @@ class refund_from_returned_lines(osv.osv_memory):
                         'reference_type': 'none',
                         'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S'),
                         # 'date_due':
-                        'address_contact_id' : claim_id.partner_address_id.id,
-                        'address_invoice_id' : claim_id.partner_address_id.id,
+                        'partner_id' : claim_id.partner_id.id,
+                        'commercial_partner_id' : claim_id.partner_id.id,
                         'account_id' : claim_id.partner_id.property_account_receivable.id,
                         'currency_id' : claim_id.company_id.currency_id.id, # from invoice ???
                         'journal_id' : refund.refund_journal.id,
                         'company_id' : claim_id.company_id.id,
                         'comment' : 'RMA Refund',
                         'claim_id': claim_id.id,
-                    })                    
-            # Create invoice lines        
-            for refund_line in refund.claim_line_ids:             
+                    })
+            # Create invoice lines
+            for refund_line in refund.claim_line_ids:
                 if refund_line.invoice_id:
                     invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
                         'name' : refund_line.product_id.name_template,
-                        'origin' : claim_id.sequence,                        
-                        'invoice_id' : invoice_id,                        
+                        'origin' : claim_id.sequence,
+                        'invoice_id' : invoice_id,
                         'uos_id' : refund_line.product_id.uom_id.id,
                         'product_id':refund_line.product_id.id,
                         'account_id': claim_id.partner_id.property_account_receivable.id, # refund_line.product_id.property_account_expense.id,
@@ -111,7 +111,7 @@ class refund_from_returned_lines(osv.osv_memory):
 #                        'account_analytic_id':
                         'company_id' : claim_id.company_id.id,
                         'partner_id' : refund_line.invoice_id.partner_id.id,
-                        'note': 'RMA Refund',                        
+                        'note': 'RMA Refund',
                         })
                 else:
                     raise osv.except_osv(_('Error !'), _('Cannot find any invoice for the return line!'))
@@ -123,7 +123,7 @@ class refund_from_returned_lines(osv.osv_memory):
             'res_model': 'account.invoice',
             'type': 'ir.actions.act_window',
         }
-                      
+
 refund_from_returned_lines()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

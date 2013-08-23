@@ -32,7 +32,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
         'claim_line_location' : fields.many2one('stock.location', 'Dest. Location',help="Location where the system will stock the returned products.", select=True),
         'claim_line_ids' : fields.many2many('temp.claim.line',string='Selected return lines'),
     }
-    
+
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
         returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
@@ -53,12 +53,12 @@ class picking_in_from_returned_lines(osv.osv_memory):
     # Get default destination location
     def _get_dest_loc(self, cr, uid,context):
         return self.pool.get('stock.warehouse').read(cr, uid, [1],['lot_input_id'])[0]['lot_input_id'][0]  
-           
+
     _defaults = {
         'claim_line_ids': _get_selected_lines,
         'claim_line_location' : _get_dest_loc,
-    }    
-        
+    }
+
     # If "Cancel" button pressed
     def action_cancel(self,cr,uid,ids,conect=None):
         return {'type': 'ir.actions.act_window_close',}
@@ -84,7 +84,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         'move_type': 'one', # direct
                         'state': 'draft',
                         'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'address_id': claim_id.partner_address_id.id,
+                        'partner_id': claim_id.partner_id.id,
                         'invoice_state': "none",
                         'company_id': claim_id.company_id.id,
                         'location_id': location,
@@ -103,7 +103,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
                         'product_id': picking_line.product_id.id,
                         'product_qty': picking_line.product_returned_quantity,
                         'product_uom': picking_line.product_id.uom_id.id,
-                        'address_id': claim_id.partner_address_id.id,
+                        'partner_id': claim_id.partner_id.id,
                         'prodlot_id': picking_line.prodlot_id.id,
                         # 'tracking_id': 
                         'picking_id': picking_id,
@@ -125,7 +125,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
             'res_model': 'stock.picking',
             'type': 'ir.actions.act_window',
         }
-                              
+
 picking_in_from_returned_lines()
 
 # Class to create a picking out from selected return lines
@@ -135,7 +135,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
     _columns = {
         'claim_line_ids' : fields.many2many('temp.claim.line', string='Selected return lines'),
     }
-    
+
     # Get selected lines to add to picking in
     def _get_selected_lines(self, cr, uid,context):
         returned_line_ids = self.pool.get('crm.claim').read(cr, uid, context['active_id'], ['claim_line_ids'])['claim_line_ids'] 
@@ -151,11 +151,11 @@ class picking_out_from_returned_lines(osv.osv_memory):
                         'prodlot_id' :  line.prodlot_id.id,
                         'price_unit' :  line.unit_sale_price,
                     }))
-        return M2M    
-   
+        return M2M
+
     _defaults = {
         'claim_line_ids': _get_selected_lines,
-    }    
+    }
 
     # If "Cancel" button pressed
     def action_cancel(self,cr,uid,ids,context=None):
@@ -180,7 +180,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
                         'move_type': 'one', # direct
                         'state': 'draft',
                         'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'address_id': claim_id.partner_address_id.id,
+                        'partner_id': claim_id.partner_id.id,
                         'invoice_state': "none",
                         'company_id': claim_id.company_id.id,
                         # 'stock_journal_id': fields.many2one('stock.journal','Stock Journal', select=True),
@@ -200,7 +200,7 @@ class picking_out_from_returned_lines(osv.osv_memory):
                         'product_id': picking_line.product_id.id,
                         'product_qty': picking_line.product_returned_quantity,
                         'product_uom': picking_line.product_id.uom_id.id,
-                        'address_id': claim_id.partner_address_id.id,
+                        'partner_id': claim_id.partner_id.id,
                         'prodlot_id': picking_line.prodlot_id.id,
                         # 'tracking_id': 
                         'picking_id': picking_id,
