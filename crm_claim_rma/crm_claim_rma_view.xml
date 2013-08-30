@@ -79,6 +79,7 @@
                     <field name="state"/>
                     <field name="substate_id"/>
                     <field name="name"/>
+                    <field name="product_id"/>
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
                     <field name="product_returned_quantity"/>
@@ -217,10 +218,13 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
-            <page string="Follow Up" position="after">
+            <field name="type_action" position="after">
+                <separator string="Invoice and Picking" colspan="4"/>
+                <b><label string="Invoice" /></b>
                 <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>
+                <b><label string="Picking" /></b>
                 <field name="picking_ids" colspan="4" nolabel="1" readonly="1"/>
-	    </page>
+	    </field>
 <!--                
             <xpath expr="/form/group/notebook/page[@string='Communication &amp; History']/field" position="after">
                 <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>

@@ -97,8 +97,8 @@ class claim_make_picking(osv.osv_memory):
         claim_picking = False
         if context.get('picking_type') in ['in', 'loss']:
             p_type = 'in'
-            view_xml_id = 'view_picking_in_form'
-            view_name = 'stock.picking.in.form'
+            view_xml_id = 'stock_picking_form'
+            view_name = 'stock.picking.form'
             write_field = 'move_in_id'
             if context.get('picking_type') == 'in':
                 claim_picking = True
@@ -112,10 +112,11 @@ class claim_make_picking(osv.osv_memory):
             write_field = 'move_out_id'
             note = 'RMA picking out'
             name = 'Customer picking out'
-            view_xml_id = 'view_picking_in_form'
-            view_name = 'stock.picking.in.form'
+            view_xml_id = 'stock_picking_form'
+            view_name = 'stock.picking.form'
         view_id = view_obj.search(cr, uid, [
                                             ('xml_id', '=', view_xml_id),
+                                            ('model', '=', 'stock.picking'),
                                             ('type', '=', 'form'),
                                             ('name', '=', view_name)
                                             ], context=context)[0]
