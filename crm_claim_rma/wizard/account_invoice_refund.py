@@ -27,7 +27,7 @@ class account_invoice_refund(osv.osv_memory):
         if context is None: context={}
         if context.get('invoice_ids'):
             context['active_ids'] = context.get('invoice_ids')
-        return super(account_invoice_refund, self).compute_refund(cr, uid, ids, mode='refund', context=context)
+        return super(account_invoice_refund, self).compute_refund(cr, uid, ids, mode=mode, context=context)
 
     def _get_description(self, cr, uid, context=None):
         if context is None: context = {}
