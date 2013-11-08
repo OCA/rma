@@ -212,6 +212,28 @@
 <!--        -->
 <!-- CLAIM VIEWS -->
 
+    <record model="ir.ui.view" id="crm_case_claims_tree_view">
+        <field name="name">CRM - Claims Tree</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="section_id" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crm_case_claims_form_view_replace">
+            <field name="name">CRM - Claims Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" widget="selection" domain="[('object_id.model', '=', 'crm.claim')]" position="replace">
+                    <field name="categ_id" />
+                </field>
+            </field>
+        </record>
+
     <record model="ir.ui.view" id="crm_claim_rma_form_view">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
@@ -282,7 +304,20 @@
                 </field>
             </field>
     </record>
-                
+
+ <!-- Crm claim Search view -->
+
+    <record id="view_crm_case_claims_filter" model="ir.ui.view">
+        <field name="name">CRM - Claims Search</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+        <field name="arch" type="xml">
+            <filter string="Stage" icon="terp-stage" domain="[]" context="{'group_by':'stage_id'}" position="before">
+                <filter string="Sales Team" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'section_id'}"/>
+            </filter>
+        </field>
+    </record>
+
 <!-- Right side link to orders -->
         <act_window 
         context="{'search_default_partner_id': [partner_id]}"
