@@ -239,56 +239,58 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
-            <page string="Follow Up" position="after">
-                <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>
-                <field name="picking_ids" colspan="4" nolabel="1" readonly="1"/>
-	    </page>
-<!--                
-            <xpath expr="/form/group/notebook/page[@string='Communication &amp; History']/field" position="after">
-                <field name="invoice_ids" colspan="4" nolabel="1" readonly="1"/>
-                <field name="picking_ids" colspan="4" nolabel="1" readonly="1"/>
-            </xpath>
--->
-            <field name="description" position="after">
-                <group name="Product Return" colspan="4">
-                    <separator string="Product Return" colspan="4"/>
-                    <field name="invoice_id" colspan="1" on_change="onchange_invoice_id(invoice_id, context)" domain="[('partner_id','=',partner_id)]" />
-                    <button name="%(action_create_return_serial)d" string="Mass return from serial/lot n°" states="draft,open" type="action" target="new"/>
-                    <field name="claim_line_ids" nolabel="1" colspan="3"/>
-                </group>
-                <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
-                    <separator string="Action" colspan="4" />
-                    <button name="%(action_claim_picking_in)d"
-                            string="New picking IN" states="open"
-                            type="action" target="new"
-                            context="{'warehouse_id': warehouse_id,
-                                'partner_id': partner_id}"/>
+            <page string="Follow Up" position="before">
+                <page string="Product Return">
+                    <group name="Product Return">
+                        <separator string="Product Return" colspan="4"/>
+                        <group>
+                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id, context)" domain="[('partner_id','=',partner_id)]" />
+                        </group>
+                        <group>
+                            <button name="%(action_create_return_serial)d" string="Mass return from serial/lot n°" states="draft,open" type="action" target="new"/>
+                        </group>
+                        <field name="claim_line_ids" nolabel="1" colspan="4"/>
+                    </group>
+                    <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
+                        <separator string="Action" colspan="4" />
+                        <button name="%(action_claim_picking_in)d"
+                                string="New picking IN" states="open"
+                                type="action" target="new"
+                                context="{'warehouse_id': warehouse_id,
+                                    'partner_id': partner_id}"/>
 
 
-                    <button name="%(action_claim_picking_out)d"
-                            string="New picking OUT" states="open"
-                            type="action" target="new"
-                            context="{'warehouse_id': warehouse_id,
-                                'partner_id': partner_id}"/>
+                        <button name="%(action_claim_picking_out)d"
+                                string="New picking OUT" states="open"
+                                type="action" target="new"
+                                context="{'warehouse_id': warehouse_id,
+                                    'partner_id': partner_id}"/>
 
-                    <button name="%(action_claim_picking_loss)d"
-                            string="New Product Loss" states="open"
-                            type="action" target="new"
-                            context="{'warehouse_id': warehouse_id,
-                                'partner_id': partner_id}"/>
+                        <button name="%(action_claim_picking_loss)d"
+                                string="New Product Loss" states="open"
+                                type="action" target="new"
+                                context="{'warehouse_id': warehouse_id,
+                                    'partner_id': partner_id}"/>
 
 
-                    <button name="%(account.action_account_invoice_refund)d"
-                            type='action' string='New Refund'
-                            states='open' icon="gtk-execute"
-                            context="{
-                                'invoice_ids': [invoice_id],
-                                'claim_line_ids': claim_line_ids,
-                                'description': name,
-                                'claim_id': id,
-                                }"/>
-                </group>
-            </field>
+                        <button name="%(account.action_account_invoice_refund)d"
+                                type='action' string='New Refund'
+                                states='open' icon="gtk-execute"
+                                context="{
+                                    'invoice_ids': [invoice_id],
+                                    'claim_line_ids': claim_line_ids,
+                                    'description': name,
+                                    'claim_id': id,
+                                    }"/>
+                    </group>
+                </page>
+                <page string="Generated Documents">
+                    <separator colspan="2" string="Refunds"/>
+                    <field name="invoice_ids" colspan="4" readonly="1"/>
+                    <separator colspan="2" string="Receptions / Deliveries"/>
+                    <field name="picking_ids" colspan="4" readonly="1"/>
+                </page>
+	       </page>
         </field>
     </record>
 
