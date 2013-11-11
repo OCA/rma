@@ -247,7 +247,9 @@ class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
     def _get_sequence_number(self, cr, uid, context=None):
-        return obj.pool.get('ir.sequence').get(cr, uid, 'crm.claim')
+        res = self.pool.get('ir.sequence').get(cr, uid, 
+            'crm.claim.rma', context=context) or '/'
+        return res
 
     def _get_default_warehouse(self, cr, uid, context=None):
         company_id = self.pool.get('res.users').browse(cr, uid, uid, 
@@ -260,7 +262,7 @@ class crm_claim(orm.Model):
         return wh_ids[0]
 
     _columns = {
-        'number': fields.char('Number', size=128, readonly=True, 
+        'number': fields.char('Number', readonly=True, 
             states={'draft': [('readonly', False)]},
             required=True,
             help="Company internal claim unique number"),
@@ -284,6 +286,7 @@ class crm_claim(orm.Model):
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', 
             required=True),
     }
+
     _defaults = {
         'number': _get_sequence_number,
         'claim_type': 'customer',

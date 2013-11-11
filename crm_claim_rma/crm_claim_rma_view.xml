@@ -90,7 +90,6 @@
                 <field name="move_in_id"/>
                 <field name="move_out_id"/>
             </group>
-            <!-- button name="%(action_get_empty_serial)d" string="Get possible values for empty serial" states="draft,confirmed" type="action" target="new"/ -->
             <separator string="Problem" colspan="4"/>
             <field name="claim_origine" nolabel="1" colspan="4"/>
             <field name="claim_descr" nolabel="1" colspan="4"/>
