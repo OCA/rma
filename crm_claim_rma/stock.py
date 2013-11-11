@@ -1,36 +1,33 @@
 # -*- coding: utf-8 -*-
-#########################################################################
-#                                                                       #
-#                                                                       #
-#########################################################################
-#                                                                       #
-# Copyright (C) 2009-2011  Akretion, Raphaël Valyi, Sébastien Beau, 	#
-# Emmanuel Samyn, Benoît Guillot                                        #
-#                                                                       #
-#This program is free software: you can redistribute it and/or modify   #
-#it under the terms of the GNU General Public License as published by   #
-#the Free Software Foundation, either version 3 of the License, or      #
-#(at your option) any later version.                                    #
-#                                                                       #
-#This program is distributed in the hope that it will be useful,        #
-#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
-#GNU General Public License for more details.                           #
-#                                                                       #
-#You should have received a copy of the GNU General Public License      #
-#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
-#########################################################################
+##############################################################################
+#
+#    Copyright 2013 Camptocamp
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 
 from osv import fields, osv
 
 class stock_picking(osv.osv):
 
     _inherit = "stock.picking"
-    
 
     _columns = {
         'claim_id': fields.many2one('crm.claim', 'Claim'),
-        'claim_picking': fields.boolean('Picking from Claim'),
     }
 
     def create(self, cr, user, vals, context=None):
@@ -42,6 +39,24 @@ class stock_picking(osv.osv):
             vals['name'] = self.pool.get('ir.sequence').get(cr, user, seq_obj_name)
         new_id = super(stock_picking, self).create(cr, user, vals, context)
         return new_id
+
+class stock_picking_out(osv.osv):
+
+    _inherit = "stock.picking.out"
+    
+    _columns = {
+        'claim_id': fields.many2one('crm.claim', 'Claim'),
+    }
+
+
+class stock_picking_out(osv.osv):
+
+    _inherit = "stock.picking.in"
+    
+    _columns = {
+        'claim_id': fields.many2one('crm.claim', 'Claim'),
+    }
+
 
 class stock_warehouse(osv.osv):
 
@@ -66,6 +81,6 @@ class stock_move(osv.osv):
         move_id = super(stock_move, self).create(cr, uid, vals, context=context)
         if vals.get('picking_id'):
             picking = self.pool.get('stock.picking').browse(cr, uid, vals['picking_id'], context=context)
-            if picking.claim_picking and picking.type == u'in':
+            if picking.claim_id and picking.type == u'in':
                 move = self.write(cr, uid, move_id, {'state': 'confirmed'}, context=context)
         return move_id

@@ -36,7 +36,7 @@ class crm_claim_ext(osv.osv):
     _columns = {
         'canal_id': fields.many2one('res.partner.canal', 'Channel'),
         'som': fields.many2one('res.partner.som', 'State of Mind'),
-
+        'product_exchange_ids': fields.one2many('product.exchange', 'claim_return_id', 'Product exchanges'),
     }
 crm_claim_ext()    
 

@@ -19,9 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import wizard
-import crm_claim_rma
-import account_invoice
-import stock
-import res_company
+#import returned_lines_from_invoice
+#import picking_from_returned_lines
+#import refund_from_returned_lines
+#import exchange_from_returned_lines
+#import picking_from_exchange_lines

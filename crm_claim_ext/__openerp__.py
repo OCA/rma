@@ -27,7 +27,13 @@
     'category': 'Generic Modules/CRM & SRM',
     'description': """
 Akretion - Emmanuel Samyn
-Add some fields to CRM claim : canal, spirit
+ * Add some fields to CRM claim : canal, spirit, product.exchange
+ * Forbid to return product from picking out and in by masking the button
+
+It also contain all views that weren't used when porting this module to v7.0.
+Also, all wizard that were not used anymore also landed here in the wait his original
+author (Akretion) take a decision on them.
+
     """,
     'author': 'esamyn',
     'website': 'http://www.erp-236.com',
@@ -35,6 +41,11 @@ Add some fields to CRM claim : canal, spirit
     'init_xml': [],
     'update_xml': [
         'crm_claim_ext_view.xml',
+#        'wizard/returned_lines_from_invoice_wizard_view.xml',
+#        'wizard/picking_from_returned_lines_wizard_view.xml',
+#        'wizard/refund_from_returned_lines_wizard_view.xml',
+#        'wizard/exchange_from_returned_lines_wizard_view.xml',
+#        'wizard/picking_from_exchange_lines_wizard_view.xml',
     ],
     'demo_xml': [], 
     'test': [], 

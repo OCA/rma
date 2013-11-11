@@ -94,14 +94,12 @@ class claim_make_picking(osv.osv_memory):
         picking_obj = self.pool.get('stock.picking')
         if context is None: context = {}
         view_obj = self.pool.get('ir.ui.view')
-        claim_picking = False
         if context.get('picking_type') in ['in', 'loss']:
             p_type = 'in'
             view_xml_id = 'stock_picking_form'
             view_name = 'stock.picking.form'
             write_field = 'move_in_id'
             if context.get('picking_type') == 'in':
-                claim_picking = True
                 note = 'RMA picking in'
                 name = 'Customer picking in'
             elif context.get('picking_type') == 'loss':
@@ -137,7 +135,6 @@ class claim_make_picking(osv.osv_memory):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note' : note,
                     'claim_id': claim.id,
-                    'claim_picking': claim_picking
                 })
         # Create picking lines
         for wizard_claim_line in wizard.claim_line_ids:
