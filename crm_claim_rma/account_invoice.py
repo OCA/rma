@@ -45,16 +45,27 @@ class account_invoice(osv.osv):
             for claim_line_id in context.get('claim_line_ids'):
                 claim_info = self.pool.get('claim.line').read(cr, uid, claim_line_id[1], ['invoice_line_id', 'product_returned_quantity', 'refund_line_id'], context=context)
                 if not claim_info['refund_line_id']:
-                    invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
-                    invoice_line_info['quantity'] = claim_info['product_returned_quantity']
-                    invoice_line_info['claim_line_id'] = [claim_line_id[1]]
-                    new_lines.append(invoice_line_info)
+                    invoice_line_info =  self.pool.get('account.invoice.line').browse(cr, uid, [claim_info['invoice_line_id'][0]], context=context)[0]
+                    clean_line = {}
+                    for field in invoice_line_info._all_columns.keys():
+                        if invoice_line_info._all_columns[field].column._type == 'many2one':
+                            clean_line[field] = invoice_line_info[field].id
+                        elif invoice_line_info._all_columns[field].column._type not in ['many2many','one2many']:
+                            clean_line[field] = invoice_line_info[field]
+                        elif field == 'invoice_line_tax_id':
+                            tax_list = []
+                            for tax in invoice_line_info[field]:
+                                tax_list.append(tax.id)
+                            clean_line[field] = [(6,0, tax_list)]
+                    #invoice_line_info = self.pool.get('account.invoice.line').read(cr, uid, claim_info['invoice_line_id'][0], context=context)
+                    clean_line['quantity'] = claim_info['product_returned_quantity']
+                    clean_line['claim_line_id'] = [claim_line_id[1]]
+                    new_lines.append(clean_line)
             if not new_lines:
                 #TODO use custom states to show button of this wizard or not instead of raise an error
                 raise osv.except_osv(_('Error !'), _('A refund has already been created for this claim !'))
-            lines = new_lines
-        result = super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
-        return result
+        #result = super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=context)
+        return map(lambda x: (0,0,x), new_lines)
 
     def _prepare_refund(self, cr, uid, *args, **kwargs):
         result = super(account_invoice, self)._prepare_refund(cr, uid, *args, **kwargs)

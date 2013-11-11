@@ -33,6 +33,16 @@ class stock_picking(osv.osv):
         'claim_picking': fields.boolean('Picking from Claim'),
     }
 
+    def create(self, cr, user, vals, context=None):
+        if ('name' not in vals) or (vals.get('name')=='/'):
+            if vals['type'] != 'internal':
+                seq_obj_name =  'stock.picking.' + vals['type']
+            else:
+                seq_obj_name =  self._name
+            vals['name'] = self.pool.get('ir.sequence').get(cr, user, seq_obj_name)
+        new_id = super(stock_picking, self).create(cr, user, vals, context)
+        return new_id
+
 class stock_warehouse(osv.osv):
 
     _inherit = "stock.warehouse"
