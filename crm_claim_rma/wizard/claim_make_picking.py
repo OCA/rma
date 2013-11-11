@@ -20,15 +20,14 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-
-from osv import fields, osv
+from openerp.osv import fields, orm
 import time
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 import netsvc
 from tools.translate import _
 
 
-class claim_make_picking(osv.osv_memory):
+class claim_make_picking(orm.TransientModel):
     _name='claim_make_picking.wizard'
     _description='Wizard to create pickings from claim lines'
     _columns = {

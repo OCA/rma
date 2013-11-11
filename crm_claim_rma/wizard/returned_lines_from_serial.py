@@ -19,11 +19,11 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-
-from osv import fields, osv
+from openerp.osv import fields, orm
 import pooler
 
-class returned_lines_from_serial(osv.osv_memory):
+
+class returned_lines_from_serial(orm.TransientModel):
     _name='returned_lines_from_serial.wizard'
     _description='Wizard to create product return lines from serial numbers'
     _columns = {

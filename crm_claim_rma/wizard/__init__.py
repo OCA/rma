@@ -20,8 +20,7 @@
 #
 ##############################################################################
 
-import returned_lines_from_serial
-import get_empty_serial
-import claim_make_picking
-import account_invoice_refund
-import claim_make_picking_from_picking
+from . import returned_lines_from_serial
+from . import claim_make_picking
+from . import account_invoice_refund
+from . import claim_make_picking_from_picking

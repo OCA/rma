@@ -20,10 +20,11 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 import pooler
 
-class get_empty_serial(osv.osv_memory):
+
+class get_empty_serial(orm.TransientModel):
     _name='get_empty_serial.wizard'
     _description='' # Get possible serial for this return based on claim partner, product, invoice
     _columns = {

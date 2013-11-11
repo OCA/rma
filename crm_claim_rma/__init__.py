@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-import wizard
-import crm_claim_rma
-import account_invoice
-import stock
-import res_company
+from . import wizard
+from . import crm_claim_rma
+from . import account_invoice
+from . import stock
+from . import res_company

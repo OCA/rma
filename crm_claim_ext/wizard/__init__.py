@@ -24,3 +24,4 @@
 #import refund_from_returned_lines
 #import exchange_from_returned_lines
 #import picking_from_exchange_lines
+from . import get_empty_serial

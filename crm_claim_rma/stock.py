@@ -19,10 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.osv import fields, orm, osv
 
-from osv import fields, osv
 
-class stock_picking(osv.osv):
+class stock_picking(orm.Model):
 
     _inherit = "stock.picking"
 
@@ -36,11 +36,15 @@ class stock_picking(osv.osv):
                 seq_obj_name =  'stock.picking.' + vals['type']
             else:
                 seq_obj_name =  self._name
-            vals['name'] = self.pool.get('ir.sequence').get(cr, user, seq_obj_name)
-        new_id = super(stock_picking, self).create(cr, user, vals, context)
+            vals['name'] = self.pool.get('ir.sequence').get(cr, user, 
+                seq_obj_name,
+                context=context)
+        new_id = super(stock_picking, self).create(cr, user, vals, 
+            context=context)
         return new_id
 
-class stock_picking_out(osv.osv):
+
+class stock_picking_out(orm.Model):
 
     _inherit = "stock.picking.out"
     
@@ -49,7 +53,7 @@ class stock_picking_out(osv.osv):
     }
 
 
-class stock_picking_out(osv.osv):
+class stock_picking_out(orm.Model):
 
     _inherit = "stock.picking.in"
     
@@ -58,29 +62,35 @@ class stock_picking_out(osv.osv):
     }
 
 
-class stock_warehouse(osv.osv):
+class stock_warehouse(orm.Model):
 
     _inherit = "stock.warehouse"
     
-
     _columns = {
         'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
-        'lot_carrier_loss_id': fields.many2one('stock.location', 'Location Carrier Loss'),
-        'lot_breakage_loss_id': fields.many2one('stock.location', 'Location Breakage Loss'),
-        'lot_refurbish_id': fields.many2one('stock.location', 'Location Refurbish'),
+        'lot_carrier_loss_id': fields.many2one('stock.location',
+            'Location Carrier Loss'),
+        'lot_breakage_loss_id': fields.many2one('stock.location',
+            'Location Breakage Loss'),
+        'lot_refurbish_id': fields.many2one('stock.location',
+            'Location Refurbish'),
     }
 
-#This part concern the case of a wrong picking out. We need to create a new stock_move in a micking already open.
-#In order to don't have to confirm the stock_move we override the create and confirm it at the creation only for this case
 
-class stock_move(osv.osv):
+#This part concern the case of a wrong picking out. We need to create a new 
+#stock_move in a micking already open.
+#In order to don't have to confirm the stock_move we override the create and
+#confirm it at the creation only for this case
+class stock_move(orm.Model):
     
     _inherit = "stock.move"
 
     def create(self, cr, uid, vals, context=None):
         move_id = super(stock_move, self).create(cr, uid, vals, context=context)
         if vals.get('picking_id'):
-            picking = self.pool.get('stock.picking').browse(cr, uid, vals['picking_id'], context=context)
+            picking = self.pool.get('stock.picking').browse(cr, uid, 
+                vals['picking_id'], context=context)
             if picking.claim_id and picking.type == u'in':
-                move = self.write(cr, uid, move_id, {'state': 'confirmed'}, context=context)
+                move = self.write(cr, uid, move_id, {'state': 'confirmed'},
+                    context=context)
         return move_id

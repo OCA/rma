@@ -21,13 +21,13 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 import time
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 import netsvc
 
 
-class claim_make_picking_from_picking(osv.osv_memory):
+class claim_make_picking_from_picking(orm.TransientModel):
     _name='claim_make_picking_from_picking.wizard'
     _description='Wizard to create pickings from picking lines'
     _columns = {

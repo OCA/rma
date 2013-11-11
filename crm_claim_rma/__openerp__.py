@@ -20,8 +20,8 @@
 #
 ##############################################################################
 {
-    'name': 'CRM Product Return',
-    'version': '1.0',
+    'name': 'Claim RMA (Product Return Management)',
+    'version': '1.1',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
 Management of Return Merchandise Authorization (RMA)
@@ -48,7 +48,6 @@ It mainly contain the following features :
                 'wizard/claim_make_picking_view.xml',
                 'wizard/claim_make_picking_from_picking_view.xml',
                 'wizard/returned_lines_from_serial_wizard_view.xml',
-                'wizard/get_empty_serial_view.xml',
                 'crm_claim_rma_view.xml',
                 'security/ir.model.access.csv',
                 'account_invoice_view.xml',
