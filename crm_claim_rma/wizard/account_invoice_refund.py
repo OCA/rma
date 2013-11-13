@@ -23,6 +23,7 @@ from openerp.osv import fields, orm
 
 
 class account_invoice_refund(orm.TransientModel):
+    
     _inherit = "account.invoice.refund"
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):

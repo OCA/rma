@@ -27,7 +27,7 @@
         </record> 
 
         <record id="action_claim_picking_in" model="ir.actions.act_window">
-            <field name="name">action_claim_picking_in</field>
+            <field name="name">Create Incoming Shipments</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking.wizard</field>
             <field name="src_model">crm.claim</field>
@@ -38,7 +38,7 @@
         </record>
 
         <record id="action_claim_picking_out" model="ir.actions.act_window">
-            <field name="name">action_claim_picking_out</field>
+            <field name="name">Create Outgoing Shipments</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking.wizard</field>
             <field name="src_model">crm.claim</field>
@@ -49,7 +49,7 @@
         </record>
 
         <record id="action_claim_picking_loss" model="ir.actions.act_window">
-            <field name="name">action_claim_picking_loss</field>
+            <field name="name">Create Products Loss</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking.wizard</field>
             <field name="src_model">crm.claim</field>

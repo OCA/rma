@@ -20,20 +20,31 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-from openerp.osv import fields, orm
+from openerp.osv import fields, orm, osv
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from openerp import netsvc
+from openerp.tools.translate import _
 import time
-from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
-import netsvc
-from tools.translate import _
 
 
 class claim_make_picking(orm.TransientModel):
-    _name='claim_make_picking.wizard'
-    _description='Wizard to create pickings from claim lines'
+
+    _name = 'claim_make_picking.wizard'
+    _description = 'Wizard to create pickings from claim lines'
     _columns = {
-        'claim_line_source_location' : fields.many2one('stock.location', 'Source Location',help="Location where the returned products are from.", required=True),
-        'claim_line_dest_location' : fields.many2one('stock.location', 'Dest. Location',help="Location where the system will stock the returned products.", required=True),
-        'claim_line_ids' : fields.many2many('claim.line', 'claim_line_picking', 'claim_picking_id', 'claim_line_id', 'Claim lines'),
+        'claim_line_source_location': fields.many2one('stock.location',
+            'Source Location',
+            help="Location where the returned products are from.",
+            required=True),
+        'claim_line_dest_location': fields.many2one('stock.location',
+            'Dest. Location',
+            help="Location where the system will stock the returned products.",
+            required=True),
+        'claim_line_ids': fields.many2many('claim.line',
+            'claim_line_picking',
+            'claim_picking_id',
+            'claim_line_id',
+            'Claim lines'),
     }
 
     def _get_claim_lines(self, cr, uid, context):
@@ -45,25 +56,33 @@ class claim_make_picking(orm.TransientModel):
         elif context.get('picking_type') == 'out':
             move_field = 'move_out_id'
         good_lines = []
-        line_ids =  line_obj.search(cr, uid, [('claim_id', '=', context['active_id'])], context=context)
+        line_ids =  line_obj.search(cr, uid, 
+            [('claim_id', '=', context['active_id'])], context=context)
         for line in line_obj.browse(cr, uid, line_ids, context=context):
             if not line[move_field] or line[move_field].state == 'cancel':
                 good_lines.append(line.id)
         if not good_lines:
-            raise osv.except_osv(_('Error !'), _('A picking has already been created for this claim !'))
+            raise osv.except_osv(_('Error !'), 
+                _('A picking has already been created for this claim !'))
         return good_lines
 
     # Get default source location
     def _get_source_loc(self, cr, uid, context):
+        loc_id = False
         if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context.get('warehouse_id')
         if context.get('picking_type') == 'out':
-            loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_stock_id'], context=context)['lot_stock_id'][0]
-        elif context.get('picking_type') in ['in', 'loss'] and context.get('partner_id'):
-            loc_id = self.pool.get('res.partner').read(cr, uid, context['partner_id'],
-                                              ['property_stock_customer'],
-                                              context=context)['property_stock_customer']
+            loc_id = warehouse_obj.read(cr, uid, 
+                warehouse_id, 
+                ['lot_stock_id'],
+                context=context)['lot_stock_id'][0]
+        elif (context.get('picking_type') in ['in', 'loss'] 
+            and context.get('partner_id')):
+            loc_id = self.pool.get('res.partner').read(cr, uid, 
+                context['partner_id'],
+                ['property_stock_customer'],
+                context=context)['property_stock_customer']
         return loc_id
 
     # Get default destination location
@@ -72,11 +91,20 @@ class claim_make_picking(orm.TransientModel):
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context.get('warehouse_id')
         if context.get('picking_type') == 'out':
-            loc_id = self.pool.get('res.partner').read(cr, uid, context.get('partner_id'), ['property_stock_customer'], context=context)['property_stock_customer'][0]
+            loc_id = self.pool.get('res.partner').read(cr, uid, 
+                context.get('partner_id'),
+                ['property_stock_customer'],
+                context=context)['property_stock_customer'][0]
         elif context.get('picking_type') == 'in':
-            loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_rma_id'], context=context)['lot_rma_id'][0]
+            loc_id = warehouse_obj.read(cr, uid, 
+                warehouse_id,
+                ['lot_rma_id'],
+                context=context)['lot_rma_id'][0]
         elif context.get('picking_type') == 'loss':
-            loc_id = warehouse_obj.read(cr, uid, warehouse_id, ['lot_carrier_loss_id'], context=context)['lot_carrier_loss_id'][0]
+            loc_id = warehouse_obj.read(cr, uid,
+                warehouse_id,
+                ['lot_carrier_loss_id'],
+                context=context)['lot_carrier_loss_id'][0]
         return loc_id
 
     _defaults = {
@@ -118,7 +146,8 @@ class claim_make_picking(orm.TransientModel):
                                             ('name', '=', view_name)
                                             ], context=context)[0]
         wizard = self.browse(cr, uid, ids[0], context=context)
-        claim = self.pool.get('crm.claim').browse(cr, uid, context['active_id'], context=context)
+        claim = self.pool.get('crm.claim').browse(cr, uid, 
+            context['active_id'], context=context)
         partner_id = claim.partner_id.id
         # create picking
         picking_id = picking_obj.create(cr, uid, {
@@ -158,17 +187,20 @@ class claim_make_picking(orm.TransientModel):
                     'location_dest_id': wizard.claim_line_dest_location.id,
                     'note': note,
                 })
-            self.pool.get('claim.line').write(cr, uid, wizard_claim_line.id, {write_field: move_id}, context=context)
+            self.pool.get('claim.line').write(cr, uid, 
+                wizard_claim_line.id, {write_field: move_id}, context=context)
         wf_service = netsvc.LocalService("workflow")
         if picking_id:
-            wf_service.trg_validate(uid, 'stock.picking', picking_id,'button_confirm', cr)
+            wf_service.trg_validate(uid, 'stock.picking', 
+                picking_id,'button_confirm', cr)
             picking_obj.action_assign(cr, uid, [picking_id])
+        domain = "[('type','=','%s'),('partner_id','=',%s)]"%(p_type, partner_id)
         return {
             'name': '%s' % name,
             'view_type': 'form',
             'view_mode': 'form',
             'view_id': view_id,
-            'domain' : "[('type', '=', '%s'),('partner_id','=',%s)]" % (p_type, partner_id),
+            'domain' : domain,
             'res_model': 'stock.picking',
             'res_id': picking_id,
             'type': 'ir.actions.act_window',
