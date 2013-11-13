@@ -151,7 +151,7 @@ class claim_line(orm.Model):
     def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
         if date_invoice:
-            warning = _(WARRANT_COMMENT['valid'])
+            warning = _(self.WARRANT_COMMENT['valid'])
             date_inv_at_server = datetime.strptime(date_invoice,
                 DEFAULT_SERVER_DATE_FORMAT)
             supplier = claim_line.product_id.seller_ids[0]
@@ -169,7 +169,7 @@ class claim_line(orm.Model):
                 limit = (date_inv_at_server +
                     waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT)
             if limit < claim_line.claim_id.date:
-                warning = _(WARRANT_COMMENT['expired'])
+                warning = _(self.WARRANT_COMMENT['expired'])
             self.write(cr,uid,ids,{
                     'guarantee_limit' : limit,
                     'warning' : warning,
