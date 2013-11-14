@@ -84,12 +84,24 @@
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
             <field name="arch" type="xml">
-                <field position="after" name="delay">
-                    <field name="warranty_duration"/>
-                    <field name="warranty_return_partner" readonly="0"/>
-                    <field name="warranty_return_address"/>
-                    <field name="active_supplier"/>
-                    <field name="return_instructions"/>
+                <field position="after" name="company_id"  groups="base.group_multi_company" widget="selection">
+                    <group string="Warranty informations" colspan="4">
+                        <field name="active_supplier"/>
+                        <field name="warranty_duration"/>
+                        <field name="return_instructions"/>
+                        <group colspan="4" col="6">
+                            <group>
+                                <field name="warranty_return_partner"/>
+                            </group>
+                            <group>
+                                <div>
+                                    <label for="warranty_return_other_address_id"/>
+                                    <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
+                                    <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
+                                </div>
+                            </group>
+                            </group>
+                    </group>
                 </field>
             </field>
         </record>
