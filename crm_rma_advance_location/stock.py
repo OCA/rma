@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2013 Camptocamp SA
+#    Copyright 2013 Camptocamp
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,33 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.osv import fields, orm, osv
 
-{'name': 'RMA Claims by shop',
- 'version': '1.0',
- 'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim', 'sale'
-             ],
- 'author': 'Camptocamp',
- 'license': 'AGPL-3',
- 'website': 'http://www.camptocamp.com',
- 'description': """
-RMA Claim by shops
-==================
 
-Claim improvements to use them by shops:
+class stock_warehouse(orm.Model):
 
- * Add shop on claim
- * Add various filter in order to work on a basic "by shop" basis
-
- Was originally designed for e-commerce purpose, but could probably do the trick 
- for other cases as well.
-
-""",
- 'images': [],
- 'demo': [],
- 'data': [
-    'claim_view.xml',
- ],
- 'installable': True,
- 'application': True,
-}
+    _inherit = "stock.warehouse"
+    
+    _columns = {
+        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
+        'lot_carrier_loss_id': fields.many2one('stock.location',
+            'Location Carrier Loss'),
+        'lot_breakage_loss_id': fields.many2one('stock.location',
+            'Location Breakage Loss'),
+        'lot_refurbish_id': fields.many2one('stock.location',
+            'Location Refurbish'),
+    }

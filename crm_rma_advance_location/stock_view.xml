@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- INHERITED VIEW FOR THE OBJECT : stock_picking -->
+
+        <record id="picking_in_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_in_form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form" />
+            <field name="arch" type="xml">
+                <!-- Those wizard aren't working yet -->
+                <xpath expr="/form/header/button[@string='Return Products']" position="after">
+                        <button name="%(action_stock_picking_from_claim_picking)d" 
+                                string="Product to stock" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                        <button name="%(action_loss_picking_from_claim_picking)d" 
+                                string="Product to Loss" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                        <button name="%(action_used_picking_from_claim_picking)d" 
+                                string="Product to refurbish stock" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="warehouse_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.warehouse_form</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/group/field[@name='lot_output_id']" position="after">
+                    <field name="lot_rma_id"/>
+                    <field name="lot_carrier_loss_id"/>
+                    <field name="lot_breakage_loss_id"/>
+                    <field name="lot_refurbish_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+
+    </data>
+</openerp>

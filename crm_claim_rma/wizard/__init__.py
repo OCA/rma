@@ -19,8 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import returned_lines_from_serial
 from . import claim_make_picking
 from . import account_invoice_refund
 from . import claim_make_picking_from_picking

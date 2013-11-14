@@ -51,10 +51,10 @@ class claim_make_picking(orm.TransientModel):
         #TODO use custom states to show buttons of this wizard or not instead of raise an error
         if context is None: context = {}
         line_obj = self.pool.get('claim.line')
-        if context.get('picking_type') in ['in', 'loss']:
-            move_field = 'move_in_id'
-        elif context.get('picking_type') == 'out':
+        if context.get('picking_type') == 'out':
             move_field = 'move_out_id'
+        else:
+            move_field = 'move_in_id'
         good_lines = []
         line_ids =  line_obj.search(cr, uid, 
             [('claim_id', '=', context['active_id'])], context=context)
@@ -77,8 +77,7 @@ class claim_make_picking(orm.TransientModel):
                 warehouse_id, 
                 ['lot_stock_id'],
                 context=context)['lot_stock_id'][0]
-        elif (context.get('picking_type') in ['in', 'loss'] 
-            and context.get('partner_id')):
+        elif context.get('partner_id'):
             loc_id = self.pool.get('res.partner').read(cr, uid, 
                 context['partner_id'],
                 ['property_stock_customer'],
@@ -90,21 +89,18 @@ class claim_make_picking(orm.TransientModel):
         if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context.get('warehouse_id')
-        if context.get('picking_type') == 'out':
+        loc_id = False
+        if context.get('picking_type') == 'out' and context.get('partner_id'):
             loc_id = self.pool.get('res.partner').read(cr, uid, 
                 context.get('partner_id'),
                 ['property_stock_customer'],
                 context=context)['property_stock_customer'][0]
-        elif context.get('picking_type') == 'in':
+        elif context.get('picking_type') == 'in' and context.get('partner_id'):
             loc_id = warehouse_obj.read(cr, uid, 
                 warehouse_id,
-                ['lot_rma_id'],
-                context=context)['lot_rma_id'][0]
-        elif context.get('picking_type') == 'loss':
-            loc_id = warehouse_obj.read(cr, uid,
-                warehouse_id,
-                ['lot_carrier_loss_id'],
-                context=context)['lot_carrier_loss_id'][0]
+                ['lot_stock_id'],
+                context=context)['lot_stock_id'][0]
+            # Add the case of return to supplier !
         return loc_id
 
     _defaults = {
@@ -121,24 +117,20 @@ class claim_make_picking(orm.TransientModel):
         picking_obj = self.pool.get('stock.picking')
         if context is None: context = {}
         view_obj = self.pool.get('ir.ui.view')
-        if context.get('picking_type') in ['in', 'loss']:
-            p_type = 'in'
-            view_xml_id = 'stock_picking_form'
-            view_name = 'stock.picking.form'
-            write_field = 'move_in_id'
-            if context.get('picking_type') == 'in':
-                note = 'RMA picking in'
-                name = 'Customer picking in'
-            elif context.get('picking_type') == 'loss':
-                name = 'Customer product loss'
-                note = 'RMA product loss'
-        elif context.get('picking_type') == 'out':
+        if context.get('picking_type') == 'out':
             p_type = 'out'
             write_field = 'move_out_id'
             note = 'RMA picking out'
             name = 'Customer picking out'
             view_xml_id = 'stock_picking_form'
             view_name = 'stock.picking.form'
+        else:
+            p_type = 'in'
+            view_xml_id = 'stock_picking_form'
+            view_name = 'stock.picking.form'
+            write_field = 'move_in_id'
+            if context.get('picking_type'):
+                note = 'RMA picking ' + str(context.get('picking_type'))
         view_id = view_obj.search(cr, uid, [
                                             ('xml_id', '=', view_xml_id),
                                             ('model', '=', 'stock.picking'),

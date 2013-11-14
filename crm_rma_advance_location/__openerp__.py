@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2013 Camptocamp SA
+#    Copyright 2013 Camptocamp
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,28 +23,41 @@
 {'name': 'RMA Claims by shop',
  'version': '1.0',
  'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim', 'sale'
+ 'depends': ['crm_claim_rma'
              ],
- 'author': 'Camptocamp',
+ 'author': 'Akretion, Camptocamp',
  'license': 'AGPL-3',
- 'website': 'http://www.camptocamp.com',
+ 'website': 'http://www.akretion.com, http://www.camptocamp.com',
  'description': """
-RMA Claim by shops
-==================
+RMA Claim Advance Location
+==========================
 
-Claim improvements to use them by shops:
+This module adds the following location on warehouses :
 
- * Add shop on claim
- * Add various filter in order to work on a basic "by shop" basis
+ * Carrier Loss
+ * RMA
+ * Breakage Loss 
+ * Refurbish
+ * Mistake Loss
 
- Was originally designed for e-commerce purpose, but could probably do the trick 
- for other cases as well.
+And also various wizards on icoming deliveries that allow you to move your goods easily in those
+new locations from a done reception.
+
+Using this module make the logistic flow of return a bit more complexe:
+
+ * Returning product goes into RMA location with a incoming shipment
+ * From the incoming shipment, forward them to another places (stock, loss,...)
+
+WARNING: This module is currently not yet completely debugged and is waiting his author to be.
 
 """,
  'images': [],
  'demo': [],
  'data': [
-    'claim_view.xml',
+    'stock_view.xml',
+    'stock_data.xml',
+    'wizard/claim_make_picking_from_picking_view.xml',
+    'wizard/claim_make_picking_view.xml',
  ],
  'installable': True,
  'application': True,

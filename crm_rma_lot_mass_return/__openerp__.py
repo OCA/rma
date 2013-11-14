@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2013 Camptocamp SA
+#    Copyright 2013 Camptocamp
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,31 +20,30 @@
 #
 ##############################################################################
 
-{'name': 'RMA Claims by shop',
+{'name': 'RMA Claims Mass Return by Lot',
  'version': '1.0',
  'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim', 'sale'
+ 'depends': ['crm_claim_rma'
              ],
- 'author': 'Camptocamp',
+ 'author': 'Akretion, Camptocamp',
  'license': 'AGPL-3',
- 'website': 'http://www.camptocamp.com',
+ 'website': 'http://www.akretion.com, http://www.camptocamp.com',
  'description': """
-RMA Claim by shops
-==================
+RMA Claim Mass Return by Lot
+============================
 
-Claim improvements to use them by shops:
+This module adds possibility to return a whole lot of product from a Claim
+and create a incoming shipment for them.
 
- * Add shop on claim
- * Add various filter in order to work on a basic "by shop" basis
 
- Was originally designed for e-commerce purpose, but could probably do the trick 
- for other cases as well.
+WARNING: This module is currently not yet completely debugged and is waiting his author to be.
 
 """,
  'images': [],
  'demo': [],
  'data': [
-    'claim_view.xml',
+        'wizard/returned_lines_from_serial_wizard_view.xml',
+        'crm_rma_view.xml',
  ],
  'installable': True,
  'application': True,

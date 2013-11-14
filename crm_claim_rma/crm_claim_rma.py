@@ -54,7 +54,8 @@ class claim_line(orm.Model):
     # Comment written in a claim.line to know about the warranty status
     WARRANT_COMMENT = {
         'valid': "Valid",
-        'expired': "Expired"}
+        'expired': "Expired"
+        'not_define': "Not Defined"}
         
     # Method to calculate total amount of the line : qty*UP
     def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
@@ -159,29 +160,31 @@ class claim_line(orm.Model):
         'name': lambda *a: 'none',
     } 
 
+    def write(self, cr, uid, ids, vals, context=None):
+        res = super(claim_line, self).write(cr, uid, ids, vals, context=context)
+        self.set_warranty(cr, uid, ids, context=context)
+        return res
+
     # Method to calculate warranty limit
     def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
         if date_invoice:
-            warning = _(self.WARRANT_COMMENT['valid'])
+            warning = _(self.WARRANT_COMMENT['not_define'])
             date_inv_at_server = datetime.strptime(date_invoice,
                 DEFAULT_SERVER_DATE_FORMAT)
             supplier = claim_line.product_id.seller_ids[0]
-            waranty_duration = relativedelta(months=int(supplier.warranty_duration))
             if claim_line.claim_id.claim_type == 'supplier':
-                if claim_line.prodlot_id :
-                     # TODO: To be implemented
-                    limit = (date_inv_at_server +
-                        waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT)
-                else :
-                    limit = (date_inv_at_server +
-                        waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT) 
-            else :
-                waranty_duration = relativedelta(months=int(claim_line.product_id.warranty))
-                limit = (date_inv_at_server +
-                    waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT)
-            if limit < claim_line.claim_id.date:
-                warning = _(self.WARRANT_COMMENT['expired'])
+                waranty_duration = int(supplier.warranty_duration)
+            else:
+                waranty_duration = int(claim_line.product_id.warranty)
+            limit = (date_inv_at_server +
+                    relativedelta(month=waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT) 
+            # If waranty period was defined
+            if waranty_duration > 0:
+                if limit < claim_line.claim_id.date:
+                    warning = _(self.WARRANT_COMMENT['expired'])
+                else:
+                    warning = _(self.WARRANT_COMMENT['valid'])
             self.write(cr,uid,ids,{
                     'guarantee_limit' : limit,
                     'warning' : warning,
@@ -240,7 +243,7 @@ class claim_line(orm.Model):
             'warranty_type':warranty_type}) 
         return True
                
-    # Method to calculate warranty limit and validity
+    # Method to calculate warranty limit and address
     def set_warranty(self, cr, uid, ids, context=None):
         for claim_line in self.browse(cr, uid, ids, context=context):
             if claim_line.product_id and claim_line.invoice_line_id:

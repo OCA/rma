@@ -62,21 +62,6 @@ class stock_picking_out(orm.Model):
     }
 
 
-class stock_warehouse(orm.Model):
-
-    _inherit = "stock.warehouse"
-    
-    _columns = {
-        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
-        'lot_carrier_loss_id': fields.many2one('stock.location',
-            'Location Carrier Loss'),
-        'lot_breakage_loss_id': fields.many2one('stock.location',
-            'Location Breakage Loss'),
-        'lot_refurbish_id': fields.many2one('stock.location',
-            'Location Refurbish'),
-    }
-
-
 #This part concern the case of a wrong picking out. We need to create a new 
 #stock_move in a picking already open.
 #In order to don't have to confirm the stock_move we override the create and

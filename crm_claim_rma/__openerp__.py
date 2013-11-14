@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    'name': 'Claim RMA (Product Return Management)',
+    'name': 'RMA Claim (Product Return Management)',
     'version': '1.1',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
@@ -33,21 +33,26 @@ the claim lines to better handle that problematic. One Claim can have several li
 the return of differents products. It's for every of them that you'll be able to check the 
 warranty (still running or not).
 
-It mainly contain the following features :
-* product returns (one by one, mass return by lot, mass return by invoice)
+It mainly contain the following features:
+
+* product returns (one by one, mass return by invoice)
 * warranty control & return address (based on invoice date and product form)
 * product picking in / out
 * product refund
 * access to related customer data (orders, invoices, refunds, picking in/out)  from a claim
 
+Using this module make the logistic flow of return this way:
+
+ * Returning product goes into Stock or Supplier location with a incoming shipment (depending
+   on the settings of the supplier info in the product form)
+ * You can make a delivery from the RMA to send a new product to the Customer
+
 """,
     'author': 'Akretion, Camptocamp',
-    'website': 'http://www.akretion.com',
+    'website': 'http://www.akretion.com, http://www.camptocamp.com',
     'depends': ['sale','stock','crm_claim','product_warranty'],
     'data': [
                 'wizard/claim_make_picking_view.xml',
-                'wizard/claim_make_picking_from_picking_view.xml',
-                'wizard/returned_lines_from_serial_wizard_view.xml',
                 'crm_claim_rma_view.xml',
                 'security/ir.model.access.csv',
                 'account_invoice_view.xml',
