@@ -84,8 +84,25 @@ class claim_make_picking(orm.TransientModel):
                 context=context)['property_stock_customer']
         return loc_id
 
+    def _get_common_dest_location_from_line(self, cr, uid, line_ids, context):
+        """Return the ID of the common location between all lines. If notecommon
+        destination was  found, return False"""
+        loc_id = False
+        line_obj = self.pool.get('claim.line')
+        line_location = []
+        for line in line_obj.browse(cr, uid, line_ids, context=context):
+            if line.location_dest_id.id not in line_location:
+                line_location.append(line.location_dest_id.id)
+        if len (line_location) == 1:
+            loc_id = line_location[0]
+        return loc_id
+
     # Get default destination location
     def _get_dest_loc(self, cr, uid, context):
+        """Return the location_id to use as destination.
+        If it's an outoing shippment: take the customer stock property 
+        If it's an incomming shippment take the location_dest_id common to all lines, or
+        if different, return None."""
         if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context.get('warehouse_id')
@@ -96,11 +113,10 @@ class claim_make_picking(orm.TransientModel):
                 ['property_stock_customer'],
                 context=context)['property_stock_customer'][0]
         elif context.get('picking_type') == 'in' and context.get('partner_id'):
-            loc_id = warehouse_obj.read(cr, uid, 
-                warehouse_id,
-                ['lot_stock_id'],
-                context=context)['lot_stock_id'][0]
-            # Add the case of return to supplier !
+            # Add the case of return to supplier ! 
+            line_ids = self._get_claim_lines(cr, uid, context=context)
+            loc_id = self._get_common_dest_location_from_line(cr, uid, 
+                line_ids, context=context)
         return loc_id
 
     _defaults = {
@@ -141,6 +157,13 @@ class claim_make_picking(orm.TransientModel):
         claim = self.pool.get('crm.claim').browse(cr, uid, 
             context['active_id'], context=context)
         partner_id = claim.partner_id.id
+
+        common_dest_loc_id = self._get_common_dest_location_from_line(cr, uid, 
+                line_ids, context=context)
+        if not common_dest_loc_id:
+            raise osv.except_osv(_('Error !'), 
+                _('A picking cannot be created for various destination location, please '
+                  'chose line with a same destination location.'))
         # create picking
         picking_id = picking_obj.create(cr, uid, {
                     'origin': claim.number,

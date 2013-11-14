@@ -153,6 +153,9 @@ class claim_line(orm.Model):
         'move_out_id': fields.many2one('stock.move',
             'Move Line from picking out',
             help='The move line related to the returned product'),
+        'location_dest_id': fields.many2one('stock.location',
+            'Return Stock Location',
+            help='The return stock location of the returned product'),
     }
 
     _defaults = {
@@ -197,50 +200,30 @@ class claim_line(orm.Model):
     # Method to calculate warranty return address
     def set_warranty_return_address(self, cr, uid, ids, 
             claim_line, context=None):
+        """Return the partner to be used as return destination and
+        the destination stock location of the line in case of return.
+        We can have various case here:
+            - company or other: return to company partner or crm_return_address_id
+              if specified
+            - supplier: return to the supplier address"""
         return_address = None
-        warranty_type = 'company'
+        location_dest_id = claim_line.warehouse_id.lot_stock_id.id
+        return_type = 'company'
         seller = claim_line.product_id.seller_info_id
         claim_company = claim_line.claim_id.company_id
+        if claim_company.crm_return_address_id:
+            return_address = claim_company.crm_return_address_id.id
+        else:
+            return_address = claim_company.partner_id.id
         if seller:
-            return_partner = seller.warranty_return_partner
-            if return_partner:
-                warranty_type = return_partner
-            else:
-                warranty_type = 'company'
-            return_address = seller.warranty_return_address.id
-#                if return_partner == 'company': 
-#                    return_address = self._get_partner_address(cr, uid, ids, context,claim_line.claim_id.company_id.partner_id)[0]
-#                elif return_partner == 'supplier':
-#                    return_address = self._get_partner_address(cr, uid, ids, context,claim_line.product_id.seller_ids[0].name)[0]
-#                    warranty_type = 'supplier'
-#                elif return_partner == 'brand':
-#                    return_address = self._get_partner_address(cr, uid, ids, context, claim_line.product_id.product_brand_id.partner_id)[0]
-#                    warranty_type = 'brand'
-#                else :
-#                    warranty_type = 'other'
-#                    # TO BE IMPLEMENTED if something to do...
-#            else :
-#                warranty_type = 'company'
-#                return_address = self._get_default_company_address(cr, uid, claim_line.claim_id.company_id, context=context)
-                #TODO fix me use default address
-#                self.write(cr,uid,ids,{'warranty_return_partner':1,'warranty_type': 'company'})
-#                return True
-
-                #raise osv.except_osv(_('Error !'), _('Cannot find any warranty return partner for this product !'))
-        else : 
-            warranty_type = 'company'
-            if claim_company.crm_return_address_id:
-                return_address = [claim_company.crm_return_address_id.id]
-            else:
-                return_address = [claim_company.partner_id.address[0].id]
-#            return_address = self._get_default_company_address(cr, uid, claim_line.claim_id.company_id, context=context)
-            #TODO fix me use default address
-#            self.write(cr,uid,ids,{'warranty_return_partner':1,'warranty_type': 'company'})
-#            return True
-            #raise osv.except_osv(_('Error !'), _('Cannot find any supplier for this product !'))                
+            return_type = seller.warranty_return_partner
+            if return_type == 'supplier':
+                return_address = seller.warranty_return_address.id
+                location_dest_id = seller.property_stock_supplier.id
         self.write(cr, uid, ids,
-            {'warranty_return_partner':return_address,
-            'warranty_type':warranty_type}) 
+            {'warranty_return_partner': return_address,
+            'warranty_type': return_type,
+            'location_dest_id': location_dest_id}) 
         return True
                
     # Method to calculate warranty limit and address

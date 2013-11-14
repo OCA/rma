@@ -61,6 +61,7 @@
                     <field name="product_id"/>
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
+                    <field name="location_dest_id"/> 
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
                     <field name="product_returned_quantity"/>
                     <field name="claim_origine"/>
@@ -156,24 +157,16 @@
                     <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
                         <separator string="Action" colspan="4" />
                         <button name="%(action_claim_picking_in)d"
-                                string="New picking IN" states="open"
+                                string="New Products Return" states="open"
                                 type="action" target="new"
                                 context="{'warehouse_id': warehouse_id,
                                     'partner_id': partner_id}"/>
-
 
                         <button name="%(action_claim_picking_out)d"
-                                string="New picking OUT" states="open"
+                                string="New Delivery" states="open"
                                 type="action" target="new"
                                 context="{'warehouse_id': warehouse_id,
                                     'partner_id': partner_id}"/>
-
-                        <button name="%(action_claim_picking_loss)d"
-                                string="New Product Loss" states="open"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
-
 
                         <button name="%(account.action_account_invoice_refund)d"
                                 type='action' string='New Refund'

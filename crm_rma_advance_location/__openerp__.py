@@ -56,6 +56,7 @@ WARNING: This module is currently not yet completely debugged and is waiting his
  'data': [
     'stock_view.xml',
     'stock_data.xml',
+    'claim_rma_view.xml',
     'wizard/claim_make_picking_from_picking_view.xml',
     'wizard/claim_make_picking_view.xml',
  ],

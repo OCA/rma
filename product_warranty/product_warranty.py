@@ -73,13 +73,13 @@ class product_supplierinfo(orm.Model):
         return result
 
     _columns = {
-        "warranty_duration" : fields.float('Warranty',
+        "warranty_duration": fields.float('Warranty',
             help="Warranty in month for this product/supplier relation. Only for "
                  "company/supplier relation (purchase order) ; the customer/company "
                  "relation (sale order) always use the product main warranty field"),
-        "warranty_return_partner" :  fields.selection(get_warranty_return_partner, 
+        "warranty_return_partner":  fields.selection(get_warranty_return_partner, 
             'Warrantee return',
-            size=128,
+            required=True,
             help="Who is in charge of the warranty return treatment toward the end customer. "
             "Company will use the current compagny delivery or default address and so on for "
             "supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be "
@@ -88,7 +88,7 @@ class product_supplierinfo(orm.Model):
         'return_instructions': fields.many2one('return.instruction',
             'Instructions',
             help="Instructions for product return"),
-        'active_supplier' : fields.boolean('Active supplier'),
+        'active_supplier': fields.boolean('Active supplier'),
         'warranty_return_address': fields.function(_get_warranty_return_address,
             type='many2one', relation='res.partner', string="Warranty return address"),
         }
