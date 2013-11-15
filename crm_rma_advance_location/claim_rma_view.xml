@@ -4,7 +4,7 @@
     <record model="ir.ui.view" id="crm_claim_rma_form_view">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
-        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@string='New Delivery']" position="after">
                 <button name="%(action_claim_picking_loss)d"

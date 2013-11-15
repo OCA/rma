@@ -25,9 +25,9 @@
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['crm_claim_rma'
              ],
- 'author': 'Akretion, Camptocamp',
+ 'author': 'Akretion',
  'license': 'AGPL-3',
- 'website': 'http://www.akretion.com, http://www.camptocamp.com',
+ 'website': 'http://www.akretion.com',
  'description': """
 RMA Claim Advance Location
 ==========================
@@ -48,17 +48,17 @@ Using this module make the logistic flow of return a bit more complexe:
  * Returning product goes into RMA location with a incoming shipment
  * From the incoming shipment, forward them to another places (stock, loss,...)
 
-WARNING: This module is currently not yet completely debugged and is waiting his author to be.
+WARNING: Use with caution, this module is currently not yet completely debugged and is waiting his author to be.
 
 """,
  'images': [],
  'demo': [],
  'data': [
+    'wizard/claim_make_picking_from_picking_view.xml',
+    'wizard/claim_make_picking_view.xml',
     'stock_view.xml',
     'stock_data.xml',
     'claim_rma_view.xml',
-    'wizard/claim_make_picking_from_picking_view.xml',
-    'wizard/claim_make_picking_view.xml',
  ],
  'installable': True,
  'application': True,

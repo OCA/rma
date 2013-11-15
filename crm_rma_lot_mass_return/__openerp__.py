@@ -25,9 +25,9 @@
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['crm_claim_rma'
              ],
- 'author': 'Akretion, Camptocamp',
+ 'author': 'Akretion',
  'license': 'AGPL-3',
- 'website': 'http://www.akretion.com, http://www.camptocamp.com',
+ 'website': 'http://www.akretion.com',
  'description': """
 RMA Claim Mass Return by Lot
 ============================

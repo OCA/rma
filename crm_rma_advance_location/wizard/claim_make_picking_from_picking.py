@@ -46,6 +46,10 @@ class claim_make_picking_from_picking(orm.TransientModel):
             'Picking lines'),
     }
 
+    def _get_default_warehouse(self, cr, uid, context=None):
+        warehouse_id=self.pool.get('crm.claim')._get_default_warehouse(cr, uid, context=context)
+        return warehouse_id
+
     def _get_picking_lines(self, cr, uid, context):
         return self.pool.get('stock.picking').read(cr, uid,
             context['active_id'], ['move_lines'], context=context)['move_lines']
@@ -54,21 +58,21 @@ class claim_make_picking_from_picking(orm.TransientModel):
     def _get_source_loc(self, cr, uid, context):
         if context is None: context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
-        warehouse_id = context.get('warehouse_id')
+        warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         return warehouse_obj.read(cr, uid,
             warehouse_id, ['lot_rma_id'], context=context)['lot_rma_id'][0]
 
     # Get default destination location
     def _get_dest_loc(self, cr, uid, context):
         if context is None: context = {}
+        warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         warehouse_obj = self.pool.get('stock.warehouse')
-        warehouse_id = context.get('warehouse_id')
-        print warehouse_id
+        import pdb;pdb.set_trace()
         if context.get('picking_type'):
             context_loc = context.get('picking_type')[8:]
             loc_field = 'lot_%s_id' %context.get('picking_type')[8:]
             loc_id = warehouse_obj.read(cr, uid,
-                [warehouse_id], [loc_field], context=context)[loc_field][0]
+                warehouse_id, [loc_field], context=context)[loc_field][0]
         return loc_id
 
     _defaults = {
