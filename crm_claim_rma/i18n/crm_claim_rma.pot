@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-15 13:25+0000\n"
-"PO-Revision-Date: 2013-11-15 13:25+0000\n"
+"POT-Creation-Date: 2013-11-15 14:51+0000\n"
+"PO-Revision-Date: 2013-11-15 14:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,6 +81,14 @@ msgid "Claim description"
 msgstr ""
 
 #. module: crm_claim_rma
+#: field:claim_make_picking.wizard,claim_line_dest_location:0
+#: field:claim_make_picking_from_picking.wizard,picking_line_dest_location:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_from_picking_wizard_picking_line_dest_location
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_dest_location
+msgid "Dest. Location"
+msgstr ""
+
+#. module: crm_claim_rma
 #: field:claim.line,move_out_id:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_move_out_id
 msgid "Move Line from picking out"
@@ -100,6 +108,11 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:0
 msgid "Create picking"
+msgstr ""
+
+#. module: crm_claim_rma
+#: view:claim.line:0
+msgid "Claim Line"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -454,11 +467,8 @@ msgid "Invoice Line"
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:claim_make_picking.wizard,claim_line_dest_location:0
-#: field:claim_make_picking_from_picking.wizard,picking_line_dest_location:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_from_picking_wizard_picking_line_dest_location
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_dest_location
-msgid "Dest. Location"
+#: view:claim.line:0
+msgid "Linked Document"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -585,11 +595,6 @@ msgid "Claim line substates"
 msgstr ""
 
 #. module: crm_claim_rma
-#: view:claim.line:0
-msgid "Returned line"
-msgstr ""
-
-#. module: crm_claim_rma
 #: selection:claim.line,claim_origine:0
 msgid "Not specified"
 msgstr ""
@@ -670,6 +675,7 @@ msgid "Action"
 msgstr ""
 
 #. module: crm_claim_rma
+#: view:claim.line:0
 #: view:crm.claim:0
 msgid "Claims"
 msgstr ""
