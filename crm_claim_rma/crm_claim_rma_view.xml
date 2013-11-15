@@ -58,7 +58,6 @@
                     <field name="substate_id"/>
                     <field name="product_id"/>
                     <field name="name"/>
-                    <field name="product_id"/>
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
                     <field name="location_dest_id"/> 
@@ -147,7 +146,7 @@
                     <group name="Product Return">
                         <separator string="Product Return" colspan="4"/>
                         <group>
-                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id, context)" domain="[('partner_id','=',partner_id)]" />
+                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id,warehouse_id,context)" domain="[('partner_id','=',partner_id)]" />
                         </group>
                         <group>
                             <!-- Place for mass return button from crm_rma_lot_mass_return -->

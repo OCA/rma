@@ -54,7 +54,7 @@ class claim_line(orm.Model):
     # Comment written in a claim.line to know about the warranty status
     WARRANT_COMMENT = {
         'valid': "Valid",
-        'expired': "Expired"
+        'expired': "Expired",
         'not_define': "Not Defined"}
         
     # Method to calculate total amount of the line : qty*UP
@@ -163,11 +163,6 @@ class claim_line(orm.Model):
         'name': lambda *a: 'none',
     } 
 
-    def write(self, cr, uid, ids, vals, context=None):
-        res = super(claim_line, self).write(cr, uid, ids, vals, context=context)
-        self.set_warranty(cr, uid, ids, context=context)
-        return res
-
     # Method to calculate warranty limit
     def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
@@ -181,7 +176,7 @@ class claim_line(orm.Model):
             else:
                 waranty_duration = int(claim_line.product_id.warranty)
             limit = (date_inv_at_server +
-                    relativedelta(month=waranty_duration).strftime(DEFAULT_SERVER_DATE_FORMAT) 
+                    relativedelta(month=waranty_duration)).strftime(DEFAULT_SERVER_DATE_FORMAT)
             # If waranty period was defined
             if waranty_duration > 0:
                 if limit < claim_line.claim_id.date:
@@ -197,6 +192,24 @@ class claim_line(orm.Model):
                 _('Cannot find any date for invoice ! Must be a validated invoice !'))
         return True
 
+    def get_destination_location(self, cr, uid, product_id, 
+            warehouse_id, context=None):
+        """Compute and return the destination location ID to take
+        for a return."""
+        prod_obj = self.pool.get('product.product')
+        prod = prod_obj.browse(cr, uid, product_id, context=context)
+        wh_obj = self.pool.get('stock.warehouse')
+        wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
+        location_dest_id = wh.lot_stock_id.id
+        return_type = 'company'
+        if prod:
+            seller = prod.seller_info_id
+            if seller:
+                return_type = seller.warranty_return_partner
+                if return_type == 'supplier':
+                    location_dest_id = seller.name.property_stock_supplier.id
+        return location_dest_id
+
     # Method to calculate warranty return address
     def set_warranty_return_address(self, cr, uid, ids, 
             claim_line, context=None):
@@ -207,7 +220,6 @@ class claim_line(orm.Model):
               if specified
             - supplier: return to the supplier address"""
         return_address = None
-        location_dest_id = claim_line.warehouse_id.lot_stock_id.id
         return_type = 'company'
         seller = claim_line.product_id.seller_info_id
         claim_company = claim_line.claim_id.company_id
@@ -219,7 +231,10 @@ class claim_line(orm.Model):
             return_type = seller.warranty_return_partner
             if return_type == 'supplier':
                 return_address = seller.warranty_return_address.id
-                location_dest_id = seller.property_stock_supplier.id
+        location_dest_id = self.get_destination_location(cr, uid, 
+            claim_line.product_id.id,
+            claim_line.claim_id.warehouse_id.id,
+            context=context)
         self.write(cr, uid, ids,
             {'warranty_return_partner': return_address,
             'warranty_type': return_type,
@@ -334,12 +349,20 @@ class crm_claim(orm.Model):
                         res['value']['partner_phone'] = other_add.phone
         return res
 
-    def onchange_invoice_id(self, cr, uid, ids, invoice_id, context=None):
+    def onchange_invoice_id(self, cr, uid, ids, invoice_id, 
+            warehouse_id, context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')
+        claim_line_obj = self.pool.get('claim.line')
         invoice_line_ids = invoice_line_obj.search(cr, uid, 
             [('invoice_id','=',invoice_id)])
         claim_lines = []
+        if not warehouse_id:
+            warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         for invoice_line in invoice_line_obj.browse(cr,uid,invoice_line_ids):
+            location_dest_id = claim_line_obj.get_destination_location(cr, uid, 
+                invoice_line.product_id.id,
+                warehouse_id,
+                context=context)
             claim_lines.append({
                     'name': invoice_line.name,
                     'claim_origine' : "none",
@@ -347,6 +370,7 @@ class crm_claim(orm.Model):
                     'product_id' : invoice_line.product_id.id,
                     'product_returned_quantity' : invoice_line.quantity,
                     'unit_sale_price' : invoice_line.price_unit,
+                    'location_dest_id': location_dest_id,
                     'state' : 'draft',
                 })
         return  {'value' : {'claim_line_ids' : claim_lines}}

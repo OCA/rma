@@ -133,11 +133,11 @@ class claim_make_picking(orm.TransientModel):
         picking_obj = self.pool.get('stock.picking')
         if context is None: context = {}
         view_obj = self.pool.get('ir.ui.view')
+        name = 'RMA picking out'
         if context.get('picking_type') == 'out':
             p_type = 'out'
             write_field = 'move_out_id'
             note = 'RMA picking out'
-            name = 'Customer picking out'
             view_xml_id = 'stock_picking_form'
             view_name = 'stock.picking.form'
         else:
@@ -147,6 +147,7 @@ class claim_make_picking(orm.TransientModel):
             write_field = 'move_in_id'
             if context.get('picking_type'):
                 note = 'RMA picking ' + str(context.get('picking_type'))
+                name = note
         view_id = view_obj.search(cr, uid, [
                                             ('xml_id', '=', view_xml_id),
                                             ('model', '=', 'stock.picking'),
@@ -157,13 +158,16 @@ class claim_make_picking(orm.TransientModel):
         claim = self.pool.get('crm.claim').browse(cr, uid, 
             context['active_id'], context=context)
         partner_id = claim.partner_id.id
-
-        common_dest_loc_id = self._get_common_dest_location_from_line(cr, uid, 
-                line_ids, context=context)
-        if not common_dest_loc_id:
-            raise osv.except_osv(_('Error !'), 
-                _('A picking cannot be created for various destination location, please '
-                  'chose line with a same destination location.'))
+        line_ids = [x.id for x in wizard.claim_line_ids]
+        # In case of product return, we don't allow one picking for various
+        # product if location are different
+        if context.get('product_return'):
+            common_dest_loc_id = self._get_common_dest_location_from_line(cr, uid, 
+                    line_ids, context=context)
+            if not common_dest_loc_id:
+                raise osv.except_osv(_('Error !'), 
+                    _('A product return cannot be created for various destination location, please '
+                      'chose line with a same destination location.'))
         # create picking
         picking_id = picking_obj.create(cr, uid, {
                     'origin': claim.number,

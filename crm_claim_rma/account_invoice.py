@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp.osv import fields, orm, osv
 from tools.translate import _
 
 
@@ -31,17 +31,13 @@ class account_invoice(orm.Model):
         'claim_id': fields.many2one('crm.claim', 'Claim'),
     }
 
-    def _get_cleanup_fields(self, cr, uid, context=None):
-        fields = super(account_invoice, self)._get_cleanup_fields(cr, uid, 
-            context=context)
-        fields = fields + ('claim_line_id',)
-        return fields
-
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
+        """Override when from claim to update the quantity and link
+        to the claim line."""
         if context is None: context = {}
         new_lines = []
-        # check if is an invoice_line
-        if context.get('claim_line_ids') and lines and 'product_id' in lines[0]:
+        # check if is an invoice_line and we are from a claim
+        if context.get('claim_line_ids') and lines and lines[0]._name =='account.invoice.line' :
             for claim_line_id in context.get('claim_line_ids'):
                 claim_info = self.pool.get('claim.line').read(cr, uid, 
                     claim_line_id[1], 
@@ -51,12 +47,13 @@ class account_invoice(orm.Model):
                         'refund_line_id'], 
                     context=context)
                 if not claim_info['refund_line_id']:
+                #For each lines replace quantity and add clain_line_id
                     inv_line_obj = self.pool.get('account.invoice.line')
                     inv_line =  inv_line_obj.browse(cr, uid, 
                             [claim_info['invoice_line_id'][0]], 
                             context=context)[0]
                     clean_line = {}
-                    for field in invoice_line_info._all_columns.keys():
+                    for field in inv_line._all_columns.keys():
                         column_type = inv_line._all_columns[field].column._type
                         if column_type == 'many2one':
                             clean_line[field] = inv_line[field].id
@@ -75,14 +72,21 @@ class account_invoice(orm.Model):
                 # not instead of raise an error
                 raise osv.except_osv(_('Error !'), 
                     _('A refund has already been created for this claim !'))
+        else:
+            return super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines, context=None)
         return map(lambda x: (0,0,x), new_lines)
 
-    def _prepare_refund(self, cr, uid, *args, **kwargs):
-        result = super(account_invoice, self)._prepare_refund(cr, uid, 
-            *args, **kwargs)
-        if kwargs.get('context') and kwargs['context'].get('claim_id'):
-            result['claim_id'] = kwargs['context']['claim_id']
+    def _prepare_refund(self, cr, uid, invoice, date=None, period_id=None, 
+            description=None, journal_id=None, context=None):
+        if context is None:
+            context={}
+        result = super(account_invoice, self)._prepare_refund(cr, uid, invoice, 
+            date=date, period_id=period_id, description=description, 
+            journal_id=journal_id, context=context)
+        if context.get('claim_id'):
+            result['claim_id'] = context.get('claim_id')
         return result
+
 
 class account_invoice_line(orm.Model):
 
