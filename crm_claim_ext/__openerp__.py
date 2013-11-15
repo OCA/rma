@@ -50,7 +50,7 @@ author (Akretion) take a decision on them.
     ],
     'demo_xml': [], 
     'test': [], 
-    'installable': True,
+    'installable': False,
     'active': False,
     'certificate' : '',
 }
