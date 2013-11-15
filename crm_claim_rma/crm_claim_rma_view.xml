@@ -188,6 +188,56 @@
         </field>
     </record>
 
+
+<!-- Right side link to orders -->
+        <act_window 
+        id="act_crm_claim_rma_sale_orders" 
+        name="Quotations and Sales"
+        res_model="sale.order"
+        src_model="crm.claim"/>
+<!-- Right side link to invoices -->
+        <act_window 
+        domain="[('type', '=', 'out_invoice')]"
+        id="act_crm_claim_rma_invoice_out" 
+        name="Customer Invoices" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/>
+<!-- Right side link to invoices -->
+        <act_window 
+        domain="[('type', '=', 'in_invoice')]"
+        id="act_crm_claim_rma_invoice_in" 
+        name="Supplier Invoices" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/>
+<!-- Right side link to refunds -->
+        <act_window 
+        domain="[('type', '=', 'out_refund')]"
+        id="act_crm_claim_rma_refunds_out" 
+        name="Customer Refunds" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/>    
+<!-- Right side link to refunds -->
+        <act_window 
+        domain="[('type', '=', 'in_refund')]"
+        id="act_crm_claim_rma_refunds_in" 
+        name="Supplier Refunds" 
+        res_model="account.invoice" 
+        src_model="crm.claim"/> 
+<!-- Right side link to picking in --> 
+        <act_window
+        domain="[('type', '=', 'in')]"
+        id="act_crm_claim_rma_picking_in" 
+        name="Incomming Shipment and Returns" 
+        res_model="stock.picking" 
+        src_model="crm.claim"/>  
+<!-- Right side link to picking out -->
+        <act_window 
+        domain="[('type', '=', 'out')]"
+        id="act_crm_claim_rma_picking_out" 
+        name="Deliveries" 
+        res_model="stock.picking" 
+        src_model="crm.claim"/>  
+
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
@@ -209,6 +259,35 @@
                     <field name="name" />
                     <field name="date"/>
                 </field>
+                <xpath expr="//sheet[@string='Claims']/group[1]" position="inside">
+                    <div class="oe_right oe_button_box" name="buttons">
+                        <button name="%(act_crm_claim_rma_sale_orders)d" type="action"
+                                string="Quotations and Sales"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
+                        <button name="%(act_crm_claim_rma_invoice_out)d" type="action"
+                                string="Customer Invoices"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
+                        <button name="%(act_crm_claim_rma_refunds_out)d" type="action"
+                                string="Customer Refunds"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
+                        <button name="%(act_crm_claim_rma_invoice_in)d" type="action"
+                                string="Supplier Invoices"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
+                        <button name="%(act_crm_claim_rma_refunds_in)d" type="action"
+                                string="Supplier Refunds"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
+                    </div>
+                </xpath>
             </field>
     </record>
 
@@ -227,61 +306,6 @@
         </field>
     </record>
 
-<!-- Right side link to orders -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id]}"
-        id="act_crm_claim_rma_sale_orders" 
-        name="Partner sale orders" 
-        res_model="sale.order" 
-        src_model="crm.claim"/>
-<!-- Right side link to invoices -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id],}"
-        domain="[('type', '=', 'out_invoice')]"
-        id="act_crm_claim_rma_invoice_out" 
-        name="Partner invoices out" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/>
-<!-- Right side link to invoices -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id],}"
-        domain="[('type', '=', 'in_invoice')]"
-        id="act_crm_claim_rma_invoice_in" 
-        name="Partner invoices in" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/>
-<!-- Right side link to refunds -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id],}"
-        domain="[('type', '=', 'out_refund')]"
-        id="act_crm_claim_rma_refunds_out" 
-        name="Partner refunds out" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/>    
-<!-- Right side link to refunds -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id],}"
-        domain="[('type', '=', 'in_refund')]"
-        id="act_crm_claim_rma_refunds_in" 
-        name="Partner refunds in" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/> 
-<!-- Right side link to picking in --> 
-        <act_window
-        context="{'search_default_partner_id': [partner_id]}"
-        domain="[('type', '=', 'in')]"
-        id="act_crm_claim_rma_picking_in" 
-        name="Partner picking IN" 
-        res_model="stock.picking" 
-        src_model="crm.claim"/>  
-<!-- Right side link to picking out -->
-        <act_window 
-        context="{'search_default_partner_id': [partner_id]}"
-        domain="[('type', '=', 'out')]"
-        id="act_crm_claim_rma_picking_out" 
-        name="Partner picking OUT" 
-        res_model="stock.picking" 
-        src_model="crm.claim"/>  
        
 <!-- Menu -->
         <record model="ir.actions.act_window" id="crm_claim.crm_case_categ_claim0">

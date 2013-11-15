@@ -43,9 +43,9 @@ It mainly contain the following features:
 
 Using this module make the logistic flow of return this way:
 
- * Returning product goes into Stock or Supplier location with a incoming shipment (depending
-   on the settings of the supplier info in the product form)
- * You can make a delivery from the RMA to send a new product to the Customer
+* Returning product goes into Stock or Supplier location with a incoming shipment (depending
+  on the settings of the supplier info in the product form)
+* You can make a delivery from the RMA to send a new product to the Customer
 
 """,
     'author': 'Akretion, Camptocamp',

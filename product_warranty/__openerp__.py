@@ -34,7 +34,7 @@ Extend the product warranty management with warranty details on product / suppli
 * supplier warranty duration
 * return product to company, supplier, other
 
-Thos informationy are used in the RMA Claim (Product Return Management) module.
+Those informations are used in the RMA Claim (Product Return Management) module.
 
 """,
     'author': 'Akretion',
