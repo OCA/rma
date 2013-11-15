@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-{'name': 'RMA Claims by shop',
+{'name': 'RMA Claims Advance Location',
  'version': '1.0',
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['crm_claim_rma'

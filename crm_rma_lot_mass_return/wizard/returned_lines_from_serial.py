@@ -146,7 +146,7 @@ class returned_lines_from_serial(orm.TransientModel):
     # Method to create return lines
     def add_return_lines(self, cr, uid, ids, context=None):
         result = self.browse(cr,uid,ids)[0]
-        return_line = self.pool.get('return.line')
+        return_line = self.pool.get('claim.line')
         # Refactor code : create 1 "createmethode" called by each if with values as parameters    
         return_line.create(cr, uid, {
                     'claim_id': context['active_id'],
