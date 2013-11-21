@@ -23,4 +23,3 @@ from . import wizard
 from . import crm_claim_rma
 from . import account_invoice
 from . import stock
-from . import res_company

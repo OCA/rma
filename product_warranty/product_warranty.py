@@ -64,21 +64,26 @@ class product_supplierinfo(orm.Model):
             result[supplier_info.id] = {}
             address_id = False
             return_partner = supplier_info.warranty_return_partner
+            partner_id = supplier_info.company_id.partner_id.id
             if return_partner:
                 if return_partner == 'supplier':
                     partner_id = supplier_info.name.id
-                else:
-                    partner_id = supplier_info.company_id.partner_id.id
+                elif return_partner == 'company':
+                    if supplier_info.company_id.crm_return_address_id:
+                        partner_id = supplier_info.company_id.crm_return_address_id.id
+                elif return_partner == 'other':
+                    if supplier_info.warranty_return_other_address_id:
+                        partner_id = supplier_info.warranty_return_other_address_id.id
                 result[supplier_info.id] = partner_id
         return result
 
     _columns = {
-        "warranty_duration": fields.float('Warranty',
+        "warranty_duration": fields.float('Period',
             help="Warranty in month for this product/supplier relation. Only for "
                  "company/supplier relation (purchase order) ; the customer/company "
                  "relation (sale order) always use the product main warranty field"),
-        "warranty_return_partner":  fields.selection(get_warranty_return_partner, 
-            'Warrantee return',
+        "warranty_return_partner":  fields.selection(get_warranty_return_partner,
+            'Return type',
             required=True,
             help="Who is in charge of the warranty return treatment toward the end customer. "
             "Company will use the current compagny delivery or default address and so on for "
@@ -88,9 +93,15 @@ class product_supplierinfo(orm.Model):
         'return_instructions': fields.many2one('return.instruction',
             'Instructions',
             help="Instructions for product return"),
-        'active_supplier': fields.boolean('Active supplier'),
+        'active_supplier': fields.boolean('Active supplier', 
+            help="Is this supplier still active, only for information"),
         'warranty_return_address': fields.function(_get_warranty_return_address,
-            type='many2one', relation='res.partner', string="Warranty return address"),
+            type='many2one', relation='res.partner', string="Return address",
+            help="Where the goods should be returned (computed field based on other infos.)"),
+        "warranty_return_other_address_id" : fields.many2one('res.partner',
+            'Return address',
+            help="Where the customer has to send back the product(s) if warranty return is set"
+                 "to 'other'."),
         }
     _defaults = {
         'warranty_return_partner': lambda *a: 'company',

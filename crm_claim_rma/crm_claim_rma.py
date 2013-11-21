@@ -75,7 +75,12 @@ class claim_line(orm.Model):
         std_default.update(default)
         return super(claim_line, self).copy_data(
             cr, uid, id, default=std_default, context=context)
-        
+    
+    def get_warranty_return_partner(self, cr, uid, context=None):
+        seller = self.pool.get('product.supplierinfo')
+        result = seller.get_warranty_return_partner(cr, uid, context=context)
+        return result
+
     _columns = {
         'name': fields.char('Description', size=64,required=True),
         'claim_origine': fields.selection([('none','Not specified'),
@@ -119,13 +124,17 @@ class claim_line(orm.Model):
         'warning': fields.char('Warranty', size=64,
             readonly=True,
             help="If warranty has expired"),
-        'warranty_type': fields.char('Warranty type',
-            size=64,
+        "warranty_type":  fields.selection(get_warranty_return_partner,
+            'Warranty type',
             readonly=True,
-            help="From product form"),
+            help="Who is in charge of the warranty return treatment toward the end customer. "
+            "Company will use the current compagny delivery or default address and so on for "
+            "supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be "
+            "applied is the one of the return partner (ie: can be returned to the company and "
+            "be under the brand warranty"),
         "warranty_return_partner" : fields.many2one('res.partner',
-            'Warranty return',
-            help="Where the customer has to send back the product(s)"),        
+            'Warranty Address',
+            help="Where the customer has to send back the product(s)"),
         'claim_id': fields.many2one('crm.claim', 'Related claim',
             help="To link to the case.claim object"),
         'state' : fields.selection([('draft','Draft'),
@@ -195,18 +204,18 @@ class claim_line(orm.Model):
     def get_destination_location(self, cr, uid, product_id, 
             warehouse_id, context=None):
         """Compute and return the destination location ID to take
-        for a return."""
+        for a return. Always take 'Supplier' one when return type different
+        from company."""
         prod_obj = self.pool.get('product.product')
         prod = prod_obj.browse(cr, uid, product_id, context=context)
         wh_obj = self.pool.get('stock.warehouse')
         wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
         location_dest_id = wh.lot_stock_id.id
-        return_type = 'company'
         if prod:
             seller = prod.seller_info_id
             if seller:
                 return_type = seller.warranty_return_partner
-                if return_type == 'supplier':
+                if return_type != 'company':
                     location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
@@ -220,17 +229,10 @@ class claim_line(orm.Model):
               if specified
             - supplier: return to the supplier address"""
         return_address = None
-        return_type = 'company'
         seller = claim_line.product_id.seller_info_id
         claim_company = claim_line.claim_id.company_id
-        if claim_company.crm_return_address_id:
-            return_address = claim_company.crm_return_address_id.id
-        else:
-            return_address = claim_company.partner_id.id
-        if seller:
-            return_type = seller.warranty_return_partner
-            if return_type == 'supplier':
-                return_address = seller.warranty_return_address.id
+        return_address = seller.warranty_return_address.id
+        return_type = seller.warranty_return_partner
         location_dest_id = self.get_destination_location(cr, uid, 
             claim_line.product_id.id,
             claim_line.claim_id.warehouse_id.id,

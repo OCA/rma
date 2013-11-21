@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-15 14:51+0000\n"
-"PO-Revision-Date: 2013-11-15 14:51+0000\n"
+"POT-Creation-Date: 2013-11-21 15:06+0000\n"
+"PO-Revision-Date: 2013-11-21 15:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,13 +21,18 @@ msgid "Returned good"
 msgstr ""
 
 #. module: crm_claim_rma
-#: view:res.company:0
-msgid "Crm product return address"
+#: view:claim_make_picking.wizard:0
+msgid "Locations"
 msgstr ""
 
 #. module: crm_claim_rma
 #: view:claim.line:0
 msgid "Draft and Open Claims"
+msgstr ""
+
+#. module: crm_claim_rma
+#: help:res.company,crm_return_address_id:0
+msgid "Default address where the customers has to send back the returned product. If empty, the address is the company address"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -47,9 +52,9 @@ msgid "Warranty limit"
 msgstr ""
 
 #. module: crm_claim_rma
-#: model:ir.model.fields,field_description:crm_claim_rma.field_res_company_crm_return_address_id
-#: field:res.company,crm_return_address_id:0
-msgid "Crm return address"
+#: selection:claim.line,applicable_guarantee:0
+#: selection:crm.claim,claim_type:0
+msgid "Supplier"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -65,11 +70,6 @@ msgid "Refund Line"
 msgstr ""
 
 #. module: crm_claim_rma
-#: help:res.company,crm_return_address_id:0
-msgid "Default address where the customers has to send back the returned product in a crm claim. If empty the address is the company address"
-msgstr ""
-
-#. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Company"
 msgstr ""
@@ -82,8 +82,6 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location:0
-#: field:claim_make_picking_from_picking.wizard,picking_line_dest_location:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_from_picking_wizard_picking_line_dest_location
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_dest_location
 msgid "Dest. Location"
 msgstr ""
@@ -150,11 +148,6 @@ msgid "Claim"
 msgstr ""
 
 #. module: crm_claim_rma
-#: help:claim.line,location_dest_id:0
-msgid "The return stock location of the returned product"
-msgstr ""
-
-#. module: crm_claim_rma
 #: help:claim.line,substate_id:0
 msgid "Select a sub state to precise the standard state. Example 1: state = refused; substate could be warranty over, not in warranty, no problem,... . Example 2: state = to treate; substate could be to refund, to exchange, to repair,..."
 msgstr ""
@@ -170,7 +163,6 @@ msgid "Create Outgoing Shipments"
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:claim.line,warranty_return_partner:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_warranty_return_partner
 msgid "Warranty return"
 msgstr ""
@@ -180,11 +172,6 @@ msgstr ""
 #: field:claim.line,warning:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_warning
 msgid "Warranty"
-msgstr ""
-
-#. module: crm_claim_rma
-#: help:claim.line,warning:0
-msgid "If warranty has expired"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -225,18 +212,12 @@ msgid "Receptions / Deliveries"
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:claim.line,location_dest_id:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_location_dest_id
-msgid "Return Stock Location"
-msgstr ""
-
-#. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_picking_out
 msgid "Delivery Orders"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:185
+#: code:addons/crm_claim_rma/crm_claim_rma.py:194
 #, python-format
 msgid "valid"
 msgstr ""
@@ -247,14 +228,19 @@ msgid "To set the last state / substate change"
 msgstr ""
 
 #. module: crm_claim_rma
+#: model:ir.model.fields,field_description:crm_claim_rma.field_res_company_crm_return_address_id
+#: field:res.company,crm_return_address_id:0
+msgid "Return address"
+msgstr ""
+
+#. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_returned_lines_from_serial_wizard
 msgid "Wizard to create product return lines from serial numbers"
 msgstr ""
 
 #. module: crm_claim_rma
-#: help:claim_make_picking.wizard,claim_line_source_location:0
-#: help:claim_make_picking_from_picking.wizard,picking_line_source_location:0
-msgid "Location where the returned products are from."
+#: selection:claim.line,claim_origine:0
+msgid "Not specified"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -263,14 +249,9 @@ msgid "Returned lines"
 msgstr ""
 
 #. module: crm_claim_rma
-#: view:claim_make_picking.wizard:0
-msgid "Locations"
-msgstr ""
-
-#. module: crm_claim_rma
-#: selection:claim.line,applicable_guarantee:0
-#: selection:crm.claim,claim_type:0
-msgid "Supplier"
+#: field:crm.claim,number:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_crm_claim_number
+msgid "Number"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -307,7 +288,6 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: help:claim_make_picking.wizard,claim_line_dest_location:0
-#: help:claim_make_picking_from_picking.wizard,picking_line_dest_location:0
 msgid "Location where the system will stock the returned products."
 msgstr ""
 
@@ -323,10 +303,11 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/account_invoice.py:73
-#: code:addons/crm_claim_rma/crm_claim_rma.py:191
-#: code:addons/crm_claim_rma/crm_claim_rma.py:253
+#: code:addons/crm_claim_rma/crm_claim_rma.py:200
+#: code:addons/crm_claim_rma/crm_claim_rma.py:255
 #: code:addons/crm_claim_rma/wizard/claim_make_picking.py:64
-#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:167
+#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:182
+#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:188
 #, python-format
 msgid "Error !"
 msgstr ""
@@ -337,7 +318,7 @@ msgid "The warranty limit is computed as: invoice date + warranty defined on sel
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:254
+#: code:addons/crm_claim_rma/crm_claim_rma.py:256
 #, python-format
 msgid "PLEASE SET PRODUCT & INVOICE!"
 msgstr ""
@@ -368,17 +349,6 @@ msgstr ""
 #: field:claim.line,product_returned_quantity:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_product_returned_quantity
 msgid "Quantity"
-msgstr ""
-
-#. module: crm_claim_rma
-#: help:claim.line,warranty_type:0
-msgid "From product form"
-msgstr ""
-
-#. module: crm_claim_rma
-#: field:claim_make_picking_from_picking.wizard,picking_line_ids:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_from_picking_wizard_picking_line_ids
-msgid "Picking lines"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -416,9 +386,9 @@ msgid "Customer Refunds"
 msgstr ""
 
 #. module: crm_claim_rma
-#: model:ir.model.fields,field_description:crm_claim_rma.field_stock_warehouse_lot_breakage_loss_id
-#: field:stock.warehouse,lot_breakage_loss_id:0
-msgid "Location Breakage Loss"
+#: field:claim.line,location_dest_id:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_location_dest_id
+msgid "Return Stock Location"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -438,9 +408,14 @@ msgid "Shipping error"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:168
+#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:183
 #, python-format
 msgid "A product return cannot be created for various destination location, please chose line with a same destination location."
+msgstr ""
+
+#. module: crm_claim_rma
+#: field:claim.line,warranty_return_partner:0
+msgid "Warranty Address"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -495,6 +470,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,prodlot_id:0
 msgid "The serial/lot of the returned product"
+msgstr ""
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizard/claim_make_picking.py:189
+#, python-format
+msgid "A product return cannot be created for various destination address, please chose line with a same address."
 msgstr ""
 
 #. module: crm_claim_rma
@@ -574,7 +555,7 @@ msgid "The refund line related to the returned product"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:183
+#: code:addons/crm_claim_rma/crm_claim_rma.py:192
 #, python-format
 msgid "expired"
 msgstr ""
@@ -595,8 +576,8 @@ msgid "Claim line substates"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
-msgid "Not specified"
+#: help:claim_make_picking.wizard,claim_line_source_location:0
+msgid "Location where the returned products are from."
 msgstr ""
 
 #. module: crm_claim_rma
@@ -609,9 +590,8 @@ msgid "RMA"
 msgstr ""
 
 #. module: crm_claim_rma
-#: model:ir.model.fields,field_description:crm_claim_rma.field_stock_warehouse_lot_rma_id
-#: field:stock.warehouse,lot_rma_id:0
-msgid "Location RMA"
+#: help:claim.line,warranty_type:0
+msgid "Who is in charge of the warranty return treatment toward the end customer. Company will use the current compagny delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -641,7 +621,7 @@ msgid "Where the customer has to send back the product(s)"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:274
+#: code:addons/crm_claim_rma/crm_claim_rma.py:276
 #, python-format
 msgid "There is no warehouse for the current user's company!"
 msgstr ""
@@ -664,7 +644,7 @@ msgid "Claim lines"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:192
+#: code:addons/crm_claim_rma/crm_claim_rma.py:201
 #, python-format
 msgid "Cannot find any date for invoice ! Must be a validated invoice !"
 msgstr ""
@@ -718,8 +698,6 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_source_location:0
-#: field:claim_make_picking_from_picking.wizard,picking_line_source_location:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_from_picking_wizard_picking_line_source_location
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_source_location
 msgid "Source Location"
 msgstr ""
@@ -788,7 +766,7 @@ msgid "substate that precise a given state"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:170
+#: code:addons/crm_claim_rma/crm_claim_rma.py:179
 #, python-format
 msgid "not_define"
 msgstr ""
@@ -857,21 +835,19 @@ msgid "Unit sale price of the product. Auto filed if retrun done by invoice sele
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:273
+#: code:addons/crm_claim_rma/crm_claim_rma.py:275
 #, python-format
 msgid "Error!"
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:crm.claim,number:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_crm_claim_number
-msgid "Number"
+#: help:claim.line,location_dest_id:0
+msgid "The return stock location of the returned product"
 msgstr ""
 
 #. module: crm_claim_rma
-#: model:ir.model.fields,field_description:crm_claim_rma.field_stock_warehouse_lot_carrier_loss_id
-#: field:stock.warehouse,lot_carrier_loss_id:0
-msgid "Location Carrier Loss"
+#: help:claim.line,warning:0
+msgid "If warranty has expired"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -961,11 +937,5 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:0
 msgid "In Progress Claims"
-msgstr ""
-
-#. module: crm_claim_rma
-#: model:ir.model.fields,field_description:crm_claim_rma.field_stock_warehouse_lot_refurbish_id
-#: field:stock.warehouse,lot_refurbish_id:0
-msgid "Location Refurbish"
 msgstr ""
 

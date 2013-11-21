@@ -32,7 +32,9 @@ Product Warranty
 Extend the product warranty management with warranty details on product / supplier relation:
 
 * supplier warranty duration
+* Set default return address for company (if different from standard one)
 * return product to company, supplier, other
+
 
 Those informations are used in the RMA Claim (Product Return Management) module.
 
@@ -42,6 +44,7 @@ Those informations are used in the RMA Claim (Product Return Management) module.
     'depends': ['product'],
     'data': [
         'security/ir.model.access.csv',
+        'res_company_view.xml',
         'product_warranty_view.xml',
     ],
     'demo_xml': [],

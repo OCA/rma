@@ -57,7 +57,6 @@ Using this module make the logistic flow of return this way:
                 'security/ir.model.access.csv',
                 'account_invoice_view.xml',
                 'stock_view.xml',
-                'res_company_view.xml',
                 'crm_claim_rma_data.xml',
     ],
     'images': ['images/product_return.png', 'images/claim.png','images/return_line.png','images/exchange.png'],

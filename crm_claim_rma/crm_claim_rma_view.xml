@@ -61,7 +61,8 @@
                     <field name="name"/>
                     <field name="prodlot_id"/>
                     <field name="warning"/> 
-                    <field name="location_dest_id"/> 
+                    <field name="warranty_type"/> 
+                    <field name="warranty_return_partner"/> 
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
                     <field name="product_returned_quantity"/>
                     <field name="claim_origine"/>

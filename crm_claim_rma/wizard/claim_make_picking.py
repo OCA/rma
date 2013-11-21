@@ -84,7 +84,7 @@ class claim_make_picking(orm.TransientModel):
         return loc_id
 
     def _get_common_dest_location_from_line(self, cr, uid, line_ids, context):
-        """Return the ID of the common location between all lines. If notecommon
+        """Return the ID of the common location between all lines. If no common
         destination was  found, return False"""
         loc_id = False
         line_obj = self.pool.get('claim.line')
@@ -95,6 +95,20 @@ class claim_make_picking(orm.TransientModel):
         if len (line_location) == 1:
             loc_id = line_location[0]
         return loc_id
+
+    def _get_common_partner_from_line(self, cr, uid, line_ids, context):
+        """Return the ID of the common partner between all lines. If no common
+        partner was found, return False"""
+        partner_id = False
+        line_obj = self.pool.get('claim.line')
+        line_partner = []
+        for line in line_obj.browse(cr, uid, line_ids, context=context):
+            if (line.warranty_return_partner and line.warranty_return_partner.id 
+                    not in line_partner):
+                line_partner.append(line.warranty_return_partner.id)
+        if len (line_partner) == 1:
+            partner_id = line_partner[0]
+        return partner_id
 
     # Get default destination location
     def _get_dest_loc(self, cr, uid, context):
@@ -160,6 +174,7 @@ class claim_make_picking(orm.TransientModel):
         line_ids = [x.id for x in wizard.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different
+        # or if partner address is different
         if context.get('product_return'):
             common_dest_loc_id = self._get_common_dest_location_from_line(cr, uid, 
                     line_ids, context=context)
@@ -167,6 +182,14 @@ class claim_make_picking(orm.TransientModel):
                 raise osv.except_osv(_('Error !'), 
                     _('A product return cannot be created for various destination location, please '
                       'chose line with a same destination location.'))
+            common_dest_partner_id = self._get_common_partner_from_line(cr, uid, 
+                    line_ids, context=context)
+            if not common_dest_partner_id:
+                raise osv.except_osv(_('Error !'), 
+                    _('A product return cannot be created for various destination address, please '
+                      'chose line with a same address.'))
+            else:
+                partner_id = common_dest_partner_id
         # create picking
         picking_id = picking_obj.create(cr, uid, {
                     'origin': claim.number,
@@ -174,7 +197,7 @@ class claim_make_picking(orm.TransientModel):
                     'move_type': 'one', # direct
                     'state': 'draft',
                     'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-                    'partner_id': claim.partner_id.id,
+                    'partner_id': partner_id,
                     'invoice_state': "none",
                     'company_id': claim.company_id.id,
                     'location_id': wizard.claim_line_source_location.id,
@@ -193,7 +216,7 @@ class claim_make_picking(orm.TransientModel):
                     'product_id': wizard_claim_line.product_id.id,
                     'product_qty': wizard_claim_line.product_returned_quantity,
                     'product_uom': wizard_claim_line.product_id.uom_id.id,
-                    'partner_id': claim.partner_id.id,
+                    'partner_id': partner_id,
                     'prodlot_id': wizard_claim_line.prodlot_id.id,
                     # 'tracking_id':
                     'picking_id': picking_id,
