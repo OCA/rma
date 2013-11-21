@@ -67,7 +67,6 @@ class claim_make_picking_from_picking(orm.TransientModel):
         if context is None: context = {}
         warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         warehouse_obj = self.pool.get('stock.warehouse')
-        import pdb;pdb.set_trace()
         if context.get('picking_type'):
             context_loc = context.get('picking_type')[8:]
             loc_field = 'lot_%s_id' %context.get('picking_type')[8:]
