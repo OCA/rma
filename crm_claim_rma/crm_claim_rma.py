@@ -185,7 +185,7 @@ class claim_line(orm.Model):
             else:
                 waranty_duration = int(claim_line.product_id.warranty)
             limit = (date_inv_at_server +
-                    relativedelta(month=waranty_duration)).strftime(DEFAULT_SERVER_DATE_FORMAT)
+                    relativedelta(months=waranty_duration)).strftime(DEFAULT_SERVER_DATE_FORMAT)
             # If waranty period was defined
             if waranty_duration > 0:
                 if limit < claim_line.claim_id.date:
