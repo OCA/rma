@@ -25,7 +25,8 @@ import math
 from openerp.osv import fields, orm
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+                           DEFAULT_SERVER_DATETIME_FORMAT)
 from openerp.tools.translate import _
 
 
@@ -238,7 +239,7 @@ class claim_line(orm.Model):
         # If waranty period was defined
         if warranty_duration > 0:
             claim_date = datetime.strptime(claim_line.claim_id.date,
-                                           DEFAULT_SERVER_DATE_FORMAT)
+                                           DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
                 warning = _(self.WARRANT_COMMENT['expired'])
             else:
@@ -280,15 +281,23 @@ class claim_line(orm.Model):
         """
         return_address = None
         seller = claim_line.product_id.seller_info_id
-        claim_company = claim_line.claim_id.company_id
-        return_address = seller.warranty_return_address.id
-        return_type = seller.warranty_return_partner
+        if seller:
+            return_address_id = seller.warranty_return_address.id
+            return_type = seller.warranty_return_partner
+        else:
+            # when no supplier is configured, returns to the company
+            company = claim_line.claim_id.company_id
+            return_address = (company.crm_return_address_id or
+                              company.partner_id)
+            return_address_id = return_address.id
+            return_type = 'company'
+
         location_dest_id = self.get_destination_location(
             cr, uid, claim_line.product_id.id,
             claim_line.claim_id.warehouse_id.id,
             context=context)
         self.write(cr, uid, ids,
-                   {'warranty_return_partner': return_address,
+                   {'warranty_return_partner': return_address_id,
                     'warranty_type': return_type,
                     'location_dest_id': location_dest_id},
                    context=context)

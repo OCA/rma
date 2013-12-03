@@ -58,7 +58,7 @@ class product_supplierinfo(orm.Model):
         # Method to return the partner delivery address or if none, the default address
         # dedicated_delivery_address stand for the case a new type of address more particularly
         # dedicated to return delivery would be implemented.
-        result ={}
+        result = {}
         address_obj = self.pool.get('res.partner')
         for supplier_info in self.browse(cr, uid, ids, context=context):
             result[supplier_info.id] = {}
