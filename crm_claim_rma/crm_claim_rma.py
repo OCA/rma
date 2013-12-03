@@ -218,14 +218,19 @@ class claim_line(orm.Model):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
         if not date_invoice:
             raise orm.except_orm(
-                _('Error !'),
+                _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
         warning = _(self.WARRANT_COMMENT['not_define'])
         date_inv_at_server = datetime.strptime(date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
-        supplier = claim_line.product_id.seller_ids[0]
         if claim_line.claim_id.claim_type == 'supplier':
+            suppliers = claim_line.product_id.seller_ids
+            if not suppliers:
+                raise orm.except_orm(
+                    _('Error'),
+                    _('The product has no supplier configured.'))
+            supplier = suppliers[0]
             warranty_duration = supplier.warranty_duration
         else:
             warranty_duration = claim_line.product_id.warranty
