@@ -20,19 +20,18 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm, osv
+from openerp.osv import fields, orm
 
 
 class res_company(orm.Model):
-    
+
     _inherit = "res.company"
 
     _columns = {
-        'crm_return_address_id': fields.many2one('res.partner', 
+        'crm_return_address_id': fields.many2one(
+            'res.partner',
             'Return address',
             help="Default address where the customers has to send back the "
                  "returned product. If empty, the address is the "
                  "company address"),
     }
-
-
