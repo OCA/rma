@@ -50,6 +50,10 @@ Using this module makes the logistic flow of return this way:
   product form)
 * You can make a delivery from the RMA to send a new product to the Customer
 
+.. warning:: Currently, the warranty duration used is the one configured on the
+             products today, not the one which was configured when the product
+             has been sold.
+
 """,
     'author': 'Akretion, Camptocamp',
     'website': 'http://www.akretion.com, http://www.camptocamp.com',
