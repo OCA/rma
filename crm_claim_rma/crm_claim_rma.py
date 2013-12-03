@@ -20,7 +20,8 @@
 #
 ##############################################################################
 
-import time
+import calendar
+import math
 from openerp.osv import fields, orm
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -191,6 +192,27 @@ class claim_line(orm.Model):
         'name': 'none',
     }
 
+    @staticmethod
+    def warranty_limit(start, warranty_duration):
+        """ Take a duration in float, return the duration in relativedelta
+
+        ``relative_delta(months=...)`` only accepts integers.
+        We have to extract the decimal part, and then, extend the delta with
+        days.
+
+        """
+        decimal_part, months = math.modf(warranty_duration)
+        months = int(months)
+        # If we have a decimal part, we add the number them as days to
+        # the limit.  We need to get the month to know the number of
+        # days.
+        delta = relativedelta(months=months)
+        monthday = start + delta
+        __, days_month = calendar.monthrange(monthday.year, monthday.month)
+        # ignore the rest of the days (hours) since we expect a date
+        days = int(days_month * decimal_part)
+        return start + relativedelta(months=months, days=days)
+
     # Method to calculate warranty limit
     def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
         date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
@@ -204,10 +226,10 @@ class claim_line(orm.Model):
                                                DEFAULT_SERVER_DATE_FORMAT)
         supplier = claim_line.product_id.seller_ids[0]
         if claim_line.claim_id.claim_type == 'supplier':
-            warranty_duration = int(supplier.warranty_duration)
+            warranty_duration = supplier.warranty_duration
         else:
-            warranty_duration = int(claim_line.product_id.warranty)
-        limit = date_inv_at_server + relativedelta(months=warranty_duration)
+            warranty_duration = claim_line.product_id.warranty
+        limit = self.warranty_limit(date_inv_at_server, warranty_duration)
         # If waranty period was defined
         if warranty_duration > 0:
             claim_date = datetime.strptime(claim_line.claim_id.date,
