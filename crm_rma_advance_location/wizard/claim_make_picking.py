@@ -20,31 +20,29 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-from openerp.osv import fields, orm, osv
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
-from openerp import netsvc
-from openerp.tools.translate import _
-import time
+from openerp.osv import orm
 
 
 class claim_make_picking(orm.TransientModel):
 
     _inherit = 'claim_make_picking.wizard'
 
-    # Get default destination location
-    def _get_dest_loc(self, cr, uid, context):
-        res = super(claim_make_picking, self)._get_dest_loc(cr, uid, 
-            context=context)
-        if context is None: context = {}
+    def _get_dest_loc(self, cr, uid, context=None):
+        """ Get default destination location """
+        loc_id = super(claim_make_picking, self)._get_dest_loc(cr, uid, context=context)
+        if context is None:
+            context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = context.get('warehouse_id')
         if context.get('picking_type') == 'in':
-            loc_id = warehouse_obj.read(cr, uid, 
+            loc_id = warehouse_obj.read(
+                cr, uid,
                 warehouse_id,
                 ['lot_rma_id'],
                 context=context)['lot_rma_id'][0]
         elif context.get('picking_type') == 'loss':
-            loc_id = warehouse_obj.read(cr, uid,
+            loc_id = warehouse_obj.read(
+                cr, uid,
                 warehouse_id,
                 ['lot_carrier_loss_id'],
                 context=context)['lot_carrier_loss_id'][0]
@@ -53,4 +51,3 @@ class claim_make_picking(orm.TransientModel):
     _defaults = {
         'claim_line_dest_location': _get_dest_loc,
     }
-
