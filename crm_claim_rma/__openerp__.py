@@ -55,6 +55,15 @@ Using this module makes the logistic flow of return this way:
              products today, not the one which was configured when the product
              has been sold.
 
+Contributors:
+-------------
+
+ * Emmanuel Samyn <esamyn@gmail.com>
+ * Sébastien Beau <sebastien.beau@akretion.com.br>
+ * Benoît Guillot <benoit.guillot@akretion.com.br>
+ * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+ * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+
 """,
     'author': 'Akretion, Camptocamp',
     'website': 'http://www.akretion.com, http://www.camptocamp.com',
