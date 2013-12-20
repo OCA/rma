@@ -26,17 +26,25 @@
     'version': '1.0',
     'category': 'Generic Modules/Product',
     'description': """
-Akretion - Emmanuel Samyn
-Extend the product warranty management with warranty details on product / supplier relation
+Product Warranty
+================
+
+Extend the product warranty management with warranty details on product / supplier relation:
+
 * supplier warranty duration
-* return product to company, supplier, brand, other
-    """,
-    'author': 'esamyn',
-    'website': 'http://www.erp-236.com',
+* Set default return address for company (if different from standard one)
+* return product to company, supplier, other
+
+
+Those informations are used in the RMA Claim (Product Return Management) module.
+
+""",
+    'author': 'Akretion',
+    'website': 'http://akretion.com',
     'depends': ['product'],
-    'init_xml': [],
-    'update_xml': [
+    'data': [
         'security/ir.model.access.csv',
+        'res_company_view.xml',
         'product_warranty_view.xml',
     ],
     'demo_xml': [],

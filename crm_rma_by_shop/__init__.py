@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#    Author: Joel Grand-Guillaume
+#    Copyright 2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,5 +18,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import claim_make_picking
-from . import account_invoice_refund
+from . import claim

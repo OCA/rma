@@ -2,9 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+
+from openerp.osv import fields, orm
 
 
-class account_invoice_refund(orm.TransientModel):
+class res_company(orm.Model):
 
-    _inherit = "account.invoice.refund"
+    _inherit = "res.company"
 
-    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        if context is None:
-            context={}
-        if context.get('invoice_ids'):
-            context['active_ids'] = context.get('invoice_ids')
-        return super(account_invoice_refund, self).compute_refund(
-            cr, uid, ids, mode=mode, context=context)
-
-    def _get_description(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        description = context.get('description') or ''
-        return description
-
-    _defaults = {
-        'description': _get_description,
+    _columns = {
+        'crm_return_address_id': fields.many2one(
+            'res.partner',
+            'Return address',
+            help="Default address where the customers has to send back the "
+                 "returned product. If empty, the address is the "
+                 "company address"),
     }

@@ -2,9 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +19,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+
+{'name': 'RMA Claims Mass Return by Lot',
+ 'version': '1.0',
+ 'category': 'Generic Modules/CRM & SRM',
+ 'depends': ['crm_claim_rma'
+             ],
+ 'author': 'Akretion',
+ 'license': 'AGPL-3',
+ 'website': 'http://www.akretion.com',
+ 'description': """
+RMA Claim Mass Return by Lot
+============================
+
+This module adds possibility to return a whole lot of product from a Claim
+and create a incoming shipment for them.
 
 
-class account_invoice_refund(orm.TransientModel):
+WARNING: This module is currently not yet completely debugged and is waiting his author to be.
 
-    _inherit = "account.invoice.refund"
-
-    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        if context is None:
-            context={}
-        if context.get('invoice_ids'):
-            context['active_ids'] = context.get('invoice_ids')
-        return super(account_invoice_refund, self).compute_refund(
-            cr, uid, ids, mode=mode, context=context)
-
-    def _get_description(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        description = context.get('description') or ''
-        return description
-
-    _defaults = {
-        'description': _get_description,
-    }
+""",
+ 'images': [],
+ 'demo': [],
+ 'data': [
+        'wizard/returned_lines_from_serial_wizard_view.xml',
+        'crm_rma_view.xml',
+ ],
+ 'installable': False,
+ 'application': True,
+}

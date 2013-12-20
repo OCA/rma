@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  crm_claim_rma for OpenERP
-  Copyright (C) 2011 Akretion Benoît Guillot <benoit.guillot@akretion.com>
-  The licence is in the file __openerp__.py
--->
-
 <openerp>
     <data>
         <!-- INHERITED VIEW FOR THE OBJECT : res_company -->
 
-        <record id="crm_claim_rma.company_form" model="ir.ui.view">
+        <record id="company_form" model="ir.ui.view">
             <field name="name">crm_claim_rma.company_form</field>
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form" />

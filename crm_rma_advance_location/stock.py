@@ -2,9 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +19,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp.osv import fields, orm
 
 
-class account_invoice_refund(orm.TransientModel):
+class stock_warehouse(orm.Model):
 
-    _inherit = "account.invoice.refund"
+    _inherit = "stock.warehouse"
 
-    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        if context is None:
-            context={}
-        if context.get('invoice_ids'):
-            context['active_ids'] = context.get('invoice_ids')
-        return super(account_invoice_refund, self).compute_refund(
-            cr, uid, ids, mode=mode, context=context)
-
-    def _get_description(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        description = context.get('description') or ''
-        return description
-
-    _defaults = {
-        'description': _get_description,
+    _columns = {
+        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
+        'lot_carrier_loss_id': fields.many2one(
+            'stock.location',
+            'Location Carrier Loss'),
+        'lot_breakage_loss_id': fields.many2one(
+            'stock.location',
+            'Location Breakage Loss'),
+        'lot_refurbish_id': fields.many2one(
+            'stock.location',
+            'Location Refurbish'),
     }

@@ -27,7 +27,7 @@
         </record> 
 
         <record id="action_stock_picking_from_claim_picking" model="ir.actions.act_window">
-            <field name="name">action_stock_picking_from_claim_picking</field>
+            <field name="name">Create Incomming Shipment to Stock</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking_from_picking.wizard</field>
             <field name="src_model">stock.picking</field>
@@ -38,7 +38,7 @@
         </record>
 
         <record id="action_loss_picking_from_claim_picking" model="ir.actions.act_window">
-            <field name="name">action_loss_picking_from_claim_picking</field>
+            <field name="name">Create Incomming Shipment to Breakkage Loss Location</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking_from_picking.wizard</field>
             <field name="src_model">stock.picking</field>
@@ -49,7 +49,7 @@
         </record>
 
         <record id="action_used_picking_from_claim_picking" model="ir.actions.act_window">
-            <field name="name">action_used_picking_from_claim_picking</field>
+            <field name="name">Create Incomming Shipment to Refurbish Location</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking_from_picking.wizard</field>
             <field name="src_model">stock.picking</field>

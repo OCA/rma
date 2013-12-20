@@ -2,9 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion, 
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
-
-
-class account_invoice_refund(orm.TransientModel):
-
-    _inherit = "account.invoice.refund"
-
-    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        if context is None:
-            context={}
-        if context.get('invoice_ids'):
-            context['active_ids'] = context.get('invoice_ids')
-        return super(account_invoice_refund, self).compute_refund(
-            cr, uid, ids, mode=mode, context=context)
-
-    def _get_description(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        description = context.get('description') or ''
-        return description
-
-    _defaults = {
-        'description': _get_description,
-    }
+#import returned_lines_from_invoice
+#import picking_from_returned_lines
+#import refund_from_returned_lines
+#import exchange_from_returned_lines
+#import picking_from_exchange_lines
+from . import get_empty_serial
