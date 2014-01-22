@@ -11,17 +11,17 @@
             <field name="name">claim_picking</field>
             <field name="model">claim_make_picking.wizard</field>
             <field name="arch" type="xml">
-                <form string="Select exchange lines to add in picking">
+                <form string="Select exchange lines to add in picking" version="7.0">
                     <separator string="Locations" colspan="4"/>
                     <field name="claim_line_source_location" nolabel="1" />
                     <field name="claim_line_dest_location" nolabel="1" />
                     <separator string="Select lines for picking" colspan="4"/>
                     <field name="claim_line_ids" nolabel="1" colspan="4"/>
-                    <group col="4" colspan="2">
-                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
-                        <button name="action_create_picking" string="Create picking" 
-                                icon='gtk-ok' type="object"/>
-                    </group>
+                    <footer>
+                        <button name="action_create_picking" string="Create picking" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
                 </form>
             </field>
         </record> 
