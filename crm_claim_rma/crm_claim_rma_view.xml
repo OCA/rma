@@ -247,14 +247,14 @@
         domain="[('type', '=', 'in')]"
         id="act_crm_claim_rma_picking_in" 
         name="Incomming Shipment and Returns" 
-        res_model="stock.picking" 
+        res_model="stock.picking.in"
         src_model="crm.claim"/>  
 <!-- Right side link to picking out -->
         <act_window 
         domain="[('type', '=', 'out')]"
         id="act_crm_claim_rma_picking_out" 
         name="Deliveries" 
-        res_model="stock.picking" 
+        res_model="stock.picking.out"
         src_model="crm.claim"/>  
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
