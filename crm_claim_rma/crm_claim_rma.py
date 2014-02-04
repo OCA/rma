@@ -29,7 +29,7 @@ from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
 from openerp.tools.translate import _
-
+from openerp import SUPERUSER_ID
 
 class substate_substate(orm.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
@@ -450,3 +450,20 @@ class crm_claim(orm.Model):
                 'state': 'draft',
             })
         return {'value': {'claim_line_ids': claim_lines}}
+
+    def message_get_reply_to(self, cr, uid, ids, context=None):
+        """ Override to get the reply_to of the parent project. """
+        return [claim.section_id.message_get_reply_to()[0] if claim.section_id else False
+                    for claim in self.browse(cr, SUPERUSER_ID, ids, context=context)]
+
+    def message_get_suggested_recipients(self, cr, uid, ids, context=None):
+        recipients = super(crm_claim, self).message_get_suggested_recipients(cr, uid, ids, context=context)
+        try:
+            for claim in self.browse(cr, uid, ids, context=context):
+                if claim.partner_id:
+                    self._message_add_suggested_recipient(cr, uid, recipients, claim, partner=claim.partner_id, reason=_('Customer'))
+                elif claim.email_from:
+                    self._message_add_suggested_recipient(cr, uid, recipients, claim, email=claim.email_from, reason=_('Customer Email'))
+        except (osv.except_osv, orm.except_orm):  # no read access rights -> just ignore suggested recipients because this imply modifying followers
+            pass
+        return recipients

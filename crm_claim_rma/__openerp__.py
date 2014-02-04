@@ -43,6 +43,8 @@ It mainly contains the following features:
 * product refund
 * access to related customer data (orders, invoices, refunds, picking
   in/out) from a claim
+* use the OpenERP chatter within team like in opportunity (reply to refer to 
+  the team, not a person)
 
 Using this module makes the logistic flow of return this way:
 
