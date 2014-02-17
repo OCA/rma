@@ -23,7 +23,7 @@
 
 import calendar
 import math
-from openerp.osv import fields, orm
+from openerp.osv import fields, orm, osv
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
