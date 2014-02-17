@@ -182,7 +182,7 @@ class claim_make_picking(orm.TransientModel):
         claim = self.pool.get('crm.claim').browse(cr, uid,
                                                   context['active_id'],
                                                   context=context)
-        partner_id = claim.partner_id.id
+        partner_id = claim.delivery_address_id.id
         line_ids = [x.id for x in wizard.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different
