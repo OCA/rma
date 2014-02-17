@@ -65,6 +65,7 @@ Contributors:
  * Benoît Guillot <benoit.guillot@akretion.com.br>
  * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
  * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+ * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
 """,
     'author': 'Akretion, Camptocamp',

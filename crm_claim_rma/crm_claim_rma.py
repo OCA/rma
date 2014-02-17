@@ -393,6 +393,10 @@ class crm_claim(orm.Model):
         'invoice_id': fields.many2one(
             'account.invoice', string='Invoice',
             help='Related original Cusotmer invoice'),
+        'delivery_address_id': fields.many2one(
+            'res.partner', string='Partner delivery address',
+            help="This address will be used to deliver repaired or replacement"
+                 "products."),
         'warehouse_id': fields.many2one(
             'stock.warehouse', string='Warehouse',
             required=True),
@@ -425,12 +429,14 @@ class crm_claim(orm.Model):
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id, context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')
+        invoice_obj = self.pool.get('account.invoice')
         claim_line_obj = self.pool.get('claim.line')
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
             [('invoice_id', '=', invoice_id)],
             context=context)
         claim_lines = []
+        value = {}
         if not warehouse_id:
             warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
@@ -449,7 +455,14 @@ class crm_claim(orm.Model):
                 'location_dest_id': location_dest_id,
                 'state': 'draft',
             })
-        return {'value': {'claim_line_ids': claim_lines}}
+        value = {'claim_line_ids': claim_lines}
+        delivery_address_id = False
+        if invoice_id:
+            invoice = invoice_obj.browse(cr, uid, invoice_id, context=context)
+            delivery_address_id = invoice.partner_id.id
+        value['delivery_address_id'] = delivery_address_id
+
+        return {'value': value}
 
     def message_get_reply_to(self, cr, uid, ids, context=None):
         """ Override to get the reply_to of the parent project. """
