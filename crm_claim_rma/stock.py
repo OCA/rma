@@ -54,7 +54,7 @@ class stock_picking_out(orm.Model):
     }
 
 
-class stock_picking_out(orm.Model):
+class stock_picking_in(orm.Model):
 
     _inherit = "stock.picking.in"
 
@@ -72,7 +72,8 @@ class stock_move(orm.Model):
     _inherit = "stock.move"
 
     def create(self, cr, uid, vals, context=None):
-        move_id = super(stock_move, self).create(cr, uid, vals, context=context)
+        move_id = super(stock_move, self
+                        ).create(cr, uid, vals, context=context)
         if vals.get('picking_id'):
             picking_obj = self.pool.get('stock.picking')
             picking = picking_obj.browse(cr, uid, vals['picking_id'],

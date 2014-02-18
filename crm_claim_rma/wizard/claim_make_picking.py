@@ -51,7 +51,8 @@ class claim_make_picking(orm.TransientModel):
     }
 
     def _get_claim_lines(self, cr, uid, context):
-        #TODO use custom states to show buttons of this wizard or not instead of raise an error
+        #TODO use custom states to show buttons of this wizard or not instead
+        # of raise an error
         if context is None:
             context = {}
         line_obj = self.pool.get('claim.line')
@@ -112,7 +113,8 @@ class claim_make_picking(orm.TransientModel):
         line_obj = self.pool.get('claim.line')
         line_partner = []
         for line in line_obj.browse(cr, uid, line_ids, context=context):
-            if (line.warranty_return_partner and line.warranty_return_partner.id
+            if (line.warranty_return_partner
+                    and line.warranty_return_partner.id
                     not in line_partner):
                 line_partner.append(line.warranty_return_partner.id)
         if len(line_partner) == 1:
@@ -123,8 +125,8 @@ class claim_make_picking(orm.TransientModel):
     def _get_dest_loc(self, cr, uid, context):
         """Return the location_id to use as destination.
         If it's an outoing shippment: take the customer stock property
-        If it's an incomming shippment take the location_dest_id common to all lines, or
-        if different, return None."""
+        If it's an incomming shippment take the location_dest_id common to all
+        lines, or if different, return None."""
         if context is None:
             context = {}
         loc_id = False
@@ -220,7 +222,7 @@ class claim_make_picking(orm.TransientModel):
              'location_dest_id': wizard.claim_line_dest_location.id,
              'note': note,
              'claim_id': claim.id,
-              },
+             },
             context=context)
         # Create picking lines
         for wizard_claim_line in wizard.claim_line_ids:

@@ -42,7 +42,7 @@ class account_invoice(orm.Model):
         claim_line_obj = self.pool.get('claim.line')
         # check if is an invoice_line and we are from a claim
         if not (context.get('claim_line_ids') and lines and
-                lines[0]._name =='account.invoice.line'):
+                lines[0]._name == 'account.invoice.line'):
             return super(account_invoice, self)._refund_cleanup_lines(
                 cr, uid, lines, context=None)
 

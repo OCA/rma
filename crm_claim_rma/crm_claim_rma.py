@@ -31,6 +31,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
+
 class substate_substate(orm.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
@@ -106,13 +107,13 @@ class claim_line(orm.Model):
         'product_returned_quantity': fields.float(
             'Quantity', digits=(12, 2),
             help="Quantity of product returned"),
-        'unit_sale_price' : fields.float(
+        'unit_sale_price': fields.float(
             'Unit sale price', digits=(12, 2),
             help="Unit sale price of the product. Auto filled if retrun done "
                  "by invoice selection. Be careful and check the automatic "
                  "value as don't take into account previous refunds, invoice "
                  "discount, can be for 0 if product for free,..."),
-        'return_value' : fields.function(
+        'return_value': fields.function(
             _line_total_amount, string='Total return', type='float',
             help="Quantity returned * Unit sold price",),
         'prodlot_id': fields.many2one(
@@ -133,23 +134,24 @@ class claim_line(orm.Model):
             'Warranty',
             readonly=True,
             help="If warranty has expired"),
-        "warranty_type":  fields.selection(
+        'warranty_type':  fields.selection(
             get_warranty_return_partner,
             'Warranty type',
             readonly=True,
-            help="Who is in charge of the warranty return treatment towards the end customer. "
-                 "Company will use the current company delivery or default address and so on for "
-                 "supplier and brand manufacturer. Does not necessarily mean that the warranty to be "
-                 "applied is the one of the return partner (ie: can be returned to the company and "
-                 "be under the brand warranty"),
-        "warranty_return_partner" : fields.many2one(
+            help="Who is in charge of the warranty return treatment towards "
+                 "the end customer. Company will use the current company "
+                 "delivery or default address and so on for supplier and brand"
+                 " manufacturer. Does not necessarily mean that the warranty "
+                 "to be applied is the one of the return partner (ie: can be "
+                 "returned to the company and be under the brand warranty"),
+        'warranty_return_partner': fields.many2one(
             'res.partner',
             string='Warranty Address',
             help="Where the customer has to send back the product(s)"),
         'claim_id': fields.many2one(
             'crm.claim', string='Related claim',
             help="To link to the case.claim object"),
-        'state' : fields.selection(
+        'state': fields.selection(
             [('draft', 'Draft'),
              ('refused', 'Refused'),
              ('confirmed', 'Confirmed, waiting for product'),
@@ -160,8 +162,8 @@ class claim_line(orm.Model):
         'substate_id': fields.many2one(
             'substate.substate',
             string='Sub state',
-            help="Select a sub state to precise the standard state. Example 1: "
-                 "state = refused; substate could be warranty over, not in "
+            help="Select a sub state to precise the standard state. Example 1:"
+                 " state = refused; substate could be warranty over, not in "
                  "warranty, no problem,... . Example 2: state = to treate; "
                  "substate could be to refund, to exchange, to repair,..."),
         'last_state_change': fields.date(
@@ -245,10 +247,11 @@ class claim_line(orm.Model):
                 warning = _(self.WARRANT_COMMENT['expired'])
             else:
                 warning = _(self.WARRANT_COMMENT['valid'])
-        self.write(cr, uid, ids,
-                   {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
-                    'warning': warning},
-                   context=context)
+        self.write(
+            cr, uid, ids,
+            {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
+             'warning': warning},
+            context=context)
         return True
 
     def get_destination_location(self, cr, uid, product_id,
@@ -270,13 +273,14 @@ class claim_line(orm.Model):
         return location_dest_id
 
     # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids, claim_line, context=None):
+    def set_warranty_return_address(self, cr, uid, ids, claim_line,
+                                    context=None):
         """Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
         We can have various case here:
-            - company or other: return to company partner or crm_return_address_id
-              if specified
+            - company or other: return to company partner or
+              crm_return_address_id if specified
             - supplier: return to the supplier address
 
         """
@@ -318,7 +322,8 @@ class claim_line(orm.Model):
         return True
 
 
-#TODO add the option to split the claim_line in order to manage the same product separately
+#TODO add the option to split the claim_line in order to manage the same
+# product separately
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
@@ -350,7 +355,8 @@ class crm_claim(orm.Model):
 
     def create(self, cr, uid, vals, context=None):
         if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number(cr, uid, context=context)
+            vals['number'] = self._get_sequence_number(cr, uid,
+                                                       context=context)
         new_id = super(crm_claim, self).create(cr, uid, vals, context=context)
         return new_id
 
@@ -388,7 +394,8 @@ class crm_claim(orm.Model):
         'planned_cost': fields.float('Expected cost'),
         'real_revenue': fields.float('Real revenue'),
         'real_cost': fields.float('Real cost'),
-        'invoice_ids': fields.one2many('account.invoice', 'claim_id', 'Refunds'),
+        'invoice_ids': fields.one2many(
+            'account.invoice', 'claim_id', 'Refunds'),
         'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
         'invoice_id': fields.many2one(
             'account.invoice', string='Invoice',
@@ -413,11 +420,14 @@ class crm_claim(orm.Model):
          'Number/Reference must be unique per Company!'),
     ]
 
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False, context=None):
-        res = super(crm_claim, self).onchange_partner_address_id(
-            cr, uid, ids, add, email=email)
+    def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
+                                    context=None):
+        res = super(crm_claim, self
+                    ).onchange_partner_address_id(cr, uid, ids, add,
+                                                  email=email)
         if add:
-            if not res['value']['email_from'] or not res['value']['partner_phone']:
+            if (not res['value']['email_from']
+                    or not res['value']['partner_phone']):
                 partner_obj = self.pool.get('res.partner')
                 address = partner_obj.browse(cr, uid, add, context=context)
                 for other_add in address.partner_id.address:
@@ -427,7 +437,8 @@ class crm_claim(orm.Model):
                         res['value']['partner_phone'] = other_add.phone
         return res
 
-    def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id, context=None):
+    def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
+                            context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')
         invoice_obj = self.pool.get('account.invoice')
         claim_line_obj = self.pool.get('claim.line')
@@ -438,7 +449,8 @@ class crm_claim(orm.Model):
         claim_lines = []
         value = {}
         if not warehouse_id:
-            warehouse_id = self._get_default_warehouse(cr, uid, context=context)
+            warehouse_id = self._get_default_warehouse(cr, uid,
+                                                       context=context)
         invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
                                                 context=context)
         for invoice_line in invoice_lines:
@@ -466,17 +478,27 @@ class crm_claim(orm.Model):
 
     def message_get_reply_to(self, cr, uid, ids, context=None):
         """ Override to get the reply_to of the parent project. """
-        return [claim.section_id.message_get_reply_to()[0] if claim.section_id else False
-                    for claim in self.browse(cr, SUPERUSER_ID, ids, context=context)]
+        return [claim.section_id.message_get_reply_to()[0]
+                if claim.section_id else False
+                for claim in self.browse(cr, SUPERUSER_ID, ids,
+                                         context=context)]
 
     def message_get_suggested_recipients(self, cr, uid, ids, context=None):
-        recipients = super(crm_claim, self).message_get_suggested_recipients(cr, uid, ids, context=context)
+        recipients = super(crm_claim, self
+                           ).message_get_suggested_recipients(cr, uid, ids,
+                                                              context=context)
         try:
             for claim in self.browse(cr, uid, ids, context=context):
                 if claim.partner_id:
-                    self._message_add_suggested_recipient(cr, uid, recipients, claim, partner=claim.partner_id, reason=_('Customer'))
+                    self._message_add_suggested_recipient(
+                        cr, uid, recipients, claim,
+                        partner=claim.partner_id, reason=_('Customer'))
                 elif claim.email_from:
-                    self._message_add_suggested_recipient(cr, uid, recipients, claim, email=claim.email_from, reason=_('Customer Email'))
-        except (osv.except_osv, orm.except_orm):  # no read access rights -> just ignore suggested recipients because this imply modifying followers
+                    self._message_add_suggested_recipient(
+                        cr, uid, recipients, claim,
+                        email=claim.email_from, reason=_('Customer Email'))
+        except (osv.except_osv, orm.except_orm):
+            # no read access rights -> just ignore suggested recipients
+            # because this imply modifying followers
             pass
         return recipients
