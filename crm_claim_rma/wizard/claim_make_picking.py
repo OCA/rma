@@ -164,20 +164,16 @@ class claim_make_picking(orm.TransientModel):
             write_field = 'move_out_id'
             note = 'RMA picking out'
             view_xml_id = 'stock_picking_form'
-            view_name = 'stock.picking.form'
         else:
             p_type = 'in'
-            view_xml_id = 'stock_picking_form'
-            view_name = 'stock.picking.form'
             write_field = 'move_in_id'
             if context.get('picking_type'):
                 note = 'RMA picking ' + str(context.get('picking_type'))
                 name = note
+        model = 'stock.picking.' + p_type
         view_id = view_obj.search(cr, uid,
-                                  [('xml_id', '=', view_xml_id),
-                                   ('model', '=', 'stock.picking'),
+                                  [('model', '=', model),
                                    ('type', '=', 'form'),
-                                   ('name', '=', view_name)
                                    ],
                                   context=context)[0]
         wizard = self.browse(cr, uid, ids[0], context=context)
@@ -263,7 +259,7 @@ class claim_make_picking(orm.TransientModel):
             'view_mode': 'form',
             'view_id': view_id,
             'domain': domain,
-            'res_model': 'stock.picking',
+            'res_model': model,
             'res_id': picking_id,
             'type': 'ir.actions.act_window',
         }
