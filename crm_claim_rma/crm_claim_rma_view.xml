@@ -305,6 +305,16 @@
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
+                        <button name="%(act_crm_claim_rma_picking_in)d" type="action"
+                                string="Returned Products"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                context="{'search_default_claim_id': active_id,'search_default_user_id':False}"
+                               />
+                        <button name="%(act_crm_claim_rma_picking_out)d" type="action"
+                                string="Deliveries"
+                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                               />
                     </div>
                 </xpath>
             </field>
