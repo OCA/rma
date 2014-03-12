@@ -895,7 +895,7 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
-msgid "Incomming Shipment and Returns"
+msgid "Incoming Shipment and Returns"
 msgstr ""
 
 #. module: crm_claim_rma

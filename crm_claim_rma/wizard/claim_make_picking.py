@@ -125,7 +125,7 @@ class claim_make_picking(orm.TransientModel):
     def _get_dest_loc(self, cr, uid, context):
         """Return the location_id to use as destination.
         If it's an outoing shippment: take the customer stock property
-        If it's an incomming shippment take the location_dest_id common to all
+        If it's an incoming shippment take the location_dest_id common to all
         lines, or if different, return None."""
         if context is None:
             context = {}

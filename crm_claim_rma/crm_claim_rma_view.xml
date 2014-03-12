@@ -247,7 +247,7 @@
         <act_window
         domain="[('type', '=', 'in')]"
         id="act_crm_claim_rma_picking_in" 
-        name="Incomming Shipment and Returns" 
+        name="Incoming Shipment and Returns" 
         res_model="stock.picking.in"
         src_model="crm.claim"/>  
 <!-- Right side link to picking out -->
