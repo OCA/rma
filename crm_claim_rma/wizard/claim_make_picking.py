@@ -90,7 +90,7 @@ class claim_make_picking(orm.TransientModel):
             loc_id = self.pool.get('res.partner').read(
                 cr, uid, context['partner_id'],
                 ['property_stock_customer'],
-                context=context)['property_stock_customer']
+                context=context)['property_stock_customer'][0]
         return loc_id
 
     def _get_common_dest_location_from_line(self, cr, uid, line_ids, context):
