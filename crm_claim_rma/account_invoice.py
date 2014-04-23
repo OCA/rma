@@ -46,7 +46,7 @@ class account_invoice(orm.Model):
             return super(account_invoice, self)._refund_cleanup_lines(
                 cr, uid, lines, context=None)
 
-        for __, claim_line_id in context.get('claim_line_ids'):
+        for __, claim_line_id, __ in context.get('claim_line_ids'):
             line = claim_line_obj.browse(cr, uid, claim_line_id,
                                          context=context)
             if not line.refund_line_id:
