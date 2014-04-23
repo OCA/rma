@@ -268,8 +268,10 @@ class claim_line(orm.Model):
         """Compute and return the destination location ID to take
         for a return. Always take 'Supplier' one when return type different
         from company."""
-        prod_obj = self.pool.get('product.product')
-        prod = prod_obj.browse(cr, uid, product_id, context=context)
+        prod = False
+        if product_id:
+            prod_obj = self.pool.get('product.product')
+            prod = prod_obj.browse(cr, uid, product_id, context=context)
         wh_obj = self.pool.get('stock.warehouse')
         wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
         location_dest_id = wh.lot_stock_id.id
@@ -465,14 +467,15 @@ class crm_claim(orm.Model):
         invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
                                                 context=context)
         for invoice_line in invoice_lines:
+            product_id = invoice_line.product_id and invoice_line.product_id.id or False
             location_dest_id = claim_line_obj.get_destination_location(
-                cr, uid, invoice_line.product_id.id,
+                cr, uid, product_id,
                 warehouse_id, context=context)
             claim_lines.append({
                 'name': invoice_line.name,
                 'claim_origine': "none",
                 'invoice_line_id': invoice_line.id,
-                'product_id': invoice_line.product_id.id,
+                'product_id': product_id,
                 'product_returned_quantity': invoice_line.quantity,
                 'unit_sale_price': invoice_line.price_unit,
                 'location_dest_id': location_dest_id,
