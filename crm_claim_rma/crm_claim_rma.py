@@ -348,6 +348,8 @@ class crm_claim(orm.Model):
 
     def name_get(self, cr, uid, ids, context=None):
         res = []
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         for claim in self.browse(cr, uid, ids, context=context):
             number = claim.number and str(claim.number) or ''
             res.append((claim.id, '[' + number + '] ' + claim.name))
