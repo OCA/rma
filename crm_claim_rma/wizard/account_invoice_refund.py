@@ -29,7 +29,7 @@ class account_invoice_refund(orm.TransientModel):
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):
         if context is None:
-            context={}
+            context = {}
         if context.get('invoice_ids'):
             context['active_ids'] = context.get('invoice_ids')
         return super(account_invoice_refund, self).compute_refund(

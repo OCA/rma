@@ -20,7 +20,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm, osv
+from openerp.osv import fields, orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import netsvc
 from openerp.tools.translate import _
@@ -51,7 +51,8 @@ class claim_make_picking(orm.TransientModel):
     }
 
     def _get_claim_lines(self, cr, uid, context):
-        #TODO use custom states to show buttons of this wizard or not instead of raise an error
+        #TODO use custom states to show buttons of this wizard or not instead
+        # of raise an error
         if context is None:
             context = {}
         line_obj = self.pool.get('claim.line')
@@ -89,7 +90,7 @@ class claim_make_picking(orm.TransientModel):
             loc_id = self.pool.get('res.partner').read(
                 cr, uid, context['partner_id'],
                 ['property_stock_customer'],
-                context=context)['property_stock_customer']
+                context=context)['property_stock_customer'][0]
         return loc_id
 
     def _get_common_dest_location_from_line(self, cr, uid, line_ids, context):
@@ -112,7 +113,8 @@ class claim_make_picking(orm.TransientModel):
         line_obj = self.pool.get('claim.line')
         line_partner = []
         for line in line_obj.browse(cr, uid, line_ids, context=context):
-            if (line.warranty_return_partner and line.warranty_return_partner.id
+            if (line.warranty_return_partner
+                    and line.warranty_return_partner.id
                     not in line_partner):
                 line_partner.append(line.warranty_return_partner.id)
         if len(line_partner) == 1:
@@ -123,8 +125,8 @@ class claim_make_picking(orm.TransientModel):
     def _get_dest_loc(self, cr, uid, context):
         """Return the location_id to use as destination.
         If it's an outoing shippment: take the customer stock property
-        If it's an incomming shippment take the location_dest_id common to all lines, or
-        if different, return None."""
+        If it's an incoming shippment take the location_dest_id common to all
+        lines, or if different, return None."""
         if context is None:
             context = {}
         loc_id = False
@@ -162,27 +164,23 @@ class claim_make_picking(orm.TransientModel):
             write_field = 'move_out_id'
             note = 'RMA picking out'
             view_xml_id = 'stock_picking_form'
-            view_name = 'stock.picking.form'
         else:
             p_type = 'in'
-            view_xml_id = 'stock_picking_form'
-            view_name = 'stock.picking.form'
             write_field = 'move_in_id'
             if context.get('picking_type'):
                 note = 'RMA picking ' + str(context.get('picking_type'))
                 name = note
+        model = 'stock.picking.' + p_type
         view_id = view_obj.search(cr, uid,
-                                  [('xml_id', '=', view_xml_id),
-                                   ('model', '=', 'stock.picking'),
+                                  [('model', '=', model),
                                    ('type', '=', 'form'),
-                                   ('name', '=', view_name)
                                    ],
                                   context=context)[0]
         wizard = self.browse(cr, uid, ids[0], context=context)
         claim = self.pool.get('crm.claim').browse(cr, uid,
                                                   context['active_id'],
                                                   context=context)
-        partner_id = claim.partner_id.id
+        partner_id = claim.delivery_address_id.id
         line_ids = [x.id for x in wizard.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different
@@ -220,7 +218,7 @@ class claim_make_picking(orm.TransientModel):
              'location_dest_id': wizard.claim_line_dest_location.id,
              'note': note,
              'claim_id': claim.id,
-              },
+             },
             context=context)
         # Create picking lines
         for wizard_claim_line in wizard.claim_line_ids:
@@ -261,7 +259,7 @@ class claim_make_picking(orm.TransientModel):
             'view_mode': 'form',
             'view_id': view_id,
             'domain': domain,
-            'res_model': 'stock.picking',
+            'res_model': model,
             'res_id': picking_id,
             'type': 'ir.actions.act_window',
         }

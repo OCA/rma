@@ -43,6 +43,8 @@ It mainly contains the following features:
 * product refund
 * access to related customer data (orders, invoices, refunds, picking
   in/out) from a claim
+* use the OpenERP chatter within team like in opportunity (reply to refer to 
+  the team, not a person)
 
 Using this module makes the logistic flow of return this way:
 
@@ -63,6 +65,7 @@ Contributors:
  * Benoît Guillot <benoit.guillot@akretion.com.br>
  * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
  * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+ * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
 """,
     'author': 'Akretion, Camptocamp',
@@ -77,6 +80,7 @@ Contributors:
              'security/ir.model.access.csv',
              'account_invoice_view.xml',
              'stock_view.xml',
+             'res_partner_view.xml',
              'crm_claim_rma_data.xml',
              ],
     'images': ['images/product_return.png',

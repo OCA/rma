@@ -166,6 +166,7 @@
                         <separator string="Product Return" colspan="4"/>
                         <group>
                             <field name="invoice_id" on_change="onchange_invoice_id(invoice_id,warehouse_id,context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
+                            <field name="delivery_address_id" context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
                         </group>
                         <group>
                             <!-- Place for mass return button from crm_rma_lot_mass_return -->
@@ -246,15 +247,15 @@
         <act_window
         domain="[('type', '=', 'in')]"
         id="act_crm_claim_rma_picking_in" 
-        name="Incomming Shipment and Returns" 
-        res_model="stock.picking" 
+        name="Incoming Shipment and Returns" 
+        res_model="stock.picking.in"
         src_model="crm.claim"/>  
 <!-- Right side link to picking out -->
         <act_window 
         domain="[('type', '=', 'out')]"
         id="act_crm_claim_rma_picking_out" 
         name="Deliveries" 
-        res_model="stock.picking" 
+        res_model="stock.picking.out"
         src_model="crm.claim"/>  
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
