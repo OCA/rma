@@ -83,6 +83,7 @@ Contributors:
              'res_partner_view.xml',
              'crm_claim_rma_data.xml',
              ],
+    'test': ['test/test_invoice_refund.yml'],
     'images': ['images/product_return.png',
                'images/claim.png',
                'images/return_line.png',
