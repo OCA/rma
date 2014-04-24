@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-23 05:58+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Launchpad-Export-Date: 2014-04-24 06:35+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
@@ -895,8 +895,8 @@ msgstr "Dirección de envío inexistente"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
-msgid "Incomming Shipment and Returns"
-msgstr "Envíos entrantes y devoluciones"
+msgid "Incoming Shipment and Returns"
+msgstr ""
 
 #. module: crm_claim_rma
 #: view:stock.picking.out:0
