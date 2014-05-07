@@ -106,6 +106,17 @@ class claim_make_picking(orm.TransientModel):
             loc_id = line_location[0]
         return loc_id
 
+    def _auto_set_warranty(self, cr, uid, line_ids, context):
+        """ For each line, if the user has not himself pressed 
+        on 'calculate warranty state', it sets warranty"""
+        if context is None:
+            context = {}
+        line_obj = self.pool.get('claim.line')
+        for line in line_obj.browse(cr, uid, line_ids, context=context):
+            if not line.warning:
+                line_obj.set_warranty(cr, uid, [line.id], context=context)
+        return True
+
     def _get_common_partner_from_line(self, cr, uid, line_ids, context):
         """Return the ID of the common partner between all lines. If no common
         partner was found, return False"""
@@ -194,6 +205,7 @@ class claim_make_picking(orm.TransientModel):
                     _('A product return cannot be created for various '
                       'destination locations, please choose line with a '
                       'same destination location.'))
+            self._auto_set_warranty(cr, uid, line_ids, context=context)
             common_dest_partner_id = self._get_common_partner_from_line(
                 cr, uid, line_ids, context=context)
             if not common_dest_partner_id:
