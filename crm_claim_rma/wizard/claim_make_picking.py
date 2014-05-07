@@ -211,7 +211,7 @@ class claim_make_picking(orm.TransientModel):
              'move_type': 'one',  # direct
              'state': 'draft',
              'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-             'partner_id': partner_id,
+             'partner_id': claim.partner_id.id,
              'invoice_state': "none",
              'company_id': claim.company_id.id,
              'location_id': wizard.claim_line_source_location.id,
