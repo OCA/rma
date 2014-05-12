@@ -254,6 +254,16 @@ class claim_line(orm.Model):
             context=context)
         return True
 
+    def auto_set_warranty(self, cr, uid, ids, context):
+        """ For each line, if the user has not himself pressed 
+        on 'calculate warranty state', it sets warranty"""
+        if context is None:
+            context = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            if not line.warning:
+                self.set_warranty(cr, uid, [line.id], context=context)
+        return True
+
     def get_destination_location(self, cr, uid, product_id,
                                  warehouse_id, context=None):
         """Compute and return the destination location ID to take
