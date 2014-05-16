@@ -255,10 +255,9 @@ class claim_line(orm.Model):
         return True
 
     def auto_set_warranty(self, cr, uid, ids, context):
-        """ For each line, if the user has not himself pressed 
-        on 'calculate warranty state', it sets warranty"""
-        if context is None:
-            context = {}
+        """ Set warranty automatically
+        if the user has not himself pressed on 'Calculate warranty state'
+        button, it sets warranty for him"""
         for line in self.browse(cr, uid, ids, context=context):
             if not line.warning:
                 self.set_warranty(cr, uid, [line.id], context=context)
