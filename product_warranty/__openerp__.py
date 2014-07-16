@@ -51,7 +51,7 @@ Those informations are used in the RMA Claim (Product Return Management) module.
     'test': [],
     'installable': True,
     'active': False,
-    'certificate' : '',
+    'certificate': '',
     'images': ['images/product_warranty.png'],
 }
 
