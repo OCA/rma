@@ -333,10 +333,16 @@ class claim_line(orm.Model):
         return True
 
 
-#TODO add the option to split the claim_line in order to manage the same
+# TODO add the option to split the claim_line in order to manage the same
 # product separately
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
+
+    def init(self, cr):
+        cr.execute("""
+            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL) 
+               OR ("number" = '/');
+        """)
 
     def _get_sequence_number(self, cr, uid, context=None):
         seq_obj = self.pool.get('ir.sequence')
