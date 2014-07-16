@@ -338,6 +338,12 @@ class claim_line(orm.Model):
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
+    def init(self, cr):
+        cr.execute("""
+            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL) 
+               OR ("number" = '/');
+        """)
+
     def _get_sequence_number(self, cr, uid, context=None):
         seq_obj = self.pool.get('ir.sequence')
         res = seq_obj.get(cr, uid, 'crm.claim.rma', context=context) or '/'
