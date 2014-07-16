@@ -338,11 +338,6 @@ class claim_line(orm.Model):
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
-    def _get_sequence_number(self, cr, uid, context=None):
-        seq_obj = self.pool.get('ir.sequence')
-        res = seq_obj.get(cr, uid, 'crm.claim.rma', context=context) or '/'
-        return res
-
     def _get_default_warehouse(self, cr, uid, context=None):
         user_obj = self.pool.get('res.users')
         user = user_obj.browse(cr, uid, uid, context=context)
@@ -366,20 +361,13 @@ class crm_claim(orm.Model):
             res.append((claim.id, '[' + number + '] ' + claim.name))
         return res
 
-    def create(self, cr, uid, vals, context=None):
-        if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number(cr, uid,
-                                                       context=context)
-        new_id = super(crm_claim, self).create(cr, uid, vals, context=context)
-        return new_id
-
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
         std_default = {
             'invoice_ids': False,
             'picking_ids': False,
-            'number': self._get_sequence_number(cr, uid, context=context),
+            'number': self.pool['ir.sequence'].get(cr, uid, 'crm.claim.rma')
         }
         std_default.update(default)
         return super(crm_claim, self).copy_data(
@@ -423,7 +411,8 @@ class crm_claim(orm.Model):
     }
 
     _defaults = {
-        'number': '/',
+        'number': lambda self, cr, uid, context: self.pool['ir.sequence'].get(
+            cr, uid, 'crm.claim.rma'),
         'claim_type': 'customer',
         'warehouse_id': _get_default_warehouse,
     }
