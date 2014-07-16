@@ -51,7 +51,7 @@ class claim_make_picking(orm.TransientModel):
     }
 
     def _get_claim_lines(self, cr, uid, context):
-        #TODO use custom states to show buttons of this wizard or not instead
+        # TODO use custom states to show buttons of this wizard or not instead
         # of raise an error
         if context is None:
             context = {}
@@ -163,7 +163,6 @@ class claim_make_picking(orm.TransientModel):
             p_type = 'out'
             write_field = 'move_out_id'
             note = 'RMA picking out'
-            view_xml_id = 'stock_picking_form'
         else:
             p_type = 'in'
             write_field = 'move_in_id'

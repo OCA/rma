@@ -75,7 +75,7 @@ class account_invoice(orm.Model):
             raise orm.except_orm(
                 _('Error !'),
                 _('A refund has already been created for this claim !'))
-        return [(0, 0, line) for line in new_lines]
+        return [(0, 0, l) for l in new_lines]
 
     def _prepare_refund(self, cr, uid, invoice, date=None, period_id=None,
                         description=None, journal_id=None, context=None):

@@ -333,7 +333,7 @@ class claim_line(orm.Model):
         return True
 
 
-#TODO add the option to split the claim_line in order to manage the same
+# TODO add the option to split the claim_line in order to manage the same
 # product separately
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'

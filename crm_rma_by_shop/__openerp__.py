@@ -36,7 +36,7 @@ Claim improvements to use them by shops:
  * Add shop on claim
  * Add various filter in order to work on a basic "by shop" basis
 
- Was originally designed for e-commerce purpose, but could probably do the trick 
+ Was originally designed for e-commerce purpose, but could probably do the trick
  for other cases as well.
 
 """,

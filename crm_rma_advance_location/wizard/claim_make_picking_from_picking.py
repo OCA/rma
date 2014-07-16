@@ -21,7 +21,7 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 from openerp.osv import fields, orm
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import netsvc
 import time
 
@@ -56,7 +56,8 @@ class claim_make_picking_from_picking(orm.TransientModel):
 
     # Get default source location
     def _get_source_loc(self, cr, uid, context):
-        if context is None: context = {}
+        if context is None: 
+            context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
         warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         return warehouse_obj.read(cr, uid,
@@ -64,7 +65,8 @@ class claim_make_picking_from_picking(orm.TransientModel):
 
     # Get default destination location
     def _get_dest_loc(self, cr, uid, context):
-        if context is None: context = {}
+        if context is None: 
+            context = {}
         warehouse_id = self._get_default_warehouse(cr, uid, context=context)
         warehouse_obj = self.pool.get('stock.warehouse')
         if context.get('picking_type'):
@@ -88,7 +90,8 @@ class claim_make_picking_from_picking(orm.TransientModel):
         picking_obj = self.pool.get('stock.picking')
         move_obj = self.pool.get('stock.move')
         view_obj = self.pool.get('ir.ui.view')
-        if context is None: context = {}
+        if context is None: 
+            context = {}
         p_type = 'internal'
         if context.get('picking_type'):
             context_type = context.get('picking_type')[8:]

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
+#    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -51,15 +51,14 @@ Using this module make the logistic flow of return a bit more complexe:
 WARNING: Use with caution, this module is currently not yet completely debugged and is waiting his author to be.
 
 """,
- 'images': [],
- 'demo': [],
- 'data': [
-    'wizard/claim_make_picking_from_picking_view.xml',
-    'wizard/claim_make_picking_view.xml',
-    'stock_view.xml',
-    'stock_data.xml',
-    'claim_rma_view.xml',
- ],
- 'installable': True,
- 'application': True,
+    'images': [],
+    'demo': [],
+    'data': ['wizard/claim_make_picking_from_picking_view.xml',
+              'wizard/claim_make_picking_view.xml',
+              'stock_view.xml',
+              'stock_data.xml',
+              'claim_rma_view.xml',
+    ],
+    'installable': True,
+    'application': True,
 }
