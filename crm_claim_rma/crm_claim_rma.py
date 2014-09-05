@@ -32,6 +32,16 @@ from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
 
+class InvoiceNoDate(Exception):
+    """ Raised when a warranty cannot be computed for a claim line
+    because the invoice has no date. """
+
+
+class ProductNoSupplier(Exception):
+    """ Raised when a warranty cannot be computed for a claim line
+    because the product has no supplier. """
+
+
 class substate_substate(orm.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
@@ -217,41 +227,55 @@ class claim_line(orm.Model):
         days = int(days_month * decimal_part)
         return start + relativedelta(months=months, days=days)
 
-    # Method to calculate warranty limit
-    def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
-        date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
+    def _warranty_limit_values(self, cr, uid, ids, invoice,
+                               claim_type, product, claim_date,
+                               context=None):
+        date_invoice = invoice.date_invoice
         if not date_invoice:
-            raise orm.except_orm(
-                _('Error'),
-                _('Cannot find any date for invoice. '
-                  'Must be a validated invoice.'))
+            raise InvoiceNoDate
         warning = _(self.WARRANT_COMMENT['not_define'])
-        date_inv_at_server = datetime.strptime(date_invoice,
-                                               DEFAULT_SERVER_DATE_FORMAT)
-        if claim_line.claim_id.claim_type == 'supplier':
-            suppliers = claim_line.product_id.seller_ids
+        date_invoice = datetime.strptime(date_invoice,
+                                         DEFAULT_SERVER_DATE_FORMAT)
+        if claim_type == 'supplier':
+            suppliers = product.seller_ids
             if not suppliers:
-                raise orm.except_orm(
-                    _('Error'),
-                    _('The product has no supplier configured.'))
-            supplier = suppliers[0]
+                raise ProductNoSupplier
+            supplier = supplier[0]
             warranty_duration = supplier.warranty_duration
         else:
-            warranty_duration = claim_line.product_id.warranty
-        limit = self.warranty_limit(date_inv_at_server, warranty_duration)
-        # If waranty period was defined
+            warranty_duration = product.warranty
+        limit = self.warranty_limit(date_invoice, warranty_duration)
         if warranty_duration > 0:
-            claim_date = datetime.strptime(claim_line.claim_id.date,
+            claim_date = datetime.strptime(claim_date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
                 warning = _(self.WARRANT_COMMENT['expired'])
             else:
                 warning = _(self.WARRANT_COMMENT['valid'])
-        self.write(
-            cr, uid, ids,
-            {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
-             'warning': warning},
-            context=context)
+        return {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
+                'warning': warning}
+
+    def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
+        claim = claim_line.claim_id
+        invoice = claim.invoice_id
+        claim_type = claim.claim_type
+        claim_date = claim.date
+        product = claim_line.product_id
+        try:
+            values = self._warranty_limit_values(cr, uid, ids, invoice,
+                                                 claim_type, product,
+                                                 claim_date,
+                                                 context=context)
+        except InvoiceNoDate:
+            raise orm.except_orm(
+                _('Error'),
+                _('Cannot find any date for invoice. '
+                  'Must be a validated invoice.'))
+        except ProductNoSupplier:
+                raise orm.except_orm(
+                    _('Error'),
+                    _('The product has no supplier configured.'))
+        self.write(cr, uid, ids, values, context=context)
         return True
 
     def auto_set_warranty(self, cr, uid, ids, context):
