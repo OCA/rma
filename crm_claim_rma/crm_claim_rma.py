@@ -307,9 +307,8 @@ class claim_line(orm.Model):
                     location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
-    # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids, claim_line,
-                                    context=None):
+    def _warranty_return_address_values(self, cr, uid, product, company,
+                                        warehouse, context=None):
         """Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
@@ -320,27 +319,31 @@ class claim_line(orm.Model):
 
         """
         return_address = None
-        seller = claim_line.product_id.seller_info_id
+        seller = product.seller_info_id
         if seller:
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
         else:
             # when no supplier is configured, returns to the company
-            company = claim_line.claim_id.company_id
             return_address = (company.crm_return_address_id or
                               company.partner_id)
             return_address_id = return_address.id
             return_type = 'company'
-
         location_dest_id = self.get_destination_location(
-            cr, uid, claim_line.product_id.id,
-            claim_line.claim_id.warehouse_id.id,
-            context=context)
-        self.write(cr, uid, ids,
-                   {'warranty_return_partner': return_address_id,
-                    'warranty_type': return_type,
-                    'location_dest_id': location_dest_id},
-                   context=context)
+            cr, uid, product.id, warehouse.id, context=context)
+        return {'warranty_return_partner': return_address_id,
+                'warranty_type': return_type,
+                'location_dest_id': location_dest_id}
+
+    def set_warranty_return_address(self, cr, uid, ids, claim_line,
+                                    context=None):
+        claim = claim_line.claim_id
+        product = claim_line.product_id
+        company = claim.company_id
+        warehouse = claim.warehouse_id
+        values = self._warranty_return_address_values(
+            cr, uid, product, company, warehouse, context=context)
+        self.write(cr, uid, ids, values, context=context)
         return True
 
     def set_warranty(self, cr, uid, ids, context=None):
