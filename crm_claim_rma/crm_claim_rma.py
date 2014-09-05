@@ -309,6 +309,56 @@ class claim_line(orm.Model):
                     location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
+    def onchange_product_id(self, cr, uid, ids, product_id, invoice_line_id,
+                            claim_id, company_id, warehouse_id,
+                            claim_type, claim_date, context=None):
+        if not claim_id and not (company_id and warehouse_id and
+                                claim_type and claim_date):
+            # if we have a claim_id, we get the info from there,
+            # otherwise we get it from the args (on creation typically)
+            return {}
+        if not (product_id and invoice_line_id):
+            return {}
+        product_obj = self.pool['product.product']
+        claim_obj = self.pool['crm.claim']
+        invoice_line_obj = self.pool['account.invoice.line']
+        claim_line_obj = self.pool.get('claim.line')
+        product = product_obj.browse(cr, uid, product_id, context=context)
+        invoice_line = invoice_line_obj.browse(cr, uid, invoice_line_id,
+                                               context=context)
+        invoice = invoice_line.invoice_id
+
+        if claim_id:
+            claim = claim_obj.browse(cr, uid, claim_id, context=context)
+            company = claim.company_id
+            warehouse = claim.warehouse_id
+            claim_type = claim.claim_type
+            claim_date = claim.date
+        else:
+            warehouse_obj = self.pool['stock.warehouse']
+            company_obj = self.pool['res.company']
+            company = company_obj.browse(cr, uid, company_id, context=context)
+            warehouse = warehouse_obj.browse(cr, uid, warehouse_id,
+                                             context=context)
+
+        values = {}
+        try:
+            warranty = claim_line_obj._warranty_limit_values(
+                cr, uid, [], invoice,
+                claim_type, product,
+                claim_date, context=context)
+        except (InvoiceNoDate, ProductNoSupplier):
+            # we don't mind at this point if the warranty can't be
+            # computed and we don't want to block the user
+            pass
+        else:
+            values.update(warranty)
+
+        warranty_address = claim_line_obj._warranty_return_address_values(
+            cr, uid, [], product, company, warehouse, context=context)
+        values.update(warranty_address)
+        return {'value': values}
+
     def _warranty_return_address_values(self, cr, uid, ids, product, company,
                                         warehouse, context=None):
         """Return the partner to be used as return destination and
