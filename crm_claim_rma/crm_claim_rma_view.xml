@@ -100,7 +100,8 @@
                         </group>
                         <group string="Linked Document">
                             <field name="claim_id" />
-                            <field name="invoice_line_id"/>
+                            <field name="invoice_line_id"
+                              on_change="onchange_product_id(product_id, invoice_line_id, claim_id, False, False, False, False, context)"/>
                             <field name="refund_line_id"/>
                             <field name="move_in_id"/>
                             <field name="move_out_id"/>
@@ -195,7 +196,8 @@
                                             <field name="return_value"/>
                                         </group>
                                         <group string="Linked Document">
-                                            <field name="invoice_line_id"/>
+                                            <field name="invoice_line_id"
+                                              on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
                                             <field name="refund_line_id"/>
                                             <field name="move_in_id"/>
                                             <field name="move_out_id"/>
