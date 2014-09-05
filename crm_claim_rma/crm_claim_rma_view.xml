@@ -189,7 +189,7 @@
                                         <group string="Returned good">
                                             <field name="product_returned_quantity"/>
                                             <field name="product_id"
-                                              on_change="onchange_product_id(product_id, invoice_line_id, parent.id, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
+                                              on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
                                             <field name="prodlot_id"/>
                                             <field name="unit_sale_price"/>
                                             <field name="return_value"/>
