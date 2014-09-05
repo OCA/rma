@@ -165,7 +165,7 @@
                     <group name="Product Return">
                         <separator string="Product Return" colspan="4"/>
                         <group>
-                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id,warehouse_id,context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
+                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
                             <field name="delivery_address_id" context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
                         </group>
                         <group>

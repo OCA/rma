@@ -481,7 +481,7 @@ class crm_claim(orm.Model):
         return res
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
-                            context=None):
+                            claim_type, claim_date, context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')
         invoice_obj = self.pool.get('account.invoice')
         claim_line_obj = self.pool.get('claim.line')
@@ -497,20 +497,31 @@ class crm_claim(orm.Model):
         invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
                                                 context=context)
         for invoice_line in invoice_lines:
-            product_id = invoice_line.product_id and invoice_line.product_id.id or False
             location_dest_id = claim_line_obj.get_destination_location(
-                cr, uid, product_id,
+                cr, uid, invoice_line.product_id.id,
                 warehouse_id, context=context)
-            claim_lines.append({
+            line = {
                 'name': invoice_line.name,
                 'claim_origine': "none",
                 'invoice_line_id': invoice_line.id,
-                'product_id': product_id,
+                'product_id': invoice_line.product_id.id,
                 'product_returned_quantity': invoice_line.quantity,
                 'unit_sale_price': invoice_line.price_unit,
                 'location_dest_id': location_dest_id,
                 'state': 'draft',
-            })
+            }
+            try:
+                warranty = claim_line_obj._warranty_limit_values(
+                    cr, uid, [], invoice_line.invoice_id,
+                    claim_type, invoice_line.product_id,
+                    claim_date, context=context)
+            except (InvoiceNoDate, ProductNoSupplier):
+                # we don't mind at this point if the warranty can't be
+                # computed and we don't want to block the user
+                pass
+            else:
+                line.update(warranty)
+            claim_lines.append(line)
         value = {'claim_line_ids': claim_lines}
         delivery_address_id = False
         if invoice_id:
