@@ -230,6 +230,8 @@ class claim_line(orm.Model):
     def _warranty_limit_values(self, cr, uid, ids, invoice,
                                claim_type, product, claim_date,
                                context=None):
+        if not (invoice and claim_type and product and claim_date):
+            return {}
         date_invoice = invoice.date_invoice
         if not date_invoice:
             raise InvoiceNoDate
@@ -307,7 +309,7 @@ class claim_line(orm.Model):
                     location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
-    def _warranty_return_address_values(self, cr, uid, product, company,
+    def _warranty_return_address_values(self, cr, uid, ids, product, company,
                                         warehouse, context=None):
         """Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
@@ -318,6 +320,8 @@ class claim_line(orm.Model):
             - supplier: return to the supplier address
 
         """
+        if not (product and company and warehouse):
+            return {}
         return_address = None
         seller = product.seller_info_id
         if seller:
@@ -342,7 +346,7 @@ class claim_line(orm.Model):
         company = claim.company_id
         warehouse = claim.warehouse_id
         values = self._warranty_return_address_values(
-            cr, uid, product, company, warehouse, context=context)
+            cr, uid, ids, product, company, warehouse, context=context)
         self.write(cr, uid, ids, values, context=context)
         return True
 
@@ -484,10 +488,12 @@ class crm_claim(orm.Model):
         return res
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
-                            claim_type, claim_date, context=None):
+                            claim_type, claim_date, company_id, context=None):
         invoice_line_obj = self.pool.get('account.invoice.line')
         invoice_obj = self.pool.get('account.invoice')
         claim_line_obj = self.pool.get('claim.line')
+        company_obj = self.pool['res.company']
+        warehouse_obj = self.pool['stock.warehouse']
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
             [('invoice_id', '=', invoice_id)],
@@ -524,6 +530,13 @@ class crm_claim(orm.Model):
                 pass
             else:
                 line.update(warranty)
+            company = company_obj.browse(cr, uid, company_id, context=context)
+            warehouse = warehouse_obj.browse(cr, uid, warehouse_id,
+                                             context=context)
+            warranty_address = claim_line_obj._warranty_return_address_values(
+                cr, uid, [], invoice_line.product_id, company,
+                warehouse, context=context)
+            line.update(warranty_address)
             claim_lines.append(line)
         value = {'claim_line_ids': claim_lines}
         delivery_address_id = False
