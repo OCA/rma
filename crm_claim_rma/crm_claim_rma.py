@@ -231,7 +231,7 @@ class claim_line(orm.Model):
                                claim_type, product, claim_date,
                                context=None):
         if not (invoice and claim_type and product and claim_date):
-            return {}
+            return {'guarantee_limit': False, 'warning': False}
         date_invoice = invoice.date_invoice
         if not date_invoice:
             raise InvoiceNoDate
@@ -350,7 +350,7 @@ class claim_line(orm.Model):
         except (InvoiceNoDate, ProductNoSupplier):
             # we don't mind at this point if the warranty can't be
             # computed and we don't want to block the user
-            pass
+            values.update({'guarantee_limit': False, 'warning': False})
         else:
             values.update(warranty)
 
@@ -371,7 +371,9 @@ class claim_line(orm.Model):
 
         """
         if not (product and company and warehouse):
-            return {}
+            return {'warranty_return_partner': False,
+                    'warranty_type': False,
+                    'location_dest_id': False}
         return_address = None
         seller = product.seller_info_id
         if seller:
@@ -569,7 +571,7 @@ class crm_claim(orm.Model):
             except (InvoiceNoDate, ProductNoSupplier):
                 # we don't mind at this point if the warranty can't be
                 # computed and we don't want to block the user
-                pass
+                values.update({'guarantee_limit': False, 'warning': False})
             else:
                 values.update(warranty)
             company = company_obj.browse(cr, uid, company_id, context=context)
