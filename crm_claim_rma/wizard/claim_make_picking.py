@@ -223,14 +223,15 @@ class claim_make_picking(orm.TransientModel):
              },
             context=context)
         # Create picking lines
+        fmt = DEFAULT_SERVER_DATETIME_FORMAT
         for wizard_claim_line in wizard.claim_line_ids:
             move_obj = self.pool.get('stock.move')
             move_id = move_obj.create(
                 cr, uid,
                 {'name': wizard_claim_line.product_id.name_template,
                  'priority': '0',
-                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-                 'date_expected': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                 'date': time.strftime(fmt),
+                 'date_expected': time.strftime(fmt),
                  'product_id': wizard_claim_line.product_id.id,
                  'product_qty': wizard_claim_line.product_returned_quantity,
                  'product_uom': wizard_claim_line.product_id.uom_id.id,

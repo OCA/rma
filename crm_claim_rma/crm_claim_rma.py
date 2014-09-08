@@ -313,7 +313,7 @@ class claim_line(orm.Model):
                             claim_id, company_id, warehouse_id,
                             claim_type, claim_date, context=None):
         if not claim_id and not (company_id and warehouse_id and
-                                claim_type and claim_date):
+                                 claim_type and claim_date):
             # if we have a claim_id, we get the info from there,
             # otherwise we get it from the args (on creation typically)
             return {}
@@ -421,7 +421,8 @@ class crm_claim(orm.Model):
 
     def init(self, cr):
         cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL) 
+            UPDATE "crm_claim" SET "number"=id::varchar
+            WHERE ("number" is NULL)
                OR ("number" = '/');
         """)
 
@@ -557,7 +558,6 @@ class crm_claim(orm.Model):
                                                        context=context)
         invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
                                                 context=context)
-
 
         def warranty_values(invoice, product):
             values = {}
