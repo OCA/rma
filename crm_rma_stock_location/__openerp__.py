@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,21 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
 
+{'name': 'RMA Stock Location',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
+ 'maintainer': 'Camptocamp',
+ 'license': 'AGPL-3',
+ 'category': 'Generic Modules/CRM & SRM',
+ 'depends': ['stock',
+             ],
+ 'description': """
+RMA Stock Location
+==================
 
-class stock_warehouse(orm.Model):
+A RMA location can be selected on the warehouses.
+The product views displays the quantity available and virtual in this
+ RMA location (including the children locations).
 
-    _inherit = "stock.warehouse"
-
-    _columns = {
-        'lot_carrier_loss_id': fields.many2one(
-            'stock.location',
-            'Location Carrier Loss'),
-        'lot_breakage_loss_id': fields.many2one(
-            'stock.location',
-            'Location Breakage Loss'),
-        'lot_refurbish_id': fields.many2one(
-            'stock.location',
-            'Location Refurbish'),
-    }
+ """,
+ 'website': 'http://www.camptocamp.com',
+ 'data': ['stock_data.xml',
+          'stock_warehouse_view.xml',
+          ],
+ 'test': [],
+ 'installable': True,
+ 'auto_install': False,
+ }

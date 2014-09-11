@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1">
+
+    <record id="stock_location_rma" model="stock.location">
+      <field name="name">RMA</field>
+      <field name="usage">internal</field>
+      <field name="location_id" ref="stock.stock_location_company"/>
+    </record>
+
+    <record id="stock.warehouse0" model="stock.warehouse">
+      <field name="lot_rma_id" ref="stock_location_rma"/>
+    </record>
+  </data>
+</openerp>
