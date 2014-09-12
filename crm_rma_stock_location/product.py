@@ -35,7 +35,6 @@ class ProductProduct(orm.Model):
             field_names = []
         if context is None:
             context = {}
-        shop_obj = self.pool['sale.shop']
         warehouse_obj = self.pool['stock.warehouse']
         res = {}
         for id in ids:
@@ -45,7 +44,10 @@ class ProductProduct(orm.Model):
             ctx = context.copy()
 
             warehouse_id = ctx.get('warehouse_id')
-            if ctx.get('shop'):
+            # no dependency on 'sale', the same oddness is done in
+            # 'stock' so I kept it here
+            if ctx.get('shop') and self.pool.get('sale.shop'):
+                shop_obj = self.pool['sale.shop']
                 shop_id = ctx['shop']
                 warehouse = shop_obj.read(cr, uid, shop_id,
                                           ['warehouse_id'],

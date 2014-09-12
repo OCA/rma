@@ -26,6 +26,7 @@
  'license': 'AGPL-3',
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['stock',
+             'procurement',
              ],
  'description': """
 RMA Stock Location
@@ -41,7 +42,8 @@ The product views displays the quantity available and virtual in this
           'stock_warehouse_view.xml',
           'product_view.xml',
           ],
- 'test': [],
+ 'test': ['test/quantity.yml',
+          ],
  'installable': True,
  'auto_install': False,
  }
