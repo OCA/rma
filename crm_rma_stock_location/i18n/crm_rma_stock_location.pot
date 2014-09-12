@@ -36,7 +36,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model.fields,field_description:crm_rma_stock_location.field_product_product_rma_virtual_available
 #: field:product.product,rma_virtual_available:0
-msgid "RMA Quantity Available"
+msgid "RMA Forecasted Quantity"
 msgstr ""
 
 #. module: crm_rma_stock_location

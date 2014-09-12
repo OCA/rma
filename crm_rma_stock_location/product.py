@@ -102,5 +102,5 @@ class ProductProduct(orm.Model):
             type='float',
             multi='rma_qty',
             digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='RMA Quantity Available'),
+            string='RMA Forecasted Quantity'),
     }
