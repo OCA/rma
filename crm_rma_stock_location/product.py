@@ -26,8 +26,8 @@ import openerp.addons.decimal_precision as dp
 class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
-    def _product_available(self, cr, uid, ids, field_names=None, arg=False,
-                           context=None):
+    def _rma_product_available(self, cr, uid, ids, field_names=None, arg=False,
+                               context=None):
         """ Finds the incoming and outgoing quantity of product for the RMA
         locations.
         """
@@ -92,13 +92,13 @@ class ProductProduct(orm.Model):
 
     _columns = {
         'rma_qty_available': fields.function(
-            _product_available,
+            _rma_product_available,
             type='float',
             multi='rma_qty',
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='RMA Quantity On Hand'),
         'rma_virtual_available': fields.function(
-            _product_available,
+            _rma_product_available,
             type='float',
             multi='rma_qty',
             digits_compute=dp.get_precision('Product Unit of Measure'),
