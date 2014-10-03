@@ -601,7 +601,8 @@ class crm_claim(orm.Model):
                 line.update(warranty_values(invoice_line.invoice_id,
                                             invoice_line.product_id))
                 claim_lines.append(line)
-        else:  # happens when the date, warehouse or claim type is modified
+        elif lines:  # happens when the date, warehouse or claim type is
+                     # modified
             for command in lines:
                 code = command[0]
                 assert code != 6, "command 6 not supported in on_change"
