@@ -22,6 +22,7 @@ from openerp.osv import orm, fields
 
 
 class crm_claim(orm.Model):
+
     """ Crm claim
     """
     _inherit = "crm.claim"
@@ -29,4 +30,3 @@ class crm_claim(orm.Model):
     _columns = {
         'shop_id': fields.many2one('sale.shop', 'Shop', select="1"),
     }
-

@@ -22,6 +22,7 @@ from openerp.tests import common
 
 
 class test_lp_1282584(common.TransactionCase):
+
     """ Test wizard open the right type of view
 
     The wizard can generate picking.in and picking.out
@@ -78,7 +79,8 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.in', "Wrong model defined")
+        self.assertEquals(
+            res.get('res_model'), 'stock.picking.in', "Wrong model defined")
 
     def test_01(self):
         """Test wizard opened view model for a new delivery
@@ -92,7 +94,8 @@ class test_lp_1282584(common.TransactionCase):
         wizard_chg_qty_id = WizardChangeProductQty.create(cr, uid, {
             'product_id': self.product_id,
             'new_quantity': 12})
-        WizardChangeProductQty.change_product_qty(cr, uid, [wizard_chg_qty_id], context=wiz_context)
+        WizardChangeProductQty.change_product_qty(
+            cr, uid, [wizard_chg_qty_id], context=wiz_context)
 
         wiz_context = {
             'active_id': self.claim_id,
@@ -105,4 +108,5 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.out', "Wrong model defined")
+        self.assertEquals(
+            res.get('res_model'), 'stock.picking.out', "Wrong model defined")

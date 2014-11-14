@@ -33,6 +33,7 @@ from openerp import SUPERUSER_ID
 
 
 class substate_substate(orm.Model):
+
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
     _description = "substate that precise a given state"
@@ -45,6 +46,7 @@ class substate_substate(orm.Model):
 
 
 class claim_line(orm.Model):
+
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
@@ -340,7 +342,7 @@ class crm_claim(orm.Model):
 
     def init(self, cr):
         cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL) 
+            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL)
                OR ("number" = '/');
         """)
 

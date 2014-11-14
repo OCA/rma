@@ -26,7 +26,9 @@ from osv import fields, osv
 #from dateutil.relativedelta import relativedelta
 #import time
 
+
 class crm_claim_ext(osv.osv):
+
     """
     Crm claim field extension
     """
@@ -37,12 +39,12 @@ class crm_claim_ext(osv.osv):
         'canal_id': fields.many2one('res.partner.canal', 'Channel'),
         'som': fields.many2one('res.partner.som', 'State of Mind'),
         'product_exchange_ids': fields.one2many('product.exchange', 'claim_return_id', 'Product exchanges'),
-                # Aftersale outsourcing        
-#        'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required=False, select=True),
-#        'out_supplier_picking_id': fields.many2one('stock.picking', 'Return From Supplier Picking', required=False, select=True),
+        # Aftersale outsourcing
+        #        'in_supplier_picking_id': fields.many2one('stock.picking', 'Return To Supplier Picking', required=False, select=True),
+        #        'out_supplier_picking_id': fields.many2one('stock.picking', 'Return From Supplier Picking', required=False, select=True),
 
 
     }
-crm_claim_ext()    
+crm_claim_ext()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
