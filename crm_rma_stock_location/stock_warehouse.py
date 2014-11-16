@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,21 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+
+from openerp.osv import orm, fields
 
 
-class stock_warehouse(orm.Model):
-
-    _inherit = "stock.warehouse"
+class StockWarehouse(orm.Model):
+    _inherit = 'stock.warehouse'
 
     _columns = {
-        'lot_carrier_loss_id': fields.many2one(
-            'stock.location',
-            'Location Carrier Loss'),
-        'lot_breakage_loss_id': fields.many2one(
-            'stock.location',
-            'Location Breakage Loss'),
-        'lot_refurbish_id': fields.many2one(
-            'stock.location',
-            'Location Refurbish'),
+        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
     }

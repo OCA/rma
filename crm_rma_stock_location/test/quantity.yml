@@ -1,0 +1,72 @@
+-
+  I create RMA locations
+-
+ !record {model: stock.location, id: location_rma}:
+    name: RMA
+    usage: view
+-
+ !record {model: stock.location, id: location_rma_a}:
+    name: RMA - Box A
+    usage: internal
+    location_id: location_rma
+-
+ !record {model: stock.location, id: location_rma_b}:
+    name: RMA - Box B
+    usage: internal
+    location_id: location_rma
+-
+  I set the RMA location on the warehouse
+-
+ !record {model: stock.warehouse, id: stock.warehouse0}:
+    lot_rma_id: location_rma
+-
+  I create a product
+-
+ !record {model: product.product, id: product_socket}:
+    default_code: 002
+    name: Sockets
+    type: product
+    categ_id: product.product_category_1
+    list_price: 100.0
+    standard_price: 70.0
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+-
+  I create a physical inventory with 50 units in Box A and 30 in Box B
+-
+ !record {model: stock.inventory, id: stock_inventory_socket}:
+    name: Inventory for Sockets
+-
+ !record {model: stock.inventory.line, id: stock_inventory_line_socket_1}:
+    product_id: product_socket
+    product_uom: product.product_uom_unit
+    inventory_id: stock_inventory_socket
+    product_qty: 50.0
+    location_id: location_rma_a
+-
+ !record {model: stock.inventory.line, id: stock_inventory_line_socket_2}:
+    product_id: product_socket
+    product_uom: product.product_uom_unit
+    inventory_id: stock_inventory_socket
+    product_qty: 30.0
+    location_id: location_rma_b
+-
+  I confirm the physical inventory
+-
+  !python {model: stock.inventory}: |
+    self.action_confirm(cr, uid, [ref('stock_inventory_socket')], context=context)
+-
+  I confirm the move in Box A
+-
+  !python {model: stock.inventory}: |
+    inventory = self.browse(cr, uid, ref('stock_inventory_socket'), context=context)
+    assert len(inventory.move_ids) == len(inventory.inventory_line_id), "moves are not correspond."
+    for move in inventory.move_ids:
+      if move.location_dest_id.id == ref('location_rma_a'):
+        move.action_done()
+-
+  I check my RMA quantities, I should have 50 on hands and 80 forecasted
+-
+  !assert {model: product.product, id: product_socket, string: RMA quantity is wrong}:
+    - rma_qty_available == 50
+    - rma_virtual_available == 80

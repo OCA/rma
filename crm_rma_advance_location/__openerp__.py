@@ -23,7 +23,8 @@
 {'name': 'RMA Claims Advance Location',
  'version': '1.0',
  'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim_rma'
+ 'depends': ['crm_claim_rma',
+             'crm_rma_stock_location',
              ],
  'author': 'Akretion',
  'license': 'AGPL-3',
