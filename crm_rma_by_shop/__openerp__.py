@@ -43,8 +43,8 @@ Claim improvements to use them by shops:
  'images': [],
  'demo': [],
  'data': [
-    'claim_view.xml',
+     'claim_view.xml',
  ],
  'installable': True,
  'application': True,
-}
+ }

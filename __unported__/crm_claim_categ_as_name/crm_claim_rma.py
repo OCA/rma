@@ -21,13 +21,13 @@
 
 from osv import fields, osv
 
+
 class crm_claim(osv.osv):
     _inherit = 'crm.claim'
 
     _columns = {
         'name': fields.related('categ_id', 'name', relation='crm.case.categ', type='char', string='Claim Subject', size=128, store=True),
-        'categ_id': fields.many2one('crm.case.categ', 'Category', \
-                            domain="[('section_id','=',section_id),\
+        'categ_id': fields.many2one('crm.case.categ', 'Category',
+                                    domain="[('section_id','=',section_id),\
                             ('object_id.model', '=', 'crm.claim')]", required=True),
     }
-    

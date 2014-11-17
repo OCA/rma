@@ -37,7 +37,7 @@ This module adds the following location on warehouses :
 
  * Carrier Loss
  * RMA
- * Breakage Loss 
+ * Breakage Loss
  * Refurbish
  * Mistake Loss
 
@@ -55,11 +55,11 @@ WARNING: Use with caution, this module is currently not yet completely debugged 
     'images': [],
     'demo': [],
     'data': ['wizard/claim_make_picking_from_picking_view.xml',
-              'wizard/claim_make_picking_view.xml',
-              'stock_view.xml',
-              'stock_data.xml',
-              'claim_rma_view.xml',
-    ],
+             'wizard/claim_make_picking_view.xml',
+             'stock_view.xml',
+             'stock_data.xml',
+             'claim_rma_view.xml',
+             ],
     'installable': True,
     'application': True,
-}
+ }

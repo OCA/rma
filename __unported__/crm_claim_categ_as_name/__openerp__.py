@@ -26,7 +26,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'license': 'AGPL-3',
     'description': """
-    
+
     """,
     'author': 'akretion',
     'website': 'http://www.akretion.com/',
@@ -35,7 +35,7 @@
     'update_xml': [
         'crm_claim_rma_view.xml',
     ],
-    'demo_xml': [], 
+    'demo_xml': [],
     'installable': False,
     'active': False,
 }

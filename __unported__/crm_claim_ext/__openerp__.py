@@ -42,17 +42,17 @@ author (Akretion) take a decision on them.
     'update_xml': [
         'crm_claim_ext_view.xml',
         'wizard/get_empty_serial_view.xml',
-#        'wizard/returned_lines_from_invoice_wizard_view.xml',
-#        'wizard/picking_from_returned_lines_wizard_view.xml',
-#        'wizard/refund_from_returned_lines_wizard_view.xml',
-#        'wizard/exchange_from_returned_lines_wizard_view.xml',
-#        'wizard/picking_from_exchange_lines_wizard_view.xml',
+        #        'wizard/returned_lines_from_invoice_wizard_view.xml',
+        #        'wizard/picking_from_returned_lines_wizard_view.xml',
+        #        'wizard/refund_from_returned_lines_wizard_view.xml',
+        #        'wizard/exchange_from_returned_lines_wizard_view.xml',
+        #        'wizard/picking_from_exchange_lines_wizard_view.xml',
     ],
-    'demo_xml': [], 
-    'test': [], 
+    'demo_xml': [],
+    'test': [],
     'installable': False,
     'active': False,
-    'certificate' : '',
+    'certificate': '',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

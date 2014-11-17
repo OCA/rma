@@ -29,7 +29,8 @@ class claim_make_picking(orm.TransientModel):
 
     def _get_dest_loc(self, cr, uid, context=None):
         """ Get default destination location """
-        loc_id = super(claim_make_picking, self)._get_dest_loc(cr, uid, context=context)
+        loc_id = super(claim_make_picking, self)._get_dest_loc(
+            cr, uid, context=context)
         if context is None:
             context = {}
         warehouse_obj = self.pool.get('stock.warehouse')
