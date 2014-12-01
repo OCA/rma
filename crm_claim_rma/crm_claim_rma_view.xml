@@ -92,14 +92,16 @@
                     <group>
                         <group string="Returned good">
                             <field name="product_returned_quantity"/>
-                            <field name="product_id"/> 
+                            <field name="product_id"
+                              on_change="onchange_product_id(product_id, invoice_line_id, claim_id, False, False, False, False, context)"/>
                             <field name="prodlot_id"/>
                             <field name="unit_sale_price"/>
                             <field name="return_value"/>
                         </group>
                         <group string="Linked Document">
                             <field name="claim_id" />
-                            <field name="invoice_line_id"/>
+                            <field name="invoice_line_id"
+                              on_change="onchange_product_id(product_id, invoice_line_id, claim_id, False, False, False, False, context)"/>
                             <field name="refund_line_id"/>
                             <field name="move_in_id"/>
                             <field name="move_out_id"/>
@@ -165,13 +167,63 @@
                     <group name="Product Return">
                         <separator string="Product Return" colspan="4"/>
                         <group>
-                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id,warehouse_id,context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
+                            <field name="company_id" invisible="1"/>
+                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, True, context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
                             <field name="delivery_address_id" context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
                         </group>
                         <group>
                             <!-- Place for mass return button from crm_rma_lot_mass_return -->
                         </group>
-                        <field name="claim_line_ids" nolabel="1" colspan="4" editable="top"/>
+                        <field name="claim_line_ids" nolabel="1" colspan="4" editable="top">
+                            <form string="Claim Line" version="7.0">
+                                <header>
+                                    <button name="set_warranty" string="Calculate warranty state" type="object" class="oe_highlight"/>
+                                </header>
+                                <sheet string="Claims">
+                                    <div class="oe_title">
+                                            <group>
+                                                <label for="name" class="oe_edit_only"/>
+                                                <h1><field name="name"/></h1>
+                                            </group>
+                                    </div>
+                                    <group>
+                                        <group string="Returned good">
+                                            <field name="product_returned_quantity"/>
+                                            <field name="product_id"
+                                              on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
+                                            <field name="prodlot_id"/>
+                                            <field name="unit_sale_price"/>
+                                            <field name="return_value"/>
+                                        </group>
+                                        <group string="Linked Document">
+                                            <field name="invoice_line_id"
+                                              on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
+                                            <field name="refund_line_id"/>
+                                            <field name="move_in_id"/>
+                                            <field name="move_out_id"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <group string="Problem">
+                                            <field name="claim_origine" nolabel="1" colspan="4"/>
+                                            <field name="claim_descr" nolabel="1" colspan="4"/>
+                                        </group>
+                                        <group string="Warranty">
+                                            <field name="guarantee_limit"/>
+                                            <field name="warning"/>
+                                            <field name="warranty_return_partner"/>
+                                            <field name="warranty_type"/>
+                                        </group>
+                                    </group>
+                                    <separator string="State" colspan="4"/>
+                                    <group col="6" colspan="4">
+                                        <field name="state"/>
+                                        <field name="substate_id" widget='selection' />
+                                        <field name="last_state_change"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
                     </group>
                     <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
                         <separator string="Action" colspan="4" />
@@ -264,8 +316,8 @@
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
                 <field name="date_deadline" position="after">
-                    <field name="claim_type"/>
-                    <field name="warehouse_id" />
+                    <field name="claim_type" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, False, context)"/>
+                    <field name="warehouse_id" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, False, context)"/>
                 </field>
                 <field name="name" position="replace">
                     <div class="oe_title">
@@ -277,7 +329,7 @@
                 </field>
                 <field name="user_id" position="before">
                     <field name="name" />
-                    <field name="date"/>
+                    <field name="date" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, False, context)"/>
                 </field>
                 <xpath expr="//sheet[@string='Claims']/group[1]" position="inside">
                     <div class="oe_right oe_button_box" name="buttons">
