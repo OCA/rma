@@ -286,9 +286,11 @@ class claim_make_picking(orm.TransientModel):
                 picking_id, wizard, claim, context=context)
             line_obj.write(cr, uid, wizard_line.id, {write_field: move_id},
                            context=context)
-            proc_id = self._create_procurement(cr, uid, wizard, claim, move_id,
-                                               wizard_line, context=context)
-            proc_ids.append(proc_id)
+            if p_type == 'out':
+                proc_id = self._create_procurement(
+                    cr, uid, wizard, claim, move_id, wizard_line,
+                    context=context)
+                proc_ids.append(proc_id)
         wf_service = netsvc.LocalService("workflow")
         if picking_id:
             wf_service.trg_validate(uid, 'stock.picking',
