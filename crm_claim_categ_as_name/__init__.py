@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###############################################################################
 #                                                                             #
 #   crm_claim_categ_as_name for OpenERP                                       #
-#   Copyright (C) 2012 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>  #
+#   Copyright (C) 2014 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>  #
 #                                                                             #
 #   This program is free software: you can redistribute it and/or modify      #
 #   it under the terms of the GNU Affero General Public License as            #
@@ -19,5 +19,4 @@
 #                                                                             #
 ###############################################################################
 
-import crm_claim_rma
-
+from . import claim

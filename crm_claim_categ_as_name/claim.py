@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###############################################################################
 #                                                                             #
 #   crm_claim_categ_as_name for OpenERP                                       #
-#   Copyright (C) 2012 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>  #
+#   Copyright (C) 2014 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>  #
 #                                                                             #
 #   This program is free software: you can redistribute it and/or modify      #
 #   it under the terms of the GNU Affero General Public License as            #
@@ -19,25 +19,25 @@
 #                                                                             #
 ###############################################################################
 
+from openerp.osv import fields, orm
 
-{
-    'name': 'crm_claim_categ_as_name',
-    'version': '1.0',
-    'category': 'Generic Modules/CRM & SRM',
-    'license': 'AGPL-3',
-    'description': """
-    
-    """,
-    'author': 'akretion',
-    'website': 'http://www.akretion.com/',
-    'depends': ['crm_claim_rma'],
-    'init_xml': [],
-    'update_xml': [
-        'crm_claim_rma_view.xml',
-    ],
-    'demo_xml': [], 
-    'installable': False,
-    'active': False,
-}
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+class crm_claim(orm.Model):
+    _inherit = 'crm.claim'
+
+    _columns = {
+        'name': fields.related(
+            'categ_id',
+            'name',
+            relation='crm.case.categ',
+            type='char',
+            string='Claim Subject',
+            size=128,
+            store=True),
+        'categ_id': fields.many2one(
+            'crm.case.categ',
+            'Category',
+            domain="[('section_id', '=', section_id), \
+                    ('object_id.model', '=', 'crm.claim')]",
+            required=True),
+    }
