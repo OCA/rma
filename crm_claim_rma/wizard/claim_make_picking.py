@@ -152,8 +152,8 @@ class claim_make_picking(orm.TransientModel):
     def action_cancel(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
 
-    def _prepare_picking_vals(self, cr, uid, claim, p_type, partner_id, wizard,
-        context=None):
+    def _prepare_picking_vals(
+            self, cr, uid, claim, p_type, partner_id, wizard, context=None):
         return {
             'origin': claim.number,
             'type': p_type,
@@ -169,8 +169,9 @@ class claim_make_picking(orm.TransientModel):
             'claim_id': claim.id,
             }
 
-    def _prepare_move_vals(self, cr, uid, wizard_line, partner_id,
-        picking_id, claim, wizard, context=None):
+    def _prepare_move_vals(
+            self, cr, uid, wizard_line, partner_id, picking_id, claim, wizard,
+            context=None):
         return {
             'name': wizard_line.product_id.name_template,
             'priority': '0',
@@ -190,16 +191,17 @@ class claim_make_picking(orm.TransientModel):
             'note': 'RMA move',
             }
 
-    def _create_move(self, cr, uid, wizard_line, partner_id,
-        picking_id, wizard, claim,  context=None):
+    def _create_move(
+            self, cr, uid, wizard_line, partner_id, picking_id, wizard, claim,
+            context=None):
         move_obj = self.pool['stock.move']
         move_vals = self._prepare_move_vals(cr, uid, wizard_line,
                 partner_id, picking_id, claim, wizard, context=context)
         move_id = move_obj.create(cr, uid, move_vals, context=context)
         return move_id
 
-    def _prepare_procurement_vals(self, cr, uid, wizard, claim, move_id,
-        wizard_line, context=None):
+    def _prepare_procurement_vals(
+            self, cr, uid, wizard, claim, move_id, wizard_line, context=None):
         return {
             'name': wizard_line.product_id.name_template,
             'origin': claim.number,
@@ -214,8 +216,8 @@ class claim_make_picking(orm.TransientModel):
             'note': 'RMA procurement',
             }
 
-    def _create_procurement(self, cr, uid, wizard, claim, move_id,
-        wizard_line, context=None):
+    def _create_procurement(
+            self, cr, uid, wizard, claim, move_id, wizard_line, context=None):
         proc_obj = self.pool['procurement.order']
         proc_vals = self._prepare_procurement_vals(cr, uid, wizard, claim,
             move_id, wizard_line, context=context)
@@ -280,9 +282,11 @@ class claim_make_picking(orm.TransientModel):
         for wizard_line in wizard.claim_line_ids:
             if wizard_line.product_id.type not in ['consu', 'product']:
                 continue
-            move_id = self._create_move(cr, uid, wizard_line, partner_id,
-                picking_id, wizard, claim, context=context)
-            line_obj.write(cr, uid, wizard_line.id, {write_field: move_id},
+            move_id = self._create_move(
+                cr, uid, wizard_line, partner_id, picking_id, wizard, claim,
+                context=context)
+            line_obj.write(
+                cr, uid, wizard_line.id, {write_field: move_id},
                 context=context)
             if p_type == 'out':
                 proc_id = self._create_procurement(
