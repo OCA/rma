@@ -45,24 +45,6 @@ class stock_picking(orm.Model):
         return new_id
 
 
-class stock_picking_out(orm.Model):
-
-    _inherit = "stock.picking.out"
-
-    _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
-    }
-
-
-class stock_picking_in(orm.Model):
-
-    _inherit = "stock.picking.in"
-
-    _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
-    }
-
-
 # This part concern the case of a wrong picking out. We need to create a new
 # stock_move in a picking already open.
 # In order to don't have to confirm the stock_move we override the create and

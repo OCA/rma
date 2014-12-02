@@ -248,14 +248,7 @@
         domain="[('type', '=', 'in')]"
         id="act_crm_claim_rma_picking_in" 
         name="Incoming Shipment and Returns" 
-        res_model="stock.picking.in"
-        src_model="crm.claim"/>  
-<!-- Right side link to picking out -->
-        <act_window 
-        domain="[('type', '=', 'out')]"
-        id="act_crm_claim_rma_picking_out" 
-        name="Deliveries" 
-        res_model="stock.picking.out"
+        res_model="stock.picking"
         src_model="crm.claim"/>  
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
@@ -286,16 +279,6 @@
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
-                        <button name="%(act_crm_claim_rma_invoice_out)d" type="action"
-                                string="Customer Invoices"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
-                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
-                               />
-                        <button name="%(act_crm_claim_rma_refunds_out)d" type="action"
-                                string="Customer Refunds"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
-                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
-                               />
                         <button name="%(act_crm_claim_rma_invoice_in)d" type="action"
                                 string="Supplier Invoices"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
@@ -310,11 +293,6 @@
                                 string="Returned Products"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_claim_id': active_id,'search_default_user_id':False}"
-                               />
-                        <button name="%(act_crm_claim_rma_picking_out)d" type="action"
-                                string="Deliveries"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
-                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                     </div>
                 </xpath>

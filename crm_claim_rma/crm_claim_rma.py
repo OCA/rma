@@ -340,7 +340,7 @@ class crm_claim(orm.Model):
 
     def init(self, cr):
         cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL) 
+            UPDATE "crm_claim" SET "number"=id::varchar WHERE ("number" is NULL)
                OR ("number" = '/');
         """)
 
@@ -394,7 +394,7 @@ class crm_claim(orm.Model):
     _columns = {
         'number': fields.char(
             'Number', readonly=True,
-            states={'draft': [('readonly', False)]},
+            #states={'draft': [('readonly', False)]},
             required=True,
             select=True,
             help="Company internal claim unique number"),
