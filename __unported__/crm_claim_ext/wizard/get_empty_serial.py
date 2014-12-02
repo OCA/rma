@@ -21,7 +21,6 @@
 #########################################################################
 
 from openerp.osv import fields, orm
-import pooler
 
 
 class get_empty_serial(orm.TransientModel):

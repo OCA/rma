@@ -22,7 +22,7 @@
 #########################################################################
 from openerp.osv import fields, orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp import netsvc
+from openerp import workflow
 import time
 
 
@@ -149,7 +149,7 @@ class claim_make_picking_from_picking(orm.TransientModel):
                 wizard_picking_line.id,
                 {'move_dest_id': move_id},
                 context=context)
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         if picking_id:
             wf_service.trg_validate(uid, 
                 'stock.picking', picking_id,'button_confirm', cr)

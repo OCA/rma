@@ -20,8 +20,7 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
 #import time
 #from datetime import datetime
 #from dateutil.relativedelta import relativedelta

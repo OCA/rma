@@ -19,7 +19,7 @@
 #                                                                             #
 ###############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, osv
 
 class crm_claim(osv.osv):
     _inherit = 'crm.claim'

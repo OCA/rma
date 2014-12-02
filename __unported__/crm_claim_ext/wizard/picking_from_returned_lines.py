@@ -20,8 +20,7 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
 import time
 
 # Class to create a picking in from selected return lines
@@ -67,7 +66,7 @@ class picking_in_from_returned_lines(osv.osv_memory):
     def action_create_picking(self, cr, uid, ids, context=None):
         print "context", context
         partner_id = 0
-#        wf_service = netsvc.LocalService("workflow")
+#        wf_service = workflow
         for picking in self.browse(cr, uid,ids):
             claim_id = self.pool.get('crm.claim').browse(cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id

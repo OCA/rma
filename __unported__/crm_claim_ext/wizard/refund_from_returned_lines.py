@@ -20,8 +20,7 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
 import time
 
 class refund_from_returned_lines(osv.osv_memory):
