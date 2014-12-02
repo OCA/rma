@@ -195,8 +195,9 @@ class claim_make_picking(orm.TransientModel):
             self, cr, uid, wizard_line, partner_id, picking_id, wizard, claim,
             context=None):
         move_obj = self.pool['stock.move']
-        move_vals = self._prepare_move_vals(cr, uid, wizard_line,
-                partner_id, picking_id, claim, wizard, context=context)
+        move_vals = self._prepare_move_vals(
+            cr, uid, wizard_line, partner_id, picking_id, claim, wizard,
+            context=context)
         move_id = move_obj.create(cr, uid, move_vals, context=context)
         return move_id
 
@@ -219,8 +220,8 @@ class claim_make_picking(orm.TransientModel):
     def _create_procurement(
             self, cr, uid, wizard, claim, move_id, wizard_line, context=None):
         proc_obj = self.pool['procurement.order']
-        proc_vals = self._prepare_procurement_vals(cr, uid, wizard, claim,
-            move_id, wizard_line, context=context)
+        proc_vals = self._prepare_procurement_vals(
+            cr, uid, wizard, claim, move_id, wizard_line, context=context)
         proc_id = proc_obj.create(cr, uid, proc_vals, context=context)
         return proc_id
 
