@@ -153,7 +153,7 @@ class claim_make_picking(orm.TransientModel):
         return {'type': 'ir.actions.act_window_close'}
 
     def _prepare_picking_vals(self, cr, uid, claim, p_type, partner_id, wizard,
-            context=None):
+        context=None):
         return {
             'origin': claim.number,
             'type': p_type,
@@ -170,7 +170,7 @@ class claim_make_picking(orm.TransientModel):
             }
 
     def _prepare_move_vals(self, cr, uid, wizard_line, partner_id,
-            picking_id, claim, wizard, context=None):
+        picking_id, claim, wizard, context=None):
         return {
             'name': wizard_line.product_id.name_template,
             'priority': '0',
@@ -191,7 +191,7 @@ class claim_make_picking(orm.TransientModel):
             }
 
     def _create_move(self, cr, uid, wizard_line, partner_id,
-            picking_id, wizard, claim,  context=None):
+        picking_id, wizard, claim,  context=None):
         move_obj = self.pool['stock.move']
         move_vals = self._prepare_move_vals(cr, uid, wizard_line,
                 partner_id, picking_id, claim, wizard, context=context)
@@ -199,7 +199,7 @@ class claim_make_picking(orm.TransientModel):
         return move_id
 
     def _prepare_procurement_vals(self, cr, uid, wizard, claim, move_id,
-            wizard_line, context=None):
+        wizard_line, context=None):
         return {
             'name': wizard_line.product_id.name_template,
             'origin': claim.number,
@@ -215,18 +215,16 @@ class claim_make_picking(orm.TransientModel):
             }
 
     def _create_procurement(self, cr, uid, wizard, claim, move_id,
-            wizard_line, context=None):
+        wizard_line, context=None):
         proc_obj = self.pool['procurement.order']
         proc_vals = self._prepare_procurement_vals(cr, uid, wizard, claim,
-                move_id, wizard_line, context=context)
+            move_id, wizard_line, context=context)
         proc_id = proc_obj.create(cr, uid, proc_vals, context=context)
         return proc_id
-
 
     # If "Create" button pressed
     def action_create_picking(self, cr, uid, ids, context=None):
         picking_obj = self.pool['stock.picking']
-        proc_obj = self.pool['procurement.order']
         line_obj = self.pool['claim.line']
         claim_obj = self.pool['crm.claim']
         if context is None:
@@ -285,7 +283,7 @@ class claim_make_picking(orm.TransientModel):
             move_id = self._create_move(cr, uid, wizard_line, partner_id,
                 picking_id, wizard, claim, context=context)
             line_obj.write(cr, uid, wizard_line.id, {write_field: move_id},
-                           context=context)
+                context=context)
             if p_type == 'out':
                 proc_id = self._create_procurement(
                     cr, uid, wizard, claim, move_id, wizard_line,
