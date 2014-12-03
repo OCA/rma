@@ -297,12 +297,12 @@ class claim_line(orm.Model):
         wh_obj = self.pool.get('stock.warehouse')
         wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
         location_dest_id = wh.lot_stock_id.id
-        if prod:
-            seller = prod.seller_info_id
-            if seller:
-                return_type = seller.warranty_return_partner
-                if return_type != 'company':
-                    location_dest_id = seller.name.property_stock_supplier.id
+        #~if prod:
+        #~    seller = prod.seller_info_id
+        #~    if seller:
+        #~        return_type = seller.warranty_return_partner
+        #~        if return_type != 'company':
+        #~            location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
     # Method to calculate warranty return address

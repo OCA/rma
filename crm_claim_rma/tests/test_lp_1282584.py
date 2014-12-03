@@ -78,7 +78,7 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.in', "Wrong model defined")
+        self.assertEquals(res.get('res_model'), 'stock.picking', "Wrong model defined")
 
     def test_01(self):
         """Test wizard opened view model for a new delivery
@@ -105,4 +105,4 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.out', "Wrong model defined")
+        self.assertEquals(res.get('res_model'), 'stock.picking', "Wrong model defined")
