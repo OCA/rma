@@ -160,10 +160,10 @@ class claim_make_picking(orm.TransientModel):
         view_obj = self.pool.get('ir.ui.view')
 
         picking_type_obj = self.pool.get('stock.picking.type')
-        picking_type_in = picking_type_obj.search(cr, uid, \
-                [('name','=','Receipts')])[0]
-        picking_type_out = picking_type_obj.search(cr, uid, \
-                [('name','=','Delivery Orders')])[0]
+        picking_type_in = picking_type_obj.search(cr, uid,
+                                                  [('name', '=', 'Receipts')])[0]
+        picking_type_out = picking_type_obj.search(cr, uid,
+                                                   [('name', '=', 'Delivery Orders')])[0]
 
         name = 'RMA picking out'
         if context.get('picking_type') == 'out':
@@ -218,7 +218,7 @@ class claim_make_picking(orm.TransientModel):
         picking_id = picking_obj.create(
             cr, uid,
             {'origin': claim.number,
-            'picking_type_id': p_type,
+             'picking_type_id': p_type,
              #'type' : type_char,
              'move_type': 'one',  # direct
              'state': 'draft',
