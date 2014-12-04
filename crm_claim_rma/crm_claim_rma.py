@@ -31,29 +31,6 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
-AVAILABLE_STATES = [
-    ('draft', 'New'),
-    ('cancel', 'Cancelled'),
-    ('open', 'In Progress'),
-    ('pending', 'Pending'),
-    ('done', 'Closed')
-]
-
-class crm_claim_stage(orm.Model):
-    _inherit = "crm.claim.stage"
-
-    _columns = {
-        'state': fields.selection(AVAILABLE_STATES, 'Status', required=True,
-            help="The related status for the stage. The status of your \
-                    document will automatically change regarding the \
-                    selected stage. For example, if a stage is related to \
-                    the status 'Close', when your document reaches this \
-                    stage, it will be automatically have the 'closed' status."),
-    }
-    _defaults = {
-        'state': 'draft',
-    }
-
 class substate_substate(orm.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
@@ -414,16 +391,8 @@ class crm_claim(orm.Model):
             cr, uid, id, default=std_default, context=context)
 
     _columns = {
-        'state': fields.related('stage_id', 'state', type="selection", store=True,
-                selection=AVAILABLE_STATES, string="Status", readonly=True,
-                help='The status is set to \'Draft\', when a case is created.\
-                      If the case is in progress the status is set to \'Open\'.\
-                      When the case is over, the status is set to \'Done\'.\
-                      If the case needs to be reviewed then the status is \
-                      set to \'Pending\'.'),
         'number': fields.char(
             'Number', readonly=True,
-            #states={'draft': [('readonly', False)]},
             required=True,
             select=True,
             help="Company internal claim unique number"),
