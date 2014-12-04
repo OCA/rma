@@ -36,7 +36,7 @@ This module adds the following location on warehouses :
 
  * Carrier Loss
  * RMA
- * Breakage Loss 
+ * Breakage Loss
  * Refurbish
  * Mistake Loss
 
