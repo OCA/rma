@@ -22,7 +22,6 @@
 ##############################################################################
 from openerp.osv import fields, orm
 
-
 class stock_picking(orm.Model):
 
     _inherit = "stock.picking"
@@ -34,12 +33,8 @@ class stock_picking(orm.Model):
     def create(self, cr, uid, vals, context=None):
         if ('name' not in vals) or (vals.get('name') == '/'):
             sequence_obj = self.pool.get('ir.sequence')
-            #~if vals['type'] == 'internal':
-            #~    seq_obj_name = self._name
-            #~else:
-            #~    seq_obj_name = 'stock.picking.' + vals['type']
-            #~vals['name'] = sequence_obj.get(cr, uid, seq_obj_name,
-            #~                                context=context)
+            vals['name'] = sequence_obj.get(cr, uid, 'stock.picking',
+                                            context=context)
         new_id = super(stock_picking, self).create(cr, uid, vals,
                                                    context=context)
         return new_id
