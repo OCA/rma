@@ -21,7 +21,7 @@
 	<record model="crm.case.section" id="section_after_sales_service">
             <field name="name">After Sales Service</field>
             <field name="code">ASV</field>
-            <field name="parent_id" ref="crm.section_sales_department"/>
+            <field name="parent_id" ref="sales_team.section_sales_department"/>
             <!-- <field name="stage_ids" eval="[(4, ref('crm_claim.stage_claim1')), (4, ref('crm_claim.stage_claim2')), (4, ref('crm_claim.stage_claim3')), (4, ref('crm_claim.stage_claim5'))]"/> -->
         </record>
 		
