@@ -74,10 +74,10 @@ class test_lp_1282584(common.TransactionCase):
             'warehouse_id': self.warehouse_id,
             'picking_type': 'in',
         }
-        wizard_id = self.WizardMakePicking.create(cr, uid, {
+        wizard_id = self.wizardmakepicking.create(cr, uid, {
         }, context=wiz_context)
 
-        res = self.WizardMakePicking.action_create_picking(
+        res = self.wizardmakepicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
         self.assertEquals(res.get('res_model'),
                           'stock.picking', "Wrong model defined")
@@ -103,10 +103,10 @@ class test_lp_1282584(common.TransactionCase):
             'warehouse_id': self.warehouse_id,
             'picking_type': 'out',
         }
-        wizard_id = self.WizardMakePicking.create(cr, uid, {
+        wizard_id = self.wizardmakepicking.create(cr, uid, {
         }, context=wiz_context)
 
-        res = self.WizardMakePicking.action_create_picking(
+        res = self.wizardmakepicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
         self.assertEquals(res.get('res_model'),
                           'stock.picking', "Wrong model defined")
