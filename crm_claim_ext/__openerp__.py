@@ -48,9 +48,9 @@ author (Akretion) take a decision on them.
 #        'wizard/exchange_from_returned_lines_wizard_view.xml',
 #        'wizard/picking_from_exchange_lines_wizard_view.xml',
     ],
-    'demo_xml': [], 
-    'test': [], 
-    'installable': False,
+    'demo_xml': [],
+    'test': [],
+    'installable': True,
     'active': False,
     'certificate' : '',
 }

@@ -20,7 +20,6 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-
 {
     'name': 'Product warranty',
     'version': '1.0',
@@ -49,7 +48,7 @@ Those informations are used in the RMA Claim (Product Return Management) module.
     ],
     'demo_xml': [],
     'test': [],
-    'installable': False,
+    'installable': True,
     'active': False,
     'certificate': '',
     'images': ['images/product_warranty.png'],

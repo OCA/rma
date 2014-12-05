@@ -45,6 +45,6 @@ Claim improvements to use them by shops:
  'data': [
     'claim_view.xml',
  ],
- 'installable': False,
+ 'installable': True,
  'application': True,
 }

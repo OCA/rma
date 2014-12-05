@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
+#    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -45,6 +45,6 @@ WARNING: This module is currently not yet completely debugged and is waiting his
         'wizard/returned_lines_from_serial_wizard_view.xml',
         'crm_rma_view.xml',
  ],
- 'installable': False,
+ 'installable': True,
  'application': True,
 }
