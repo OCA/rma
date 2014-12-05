@@ -22,6 +22,7 @@
 ##############################################################################
 from openerp.osv import fields, orm
 
+
 class stock_picking(orm.Model):
 
     _inherit = "stock.picking"
@@ -55,8 +56,6 @@ class stock_move(orm.Model):
         picking_type_obj = self.pool.get('stock.picking.type')
         picking_type_in = picking_type_obj.search(cr, uid,
                                                   [('name', '=', 'Receipts')])[0]
-        picking_type_out = picking_type_obj.search(cr, uid,
-                                                   [('name', '=', 'Delivery Orders')])[0]
 
         if vals.get('picking_id'):
             picking_obj = self.pool.get('stock.picking')

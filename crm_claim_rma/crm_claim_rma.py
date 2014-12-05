@@ -67,7 +67,7 @@ class claim_line(orm.Model):
                             line.product_returned_quantity)
         return res
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    def copy_data(self, cr, uid, ids, default=None, context=None):
         if default is None:
             default = {}
         std_default = {
@@ -77,7 +77,7 @@ class claim_line(orm.Model):
         }
         std_default.update(default)
         return super(claim_line, self).copy_data(
-            cr, uid, id, default=std_default, context=context)
+            cr, uid, ids, default=std_default, context=context)
 
     def get_warranty_return_partner(self, cr, uid, context=None):
         seller = self.pool.get('product.supplierinfo')
@@ -220,8 +220,8 @@ class claim_line(orm.Model):
         return start + relativedelta(months=months, days=days)
 
     # Method to calculate warranty limit
-    def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
-        date_invoice = claim_line.invoice_line_id.invoice_id.date_invoice
+    def set_warranty_limit(self, cr, uid, ids, claim_line_brw, context=None):
+        date_invoice = claim_line_brw.invoice_line_id.invoice_id.date_invoice
         if not date_invoice:
             raise orm.except_orm(
                 _('Error'),
@@ -230,8 +230,8 @@ class claim_line(orm.Model):
         warning = _(self.WARRANT_COMMENT['not_define'])
         date_inv_at_server = datetime.strptime(date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
-        if claim_line.claim_id.claim_type == 'supplier':
-            suppliers = claim_line.product_id.seller_ids
+        if claim_line_brw.claim_id.claim_type == 'supplier':
+            suppliers = claim_line_brw.product_id.seller_ids
             if not suppliers:
                 raise orm.except_orm(
                     _('Error'),
@@ -239,11 +239,11 @@ class claim_line(orm.Model):
             supplier = suppliers[0]
             warranty_duration = supplier.warranty_duration
         else:
-            warranty_duration = claim_line.product_id.warranty
+            warranty_duration = claim_line_brw.product_id.warranty
         limit = self.warranty_limit(date_inv_at_server, warranty_duration)
         # If waranty period was defined
         if warranty_duration > 0:
-            claim_date = datetime.strptime(claim_line.claim_id.date,
+            claim_date = datetime.strptime(claim_line_brw.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
                 warning = _(self.WARRANT_COMMENT['expired'])

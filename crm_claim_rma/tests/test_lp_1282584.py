@@ -33,16 +33,16 @@ class test_lp_1282584(common.TransactionCase):
         super(test_lp_1282584, self).setUp()
         cr, uid = self.cr, self.uid
 
-        self.WizardMakePicking = self.registry('claim_make_picking.wizard')
-        ClaimLine = self.registry('claim.line')
-        Claim = self.registry('crm.claim')
+        self.wizardmakepicking = self.registry('claim_make_picking.wizard')
+        claimline_obj = self.registry('claim.line')
+        claim_obj = self.registry('crm.claim')
 
         self.product_id = self.ref('product.product_product_4')
 
         self.partner_id = self.ref('base.res_partner_12')
 
         # Create the claim with a claim line
-        self.claim_id = Claim.create(
+        self.claim_id = claim_obj.create(
             cr, uid,
             {
                 'name': 'TEST CLAIM',
@@ -51,9 +51,9 @@ class test_lp_1282584(common.TransactionCase):
                 'delivery_address_id': self.partner_id,
             })
 
-        claim = Claim.browse(cr, uid, self.claim_id)
+        claim = claim_obj.browse(cr, uid, self.claim_id)
         self.warehouse_id = claim.warehouse_id.id
-        self.claim_line_id = ClaimLine.create(
+        self.claim_line_id = claimline_obj.create(
             cr, uid,
             {
                 'name': 'TEST CLAIM LINE',

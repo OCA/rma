@@ -314,7 +314,6 @@
         </field>
     </record>
 
-       
 <!-- Menu -->
         <record model="ir.actions.act_window" id="crm_claim.crm_case_categ_claim0">
             <field name="context">{"search_default_user_id":uid, "stage_type":'claim'}</field>

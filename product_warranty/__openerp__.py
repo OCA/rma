@@ -55,3 +55,4 @@ Those informations are used in the RMA Claim (Product Return Management) module.
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
