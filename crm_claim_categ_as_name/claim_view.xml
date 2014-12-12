@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   crm_claim_categ_as_name for OpenERP
-  Copyright (C) 2014 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  Copyright (C) 2012-2014 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
   The licence is in the file __openerp__.py
 -->
 <openerp>
