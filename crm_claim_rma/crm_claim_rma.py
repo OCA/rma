@@ -270,20 +270,16 @@ class claim_line(orm.Model):
         """Compute and return the destination location ID to take
         for a return. Always take 'Supplier' one when return type different
         from company."""
-        prod = False
-        if product_id:
-            prod_obj = self.pool.get('product.product')
-            prod = prod_obj.browse(cr, uid, product_id, context=context)
         wh_obj = self.pool.get('stock.warehouse')
         wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
         location_dest_id = wh.lot_stock_id.id
         return location_dest_id
 
     # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids, claim_line,
+    def set_warranty_return_address(self, cr, uid, ids, claim_line_brw,
                                     context=None):
         """Return the partner to be used as return destination and
-        the destination stock location of the line in case of return.
+        the destination stock location of the line in case of Return.
 
         We can have various case here:
             - company or other: return to company partner or
@@ -292,21 +288,21 @@ class claim_line(orm.Model):
 
         """
         return_address = None
-        seller = claim_line.product_id.seller_info_id
+        seller = claim_line_brw.product_id.seller_info_id
         if seller:
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
         else:
             # when no supplier is configured, returns to the company
-            company = claim_line.claim_id.company_id
+            company = claim_line_brw.claim_id.company_id
             return_address = (company.crm_return_address_id or
                               company.partner_id)
             return_address_id = return_address.id
             return_type = 'company'
 
         location_dest_id = self.get_destination_location(
-            cr, uid, claim_line.product_id.id,
-            claim_line.claim_id.warehouse_id.id,
+            cr, uid, claim_line_brw.product_id.id,
+            claim_line_brw.claim_id.warehouse_id.id,
             context=context)
         self.write(cr, uid, ids,
                    {'warranty_return_partner': return_address_id,
@@ -317,15 +313,15 @@ class claim_line(orm.Model):
 
     def set_warranty(self, cr, uid, ids, context=None):
         """ Calculate warranty limit and address """
-        for claim_line in self.browse(cr, uid, ids, context=context):
-            if not (claim_line.product_id and claim_line.invoice_line_id):
+        for claim_line_brw in self.browse(cr, uid, ids, context=context):
+            if not (claim_line_brw.product_id and claim_line.invoice_line_id):
                 raise orm.except_orm(
                     _('Error !'),
                     _('Please set product and invoice.'))
             self.set_warranty_limit(cr, uid, ids,
-                                    claim_line, context=context)
+                                    claim_line_brw, context=context)
             self.set_warranty_return_address(cr, uid, ids,
-                                             claim_line, context=context)
+                                             claim_line_brw, context=context)
         return True
 
 

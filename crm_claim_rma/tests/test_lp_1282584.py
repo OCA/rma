@@ -89,12 +89,12 @@ class test_lp_1282584(common.TransactionCase):
 
         cr, uid = self.cr, self.uid
 
-        WizardChangeProductQty = self.registry('stock.change.product.qty')
+        wizardchangeproductqty = self.registry('stock.change.product.qty')
         wiz_context = {'active_id': self.product_id}
-        wizard_chg_qty_id = WizardChangeProductQty.create(cr, uid, {
+        wizard_chg_qty_id = wizardchangeproductqty.create(cr, uid, {
             'product_id': self.product_id,
             'new_quantity': 12})
-        WizardChangeProductQty.change_product_qty(
+        wizardchangeproductqty.change_product_qty(
             cr, uid, [wizard_chg_qty_id], context=wiz_context)
 
         wiz_context = {

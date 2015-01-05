@@ -24,6 +24,7 @@ from openerp.osv import orm, fields
 
 
 class return_instruction(orm.Model):
+
     _name = "return.instruction"
     _description = "Instructions for product return"
     _columns = {

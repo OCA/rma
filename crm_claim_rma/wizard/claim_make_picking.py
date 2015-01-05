@@ -168,11 +168,9 @@ class claim_make_picking(orm.TransientModel):
         name = 'RMA picking out'
         if context.get('picking_type') == 'out':
             p_type = picking_type_out
-            type_char = 'out'
             write_field = 'move_out_id'
             note = 'RMA picking out'
         else:
-            type_char = 'in'
             p_type = picking_type_in
             write_field = 'move_in_id'
             if context.get('picking_type'):
@@ -219,7 +217,6 @@ class claim_make_picking(orm.TransientModel):
             cr, uid,
             {'origin': claim.number,
              'picking_type_id': p_type,
-             #'type' : type_char,
              'move_type': 'one',  # direct
              'state': 'draft',
              'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
