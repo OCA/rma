@@ -37,6 +37,7 @@ author (Akretion) take a decision on them.
     """,
     'author': 'esamyn',
     'website': 'http://www.erp-236.com',
+    'license': 'GPL-3 or any later version',
     'depends': ['crm_claim'],
     'init_xml': [],
     'update_xml': [

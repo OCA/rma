@@ -41,6 +41,7 @@ Those informations are used in the RMA Claim (Product Return Management) module.
 """,
     'author': 'Akretion',
     'website': 'http://akretion.com',
+    'license': 'AGPL-3',
     'depends': ['product'],
     'data': [
         'security/ir.model.access.csv',
