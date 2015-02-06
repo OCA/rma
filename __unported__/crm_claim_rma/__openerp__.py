@@ -70,6 +70,7 @@ Contributors:
 """,
     'author': 'Akretion, Camptocamp',
     'website': 'http://www.akretion.com, http://www.camptocamp.com',
+    'license': 'AGPL-3',
     'depends': ['sale',
                 'stock',
                 'crm_claim',
