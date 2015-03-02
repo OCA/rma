@@ -29,7 +29,7 @@
 Akretion - Emmanuel Samyn
 Add some fields to CRM claim : canal, spirit
     """,
-    'author': 'esamyn',
+    'author': "esamyn,Odoo Community Association (OCA)",
     'website': 'http://www.erp-236.com',
     'depends': ['crm_claim'],
     'init_xml': [],

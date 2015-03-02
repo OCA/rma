@@ -28,7 +28,7 @@
     'description': """
     
     """,
-    'author': 'akretion',
+    'author': "akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com/',
     'depends': ['crm_claim_rma'],
     'init_xml': [],

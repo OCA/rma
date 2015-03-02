@@ -44,7 +44,7 @@ in the module account from the addons. You can find the refactor at the revision
 on this branch : https://code.launchpad.net/~akretion-team/openobject-addons/openobject-addons-61-akretion
     
     """,
-    'author': 'esamyn',
+    'author': "esamyn,Odoo Community Association (OCA)",
     'website': 'http://www.erp-236.com',
     'depends': ['sale','stock','crm_claim','product_warranty'],
     'init_xml': ['rma_data.xml',],
