@@ -35,7 +35,7 @@ Also, all wizard that were not used anymore also landed here in the wait his ori
 author (Akretion) take a decision on them.
 
     """,
-    'author': 'esamyn',
+    'author': "esamyn,Odoo Community Association (OCA)",
     'website': 'http://www.erp-236.com',
     'license': 'GPL-3 or any later version',
     'depends': ['crm_claim'],

@@ -26,7 +26,7 @@
  'depends': ['crm_claim_rma',
              'crm_rma_stock_location',
              ],
- 'author': 'Akretion',
+ 'author': "Akretion,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://www.akretion.com',
  'description': """
