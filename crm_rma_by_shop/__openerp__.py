@@ -24,7 +24,7 @@
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['crm_claim', 'sale'
              ],
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://www.camptocamp.com',
  'description': """

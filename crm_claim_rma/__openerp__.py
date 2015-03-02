@@ -68,7 +68,7 @@ Contributors:
  * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
 """,
-    'author': 'Akretion, Camptocamp',
+    'author': "Akretion, Camptocamp,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com',
     'depends': ['sale',
                 'stock',

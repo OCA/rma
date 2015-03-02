@@ -39,7 +39,7 @@ Extend the product warranty management with warranty details on product / suppli
 Those informations are used in the RMA Claim (Product Return Management) module.
 
 """,
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://akretion.com',
     'depends': ['product'],
     'data': [
