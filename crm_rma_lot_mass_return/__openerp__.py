@@ -48,6 +48,6 @@ his author to be.
         'wizard/returned_lines_from_serial_wizard_view.xml',
         'crm_rma_view.xml',
         ],
-    'installable': False,
+    'installable': True,
     'application': True,
 }
