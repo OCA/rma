@@ -61,11 +61,6 @@ msgid "Create Incomming Shipment to Breakkage Loss Location"
 msgstr ""
 
 #. module: crm_rma_advance_location
-#: view:stock.picking.in:0
-msgid "Product to refurbish stock"
-msgstr ""
-
-#. module: crm_rma_advance_location
 #: model:ir.model,name:crm_rma_advance_location.model_stock_warehouse
 msgid "Warehouse"
 msgstr ""
@@ -78,11 +73,6 @@ msgstr ""
 #. module: crm_rma_advance_location
 #: model:stock.location,name:crm_rma_advance_location.stock_location_refurbish
 msgid "Refurbish"
-msgstr ""
-
-#. module: crm_rma_advance_location
-#: view:stock.picking.in:0
-msgid "Product to stock"
 msgstr ""
 
 #. module: crm_rma_advance_location
@@ -108,11 +98,6 @@ msgstr ""
 #. module: crm_rma_advance_location
 #: model:ir.model,name:crm_rma_advance_location.model_claim_make_picking_from_picking_wizard
 msgid "Wizard to create pickings from picking lines"
-msgstr ""
-
-#. module: crm_rma_advance_location
-#: view:stock.picking.in:0
-msgid "Product to Loss"
 msgstr ""
 
 #. module: crm_rma_advance_location

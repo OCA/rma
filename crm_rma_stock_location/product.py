@@ -19,12 +19,12 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
 
 
-class ProductProduct(orm.Model):
-    _inherit = 'product.product'
+class ProductTemplate(osv.Model):
+    _inherit = 'product.template'
 
     def _rma_product_available(self, cr, uid, ids, field_names=None, arg=False,
                                context=None):
@@ -46,13 +46,6 @@ class ProductProduct(orm.Model):
             warehouse_id = ctx.get('warehouse_id')
             # no dependency on 'sale', the same oddness is done in
             # 'stock' so I kept it here
-            if ctx.get('shop') and self.pool.get('sale.shop'):
-                shop_obj = self.pool['sale.shop']
-                shop_id = ctx['shop']
-                warehouse = shop_obj.read(cr, uid, shop_id,
-                                          ['warehouse_id'],
-                                          context=ctx)
-                warehouse_id = warehouse['warehouse_id'][0]
 
             if warehouse_id:
                 rma_id = warehouse_obj.read(cr, uid,

@@ -39,14 +39,14 @@
 -
  !record {model: stock.inventory.line, id: stock_inventory_line_socket_1}:
     product_id: product_socket
-    product_uom: product.product_uom_unit
+    product_uom_id: product.product_uom_unit
     inventory_id: stock_inventory_socket
     product_qty: 50.0
     location_id: location_rma_a
 -
  !record {model: stock.inventory.line, id: stock_inventory_line_socket_2}:
     product_id: product_socket
-    product_uom: product.product_uom_unit
+    product_uom_id: product.product_uom_unit
     inventory_id: stock_inventory_socket
     product_qty: 30.0
     location_id: location_rma_b

@@ -2,8 +2,9 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion,
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -27,6 +28,7 @@ class stock_warehouse(orm.Model):
     _inherit = "stock.warehouse"
 
     _columns = {
+        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
         'lot_carrier_loss_id': fields.many2one(
             'stock.location',
             'Location Carrier Loss'),
