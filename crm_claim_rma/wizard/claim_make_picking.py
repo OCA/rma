@@ -22,7 +22,7 @@
 ##############################################################################
 from openerp.osv import fields, orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp import netsvc
+from openerp import workflow
 from openerp.tools.translate import _
 import time
 
@@ -158,18 +158,25 @@ class claim_make_picking(orm.TransientModel):
         if context is None:
             context = {}
         view_obj = self.pool.get('ir.ui.view')
+
+        picking_type_obj = self.pool.get('stock.picking.type')
+        picking_type_in = picking_type_obj.search(
+            cr, uid, [('name', '=', 'Receipts')])[0]
+        picking_type_out = picking_type_obj.search(
+            cr, uid, [('name', '=', 'Delivery Orders')])[0]
+
         name = 'RMA picking out'
         if context.get('picking_type') == 'out':
-            p_type = 'out'
+            p_type = picking_type_out
             write_field = 'move_out_id'
             note = 'RMA picking out'
         else:
-            p_type = 'in'
+            p_type = picking_type_in
             write_field = 'move_in_id'
             if context.get('picking_type'):
                 note = 'RMA picking ' + str(context.get('picking_type'))
                 name = note
-        model = 'stock.picking.' + p_type
+        model = 'stock.picking'
         view_id = view_obj.search(cr, uid,
                                   [('model', '=', model),
                                    ('type', '=', 'form'),
@@ -209,7 +216,7 @@ class claim_make_picking(orm.TransientModel):
         picking_id = picking_obj.create(
             cr, uid,
             {'origin': claim.number,
-             'type': p_type,
+             'picking_type_id': p_type,
              'move_type': 'one',  # direct
              'state': 'draft',
              'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
@@ -223,20 +230,22 @@ class claim_make_picking(orm.TransientModel):
              },
             context=context)
         # Create picking lines
-        fmt = DEFAULT_SERVER_DATETIME_FORMAT
         for wizard_claim_line in wizard.claim_line_ids:
             move_obj = self.pool.get('stock.move')
             move_id = move_obj.create(
                 cr, uid,
                 {'name': wizard_claim_line.product_id.name_template,
                  'priority': '0',
-                 'date': time.strftime(fmt),
-                 'date_expected': time.strftime(fmt),
+                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                 'date_expected':
+                 time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                  'product_id': wizard_claim_line.product_id.id,
-                 'product_qty': wizard_claim_line.product_returned_quantity,
                  'product_uom': wizard_claim_line.product_id.uom_id.id,
                  'partner_id': partner_id,
-                 'prodlot_id': wizard_claim_line.prodlot_id.id,
+                 # 'prodlot_id': wizard_claim_line.prodlot_id.id,
+                 # 'product_qty': wizard_claim_line.product_returned_quantity,
+                 'product_uom_qty':
+                 wizard_claim_line.product_returned_quantity,
                  'picking_id': picking_id,
                  'state': 'draft',
                  'price_unit': wizard_claim_line.unit_sale_price,
@@ -249,7 +258,7 @@ class claim_make_picking(orm.TransientModel):
             self.pool.get('claim.line').write(
                 cr, uid, wizard_claim_line.id,
                 {write_field: move_id}, context=context)
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         if picking_id:
             wf_service.trg_validate(uid, 'stock.picking',
                                     picking_id, 'button_confirm', cr)

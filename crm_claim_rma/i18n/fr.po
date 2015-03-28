@@ -60,12 +60,6 @@ msgid "Refused"
 msgstr "Refusé"
 
 #. module: crm_claim_rma
-#: view:stock.picking.in:0
-#: view:stock.picking.out:0
-msgid "To Invoice"
-msgstr "Vers facturation"
-
-#. module: crm_claim_rma
 #: field:claim.line,refund_line_id:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_refund_line_id
 msgid "Refund Line"
@@ -143,8 +137,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm_claim_rma.field_stock_picking_claim_id_4030
 #: model:ir.model.fields,field_description:crm_claim_rma.field_stock_picking_claim_id_4031
 #: field:stock.picking,claim_id:0
-#: field:stock.picking.in,claim_id:0
-#: field:stock.picking.out,claim_id:0
 msgid "Claim"
 msgstr "Réclamation"
 
@@ -207,11 +199,6 @@ msgid ""
 "for supplier and brand manufacturer. Does not necessarily mean that the "
 "warranty to be applied is the one of the return partner (ie: can be returned "
 "to the company and be under the brand warranty"
-msgstr ""
-
-#. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_stock_picking_out
-msgid "Delivery Orders"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -541,11 +528,6 @@ msgid "expired"
 msgstr ""
 
 #. module: crm_claim_rma
-#: model:ir.model,name:crm_claim_rma.model_stock_picking_in
-msgid "Incoming Shipments"
-msgstr ""
-
-#. module: crm_claim_rma
 #: help:substate.substate,substate_descr:0
 msgid "To give more information about the sub state"
 msgstr "Permet de donner plus d'information sur le sous état"
@@ -563,8 +545,6 @@ msgstr "Emplacement d'ou les produits retournés proviennent."
 #. module: crm_claim_rma
 #: field:crm.claim,picking_ids:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_crm_claim_picking_ids
-#: view:stock.picking.in:0
-#: view:stock.picking.out:0
 msgid "RMA"
 msgstr "RMA"
 
@@ -887,11 +867,6 @@ msgstr "Mauvaise adresse de livraison"
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
 msgid "Incoming Shipment and Returns"
-msgstr ""
-
-#. module: crm_claim_rma
-#: view:stock.picking.out:0
-msgid "Delivery orders to invoice"
 msgstr ""
 
 #. module: crm_claim_rma

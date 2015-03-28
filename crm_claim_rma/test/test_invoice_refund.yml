@@ -25,7 +25,6 @@
     claim_type: customer
     partner_id: base.res_partner_3
     invoice_id: account_invoice_claim_refund
-    state: open
 -
   I prepare the wizard context.
 -

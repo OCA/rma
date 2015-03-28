@@ -12,11 +12,25 @@
             <field name="model">claim_make_picking.wizard</field>
             <field name="arch" type="xml">
                 <form string="Select exchange lines to add in picking" version="7.0">
-                    <separator string="Locations" colspan="4"/>
-                    <field name="claim_line_source_location" nolabel="1" />
-                    <field name="claim_line_dest_location" nolabel="1" />
-                    <separator string="Select lines for picking" colspan="4"/>
-                    <field name="claim_line_ids" nolabel="1" colspan="4"/>
+                    <group colspan="4">
+                        <group string="Locations" colspan="4">
+                            <field name="claim_line_source_location"/>
+                            <field name="claim_line_dest_location"/>
+                        </group>
+                        <group string="Select lines for picking" colspan="4">
+                            <field name="claim_line_ids" nolabel="1" colspan="4">
+                                <tree>
+                                    <field name="claim_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="invoice_line_id"/>
+                                    <field name="product_id"/>
+                                    <field name="state" readonly="True"/>
+                                    <field name="prodlot_id"/>
+                                    <field name="product_returned_quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
                     <footer>
                         <button name="action_create_picking" string="Create picking" type="object" class="oe_highlight"/>
                         or

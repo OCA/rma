@@ -22,7 +22,7 @@
 ##############################################################################
 {
     'name': 'RMA Claim (Product Return Management)',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
 Management of Return Merchandise Authorization (RMA)
@@ -66,12 +66,13 @@ Contributors:
  * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
  * Guewen Baconnier <guewen.baconnier@camptocamp.com>
  * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+ * Yanina Aular <yanina.aular@vauxoo.com>
 
 """,
-    'author': "Akretion, Camptocamp,Odoo Community Association (OCA)",
+    'author': 'Akretion, Camptocamp, Vauxoo, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com, http://www.camptocamp.com',
-    'license': 'AGPL-3',
     'depends': ['sale',
+                'sales_team',
                 'stock',
                 'crm_claim',
                 'product_warranty',
