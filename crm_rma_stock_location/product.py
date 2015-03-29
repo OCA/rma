@@ -105,3 +105,31 @@ class ProductProduct(osv.Model):
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='RMA Forecasted Quantity'),
     }
+
+
+class ProductTemplate(osv.Model):
+    _inherit = 'product.template'
+
+    def _rma_product_available(self, cr, uid, ids, name, arg, context=None):
+        res = dict.fromkeys(ids, 0)
+        for product in self.browse(cr, uid, ids, context=context):
+            res[product.id] = {
+                "rma_qty_available": sum([p.rma_qty_available for p in product.product_variant_ids]),
+                "rma_virtual_available": sum([p.rma_virtual_available for p in product.product_variant_ids]),
+            }
+        return res
+
+    _columns = {
+        'rma_qty_available': fields.function(
+            _rma_product_available,
+            type='float',
+            multi='rma_qty',
+            digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='RMA Quantity On Hand'),
+        'rma_virtual_available': fields.function(
+            _rma_product_available,
+            type='float',
+            multi='rma_qty',
+            digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='RMA Forecasted Quantity'),
+    }
