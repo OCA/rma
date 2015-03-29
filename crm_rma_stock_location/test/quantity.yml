@@ -54,19 +54,15 @@
   I confirm the physical inventory
 -
   !python {model: stock.inventory}: |
-    self.action_confirm(cr, uid, [ref('stock_inventory_socket')], context=context)
+    self.prepare_inventory(cr, uid, [ref('stock_inventory_socket')], context=context)
 -
-  I confirm the move in Box A
+  I validate the physical inventory
 -
   !python {model: stock.inventory}: |
-    inventory = self.browse(cr, uid, ref('stock_inventory_socket'), context=context)
-    assert len(inventory.move_ids) == len(inventory.inventory_line_id), "moves are not correspond."
-    for move in inventory.move_ids:
-      if move.location_dest_id.id == ref('location_rma_a'):
-        move.action_done()
+    self.action_done(cr, uid, [ref('stock_inventory_socket')], context=context)
 -
-  I check my RMA quantities, I should have 50 on hands and 80 forecasted
+  I check my RMA quantities, I should have 80 on hands and 80 forecasted
 -
   !assert {model: product.product, id: product_socket, string: RMA quantity is wrong}:
-    - rma_qty_available == 50
+    - rma_qty_available == 80
     - rma_virtual_available == 80
