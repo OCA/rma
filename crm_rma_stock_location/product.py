@@ -63,9 +63,22 @@ class ProductProduct(osv.Model):
         field_names = field_names or []
 
         domain_products = [('product_id', 'in', ids)]
-        domain_quant, domain_move_in, domain_move_out = self._get_domain_locations(cr, uid, ids, context=ctx)
-        domain_move_in += self._get_domain_dates(cr, uid, ids, context=ctx) + [('state', 'not in', ('done', 'cancel', 'draft'))] + domain_products
-        domain_move_out += self._get_domain_dates(cr, uid, ids, context=ctx) + [('state', 'not in', ('done', 'cancel', 'draft'))] + domain_products
+        domain_quant, domain_move_in, domain_move_out = \
+            self._get_domain_locations(cr, uid, ids, context=ctx)
+        domain_move_in += self._get_domain_dates(cr,
+                                                 uid,
+                                                 ids,
+                                                 context=ctx) + \
+            [('state',
+              'not in',
+              ('done', 'cancel', 'draft'))] + domain_products
+        domain_move_out += self._get_domain_dates(cr,
+                                                  uid,
+                                                  ids,
+                                                  context=ctx) + \
+            [('state',
+              'not in',
+              ('done', 'cancel', 'draft'))] + domain_products
         domain_quant += domain_products
         if context.get('lot_rma_id'):
             if context.get('lot_rma_id'):
@@ -73,21 +86,47 @@ class ProductProduct(osv.Model):
             moves_in = []
             moves_out = []
         else:
-            moves_in = self.pool.get('stock.move').read_group(cr, uid, domain_move_in, ['product_id', 'product_qty'], ['product_id'], context=ctx)
-            moves_out = self.pool.get('stock.move').read_group(cr, uid, domain_move_out, ['product_id', 'product_qty'], ['product_id'], context=ctx)
-        quants = self.pool.get('stock.quant').read_group(cr, uid, domain_quant, ['product_id', 'qty'], ['product_id'], context=ctx)
+            moves_in = self.pool.get('stock.move').read_group(cr,
+                                                              uid,
+                                                              domain_move_in,
+                                                              ['product_id',
+                                                               'product_qty'],
+                                                              ['product_id'],
+                                                              context=ctx)
+            moves_out = self.pool.get('stock.move').read_group(cr,
+                                                               uid,
+                                                               domain_move_out,
+                                                               ['product_id',
+                                                                'product_qty'],
+                                                               ['product_id'],
+                                                               context=ctx)
+        quants = self.pool.get('stock.quant').read_group(cr,
+                                                         uid,
+                                                         domain_quant,
+                                                         ['product_id',
+                                                          'qty'],
+                                                         ['product_id'],
+                                                         context=ctx)
         quants = dict(map(lambda x: (x['product_id'][0], x['qty']), quants))
 
-        moves_in = dict(map(lambda x: (x['product_id'][0], x['product_qty']), moves_in))
-        moves_out = dict(map(lambda x: (x['product_id'][0], x['product_qty']), moves_out))
+        moves_in = dict(map(lambda x: (x['product_id'][0],
+                                       x['product_qty']), moves_in))
+        moves_out = dict(map(lambda x: (x['product_id'][0],
+                                        x['product_qty']), moves_out))
         res = {}
         for product in self.browse(cr, uid, ids, context=context):
             id = product.id
-            rma_qty_available = float_round(quants.get(id, 0.0), precision_rounding=product.uom_id.rounding)
-            rma_virtual_available = float_round(quants.get(id, 0.0) + moves_in.get(id, 0.0) - moves_out.get(id, 0.0), precision_rounding=product.uom_id.rounding)
+            rma_qty_available = \
+                float_round(quants.get(id, 0.0),
+                            precision_rounding=product.uom_id.rounding)
+            rma_virtual_available = \
+                float_round(quants.get(id, 0.0) +
+                            moves_in.get(id, 0.0) -
+                            moves_out.get(id, 0.0),
+                            precision_rounding=product.uom_id.rounding)
             res[id] = {
-                'rma_qty_available' : rma_qty_available,
-                'rma_virtual_available' : rma_virtual_available,
+                'rma_qty_available': rma_qty_available,
+                'rma_virtual_available': rma_virtual_available,
             }
         return res
 
@@ -114,8 +153,12 @@ class ProductTemplate(osv.Model):
         res = dict.fromkeys(ids, 0)
         for product in self.browse(cr, uid, ids, context=context):
             res[product.id] = {
-                "rma_qty_available": sum([p.rma_qty_available for p in product.product_variant_ids]),
-                "rma_virtual_available": sum([p.rma_virtual_available for p in product.product_variant_ids]),
+                "rma_qty_available": sum([p.rma_qty_available
+                                          for p in
+                                          product.product_variant_ids]),
+                "rma_virtual_available": sum([p.rma_virtual_available
+                                              for p in
+                                              product.product_variant_ids]),
             }
         return res
 

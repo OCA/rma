@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Author: Yanina Aular
+#    Copyright 2014 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,6 +19,12 @@
 #
 ##############################################################################
 
-from . import stock_warehouse
-from . import product
-from . import stock
+from openerp.osv import osv
+
+
+class stock_move(osv.Model):
+    _inherit = 'stock.move'
+
+    defaults = {
+        'invoice_state': 'none'
+    }
