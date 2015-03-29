@@ -42,6 +42,8 @@ The product views displays the quantity available and virtual in this
           'stock_warehouse_view.xml',
           'product_view.xml',
           ],
+ 'demo': ['stock_demo.xml',
+          ],
  'test': ['test/quantity.yml',
           ],
  'installable': True,
