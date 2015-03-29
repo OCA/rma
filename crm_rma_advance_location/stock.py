@@ -20,10 +20,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp.osv import fields, osv
 
 
-class stock_warehouse(orm.Model):
+class stock_warehouse(osv.Model):
 
     _inherit = "stock.warehouse"
 
