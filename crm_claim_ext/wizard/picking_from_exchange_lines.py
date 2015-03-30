@@ -21,6 +21,7 @@
 #########################################################################
 
 from osv import fields, osv
+import time
 
 # Class to create a picking out from selected exchange lines
 
@@ -81,58 +82,57 @@ class picking_out_from_exchange_lines(osv.osv_memory):
                 cr, uid, context['active_id'])
             partner_id = claim_id.partner_id.id
             # create picking
-            # picking_id = self.pool.get('stock.picking').create(cr, uid, {
-            #     'origin': "RMA/" + `claim_id.id`,
-            #     'type': 'out',
-            #             'move_type': 'one',  # direct
-            #             'state': 'draft',
-            #             'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-            #             'partner_id': claim_id.partner_id.id,
-            #             'invoice_state': "none",
-            #             'company_id': claim_id.company_id.id,
-            #             # 'stock_journal_id':
-            #             # fields.many2one('stock.journal',
-            #             #                 'Stock Journal',
-            #             #                 select=True),
-            #             'location_id': self.pool.get('stock.warehouse').
-            #             read(cr, uid, [1],
-            #                  ['lot_input_id'])[0]['lot_input_id'][0],
-            #             'location_dest_id':
-            #     claim_id.partner_id.property_stock_customer.id,
-            #     'note': 'RMA picking in',
-            # })
+            picking_id = self.pool.get('stock.picking').create(cr, uid, {
+                'origin': "RMA/" + str(claim_id.id),
+                'type': 'out',
+                        'move_type': 'one',  # direct
+                        'state': 'draft',
+                        'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                        'partner_id': claim_id.partner_id.id,
+                        'invoice_state': "none",
+                        'company_id': claim_id.company_id.id,
+                        # 'stock_journal_id':
+                        # fields.many2one('stock.journal',
+                        #                 'Stock Journal',
+                        #                 select=True),
+                        'location_id': self.pool.get('stock.warehouse').
+                        read(cr, uid, [1],
+                             ['lot_input_id'])[0]['lot_input_id'][0],
+                        'location_dest_id':
+                claim_id.partner_id.property_stock_customer.id,
+                'note': 'RMA picking in',
+            })
             # Create picking lines
             for exchange_line in exchange_lines.exchange_line_ids:
-                pass
-                # move_id = self.pool.get('stock.move').create(cr, uid, {
-                #     # Motif : crm id ? stock_picking_id ?
-                #     'name': exchange_line.
-                #             replacement_product_id.name_template,
-                #     'priority': '0',
-                #     # 'create_date':
-                #     'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                #     'date_expected': time.strftime('%Y-%m-%d %H:%M:%S'),
-                #     'product_id': exchange_line.replacement_product_id.id,
-                #     'product_qty':
-                #     exchange_line.replacement_product_quantity,
-                #     'product_uom':
-                #     exchange_line.replacement_product_id.uom_id.id,
-                #     'partner_id': claim_id.partner_id.id,
-                #     'prodlot_id': exchange_line.replacement_prodlot_id,
-                #     # 'tracking_id':
-                #     'picking_id': picking_id,
-                #     'state': 'draft',
-                #     # 'price_unit': 1.0, # to get from invoice line
-                #     # 'price_currency_id':
-                #     # claim_id.company_id.currency_id.id, # from invoice ???
-                #     'company_id': claim_id.company_id.id,
-                #     'location_id': self.pool.get('stock.warehouse')
-                #     .read(cr, uid, [1],
-                #           ['lot_input_id'])[0]['lot_input_id'][0],
-                #     'location_dest_id':
-                #     claim_id.partner_id.property_stock_customer.id,
-                #     'note': 'RMA Refound',
-                # })
+                self.pool.get('stock.move').create(cr, uid, {
+                    # Motif : crm id ? stock_picking_id ?
+                    'name': exchange_line
+                    .replacement_product_id.name_template,
+                    'priority': '0',
+                    # 'create_date':
+                    'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'date_expected': time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'product_id': exchange_line.replacement_product_id.id,
+                    'product_qty':
+                    exchange_line.replacement_product_quantity,
+                    'product_uom':
+                    exchange_line.replacement_product_id.uom_id.id,
+                    'partner_id': claim_id.partner_id.id,
+                    'prodlot_id': exchange_line.replacement_prodlot_id,
+                    # 'tracking_id':
+                    'picking_id': picking_id,
+                    'state': 'draft',
+                    # 'price_unit': 1.0, # to get from invoice line
+                    # 'price_currency_id':
+                    # claim_id.company_id.currency_id.id, # from invoice ???
+                    'company_id': claim_id.company_id.id,
+                    'location_id': self.pool.get('stock.warehouse')
+                    .read(cr, uid, [1],
+                          ['lot_input_id'])[0]['lot_input_id'][0],
+                    'location_dest_id':
+                    claim_id.partner_id.property_stock_customer.id,
+                    'note': 'RMA Refound',
+                })
         view = {
             'name': 'Customer Picking OUT',
             'view_type': 'form',
