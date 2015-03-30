@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Author: Yanina Aular
+#    Copyright 2014 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,5 +19,26 @@
 #
 ##############################################################################
 
-from . import product
-from . import stock
+{'name': 'RMA Location',
+ 'version': '1.0',
+ 'author': "Vauxoo, Odoo Community Association (OCA)",
+ 'license': 'AGPL-3',
+ 'category': 'Generic Modules/CRM & SRM',
+ 'depends': ['stock',
+             'procurement',
+             ],
+ 'description': """
+RMA Location
+============
+
+Bridge Module.
+
+RMA Location added in warehouse to control products in rma.
+
+ """,
+ 'website': 'http://www.camptocamp.com',
+ 'data': ['stock_warehouse_view.xml',
+          ],
+ 'installable': True,
+ 'auto_install': False,
+ }

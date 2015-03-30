@@ -25,7 +25,7 @@
     'name': 'RMA Claims Mass Return by Lot',
     'version': '1.0',
     'category': 'Generic Modules/CRM & SRM',
-    'depends': ['crm_claim_rma'
+    'depends': ['crm_claim_rma',
                 ],
     'author': 'Akretion,Odoo Community Association (OCA)',
     'license': 'AGPL-3',

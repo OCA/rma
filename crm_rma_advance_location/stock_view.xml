@@ -35,7 +35,6 @@
             <field name="inherit_id" ref="stock.view_warehouse" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='company_id']" position="before">
-                    <field name="lot_rma_id"/>
                     <field name="lot_carrier_loss_id"/>
                     <field name="lot_breakage_loss_id"/>
                     <field name="lot_refurbish_id"/>

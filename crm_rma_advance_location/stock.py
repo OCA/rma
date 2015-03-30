@@ -28,7 +28,6 @@ class stock_warehouse(osv.Model):
     _inherit = "stock.warehouse"
 
     _columns = {
-        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
         'lot_carrier_loss_id': fields.many2one(
             'stock.location',
             'Location Carrier Loss'),
