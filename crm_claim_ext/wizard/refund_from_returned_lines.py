@@ -22,6 +22,7 @@
 
 from osv import fields, osv
 from openerp.tools.translate import _
+import time
 
 
 class refund_from_returned_lines(osv.osv_memory):
@@ -85,51 +86,47 @@ class refund_from_returned_lines(osv.osv_memory):
             if claim_id.claim_type == "supplier":
                 invoice_type = "in_refund"
             # create invoice
-            # invoice_id = self.pool.get('account.invoice').create(cr, uid, {
-            #     'claim_origine': "none",
-            #     'origin': claim_id.sequence,
-            #     'type': invoice_type,
-            #     'state': 'draft',
-            #     'partner_id': claim_id.partner_id.id,
-            #     'user_id': uid,
-            #     'reference_type': 'none',
-            #     'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S'),
-            #     # 'date_due':
-            #     'partner_id': claim_id.partner_id.id,
-            #     'commercial_partner_id': claim_id.partner_id.id,
-            #     'account_id':
-            #     claim_id.partner_id.property_account_receivable.id,
-            #     # from invoice ???
-            #     'currency_id': claim_id.company_id.currency_id.id,
-            #     'journal_id': refund.refund_journal.id,
-            #     'company_id': claim_id.company_id.id,
-            #     'comment': 'RMA Refund',
-            #     'claim_id': claim_id.id,
-            # })
+            invoice_id = self.pool.get('account.invoice').create(cr, uid, {
+                'claim_origine': "none",
+                'origin': claim_id.sequence,
+                'type': invoice_type,
+                'state': 'draft',
+                'partner_id': claim_id.partner_id.id,
+                'user_id': uid,
+                'reference_type': 'none',
+                'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S'),
+                # 'date_due':
+                'commercial_partner_id': claim_id.partner_id.id,
+                'account_id':
+                claim_id.partner_id.property_account_receivable.id,
+                # from invoice ???
+                'currency_id': claim_id.company_id.currency_id.id,
+                'journal_id': refund.refund_journal.id,
+                'company_id': claim_id.company_id.id,
+                'comment': 'RMA Refund',
+                'claim_id': claim_id.id,
+            })
             # Create invoice lines
             for refund_line in refund.claim_line_ids:
                 if refund_line.invoice_id:
-                    # invoice_line_id = \
-                    #     self.pool.get('account.invoice.line')\
-                    #     .create(cr, uid, {
-                    #     'name': refund_line.product_id.name_template,
-                    #     'origin': claim_id.sequence,
-                    #     'invoice_id': invoice_id,
-                    #     'uos_id': refund_line.product_id.uom_id.id,
-                    #     'product_id': refund_line.product_id.id,
-                    #     # refund_line.product_id.property_account_expense.id,
-                    #     'account_id':
-                    #     claim_id.partner_id.property_account_receivable.id,
-                    #     'price_unit': refund_line.price_unit,
-                    #     'quantity': refund_line.product_returned_quantity,
-                    #     #                        'discount':
-                    #     #                        'invoice_line_tax_id':
-                    #     #                        'account_analytic_id':
-                    #     'company_id': claim_id.company_id.id,
-                    #     'partner_id': refund_line.invoice_id.partner_id.id,
-                    #     'note': 'RMA Refund',
-                    # })
-                    pass
+                    self.pool.get('account.invoice.line').create(cr, uid, {
+                        'name': refund_line.product_id.name_template,
+                        'origin': claim_id.sequence,
+                        'invoice_id': invoice_id,
+                        'uos_id': refund_line.product_id.uom_id.id,
+                        'product_id': refund_line.product_id.id,
+                        # refund_line.product_id.property_account_expense.id,
+                        'account_id':
+                        claim_id.partner_id.property_account_receivable.id,
+                        'price_unit': refund_line.price_unit,
+                        'quantity': refund_line.product_returned_quantity,
+                        #                        'discount':
+                        #                        'invoice_line_tax_id':
+                        #                        'account_analytic_id':
+                        'company_id': claim_id.company_id.id,
+                        'partner_id': refund_line.invoice_id.partner_id.id,
+                        'note': 'RMA Refund',
+                    })
                 else:
                     raise osv.except_osv(
                         _('Error !'), _('Cannot find any'

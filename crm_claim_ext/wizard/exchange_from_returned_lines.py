@@ -21,6 +21,7 @@
 #########################################################################
 
 from osv import fields, osv
+import time
 
 # Class to create a picking in from selected return lines
 
@@ -75,35 +76,33 @@ class exchange_from_returned_lines(osv.osv_memory):
     # If "Create" button pressed
     def action_create_exchange(self, cr, uid, ids, context=None):
         for exchange in self.browse(cr, uid, ids):
-            # claim_id = self.pool.get('crm.claim').browse(
-            #     cr, uid, context['active_id'])
+            claim_id = self.pool.get('crm.claim').browse(
+                cr, uid, context['active_id'])
             # create exchange
             for line in exchange.exchange_line_ids:
-                pass
-                # exchange_id = self.pool.get('product.exchange').\
-                #     create(cr,
-                #            uid,
-                #            {
-                #                'name': "#",
-                #                'state': 'draft',
-                #                'exchange_send_date':
-                #                time.strftime('%Y-%m-%d %H:%M:%S'),
-                #                'returned_product': line.
-                #                 returned_product_id.id,
-                #                'returned_product_serial':
-                #                line.returned_prodlot_id.id,
-                #                'returned_product_qty':
-                #                line.returned_product_quantity,
-                #                'returned_unit_sale_price':
-                #                line.returned_unit_sale_price,
-                #                'replacement_product':
-                #                line.replacement_product_id.id,
-                #                'replacement_product_serial':
-                #                line.replacement_prodlot_id.id,
-                #                'replacement_product_qty':
-                #                line.replacement_product_quantity,
-                #                'claim_return_id': claim_id.id
-                #            })
+                self.pool.get('product.exchange').\
+                    create(cr,
+                           uid,
+                           {
+                               'name': "#",
+                               'state': 'draft',
+                               'exchange_send_date':
+                               time.strftime('%Y-%m-%d %H:%M:%S'),
+                               'returned_product': line.returned_product_id.id,
+                               'returned_product_serial':
+                               line.returned_prodlot_id.id,
+                               'returned_product_qty':
+                               line.returned_product_quantity,
+                               'returned_unit_sale_price':
+                               line.returned_unit_sale_price,
+                               'replacement_product':
+                               line.replacement_product_id.id,
+                               'replacement_product_serial':
+                               line.replacement_prodlot_id.id,
+                               'replacement_product_qty':
+                               line.replacement_product_quantity,
+                               'claim_return_id': claim_id.id
+                           })
 
         return {'type': 'ir.actions.act_window_close', }
 
