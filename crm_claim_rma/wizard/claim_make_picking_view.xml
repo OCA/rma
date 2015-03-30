@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  crm_claim_rma for OpenERP
+  Copyright (C) 2011 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+<openerp>
+    <data>
+
+        <record id="view_claim_picking" model="ir.ui.view">
+            <field name="name">claim_picking</field>
+            <field name="model">claim_make_picking.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select exchange lines to add in picking" version="7.0">
+                    <group colspan="4">
+                        <group string="Locations" colspan="4">
+                            <field name="claim_line_source_location"/>
+                            <field name="claim_line_dest_location"/>
+                        </group>
+                        <group string="Select lines for picking" colspan="4">
+                            <field name="claim_line_ids" nolabel="1" colspan="4">
+                                <tree>
+                                    <field name="claim_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="invoice_line_id"/>
+                                    <field name="product_id"/>
+                                    <field name="state" readonly="True"/>
+                                    <field name="prodlot_id"/>
+                                    <field name="product_returned_quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_create_picking" string="Create picking" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record> 
+
+        <record id="action_claim_picking_in" model="ir.actions.act_window">
+            <field name="name">Return Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">claim_make_picking.wizard</field>
+            <field name="src_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> 
+            <field name="context">{'picking_type': 'in','product_return': True}</field>
+        </record>
+
+        <record id="action_claim_picking_out" model="ir.actions.act_window">
+            <field name="name">Create Outgoing Shipments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">claim_make_picking.wizard</field>
+            <field name="src_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> 
+            <field name="context">{'picking_type': 'out'}</field>
+        </record>
+
+    </data>
+</openerp>

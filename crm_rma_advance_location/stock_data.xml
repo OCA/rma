@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <!--
+        Default Values for : Stock Location
+        -->
+        <record id="stock_location_carrier_loss" model="stock.location">
+            <field name="name">Carrier Loss</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+        <record id="stock_location_rma" model="stock.location">
+            <field name="name">RMA</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+        <record id="stock_location_breakage_loss" model="stock.location">
+            <field name="name">Breakage Loss</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+        <record id="stock_location_refurbish" model="stock.location">
+            <field name="name">Refurbish</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+        <record id="stock_location_mistake_loss" model="stock.location">
+            <field name="name">Mistake Loss</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+        <!--
+        Default Values for : Stock Warehouse
+        -->
+        <record id="stock.warehouse0" model="stock.warehouse">
+            <field name="lot_rma_id" ref="stock_location_rma"/>
+            <field name="lot_breakage_loss_id" ref="stock_location_breakage_loss"/>
+            <field name="lot_carrier_loss_id" ref="stock_location_carrier_loss"/>
+            <field name="lot_refurbish_id" ref="stock_location_refurbish"/>
+        </record>
+    </data>
+</openerp>
