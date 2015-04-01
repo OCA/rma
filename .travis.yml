@@ -10,8 +10,8 @@ virtualenv:
   system_site_packages: true
 
 env:
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1"
   - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="rma"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1" EXCLUDE="rma"
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
