@@ -27,15 +27,6 @@
  'depends': ['stock',
              'procurement',
              ],
- 'description': """
-RMA Location
-============
-
-Bridge Module.
-
-RMA Location added in warehouse to control products in rma.
-
- """,
  'website': 'http://www.camptocamp.com',
  'data': ['stock_warehouse_view.xml',
           ],
