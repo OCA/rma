@@ -153,92 +153,49 @@ class returned_lines_from_serial(orm.TransientModel):
         return_line = self.pool.get('claim.line')
         # Refactor code : create 1 "createmethode" called by each if with
         # values as parameters
-        return_line.create(cr, uid, {
-            'claim_id': context['active_id'],
-            'claim_origine': result.claim_1,
-            'product_id': self.get_product_id(
-                cr, uid, ids, result.prodlot_id_1.id, context=context),
-            # 'invoice_id' : self.prodlot_2_invoice(
-            #     cr, uid, [result.prodlot_id_1.id],
-            #     [result.prodlot_id_1.product_id.id]),
-            # PRODLOT_ID can be in many invoice !!
-            'product_returned_quantity': result.qty_1,
-            'prodlot_id': result.prodlot_id_1.id,
-            'selected': False,
-            'state': 'draft',
-            # 'guarantee_limit' : warranty['value']['guarantee_limit'],
-            # 'warning' : warranty['value']['warning'],
-        })
-        if result.prodlot_id_2.id:
-            return_line.create(cr, uid, {
-                'claim_id': context['active_id'],
-                'claim_origine': result.claim_2,
-                'product_id': self.get_product_id(
-                    cr, uid, ids, result.prodlot_id_2.id, context=context),
-                # 'invoice_id' : self.prodlot_2_invoice(
-                #     cr, uid, [result.prodlot_id_1.id]),
-                'product_returned_quantity': result.qty_2,
-                'prodlot_id': result.prodlot_id_2.id,
-                'selected': False,
-                'state': 'draft',
-                # 'guarantee_limit' : warranty['value']['guarantee_limit'],
-                # 'warning' : warranty['value']['warning'],
-            })
-        if result.prodlot_id_3.id:
-            return_line.create(cr, uid, {
-                'claim_id': context['active_id'],
-                'claim_origine': result.claim_3,
-                'product_id': self.get_product_id(
-                    cr, uid, ids, result.prodlot_id_3.id, context=context),
-                #  'invoice_id' : self.prodlot_2_invoice(
-                #      cr, uid,[result.prodlot_id_1.id]),
-                'product_returned_quantity': result.qty_3,
-                'prodlot_id': result.prodlot_id_3.id,
-                'selected': False,
-                'state': 'draft',
-                # 'guarantee_limit' : warranty['value']['guarantee_limit'],
-                # 'warning' : warranty['value']['warning'],
-            })
-        if result.prodlot_id_4.id:
-            return_line.create(cr, uid, {
-                'claim_id': context['active_id'],
-                'claim_origine': result.claim_4,
-                'product_id': self.get_product_id(
-                    cr, uid, ids, result.prodlot_id_4.id, context=context),
-                # 'invoice_id' : self.prodlot_2_invoice(
-                #     cr, uid,[result.prodlot_id_1.id]),
-                'product_returned_quantity': result.qty_4,
-                'prodlot_id': result.prodlot_id_4.id,
-                'selected': False,
-                'state': 'draft',
-                # 'guarantee_limit' : warranty['value']['guarantee_limit'],
-                # 'warning' : warranty['value']['warning'],
-            })
-        if result.prodlot_id_5.id:
-            return_line.create(cr, uid, {
-                'claim_id': context['active_id'],
-                'claim_origine': result.claim_5,
-                'product_id': self.get_product_id(
-                    cr, uid, ids, result.prodlot_id_5.id, context=context),
-                # 'invoice_id' : self.prodlot_2_invoice(
-                #     cr, uid, [result.prodlot_id_1.id],
-                #     [result.prodlot_id_1.product_id.id]),
-                'product_returned_quantity': result.qty_5,
-                'prodlot_id': result.prodlot_id_5.id,
-                'selected': False,
-                'state': 'draft',
-                # 'guarantee_type':
-                # 'guarantee_limit' : warranty['value']['guarantee_limit'],
-                # 'warning' : warranty['value']['warning'],
-            })
+        product_obj = self.pool.get('product.product')
+
+        for num in xrange(1, 6):
+            prodlot_id = False
+            if result:
+                prodlot_id = eval("result.prodlot_id_" + str(num) + ".id")
+            if prodlot_id:
+                product_id = \
+                    self.get_product_id(cr,
+                                        uid,
+                                        ids,
+                                        prodlot_id,
+                                        context=context)
+                product_brw = product_obj.browse(cr,
+                                                 uid,
+                                                 product_id,
+                                                 context=context)
+                claim_origine = eval("result.claim_" + str(num))
+                qty = eval("result.qty_" + str(num))
+                return_line.create(cr, uid, {
+                    'claim_id': context['active_id'],
+                    'claim_origine': claim_origine,
+                    'product_id': product_brw.id,
+                    'name': product_brw.name,
+                    # 'invoice_id' : self.prodlot_2_invoice(
+                    #     cr, uid, [prodlot_id],
+                    #     [product_id]),
+                    # PRODLOT_ID can be in many invoice !!
+                    'product_returned_quantity': qty,
+                    'prodlot_id': prodlot_id,
+                    'selected': False,
+                    'state': 'draft',
+                    # 'guarantee_limit' : warranty['value']['guarantee_limit'],
+                    # 'warning' : warranty['value']['warning'],
+                })
 
         return True
 
     def prodlot_2_product(self, cr, uid, prodlot_ids):
-        stock_move_ids = self.pool.get('stock.move').search(
-            cr, uid, [('prodlot_id', 'in', prodlot_ids)])
-        res = self.pool.get('stock.move').read(
-            cr, uid, stock_move_ids, ['product_id'])
+        stock_quant_ids = self.pool.get('stock.quant').search(
+            cr, uid, [('lot_id', 'in', prodlot_ids)])
+        res = self.pool.get('stock.quant').read(
+            cr, uid, stock_quant_ids, ['product_id'])
         return set([x['product_id'][0] for x in res if x['product_id']])
 
     def prodlot_2_invoice(self, cr, uid, prodlot_id, product_id):
