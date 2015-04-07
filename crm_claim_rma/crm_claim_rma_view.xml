@@ -27,7 +27,7 @@
                     <group expand="0" string="More">
                         <field name="last_state_change" select='1'/>
                         <field name="guarantee_limit" select='1'/>
-                        <field name="return_value" select='1'/>    
+                        <field name="return_value" select='1'/>
                         <field name="name" select='1'/>
                     </group>
                     <newline/>
@@ -60,9 +60,9 @@
                     <field name="product_id"/>
                     <field name="name"/>
                     <field name="prodlot_id"/>
-                    <field name="warning"/> 
-                    <field name="warranty_type"/> 
-                    <field name="warranty_return_partner"/> 
+                    <field name="warning"/>
+                    <field name="warranty_type"/>
+                    <field name="warranty_return_partner"/>
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
                     <field name="product_returned_quantity"/>
                     <field name="claim_origine"/>
@@ -92,7 +92,7 @@
                     <group>
                         <group string="Returned good">
                             <field name="product_returned_quantity"/>
-                            <field name="product_id"/> 
+                            <field name="product_id"/>
                             <field name="prodlot_id"/>
                             <field name="unit_sale_price"/>
                             <field name="return_value"/>
@@ -149,9 +149,9 @@
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
-                <field name="categ_id" widget="selection" domain="[('object_id.model', '=', 'crm.claim')]" position="replace">
+                <xpath expr="//field[@name='categ_id']" position="replace">
                     <field name="categ_id" />
-                </field>
+                </xpath>
             </field>
         </record>
 
@@ -210,46 +210,46 @@
 
 
 <!-- Right side link to orders -->
-        <act_window 
-        id="act_crm_claim_rma_sale_orders" 
+        <act_window
+        id="act_crm_claim_rma_sale_orders"
         name="Quotations and Sales"
         res_model="sale.order"
         src_model="crm.claim"/>
 <!-- Right side link to invoices -->
-        <act_window 
+        <act_window
         domain="[('type', '=', 'out_invoice')]"
-        id="act_crm_claim_rma_invoice_out" 
-        name="Customer Invoices" 
-        res_model="account.invoice" 
+        id="act_crm_claim_rma_invoice_out"
+        name="Customer Invoices"
+        res_model="account.invoice"
         src_model="crm.claim"/>
 <!-- Right side link to invoices -->
-        <act_window 
+        <act_window
         domain="[('type', '=', 'in_invoice')]"
-        id="act_crm_claim_rma_invoice_in" 
-        name="Supplier Invoices" 
-        res_model="account.invoice" 
+        id="act_crm_claim_rma_invoice_in"
+        name="Supplier Invoices"
+        res_model="account.invoice"
         src_model="crm.claim"/>
 <!-- Right side link to refunds -->
-        <act_window 
+        <act_window
         domain="[('type', '=', 'out_refund')]"
-        id="act_crm_claim_rma_refunds_out" 
-        name="Customer Refunds" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/>    
+        id="act_crm_claim_rma_refunds_out"
+        name="Customer Refunds"
+        res_model="account.invoice"
+        src_model="crm.claim"/>
 <!-- Right side link to refunds -->
-        <act_window 
+        <act_window
         domain="[('type', '=', 'in_refund')]"
-        id="act_crm_claim_rma_refunds_in" 
-        name="Supplier Refunds" 
-        res_model="account.invoice" 
-        src_model="crm.claim"/> 
-<!-- Right side link to picking in --> 
+        id="act_crm_claim_rma_refunds_in"
+        name="Supplier Refunds"
+        res_model="account.invoice"
+        src_model="crm.claim"/>
+<!-- Right side link to picking in -->
         <act_window
         domain="[('type', '=', 'in')]"
-        id="act_crm_claim_rma_picking_in" 
-        name="Incoming Shipment and Returns" 
+        id="act_crm_claim_rma_picking_in"
+        name="Incoming Shipment and Returns"
         res_model="stock.picking"
-        src_model="crm.claim"/>  
+        src_model="crm.claim"/>
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
         <field name="name">CRM - Claim product return Form</field>
