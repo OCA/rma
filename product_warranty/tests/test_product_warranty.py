@@ -83,4 +83,5 @@ class TestProductWarranty(TransactionCase):
         self.supplierinfo_brw.write({'warranty_return_partner': 'company'})
 
         self.assertEquals(self.supplierinfo_brw.warranty_return_address.id,
-                          self.supplierinfo_brw.company_id.id)
+                          self.supplierinfo_brw.company_id.
+                          crm_return_address_id.id)
