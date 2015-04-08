@@ -51,6 +51,7 @@ module.
     ],
     'demo': [
         'demo/product_warranty.xml',
+        'demo/res_company.xml',
     ],
     'test': [],
     'installable': True,

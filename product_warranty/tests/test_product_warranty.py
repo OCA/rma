@@ -28,6 +28,7 @@ class TestProductWarranty(TransactionCase):
         super(TestProductWarranty, self).setUp()
         self.instruction_model = self.env['return.instruction']
         self.supplierinfo = self.env['product.supplierinfo']
+        self.create_product_supplierinfo()
 
     def create_product_supplierinfo(self):
         """
@@ -48,7 +49,7 @@ class TestProductWarranty(TransactionCase):
                                  ' display Default Instruction',
                                  min_qty=4,
                                  delay=5,
-                                 warranty_return_partner='company',
+                                 warranty_return_partner='supplier',
                                  product_tmpl_id=product_tmpl_id,)
         self.supplierinfo_brw = \
             self.supplierinfo.create(supplierinfo_data)
@@ -62,11 +63,24 @@ class TestProductWarranty(TransactionCase):
         """
         cr, uid = self.cr, self.uid
 
-        self.create_product_supplierinfo()
-
         return_instructions_id = self.registry("ir.model.data").\
             get_object_reference(cr, uid, "product_warranty",
                                  "return_instruction_1")[1]
 
         self.assertEquals(self.supplierinfo_brw.return_instructions.id,
                           return_instructions_id)
+
+    def test_warranty_return_address(self):
+        """
+        Test warranty_return_address field is calculate correctly depends of
+        warranty_return_partner
+        """
+        self.create_product_supplierinfo()
+
+        self.assertEquals(self.supplierinfo_brw.warranty_return_address.id,
+                          self.supplierinfo_brw.name.id)
+
+        self.supplierinfo_brw.write({'warranty_return_partner': 'company'})
+
+        self.assertEquals(self.supplierinfo_brw.warranty_return_address.id,
+                          self.supplierinfo_brw.company_id.id)
