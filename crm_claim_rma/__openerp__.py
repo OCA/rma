@@ -91,6 +91,9 @@ Contributors:
                'images/return_line.png',
                'images/exchange.png',
                ],
+    'demo': [
+        'demo/crm_claim_rma_demo.xml',
+    ],
     'installable': True,
     'auto_install': False,
 }
