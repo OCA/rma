@@ -39,30 +39,13 @@ class returned_lines_from_serial(models.Model):
         else:
             return partner_id
 
-    # If "Cancel" button pressed
     @api.model
-    def action_cancel(self):
-        return {'type': 'ir.actions.act_window_close'}
-
-    # If "Add & close" button pressed
-    @api.model
-    def action_add_and_close(self):
-        self.add_return_lines()
-        return {'type': 'ir.actions.act_window_close'}
-
-    # If "Add & new" button pressed
-    @api.model
-    def action_add_and_new(self):
-        self.add_return_lines()
-        return {
-            'context': self._context,
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'returned_lines_from_serial.wizard',
-            'view_id': False,
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
+    def prodlot_2_product(self, prodlot_ids):
+        stock_quant_ids = self.env['stock.production.lot'].search(
+            [('id', 'in', prodlot_ids)])
+        res = [prod.product_id.id for prod
+               in stock_quant_ids if prod.product_id]
+        return set(res)
 
     # Method to get the product id from set
     @api.model
@@ -110,15 +93,30 @@ class returned_lines_from_serial(models.Model):
                         # 'warning' : warranty['value']['warning'],
                     })
 
-        return True
+    # If "Cancel" button pressed
+    @api.multi
+    def action_cancel(self):
+        return {'type': 'ir.actions.act_window_close'}
 
-    @api.model
-    def prodlot_2_product(self, prodlot_ids):
-        stock_quant_ids = self.env['stock.quant'].search(
-            [('lot_id', 'in', prodlot_ids)])
-        res = self.env['stock.quant'].read(
-            stock_quant_ids, ['product_id'])
-        return set([x['product_id'][0] for x in res if x['product_id']])
+    # If "Add & new" button pressed
+    @api.multi
+    def action_add_and_new(self):
+        self.add_return_lines()
+        return {
+            'context': self._context,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'returned_lines_from_serial.wizard',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+    # If "Add & close" button pressed
+    @api.multi
+    def action_add_and_close(self):
+        self.add_return_lines()
+        return {'type': 'ir.actions.act_window_close'}
 
     prodlot_id_1 = fields.Many2one('stock.production.lot',
                                    'Serial / Lot Number 1',
@@ -178,7 +176,6 @@ class returned_lines_from_serial(models.Model):
                                 ('lost', 'Lost during transport'),
                                 ('other', 'Other')], 'Claim Subject',
                                                      default=lambda *a: "none",
-                                                     required=True,
                                                      help="To describe the"
                                                      " line product"
                                                      " problem")
@@ -192,7 +189,6 @@ class returned_lines_from_serial(models.Model):
                                 ('lost', 'Lost during transport'),
                                 ('other', 'Other')], 'Claim Subject',
                                                      default=lambda *a: "none",
-                                                     required=True,
                                                      help="To describe the"
                                                      " line product"
                                                      " problem")
@@ -206,7 +202,6 @@ class returned_lines_from_serial(models.Model):
                                 ('lost', 'Lost during transport'),
                                 ('other', 'Other')], 'Claim Subject',
                                                      default=lambda *a: "none",
-                                                     required=True,
                                                      help="To describe the"
                                                      " line product"
                                                      " problem")
@@ -220,14 +215,12 @@ class returned_lines_from_serial(models.Model):
                                 ('lost', 'Lost during transport'),
                                 ('other', 'Other')], 'Claim Subject',
                                                      default=lambda *a: "none",
-                                                     required=True,
                                                      help="To describe "
                                                      "the line product"
                                                      " problem")
 
     partner_id = fields.Many2one('res.partner',
-                                 'Partner',
-                                 default=_get_default_partner_id)
+                                 'Partner')
 
     # def prodlot_2_invoice(self, cr, uid, prodlot_id, product_id):
     #     # get stock_move_ids

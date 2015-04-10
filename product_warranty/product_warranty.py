@@ -28,7 +28,7 @@ class return_instruction(models.Model):
     _name = "return.instruction"
     _description = "Instructions for product return"
 
-    name = fields.Char('Title')
+    name = fields.Char('Title', required=True)
 
     instructions = fields.Text(
         'Instructions',
