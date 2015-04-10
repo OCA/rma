@@ -19,63 +19,55 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
 
 
-class ProductProduct(osv.Model):
+class ProductProduct(models.Model):
+
     _inherit = 'product.product'
 
-    def _rma_product_available(self, cr, uid, ids, field_names=None, arg=False,
-                               context=None):
+    @api.model
+    def _rma_product_available(self):
         """ Finds the incoming and outgoing quantity of product for the RMA
         locations.
         """
         res = {}
-        context = context or {}
+        context = self._context
 
         warehouse_id = context.get('warehouse_id')
-        warehouse_obj = self.pool.get('stock.warehouse')
+        warehouse_obj = self.env['stock.warehouse']
         # no dependency on 'sale', the same oddness is done in
         # 'stock' so I kept it here
         ctx = context.copy()
-
+        import pdb
+        pdb.set_trace()
         if warehouse_id:
-            rma_id = warehouse_obj.read(cr, uid,
-                                        warehouse_id,
-                                        ['lot_rma_id'],
-                                        context=ctx)['lot_rma_id'][0]
+            rma_id = warehouse_obj.read(warehouse_id,
+                                        ['lot_rma_id'])['lot_rma_id'][0]
             if rma_id:
                 ctx['location'] = rma_id
         else:
             location_ids = set()
-            wids = warehouse_obj.search(cr, uid, [], context=context)
+            wids = warehouse_obj.search([])
             if not wids:
                 return res
-            for wh in warehouse_obj.browse(cr, uid, wids, context=context):
+            for wh in warehouse_obj.browse(wids):
                 if wh.lot_rma_id:
                     location_ids.add(wh.lot_rma_id.id)
             if not location_ids:
                 return res
             ctx['location'] = list(location_ids)
 
-        field_names = field_names or []
-
-        domain_products = [('product_id', 'in', ids)]
+        domain_products = [('product_id', 'in', [prod.id for prod in self])]
         domain_quant, domain_move_in, domain_move_out = \
-            self._get_domain_locations(cr, uid, ids, context=ctx)
-        domain_move_in += self._get_domain_dates(cr,
-                                                 uid,
-                                                 ids,
-                                                 context=ctx) + \
+            self._get_domain_locations(context=ctx)
+        domain_move_in += self._get_domain_dates(context=ctx) + \
             [('state',
               'not in',
               ('done', 'cancel', 'draft'))] + domain_products
-        domain_move_out += self._get_domain_dates(cr,
-                                                  uid,
-                                                  ids,
-                                                  context=ctx) + \
+        domain_move_out += self._get_domain_dates(context=ctx) + \
             [('state',
               'not in',
               ('done', 'cancel', 'draft'))] + domain_products
@@ -86,23 +78,17 @@ class ProductProduct(osv.Model):
             moves_in = []
             moves_out = []
         else:
-            moves_in = self.pool.get('stock.move').read_group(cr,
-                                                              uid,
-                                                              domain_move_in,
+            moves_in = self.pool.get('stock.move').read_group(domain_move_in,
                                                               ['product_id',
                                                                'product_qty'],
                                                               ['product_id'],
                                                               context=ctx)
-            moves_out = self.pool.get('stock.move').read_group(cr,
-                                                               uid,
-                                                               domain_move_out,
+            moves_out = self.pool.get('stock.move').read_group(domain_move_out,
                                                                ['product_id',
                                                                 'product_qty'],
                                                                ['product_id'],
                                                                context=ctx)
-        quants = self.pool.get('stock.quant').read_group(cr,
-                                                         uid,
-                                                         domain_quant,
+        quants = self.pool.get('stock.quant').read_group(domain_quant,
                                                          ['product_id',
                                                           'qty'],
                                                          ['product_id'],
@@ -114,7 +100,7 @@ class ProductProduct(osv.Model):
         moves_out = dict(map(lambda x: (x['product_id'][0],
                                         x['product_qty']), moves_out))
         res = {}
-        for product in self.browse(cr, uid, ids, context=context):
+        for product in self:
             id = product.id
             rma_qty_available = \
                 float_round(quants.get(id, 0.0),
@@ -124,55 +110,44 @@ class ProductProduct(osv.Model):
                             moves_in.get(id, 0.0) -
                             moves_out.get(id, 0.0),
                             precision_rounding=product.uom_id.rounding)
-            res[id] = {
-                'rma_qty_available': rma_qty_available,
-                'rma_virtual_available': rma_virtual_available,
-            }
-        return res
+            product.rma_qty_available = rma_qty_available,
+            product.rma_virtual_available = rma_virtual_available,
 
-    _columns = {
-        'rma_qty_available': fields.function(
-            _rma_product_available,
-            type='float',
-            multi='rma_qty',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='RMA Quantity On Hand'),
-        'rma_virtual_available': fields.function(
-            _rma_product_available,
-            type='float',
-            multi='rma_qty',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='RMA Forecasted Quantity'),
-    }
+    rma_qty_available = fields.Float(compute=_rma_product_available,
+                                     digits_compute=dp.
+                                     get_precision('Product Unit of Measure'),
+                                     string='RMA Quantity On Hand')
+
+    rma_virtual_available = fields.Float(compute=_rma_product_available,
+                                         digits_compute=dp.
+                                         get_precision('Product Unit '
+                                                       'of Measure'),
+                                         string='RMA Forecasted Quantity')
 
 
-class ProductTemplate(osv.Model):
+class ProductTemplate(models.Model):
+
     _inherit = 'product.template'
 
-    def _rma_product_available(self, cr, uid, ids, name, arg, context=None):
-        res = dict.fromkeys(ids, 0)
-        for product in self.browse(cr, uid, ids, context=context):
-            res[product.id] = {
-                "rma_qty_available": sum([p.rma_qty_available
-                                          for p in
-                                          product.product_variant_ids]),
-                "rma_virtual_available": sum([p.rma_virtual_available
-                                              for p in
-                                              product.product_variant_ids]),
-            }
-        return res
+    @api.model
+    def _rma_product_available(self):
+        for product in self:
+            rma_qty_available = sum([p.rma_qty_available
+                                     for p in
+                                     product.product_variant_ids]),
+            rma_virtual_available = sum([p.rma_virtual_available
+                                         for p in
+                                         product.product_variant_ids]),
+            product.rma_qty_available = rma_qty_available
+            product.rma_virtual_available = rma_virtual_available
 
-    _columns = {
-        'rma_qty_available': fields.function(
-            _rma_product_available,
-            type='float',
-            multi='rma_qty',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='RMA Quantity On Hand'),
-        'rma_virtual_available': fields.function(
-            _rma_product_available,
-            type='float',
-            multi='rma_qty',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='RMA Forecasted Quantity'),
-    }
+    rma_qty_available = fields.Float(compute=_rma_product_available,
+                                     digits_compute=dp.
+                                     get_precision('Product Unit of Measure'),
+                                     string='RMA Quantity On Hand')
+
+    rma_virtual_available = fields.Float(compute=_rma_product_available,
+                                         digits_compute=dp.
+                                         get_precision('Product Unit'
+                                                       ' of Measure'),
+                                         string='RMA Forecasted Quantity')
