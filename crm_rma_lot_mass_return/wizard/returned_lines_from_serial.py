@@ -220,7 +220,8 @@ class returned_lines_from_serial(models.Model):
                                                      " problem")
 
     partner_id = fields.Many2one('res.partner',
-                                 'Partner')
+                                 'Partner',
+                                 default=_get_default_partner_id)
 
     # def prodlot_2_invoice(self, cr, uid, prodlot_id, product_id):
     #     # get stock_move_ids
