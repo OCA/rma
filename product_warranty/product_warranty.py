@@ -28,7 +28,7 @@ class return_instruction(models.Model):
     _name = "return.instruction"
     _description = "Instructions for product return"
 
-    name = fields.Char('Title', required=True)
+    name = fields.Char('Title')
 
     instructions = fields.Text(
         'Instructions',
@@ -56,13 +56,13 @@ class product_supplierinfo(models.Model):
     @api.model
     def _get_default_instructions(self):
         """ Get selected lines to add to exchange """
-        instr_obj = self.env['return.instruction']
-        instruction_ids = instr_obj.search([('is_default', '=', 'FALSE')],)
+        instruction_ids = self.env['return.instruction']\
+            .search([('is_default', '=', True)])
         if instruction_ids:
             return instruction_ids[0]
-        return False
+        else:
+            return instruction_ids
 
-    @api.one
     @api.depends('warranty_return_partner')
     def _get_warranty_return_address(self):
         """ Method to return the partner delivery address or if none,
@@ -73,20 +73,21 @@ class product_supplierinfo(models.Model):
         implemented.
 
         """
-        return_partner = self.warranty_return_partner
-        partner_id = self.company_id.partner_id.id
-        if return_partner:
-            if return_partner == 'supplier':
-                partner_id = self.name.id
-            elif return_partner == 'company':
-                if self.company_id.crm_return_address_id:
-                    partner_id = self.company_id.\
-                        crm_return_address_id.id
-            elif return_partner == 'other':
-                if self.warranty_return_other_address_id:
-                    partner_id = self.\
-                        warranty_return_other_address_id.id
-            self.warranty_return_address = partner_id
+        for record in self:
+            return_partner = record.warranty_return_partner
+            partner_id = record.company_id.partner_id.id
+            if return_partner:
+                if return_partner == 'supplier':
+                    partner_id = record.name.id
+                elif return_partner == 'company':
+                    if record.company_id.crm_return_address_id:
+                        partner_id = record.company_id.\
+                            crm_return_address_id.id
+                elif return_partner == 'other':
+                    if record.warranty_return_other_address_id:
+                        partner_id = record.\
+                            warranty_return_other_address_id.id
+                record.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(
         'Period',
