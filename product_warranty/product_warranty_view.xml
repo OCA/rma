@@ -95,13 +95,10 @@
                                 <field name="warranty_return_partner"/>
                             </group>
                             <group>
-                                <div>
-                                    <label for="warranty_return_other_address_id"/>
-                                    <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
-                                    <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
-                                </div>
+                                <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
+                                <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
                             </group>
-                            </group>
+                        </group>
                     </group>
                 </field>
             </field>
