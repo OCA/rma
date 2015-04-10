@@ -19,13 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, osv
+
+from openerp import models, fields, api
 
 
-class stock_warehouse(osv.Model):
+class stock_warehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    _columns = {
-        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
-    }
+    lot_rma_id = fields.Many2one('stock.location',
+                                 'Location RMA')
