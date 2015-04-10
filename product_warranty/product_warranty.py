@@ -62,6 +62,7 @@ class product_supplierinfo(models.Model):
             return instruction_ids[0]
         return False
 
+    @api.one
     @api.depends('warranty_return_partner')
     def _get_warranty_return_address(self):
         """ Method to return the partner delivery address or if none,
@@ -72,24 +73,20 @@ class product_supplierinfo(models.Model):
         implemented.
 
         """
-        result = {}
-        for supplier_info in self:
-            result[supplier_info.id] = False
-            return_partner = supplier_info.warranty_return_partner
-            partner_id = supplier_info.company_id.partner_id.id
-            if return_partner:
-                if return_partner == 'supplier':
-                    partner_id = supplier_info.name.id
-                elif return_partner == 'company':
-                    if supplier_info.company_id.crm_return_address_id:
-                        partner_id = supplier_info.company_id.\
-                            crm_return_address_id.id
-                elif return_partner == 'other':
-                    if supplier_info.warranty_return_other_address_id:
-                        partner_id = supplier_info.\
-                            warranty_return_other_address_id.id
-                result[supplier_info.id] = partner_id
-        return result
+        return_partner = self.warranty_return_partner
+        partner_id = self.company_id.partner_id.id
+        if return_partner:
+            if return_partner == 'supplier':
+                partner_id = self.name.id
+            elif return_partner == 'company':
+                if self.company_id.crm_return_address_id:
+                    partner_id = self.company_id.\
+                        crm_return_address_id.id
+            elif return_partner == 'other':
+                if self.warranty_return_other_address_id:
+                    partner_id = self.\
+                        warranty_return_other_address_id.id
+            self.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(
         'Period',
