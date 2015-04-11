@@ -43,6 +43,7 @@ class ProductProduct(models.Model):
         ctx = context.copy()
         import pdb
         pdb.set_trace()
+
         if warehouse_id:
             rma_id = warehouse_obj.read(warehouse_id,
                                         ['lot_rma_id'])['lot_rma_id'][0]
@@ -53,7 +54,7 @@ class ProductProduct(models.Model):
             wids = warehouse_obj.search([])
             if not wids:
                 return res
-            for wh in warehouse_obj.browse(wids):
+            for wh in wids:
                 if wh.lot_rma_id:
                     location_ids.add(wh.lot_rma_id.id)
             if not location_ids:
@@ -78,21 +79,21 @@ class ProductProduct(models.Model):
             moves_in = []
             moves_out = []
         else:
-            moves_in = self.pool.get('stock.move').read_group(domain_move_in,
-                                                              ['product_id',
-                                                               'product_qty'],
-                                                              ['product_id'],
-                                                              context=ctx)
-            moves_out = self.pool.get('stock.move').read_group(domain_move_out,
-                                                               ['product_id',
-                                                                'product_qty'],
-                                                               ['product_id'],
-                                                               context=ctx)
-        quants = self.pool.get('stock.quant').read_group(domain_quant,
+            moves_in = self.env['stock.move'].read_group(domain_move_in,
                                                          ['product_id',
-                                                          'qty'],
+                                                          'product_qty'],
                                                          ['product_id'],
                                                          context=ctx)
+            moves_out = self.env['stock.move'].read_group(domain_move_out,
+                                                          ['product_id',
+                                                           'product_qty'],
+                                                          ['product_id'],
+                                                          context=ctx)
+        quants = self.env['stock.quant'].read_group(domain_quant,
+                                                    ['product_id',
+                                                     'qty'],
+                                                    ['product_id'],
+                                                    context=ctx)
         quants = dict(map(lambda x: (x['product_id'][0], x['qty']), quants))
 
         moves_in = dict(map(lambda x: (x['product_id'][0],
@@ -100,18 +101,18 @@ class ProductProduct(models.Model):
         moves_out = dict(map(lambda x: (x['product_id'][0],
                                         x['product_qty']), moves_out))
         res = {}
-        for product in self:
-            id = product.id
+        for product_rec in self:
+            id = product_rec.id
             rma_qty_available = \
                 float_round(quants.get(id, 0.0),
-                            precision_rounding=product.uom_id.rounding)
+                            precision_rounding=product_rec.uom_id.rounding)
             rma_virtual_available = \
                 float_round(quants.get(id, 0.0) +
                             moves_in.get(id, 0.0) -
                             moves_out.get(id, 0.0),
-                            precision_rounding=product.uom_id.rounding)
-            product.rma_qty_available = rma_qty_available,
-            product.rma_virtual_available = rma_virtual_available,
+                            precision_rounding=product_rec.uom_id.rounding)
+            product_rec.rma_qty_available = rma_qty_available
+            product_rec.rma_virtual_available = rma_virtual_available
 
     rma_qty_available = fields.Float(compute=_rma_product_available,
                                      digits_compute=dp.
@@ -134,10 +135,10 @@ class ProductTemplate(models.Model):
         for product in self:
             rma_qty_available = sum([p.rma_qty_available
                                      for p in
-                                     product.product_variant_ids]),
+                                     product.product_variant_ids])
             rma_virtual_available = sum([p.rma_virtual_available
                                          for p in
-                                         product.product_variant_ids]),
+                                         product.product_variant_ids])
             product.rma_qty_available = rma_qty_available
             product.rma_virtual_available = rma_virtual_available
 
