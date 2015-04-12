@@ -59,15 +59,14 @@ class ProductProduct(models.Model):
                 return
             ctx['location'] = list(location_ids)
 
-        self = self.with_context(ctx)
         domain_products = [('product_id', 'in', [self.id])]
         domain_quant, domain_move_in, domain_move_out = \
-            self._get_domain_locations()
-        domain_move_in += self._get_domain_dates() + \
+            self.with_context(ctx)._get_domain_locations()
+        domain_move_in += self.with_context(ctx)._get_domain_dates() + \
             [('state',
               'not in',
               ('done', 'cancel', 'draft'))] + domain_products
-        domain_move_out += self._get_domain_dates() + \
+        domain_move_out += self.with_context(ctx)._get_domain_dates() + \
             [('state',
               'not in',
               ('done', 'cancel', 'draft'))] + domain_products
@@ -78,18 +77,22 @@ class ProductProduct(models.Model):
             moves_in = []
             moves_out = []
         else:
-            moves_in = self.env['stock.move'].read_group(domain_move_in,
-                                                         ['product_id',
-                                                          'product_qty'],
-                                                         ['product_id'])
-            moves_out = self.env['stock.move'].read_group(domain_move_out,
-                                                          ['product_id',
-                                                           'product_qty'],
-                                                          ['product_id'])
-        quants = self.env['stock.quant'].read_group(domain_quant,
-                                                    ['product_id',
-                                                     'qty'],
-                                                    ['product_id'])
+            moves_in = self.env['stock.move'].\
+                with_context(ctx).read_group(domain_move_in,
+                                             ['product_id',
+                                              'product_qty'],
+                                             ['product_id'])
+            moves_out = self.env['stock.move'].\
+                with_context(ctx).read_group(domain_move_out,
+                                             ['product_id',
+                                              'product_qty'],
+                                             ['product_id'])
+        quants = self.env['stock.quant'].\
+            with_context(ctx).read_group(domain_quant,
+                                         ['product_id',
+                                          'qty'],
+                                         ['product_id'])
+
         quants = dict(map(lambda x: (x['product_id'][0], x['qty']), quants))
 
         moves_in = dict(map(lambda x: (x['product_id'][0],
@@ -97,7 +100,6 @@ class ProductProduct(models.Model):
         moves_out = dict(map(lambda x: (x['product_id'][0],
                                         x['product_qty']), moves_out))
 
-        self = self.with_context(context)
         self.rma_qty_available = \
             float_round(quants.get(self.id, 0.0),
                         precision_rounding=self.uom_id.rounding)
