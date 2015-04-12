@@ -28,7 +28,7 @@
              'procurement',
              ],
  'website': 'http://www.camptocamp.com',
- 'data': ['stock_data.xml',
+ 'data': ['data/stock_data.xml',
           'stock_warehouse_view.xml',
           ],
  'installable': True,

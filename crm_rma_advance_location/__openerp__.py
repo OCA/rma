@@ -60,7 +60,7 @@ and is waiting his author to be.
     'data': ['wizard/claim_make_picking_from_picking_view.xml',
              'wizard/claim_make_picking_view.xml',
              'stock_view.xml',
-             'stock_data.xml',
+             'data/stock_data.xml',
              'claim_rma_view.xml',
              ],
     'installable': True,
