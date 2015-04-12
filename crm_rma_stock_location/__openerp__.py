@@ -21,7 +21,7 @@
 
 {'name': 'RMA Stock Location',
  'version': '1.0',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
+ 'author': "Vauxoo,Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Generic Modules/CRM & SRM',
