@@ -39,8 +39,7 @@ The product views displays the quantity available and virtual in this
 
  """,
  'website': 'http://www.camptocamp.com',
- 'data': ['stock_data.xml',
-          'product_view.xml',
+ 'data': ['product_view.xml',
           ],
  'demo': ['stock_demo.xml',
           ],
