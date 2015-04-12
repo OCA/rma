@@ -41,8 +41,6 @@ class ProductProduct(models.Model):
         # no dependency on 'sale', the same oddness is done in
         # 'stock' so I kept it here
         ctx = context.copy()
-        import pdb
-        pdb.set_trace()
 
         if warehouse_id:
             rma_id = warehouse_obj.read(warehouse_id,
