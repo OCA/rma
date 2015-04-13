@@ -23,7 +23,7 @@
 from openerp import models, fields, api
 
 
-class returned_lines_from_serial(models.Model):
+class returned_lines_from_serial(models.TransientModel):
 
     _name = 'returned_lines_from_serial.wizard'
 
