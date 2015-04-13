@@ -74,6 +74,7 @@ Contributors:
     'depends': ['sale',
                 'stock',
                 'crm_claim',
+                'crm_claim_number',
                 'product_warranty',
                 ],
     'data': ['wizard/claim_make_picking_view.xml',

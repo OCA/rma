@@ -421,18 +421,6 @@ class claim_line(orm.Model):
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
-    def init(self, cr):
-        cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar
-            WHERE ("number" is NULL)
-               OR ("number" = '/');
-        """)
-
-    def _get_sequence_number(self, cr, uid, context=None):
-        seq_obj = self.pool.get('ir.sequence')
-        res = seq_obj.get(cr, uid, 'crm.claim.rma', context=context) or '/'
-        return res
-
     def _get_default_warehouse(self, cr, uid, context=None):
         user_obj = self.pool.get('res.users')
         user = user_obj.browse(cr, uid, uid, context=context)
@@ -447,41 +435,18 @@ class crm_claim(orm.Model):
                 _('There is no warehouse for the current user\'s company.'))
         return wh_ids[0]
 
-    def name_get(self, cr, uid, ids, context=None):
-        res = []
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for claim in self.browse(cr, uid, ids, context=context):
-            number = claim.number and str(claim.number) or ''
-            res.append((claim.id, '[' + number + '] ' + claim.name))
-        return res
-
-    def create(self, cr, uid, vals, context=None):
-        if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number(cr, uid,
-                                                       context=context)
-        new_id = super(crm_claim, self).create(cr, uid, vals, context=context)
-        return new_id
-
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
         std_default = {
             'invoice_ids': False,
             'picking_ids': False,
-            'number': self._get_sequence_number(cr, uid, context=context),
         }
         std_default.update(default)
         return super(crm_claim, self).copy_data(
             cr, uid, id, default=std_default, context=context)
 
     _columns = {
-        'number': fields.char(
-            'Number', readonly=True,
-            states={'draft': [('readonly', False)]},
-            required=True,
-            select=True,
-            help="Company internal claim unique number"),
         'claim_type': fields.selection(
             [('customer', 'Customer'),
              ('supplier', 'Supplier'),
@@ -513,15 +478,9 @@ class crm_claim(orm.Model):
     }
 
     _defaults = {
-        'number': '/',
         'claim_type': 'customer',
         'warehouse_id': _get_default_warehouse,
     }
-
-    _sql_constraints = [
-        ('number_uniq', 'unique(number, company_id)',
-         'Number/Reference must be unique per Company!'),
-    ]
 
     def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
                                     context=None):
