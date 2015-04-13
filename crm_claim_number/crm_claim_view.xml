@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- CLAIM VIEWS -->
+        <record model="ir.ui.view" id="crm_case_claims_tree_view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="number" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_claims_form_view">
+            <field name="name">CRM - Claim Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="before">
+                    <div class="oe_title">
+                        <label for="number" class="oe_edit_only"/>
+                        <h1><field name="number"/></h1>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+<!-- Crm claim Search view -->
+        <record id="view_crm_case_claims_filter" model="ir.ui.view">
+            <field name="name">CRM - Claims Search</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" string="Claims" position="before">
+                    <field name="number"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
