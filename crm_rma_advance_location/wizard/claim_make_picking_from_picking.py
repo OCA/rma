@@ -59,11 +59,17 @@ class claim_make_picking_from_picking(models.TransientModel):
         warehouse_id = self._get_default_warehouse()
         warehouse_obj = self.env['stock.warehouse']
         if context.get('picking_type'):
-            # context_loc = context.get('picking_type')[8:]
-            loc_field = 'lot_%s_id' % context.get('picking_type')[8:]
-            loc_id = eval('warehouse_obj.'
-                          'browse(warehouse_id).' +
-                          loc_field+'.id')
+            if context.get('picking_type') == 'picking_stock':
+                loc_id = warehouse_obj.browse(warehouse_id).lot_stock_id.id
+            if context.get('picking_type') == 'picking_breakage_loss':
+                loc_id = warehouse_obj.browse(warehouse_id).\
+                    lot_breakage_loss_id.id
+            if context.get('picking_type') == 'picking_refurbish':
+                loc_id = warehouse_obj.browse(warehouse_id).lot_refurbish_id.id
+            # TODO picking_mistake_loss must be added
+            # if context.get('picking_type') == 'picking_mistake_loss':
+            #     loc_id = warehouse_obj.browse(warehouse_id).\
+            #    lot_mistake_loss_id.id
         return loc_id
 
     picking_line_source_location = fields.Many2one(
