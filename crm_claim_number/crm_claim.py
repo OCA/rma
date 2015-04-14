@@ -29,12 +29,16 @@ from openerp.osv import fields, orm
 class crm_claim(orm.Model):
     _inherit = 'crm.claim'
 
-    def init(self, cr):
-        cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar
-            WHERE ("number" is NULL)
-               OR ("number" = '/');
-        """)
+    def _set_default_value_on_column(self, cr, column_name, context=None):
+        if column_name == 'number':
+            cr.execute("""
+                UPDATE "crm_claim" SET "number"=id::varchar
+                WHERE ("number" is NULL)
+                   OR ("number" = '/');
+            """)
+        else:
+            super(crm_claim, self)._set_default_value_on_column(
+                cr, column_name, context=context)
 
     def _get_sequence_number(self, cr, uid, context=None):
         seq_obj = self.pool.get('ir.sequence')
