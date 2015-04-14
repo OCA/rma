@@ -14,8 +14,8 @@
                 <form string="Select exchange lines to add in picking" version="7.0">
                     <group colspan="4">
                         <group string="Locations" colspan="4">
-                            <field name="claim_line_source_location"/>
-                            <field name="claim_line_dest_location"/>
+                            <field name="claim_line_source_location" required="1"/>
+                            <field name="claim_line_dest_location" required="1"/>
                         </group>
                         <group string="Select lines for picking" colspan="4">
                             <field name="claim_line_ids" nolabel="1" colspan="4">
@@ -38,7 +38,7 @@
                     </footer>
                 </form>
             </field>
-        </record> 
+        </record>
 
         <record id="action_claim_picking_in" model="ir.actions.act_window">
             <field name="name">Return Products</field>
@@ -47,7 +47,7 @@
             <field name="src_model">crm.claim</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="target">new</field> 
+            <field name="target">new</field>
             <field name="context">{'picking_type': 'in','product_return': True}</field>
         </record>
 
@@ -58,7 +58,7 @@
             <field name="src_model">crm.claim</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="target">new</field> 
+            <field name="target">new</field>
             <field name="context">{'picking_type': 'out'}</field>
         </record>
 

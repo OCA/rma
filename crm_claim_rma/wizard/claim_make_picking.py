@@ -35,13 +35,12 @@ class claim_make_picking(orm.TransientModel):
         'claim_line_source_location': fields.many2one(
             'stock.location',
             string='Source Location',
-            help="Location where the returned products are from.",
-            required=True),
+            help="Location where the returned products are from."),
         'claim_line_dest_location': fields.many2one(
             'stock.location',
             string='Dest. Location',
-            help="Location where the system will stock the returned products.",
-            required=True),
+            help="Location where the system will stock the"
+            " returned products."),
         'claim_line_ids': fields.many2many(
             'claim.line',
             'claim_line_picking',
