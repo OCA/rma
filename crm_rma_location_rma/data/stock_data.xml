@@ -54,6 +54,10 @@
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="default_location_src_id" ref="stock_location_rma"/>
             <field name="default_location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="return_picking_type_id" ref="stock_picking_type_rma_in"/>
+        </record>
+        <record id="stock_picking_type_rma_in" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="stock_picking_type_rma_out"/>
         </record>
 
     </data>

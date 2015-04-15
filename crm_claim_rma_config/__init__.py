@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Yanina Aular
-#    Copyright 2014 Vauxoo
+#    Copyright 2015 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{'name': 'RMA Location',
- 'version': '1.0',
- 'author': "Vauxoo, Odoo Community Association (OCA)",
- 'license': 'AGPL-3',
- 'category': 'Generic Modules/CRM & SRM',
- 'depends': ['stock',
-             'procurement',
-             'crm_claim_rma_config',
-             ],
- 'website': 'http://www.camptocamp.com',
- 'data': ['data/stock_data.xml',
-          'stock_warehouse_view.xml',
-          ],
- 'installable': True,
- 'auto_install': False,
- }
