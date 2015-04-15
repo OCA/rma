@@ -12,5 +12,49 @@
             <field name="lot_rma_id" ref="stock_location_rma"/>
         </record>
 
+        <record id="seq_rma_in" model="ir.sequence">
+            <field name="name">RMA Sequence IN</field>
+            <field name="code">crm.claim.rma</field>
+            <field name="prefix">RMA/IN</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="seq_rma_out" model="ir.sequence">
+            <field name="name">RMA Sequence OUT</field>
+            <field name="code">crm.claim.rma</field>
+            <field name="prefix">RMA/OUT</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="seq_rma_int" model="ir.sequence">
+            <field name="name">RMA Sequence internal</field>
+            <field name="code">crm.claim.rma</field>
+            <field name="prefix">RMA/INT</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="stock_picking_type_rma_in" model="stock.picking.type">
+            <field name="name">Receipts RMA from Customer</field>
+            <field name="code">incoming</field>
+            <field name="sequence_id" ref="seq_rma_in"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="default_location_src_id" ref="stock.stock_location_customers"/>
+            <field name="default_location_dest_id" ref="stock_location_rma"/>
+        </record>
+        <record id="stock_picking_type_rma_int" model="stock.picking.type">
+            <field name="name">Internal Transfers RMA</field>
+            <field name="code">internal</field>
+            <field name="sequence_id" ref="seq_rma_int"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="default_location_src_id" ref="stock_location_rma"/>
+            <field name="default_location_dest_id" ref="stock_location_rma"/>
+        </record>
+        <record id="stock_picking_type_rma_out" model="stock.picking.type">
+            <field name="name">Delivery Orders RMA</field>
+            <field name="code">outgoing</field>
+            <field name="sequence_id" ref="seq_rma_out"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="default_location_src_id" ref="stock_location_rma"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_suppliers"/>
+        </record>
+
     </data>
 </openerp>
