@@ -32,13 +32,18 @@ class claim_make_picking(models.TransientModel):
     def _get_dest_loc(self):
         """ Get default destination location """
         context = self._context
-        loc_id = super(claim_make_picking, self)._get_dest_loc()
         warehouse_obj = self.env['stock.warehouse']
-        warehouse_id = context.get('warehouse_id')
-        if context.get('picking_type') == 'in':
-            loc_id = warehouse_obj.browse(warehouse_id).lot_rma_id.id
-        elif context.get('picking_type') == 'loss':
-            loc_id = warehouse_obj.browse(warehouse_id).lot_carrier_loss_id.id
+        picking_type = context.get('picking_type')
+        warehouse_rec = warehouse_obj.browse(context.get('warehouse_id'))
+        loc_id = self.env['stock.location']
+
+        if picking_type and picking_type == 'carrier_loss':
+            loc_id = warehouse_rec.lot_carrier_loss_id
+        elif picking_type and picking_type == 'new_rma':
+            loc_id = warehouse_rec.lot_rma_id
+        else:
+            loc_id = super(claim_make_picking, self)._get_dest_loc()
+
         return loc_id
 
     claim_line_dest_location = fields.Many2one(default=_get_dest_loc)

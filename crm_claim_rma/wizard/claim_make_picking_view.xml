@@ -48,7 +48,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            <field name="context">{'picking_type': 'in','product_return': True}</field>
+            <field name="context">{'picking_type': 'new_rma','product_return': True}</field>
         </record>
 
         <record id="action_claim_picking_out" model="ir.actions.act_window">
@@ -59,7 +59,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            <field name="context">{'picking_type': 'out'}</field>
+            <field name="context">{'picking_type': 'new_delivery'}</field>
         </record>
 
     </data>
