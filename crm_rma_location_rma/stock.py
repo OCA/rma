@@ -116,29 +116,29 @@ class stock_warehouse(models.Model):
                                             'prefix': warehouse.code
                                             + 'RMA/OUT/', 'padding': 5},
                                     context=context)
-        # int_seq_id = seq_obj.create(cr,
-        #                             SUPERUSER_ID,
-        #                             values={'name': warehouse.name
-        #                                     + _(' Sequence internal'),
-        #                                     'prefix': warehouse.code
-        #                                     + 'RMA/INT/',
-        #                                     'padding': 5}, context=context)
+        int_seq_id = seq_obj.create(cr,
+                                    SUPERUSER_ID,
+                                    values={'name': warehouse.name
+                                            + _(' Sequence internal'),
+                                            'prefix': warehouse.code
+                                            + 'RMA/INT/',
+                                            'padding': 5}, context=context)
 
         wh_stock_loc = warehouse.lot_rma_id
-        # wh_input_stock_loc = warehouse.wh_input_stock_loc_id
-        # wh_output_stock_loc = warehouse.wh_output_stock_loc_id
+        wh_input_stock_loc = warehouse.wh_input_stock_loc_id
+        wh_output_stock_loc = warehouse.wh_output_stock_loc_id
 
         # fetch customer and supplier locations, for references
         customer_loc, supplier_loc = self.\
             _get_partner_locations(cr, uid, warehouse.id, context=context)
 
         # create in, out, internal picking types for warehouse
-        # input_loc = wh_input_stock_loc
-        # if warehouse.reception_steps == 'one_step':
-        #     input_loc = wh_stock_loc
-        # output_loc = wh_output_stock_loc
-        # if warehouse.delivery_steps == 'ship_only':
-        #     output_loc = wh_stock_loc
+        input_loc = wh_input_stock_loc
+        if warehouse.reception_steps == 'one_step':
+            input_loc = wh_stock_loc
+        output_loc = wh_output_stock_loc
+        if warehouse.delivery_steps == 'ship_only':
+            output_loc = wh_stock_loc
 
         # choose the next available color for
         # the picking types of this warehouse
@@ -186,22 +186,22 @@ class stock_warehouse(models.Model):
                                [in_type_id],
                                {'return_picking_type_id': out_type_id},
                                context=context)
-        # int_type_id = picking_type_obj.create(cr, uid, vals={
-        #     'name': _('RMA Internal Transfers'),
-        #     'warehouse_id': warehouse.id,
-        #     'code': 'internal',
-        #     'sequence_id': int_seq_id,
-        #     'default_location_src_id': wh_stock_loc.id,
-        #     'default_location_dest_id': wh_stock_loc.id,
-        #     'active': True,
-        #     'sequence': max_sequence + 2,
-        #     'color': color}, context=context)
+        int_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': _('RMA Internal Transfers'),
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': int_seq_id,
+            'default_location_src_id': wh_stock_loc.id,
+            'default_location_dest_id': wh_stock_loc.id,
+            'active': True,
+            'sequence': max_sequence + 2,
+            'color': color}, context=context)
 
         # write picking types on WH
-        # vals = {
-        #     'rma_in_type_id': in_type_id,
-        #     'rma_out_type_id': out_type_id,
-        #     'rma_int_type_id': int_type_id,
-        # }
-        # super(stock_warehouse, self).\
-        #  write(cr, uid, warehouse.id, vals=vals, context=context)
+        vals = {
+            'rma_in_type_id': in_type_id,
+            'rma_out_type_id': out_type_id,
+            'rma_int_type_id': int_type_id,
+        }
+        super(stock_warehouse, self).\
+         write(cr, uid, warehouse.id, vals=vals, context=context)
