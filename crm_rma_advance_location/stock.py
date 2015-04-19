@@ -30,10 +30,10 @@ class stock_warehouse(models.Model):
 
     lot_carrier_loss_id = fields.Many2one(
         'stock.location',
-        'Location Carrier Loss')
+        'Carrier Loss Location')
     lot_breakage_loss_id = fields.Many2one(
         'stock.location',
-        'Location Breakage Loss')
+        'Breakage Loss Location')
     lot_refurbish_id = fields.Many2one(
         'stock.location',
-        'Location Refurbish')
+        'Refurbish Location')

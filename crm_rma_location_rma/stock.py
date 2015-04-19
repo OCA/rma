@@ -31,7 +31,7 @@ class stock_warehouse(models.Model):
     _inherit = "stock.warehouse"
 
     lot_rma_id = fields.Many2one('stock.location',
-                                 'Location RMA')
+                                 'RMA Location')
 
     rma_out_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Out Type')
