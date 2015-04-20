@@ -20,9 +20,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields
-from openerp import SUPERUSER_ID
-# , api
+from openerp import models, fields, api, SUPERUSER_ID
 from openerp.tools.translate import _
 
 
@@ -43,64 +41,50 @@ class stock_warehouse(models.Model):
                                       'RMA Internal Type')
 
     def init(self, cr):
-        for wh_id in self.browse(cr,
-                                 SUPERUSER_ID,
-                                 self.search(cr, SUPERUSER_ID, [])):
+        for wh_id in self.browse(cr, SUPERUSER_ID, self.search(cr, SUPERUSER_ID, [])):
             vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
-            vals2 = self.create_sequences_picking_types(cr,
-                                                        SUPERUSER_ID,
-                                                        wh_id)
+            vals2 = self.create_sequences_picking_types(cr, SUPERUSER_ID, wh_id)
             vals.update(vals2)
             self.write(cr, SUPERUSER_ID, wh_id.id, vals=vals)
 
+    @api.model
+    def create_sequences_picking_types(self, warehouse):
 
-
-    def create_sequences_picking_types(self, cr, uid,
-                                           warehouse, context=None):
-
-        seq_obj = self.pool.get('ir.sequence')
-        picking_type_obj = self.pool.get('stock.picking.type')
+        seq_obj = self.env['ir.sequence']
+        picking_type_obj = self.env['stock.picking.type']
         # create new sequences
 
         if not warehouse.rma_in_type_id:
-            in_seq_id = seq_obj.create(cr,
-                                    SUPERUSER_ID,
-                                    values={'name': warehouse.name
-                                            + _(' Sequence in'),
-                                            'prefix': warehouse.code
-                                            + 'RMA/IN/', 'padding': 5},
-                                    context=context)
+            in_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
+                                              + _(' Sequence in'),
+                                              'prefix': warehouse.code
+                                              + '/RMA/IN/', 'padding': 5})
         if not warehouse.rma_out_type_id:
-            out_seq_id = seq_obj.create(cr,
-                                        SUPERUSER_ID,
-                                        values={'name': warehouse.name
-                                                + _(' Sequence out'),
-                                                'prefix': warehouse.code
-                                                + 'RMA/OUT/', 'padding': 5},
-                                        context=context)
+            out_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
+                                               + _(' Sequence out'),
+                                               'prefix': warehouse.code
+                                               + '/RMA/OUT/', 'padding': 5})
         if not warehouse.rma_int_type_id:
-            int_seq_id = seq_obj.create(cr,
-                                        SUPERUSER_ID,
-                                        values={'name': warehouse.name
-                                                + _(' Sequence internal'),
-                                                'prefix': warehouse.code
-                                                + 'RMA/INT/',
-                                                'padding': 5}, context=context)
+            int_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
+                                               + _(' Sequence internal'),
+                                               'prefix': warehouse.code
+                                               + '/RMA/INT/',
+                                               'padding': 5})
 
         wh_stock_loc = warehouse.lot_rma_id
 
         # fetch customer and supplier locations, for references
         customer_loc, supplier_loc = self.\
-            _get_partner_locations(cr, uid, warehouse.id, context=context)
+            _get_partner_locations()
 
         # choose the next available color for
         # the picking types of this warehouse
         color = 0
         available_colors = [c % 9 for c in
                             range(3, 12)]  # put flashy colors first
-        all_used_colors = self.pool.get('stock.picking.type').\
-            search_read(cr, uid, [('warehouse_id', '!=', False),
-                                  ('color', '!=', False)],
+        all_used_colors = self.env['stock.picking.type'].\
+            search_read([('warehouse_id', '!=', False),
+                         ('color', '!=', False)],
                         ['color'], order='color')
         # don't use sets to preserve the list order
         for x in all_used_colors:
@@ -112,68 +96,64 @@ class stock_warehouse(models.Model):
         # order the picking types with a sequence
         # allowing to have the following suit for
         # each warehouse: reception, internal, pick, pack, ship.
-        max_sequence = self.pool.get('stock.picking.type').\
-            search_read(cr, uid, [], ['sequence'], order='sequence desc')
+        max_sequence = self.env['stock.picking.type'].\
+            search_read([], ['sequence'], order='sequence desc')
         max_sequence = max_sequence and max_sequence[0]['sequence'] or 0
 
         if not warehouse.rma_in_type_id:
-            in_type_id = picking_type_obj.create(cr, uid, vals={
+            in_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Receipts'),
                 'warehouse_id': warehouse.id,
                 'code': 'outgoing',
-                'sequence_id': in_seq_id,
+                'sequence_id': in_seq_id.id,
                 'default_location_src_id': customer_loc.id,
                 'default_location_dest_id': wh_stock_loc.id,
                 'sequence': max_sequence + 4,
-                'color': color}, context=context)
+                'color': color})
         else:
             in_type_id = warehouse.rma_in_type_id
         if not warehouse.rma_out_type_id:
-            out_type_id = picking_type_obj.create(cr, uid, vals={
+            out_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Delivery Orders'),
                 'warehouse_id': warehouse.id,
                 'code': 'incoming',
-                'sequence_id': out_seq_id,
-                'return_picking_type_id': in_type_id,
+                'sequence_id': out_seq_id.id,
+                'return_picking_type_id': in_type_id.id,
                 'default_location_src_id': wh_stock_loc.id,
                 'default_location_dest_id': supplier_loc.id,
                 'sequence': max_sequence + 1,
-                'color': color}, context=context)
-            picking_type_obj.write(cr, uid,
-                                [in_type_id],
-                                {'return_picking_type_id': out_type_id},
-                                context=context)
+                'color': color})
+            in_type_id.write({'return_picking_type_id': out_type_id.id})
         else:
             out_type_id = warehouse.rma_out_type_id
         if not warehouse.rma_int_type_id:
-            int_type_id = picking_type_obj.create(cr, uid, vals={
+            int_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Internal Transfers'),
                 'warehouse_id': warehouse.id,
                 'code': 'internal',
-                'sequence_id': int_seq_id,
+                'sequence_id': int_seq_id.id,
                 'default_location_src_id': wh_stock_loc.id,
                 'default_location_dest_id': wh_stock_loc.id,
                 'active': True,
                 'sequence': max_sequence + 2,
-                'color': color}, context=context)
+                'color': color})
         else:
             int_type_id = warehouse.rma_int_type_id
 
         # write picking types on WH
         vals = {
-            'rma_in_type_id': in_type_id,
-            'rma_out_type_id': out_type_id,
-            'rma_int_type_id': int_type_id,
+            'rma_in_type_id': in_type_id.id,
+            'rma_out_type_id': out_type_id.id,
+            'rma_int_type_id': int_type_id.id,
         }
         return vals
 
-    def create_locations_rma(self, cr, uid, wh_id, context=None):
+    @api.model
+    def create_locations_rma(self, wh_id):
         vals = {}
 
-        if context is None:
-            context = {}
-        location_obj = self.pool.get('stock.location')
-
+        location_obj = self.env['stock.location']
+        context = self._context
         context_with_inactive = context.copy()
         context_with_inactive['active_test'] = False
         wh_loc_id = wh_id.view_location_id.id
@@ -181,16 +161,8 @@ class stock_warehouse(models.Model):
         sub_locations = [
             {'name': _('RMA'), 'active': True,
              'field': 'lot_rma_id'},
-            {'name': _('Refurbish'), 'active': True,
-             'field': 'lot_refurbish_id'},
-            {'name': _('Carrier Loss'), 'active': True,
-             'field': 'lot_carrier_loss_id'},
-            {'name': _('Breakage Loss'), 'active': True,
-             'field': 'lot_breakage_loss_id'},
         ]
         for values in sub_locations:
-            import pdb
-            pdb.set_trace()
             if not eval('wh_id.'+values['field']):
                 loc_vals = {
                     'name': values['name'],
@@ -201,33 +173,18 @@ class stock_warehouse(models.Model):
                 if vals.get('company_id'):
                     loc_vals['company_id'] = vals.get('company_id')
                 location_id = location_obj.\
-                    create(cr, uid, loc_vals, context=context_with_inactive)
-                vals[values['field']] = location_id
+                    create(loc_vals, context=context_with_inactive)
+                vals[values['field']] = location_id.id
         return vals
 
+    @api.model
+    def create(self, vals):
 
-    def create(self, cr, uid, vals, context=None):
-        if context is None:
-            context = {}
-        if vals is None:
-            vals = {}
-
-        new_id = super(stock_warehouse, self).create(cr,
-                                                     uid,
-                                                     vals=vals,
-                                                     context=context)
-        wh_loc_id = vals['view_location_id']
-        new_vals = self.create_locations_rma(cr,
-                                             uid,
-                                             wh_loc_id,
-                                             context=context)
-        warehouse = self.browse(cr, uid, new_id)
-        new_vals2 = self.create_sequences_picking_types(cr,
-                                                        uid,
-                                                        warehouse,
-                                                        context=context)
+        new_id_warehouse = super(stock_warehouse, self).create(vals=vals)
+        new_vals = self.create_locations_rma(new_id_warehouse)
+        new_vals2 = self.create_sequences_picking_types(new_id_warehouse)
         new_vals.update(new_vals2)
-        self.write(cr, uid, new_id, vals=new_vals, context=context)
+        new_id_warehouse.write(vals=new_vals)
 
-        return new_id
+        return new_id_warehouse
 
