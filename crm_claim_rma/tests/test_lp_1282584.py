@@ -52,7 +52,7 @@ class test_lp_1282584(common.TransactionCase):
             })
 
         claim = claim_obj.browse(cr, uid, self.claim_id)
-        self.warehouse_id = claim.warehouse_id.id
+        self.warehouse_id = claim.warehouse_id
         self.claim_line_id = claimline_obj.create(
             cr, uid,
             {
@@ -71,9 +71,10 @@ class test_lp_1282584(common.TransactionCase):
         wiz_context = {
             'active_id': self.claim_id,
             'partner_id': self.partner_id,
-            'warehouse_id': self.warehouse_id,
-            'picking_type': 'in',
+            'warehouse_id': self.warehouse_id.id,
+            'picking_type': self.warehouse_id.rma_in_type_id.id,
         }
+
         wizard_id = self.wizardmakepicking.create(cr, uid, {
         }, context=wiz_context)
 
@@ -100,8 +101,8 @@ class test_lp_1282584(common.TransactionCase):
         wiz_context = {
             'active_id': self.claim_id,
             'partner_id': self.partner_id,
-            'warehouse_id': self.warehouse_id,
-            'picking_type': 'out',
+            'warehouse_id': self.warehouse_id.id,
+            'picking_type': self.warehouse_id.rma_out_type_id.id,
         }
         wizard_id = self.wizardmakepicking.create(cr, uid, {
         }, context=wiz_context)

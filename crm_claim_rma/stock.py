@@ -54,6 +54,7 @@ class stock_move(orm.Model):
                         ).create(cr, uid, vals, context=context)
 
         picking_type_obj = self.pool.get('stock.picking.type')
+        # TODO fix ME
         picking_type_in = picking_type_obj.search(
             cr, uid, [('name', '=', 'Receipts')])[0]
 

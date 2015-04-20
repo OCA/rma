@@ -36,7 +36,6 @@ class claim_make_picking(models.TransientModel):
         picking_type = context.get('picking_type')
         warehouse_rec = warehouse_obj.browse(context.get('warehouse_id'))
         loc_id = self.env['stock.location']
-
         if picking_type and picking_type == 'carrier_loss':
             loc_id = warehouse_rec.lot_carrier_loss_id
         elif picking_type and picking_type == 'new_rma':

@@ -49,8 +49,6 @@ class claim_make_picking_from_picking(models.TransientModel):
     def _get_source_loc(self):
         warehouse_obj = self.env['stock.warehouse']
         warehouse_id = self._get_default_warehouse()
-        import pdb
-        pdb.set_trace()
         return warehouse_obj.browse(warehouse_id).\
             lot_rma_id.id
 
@@ -123,8 +121,6 @@ class claim_make_picking_from_picking(models.TransientModel):
         partner_id = prev_picking.partner_id.id
         # create picking
         # TODO create picking types
-        import pdb
-        pdb.set_trace()
         picking_id = picking_obj.create({
             'origin': prev_picking.origin,
             'type': p_type,

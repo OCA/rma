@@ -57,13 +57,27 @@ class claim_make_picking(models.TransientModel):
         line_obj = self.env['claim.line']
 
         picking_type = context.get('picking_type')
+        picking_obj = self.env['stock.picking.type']
 
         good_lines = []
         line_ids = line_obj.search(
             [('claim_id', '=', context['active_id'])])
 
         for line in line_ids:
-            if picking_type in ('new_delivery'):
+            # TODO fix code, be careful
+            if isinstance(picking_type, int):
+                pick_t = picking_obj.browse(picking_type)
+                if pick_t.code == 'outgoing':
+                    pick = 'out'
+                else:
+                    pick = 'in'
+            else:
+                if picking_type in ('new_delivery'):
+                    pick = 'out'
+                else:
+                    pick = 'in'
+
+            if pick == 'out':
                 if not line.move_out_id or line.move_out_id.state == 'cancel':
                     good_lines.append(line.id)
             else:
@@ -149,13 +163,17 @@ class claim_make_picking(models.TransientModel):
         if context.get('partner_id'):
             partner_rec = partner_obj.browse(context.get('partner_id'))
 
-        if picking_type == 'new_delivery':
-            loc_id = partner_rec.property_stock_customer
-        elif picking_type == 'new_rma':
-            line_ids = self._get_claim_lines()
-            loc_id = self._get_common_dest_location_from_line(line_ids)
-        loc = picking_obj.browse(picking_type)
-        return loc.default_location_dest_id
+        # TODO FIX ME
+        if isinstance(picking_type, int):
+            pick_t = picking_obj.browse(picking_type)
+            loc_id = pick_t.default_location_dest_id.id
+        else:
+            if picking_type == 'new_delivery':
+                loc_id = partner_rec.property_stock_customer
+            elif picking_type == 'new_rma':
+                line_ids = self._get_claim_lines()
+                loc_id = self._get_common_dest_location_from_line(line_ids)
+        return loc_id
 
     claim_line_source_location = fields.Many2one(
         'stock.location',
@@ -221,7 +239,7 @@ class claim_make_picking(models.TransientModel):
 
         claim_line_obj = self.pool.get('claim.line')
         lines_rec = [claim_line_obj.browse(cr, uid, x.id)
-                    for x in wizard.claim_line_ids]
+                     for x in wizard.claim_line_ids]
         line_ids = [x.id for x in wizard.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different

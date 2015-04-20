@@ -41,7 +41,8 @@ class stock_warehouse(models.Model):
                                       'RMA Internal Type')
 
     def init(self, cr):
-        for wh_id in self.browse(cr, SUPERUSER_ID, self.search(cr, SUPERUSER_ID, [])):
+        for wh_id in self.browse(cr, SUPERUSER_ID,
+                                 self.search(cr, SUPERUSER_ID, [])):
             vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
             self.write(cr, SUPERUSER_ID, wh_id.id, vals=vals)
             vals = self.create_sequences_picking_types(cr, SUPERUSER_ID, wh_id)
@@ -185,6 +186,4 @@ class stock_warehouse(models.Model):
         new_id_warehouse.write(vals=new_vals)
         new_vals = self.create_sequences_picking_types(new_id_warehouse)
         new_id_warehouse.write(vals=new_vals)
-
         return new_id_warehouse
-

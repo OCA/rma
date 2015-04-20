@@ -77,6 +77,7 @@ Contributors:
                 'crm_claim',
                 'product_warranty',
                 'crm_claim_rma_config',
+                'crm_rma_location_rma',
                 ],
     'data': ['wizard/claim_make_picking_view.xml',
              'crm_claim_rma_view.xml',

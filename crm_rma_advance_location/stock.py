@@ -40,7 +40,8 @@ class stock_warehouse(models.Model):
         'Refurbish Location')
 
     def init(self, cr):
-        for wh_id in self.browse(cr, SUPERUSER_ID, self.search(cr, SUPERUSER_ID, [])):
+        for wh_id in self.browse(cr, SUPERUSER_ID,
+                                 self.search(cr, SUPERUSER_ID, [])):
             vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
             self.write(cr, SUPERUSER_ID, wh_id.id, vals=vals)
 
