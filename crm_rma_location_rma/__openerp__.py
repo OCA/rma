@@ -31,8 +31,7 @@
  'website': 'http://www.camptocamp.com',
  'data': ['stock_warehouse_view.xml',
           ],
- 'demo': ['demo/location_demo.xml',
-          ],
+ 'demo': [],
  'installable': True,
  'auto_install': False,
  }
