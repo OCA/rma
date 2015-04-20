@@ -65,10 +65,10 @@ class claim_make_picking(models.TransientModel):
         for line in line_ids:
             if picking_type in ('new_delivery'):
                 if not line.move_out_id or line.move_out_id.state == 'cancel':
-                    good_lines.append(line)
+                    good_lines.append(line.id)
             else:
                 if not line.move_in_id or line.move_in_id.state == 'cancel':
-                    good_lines.append(line)
+                    good_lines.append(line.id)
 
         if not good_lines:
             raise except_orm(
@@ -109,6 +109,7 @@ class claim_make_picking(models.TransientModel):
         destination was  found, return False"""
         # TODO no puede retornar un booleano
         loc_id = False
+
         line_location = [line.location_dest_id for line in line_ids]
         line_location = list(set(line_location))
         if len(line_location) == 1:
@@ -142,6 +143,7 @@ class claim_make_picking(models.TransientModel):
 
         loc_id = False
         partner_obj = self.env['res.partner']
+        picking_obj = self.env['stock.picking.type']
         picking_type = context.get('picking_type')
 
         if context.get('partner_id'):
@@ -152,8 +154,8 @@ class claim_make_picking(models.TransientModel):
         elif picking_type == 'new_rma':
             line_ids = self._get_claim_lines()
             loc_id = self._get_common_dest_location_from_line(line_ids)
-
-        return loc_id
+        loc = picking_obj.browse(picking_type)
+        return loc.default_location_dest_id
 
     claim_line_source_location = fields.Many2one(
         'stock.location',
@@ -164,7 +166,7 @@ class claim_make_picking(models.TransientModel):
     claim_line_dest_location = fields.Many2one(
         'stock.location',
         string='Dest. Location',
-        # default=_get_dest_loc,
+        default=_get_dest_loc,
         help="Location where the system will stock the"
         " returned products.")
 
@@ -173,7 +175,7 @@ class claim_make_picking(models.TransientModel):
         'claim_line_picking',
         'claim_picking_id',
         'claim_line_id',
-        # default=_get_claim_lines,
+        default=_get_claim_lines,
         string='Claim lines')
 
     @api.v7
@@ -216,13 +218,17 @@ class claim_make_picking(models.TransientModel):
                                                   context['active_id'],
                                                   context=context)
         partner_id = claim.delivery_address_id.id
+
+        claim_line_obj = self.pool.get('claim.line')
+        lines_rec = [claim_line_obj.browse(cr, uid, x.id)
+                    for x in wizard.claim_line_ids]
         line_ids = [x.id for x in wizard.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different
         # or if partner address is different
         if context.get('product_return'):
             common_dest_loc_id = self._get_common_dest_location_from_line(
-                cr, uid, line_ids, context=context)
+                cr, uid, lines_rec, context=context)
             if not common_dest_loc_id:
                 raise except_orm(
                     _('Error !'),
@@ -232,6 +238,7 @@ class claim_make_picking(models.TransientModel):
             self.pool.get('claim.line').auto_set_warranty(cr, uid,
                                                           line_ids,
                                                           context=context)
+
             common_dest_partner_id = self._get_common_partner_from_line(
                 cr, uid, line_ids, context=context)
             if not common_dest_partner_id:
