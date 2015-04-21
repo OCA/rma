@@ -12,16 +12,19 @@
                 <xpath expr="//field[@name='state']" position="before">
                         <button name="%(action_stock_picking_from_claim_picking)d"
                                 string="Product to stock" type="action"
+                                icon="gtk-convert"
                                 attrs="{'invisible':['|',
                                                     ('state','&lt;&gt;','done'),
                                                     ('claim_id', '=', False)]}"/>
                         <button name="%(action_loss_picking_from_claim_picking)d"
                                 string="Product to Loss" type="action"
+                                icon="gtk-cancel"
                                 attrs="{'invisible':['|',
                                                     ('state','&lt;&gt;','done'),
                                                     ('claim_id', '=', False)]}"/>
                         <button name="%(action_used_picking_from_claim_picking)d"
                                 string="Product to refurbish stock" type="action"
+                                icon="gtk-refresh"
                                 attrs="{'invisible':['|',
                                                     ('state','&lt;&gt;','done'),
                                                     ('claim_id', '=', False)]}"/>
