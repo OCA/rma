@@ -138,10 +138,9 @@ class claim_make_picking(models.TransientModel):
         line_obj = self.pool.get('claim.line')
         line_partner = []
         for line in line_obj.browse(cr, uid, line_ids, context=context):
-            if (line.warranty_return_partner
-                    and line.warranty_return_partner.id
-                    not in line_partner):
-                line_partner.append(line.warranty_return_partner.id)
+            if (line.location_dest_id.id not in line_partner):
+                line_partner.append(line.location_dest_id.id)
+        # TODO FIX ME, as do when the lines have different directions
         if len(line_partner) == 1:
             partner_id = line_partner[0]
         return partner_id
@@ -201,30 +200,47 @@ class claim_make_picking(models.TransientModel):
         return {'type': 'ir.actions.act_window_close'}
 
     # If "Create" button pressed
-    @api.v7
     def action_create_picking(self, cr, uid, ids, context=None):
-        picking_obj = self.pool.get('stock.picking')
         if context is None:
             context = {}
         view_obj = self.pool.get('ir.ui.view')
+        picking_obj = self.pool.get('stock.picking')
+        warehouse_obj = self.pool.get('stock.warehouse')
 
         picking_type_obj = self.pool.get('stock.picking.type')
-        picking_type_in = picking_type_obj.search(
-            cr, uid, [('name', '=', 'Receipts')])[0]
-        picking_type_out = picking_type_obj.search(
-            cr, uid, [('name', '=', 'Delivery Orders')])[0]
+        picking_type = context.get('picking_type')
 
         name = 'RMA picking out'
-        if context.get('picking_type') == 'out':
-            p_type = picking_type_out
+
+        if isinstance(picking_type, int):
+            pick_t = picking_type_obj.browse(cr,
+                                             uid,
+                                             picking_type,
+                                             context=context)
+            if pick_t.code == 'outgoing':
+                pick = 'out'
+            else:
+                pick = 'in'
+        else:
+            if picking_type in ('new_rma'):
+                pick = 'in'
+            else:
+                pick = 'out'
+
+        wh_rec = warehouse_obj.browse(cr,
+                                      uid,
+                                      context.get('warehouse_id'),
+                                      context=context)
+        if pick == 'out':
+            pick_type = wh_rec.rma_out_type_id
             write_field = 'move_out_id'
             note = 'RMA picking out'
         else:
-            p_type = picking_type_in
+            pick_type = wh_rec.rma_in_type_id
             write_field = 'move_in_id'
-            if context.get('picking_type'):
-                note = 'RMA picking ' + str(context.get('picking_type'))
-                name = note
+            note = 'RMA picking ' + str(context.get('picking_type'))
+            name = note
+
         model = 'stock.picking'
         view_id = view_obj.search(cr, uid,
                                   [('model', '=', model),
@@ -270,7 +286,7 @@ class claim_make_picking(models.TransientModel):
         picking_id = picking_obj.create(
             cr, uid,
             {'origin': claim.number,
-             'picking_type_id': p_type,
+             'picking_type_id': pick_type.id,
              'move_type': 'one',  # direct
              'state': 'draft',
              'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
@@ -317,8 +333,8 @@ class claim_make_picking(models.TransientModel):
             wf_service.trg_validate(uid, 'stock.picking',
                                     picking_id, 'button_confirm', cr)
             picking_obj.action_assign(cr, uid, [picking_id])
-        domain = ("[('type', '=', '%s'), ('partner_id', '=', %s)]" %
-                  (p_type, partner_id))
+        domain = ("[('picking_type_id', '=', %s), ('partner_id', '=', %s)]" %
+                  (pick_type.id, partner_id))
         return {
             'name': '%s' % name,
             'view_type': 'form',
