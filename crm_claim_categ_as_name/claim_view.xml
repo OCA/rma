@@ -15,7 +15,7 @@
             <xpath expr="//page[@string='Claim Description']/group/field[@name='categ_id']" position="replace">
             </xpath>
             <xpath expr="//field[@name='name']" position="replace">
-                <field name="categ_id" string='Name' />
+                <field name="categ_id" string='Name'/>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="name" invisible="1" required="False"/>

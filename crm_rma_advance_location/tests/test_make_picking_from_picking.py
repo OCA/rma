@@ -79,14 +79,14 @@ class TestPickingFromPicking(TransactionCase):
         # res = self.wizardmakepicking.action_create_picking(
         #     [wizard_id])
 
-
         stock_picking_id = res.get('res_id')
 
         # import pdb
         # pdb.set_trace()
         context = {'active_id':
                    stock_picking_id,
-                   'picking_type': self.claim_test.warehouse_id.rma_int_type_id.id,
+                   'picking_type':
+                   self.claim_test.warehouse_id.rma_int_type_id.id,
                    }
 
         # Create Picking 'Product to stock'

@@ -240,8 +240,8 @@ class claim_line(orm.Model):
 
             psi_obj = self.pool.get('product.supplierinfo')
             domain = [('name', '=', supplier.id),
-                    ('product_tmpl_id', '=',
-                    claim_line_brw.product_id.product_tmpl_id.id)]
+                      ('product_tmpl_id', '=',
+                       claim_line_brw.product_id.product_tmpl_id.id)]
             seller_id = psi_obj.search(cr, uid, domain, context=context)
             seller = psi_obj.browse(cr, uid, seller_id, context=context)
 
