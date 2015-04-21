@@ -10,7 +10,6 @@
                 <xpath expr="//button[@string='New Delivery']" position="after">
                     <button name="%(action_claim_picking_loss)d"
                                     string="New Product Loss"
-                                    icon="gtk-cancel"
                                     type="action" target="new"
                                     context="{'warehouse_id': warehouse_id,
                                         'partner_id': partner_id}"/>

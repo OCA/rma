@@ -360,6 +360,7 @@ class crm_claim(orm.Model):
         return res
 
     def _get_default_warehouse(self, cr, uid, context=None):
+        # TODO must be an smarter method
         user_obj = self.pool.get('res.users')
         user = user_obj.browse(cr, uid, uid, context=context)
         company_id = user.company_id.id
