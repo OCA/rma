@@ -38,6 +38,9 @@ class crm_claim(osv.osv):
             'crm.case.categ',
             'Category',
             domain="[('section_id','=',section_id),"
-                   " ('object_id.model', '=', 'crm.claim')]",
-            required=True),
+                   " ('object_id.model', '=', 'crm.claim')]"),
     }
+    _defaults = {
+        'section_id': lambda s, cr, uid, c: s.pool.get('crm.lead')._get_default_section_id(cr, uid, context=c),
+    }
+
