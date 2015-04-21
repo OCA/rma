@@ -230,14 +230,23 @@ class claim_line(orm.Model):
         warning = _(self.WARRANT_COMMENT['not_define'])
         date_inv_at_server = datetime.strptime(date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
-        if claim_line_brw.claim_id.claim_type == 'supplier':
-            suppliers = claim_line_brw.product_id.seller_ids
-            if not suppliers:
+        if claim_line_brw.warranty_type == 'supplier':
+            # TODO important product_id.seller_ids
+            supplier = claim_line_brw.product_id.seller_id
+            if not supplier:
                 raise orm.except_orm(
                     _('Error'),
                     _('The product has no supplier configured.'))
-            supplier = suppliers[0]
-            warranty_duration = supplier.warranty_duration
+
+            psi_obj = self.pool.get('product.supplierinfo')
+            domain = [('name', '=', supplier.id),
+                    ('product_tmpl_id', '=',
+                    claim_line_brw.product_id.product_tmpl_id.id)]
+            seller_id = psi_obj.search(cr, uid, domain, context=context)
+            seller = psi_obj.browse(cr, uid, seller_id, context=context)
+
+            warranty_duration = seller.warranty_duration
+
         else:
             warranty_duration = claim_line_brw.product_id.warranty
         limit = self.warranty_limit(date_inv_at_server, warranty_duration)
@@ -290,11 +299,12 @@ class claim_line(orm.Model):
         return_address = None
         context = context or {}
         psi_obj = self.pool.get('product.supplierinfo')
+        # TODO important product_id.seller_ids
         domain = [('name', '=', claim_line_brw.product_id.seller_id.id),
                   ('product_tmpl_id', '=',
                    claim_line_brw.product_id.product_tmpl_id.id)]
-        seller = psi_obj.search(cr, uid, domain, context=context)
-        seller = psi_obj.browse(cr, uid, seller, context=context)
+        seller_id = psi_obj.search(cr, uid, domain, context=context)
+        seller = psi_obj.browse(cr, uid, seller_id, context=context)
         if seller:
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
