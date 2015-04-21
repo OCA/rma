@@ -135,32 +135,32 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
         <field name="arch" type="xml">
-            <field name="stage_id" position="after">
+            <xpath expr="//field[@name='stage_id']" position="after">
                 <field name="section_id" />
-            </field>
-            <field name="name" position="before">
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
                 <field name="number" />
-            </field>
+            </xpath>
         </field>
     </record>
 
     <record model="ir.ui.view" id="crm_case_claims_form_view_replace">
-            <field name="name">CRM - Claims Form</field>
-            <field name="model">crm.claim</field>
-            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='categ_id']" position="replace">
-                    <field name="categ_id" />
-                </xpath>
-            </field>
-        </record>
+        <field name="name">CRM - Claims Form</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="replace">
+                <field name="categ_id" />
+            </xpath>
+        </field>
+    </record>
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='stage_id']" position="after">
+            <xpath expr="//field[@name='stage_id']" position="replace">
                 <button name="%(action_claim_picking_in)d"
                         string="New Products Return"
                         icon="gtk-ok"
@@ -169,6 +169,7 @@
                             'partner_id': partner_id}"/>
 
                 <button name="%(action_claim_picking_out)d"
+                        class="oe_inline"
                         string="New Delivery"
                         icon="gtk-go-forward"
                         type="action" target="new"
@@ -176,6 +177,7 @@
                             'partner_id': partner_id}"/>
 
                 <button name="%(account.action_account_invoice_refund)d"
+                        class="oe_inline"
                         type='action' string='New Refund'
                         icon="gtk-justify-center"
                         context="{
@@ -184,44 +186,24 @@
                             'description': name,
                             'claim_id': id,
                             }"/>
+                <field name="stage_id" widget="statusbar" clickable="True"/>
             </xpath>
             <page string="Follow Up" position="before">
                 <page string="Product Return">
-                    <group name="Product Return">
-                        <separator string="Product Return" colspan="4"/>
-                        <group>
-                            <field name="invoice_id" on_change="onchange_invoice_id(invoice_id,warehouse_id,context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
-                            <field name="delivery_address_id" context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
-                        </group>
-                        <group>
+                    <group>
+                        <div class="oe_button_box oe_right">
                             <!-- Place for mass return button from crm_rma_lot_mass_return -->
-                        </group>
-                        <field name="claim_line_ids" nolabel="1" colspan="4" editable="top"/>
+                        </div>
                     </group>
-                    <group col="4" colspan="4">
-                        <separator string="Action" colspan="4" />
-                        <button name="%(action_claim_picking_in)d"
-                                string="New Products Return"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
-
-                        <button name="%(action_claim_picking_out)d"
-                                string="New Delivery"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
-
-                        <button name="%(account.action_account_invoice_refund)d"
-                                type='action' string='New Refund'
-                                icon="gtk-execute"
-                                context="{
-                                    'invoice_ids': [invoice_id],
-                                    'claim_line_ids': claim_line_ids,
-                                    'description': name,
-                                    'claim_id': id,
-                                    }"/>
+                    <group colspan="6">
+                        <field name="invoice_id"
+                            on_change="onchange_invoice_id(invoice_id,warehouse_id,context)"
+                            domain="['|',('commercial_partner_id','=',partner_id),
+                            ('partner_id','=',partner_id)]" />
+                        <field name="delivery_address_id"
+                            context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
                     </group>
+                    <field name="claim_line_ids" editable="top"/>
                 </page>
                 <page string="Generated Documents">
                     <separator colspan="2" string="Refunds"/>
@@ -280,10 +262,10 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
-                <field name="date_deadline" position="after">
+                <xpath expr="//field[@name='date_deadline']" position="after">
                     <field name="claim_type"/>
                     <field name="warehouse_id" />
-                </field>
+                </xpath>
                 <field name="name" position="replace">
                     <div class="oe_title">
                         <label for="number" class="oe_edit_only"/>

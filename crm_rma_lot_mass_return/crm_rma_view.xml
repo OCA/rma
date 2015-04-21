@@ -6,7 +6,7 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@string='Product Return']/group/group[2]" position="inside">
+            <xpath expr="//page[@string='Product Return']//div" position="inside">
                 <button name="%(action_create_return_serial)d"
                     string="Mass return from serial/lot" type="action" target="new"/>
             </xpath>
