@@ -44,25 +44,15 @@ class TestPickingFromPicking(TransactionCase):
                                  "warehouse0")[1]
         self.main_warehouse = self.stock_warehouse.browse(main_warehouse)
 
-        self.loc_rma = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_rma_location_rma",
-                                 "stock_location_rma")[1]
+        self.loc_rma = self.main_warehouse.lot_rma_id
 
-        self.loc_carrier_loss = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_rma_advance_location",
-                                 "stock_location_carrier_loss")[1]
+        self.loc_carrier_loss = self.main_warehouse.lot_carrier_loss_id
 
-        self.loc_breakage_loss = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_rma_advance_location",
-                                 "stock_location_breakage_loss")[1]
+        self.loc_breakage_loss = self.main_warehouse.lot_breakage_loss_id
 
-        self.loc_refurbish = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_rma_advance_location",
-                                 "stock_location_refurbish")[1]
+        self.loc_refurbish = self.main_warehouse.lot_refurbish_id
 
-        self.loc_mistake_loss = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_rma_advance_location",
-                                 "stock_location_mistake_loss")[1]
+        # self.loc_mistake_loss = self.main_warehouse.lot_mistake_loss_id
 
         claim_test = self.registry("ir.model.data").\
             get_object_reference(cr, uid, "crm_claim",
@@ -74,29 +64,37 @@ class TestPickingFromPicking(TransactionCase):
 
         # Create Picking from Customers to RMA
         # with button New Products Return
+
         wiz_context = {
             'active_id': self.claim_test.id,
             'warehouse_id': self.claim_test.warehouse_id.id,
             'partner_id': self.claim_test.partner_id.id,
-            'picking_type': 'in',
+            'picking_type': self.claim_test.warehouse_id.rma_in_type_id.id,
         }
         wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
 
+        # res = self.wizardmakepicking.with_context(wiz_context).\
+        #     action_create_picking(wizard_id.id)
         res = wizard_id.action_create_picking()
+        # res = self.wizardmakepicking.action_create_picking(
+        #     [wizard_id])
+
 
         stock_picking_id = res.get('res_id')
 
+        # import pdb
+        # pdb.set_trace()
         context = {'active_id':
                    stock_picking_id,
-                   'picking_type':
-                   'picking_stock'}
+                   'picking_type': self.claim_test.warehouse_id.rma_int_type_id.id,
+                   }
 
         # Create Picking 'Product to stock'
         claim_wizard = self.claim_picking_wizard.\
             with_context(context).create({})
 
         self.assertEquals(claim_wizard.picking_line_source_location.id,
-                          self.loc_rma)
+                          self.loc_rma.id)
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
                           self.main_warehouse.lot_stock_id.id)
@@ -121,8 +119,9 @@ class TestPickingFromPicking(TransactionCase):
         claim_wizard = self.claim_picking_wizard.\
             with_context({'active_id':
                           stock_picking_id,
-                          'picking_type':
-                          'picking_breakage_loss'}).create({})
+                          'picking_type': self.claim_test.
+                          warehouse_id.rma_int_type_id.id,
+                          }).create({})
 
         self.assertEquals(claim_wizard.picking_line_source_location.id,
                           self.loc_rma)

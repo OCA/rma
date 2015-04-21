@@ -59,6 +59,10 @@ class claim_make_picking_from_picking(models.TransientModel):
         context = self._context
         warehouse_id = self._get_default_warehouse()
         warehouse_obj = self.env['stock.warehouse']
+        loc_id = self.env['stock.location']
+        # TODO not workinf from tests
+        # import pdb
+        # pdb.set_trace()
         if context.get('picking_type'):
             if context.get('picking_type') == 'picking_stock':
                 loc_id = warehouse_obj.browse(warehouse_id).lot_stock_id.id
