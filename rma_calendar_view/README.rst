@@ -4,7 +4,7 @@
 RMA Calendar View
 =================
 
-This Module adds a calendar view for the reclaims
+This Module adds a calendar view for the repair orders
 
 Credits
 =======
