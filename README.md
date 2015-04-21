@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/OCA/rma.svg?branch=7.0)](https://travis-ci.org/OCA/rma)
-[![Coverage Status](https://coveralls.io/repos/OCA/rma/badge.png?branch=7.0)](https://coveralls.io/r/OCA/rma?branch=7.0)
+[![Build Status](https://travis-ci.org/OCA/rma.svg?branch=8.0)](https://travis-ci.org/OCA/rma)
+[![Coverage Status](https://coveralls.io/repos/OCA/rma/badge.png?branch=8.0)](https://coveralls.io/r/OCA/rma?branch=8.0)
 
 RMA (Return Merchandise Authorization) 
 =======================================
