@@ -85,7 +85,6 @@ class TestPickingFromPicking(TransactionCase):
         context = {'active_id':
                    stock_picking_id,
                    'picking_type': 'picking_stock',
-                   # self.claim_test.warehouse_id.rma_int_type_id.id,
                    }
 
         claim_wizard = self.claim_picking_wizard.\
@@ -112,10 +111,7 @@ class TestPickingFromPicking(TransactionCase):
                     band = True
             self.assertEquals(True, band)
 
-        # TODO it is not wirking because the method
-        # action_create_picking_from_picking
-        # must has a picking_type_id
-        # claim_wizard.with_context(context).action_create_picking_from_picking()
+        claim_wizard.with_context(context).action_create_picking_from_picking()
 
         # Create Picking 'Product to Loss'
         claim_wizard = self.claim_picking_wizard.\
