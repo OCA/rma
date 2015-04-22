@@ -47,9 +47,8 @@ class claim_make_picking_from_picking(models.TransientModel):
     # Get default source location
     @api.model
     def _get_source_loc(self):
-        warehouse_obj = self.env['stock.warehouse']
         warehouse_id = self._get_default_warehouse()
-        return warehouse_obj.browse(warehouse_id).\
+        return warehouse_id.\
             lot_rma_id.id
 
     # Get default destination location
@@ -58,7 +57,6 @@ class claim_make_picking_from_picking(models.TransientModel):
         # TODO add picking_type
         context = self._context
         warehouse_id = self._get_default_warehouse()
-        warehouse_obj = self.env['stock.warehouse']
         loc_id = self.env['stock.location']
         picking_type = context.get('picking_type')
         picking_type_obj = self.env['stock.picking.type']
@@ -68,12 +66,12 @@ class claim_make_picking_from_picking(models.TransientModel):
             loc_id = pick_t.default_location_dest_id
         else:
             if context.get('picking_type') == 'picking_stock':
-                loc_id = warehouse_obj.browse(warehouse_id).lot_stock_id.id
+                loc_id = warehouse_id.lot_stock_id.id
             if context.get('picking_type') == 'picking_breakage_loss':
-                loc_id = warehouse_obj.browse(warehouse_id).\
+                loc_id = warehouse_id.\
                     lot_breakage_loss_id.id
             if context.get('picking_type') == 'picking_refurbish':
-                loc_id = warehouse_obj.browse(warehouse_id).lot_refurbish_id.id
+                loc_id = warehouse_id.lot_refurbish_id.id
             # TODO picking_mistake_loss must be added
             # if context.get('picking_type') == 'picking_mistake_loss':
             #     loc_id = warehouse_obj.browse(warehouse_id).\
