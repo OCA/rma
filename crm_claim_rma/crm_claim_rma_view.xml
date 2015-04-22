@@ -185,13 +185,8 @@
                             }"/>
                 <field name="stage_id" widget="statusbar" clickable="True"/>
             </xpath>
-            <page string="Follow Up" position="before">
-                <page string="Product Return">
-                    <group>
-                        <div class="oe_button_box oe_right">
-                            <!-- Place for mass return button from crm_rma_lot_mass_return -->
-                        </div>
-                    </group>
+            <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
+                <separator colspan="2" string="Product Returns"/>
                     <group colspan="6">
                         <field name="invoice_id"
                             on_change="onchange_invoice_id(invoice_id,warehouse_id,context)"
@@ -200,15 +195,21 @@
                         <field name="delivery_address_id"
                             context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
                     </group>
+                    <group>
+                        <div class="oe_button_box oe_right" name="serial">
+                            <!-- Place for mass return button from crm_rma_lot_mass_return -->
+                        </div>
+                    </group>
                     <field name="claim_line_ids" editable="top"/>
-                </page>
+            </xpath>
+            <xpath expr="//page[@string='Claim Description']" position="after">
                 <page string="Generated Documents">
                     <separator colspan="2" string="Refunds"/>
                     <field name="invoice_ids" colspan="4" readonly="1"/>
                     <separator colspan="2" string="Receptions / Deliveries"/>
                     <field name="picking_ids" colspan="4" readonly="1"/>
                 </page>
-	       </page>
+            </xpath>
         </field>
     </record>
 
@@ -259,7 +260,7 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='date_deadline']" position="after">
+                <xpath expr="//field[@name='section_id']" position="before">
                     <field name="claim_type"/>
                     <field name="warehouse_id" />
                 </xpath>
