@@ -52,18 +52,12 @@ class stock_move(orm.Model):
     def create(self, cr, uid, vals, context=None):
         move_id = super(stock_move, self
                         ).create(cr, uid, vals, context=context)
-
-        picking_type_obj = self.pool.get('stock.picking.type')
-        # TODO fix ME
-        picking_type_in = picking_type_obj.search(
-            cr, uid, [('name', '=', 'Receipts')])[0]
-
         if vals.get('picking_id'):
             picking_obj = self.pool.get('stock.picking')
             picking = picking_obj.browse(cr, uid, vals['picking_id'],
                                          context=context)
             if (picking.claim_id
-               and picking.picking_type_id.id == picking_type_in):
+               and picking.picking_type_id.code == 'incoming'):
                 self.write(cr, uid, move_id, {'state': 'confirmed'},
                            context=context)
         return move_id
