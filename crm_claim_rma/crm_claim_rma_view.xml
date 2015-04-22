@@ -3,6 +3,18 @@
     <data>
 <!-- Return line -->
         <!-- SEARCH -->
+
+        <record id="view_picking_internal_search_claim_id" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search[@string='Picking Lists']">
+                    <field name="claim_id" help="Moves created from claims"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_crm_claim_lines_filter" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">claim.line</field>
