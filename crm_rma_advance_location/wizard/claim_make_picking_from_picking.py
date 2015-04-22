@@ -54,24 +54,22 @@ class claim_make_picking_from_picking(models.TransientModel):
     # Get default destination location
     @api.model
     def _get_dest_loc(self):
-        # TODO add picking_type
         context = self._context
         warehouse_id = self._get_default_warehouse()
         loc_id = self.env['stock.location']
         picking_type = context.get('picking_type')
         picking_type_obj = self.env['stock.picking.type']
-        # TODO not working from tests
         if isinstance(picking_type, int):
             pick_t = picking_type_obj.browse(picking_type)
             loc_id = pick_t.default_location_dest_id
         else:
             if context.get('picking_type') == 'picking_stock':
-                loc_id = warehouse_id.lot_stock_id.id
+                loc_id = warehouse_id.lot_stock_id
             if context.get('picking_type') == 'picking_breakage_loss':
                 loc_id = warehouse_id.\
-                    lot_breakage_loss_id.id
+                    lot_breakage_loss_id
             if context.get('picking_type') == 'picking_refurbish':
-                loc_id = warehouse_id.lot_refurbish_id.id
+                loc_id = warehouse_id.lot_refurbish_id
             # TODO picking_mistake_loss must be added
             # if context.get('picking_type') == 'picking_mistake_loss':
             #     loc_id = warehouse_obj.browse(warehouse_id).\
