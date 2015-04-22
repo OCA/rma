@@ -6,7 +6,6 @@
 -->
 <openerp>
     <data>
-        <!--
         <record id="view_claim_picking" model="ir.ui.view">
             <field name="name">claim_picking</field>
             <field name="model">claim_make_picking.wizard</field>
@@ -40,7 +39,6 @@
                 </form>
             </field>
         </record>
-        -->
 
         <record id="action_claim_picking_in" model="ir.actions.act_window">
             <field name="name">Return Products</field>

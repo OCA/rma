@@ -64,12 +64,12 @@ class claim_make_picking_from_picking(models.TransientModel):
             loc_id = pick_t.default_location_dest_id
         else:
             if context.get('picking_type') == 'picking_stock':
-                loc_id = warehouse_id.lot_stock_id
+                loc_id = warehouse_id.lot_stock_id.id
             if context.get('picking_type') == 'picking_breakage_loss':
                 loc_id = warehouse_id.\
-                    lot_breakage_loss_id
+                    lot_breakage_loss_id.id
             if context.get('picking_type') == 'picking_refurbish':
-                loc_id = warehouse_id.lot_refurbish_id
+                loc_id = warehouse_id.lot_refurbish_id.id
             # TODO picking_mistake_loss must be added
             # if context.get('picking_type') == 'picking_mistake_loss':
             #     loc_id = warehouse_obj.browse(warehouse_id).\
@@ -108,14 +108,12 @@ class claim_make_picking_from_picking(models.TransientModel):
         picking_obj = self.env['stock.picking']
         move_obj = self.env['stock.move']
         view_obj = self.env['ir.ui.view']
-        p_type = 'internal'
         context = self._context
         if context.get('picking_type'):
             context_type = context.get('picking_type')[8:]
             note = 'Internal picking from RMA to %s' % context_type
             name = 'Internal picking to %s' % context_type
         view_id = view_obj.search([
-            ('xml_id', '=', 'view_picking_form'),
             ('model', '=', 'stock.picking'),
             ('type', '=', 'form'),
             ('name', '=', 'stock.picking.form')
@@ -126,8 +124,7 @@ class claim_make_picking_from_picking(models.TransientModel):
         # TODO create picking types
         picking_id = picking_obj.create({
             'origin': prev_picking.origin,
-            'type': p_type,
-            'move_type': 'one',  # direct
+            'move_type': 'one',
             'state': 'draft',
             'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
             'partner_id': prev_picking.partner_id.id,
@@ -137,54 +134,51 @@ class claim_make_picking_from_picking(models.TransientModel):
             'location_dest_id': self.picking_line_dest_location.id,
             'note': note,
             'claim_id': prev_picking.claim_id.id,
+            'picking_type_id': prev_picking.claim_id.warehouse_id.id,
         })
+
         # Create picking lines
         for wizard_picking_line in self.picking_line_ids:
             move_id = move_obj.create({
                 'name': wizard_picking_line.product_id.name_template,
                 # Motif : crm id ? stock_picking_id ?
                 'priority': '0',
-                # 'create_date':
                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                 'date_expected': time.strftime(
                     DEFAULT_SERVER_DATETIME_FORMAT),
                 'product_id': wizard_picking_line.product_id.id,
-                'product_qty': wizard_picking_line.product_qty,
+                'product_uom_qty': wizard_picking_line.product_uom_qty,
                 'product_uom': wizard_picking_line.product_uom.id,
                 'partner_id': prev_picking.partner_id.id,
-                'prodlot_id': wizard_picking_line.prodlot_id.id,
-                # 'tracking_id':
-                'picking_id': picking_id,
+                'picking_id': picking_id.id,
                 'state': 'draft',
                 'price_unit': wizard_picking_line.price_unit,
-                # 'price_currency_id': claim_id.company_id.currency_id.id,
-                # from invoice ???
                 'company_id': prev_picking.company_id.id,
                 'location_id': self.picking_line_source_location.id,
                 'location_dest_id': self.picking_line_dest_location.id,
                 'note': note,
+                'invoice_state': 'none',
             })
-            move_obj.write(
-                wizard_picking_line.id,
-                {'move_dest_id': move_id})
+            wizard_picking_line.write(
+                {'move_dest_id': move_id.id})
         wf_service = workflow
         if picking_id:
             wf_service.trg_validate(
-                self.uid, 'stock.picking',
-                picking_id,
+                self._uid, 'stock.picking',
+                picking_id.id,
                 'button_confirm',
-                self.cr)
-            picking_obj.action_assign([picking_id])
-        domain = "[('type','=','%s'),('partner_id','=',%s)]" % (
-            p_type, partner_id)
+                self._cr)
+            picking_id.action_assign()
+        domain = "[('picking_type_id','=','%s'),('partner_id','=',%s)]" % (
+            prev_picking.claim_id.warehouse_id.rma_int_type_id.id, partner_id)
         return {
             'name': '%s' % name,
             'view_type': 'form',
             'view_mode': 'form',
-            'view_id': view_id,
+            'view_id': view_id.id,
             'domain': domain,
             'res_model': 'stock.picking',
-            'res_id': picking_id,
+            'res_id': picking_id.id,
             'type': 'ir.actions.act_window',
         }
 
