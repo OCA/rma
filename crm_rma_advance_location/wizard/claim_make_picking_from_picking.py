@@ -121,7 +121,6 @@ class claim_make_picking_from_picking(models.TransientModel):
         prev_picking = picking_obj.browse(context['active_id'])
         partner_id = prev_picking.partner_id.id
         # create picking
-        # TODO create picking types
         picking_id = picking_obj.create({
             'origin': prev_picking.origin,
             'move_type': 'one',

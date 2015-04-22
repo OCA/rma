@@ -216,7 +216,7 @@ class claim_line(models.Model):
     def set_warranty_limit(self, cr, uid, ids, claim_line_brw, context=None):
         date_invoice = claim_line_brw.invoice_line_id.invoice_id.date_invoice
         if not date_invoice:
-            raise models.except_models(
+            raise except_orm(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
@@ -227,7 +227,7 @@ class claim_line(models.Model):
             # TODO important product_id.seller_ids
             supplier = claim_line_brw.product_id.seller_id
             if not supplier:
-                raise models.except_models(
+                raise except_orm(
                     _('Error'),
                     _('The product has no supplier configured.'))
 
@@ -324,7 +324,7 @@ class claim_line(models.Model):
         """ Calculate warranty limit and address """
         for claim_line_brw in self.browse(cr, uid, ids, context=context):
             if not (claim_line_brw.product_id and claim_line.invoice_line_id):
-                raise models.except_models(
+                raise except_orm(
                     _('Error !'),
                     _('Please set product and invoice.'))
             self.set_warranty_limit(cr, uid, ids,

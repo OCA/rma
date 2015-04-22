@@ -64,7 +64,7 @@ class claim_make_picking(models.TransientModel):
             [('claim_id', '=', context['active_id'])])
 
         for line in line_ids:
-            # TODO fix code, be careful
+            # TODO code repeated, make a generic method
             if isinstance(picking_type, int):
                 pick_t = picking_obj.browse(picking_type)
                 if pick_t.code == 'outgoing':
@@ -93,7 +93,7 @@ class claim_make_picking(models.TransientModel):
     # Get default source location
     @api.model
     def _get_source_loc(self):
-        loc_id = False
+        loc_id = self.env['stock.location']
         context = self._context
         warehouse_obj = self.env['stock.warehouse']
         partner_obj = self.env['res.partner']
@@ -108,7 +108,6 @@ class claim_make_picking(models.TransientModel):
 
         picking_type = context.get('picking_type')
 
-        # TODO no se puede devolver un booleano
         if picking_type:
             if picking_type == 'new_delivery':
                 loc_id = warehouse_rec.lot_stock_id
@@ -121,9 +120,7 @@ class claim_make_picking(models.TransientModel):
     def _get_common_dest_location_from_line(self, line_ids):
         """Return the ID of the common location between all lines. If no common
         destination was  found, return False"""
-        # TODO no puede retornar un booleano
-        loc_id = False
-
+        loc_id = self.env['stock.location']
         line_location = [line.location_dest_id for line in line_ids]
         line_location = list(set(line_location))
         if len(line_location) == 1:
@@ -162,7 +159,7 @@ class claim_make_picking(models.TransientModel):
         if context.get('partner_id'):
             partner_rec = partner_obj.browse(context.get('partner_id'))
 
-        # TODO FIX ME
+        # TODO code repeated, make a generic method
         if isinstance(picking_type, int):
             pick_t = picking_obj.browse(picking_type)
             loc_id = pick_t.default_location_dest_id.id
