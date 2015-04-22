@@ -81,15 +81,13 @@ class TestPickingFromPicking(TransactionCase):
 
         stock_picking_id = res.get('res_id')
 
-        # import pdb
-        # pdb.set_trace()
+        # Create Picking 'Product to stock'
         context = {'active_id':
                    stock_picking_id,
-                   'picking_type':
-                   self.claim_test.warehouse_id.rma_int_type_id.id,
+                   'picking_type': 'picking_stock',
+                   # self.claim_test.warehouse_id.rma_int_type_id.id,
                    }
 
-        # Create Picking 'Product to stock'
         claim_wizard = self.claim_picking_wizard.\
             with_context(context).create({})
 
@@ -107,8 +105,12 @@ class TestPickingFromPicking(TransactionCase):
         claim_lines = self.claim_test.claim_line_ids
 
         for num in xrange(0, len(picking_lines)):
-            self.assertEquals(claim_lines[num].product_id.id,
-                              picking_lines[num].product_id.id)
+            band = False
+            for num2 in xrange(0, len(claim_lines)):
+                if claim_lines[num].product_id.id == \
+                        picking_lines[num2].product_id.id:
+                    band = True
+            self.assertEquals(True, band)
 
         # TODO it is not wirking because the method
         # action_create_picking_from_picking
@@ -119,12 +121,12 @@ class TestPickingFromPicking(TransactionCase):
         claim_wizard = self.claim_picking_wizard.\
             with_context({'active_id':
                           stock_picking_id,
-                          'picking_type': self.claim_test.
-                          warehouse_id.rma_int_type_id.id,
+                          'picking_type': 'picking_breakage_loss',
+                          # self.claim_test.warehouse_id.rma_int_type_id.id,
                           }).create({})
 
         self.assertEquals(claim_wizard.picking_line_source_location.id,
-                          self.loc_rma)
+                          self.loc_rma.id)
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
-                          self.loc_breakage_loss)
+                          self.loc_breakage_loss.id)
