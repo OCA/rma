@@ -22,11 +22,6 @@ from openerp.tests import common
 
 
 class test_lp_1282584(common.TransactionCase):
-    """ Test wizard open the right type of view
-
-    The wizard can generate picking.in and picking.out
-    Let's ensure it open the right view for each picking type
-    """
 
     def setUp(self):
         super(test_lp_1282584, self).setUp()
@@ -78,7 +73,7 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.in',
+        self.assertEquals(res.get('res_model'), 'stock.picking',
                           "Wrong model defined")
 
     def test_01(self):
@@ -108,5 +103,5 @@ class test_lp_1282584(common.TransactionCase):
 
         res = self.WizardMakePicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.out',
+        self.assertEquals(res.get('res_model'), 'stock.picking',
                           "Wrong model defined")

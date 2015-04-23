@@ -69,6 +69,7 @@
                     <field name="refund_line_id"/>
                     <field name="move_in_id"/>
                     <field name="move_out_id"/>
+                    <field name="location_dest_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -214,32 +215,31 @@
                                     </group>
                                     <separator string="State" colspan="4"/>
                                     <group col="6" colspan="4">
-                                        <field name="state"/>
                                         <field name="substate_id" widget='selection' />
                                         <field name="last_state_change"/>
+                                        <field name="location_dest_id" invisible="1"/>
                                     </group>
                                 </sheet>
                             </form>
                         </field>
                     </group>
-                    <group col="4" colspan="4" attrs="{'invisible':[('state', '&lt;&gt;','open')]}">
+                    <group col="4" colspan="4">
                         <separator string="Action" colspan="4" />
                         <button name="%(action_claim_picking_in)d"
-                                string="New Products Return" states="open"
+                                string="New Products Return"
                                 type="action" target="new"
                                 context="{'warehouse_id': warehouse_id,
                                     'partner_id': partner_id}"/>
 
                         <button name="%(action_claim_picking_out)d"
-                                string="New Delivery" states="open"
+                                string="New Delivery"
                                 type="action" target="new"
                                 context="{'warehouse_id': warehouse_id,
                                     'partner_id': partner_id}"/>
 
                         <button name="%(account.action_account_invoice_refund)d"
                                 type='action' string='New Refund'
-                                states='open' icon="gtk-execute"
-                                context="{
+                                icon="gtk-execute" context="{
                                     'invoice_ids': [invoice_id],
                                     'claim_line_ids': claim_line_ids,
                                     'description': name,
@@ -292,19 +292,11 @@
         name="Supplier Refunds" 
         res_model="account.invoice" 
         src_model="crm.claim"/> 
-<!-- Right side link to picking in --> 
+<!-- Button linking to pickings -->
         <act_window
-        domain="[('type', '=', 'in')]"
-        id="act_crm_claim_rma_picking_in" 
-        name="Incoming Shipment and Returns" 
-        res_model="stock.picking.in"
-        src_model="crm.claim"/>  
-<!-- Right side link to picking out -->
-        <act_window 
-        domain="[('type', '=', 'out')]"
-        id="act_crm_claim_rma_picking_out" 
-        name="Deliveries" 
-        res_model="stock.picking.out"
+        id="act_crm_claim_rma_pickings"
+        name="Deliveries and returns"
+        res_model="stock.picking"
         src_model="crm.claim"/>  
 
     <record model="ir.ui.view" id="crm_claim_rma_form_view2">
@@ -351,15 +343,10 @@
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
-                        <button name="%(act_crm_claim_rma_picking_in)d" type="action"
-                                string="Returned Products"
+                        <button name="%(act_crm_claim_rma_pickings)d" type="action"
+                                string="Deliveries and returns"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_claim_id': active_id,'search_default_user_id':False}"
-                               />
-                        <button name="%(act_crm_claim_rma_picking_out)d" type="action"
-                                string="Deliveries"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
-                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                     </div>
                 </xpath>

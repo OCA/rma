@@ -563,6 +563,10 @@ class crm_claim(orm.Model):
                         # modified
             for command in lines:
                 code = command[0]
+                # FIXME: find out what this actually does and why 8.0 decided
+                # to send a (6, ...)
+                if code == 6 and command[2] == []:
+                    code = 5
                 assert code != 6, "command 6 not supported in on_change"
                 if code in (0, 1, 4):
                     # 0: link a new record with values

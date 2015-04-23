@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 credativ ltd.
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Ondřej Kuzník
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,65 +21,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class stock_picking(orm.Model):
+class stock_picking(models.Model):
 
     _inherit = "stock.picking"
 
-    _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
-    }
-
-    def create(self, cr, uid, vals, context=None):
-        if ('name' not in vals) or (vals.get('name') == '/'):
-            sequence_obj = self.pool.get('ir.sequence')
-            if vals['type'] == 'internal':
-                seq_obj_name = self._name
-            else:
-                seq_obj_name = 'stock.picking.' + vals['type']
-            vals['name'] = sequence_obj.get(cr, uid, seq_obj_name,
-                                            context=context)
-        new_id = super(stock_picking, self).create(cr, uid, vals,
-                                                   context=context)
-        return new_id
-
-
-class stock_picking_out(orm.Model):
-
-    _inherit = "stock.picking.out"
-
-    _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
-    }
-
-
-class stock_picking_in(orm.Model):
-
-    _inherit = "stock.picking.in"
-
-    _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
-    }
+    claim_id = fields.Many2one('crm.claim', 'Claim')
 
 
 # This part concern the case of a wrong picking out. We need to create a new
 # stock_move in a picking already open.
 # In order to don't have to confirm the stock_move we override the create and
 # confirm it at the creation only for this case
-class stock_move(orm.Model):
+class stock_move(models.Model):
 
     _inherit = "stock.move"
 
     def create(self, cr, uid, vals, context=None):
         move_id = super(stock_move, self
                         ).create(cr, uid, vals, context=context)
-        if vals.get('picking_id'):
-            picking_obj = self.pool.get('stock.picking')
-            picking = picking_obj.browse(cr, uid, vals['picking_id'],
-                                         context=context)
-            if picking.claim_id and picking.type == u'in':
+        move = self.browse(cr, uid, move_id, context=context)
+        if move.picking_id and move.picking_id.claim_id:
+            picking_code = self.get_code_from_locs(
+                cr, uid, move, context=context)
+
+            if picking_code == 'incoming':
                 self.write(cr, uid, move_id, {'state': 'confirmed'},
                            context=context)
         return move_id

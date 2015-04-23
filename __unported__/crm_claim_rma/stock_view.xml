@@ -3,10 +3,10 @@
     <data>
         <!-- INHERITED VIEW FOR THE OBJECT : stock_picking -->
 
-        <record id="picking_in_form" model="ir.ui.view">
-            <field name="name">crm_claim_rma.picking_in_form</field>
-            <field name="model">stock.picking.in</field>
-            <field name="inherit_id" ref="stock.view_picking_in_form" />
+        <record id="picking_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='move_type']" position="after">
                     <field name="claim_id" />
@@ -14,42 +14,17 @@
             </field>
         </record>
 
-        <record id="picking_out_form" model="ir.ui.view">
-            <field name="name">crm_claim_rma.picking_out_form</field>
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form" />
+        <record id="view_picking_search" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_type']" position="after">
-                    <field name="claim_id" />
-                </xpath>
-            </field>
-        </record>
-        
-        <record id="view_picking_in_search" model="ir.ui.view">
-            <field name="name">crm_claim_rma.picking_in_search</field>
-            <field name="model">stock.picking.in</field>
-            <field name="inherit_id" ref="stock.view_picking_in_search" />
-            <field name="arch" type="xml">
-                <filter string="To Invoice" name="to_invoice" icon="terp-dolar" domain="[('invoice_state', '=', '2binvoiced')]" position="after">
-                    <separator/>
+                <filter name="backorder" position="after">
                     <filter string="RMA" icon="terp-accessories-archiver-minus" domain="[('claim_id', '!=', 'False')]" />
                     <field name="claim_id" string="RMA" invisible="True"/>
                 </filter>
             </field>
         </record>
-
-        <record id="view_picking_out_search" model="ir.ui.view">
-            <field name="name">crm_claim_rma.picking_out_search</field>
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_search" />
-            <field name="arch" type="xml">
-                <filter icon="terp-dolar" name="to_invoice" string="To Invoice" domain="[('invoice_state','=','2binvoiced')]" help="Delivery orders to invoice" position="after">
-                    <separator/>
-                    <filter string="RMA" icon="terp-accessories-archiver-minus" domain="[('claim_id', '!=', 'False')]" />
-                </filter>
-            </field>
-        </record>
-
 
     </data>
 </openerp>
