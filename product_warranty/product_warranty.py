@@ -50,7 +50,7 @@ class product_supplierinfo(orm.Model):
         """ Get selected lines to add to exchange """
         instr_obj = self.pool.get('return.instruction')
         instruction_ids = instr_obj.search(cr, uid,
-                                           [('is_default', '=', 'FALSE')],
+                                           [('is_default', '=', True)],
                                            context=context)
         if instruction_ids:
             return instruction_ids[0]
