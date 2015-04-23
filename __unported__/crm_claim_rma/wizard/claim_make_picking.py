@@ -71,7 +71,7 @@ class claim_make_picking(orm.TransientModel):
         if not good_lines:
             raise orm.except_orm(
                 _('Error'),
-                _('A picking has already been created for this claim.'))
+                _('No products remain to be processed for this claim.'))
         return good_lines
 
     # Get default source location
@@ -157,7 +157,6 @@ class claim_make_picking(orm.TransientModel):
         picking_obj = self.pool.get('stock.picking')
         if context is None:
             context = {}
-        view_obj = self.pool.get('ir.ui.view')
         name = 'RMA picking out'
         if context.get('picking_type') == 'out':
             p_type = 'out'
@@ -233,7 +232,8 @@ class claim_make_picking(orm.TransientModel):
                  'date': time.strftime(fmt),
                  'date_expected': time.strftime(fmt),
                  'product_id': wizard_claim_line.product_id.id,
-                 'product_qty': wizard_claim_line.product_returned_quantity,
+                 'product_uom_qty':
+                    wizard_claim_line.product_returned_quantity,
                  'product_uom': wizard_claim_line.product_id.uom_id.id,
                  'partner_id': partner_id,
                  'prodlot_id': wizard_claim_line.prodlot_id.id,
@@ -266,5 +266,3 @@ class claim_make_picking(orm.TransientModel):
             'res_id': picking_id,
             'type': 'ir.actions.act_window',
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

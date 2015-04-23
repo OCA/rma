@@ -144,7 +144,7 @@ class claim_line(orm.Model):
             'Warranty',
             readonly=True,
             help="If warranty has expired"),
-        'warranty_type':  fields.selection(
+        'warranty_type': fields.selection(
             get_warranty_return_partner,
             'Warranty type',
             readonly=True,
@@ -301,12 +301,11 @@ class claim_line(orm.Model):
         wh_obj = self.pool.get('stock.warehouse')
         wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
         location_dest_id = wh.lot_stock_id.id
-        if prod:
-            seller = prod.seller_info_id
-            if seller:
-                return_type = seller.warranty_return_partner
-                if return_type != 'company':
-                    location_dest_id = seller.name.property_stock_supplier.id
+        if prod and prod.seller_ids:
+            seller = prod.seller_ids[0]
+            return_type = seller.warranty_return_partner
+            if return_type != 'company':
+                location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
     def onchange_product_id(self, cr, uid, ids, product_id, invoice_line_id,
@@ -375,7 +374,7 @@ class claim_line(orm.Model):
                     'warranty_type': False,
                     'location_dest_id': False}
         return_address = None
-        seller = product.seller_info_id
+        seller = product.seller_ids and product.seller_ids[0]
         if seller:
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
@@ -560,8 +559,8 @@ class crm_claim(orm.Model):
                 line.update(warranty_values(invoice_line.invoice_id,
                                             invoice_line.product_id))
                 claim_lines.append(line)
-        elif lines:  # happens when the date, warehouse or claim type is
-                     # modified
+        elif lines:     # happens when the date, warehouse or claim type is
+                        # modified
             for command in lines:
                 code = command[0]
                 assert code != 6, "command 6 not supported in on_change"

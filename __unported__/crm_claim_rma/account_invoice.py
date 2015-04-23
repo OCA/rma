@@ -21,7 +21,7 @@
 #
 ##############################################################################
 from openerp.osv import fields, orm
-from tools.translate import _
+from openerp.tools.translate import _
 
 
 class account_invoice(orm.Model):
@@ -55,8 +55,8 @@ class account_invoice(orm.Model):
                                                line.invoice_line_id.id,
                                                context=context)
                 clean_line = {}
-                for field_name, field in inv_line._all_columns.iteritems():
-                    column_type = field.column._type
+                for field_name, field in inv_line._fields.iteritems():
+                    column_type = field.type
                     if column_type == 'many2one':
                         clean_line[field_name] = inv_line[field_name].id
                     elif column_type not in ('many2many', 'one2many'):
