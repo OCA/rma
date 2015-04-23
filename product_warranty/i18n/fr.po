@@ -1,0 +1,155 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_warranty
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2013-11-21 15:06+0000\n"
+"PO-Revision-Date: 2014-01-22 19:17+0000\n"
+"Last-Translator: Joël Grand-Guillaume @ camptocamp "
+"<joel.grandguillaume@camptocamp.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-05-24 06:50+0000\n"
+"X-Generator: Launchpad (build 17017)\n"
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_return_address
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_return_other_address_id
+#: field:product.supplierinfo,warranty_return_address:0
+#: field:product.supplierinfo,warranty_return_other_address_id:0
+msgid "Return address"
+msgstr ""
+
+#. module: product_warranty
+#: view:product.supplierinfo:0
+msgid "Warranty informations"
+msgstr ""
+
+#. module: product_warranty
+#: help:product.supplierinfo,warranty_return_partner:0
+msgid ""
+"Who is in charge of the warranty return treatment toward the end customer. "
+"Company will use the current company delivery or default address and so on "
+"for supplier and brand manufacturer. Doesn't necessarily mean that the "
+"warranty to be applied is the one of the return partner (i.e. can be returned "
+"to the company and be under the brand warranty"
+msgstr ""
+"Indique qui est en charge du traitement du retour garantie envers le client "
+"final. L'entreprise utilise l'adresse de livraison, et sinon l'adresse par "
+"défaut. Il en va de même pour les options fournisseur ou fabricant. Ce champ "
+"n'implique pas forcément que la garantie qui va s'appliquer est celle de "
+"celui qui gère le retour."
+
+#. module: product_warranty
+#: help:product.supplierinfo,warranty_return_other_address_id:0
+msgid ""
+"Where the customer has to send back the product(s) if warranty return is "
+"set to 'other'."
+msgstr ""
+
+#. module: product_warranty
+#: help:product.supplierinfo,warranty_duration:0
+msgid ""
+"Warranty in month for this product/supplier relation. Only for "
+"company/supplier relation (purchase order) ; the customer/company relation "
+"(sale order) always use the product main warranty field"
+msgstr ""
+"Garantie en nombre de mois pour ce fournisseur. Uniquement pour la relation "
+"entreprise/fournisseur (commandes d'achat) ; La relation entreprise/client "
+"(commandes de vente) utilise toujours le champ de garantie de la fiche "
+"produit"
+
+#. module: product_warranty
+#: view:res.company:0
+msgid "Crm product return address"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model,name:product_warranty.model_return_instruction
+#: help:product.supplierinfo,return_instructions:0
+#: help:return.instruction,instructions:0
+msgid "Instructions for product return"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_duration
+#: field:product.supplierinfo,warranty_duration:0
+msgid "Period"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_return_instruction_name
+#: field:return.instruction,name:0
+msgid "Title"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model,name:product_warranty.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_active_supplier
+#: field:product.supplierinfo,active_supplier:0
+msgid "Active supplier"
+msgstr "Fournisseur actif"
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_return_instruction_is_default
+#: field:return.instruction,is_default:0
+msgid "Is default"
+msgstr ""
+
+#. module: product_warranty
+#: help:product.supplierinfo,warranty_return_address:0
+msgid ""
+"Where the goods should be returned (computed field based on other infos.)"
+msgstr ""
+
+#. module: product_warranty
+#: help:return.instruction,is_default:0
+msgid ""
+"If is default, will be use to set the default value in supplier infos. Be "
+"careful to have only one default"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.actions.act_window,name:product_warranty.product_return_instructions_action
+#: model:ir.ui.menu,name:product_warranty.menu_product_return_instructions_action
+msgid "Products return instructions"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model,name:product_warranty.model_product_supplierinfo
+msgid "Information about a product supplier"
+msgstr "Information sur le fournisseur du produit"
+
+#. module: product_warranty
+#: help:product.supplierinfo,active_supplier:0
+msgid "Is this supplier still active, only for information"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_return_partner
+#: field:product.supplierinfo,warranty_return_partner:0
+msgid "Return type"
+msgstr ""
+
+#. module: product_warranty
+#: view:return.instruction:0
+msgid "Return instructions"
+msgstr ""
+
+#. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_return_instructions
+#: model:ir.model.fields,field_description:product_warranty.field_return_instruction_instructions
+#: field:product.supplierinfo,return_instructions:0
+#: view:return.instruction:0
+#: field:return.instruction,instructions:0
+msgid "Instructions"
+msgstr ""
