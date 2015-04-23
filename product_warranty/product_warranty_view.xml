@@ -34,7 +34,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <!-- supplier info form view -->
         <record model="ir.ui.view" id="product_return_instructions_form_view">
             <field name="name">product.return.instructions.form</field>
@@ -50,17 +50,18 @@
         </record>
 
         <record id="product_return_instructions_action" model="ir.actions.act_window">
-            <field name="name">Products return instructions</field>
+            <field name="name">Products Return Instructions</field>
             <field name="res_model">return.instruction</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="product_return_instructions_tree_view"/>
         </record>
-        
+
         <menuitem action="product_return_instructions_action"
             groups="base.group_no_one"
             id="menu_product_return_instructions_action"
-            parent="product.prod_config_main" sequence="3"/>        
+            parent="product.prod_config_main" sequence="3"/>
+
 <!-- supplier info -->
         <!-- supplier info tree view -->
         <record model="ir.ui.view" id="product_supplierinfo_warranty_tree_view">
@@ -68,16 +69,16 @@
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
             <field name="arch" type="xml">
-                <field position="after" name="delay">
+                <xpath expr="//field[@name='delay']" position="after">
                     <field name="warranty_duration"/>
                     <field name="warranty_return_partner"/>
                     <field name="warranty_return_address"/>
                     <field name="active_supplier"/>
                     <field name="return_instructions"/>
-                </field>
+                </xpath>
             </field>
         </record>
-        
+
         <!-- supplier info form view -->
         <record model="ir.ui.view" id="product_supplierinfo_warranty_form_view">
             <field name="name">product.supplierinfo.warranty.form</field>
@@ -94,13 +95,10 @@
                                 <field name="warranty_return_partner"/>
                             </group>
                             <group>
-                                <div>
-                                    <label for="warranty_return_other_address_id"/>
-                                    <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
-                                    <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
-                                </div>
+                                <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
+                                <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
                             </group>
-                            </group>
+                        </group>
                     </group>
                 </field>
             </field>

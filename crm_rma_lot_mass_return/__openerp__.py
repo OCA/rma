@@ -27,7 +27,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'depends': ['crm_claim_rma',
                 ],
-    'author': 'Akretion,Odoo Community Association (OCA)',
+    'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'website': 'http://www.akretion.com',
     'description': """

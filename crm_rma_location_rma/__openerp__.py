@@ -26,19 +26,12 @@
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['stock',
              'procurement',
+             'crm_claim_rma_config',
              ],
- 'description': """
-RMA Location
-============
-
-Bridge Module.
-
-RMA Location added in warehouse to control products in rma.
-
- """,
  'website': 'http://www.camptocamp.com',
  'data': ['stock_warehouse_view.xml',
           ],
+ 'demo': [],
  'installable': True,
  'auto_install': False,
  }

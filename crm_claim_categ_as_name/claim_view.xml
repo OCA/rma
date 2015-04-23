@@ -7,16 +7,18 @@
 <openerp>
     <data>
 
-    <record model="ir.ui.view" id="crm_claim_rma_form_view">
+    <record model="ir.ui.view" id="crm_claim_rma_form_view_categ">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
-        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="replace">
-                <field name="categ_id" string='Name' />
-            </xpath>
             <xpath expr="//page[@string='Claim Description']/group/field[@name='categ_id']" position="replace">
-                <field name="name" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="categ_id" string='Name'/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="name" invisible="1" required="False"/>
             </xpath>
         </field>
     </record>

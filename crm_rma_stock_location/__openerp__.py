@@ -21,7 +21,7 @@
 
 {'name': 'RMA Stock Location',
  'version': '1.0',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
+ 'author': "Vauxoo,Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Generic Modules/CRM & SRM',
@@ -39,10 +39,9 @@ The product views displays the quantity available and virtual in this
 
  """,
  'website': 'http://www.camptocamp.com',
- 'data': ['stock_data.xml',
-          'product_view.xml',
+ 'data': ['product_view.xml',
           ],
- 'demo': ['stock_demo.xml',
+ 'demo': ['demo/stock_demo.xml',
           ],
  'test': ['test/quantity.yml',
           ],

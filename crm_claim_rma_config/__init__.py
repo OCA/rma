@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#    Author: Yanina Aular
+#    Copyright 2015 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,17 +18,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp import models, fields
-
-
-class res_company(models.Model):
-
-    _inherit = "res.company"
-
-    crm_return_address_id = fields.Many2one(
-        'res.partner',
-        string='Return address',
-        help="Default address where the customers has to send back the "
-             "returned product. If empty, the address is the "
-             "company address")

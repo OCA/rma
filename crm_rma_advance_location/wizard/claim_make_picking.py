@@ -20,35 +20,29 @@
 # You should have received a copy of the GNU General Public License     #
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 #########################################################################
-from openerp.osv import orm
+
+from openerp import models, fields, api
 
 
-class claim_make_picking(orm.TransientModel):
+class claim_make_picking(models.TransientModel):
 
     _inherit = 'claim_make_picking.wizard'
 
-    def _get_dest_loc(self, cr, uid, context=None):
+    @api.model
+    def _get_dest_loc(self):
         """ Get default destination location """
-        loc_id = super(claim_make_picking, self)._get_dest_loc(
-            cr, uid, context=context)
-        if context is None:
-            context = {}
-        warehouse_obj = self.pool.get('stock.warehouse')
-        warehouse_id = context.get('warehouse_id')
-        if context.get('picking_type') == 'in':
-            loc_id = warehouse_obj.read(
-                cr, uid,
-                warehouse_id,
-                ['lot_rma_id'],
-                context=context)['lot_rma_id'][0]
-        elif context.get('picking_type') == 'loss':
-            loc_id = warehouse_obj.read(
-                cr, uid,
-                warehouse_id,
-                ['lot_carrier_loss_id'],
-                context=context)['lot_carrier_loss_id'][0]
+        context = self._context
+        warehouse_obj = self.env['stock.warehouse']
+        picking_type = context.get('picking_type')
+        warehouse_rec = warehouse_obj.browse(context.get('warehouse_id'))
+        loc_id = self.env['stock.location']
+        if picking_type and picking_type == 'carrier_loss':
+            loc_id = warehouse_rec.lot_carrier_loss_id
+        elif picking_type and picking_type == 'new_rma':
+            loc_id = warehouse_rec.lot_rma_id
+        else:
+            loc_id = super(claim_make_picking, self)._get_dest_loc()
+
         return loc_id
 
-    _defaults = {
-        'claim_line_dest_location': _get_dest_loc,
-    }
+    claim_line_dest_location = fields.Many2one(default=_get_dest_loc)

@@ -49,7 +49,10 @@ module.
         'res_company_view.xml',
         'product_warranty_view.xml',
     ],
-    'demo_xml': [],
+    'demo': [
+        'demo/product_warranty.xml',
+        'demo/res_company.xml',
+    ],
     'test': [],
     'installable': True,
     'active': False,

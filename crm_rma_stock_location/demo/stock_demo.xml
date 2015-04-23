@@ -3,9 +3,14 @@
     <data noupdate="1">
 
         <record id="location_rma" model="stock.location">
-            <field name="name">RMA</field>
-            <field name="usage">view</field>
+            <field name="name">RMA Demo</field>
+            <field name="usage">internal</field>
         </record>
+
+        <record id="stock.stock_warehouse_shop0" model="stock.warehouse">
+            <field name="lot_rma_id" ref="location_rma"/>
+        </record>
+
         <record id="location_rma_a" model="stock.location">
             <field name="name">RMA - Box A</field>
             <field name="location_id" ref="location_rma"/>
@@ -15,10 +20,6 @@
             <field name="name">RMA - Box B</field>
             <field name="location_id" ref="location_rma"/>
             <field name="usage">internal</field>
-        </record>
-
-        <record id="stock.warehouse0" model="stock.warehouse">
-            <field name="lot_rma_id" ref="location_rma"/>
         </record>
 
         <record id="product_socket" model="product.product">

@@ -76,6 +76,8 @@ Contributors:
                 'stock',
                 'crm_claim',
                 'product_warranty',
+                'crm_claim_rma_config',
+                'crm_rma_location_rma',
                 ],
     'data': ['wizard/claim_make_picking_view.xml',
              'crm_claim_rma_view.xml',
@@ -91,6 +93,9 @@ Contributors:
                'images/return_line.png',
                'images/exchange.png',
                ],
+    'demo': [
+        'demo/crm_claim_rma_demo.xml',
+    ],
     'installable': True,
     'auto_install': False,
 }
