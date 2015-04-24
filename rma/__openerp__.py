@@ -35,6 +35,7 @@
         "crm_rma_advance_location",
         "crm_rma_lot_mass_return",
         "crm_rma_stock_location",
+        "crm_rma_prodlot_invoice",
     ],
     "demo": [],
     "data": [],
