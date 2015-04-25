@@ -43,7 +43,7 @@ class stock_warehouse(models.Model):
         for wh_id in self.browse(cr, SUPERUSER_ID,
                                  self.search(cr, SUPERUSER_ID, [])):
             vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
-            self.write(cr, SUPERUSER_ID, wh_id.id, vals=vals)
+            self.write(cr, SUPERUSER_ID, wh_id.id, vals)
 
     @api.model
     def create_locations_rma(self, wh_id):
@@ -56,26 +56,33 @@ class stock_warehouse(models.Model):
         wh_loc_id = wh_id.view_location_id.id
 
         vals_new = super(stock_warehouse, self).create_locations_rma(wh_id)
-        sub_locations = [
-            {'name': _('Refurbish'), 'active': True,
-             'field': 'lot_refurbish_id'},
-            {'name': _('Carrier Loss'), 'active': True,
-             'field': 'lot_carrier_loss_id'},
-            {'name': _('Breakage Loss'), 'active': True,
-             'field': 'lot_breakage_loss_id'},
-        ]
-        for values in sub_locations:
-            if not eval('wh_id.'+values['field']):
-                loc_vals = {
-                    'name': values['name'],
-                    'usage': 'internal',
-                    'location_id': wh_loc_id,
-                    'active': values['active'],
-                }
-                if vals.get('company_id'):
-                    loc_vals['company_id'] = vals.get('company_id')
-                location_id = location_obj.\
-                    create(loc_vals, context=context_with_inactive)
-                vals[values['field']] = location_id.id
+
+        loc_vals = {
+            'usage': 'internal',
+            'location_id': wh_loc_id,
+            'active': True,
+        }
+
+        if vals.get('company_id'):
+            loc_vals['company_id'] = vals.get('company_id')
+
+        if not wh_id.lot_refurbish_id:
+            loc_vals.update({'name': _('Refurbish')})
+            location_id = location_obj.\
+                create(loc_vals, context=context_with_inactive)
+            vals['lot_refurbish_id'] = location_id.id
+
+        if not wh_id.lot_carrier_loss_id:
+            loc_vals.update({'name': _('Carrier Loss')})
+            location_id = location_obj.\
+                create(loc_vals, context=context_with_inactive)
+            vals['lot_carrier_loss_id'] = location_id.id
+
+        if not wh_id.lot_breakage_loss_id:
+            loc_vals.update({'name': _('Breakage Loss')})
+            location_id = location_obj.\
+                create(loc_vals, context=context_with_inactive)
+            vals['lot_breakage_loss_id'] = location_id.id
+
         vals.update(vals_new)
         return vals

@@ -72,7 +72,7 @@ class claim_make_picking(models.TransientModel):
                 else:
                     pick = 'in'
             else:
-                if picking_type in ('new_delivery'):
+                if picking_type == 'new_delivery':
                     pick = 'out'
                 else:
                     pick = 'in'
@@ -135,7 +135,7 @@ class claim_make_picking(models.TransientModel):
         line_obj = self.pool.get('claim.line')
         line_partner = []
         for line in line_obj.browse(cr, uid, line_ids, context=context):
-            if (line.location_dest_id.id not in line_partner):
+            if line.location_dest_id.id not in line_partner:
                 line_partner.append(line.location_dest_id.id)
         # TODO FIX ME, as do when the lines have different directions
         if len(line_partner) == 1:
@@ -219,7 +219,7 @@ class claim_make_picking(models.TransientModel):
             else:
                 pick = 'in'
         else:
-            if picking_type in ('new_rma'):
+            if picking_type == 'new_rma':
                 pick = 'in'
             else:
                 pick = 'out'

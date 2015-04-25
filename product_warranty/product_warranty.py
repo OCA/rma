@@ -128,6 +128,6 @@ class product_supplierinfo(models.Model):
 
     warranty_return_other_address_id = fields.Many2one(
         'res.partner',
-        'Return address',
+        string='Return address',
         help="Where the customer has to send back the product(s) "
              "if warranty return is set to 'other'.")

@@ -68,13 +68,14 @@ class returned_lines_from_serial(models.TransientModel):
             for num in xrange(1, 6):
                 prodlot_id = False
                 if result:
-                    prodlot_id = eval("result.prodlot_id_" + str(num) + ".id")
+                    exec("prodlot_id = result.prodlot_id_" + str(num) + ".id")
                 if prodlot_id:
                     product_id = \
                         self.get_product_id(prodlot_id)
                     product_brw = product_obj.browse(product_id)
                     claim_origine = eval("result.claim_" + str(num))
-                    qty = eval("result.qty_" + str(num))
+                    qty = 0.0
+                    exec("qty = result.qty_" + str(num))
                     return_line.create({
                         'claim_id': context['active_id'],
                         'claim_origine': claim_origine,
