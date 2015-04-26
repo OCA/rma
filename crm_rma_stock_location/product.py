@@ -87,18 +87,21 @@ class ProductProduct(models.Model):
                                              ['product_id',
                                               'product_qty'],
                                              ['product_id'])
+
         quants = self.env['stock.quant'].\
             with_context(ctx).read_group(domain_quant,
                                          ['product_id',
                                           'qty'],
                                          ['product_id'])
 
-        quants = dict(map(lambda x: (x['product_id'][0], x['qty']), quants))
+        quants = dict([(item.get('product_id')[0],
+                        item.get('qty')) for item in quants])
 
-        moves_in = dict(map(lambda x: (x['product_id'][0],
-                                       x['product_qty']), moves_in))
-        moves_out = dict(map(lambda x: (x['product_id'][0],
-                                        x['product_qty']), moves_out))
+        moves_in = dict([(item.get('product_id')[0],
+                          item.get('qty')) for item in moves_in])
+
+        moves_out = dict([(item.get('product_id')[0],
+                           item.get('qty')) for item in moves_out])
 
         self.rma_qty_available = \
             float_round(quants.get(self.id, 0.0),

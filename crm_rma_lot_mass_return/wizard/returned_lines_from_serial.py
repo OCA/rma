@@ -68,14 +68,43 @@ class returned_lines_from_serial(models.TransientModel):
             for num in xrange(1, 6):
                 prodlot_id = False
                 if result:
-                    exec("prodlot_id = result.prodlot_id_" + str(num) + ".id")
+                    # deleted by problems in pylint
+                    # exec("prodlot_id = result.prodlot_id_"
+                    # + str(num) + ".id")
+                    if num == 1:
+                        prodlot_id = result.prodlot_id_1.id
+                    elif num == 2:
+                        prodlot_id = result.prodlot_id_2.id
+                    elif num == 3:
+                        prodlot_id = result.prodlot_id_3.id
+                    elif num == 4:
+                        prodlot_id = result.prodlot_id_4.id
+                    else:
+                        prodlot_id = result.prodlot_id_5.id
                 if prodlot_id:
                     product_id = \
                         self.get_product_id(prodlot_id)
                     product_brw = product_obj.browse(product_id)
-                    claim_origine = eval("result.claim_" + str(num))
                     qty = 0.0
-                    exec("qty = result.qty_" + str(num))
+                    # deleted by problems in pylint
+                    # claim_origine = eval("result.claim_" + str(num))
+                    # exec("qty = result.qty_" + str(num))
+                    if num == 1:
+                        qty = result.qty_1
+                        claim_origine = result.claim_1
+                    elif num == 2:
+                        qty = result.qty_2
+                        claim_origine = result.claim_2
+                    elif num == 3:
+                        qty = result.qty_3
+                        claim_origine = result.claim_3
+                    elif num == 4:
+                        qty = result.qty_4
+                        claim_origine = result.claim_4
+                    else:
+                        qty = result.qty_5
+                        claim_origine = result.claim_5
+
                     return_line.create({
                         'claim_id': context['active_id'],
                         'claim_origine': claim_origine,
