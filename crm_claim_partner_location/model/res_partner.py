@@ -31,14 +31,12 @@ class crm_claim(models.Model):
 
     _inherit = 'crm.claim'
 
-    def _get_related_location_options(self, cr, uid, context=None):
+    @api.model
+    def _get_related_location_options(self):
         """
         @return a list of tuples with the selection field options.
         """
-        context = context or {}
-        res = self.pool.get('res.partner')._get_location_options(
-            cr, uid, context=context)
-        return res
+        return self.env['res.partner']._get_location_options()
 
     @api.one
     @api.depends('partner_id', 'company_id.partner_id.country_id',
