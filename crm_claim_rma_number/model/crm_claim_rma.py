@@ -30,4 +30,4 @@ class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
     rma_number = fields.Char('RMA Number', size=128,
-                             help='RMA Number provided by supplier'),
+                             help='RMA Number provided by supplier')
