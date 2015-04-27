@@ -98,14 +98,15 @@ class ProductProduct(models.Model):
                         item.get('qty')) for item in quants])
 
         moves_in = dict([(item.get('product_id')[0],
-                          item.get('qty')) for item in moves_in])
+                          item.get('product_qty')) for item in moves_in])
 
         moves_out = dict([(item.get('product_id')[0],
-                           item.get('qty')) for item in moves_out])
+                           item.get('product_qty')) for item in moves_out])
 
         self.rma_qty_available = \
             float_round(quants.get(self.id, 0.0),
                         precision_rounding=self.uom_id.rounding)
+
         self.rma_virtual_available = \
             float_round(quants.get(self.id, 0.0) +
                         moves_in.get(self.id, 0.0) -
