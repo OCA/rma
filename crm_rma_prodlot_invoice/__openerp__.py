@@ -29,7 +29,6 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'depends': [
-        'account_accountant',
         'account_anglo_saxon',
         'sale',
     ],

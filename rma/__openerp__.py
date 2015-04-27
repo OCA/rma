@@ -38,7 +38,6 @@
         "crm_rma_prodlot_invoice",
         "crm_claim_partner_foreign",
         "crm_claim_rma_number",
-        "crm_rma_prodlot_invoice",
         "crm_rma_prodlot_supplier",
     ],
     "demo": [],
