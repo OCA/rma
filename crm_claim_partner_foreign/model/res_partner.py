@@ -24,7 +24,6 @@
 ###############################################################################
 
 from openerp import fields, models, api
-from openerp.tools.translate import _
 
 
 class crm_claim(models.Model):
