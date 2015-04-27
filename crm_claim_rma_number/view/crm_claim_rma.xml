@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Update account invoice !-->
+        <record model="ir.ui.view" id="crm_claim_rma_form">
+            <field name="name">CRM Claim RMA</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='warehouse_id']" position="after">
+                        <field name="rma_number"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    <record id="search_crm_claim_rma_number" model="ir.ui.view">
+        <field name="name">CRM - Claims Search</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="rma_number"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="tree_crm_claim_rma_number" model="ir.ui.view">
+        <field name="name">CRM - Claims Tree</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="rma_number"/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>
