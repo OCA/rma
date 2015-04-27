@@ -36,7 +36,20 @@ class sale_order(osv.osv):
         invline_obj = self.pool.get('account.invoice.line')
         move_id = self.browse(cr, uid, ids).picking_ids.move_lines
         invoice_line = self.browse(cr, uid, ids).invoice_ids.invoice_line
-        invline_obj.write(cr, uid, [invoice_line.id], {'move_id': move_id.id})
+        move_id = [move for move in move_id]
+        if invoice_line:
+            for inv_line in invoice_line:
+                for mov in move_id:
+                    if inv_line.product_id.id == mov.product_id.id and \
+                        inv_line.quantity == mov.product_qty and \
+                            not inv_line.move_id:
+                        invline_obj.write(cr, uid,
+                                          [inv_line.id],
+                                          {'move_id': mov.id})
+                        move_id.remove(mov)
+                    elif inv_line.move_id:
+                        move_id.remove(mov)
+
         return res
 
 
