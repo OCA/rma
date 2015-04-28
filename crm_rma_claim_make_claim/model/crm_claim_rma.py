@@ -30,22 +30,37 @@ from openerp.tools.translate import _
 class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
-    @api.model
+    claim_ids = \
+        fields.Many2many('crm.claim',
+                         'claim_rel',
+                         'claim_parent',
+                         'claim_child',
+                         string="Related Claims",
+                         help=" - For a Vendor Claim means"
+                              " the RMA-C that generate the"
+                              " current RMA-V.\n"
+                              " - For a Custtomer Claim means"
+                              " the RMA-V generated to"
+                              " fullfill the current RMA-C.")
+
+    @api.multi
     def button_create_rma_vendor(self):
         """
         Create RMA Vendor.
         """
         # TODO supplier module that is responsible for
         # search supplier and supplier invoice
-            # TODO add supplier_id field in claim line
+            # TODO know serial/lot number with
+            # invoice line and vice versa
             # TODO add invoice supplier field in claim line
+                # TODO add supplier_id field in claim line
+
         # TODO warranty module with company and supplier that
         # depends of supplier module
 
         # TODO add claim_line_id field in claim line
         # to parent line with line
         # TODO add claim_type to claim line
-
         claim_line_obj = self.env['claim.line']
         invline_obj = self.env['account.invoice.line']
         good_lines = []
