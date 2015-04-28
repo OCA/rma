@@ -26,6 +26,8 @@
     'version': '1.0',
     'category': 'Generic Modules/CRM & SRM',
     'depends': ['crm_claim_rma',
+                'crm_rma_prodlot_invoice',
+                'crm_rma_prodlot_supplier',
                 ],
     'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
     'license': 'AGPL-3',
