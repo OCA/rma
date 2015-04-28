@@ -59,12 +59,11 @@ class claim_line(models.Model):
         'not_define': "Not Defined"}
 
     # Method to calculate total amount of the line : qty*UP
-    def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.unit_sale_price *
-                            line.product_returned_quantity)
-        return res
+    @api.multi
+    def _line_total_amount(self):
+        for line in self:
+            line.return_value = (line.unit_sale_price *
+                                 line.product_returned_quantity)
 
     def copy_data(self, cr, uid, ids, default=None, context=None):
         if default is None:
