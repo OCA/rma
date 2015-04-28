@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="crm_claim_workflow_view">
+            <field name="name">CRM - Claims Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="button_create_rma_vendor"
+                        attrs="{'invisible': ['|', ('claim_type', '=', 'supplier')]}"
+                        class="oe_inline oe_highlight"
+                        string="Create RMA Vendor"
+                        type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
