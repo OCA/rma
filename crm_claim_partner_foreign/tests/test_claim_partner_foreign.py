@@ -41,6 +41,9 @@ class TestPartnerForeign(TransactionCase):
         Test if claim are national or international depends
         of main partner and partner_id  of claim
         """
+        country_ve = self.env.ref('base.ve')
+        self.partner_rec.write({'country_id': country_ve.id})
+
         self.assertEquals(self.claim_rec.international, 'international')
 
         self.claim_rec.write({'partner_id': self.vauxoo_rec.id})
