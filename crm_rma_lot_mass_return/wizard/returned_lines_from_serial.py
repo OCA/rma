@@ -252,7 +252,6 @@ class returned_lines_from_serial(models.TransientModel):
                                  'Partner',
                                  default=_get_default_partner_id)
 
-
     @api.model
     def prodlot_2_invoice_line(self, prodlot_id):
         """

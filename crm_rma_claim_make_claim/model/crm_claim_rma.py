@@ -27,6 +27,22 @@ from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 
 
+class claim_line(models.Model):
+    _inherit = 'claim.line'
+
+    claim_line_id = fields.Many2one('claim.line',
+                                    string='Related claim line',
+                                    help="To link to the claim line object")
+
+    claim_type = fields.Selection(related='claim_id.claim_type',
+                                  # selection=[('customer', 'Customer'),
+                                  #            ('supplier', 'Supplier')],
+                                  string="Claim Line Type",
+                                  store=True,
+                                  help="Customer: from customer to company.\n "
+                                       "Supplier: from company to supplier.")
+
+
 class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
@@ -48,19 +64,12 @@ class crm_claim(models.Model):
         """
         Create RMA Vendor.
         """
-        # TODO supplier module that is responsible for
-        # search supplier and supplier invoice
         # TODO know serial/lot number with
         # invoice line
-        # TODO add invoice supplier field in claim line
-        # TODO add supplier_id field in claim line
 
         # TODO warranty module with company and supplier that
         # depends of supplier module
 
-        # TODO add claim_line_id field in claim line
-        # to parent line with line
-        # TODO add claim_type to claim line
         claim_line_obj = self.env['claim.line']
         invline_obj = self.env['account.invoice.line']
         good_lines = []
@@ -138,3 +147,4 @@ class crm_claim(models.Model):
             #    str(claim_line_id) + ")]"
             result['domain'] = "[('id','in'," + str(good_lines) + ")]"
         return result
+

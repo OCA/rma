@@ -48,4 +48,3 @@ class crm_claim(models.Model):
                                          'in',
                                          spt_receipts)])
         return sm_receipts
-

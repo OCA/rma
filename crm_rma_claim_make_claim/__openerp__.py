@@ -32,6 +32,7 @@
     'depends': [
         'stock',
         'crm_claim',
+        'crm_claim_product_supplier',
     ],
     'data': [
         'view/crm_claim_view.xml',
