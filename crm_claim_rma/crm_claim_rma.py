@@ -150,7 +150,9 @@ class claim_line(models.Model):
         fields.Many2one('res.partner', string='Warranty Address',
                         help="Where the customer has to "
                         "send back the product(s)")
-    claim_id = fields.Many2one('crm.claim', string='Related claim',
+    claim_id = fields.Many2one('crm.claim',
+                               string='Related claim',
+                               ondelete='cascade',
                                help="To link to the case.claim object")
     state = fields.Selection([('draft', 'Draft'), ('refused', 'Refused'),
                               ('confirmed', 'Confirmed, waiting for product'),
