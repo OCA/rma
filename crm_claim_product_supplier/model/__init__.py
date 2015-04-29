@@ -23,34 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api
-
-
-class claim_line(models.Model):
-
-    _inherit = 'claim.line'
-
-    @api.multi
-    @api.one
-    @api.depends('prodlot_id')
-    def _get_supplier_and_supplier_invoice(self):
-
-        if self.prodlot_id:
-            self.supplier_id = self.prodlot_id.supplier_id.id
-            #self.supplier_invoice_id =
-
-        return False
-
-    supplier_id = fields.Many2one('res.partner', string='Supplier',
-                                  compute='_get_supplier_and_supplier_invoice',
-                                  store=True,
-                                  help="Supplier of good in claim")
-
-    supplier_invoice_id = \
-        fields.Many2one('account.invoice',
-                        string='Supplier Invoice',
-                        compute='_get_supplier_and_supplier_invoice',
-                        store=True,
-                        help="Supplier invoice with the "
-                             "purchase of goods sold to "
-                             "customer")
+from . import crm_claim_rma
