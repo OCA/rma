@@ -110,7 +110,8 @@ class returned_lines_from_serial(models.TransientModel):
                         'claim_origine': claim_origine,
                         'product_id': product_brw.id,
                         'name': product_brw.name,
-                        'invoice_line_id' : self.prodlot_2_invoice_line(prodlot_id),
+                        'invoice_line_id':
+                        self.prodlot_2_invoice_line(prodlot_id),
                         # PRODLOT_ID can be in many invoice !!
                         'product_returned_quantity': qty,
                         'prodlot_id': prodlot_id,

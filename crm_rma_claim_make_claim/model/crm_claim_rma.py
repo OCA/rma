@@ -50,10 +50,10 @@ class crm_claim(models.Model):
         """
         # TODO supplier module that is responsible for
         # search supplier and supplier invoice
-            # TODO know serial/lot number with
-            # invoice line and vice versa
-            # TODO add invoice supplier field in claim line
-                # TODO add supplier_id field in claim line
+        # TODO know serial/lot number with
+        # invoice line
+        # TODO add invoice supplier field in claim line
+        # TODO add supplier_id field in claim line
 
         # TODO warranty module with company and supplier that
         # depends of supplier module

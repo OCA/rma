@@ -53,4 +53,3 @@ class TestPartnerForeign(TransactionCase):
         self.partner_rec.write({'country_id': country_mx.id})
         self.claim_rec.refresh()
         self.assertEquals(self.claim_rec.international, 'international')
-
