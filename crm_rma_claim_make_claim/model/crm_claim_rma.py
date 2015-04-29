@@ -71,7 +71,8 @@ class crm_claim(models.Model):
         # depends of supplier module
 
         claim_line_obj = self.env['claim.line']
-        invline_obj = self.env['account.invoice.line']
+        # inv_obj = self.env['account.invoice']
+        # invline_obj = self.env['account.invoice.line']
         good_lines = []
 
         for claim_brw in self:
@@ -97,35 +98,38 @@ class crm_claim(models.Model):
                     claim_lines_exists = claim_line_obj.search(
                         [('claim_line_id', '=', claim_line_id)],
                         )
+                    claim_lines_exists = [cla.id for cla in claim_lines_exists]
 
                     # If claim_line_id does not have child
                     if not claim_lines_exists:
                         # The claim line of supplier claim is created
-                        claim_line_values = \
-                            claim_line_obj.copy_data(claim_line_id)
-                        supplier_invoice_id = \
-                            claim_line_values['supplier_invoice_id']
-                        claim_line_values['claim_id'] = False
-                        claim_line_values['number'] = '/'
-                        claim_line_values['claim_type'] = 'supplier'
-                        claim_line_values['claim_line_id'] = claim_line_id
-                        claim_line_values['invoice_id'] = \
-                            supplier_invoice_id
-                        claim_line_values['supplier_invoice_id'] = False
-                        claim_line_values['state'] = 'draft'
-                        invl = \
-                            invline_obj.search([('invoice_id',
-                                                '=',
-                                                 supplier_invoice_id),
-                                               ('product_id',
-                                                '=',
-                                                claim_line_values['product_id']
-                                                )])
-                        claim_line_values['invoice_line_id'] = invl[0]
-                        claim_line = claim_line_obj.create(claim_line_values)
+                        claim_line_id = claim_line_obj.browse(claim_line_id)
+
+                        # invl = \
+                        #     invline_obj.search([('invoice_id',
+                        #                         '=',
+                        #                          claim_line_id.
+                        #                          supplier_invoice_id.id),
+                        #                        ('product_id',
+                        #                         '=',
+                        #                         claim_line_id.product_id.id
+                        #                         )])
+
+                        claim_line_new = \
+                            claim_line_id.copy({
+                                'claim_id': False,
+                                # 'number': '/',
+                                'claim_type': 'supplier',
+                                'claim_line_id': claim_line_id.id,
+                                # 'state': 'draft',
+                                # 'invoice_id': claim_line_id.
+                                # supplier_invoice_id.id,
+                                # 'supplier_invoice_id': inv_obj,
+                                # 'invoice_line_id': invl[0].id,
+                            })
 
                         # is added for display in the view
-                        good_lines.append(claim_line)
+                        good_lines.append(claim_line_new.id)
                     else:
                         # Anyway. If claim line have child,
                         # is added for display in the view
@@ -135,16 +139,14 @@ class crm_claim(models.Model):
                 raise except_orm(
                     _('Error'),
                     _('The Supplier Claim Was Not Created.'))
-
+            good_lines = list(set(good_lines))
             mod_obj = self.env['ir.model.data']
             act_obj = self.env['ir.actions.act_window']
 
             result = mod_obj.get_object_reference('crm_claim_rma',
                                                   'act_crm_case_claim_lines')
             act_id = result and result[1] or False
-            result = act_obj.read([act_id])[0]
-            # result['domain'] = "[('claim_line_id', '='," + \
-            #    str(claim_line_id) + ")]"
-            result['domain'] = "[('id','in'," + str(good_lines) + ")]"
-        return result
-
+            act_rec = act_obj.browse(act_id)
+            result = act_rec.read()
+            result[0]['domain'] = "[('id','in'," + str(good_lines) + ")]"
+        return result[0]
