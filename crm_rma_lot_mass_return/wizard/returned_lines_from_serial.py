@@ -252,25 +252,6 @@ class returned_lines_from_serial(models.TransientModel):
                                  'Partner',
                                  default=_get_default_partner_id)
 
-    @api.model
-    def _get_stock_moves_with_code(self, code='incoming'):
-        """
-        @code: Type of operation code.
-        Returns all stock_move with filtered by type of
-        operation.
-        """
-        stockmove = self.env['stock.move']
-        receipts = self.env['stock.picking.type']
-
-        spt_receipts = receipts.search([('code',
-                                         '=',
-                                         code)])
-        spt_receipts = [spt.id for spt in spt_receipts]
-
-        sm_receipts = stockmove.search([('picking_type_id',
-                                         'in',
-                                         spt_receipts)])
-        return sm_receipts
 
     @api.model
     def prodlot_2_invoice_line(self, prodlot_id):
@@ -280,12 +261,13 @@ class returned_lines_from_serial(models.TransientModel):
         """
         # If there is a lot number, the product
         # vendor is searched accurately.
+        claim_obj = self.env['crm.claim']
         inv_obj = self.env['account.invoice']
         invline_obj = self.env['account.invoice.line']
         lot_obj = self.env['stock.production.lot']
 
         # Take all stock moves with outgoing type of operation
-        sm_delivery = self._get_stock_moves_with_code('outgoing')
+        sm_delivery = claim_obj._get_stock_moves_with_code('outgoing')
 
         # Get traceability of serial/lot number
         quant_obj = self.env['stock.quant']
