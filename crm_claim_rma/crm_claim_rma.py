@@ -214,8 +214,10 @@ class claim_line(models.Model):
         return start + relativedelta(months=months, days=days)
 
     # Method to calculate warranty limit
-    def set_warranty_limit(self, cr, uid, ids, claim_line_brw, context=None):
-        date_invoice = claim_line_brw.invoice_line_id.invoice_id.date_invoice
+    @api.one
+    @api.model
+    def set_warranty_limit(self):
+        date_invoice = self.invoice_line_id.invoice_id.date_invoice
         if not date_invoice:
             raise except_orm(
                 _('Error'),
@@ -224,9 +226,9 @@ class claim_line(models.Model):
         warning = _(self.WARRANT_COMMENT['not_define'])
         date_inv_at_server = datetime.strptime(date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
-        if claim_line_brw.warranty_type == 'supplier':
+        if self.warranty_type == 'supplier':
             # TODO important product_id.seller_ids
-            supplier = claim_line_brw.product_id.seller_id
+            supplier = self.product_id.seller_id
             if not supplier:
                 raise except_orm(
                     _('Error'),
@@ -235,29 +237,26 @@ class claim_line(models.Model):
             psi_obj = self.pool.get('product.supplierinfo')
             domain = [('name', '=', supplier.id),
                       ('product_tmpl_id', '=',
-                       claim_line_brw.product_id.product_tmpl_id.id)]
-            seller_id = psi_obj.search(cr, uid, domain, context=context)
-            seller = psi_obj.browse(cr, uid, seller_id, context=context)
+                       self.product_id.product_tmpl_id.id)]
+            seller_id = psi_obj.search(domain)
+            seller = psi_obj.browse(seller_id)
 
             warranty_duration = seller.warranty_duration
 
         else:
-            warranty_duration = claim_line_brw.product_id.warranty
+            warranty_duration = self.product_id.warranty
         limit = self.warranty_limit(date_inv_at_server, warranty_duration)
         # If waranty period was defined
         if warranty_duration > 0:
-            claim_date = datetime.strptime(claim_line_brw.claim_id.date,
+            claim_date = datetime.strptime(self.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
                 warning = _(self.WARRANT_COMMENT['expired'])
             else:
                 warning = _(self.WARRANT_COMMENT['valid'])
         self.write(
-            cr, uid, ids,
             {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
-             'warning': warning},
-            context=context)
-        return True
+             'warning': warning},)
 
     def auto_set_warranty(self, cr, uid, ids, context):
         """ Set warranty automatically
@@ -265,7 +264,8 @@ class claim_line(models.Model):
         button, it sets warranty for him"""
         for line in self.browse(cr, uid, ids, context=context):
             if not line.warning:
-                self.set_warranty(cr, uid, [line.id], context=context)
+                import pdb; pdb.set_trace()
+                self.set_warranty([line.id])
         return True
 
     def get_destination_location(self, cr, uid, product_id,
@@ -279,8 +279,9 @@ class claim_line(models.Model):
         return location_dest_id
 
     # Method to calculate warranty return address
-    def set_warranty_return_address(self, cr, uid, ids, claim_line_brw,
-                                    context=None):
+    @api.one
+    @api.model
+    def set_warranty_return_address(self):
         """Return the partner to be used as return destination and
         the destination stock location of the line in case of Return.
 
@@ -291,47 +292,40 @@ class claim_line(models.Model):
 
         """
         return_address = None
-        context = context or {}
-        psi_obj = self.pool.get('product.supplierinfo')
+        psi_obj = self.env['product.supplierinfo']
         # TODO important product_id.seller_ids
-        domain = [('name', '=', claim_line_brw.product_id.seller_id.id),
+        domain = [('name', '=', self.product_id.seller_id.id),
                   ('product_tmpl_id', '=',
-                   claim_line_brw.product_id.product_tmpl_id.id)]
-        seller_id = psi_obj.search(cr, uid, domain, context=context)
-        seller = psi_obj.browse(cr, uid, seller_id, context=context)
+                   self.product_id.product_tmpl_id.id)]
+        seller = psi_obj.search(domain)
         if seller:
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
         else:
             # when no supplier is configured, returns to the company
-            company = claim_line_brw.claim_id.company_id
+            company = self.claim_id.company_id
             return_address = (company.crm_return_address_id or
                               company.partner_id)
             return_address_id = return_address.id
             return_type = 'company'
 
         location_dest_id = self.get_destination_location(
-            cr, uid, claim_line_brw.product_id.id,
-            claim_line_brw.claim_id.warehouse_id.id,
-            context=context)
-        self.write(cr, uid, ids,
-                   {'warranty_return_partner': return_address_id,
+            self.product_id.id,
+            self.claim_id.warehouse_id.id)
+        self.write({'warranty_return_partner': return_address_id,
                     'warranty_type': return_type,
-                    'location_dest_id': location_dest_id},
-                   context=context)
-        return True
+                    'location_dest_id': location_dest_id})
 
-    def set_warranty(self, cr, uid, ids, context=None):
+    @api.model
+    def set_warranty(self, ids):
         """ Calculate warranty limit and address """
-        for claim_line_brw in self.browse(cr, uid, ids, context=context):
+        for claim_line_brw in self.browse(ids):
             if not (claim_line_brw.product_id and claim_line.invoice_line_id):
                 raise except_orm(
                     _('Error !'),
                     _('Please set product and invoice.'))
-            self.set_warranty_limit(cr, uid, ids,
-                                    claim_line_brw, context=context)
-            self.set_warranty_return_address(cr, uid, ids,
-                                             claim_line_brw, context=context)
+            claim_line_brw.set_warranty_limit()
+            claim_line_brw.set_warranty_return_address()
         return True
 
 
