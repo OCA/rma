@@ -5,6 +5,11 @@ CRM RMA Advanced Warranty
 in the crm_claim_product_supplier using the prodlot of
 claim line.
 
+NOTE:
+
+In crm_claim_rma it is calculate take the first seller
+in the seller list of product form.
+
 Features
 --------
 

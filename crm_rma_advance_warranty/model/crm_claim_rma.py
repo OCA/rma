@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, api
 from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 from datetime import datetime
@@ -54,7 +54,7 @@ class claim_line(models.Model):
                 supplier_rec = self.prodlot_id.supplier_id
                 supplier = False
                 for seller_rec in self.product_id.seller_ids:
-                    if supplier_rec.id == seller_rec.id:
+                    if supplier_rec.id == seller_rec.name.id:
                         supplier = supplier_rec
                         break
 
@@ -106,7 +106,7 @@ class claim_line(models.Model):
             supplier_rec = self.prodlot_id.supplier_id
             supplier = False
             for seller_rec in self.product_id.seller_ids:
-                if supplier_rec.id == seller_rec.id:
+                if supplier_rec.id == seller_rec.name.id:
                     supplier = supplier_rec
                     break
 
@@ -133,4 +133,3 @@ class claim_line(models.Model):
         self.write({'warranty_return_partner': return_address_id,
                     'warranty_type': return_type,
                     'location_dest_id': location_dest_id})
-
