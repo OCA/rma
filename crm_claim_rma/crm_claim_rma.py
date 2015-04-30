@@ -227,7 +227,6 @@ class claim_line(models.Model):
         date_inv_at_server = datetime.strptime(date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
-            # TODO important product_id.seller_ids
             supplier = self.product_id.seller_id
             if not supplier:
                 raise except_orm(
@@ -291,7 +290,6 @@ class claim_line(models.Model):
         """
         return_address = None
         psi_obj = self.env['product.supplierinfo']
-        # TODO important product_id.seller_ids
         domain = [('name', '=', self.product_id.seller_id.id),
                   ('product_tmpl_id', '=',
                    self.product_id.product_tmpl_id.id)]
