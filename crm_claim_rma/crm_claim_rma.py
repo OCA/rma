@@ -320,8 +320,8 @@ class claim_line(models.Model):
                 raise except_orm(
                     _('Error !'),
                     _('Please set product and invoice.'))
-            claim_line_brw.set_warranty_limit()
             claim_line_brw.set_warranty_return_address()
+            claim_line_brw.set_warranty_limit()
         return True
 
 
