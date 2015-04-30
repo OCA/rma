@@ -234,12 +234,11 @@ class claim_line(models.Model):
                     _('Error'),
                     _('The product has no supplier configured.'))
 
-            psi_obj = self.pool.get('product.supplierinfo')
+            psi_obj = self.env['product.supplierinfo']
             domain = [('name', '=', supplier.id),
                       ('product_tmpl_id', '=',
                        self.product_id.product_tmpl_id.id)]
-            seller_id = psi_obj.search(domain)
-            seller = psi_obj.browse(seller_id)
+            seller = psi_obj.search(domain)
 
             warranty_duration = seller.warranty_duration
 
