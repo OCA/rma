@@ -264,7 +264,6 @@ class claim_line(models.Model):
         button, it sets warranty for him"""
         for line in self.browse(cr, uid, ids, context=context):
             if not line.warning:
-                import pdb; pdb.set_trace()
                 self.set_warranty([line.id])
         return True
 

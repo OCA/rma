@@ -29,6 +29,8 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'depends': [
+        'crm_claim_rma',
+        'crm_claim_product_supplier',
     ],
     'data': [],
     'demo': [],
