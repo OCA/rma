@@ -83,6 +83,12 @@ class claim_line(models.Model):
         result = seller.get_warranty_return_partner()
         return result
 
+    company_id = fields.Many2one(
+        'res.company', string='Company', readonly=False,
+        change_default=True,
+        default=lambda self: self.env['res.company']._company_default_get(
+            'claim.line'))
+
     name = fields.Char('Description', default='none', required=True)
     claim_origine = fields.Selection([('none', 'Not specified'),
                                       ('legal', 'Legal retractation'),
@@ -386,6 +392,11 @@ class crm_claim(models.Model):
         return super(crm_claim, self).copy_data(
             cr, uid, id, default=std_default, context=context)
 
+    company_id = fields.Many2one(
+        change_default=True,
+        default=lambda self: self.env['res.company']._company_default_get(
+            'crm.claim'))
+
     number = fields.Char('Number', readonly=True,
                          required=True,
                          select=True,
@@ -519,4 +530,3 @@ class crm_claim(models.Model):
         """
         self.email_from = self.delivery_address_id.email
         self.partner_phone = self.delivery_address_id.phone
-
