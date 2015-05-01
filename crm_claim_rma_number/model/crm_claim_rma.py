@@ -22,7 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import fields, models
+from openerp import fields, api, models
 
 
 class crm_claim(models.Model):
@@ -31,3 +31,33 @@ class crm_claim(models.Model):
 
     rma_number = fields.Char('RMA Number', size=128,
                              help='RMA Number provided by supplier')
+
+    @api.model
+    def _get_sequence_number_customer(self):
+        seq_obj = self.env['ir.sequence']
+        res = seq_obj.get('crm.claim.rma.customer') or '/'
+        return res
+
+    @api.model
+    def _get_sequence_number_supplier(self):
+        seq_obj = self.env['ir.sequence']
+        res = seq_obj.get('crm.claim.rma.supplier') or '/'
+        return res
+
+    @api.v7
+    def create(self, cur, uid, vals, context=None):
+        if ('number' not in vals) or (vals.get('number') == '/'):
+            if vals.get('claim_type') == 'customer':
+                vals['number'] = \
+                    self._get_sequence_number_customer(cur, uid,
+                                                       context=context)
+            elif vals.get('claim_type') == 'supplier':
+                vals['number'] = \
+                    self._get_sequence_number_supplier(cur, uid,
+                                                       context=context)
+            else:
+                vals['number'] = \
+                    self._get_sequence_number(cur, uid,
+                                              context=context)
+        new_id = super(crm_claim, self).create(cur, uid, vals, context=context)
+        return new_id

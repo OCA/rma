@@ -511,3 +511,12 @@ class crm_claim(models.Model):
             # because this imply modifying followers
             pass
         return recipients
+
+    @api.onchange('delivery_address_id')
+    def _fill_email_and_phone(self):
+        """
+        When the delivery address is set will add the email and phone data.
+        """
+        self.email_from = self.delivery_address_id.email
+        self.partner_phone = self.delivery_address_id.phone
+

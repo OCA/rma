@@ -28,17 +28,12 @@
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
-    'description': '''
-Yoytec CRM Claim RMA Number
-===========================
-
-1.  New field 'rma_number' provided for supplier
-''',
     'depends': [
         'crm_claim_rma',
     ],
     'data': [
         'view/crm_claim_rma.xml',
+        'data/crm_claim_rma_data.xml',
     ],
     'demo': [],
     'test': [],
