@@ -22,10 +22,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import fields, api, models
+from openerp import models, fields, api, SUPERUSER_ID
 
 
 class claim_line(models.Model):
+
+    _inherit = 'claim.line'
 
     @api.model
     def _get_sequence_number(self):
@@ -37,7 +39,7 @@ class claim_line(models.Model):
         return seq_obj.get('claim.line')
 
     number = fields.Char(
-        required=True, readonly=True,
+        readonly=True,
         default='/',
         help='Claim Line Identification Number')
 
@@ -64,6 +66,19 @@ class claim_line(models.Model):
             name = "%s - %s" % (cl.claim_id.number, cl.name)
             result.append((cl.id, name))
         return result
+
+    def init(self, cr):
+        seq_obj = self.pool.get('ir.sequence')
+        for claim_line in self.browse(cr, SUPERUSER_ID,
+                                      self.search(cr,
+                                                  SUPERUSER_ID,
+                                                  [])):
+            if claim_line.number == '/':
+                number = seq_obj.get(cr, SUPERUSER_ID, 'claim.line')
+                self.write(cr,
+                           SUPERUSER_ID,
+                           claim_line.id,
+                           {'number': number})
 
 
 class crm_claim(models.Model):

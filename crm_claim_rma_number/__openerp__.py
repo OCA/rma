@@ -32,8 +32,8 @@
         'crm_claim_rma',
     ],
     'data': [
-        'view/crm_claim_rma.xml',
         'data/crm_claim_rma_data.xml',
+        'view/crm_claim_rma.xml',
     ],
     'demo': [],
     'test': [],
