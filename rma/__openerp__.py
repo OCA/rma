@@ -41,7 +41,7 @@
         "crm_claim_partner_foreign",
         "crm_rma_claim_make_claim",
         "crm_claim_product_supplier",
-        "crm_rma_advanced_warranty",
+        "crm_rma_advance_warranty",
         "crm_rma_priority_extended",
     ],
     "demo": [],

@@ -25,6 +25,47 @@
 from openerp import fields, api, models
 
 
+class claim_line(models.Model):
+
+    @api.model
+    def _get_sequence_number(self):
+        """
+        @return the value of the secuence for the number field in the
+        claim.line model.
+        """
+        seq_obj = self.env['ir.sequence']
+        return seq_obj.get('claim.line')
+
+    number = fields.Char(
+        required=True, readonly=True,
+        default='/',
+        help='Claim Line Identification Number')
+
+    _sql_constraints = [
+        ('number_uniq', 'unique(number, company_id)',
+            'Internal RMA number must be unique per Company!'),
+    ]
+
+    @api.model
+    def create(self, vals):
+        """
+        @return wirte the identify number once the claim line is create.
+        """
+        vals = vals or {}
+        if ('number' not in vals) or (vals.get('number', False) == '/'):
+            vals['number'] = self._get_sequence_number()
+        res = super(claim_line, self).create(vals)
+        return res
+
+    @api.multi
+    def name_get(self):
+        result = []
+        for cl in self:
+            name = "%s - %s" % (cl.claim_id.number, cl.name)
+            result.append((cl.id, name))
+        return result
+
+
 class crm_claim(models.Model):
 
     _inherit = 'crm.claim'
