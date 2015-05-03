@@ -30,7 +30,7 @@
             <field name="padding">5</field>
             <field name="prefix">RMA-C/%(year)s/</field>
         </record>
-        <!--
+
         <record id="seq_claim_line" model="ir.sequence">
             <field name="name">Claim Line</field>
             <field name="code">claim.line</field>
@@ -38,7 +38,6 @@
             <field name="implementation">no_gap</field>
             <field name="prefix">RMA-R/</field>
         </record>
-        -->
     </data>
 </openerp>
 
