@@ -36,17 +36,17 @@ class claim_line(models.Model):
         To determine the priority of claim line
         """
         date_invoice = self.invoice_line_id.invoice_id.date_invoice
-
-        days = fields.datetime.strptime(self.guarantee_limit,
-                                        '%Y-%m-%d') - \
-            fields.datetime.strptime(date_invoice,
-                                     '%Y-%m-%d')
-        if days.days <= 1:
-            self.priority = '3_very_high'
-        elif days.days <= 7:
-            self.priority = '2_high'
-        else:
-            self.priority = '1_normal'
+        if self.guarantee_limit and date_invoice:
+            days = fields.datetime.strptime(self.guarantee_limit,
+                                            '%Y-%m-%d') - \
+                fields.datetime.strptime(date_invoice,
+                                         '%Y-%m-%d')
+            if days.days <= 1:
+                self.priority = '3_very_high'
+            elif days.days <= 7:
+                self.priority = '2_high'
+            else:
+                self.priority = '1_normal'
 
     priority = fields.Selection([('0_not_define', 'Not Define'),
                                 ('1_normal', 'Normal'),
