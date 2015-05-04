@@ -73,11 +73,11 @@ class test_lp_1282584(common.TransactionCase):
             'partner_id': self.partner_id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': self.warehouse_id.rma_in_type_id.id,
+            'product_return': True,
         }
 
         wizard_id = self.wizardmakepicking.create(cr, uid, {
         }, context=wiz_context)
-
         res = self.wizardmakepicking.action_create_picking(
             cr, uid, [wizard_id], context=wiz_context)
         self.assertEquals(res.get('res_model'),

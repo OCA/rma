@@ -90,6 +90,22 @@ class claim_line(models.Model):
             'claim.line'))
 
     name = fields.Char('Description', default='none', required=True)
+
+    claim_condition = fields.\
+        Selection([('auth_service', 'Authorized Service'),
+                   ('supplier', 'Supplier')],
+                  help="This field only applies "
+                       "for lines with 'RMA-C' type")
+
+    claim_diagnosis = fields.\
+        Selection([('damaged', 'Product Damaged'),
+                   ('repaired', 'Product Repaired'),
+                   ('good', 'Product in good condition'),
+                   ('hidden', 'Product with hidden physical damage'),
+                   ],
+                  string='Claim Diagnosis',
+                  help="To describe the line product diagnosis")
+
     claim_origine = fields.Selection([('none', 'Not specified'),
                                       ('legal', 'Legal retractation'),
                                       ('cancellation', 'Order cancellation'),
@@ -97,6 +113,13 @@ class claim_line(models.Model):
                                       ('error', 'Shipping error'),
                                       ('exchange', 'Exchange request'),
                                       ('lost', 'Lost during transport'),
+                                      ('perfect_conditions',
+                                       'Perfect Conditions'),
+                                      ('imperfection', 'Imperfection'),
+                                      ('physical_damage_client',
+                                       'Physical Damage by Client'),
+                                      ('physical_damage_company',
+                                       'Physical Damage by Company'),
                                       ('other', 'Other')], 'Claim Subject',
                                      required=True,
                                      help="To describe the "

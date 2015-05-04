@@ -6,7 +6,7 @@
 # ############ Credits ########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Yanina Aular <yani@vauxoo.com>
-#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
+#    Audited by: Moises Lopez <moylop260@vauxoo.com>
 # #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -21,3 +21,5 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # #############################################################################
+
+# from . import claim_make_picking
