@@ -28,6 +28,6 @@ class mrp_repair(models.Model):
     user_id = fields.Many2one('res.users', 'User',
                               default=lambda self: self.env.user,
                               help="Person in charge for the repair")
-    datetime = fields.Datetime('Date', default=fields.Datetime.now,
-                               help="Date of the repair,\
-                               this field and user_id defines the calendar")
+    date_repair = fields.Datetime('Repair Date', default=fields.Datetime.now,
+                               	  help="Date of the repair,\
+                                  this field and user_id defines the calendar")
