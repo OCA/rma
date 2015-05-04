@@ -67,19 +67,6 @@ class claim_line(models.Model):
             result.append((cl.id, name))
         return result
 
-    def init(self, cr):
-        seq_obj = self.pool.get('ir.sequence')
-        for claim_line in self.browse(cr, SUPERUSER_ID,
-                                      self.search(cr,
-                                                  SUPERUSER_ID,
-                                                  [])):
-            if claim_line.number == '/':
-                number = seq_obj.get(cr, SUPERUSER_ID, 'claim.line')
-                self.write(cr,
-                           SUPERUSER_ID,
-                           claim_line.id,
-                           {'number': number})
-
 
 class crm_claim(models.Model):
 

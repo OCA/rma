@@ -35,7 +35,9 @@
         'data/crm_claim_rma_data.xml',
         'view/crm_claim_rma.xml',
     ],
-    'demo': [],
+    'demo': [
+        'demo/crm_claim_rma_demo.xml',
+    ],
     'test': [],
     'qweb': [],
     'js': [],
