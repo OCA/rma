@@ -32,11 +32,11 @@ class stock_production_lot(models.Model):
     supplier_id = fields.Many2one('res.partner', string='Supplier',
                                   help="Supplier of good in claim")
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, fields_list, context=None):
         if context is None:
             context = {}
         res = super(stock_production_lot,
-                    self).default_get(cr, uid, fields, context=context)
+                    self).default_get(cr, uid, fields_list, context=context)
         transfer_item_id = context.get('active_id', False)
 
         if transfer_item_id:

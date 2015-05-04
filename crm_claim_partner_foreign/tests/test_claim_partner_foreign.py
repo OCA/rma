@@ -31,6 +31,7 @@ class TestPartnerForeign(TransactionCase):
 
     def get_records(self):
         """
+        get record to tests
         """
         self.partner_rec = self.env.ref('base.main_partner')
         self.vauxoo_rec = self.env.ref('base.res_partner_23')
