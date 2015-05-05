@@ -34,15 +34,6 @@ class claim_line(models.Model):
                                     string='Related claim line',
                                     help="To link to the claim line object")
 
-    claim_type = fields.Selection(related='claim_id.claim_type',
-                                  # selection=[('customer', 'Customer'),
-                                  #            ('supplier', 'Supplier')],
-                                  string="Claim Line Type",
-                                  store=True,
-                                  help="Customer: from customer to company.\n "
-                                       "Supplier: from company to supplier.")
-
-
 class crm_claim(models.Model):
     _inherit = 'crm.claim'
 

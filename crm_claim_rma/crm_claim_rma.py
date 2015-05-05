@@ -221,6 +221,14 @@ class claim_line(models.Model):
                                        help='The return stock location'
                                        ' of the returned product')
 
+    claim_type = fields.Selection(related='claim_id.claim_type',
+                                  # selection=[('customer', 'Customer'),
+                                  #            ('supplier', 'Supplier')],
+                                  string="Claim Line Type",
+                                  store=True,
+                                  help="Customer: from customer to company.\n "
+                                       "Supplier: from company to supplier.")
+
     @staticmethod
     def warranty_limit(start, warranty_duration):
         """ Take a duration in float, return the duration in relativedelta
