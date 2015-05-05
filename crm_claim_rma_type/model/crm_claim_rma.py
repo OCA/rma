@@ -30,6 +30,7 @@ class crm_claim_type(models.Model):
     _name = 'crm.claim.type'
 
     name = fields.Char('Name', required=True)
+    active = fields.Boolean('Active')
     description = fields.Text('Decription')
 
 
@@ -40,7 +41,7 @@ class crm_claim(models.Model):
     @api.model
     def _get_claim_type(self):
         claim_type = self.env['crm.claim.type']
-        res = claim_type.search([])
+        res = claim_type.search([('active', '=', True)])
         res = [(r.name.lower(), r.name) for r in res]
         return res
 

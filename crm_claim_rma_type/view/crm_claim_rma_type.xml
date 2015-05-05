@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <tree string="Claim types">
                     <field name="name"/>
+                    <field name="active"/>
                 </tree>
             </field>
         </record>
@@ -19,6 +20,7 @@
                 <form string="Claim type">
                     <group col="4">
                         <field name="name"/>
+                        <field name="active"/>
                         <field name="description"/>
                     </group>
                 </form>
@@ -28,8 +30,8 @@
         <record id="crm_claim_type_act" model="ir.actions.act_window">
             <field name="name">Claim Types</field>
             <field name="res_model">crm.claim.type</field>
-            <field name="view_type">tree</field>
-            <field name="view_id" ref="crm_claim_type_tree"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem action="crm_claim_type_act" name="Claim Types"
