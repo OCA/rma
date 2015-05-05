@@ -25,19 +25,28 @@
 from openerp import fields, api, models
 
 
-class claim_rma_type(models.Model):
+class crm_claim_type(models.Model):
 
-    _name = 'claim.rma.type'
+    _name = 'crm.claim.type'
 
     name = fields.Char('Name', required=True)
+    description = fields.Text('Decription')
 
 
 class crm_claim(models.Model):
 
     _inherit = 'crm.claim'
 
+    @api.model
+    def _get_claim_type(self):
+        claim_type = self.env['crm.claim.type']
+        res = claim_type.search([])
+        res = [(r.name.lower(), r.name) for r in res]
+        return res
+
     claim_type = \
-        fields.Many2one('claim.rma.type',
+        fields.Many2one('crm.claim.type',
+                        selection=_get_claim_type,
                         string='Claim Type',
                         help="Customer: from customer to company.\n "
                              "Supplier: from company to supplier.")

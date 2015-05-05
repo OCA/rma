@@ -28,12 +28,24 @@
         <record id="crm_claim_type_act" model="ir.actions.act_window">
             <field name="name">Claim Types</field>
             <field name="res_model">crm.claim.type</field>
-            <field name="view_type">form</field>
+            <field name="view_type">tree</field>
             <field name="view_id" ref="crm_claim_type_tree"/>
         </record>
 
         <menuitem action="crm_claim_type_act" name="Claim Types"
-            id="menu_crm_claim_type_act" parent="menu_config_claim" groups="base.group_no_one"/>
+            id="menu_crm_claim_type_act" parent="crm_claim.menu_config_claim" groups="base.group_no_one"/>
+
+    <record id="crm_claim_line_type_many2one" model="ir.ui.view">
+        <field name="name">crm.claim.type.many2one</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='claim_type']" position="attributes">
+                <attribute name="widget">selection</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
 
     </data>
 </openerp>

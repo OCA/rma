@@ -32,6 +32,7 @@
         'crm_claim_rma',
     ],
     'data': [
+        'data/crm_claim_rma_type.xml',
         'view/crm_claim_rma_type.xml',
     ],
     'demo': [],
