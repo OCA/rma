@@ -30,12 +30,12 @@ msgstr ""
 
 #. module: product_warranty
 #: help:product.supplierinfo,warranty_return_partner:0
-msgid "Who is in charge of the warranty return treatment toward the end customer. Company will use the current compagny delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarly mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty"
+msgid "Who is in charge of the warranty return treatment toward the end customer. Company will use the current company delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarily mean that the warranty to be applied is the one of the return partner (i.e. can be returned to the company and be under the brand warranty"
 msgstr ""
 
 #. module: product_warranty
 #: help:product.supplierinfo,warranty_return_other_address_id:0
-msgid "Where the customer has to send back the product(s) if warranty return is setto 'other'."
+msgid "Where the customer has to send back the product(s) if warranty return is set to 'other'."
 msgstr ""
 
 #. module: product_warranty
