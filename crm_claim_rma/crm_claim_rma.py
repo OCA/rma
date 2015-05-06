@@ -84,16 +84,15 @@ class claim_line(models.Model):
         return result
 
     @api.one
-    @api.depends('guarantee_limit')
+    @api.depends('date_invoice', 'date')
     def _set_priority(self):
         """
         To determine the priority of claim line
         """
-        date_invoice = self.invoice_line_id.invoice_id.date_invoice
-        if self.guarantee_limit and date_invoice:
-            days = fields.datetime.strptime(self.guarantee_limit,
+        if self.date_invoice:
+            days = fields.datetime.strptime(self.date,
                                             '%Y-%m-%d') - \
-                fields.datetime.strptime(date_invoice,
+                fields.datetime.strptime(self.date_invoice,
                                          '%Y-%m-%d')
             if days.days <= 1:
                 self.priority = '3_very_high'
@@ -107,6 +106,10 @@ class claim_line(models.Model):
         change_default=True,
         default=lambda self: self.env['res.company']._company_default_get(
             'claim.line'))
+
+    date = fields.Date('Claim Line Date',
+                       select=True,
+                       default=fields.date.today())
 
     name = fields.Char('Description', default='none', required=True)
 
@@ -258,6 +261,12 @@ class claim_line(models.Model):
                                   help="Customer: from customer to company.\n "
                                        "Supplier: from company to supplier.")
 
+    date_invoice = fields.Date(related='invoice_line_id.invoice_id.'
+                               'date_invoice',
+                               string='Date Invoice',
+                               store=True,
+                               help="Date of Claim Invoice")
+
     @staticmethod
     def warranty_limit(start, warranty_duration):
         """ Take a duration in float, return the duration in relativedelta
@@ -283,14 +292,13 @@ class claim_line(models.Model):
     @api.one
     @api.model
     def set_warranty_limit(self):
-        date_invoice = self.invoice_line_id.invoice_id.date_invoice
-        if not date_invoice:
+        if not self.date_invoice:
             raise except_orm(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
         warning = _(self.WARRANT_COMMENT['not_define'])
-        date_inv_at_server = datetime.strptime(date_invoice,
+        date_inv_at_server = datetime.strptime(self.date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             supplier = self.product_id.seller_id
@@ -457,13 +465,13 @@ class crm_claim(models.Model):
         default=lambda self: self.env['res.company']._company_default_get(
             'crm.claim'))
 
-
     number = fields.Char('Number', readonly=True,
                          required=True,
                          select=True,
                          default="/",
                          help="Company internal "
                          "claim unique number")
+
     claim_type = fields.Selection([('customer', 'Customer'),
                                    ('supplier', 'Supplier'),
                                    ('other', 'Other')],

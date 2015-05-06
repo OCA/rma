@@ -362,6 +362,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="crm_claim_line_tree_view"/>
             <field name="search_view_id" ref="view_crm_claim_lines_filter"/>
+            <field name="context">{'search_default_group_by_priority': True}</field>
         </record>
     <!-- substates action -->
         <record id="act_crm_claim_substates" model="ir.actions.act_window">

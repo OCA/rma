@@ -34,6 +34,7 @@ class claim_line(models.Model):
                                     string='Related claim line',
                                     help="To link to the claim line object")
 
+
 class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
