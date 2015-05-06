@@ -55,6 +55,11 @@
                             domain="[]" context="{'group_by':'substate_id'}" />
                         <filter string="Claim n°" icon="terp-emblem-documents"
                             domain="[]" context="{'group_by':'claim_id'}" />
+                        <filter string="Priority"
+                                name="group_by_priority"
+                                domain="[]"
+                                context="{'group_by':'priority'}"
+                                help="Priority"/>
                     </group>
                 </search>
             </field>
