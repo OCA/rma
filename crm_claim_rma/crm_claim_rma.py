@@ -473,17 +473,10 @@ class crm_claim(models.Model):
                          help="Company internal "
                          "claim unique number")
 
-    @api.model
-    def _get_claim_type(self):
-        claim_type = self.env['crm.claim.type']
-        res = claim_type.search([('active', '=', True)])
-        res = [(r.name.lower(), r.name) for r in res]
-        return res
-
     claim_type = \
         fields.Many2one('crm.claim.type',
-                        selection=_get_claim_type,
                         string='Claim Type',
+                        required=True,
                         help="Customer: from customer to company.\n "
                              "Supplier: from company to supplier.")
 

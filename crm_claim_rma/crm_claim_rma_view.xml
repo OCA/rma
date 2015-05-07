@@ -279,7 +279,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//sheet/group[2]" position="replace">
                     <group colspan="4" col="4"  groups="base.group_user">
-                        <field name="claim_type" widget="selection" required="1"/>
+                        <field name="claim_type" options="{'no_create': True}"/>
                         <field name="warehouse_id" />
                         <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_sale_salesman_all_leads']}"/>
                         <field name="priority" widget="priority"/>
@@ -418,7 +418,7 @@
         <field name="inherit_id" ref="crm_claim.crm_claim_stage_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='sequence']" position="after">
-                <field name="claim_type" widget="selection"/>
+                <field name="claim_type"/>
                 <field name="claim_common"/>
             </xpath>
         </field>
@@ -430,7 +430,7 @@
         <field name="inherit_id" ref="crm_claim.crm_claim_stage_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="claim_type" widget="selection"/>
+                <field name="claim_type"/>
                 <field name="claim_common"/>
             </xpath>
         </field>
