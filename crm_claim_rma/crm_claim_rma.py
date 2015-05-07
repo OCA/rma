@@ -253,7 +253,7 @@ class claim_line(models.Model):
                                        help='The return stock location'
                                        ' of the returned product')
 
-    claim_type = fields.Selection(related='claim_id.claim_type',
+    claim_type = fields.Many2one(related='claim_id.claim_type',
                                   # selection=[('customer', 'Customer'),
                                   #            ('supplier', 'Supplier')],
                                   string="Claim Line Type",
@@ -473,14 +473,28 @@ class crm_claim(models.Model):
                          help="Company internal "
                          "claim unique number")
 
-    claim_type = fields.Selection([('customer', 'Customer'),
-                                   ('supplier', 'Supplier'),
-                                   ('other', 'Other')],
-                                  string='Claim type',
-                                  required=True,
-                                  default="customer",
-                                  help="Customer: from customer to company.\n "
-                                       "Supplier: from company to supplier.")
+    @api.model
+    def _get_claim_type(self):
+        claim_type = self.env['crm.claim.type']
+        res = claim_type.search([('active', '=', True)])
+        res = [(r.name.lower(), r.name) for r in res]
+        return res
+
+    claim_type = \
+        fields.Many2one('crm.claim.type',
+                        selection=_get_claim_type,
+                        string='Claim Type',
+                        help="Customer: from customer to company.\n "
+                             "Supplier: from company to supplier.")
+
+    stage_id = fields.Many2one('crm.claim.stage',
+                               'Stage',
+                               track_visibility='onchange',
+                               domain="['|', ('section_ids', '=', "
+                               "section_id), ('case_default', '=', True), "
+                               "('claim_type', '=', claim_type)]")
+                               # ",('claim_default', '=', True)]")
+
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
     planned_revenue = fields.Float('Expected revenue')
@@ -600,3 +614,32 @@ class crm_claim(models.Model):
         """
         self.email_from = self.delivery_address_id.email
         self.partner_phone = self.delivery_address_id.phone
+
+class crm_claim_type(models.Model):
+
+    _name = 'crm.claim.type'
+
+    name = fields.Char('Name', required=True)
+    active = fields.Boolean('Active')
+    description = fields.Text('Decription')
+
+
+class crm_claim_stage(models.Model):
+
+    _inherit = 'crm.claim.stage'
+
+    @api.model
+    def _get_claim_type(self):
+        return self.env['crm.claim']._get_claim_type()
+
+    claim_type = \
+        fields.Many2one('crm.claim.type',
+                        selection=_get_claim_type,
+                        string='Claim Type',
+                        help="Customer: from customer to company.\n "
+                             "Supplier: from company to supplier.")
+
+    # claim_default = fields.Boolean('Claim Type to All Teams',
+    #                                help="If you check this field,"
+    #                                " this stage will be proposed"
+    #                                " by default on each claim type.")
