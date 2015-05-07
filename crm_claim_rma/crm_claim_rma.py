@@ -621,7 +621,7 @@ class crm_claim_type(models.Model):
     _name = 'crm.claim.type'
 
     name = fields.Char('Name', required=True)
-    active = fields.Boolean('Active')
+    active = fields.Boolean('Active', default=True)
     description = fields.Text('Decription')
 
 
