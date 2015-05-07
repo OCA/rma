@@ -43,10 +43,12 @@ class claim_line(models.Model):
         default='/',
         help='Claim Line Identification Number')
 
-    _sql_constraints = [
-        ('number_uniq', 'unique(number, company_id)',
-            'Internal RMA number must be unique per Company!'),
-    ]
+    # Field "number" is assigned by default with "/"
+    # then this constraint ever is broken
+    # _sql_constraints = [
+    #     ('number_uniq', 'unique(number, company_id)',
+    #         'Internal RMA number must be unique per Company!'),
+    # ]
 
     @api.model
     def create(self, vals):
