@@ -35,7 +35,9 @@
     'data': [
         'claim_view.xml',
     ],
-    'demo_xml': [],
+    'demo': [
+        # 'demo/crm_claim_categ_demo.xml',
+    ],
     'installable': True,
     'active': False,
 }

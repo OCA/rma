@@ -84,9 +84,9 @@ class product_supplierinfo(models.Model):
                         partner_id = record.company_id.\
                             crm_return_address_id.id
                 elif return_partner == 'other':
-                    if record.warranty_return_other_address_id:
+                    if record.warranty_return_other_address:
                         partner_id = record.\
-                            warranty_return_other_address_id.id
+                            warranty_return_other_address.id
                 record.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(
@@ -126,8 +126,8 @@ class product_supplierinfo(models.Model):
         help="Where the goods should be returned  "
              "(computed field based on other infos.)")
 
-    warranty_return_other_address_id = fields.Many2one(
+    warranty_return_other_address = fields.Many2one(
         'res.partner',
-        'Return address',
+        string='Return address',
         help="Where the customer has to send back the product(s) "
              "if warranty return is set to 'other'.")

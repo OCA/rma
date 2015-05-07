@@ -95,7 +95,7 @@
                                 <field name="warranty_return_partner"/>
                             </group>
                             <group>
-                                <field name="warranty_return_other_address_id" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
+                                <field name="warranty_return_other_address" attrs="{'invisible':[('warranty_return_partner', '!=', 'other')], 'required':[('warranty_return_partner', '=', 'other')]}" class="oe_inline"/>
                                 <field name="warranty_return_address" attrs="{'invisible':[('warranty_return_partner', '=', 'other')]}" class="oe_inline" />
                             </group>
                         </group>

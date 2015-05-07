@@ -68,21 +68,50 @@ class returned_lines_from_serial(models.TransientModel):
             for num in xrange(1, 6):
                 prodlot_id = False
                 if result:
-                    prodlot_id = eval("result.prodlot_id_" + str(num) + ".id")
+                    # deleted by problems in pylint
+                    # exec("prodlot_id = result.prodlot_id_"
+                    # + str(num) + ".id")
+                    if num == 1:
+                        prodlot_id = result.prodlot_id_1.id
+                    elif num == 2:
+                        prodlot_id = result.prodlot_id_2.id
+                    elif num == 3:
+                        prodlot_id = result.prodlot_id_3.id
+                    elif num == 4:
+                        prodlot_id = result.prodlot_id_4.id
+                    else:
+                        prodlot_id = result.prodlot_id_5.id
                 if prodlot_id:
                     product_id = \
                         self.get_product_id(prodlot_id)
                     product_brw = product_obj.browse(product_id)
-                    claim_origine = eval("result.claim_" + str(num))
-                    qty = eval("result.qty_" + str(num))
+                    qty = 0.0
+                    # deleted by problems in pylint
+                    # claim_origine = eval("result.claim_" + str(num))
+                    # exec("qty = result.qty_" + str(num))
+                    if num == 1:
+                        qty = result.qty_1
+                        claim_origine = result.claim_1
+                    elif num == 2:
+                        qty = result.qty_2
+                        claim_origine = result.claim_2
+                    elif num == 3:
+                        qty = result.qty_3
+                        claim_origine = result.claim_3
+                    elif num == 4:
+                        qty = result.qty_4
+                        claim_origine = result.claim_4
+                    else:
+                        qty = result.qty_5
+                        claim_origine = result.claim_5
+
                     return_line.create({
                         'claim_id': context['active_id'],
                         'claim_origine': claim_origine,
                         'product_id': product_brw.id,
                         'name': product_brw.name,
-                        # 'invoice_id' : self.prodlot_2_invoice(
-                        #     cr, uid, [prodlot_id],
-                        #     [product_id]),
+                        'invoice_line_id':
+                        self.prodlot_2_invoice_line(prodlot_id),
                         # PRODLOT_ID can be in many invoice !!
                         'product_returned_quantity': qty,
                         'prodlot_id': prodlot_id,
@@ -223,42 +252,57 @@ class returned_lines_from_serial(models.TransientModel):
                                  'Partner',
                                  default=_get_default_partner_id)
 
-    # def prodlot_2_invoice(self, cr, uid, prodlot_id, product_id):
-    #     # get stock_move_ids
-    #     # stock_move_ids = self.pool.get('stock.move').search(
-    #     #     cr, uid, [('prodlot_id', 'in', prodlot_id)])
-    #     # if 1 id
-    #         # (get stock picking (filter on out ?))
-    #         # get invoice_ids from stock_move_id where
-    #         # invoice.line.product = prodlot_product and
-    #         # invoice customer = claim_partner
-    #         # if 1 id
-    #             # return invoice_id
-    #         # else
-    #     # else : move_in / move_out ; 1 move per order line so if many order
-    #     # lines with same lot, ...
+    @api.model
+    def prodlot_2_invoice_line(self, prodlot_id):
+        """
+        Return the last line of customer invoice
+        based in serial/lot number
+        """
+        # If there is a lot number, the product
+        # vendor is searched accurately.
+        claim_obj = self.env['crm.claim']
+        inv_obj = self.env['account.invoice']
+        invline_obj = self.env['account.invoice.line']
+        lot_obj = self.env['stock.production.lot']
 
-    #     # return set(self.stock_move_2_invoice(cr, uid, stock_move_ids))
-    #     return True
+        # Take all stock moves with outgoing type of operation
+        sm_delivery = claim_obj._get_stock_moves_with_code('outgoing')
 
-    # def stock_move_2_invoice(self, cr, uid, stock_move_ids):
-    #     inv_line_ids = []
-    #     res = self.pool.get('stock.move').read(
-    #         cr, uid, stock_move_ids, ['sale_line_id'])
-    #     sale_line_ids = [
-    #         x['sale_line_id'][0] for x in res if x['sale_line_id']]
-    #     if not sale_line_ids:
-    #         return []
-    #     sql_base = "select invoice_id from "
-    #                "sale_order_line_invoice_rel where \
-    #      order_line_id in ("
-    #     cr.execute(sql_base + ','.join(
-    #         [str(item) for item in sale_line_ids])+')')
-    #     res = cr.fetchall()
-    #     for iii in res:
-    #         for jjj in iii:
-    #             inv_line_ids.append(jjj)
+        # Get traceability of serial/lot number
+        quant_obj = self.env['stock.quant']
+        quants = quant_obj.search([('lot_id', '=', prodlot_id)])
+        moves = set()
+        for quant in quants:
+            moves |= {move.id for move in quant.history_ids}
 
-    #     res = self.pool.get('account.invoice.line').read(
-    #         cr, uid, inv_line_ids, ['invoice_id'])
-    #     return [x['invoice_id'][0] for x in res if x['invoice_id']]
+        # Make intersection between delivery moves and traceability moves
+        # If product was sold just once, moves will be just one id
+        # If product was sold more than once, the list have multiple ids
+        moves &= {sm_d.id for sm_d in sm_delivery}
+
+        moves = list(moves)
+        # The last move correspond to the last sale
+        moves.sort(reverse=True)
+        moves = self.env['stock.move'].browse(moves)
+
+        prodlot_id = lot_obj.browse(prodlot_id)
+
+        # Filter invoices lines by customer invoice lines
+        invoice_client = False
+        invoice_customer = inv_obj.search([('type', '=', 'out_invoice')])
+        invoice_customer = [inv.id for inv in invoice_customer]
+        invline_customer = invline_obj.search([('invoice_id',
+                                                'in',
+                                                invoice_customer)])
+
+        # The move(s) is searched in invoice lines.
+        # It will take the last line of customer invoice
+        for stock_move in moves:
+            invoice_client = \
+                invline_customer.search([('move_id',
+                                          '=',
+                                          stock_move.id)])
+            if invoice_client:
+                return invoice_client.id
+
+        return False

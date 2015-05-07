@@ -23,7 +23,7 @@ Select the product you want to return and the reason for the return. You will ne
         <record id="product_supplierinfo_warranty_31" model="product.supplierinfo">
             <field name="return_instructions" ref="return_instruction_2"/>
             <field name="warranty_return_partner">other</field>
-            <field name="warranty_return_other_address_id"
+            <field name="warranty_return_other_address"
                 ref="base.res_partner_address_7"/>
             <field name="warranty_duration">8</field>
             <field name="product_tmpl_id" ref="product.product_product_3_product_template"/>
