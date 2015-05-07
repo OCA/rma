@@ -254,12 +254,12 @@ class claim_line(models.Model):
                                        ' of the returned product')
 
     claim_type = fields.Many2one(related='claim_id.claim_type',
-                                  # selection=[('customer', 'Customer'),
-                                  #            ('supplier', 'Supplier')],
-                                  string="Claim Line Type",
-                                  store=True,
-                                  help="Customer: from customer to company.\n "
-                                       "Supplier: from company to supplier.")
+                                 # selection=[('customer', 'Customer'),
+                                 #            ('supplier', 'Supplier')],
+                                 string="Claim Line Type",
+                                 store=True,
+                                 help="Customer: from customer to company.\n "
+                                      "Supplier: from company to supplier.")
 
     date_invoice = fields.Date(related='invoice_line_id.invoice_id.'
                                'date_invoice',
@@ -493,7 +493,7 @@ class crm_claim(models.Model):
                                domain="['|', ('section_ids', '=', "
                                "section_id), ('case_default', '=', True), "
                                "('claim_type', '=', claim_type)]")
-                               # ",('claim_default', '=', True)]")
+    # ",('claim_default', '=', True)]")
 
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
@@ -614,6 +614,7 @@ class crm_claim(models.Model):
         """
         self.email_from = self.delivery_address_id.email
         self.partner_phone = self.delivery_address_id.phone
+
 
 class crm_claim_type(models.Model):
 

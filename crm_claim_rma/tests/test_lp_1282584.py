@@ -21,6 +21,7 @@
 
 from openerp.tests.common import TransactionCase
 
+
 class test_lp_1282584(TransactionCase):
 
     """ Test wizard open the right type of view
@@ -44,7 +45,8 @@ class test_lp_1282584(TransactionCase):
             {
                 'name': 'TEST CLAIM',
                 'number': 'TEST CLAIM',
-                'claim_type': 'customer',
+                'claim_type': self.env.ref('crm_claim_rma.'
+                                           'crm_claim_type_customer').id,
                 'delivery_address_id': self.partner_id.id,
             })
         self.warehouse_id = self.claim_id.warehouse_id
