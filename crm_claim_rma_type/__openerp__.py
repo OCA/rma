@@ -32,10 +32,12 @@
         'crm_claim_rma',
     ],
     'data': [
-        'data/crm_claim_rma_type.xml',
         'view/crm_claim_rma_type.xml',
+        'data/crm_claim_rma_type.xml',
     ],
-    'demo': [],
+    'demo': [
+        'demo/crm_claim_rma_type.xml',
+    ],
     'test': [],
     'qweb': [],
     'js': [],

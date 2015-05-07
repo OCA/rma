@@ -52,6 +52,13 @@ class crm_claim(models.Model):
                         help="Customer: from customer to company.\n "
                              "Supplier: from company to supplier.")
 
+    stage_id = fields.Many2one('crm.claim.stage',
+                               'Stage',
+                               track_visibility='onchange',
+                               domain="['|', ('section_ids', '=', "
+                               "section_id), ('case_default', '=', True), "
+                               "('claim_type', '=', claim_type)]"
+                               ",('claim_default', '=', True)]")
 
 class claim_line(models.Model):
 
@@ -70,8 +77,18 @@ class crm_claim_stage(models.Model):
 
     _inherit = 'crm.claim.stage'
 
+    @api.model
+    def _get_claim_type(self):
+        return self.env['crm.claim']._get_claim_type()
+
     claim_type = \
-        fields.Many2one('claim.rma.type',
+        fields.Many2one('crm.claim.type',
+                        selection=_get_claim_type,
                         string='Claim Type',
                         help="Customer: from customer to company.\n "
                              "Supplier: from company to supplier.")
+
+    claim_default = fields.Boolean('Claim Type to All Teams',
+                                   help="If you check this field,"
+                                   " this stage will be proposed"
+                                   " by default on each claim type.")
