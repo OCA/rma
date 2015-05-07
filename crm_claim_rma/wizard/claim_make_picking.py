@@ -197,23 +197,19 @@ class claim_make_picking(models.TransientModel):
         return {'type': 'ir.actions.act_window_close'}
 
     # If "Create" button pressed
-    def action_create_picking(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        view_obj = self.pool.get('ir.ui.view')
-        picking_obj = self.pool.get('stock.picking')
-        warehouse_obj = self.pool.get('stock.warehouse')
+    @api.multi
+    def action_create_picking(self):
+        context = self._context
+        view_obj = self.env['ir.ui.view']
+        picking_obj = self.env['stock.picking']
+        warehouse_obj = self.env['stock.warehouse']
 
-        picking_type_obj = self.pool.get('stock.picking.type')
+        picking_type_obj = self.env['stock.picking.type']
         picking_type = context.get('picking_type')
 
         name = 'RMA picking out'
-
         if isinstance(picking_type, int):
-            pick_t = picking_type_obj.browse(cr,
-                                             uid,
-                                             picking_type,
-                                             context=context)
+            pick_t = picking_type_obj.browse(picking_type)
             if pick_t.code == 'outgoing':
                 pick = 'out'
             else:
@@ -224,10 +220,7 @@ class claim_make_picking(models.TransientModel):
             else:
                 pick = 'out'
 
-        wh_rec = warehouse_obj.browse(cr,
-                                      uid,
-                                      context.get('warehouse_id'),
-                                      context=context)
+        wh_rec = warehouse_obj.browse(context.get('warehouse_id'))
         if pick == 'out':
             pick_type = wh_rec.rma_out_type_id
             write_field = 'move_out_id'
@@ -239,39 +232,33 @@ class claim_make_picking(models.TransientModel):
             name = note
 
         model = 'stock.picking'
-        view_id = view_obj.search(cr, uid,
-                                  [('model', '=', model),
+        view_id = view_obj.search([('model', '=', model),
                                    ('type', '=', 'form'),
-                                   ],
-                                  context=context)[0]
-        wizard = self.browse(cr, uid, ids[0], context=context)
-        claim = self.pool.get('crm.claim').browse(cr, uid,
-                                                  context['active_id'],
-                                                  context=context)
+                                   ])[0]
+        claim = self.env['crm.claim'].browse(context['active_id'])
+
         partner_id = claim.delivery_address_id.id
 
-        claim_line_obj = self.pool.get('claim.line')
-        lines_rec = [claim_line_obj.browse(cr, uid, x.id)
-                     for x in wizard.claim_line_ids]
-        line_ids = [x.id for x in wizard.claim_line_ids]
+        claim_line_obj = self.env['claim.line']
+        lines_rec = [claim_line_obj.browse(x.id)
+                     for x in self.claim_line_ids]
+        line_ids = [x.id for x in self.claim_line_ids]
         # In case of product return, we don't allow one picking for various
         # product if location are different
         # or if partner address is different
         if context.get('product_return'):
             common_dest_loc_id = self._get_common_dest_location_from_line(
-                cr, uid, lines_rec, context=context)
+                lines_rec)
             if not common_dest_loc_id:
                 raise except_orm(
                     _('Error !'),
                     _('A product return cannot be created for various '
                       'destination locations, please choose line with a '
                       'same destination location.'))
-            self.pool.get('claim.line').auto_set_warranty(cr, uid,
-                                                          line_ids,
-                                                          context=context)
+            self.env['claim.line'].browse(line_ids).auto_set_warranty()
 
             common_dest_partner_id = self._get_common_partner_from_line(
-                cr, uid, line_ids, context=context)
+                line_ids)
             if not common_dest_partner_id:
                 raise except_orm(
                     _('Error !'),
@@ -281,7 +268,6 @@ class claim_make_picking(models.TransientModel):
             partner_id = common_dest_partner_id
         # create picking
         picking_id = picking_obj.create(
-            cr, uid,
             {'origin': claim.number,
              'picking_type_id': pick_type.id,
              'move_type': 'one',  # direct
@@ -290,17 +276,15 @@ class claim_make_picking(models.TransientModel):
              'partner_id': partner_id,
              'invoice_state': "none",
              'company_id': claim.company_id.id,
-             'location_id': wizard.claim_line_source_location.id,
-             'location_dest_id': wizard.claim_line_dest_location.id,
+             'location_id': self.claim_line_source_location.id,
+             'location_dest_id': self.claim_line_dest_location.id,
              'note': note,
              'claim_id': claim.id,
-             },
-            context=context)
+             })
         # Create picking lines
-        for wizard_claim_line in wizard.claim_line_ids:
-            move_obj = self.pool.get('stock.move')
+        for wizard_claim_line in self.claim_line_ids:
+            move_obj = self.env['stock.move']
             move_id = move_obj.create(
-                cr, uid,
                 {'name': wizard_claim_line.product_id.name_template,
                  'priority': '0',
                  'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
@@ -313,33 +297,33 @@ class claim_make_picking(models.TransientModel):
                  # 'product_qty': wizard_claim_line.product_returned_quantity,
                  'product_uom_qty':
                  wizard_claim_line.product_returned_quantity,
-                 'picking_id': picking_id,
+                 'picking_id': picking_id.id,
                  'state': 'draft',
                  'price_unit': wizard_claim_line.unit_sale_price,
                  'company_id': claim.company_id.id,
-                 'location_id': wizard.claim_line_source_location.id,
-                 'location_dest_id': wizard.claim_line_dest_location.id,
+                 'location_id': self.claim_line_source_location.id,
+                 'location_dest_id': self.claim_line_dest_location.id,
                  'note': note,
-                 },
-                context=context)
-            self.pool.get('claim.line').write(
-                cr, uid, wizard_claim_line.id,
-                {write_field: move_id}, context=context)
+                 })
+            wizard_claim_line.write({write_field: move_id.id})
         wf_service = workflow
         if picking_id:
-            wf_service.trg_validate(uid, 'stock.picking',
-                                    picking_id, 'button_confirm', cr)
-            picking_obj.action_assign(cr, uid, [picking_id])
+            wf_service.trg_validate(
+                self._uid, 'stock.picking',
+                picking_id.id,
+                'button_confirm',
+                self._cr)
+            picking_id.action_assign()
         domain = ("[('picking_type_id', '=', %s), ('partner_id', '=', %s)]" %
                   (pick_type.id, partner_id))
         return {
             'name': '%s' % name,
             'view_type': 'form',
             'view_mode': 'form',
-            'view_id': view_id,
+            'view_id': view_id.id,
             'domain': domain,
             'res_model': model,
-            'res_id': picking_id,
+            'res_id': picking_id.id,
             'type': 'ir.actions.act_window',
         }
 

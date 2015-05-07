@@ -330,13 +330,14 @@ class claim_line(models.Model):
             {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
              'warning': warning},)
 
-    def auto_set_warranty(self, cr, uid, ids, context):
+    @api.model
+    def auto_set_warranty(self):
         """ Set warranty automatically
         if the user has not himself pressed on 'Calculate warranty state'
         button, it sets warranty for him"""
-        for line in self.browse(cr, uid, ids, context=context):
+        for line in self:
             if not line.warning:
-                self.set_warranty([line.id])
+                line.set_warranty()
         return True
 
     def get_destination_location(self, cr, uid, product_id,
@@ -387,9 +388,9 @@ class claim_line(models.Model):
                     'location_dest_id': location_dest_id})
 
     @api.model
-    def set_warranty(self, ids):
+    def set_warranty(self):
         """ Calculate warranty limit and address """
-        for claim_line_brw in self.browse(ids):
+        for claim_line_brw in self:
             if not (claim_line_brw.product_id and claim_line.invoice_line_id):
                 raise except_orm(
                     _('Error !'),
