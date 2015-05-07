@@ -419,7 +419,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='sequence']" position="after">
                 <field name="claim_type" widget="selection"/>
-                <field name="claim_default"/>
+                <field name="claim_common"/>
             </xpath>
         </field>
     </record>
@@ -431,7 +431,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="claim_type" widget="selection"/>
-                <field name="claim_default"/>
+                <field name="claim_common"/>
             </xpath>
         </field>
     </record>

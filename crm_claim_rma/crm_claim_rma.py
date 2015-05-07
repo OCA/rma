@@ -493,7 +493,7 @@ class crm_claim(models.Model):
                                domain="['|', '|', '|',('section_ids', '=', "
                                "section_id), ('case_default', '=', True), "
                                "('claim_type', '=', claim_type)"
-                               ",('claim_default', '=', True)]")
+                               ",('claim_common', '=', True)]")
 
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
@@ -640,7 +640,7 @@ class crm_claim_stage(models.Model):
                         help="Customer: from customer to company.\n "
                              "Supplier: from company to supplier.")
 
-    claim_default = fields.Boolean('Common to All Claim Types',
+    claim_common = fields.Boolean('Common to All Claim Types',
                                    help="If you check this field,"
                                    " this stage will be proposed"
                                    " by default on each claim type.")

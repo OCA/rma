@@ -86,22 +86,22 @@
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim1">
             <field name="claim_type" ref="crm_claim_type_customer"/>
-            <field name="claim_default" eval="True"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim5">
             <field name="claim_type" ref="crm_claim_type_customer"/>
-            <field name="claim_default" eval="True"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim2">
             <field name="claim_type" ref="crm_claim_type_customer"/>
-            <field name="claim_default" eval="True"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim3">
             <field name="claim_type" ref="crm_claim_type_customer"/>
-            <field name="claim_default" eval="True"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
     </data>
