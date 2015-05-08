@@ -473,12 +473,17 @@ class crm_claim(models.Model):
                          help="Company internal "
                          "claim unique number")
 
+    @api.model
+    def _get_claim_type_default(self):
+        claim_type = self.env['crm.claim.type'].search([])
+        if claim_type:
+            return claim_type[0]
+        else:
+            return self.env['crm.claim.type']
+
     claim_type = \
-        fields.Many2one('crm.claim.type',
-                        string='Claim Type',
-                        required=True,
-                        help="Customer: from customer to company.\n "
-                             "Supplier: from company to supplier.")
+        fields.Many2one(default=_get_claim_type_default,
+                        required=True)
 
     stage_id = fields.Many2one('crm.claim.stage',
                                'Stage',
@@ -507,6 +512,8 @@ class crm_claim(models.Model):
     warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse',
                                    required=True,
                                    default=_get_default_warehouse)
+
+    sequence = fields.Integer(default=lambda *args: 1)
 
     # Field "number" is assigned by default with "/"
     # then this constraint ever is broken
@@ -607,15 +614,6 @@ class crm_claim(models.Model):
         """
         self.email_from = self.delivery_address_id.email
         self.partner_phone = self.delivery_address_id.phone
-
-
-class crm_claim_type(models.Model):
-
-    _name = 'crm.claim.type'
-
-    name = fields.Char('Name', required=True)
-    active = fields.Boolean('Active', default=True)
-    description = fields.Text('Decription')
 
 
 class crm_claim_stage(models.Model):

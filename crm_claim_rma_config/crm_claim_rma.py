@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yanina Aular
-#    Copyright 2015 Vauxoo
+#    Copyright 2013 Camptocamp
+#    Copyright 2009-2013 Akretion,
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Benoît Guillot, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,23 +21,23 @@
 #
 ##############################################################################
 
-{
-    'name': 'RMA Claim Config',
-    'version': '1.0',
-    'category': 'Generic Modules/CRM & SRM',
-    'author': 'Vauxoo, Odoo Community Association (OCA)',
-    'website': 'http://www.vauxoo.com',
-    'depends': ['base',
-                'crm_claim',
-                ],
-    'data': [
-            'crm_claim_rma_config.xml',
-            'crm_claim_rma_data.xml',
-            'security/ir.model.access.csv',
-    ],
-    'test': [],
-    'images': [],
-    'demo': ['crm_claim_rma_demo.xml'],
-    'installable': True,
-    'auto_install': False,
-}
+from openerp import models, fields
+
+
+class crm_claim_type(models.Model):
+
+    _name = 'crm.claim.type'
+
+    name = fields.Char('Name', required=True)
+    active = fields.Boolean('Active', default=True)
+    description = fields.Text('Decription')
+
+
+class crm_claim(models.Model):
+    _inherit = 'crm.claim'
+
+    claim_type = \
+        fields.Many2one('crm.claim.type',
+                        string='Claim Type',
+                        help="Customer: from customer to company.\n "
+                             "Supplier: from company to supplier.")
