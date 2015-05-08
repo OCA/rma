@@ -5,3 +5,5 @@
 "access_claim_line_manager","claim.line.manager","model_claim_line","base.group_sale_manager","True","True","True","True"
 "access_substate_user","substate.substate.user","model_substate_substate","base.group_sale_salesman","True","True","True",
 "access_claim_line_user","claim.line.user","model_claim_line","base.group_sale_salesman","True","True","True",
+"access_crm_claim_type_user","crm.claim.type.user","model_crm_claim_type","base.group_sale_salesman","True","True","True","True"
+
