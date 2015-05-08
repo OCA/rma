@@ -45,7 +45,7 @@ class test_lp_1282584(TransactionCase):
             {
                 'name': 'TEST CLAIM',
                 'number': 'TEST CLAIM',
-                'claim_type': self.env.ref('crm_claim_rma.'
+                'claim_type': self.env.ref('crm_claim_rma_config.'
                                            'crm_claim_type_customer').id,
                 'delivery_address_id': self.partner_id.id,
             })
