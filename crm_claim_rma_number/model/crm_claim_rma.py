@@ -70,6 +70,19 @@ class claim_line(models.Model):
         return result
 
 
+class crm_claim_type(models.Model):
+
+    _inherit = 'crm.claim.type'
+
+    ir_sequence_id = \
+        fields.Many2one('ir.sequence',
+                        string='Sequence Number',
+                        default=lambda self:
+                        self.env['ir.sequence'].
+                        search([('code', '=', 'crm.claim.rma.basic')])
+                        )
+
+
 class crm_claim(models.Model):
 
     _inherit = 'crm.claim'
@@ -77,32 +90,22 @@ class crm_claim(models.Model):
     rma_number = fields.Char('RMA Number', size=128,
                              help='RMA Number provided by supplier')
 
-    @api.model
-    def _get_sequence_number_customer(self):
-        seq_obj = self.env['ir.sequence']
-        res = seq_obj.get('crm.claim.rma.customer') or '/'
-        return res
-
-    @api.model
-    def _get_sequence_number_supplier(self):
-        seq_obj = self.env['ir.sequence']
-        res = seq_obj.get('crm.claim.rma.supplier') or '/'
+    def _get_sequence_number(self, cr, uid, code_id, context=None):
+        seq_obj = self.pool.get('ir.sequence')
+        res = '/'
+        claim_type_obj = self.pool.get('crm.claim.type')
+        claim_type = claim_type_obj.browse(cr, uid, code_id)
+        code = claim_type.ir_sequence_id.code
+        if code:
+            res = seq_obj.get(cr, uid, code) or '/'
         return res
 
     @api.v7
     def create(self, cur, uid, vals, context=None):
-        if ('number' not in vals) or (vals.get('number') == '/'):
-            if vals.get('claim_type') == 'customer':
-                vals['number'] = \
-                    self._get_sequence_number_customer(cur, uid,
+        if ('number' not in vals) or (vals.get('number') == '/') \
+                or vals.get('number') is False:
+            vals['number'] = self._get_sequence_number(cur, uid,
+                                                       vals['claim_type'],
                                                        context=context)
-            elif vals.get('claim_type') == 'supplier':
-                vals['number'] = \
-                    self._get_sequence_number_supplier(cur, uid,
-                                                       context=context)
-            else:
-                vals['number'] = \
-                    self._get_sequence_number(cur, uid,
-                                              context=context)
         new_id = super(crm_claim, self).create(cur, uid, vals, context=context)
         return new_id

@@ -31,7 +31,7 @@
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
-        "crm_claim_categ_as_name",
+        "crm_claim_rma",
         "crm_rma_advance_location",
         "crm_rma_lot_mass_return",
         "crm_rma_stock_location",
@@ -42,6 +42,7 @@
         "crm_rma_claim_make_claim",
         "crm_claim_product_supplier",
         "crm_rma_advance_warranty",
+        "crm_claim_categ_as_name",
     ],
     "demo": [],
     "data": [],
