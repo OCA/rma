@@ -31,6 +31,7 @@
     'data': [
             'crm_claim_rma_config.xml',
             'crm_claim_rma_data.xml',
+            'view/crm_claim_rma_view.xml',
             'security/ir.model.access.csv',
     ],
     'test': [],
