@@ -33,7 +33,6 @@
         <record id="crm_claim.crm_claim_6" model="crm.claim">
             <field name="invoice_id" ref="crm_rma_invoice_001"/>
             <field name="delivery_address_id" ref="base.res_partner_9"/>
-            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="claim_line_1" model="claim.line">
@@ -58,46 +57,26 @@
             <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
         </record>
 
-        <record id="crm_claim.crm_claim_1" model="crm.claim">
-            <field name="claim_type" search="[('name', '=', 'Customer')]"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_2" model="crm.claim">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_3" model="crm.claim">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_4" model="crm.claim">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_5" model="crm.claim">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_7" model="crm.claim">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
         <!-- Claim Stage -->
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim1">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim5">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim2">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim3">
-            <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
+            <field name="claim_common" eval="True"/>
         </record>
 
     </data>

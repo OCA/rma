@@ -10,15 +10,15 @@
     <record model="ir.ui.view" id="crm_claim_rma_form_view_categ">
         <field name="name">CRM - Claim product return Form</field>
         <field name="model">crm.claim</field>
-        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view2"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@string='Claim Description']/group/field[@name='categ_id']" position="replace">
             </xpath>
             <xpath expr="//field[@name='name']" position="replace">
-                <field name="categ_id" string='Name'/>
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="name" invisible="1" required="False"/>
+            </xpath>
+            <xpath expr="//field[@name='warehouse_id']" position="after">
+                <field name="categ_id" string='Name'/>
             </xpath>
         </field>
     </record>

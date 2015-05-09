@@ -22,7 +22,7 @@
 -
   !record {model: crm.claim, id: claim_refund}:
     name: 'Angry Customer'
-    claim_type: crm_claim_type_customer
+    claim_type: crm_claim_rma_config.crm_claim_type_customer
     partner_id: base.res_partner_3
     invoice_id: account_invoice_claim_refund
 -
