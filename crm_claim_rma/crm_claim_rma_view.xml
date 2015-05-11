@@ -177,9 +177,10 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='stage_id']" position="replace">
+            <xpath expr="//field[@name='stage_id']" position="before">
                 <button name="%(action_claim_picking_in)d"
                         string="New Products Return"
+                        class="oe_inline"
                         type="action" target="new"
                         context="{'warehouse_id': warehouse_id,
                             'partner_id': partner_id}"/>
@@ -200,7 +201,6 @@
                             'description': name,
                             'claim_id': id,
                             }"/>
-                <field name="stage_id" widget="statusbar" clickable="True"/>
             </xpath>
             <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
                 <separator colspan="2" string="Product Returns"/>

@@ -40,14 +40,13 @@ class claim_line(models.Model):
     @api.one
     @api.model
     def set_warranty_limit(self):
-        date_invoice = self.invoice_line_id.invoice_id.date_invoice
-        if not date_invoice:
+        if not self.date_invoice:
             raise except_orm(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
         warning = _(self.WARRANT_COMMENT['not_define'])
-        date_inv_at_server = datetime.strptime(date_invoice,
+        date_inv_at_server = datetime.strptime(self.date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
