@@ -904,4 +904,3 @@ msgstr ""
 #, python-format
 msgid "The product has no supplier configured."
 msgstr ""
-
