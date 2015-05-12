@@ -340,13 +340,13 @@ class claim_line(models.Model):
                 line.set_warranty()
         return True
 
-    def get_destination_location(self, cr, uid, product_id,
-                                 warehouse_id, context=None):
+    @api.model
+    def get_destination_location(self, product_id, warehouse_id):
         """Compute and return the destination location ID to take
         for a return. Always take 'Supplier' one when return type different
         from company."""
-        wh_obj = self.pool.get('stock.warehouse')
-        wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
+        wh_obj = self.env['stock.warehouse']
+        wh = wh_obj.browse(warehouse_id)
         location_dest_id = wh.lot_stock_id.id
         return location_dest_id
 
@@ -387,14 +387,14 @@ class claim_line(models.Model):
                     'warranty_type': return_type,
                     'location_dest_id': location_dest_id})
 
-    @api.model
+    @api.multi
     def set_warranty(self):
         """ Calculate warranty limit and address """
         for claim_line_brw in self:
             if not (claim_line_brw.product_id and claim_line.invoice_line_id):
                 raise except_orm(
                     _('Error !'),
-                    _('Please set product and invoice.'))
+                    _('Please set product or/and invoice line.'))
             claim_line_brw.set_warranty_return_address()
             claim_line_brw.set_warranty_limit()
         return True

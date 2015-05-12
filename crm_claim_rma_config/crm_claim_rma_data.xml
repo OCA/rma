@@ -3,13 +3,13 @@
     <data noupdate="1">
 
     <!-- Claims Type -->
-    <record id="crm_claim_type_supplier" model="crm.claim.type">
-        <field name="name">Supplier</field>
+    <record id="crm_claim_type_customer" model="crm.claim.type">
+        <field name="name">Customer</field>
         <field name="active">1</field>
     </record>
 
-    <record id="crm_claim_type_customer" model="crm.claim.type">
-        <field name="name">Customer</field>
+    <record id="crm_claim_type_supplier" model="crm.claim.type">
+        <field name="name">Supplier</field>
         <field name="active">1</field>
     </record>
 

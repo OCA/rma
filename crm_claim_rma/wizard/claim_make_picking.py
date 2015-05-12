@@ -127,14 +127,14 @@ class claim_make_picking(models.TransientModel):
             loc_id = line_location[0]
         return loc_id
 
-    @api.v7
-    def _get_common_partner_from_line(self, cr, uid, line_ids, context):
+    @api.model
+    def _get_common_partner_from_line(self, line_ids):
         """Return the ID of the common partner between all lines. If no common
         partner was found, return False"""
         partner_id = False
-        line_obj = self.pool.get('claim.line')
+        line_obj = self.env['claim.line']
         line_partner = []
-        for line in line_obj.browse(cr, uid, line_ids, context=context):
+        for line in line_obj.browse(line_ids):
             if line.location_dest_id.id not in line_partner:
                 line_partner.append(line.location_dest_id.id)
         # TODO FIX ME, as do when the lines have different directions
@@ -192,8 +192,8 @@ class claim_make_picking(models.TransientModel):
         default=_get_claim_lines,
         string='Claim lines')
 
-    @api.v7
-    def action_cancel(self, cr, uid, ids, context=None):
+    @api.multi
+    def action_cancel(self):
         return {'type': 'ir.actions.act_window_close'}
 
     # If "Create" button pressed
@@ -256,7 +256,6 @@ class claim_make_picking(models.TransientModel):
                       'destination locations, please choose line with a '
                       'same destination location.'))
             self.env['claim.line'].browse(line_ids).auto_set_warranty()
-
             common_dest_partner_id = self._get_common_partner_from_line(
                 line_ids)
             if not common_dest_partner_id:

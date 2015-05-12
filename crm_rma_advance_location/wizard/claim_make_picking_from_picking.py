@@ -47,9 +47,15 @@ class claim_make_picking_from_picking(models.TransientModel):
     # Get default source location
     @api.model
     def _get_source_loc(self):
+        context = self._context
         warehouse_id = self._get_default_warehouse()
-        return warehouse_id.\
-            lot_rma_id.id
+        picking_obj = self.env['stock.picking']
+        picking_id = context.get('active_id')
+        picking_rec = picking_obj.browse(picking_id)
+        if picking_rec.location_dest_id:
+            return picking_rec.location_dest_id.id
+        else:
+            return warehouse_id.lot_rma_id.id
 
     # Get default destination location
     @api.model
