@@ -23,7 +23,6 @@
 ###############################################################################
 
 from openerp import models, api
-from openerp.tools.translate import _
 
 
 class crm_claim(models.Model):
@@ -31,27 +30,14 @@ class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
     @api.multi
-    def get_view_search(self):
-        view_id = self.env.\
-            ref('crm_rma_lot_mass_return.view_enter_product')
-        return view_id
-
-    @api.multi
     def search_return(self):
-        # res = super(stock_transfer_details, self).wizard_view()
-        view = self.get_view_search()
-        if view:
-            return {
-                'name': _('Search Product'),
-                'type': 'ir.actions.act_window',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'returned_lines_from_serial.wizard',
-                'src_model': 'crm.claim',
-                # 'views': [(view.id, 'form')],
-                'view_id': view.id,
-                'target': 'new',
-                'res_id': self.ids[0],
-                'context': self.env.context,
-            }
-
+        context = self._context.copy()
+        context.update({
+            'active_model': self._name,
+            'active_ids': self.ids,
+            'active_id': len(self.ids) and self.ids[0] or False,
+        })
+        created_id = self.env['returned_lines_from_serial.wizard'].\
+            with_context(context).\
+            create({'claim_id': len(self.ids) and self.ids[0] or False})
+        return created_id.search_return()

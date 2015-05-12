@@ -73,7 +73,6 @@
         <record id="view_enter_product" model="ir.ui.view">
             <field name="name">returned_lines_from_serial_wiew</field>
             <field name="model">returned_lines_from_serial.wizard</field>
-            <field name="priority" eval="99999"/>
             <field name="arch" type="xml">
                 <form>
                     <div class='row'>
@@ -82,30 +81,24 @@
                                 <div class="panel-heading">
                                     <h2><field name="partner_id" readonly="1"/></h2>
                                     <group>
-                                        <!--
                                         <field name="l_storage" invisible="1"/>
                                         <field name="scaned_data" invisible="1"/>
                                         <field name="last_tracking_id" readonly="1"/>
                                         <field name="current_tracking_id" string='Current Pack' options="{'no_create': True, 'no_open': True}" on_change="onchange_get_product_packaged(current_tracking_id, picking_id)"/>
-                                        -->
                                     </group>
                                 </div>
                             </div>
                             <table class="table table-hover">
                                 <tbody>
                                     <td>
-                                        <!--
                                         <field name="current_status" readonly="1" widget="barcode_text"  nolabel='1'/>
-                                        -->
                                     </td>
                                     <td>
-                                        <!--
                                         <field name="scan_data"
                                                widget='barcode_text'
                                                attrs="{'readonly':[('current_tracking_id', '=', False)]}"
                                                on_change="onchange_load_products(scan_data, product_packaged, context)"
                                                nolabel='1'/>
-                                        -->
                                     </td>
                                 </tbody>
                             </table>
@@ -187,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                    <footer><!-- TODO: Fill correctly this, and set invisible, false -->
+                    <footer>
                         <p class="oe_help">
                             You should use this windows on this way.
                             <ol>

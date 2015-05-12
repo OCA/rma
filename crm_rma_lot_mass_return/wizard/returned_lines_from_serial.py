@@ -21,6 +21,7 @@
 #########################################################################
 
 from openerp import models, fields, api
+from openerp.tools.translate import _
 
 
 class returned_lines_from_serial(models.TransientModel):
@@ -149,7 +150,7 @@ class returned_lines_from_serial(models.TransientModel):
 
     prodlot_id_1 = fields.Many2one('stock.production.lot',
                                    'Serial / Lot Number 1',
-                                   required=True)
+                                   )
 
     prodlot_id_2 = fields.Many2one('stock.production.lot',
                                    'Serial / Lot Number 2')
@@ -165,7 +166,7 @@ class returned_lines_from_serial(models.TransientModel):
 
     qty_1 = fields.Float('Quantity 1',
                          default=lambda *a: 1.0,
-                         digits=(12, 2), required=True)
+                         digits=(12, 2))
 
     qty_2 = fields.Float('Quantity 2',
                          default=lambda *a: 1.0,
@@ -192,7 +193,6 @@ class returned_lines_from_serial(models.TransientModel):
                                 ('lost', 'Lost during transport'),
                                 ('other', 'Other')], 'Claim Subject',
                                                      default=lambda *a: "none",
-                                                     required=True,
                                                      help="To describe"
                                                      " the product problem")
 
@@ -306,3 +306,51 @@ class returned_lines_from_serial(models.TransientModel):
                 return invoice_client.id
 
         return False
+
+    l_storage = fields.Text('Storage',
+                            help='Field used to avoid use sql for every '
+                            'product loaded')
+    current_tracking_id = fields.Many2one('stock.quant.package',
+                                          string='Current Pack',
+                                          help='Used to set the current '
+                                          'package where your products '
+                                          'are been stored')
+    last_tracking_id = fields.Many2one('stock.quant.package',
+                                       help='Used to set the last package '
+                                       'where your products were stored '
+                                       'before thethe current pack')
+    scan_data = fields.Text('Products',
+                            help='Field used to load and show the '
+                            'products')
+    scaned_data = fields.Text('Products',
+                              help='Field used to load the ids of '
+                              'products loaded')
+    current_status = fields.Text('Status',
+                                 help='Field used to show the current '
+                                 'status of the product '
+                                 'loaded(Name and quantity)')
+
+    @api.multi
+    def get_view_search(self):
+        view_id = self.env.\
+            ref('crm_rma_lot_mass_return.view_enter_product')
+        return view_id
+
+    @api.multi
+    def search_return(self):
+        # res = super(stock_transfer_details, self).wizard_view()
+        view = self.get_view_search()
+        if view:
+            return {
+                'name': _('Search Product'),
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'returned_lines_from_serial.wizard',
+                'view_id': view.id,
+                # 'src_model': 'crm.claim',
+                'views': [(view.id, 'form')],
+                'target': 'new',
+                'res_id': self.ids[0],
+                # 'context': self.env.context,
+            }
