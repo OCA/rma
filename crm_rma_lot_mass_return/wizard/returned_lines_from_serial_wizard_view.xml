@@ -69,5 +69,149 @@
             <field name="target">new</field>
         </record>
 
+
+        <record id="view_enter_product" model="ir.ui.view">
+            <field name="name">returned_lines_from_serial_wiew</field>
+            <field name="model">returned_lines_from_serial.wizard</field>
+            <field name="priority" eval="99999"/>
+            <field name="arch" type="xml">
+                <form>
+                    <div class='row'>
+                        <div class="col-md-4 col-sm-4 col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h2><field name="partner_id" readonly="1"/></h2>
+                                    <group>
+                                        <!--
+                                        <field name="l_storage" invisible="1"/>
+                                        <field name="scaned_data" invisible="1"/>
+                                        <field name="last_tracking_id" readonly="1"/>
+                                        <field name="current_tracking_id" string='Current Pack' options="{'no_create': True, 'no_open': True}" on_change="onchange_get_product_packaged(current_tracking_id, picking_id)"/>
+                                        -->
+                                    </group>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <td>
+                                        <!--
+                                        <field name="current_status" readonly="1" widget="barcode_text"  nolabel='1'/>
+                                        -->
+                                    </td>
+                                    <td>
+                                        <!--
+                                        <field name="scan_data"
+                                               widget='barcode_text'
+                                               attrs="{'readonly':[('current_tracking_id', '=', False)]}"
+                                               on_change="onchange_load_products(scan_data, product_packaged, context)"
+                                               nolabel='1'/>
+                                        -->
+                                    </td>
+                                </tbody>
+                            </table>
+                            <ul class="list-group list-elements-flat">
+                                <li class="list-group-item">
+                                    <group string="Actual package's weight">
+                                        <!--
+                                        <h2><field name="weight"/></h2>
+                                        -->
+                                        <div class="oe_right">
+                                            <button class="oe_inline oe_stat_button packing_cache_button"  icon="fa-pencil-square-o" help='Save the current cache, all the actual triggered barcodes will be saved termporaly' type='object'  name='preprocess_line'>
+                                                <div><strong>Save in Cache</strong></div>
+                                            </button>
+                                        </div>
+                                    </group>
+                                </li>
+                                        <!--
+                                <li class="list-group-item"><label for="product_packaged" readonly="1"/><span class="badge"><field name="product_packaged" readonly="1"/></span></li>
+                                <li class="list-group-item"><label for="total_counted" readonly="1"/><span class="badge"><field name="total_counted" readonly="1"/></span></li>
+                                <li class="list-group-item"><label for="total_products" readonly="1"/><span class="badge"><field name="total_products" readonly="1"/></span></li>
+                                        -->
+                            </ul>
+                        </div>
+                        <div class="list-group col-md-8 col-sm-8 col-lg-8">
+                            <div class="row">
+                                <div class="pull-right" name="buttons">
+                                    <!--
+                                <button name="do_partial"
+                                    help="Validate the actual picking, it will execute all the validations and the inventory will be affected"
+                                    confirm="You are close to confirm totally the actual move, it will affect your inventories, are you sure?."
+                                    string="_Validate" colspan="1" type="object" class="oe_highlight"/>
+                                    -->
+                                </div>
+                                <div class="pull-left" name="buttons">
+                                    <h1 class="oe_inline">
+                                        <!--
+                                    <field name="pack_search"
+                                           class='pack_search'
+                                           placeholder="i.e: ID00001 (hint: Trigger the barcode in the box)"
+                                           default_focus='1'
+                                           widget='change_focus'
+                                           on_change="onchange_set_package(pack_search, current_tracking_id, picking_id, context)"/>
+                                           -->
+                                    </h1>
+                                        <!--
+                                    <button class="oe_inline oe_stat_button" name="cancel_package" icon="fa-arrow-circle-left" help="Cancel all what you are doing and delete last changes" confirm="You will loss your last not saved changes, are you agreed?" type="object">
+                                        <div><strong>Back to List</strong></div>
+                                    </button>
+                                    -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                        <!--
+                            <field name="operation_ids" colspan="6"  nolabel="1" mode="tree" options="{'no_create_edit': True}">
+                                <tree editable="top" string="Product Moves">
+                                    <field name="package_id" invisible="1" readonly="1" options="{'create': False, 'create_edit': False}" groups="stock.group_tracking_lot"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="product_uom_id" readonly="1" groups="product.group_uom"/>
+                                    <field name="lot_id" readonly="1" domain="[('product_id','=', product_id)]" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                    <field name="picking_id" invisible="1"/>
+                                    <field name="owner_id" readonly="1" invisible="1" groups="stock.group_tracking_owner"/>
+                                    <field name="product_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}"/>
+                                    <field name="location_id" readonly="1"/>
+                                    <field name="location_dest_id" readonly="1"/>
+                                    <field name="result_package_id"
+                                           options="{'create': False, 'create_edit': False}"
+                                           on_change="onchange_remove_pack(result_package_id, context)"
+                                           groups="stock.group_tracking_lot"
+                                           context="{'location_id': location_dest_id}"/>
+                                </tree>
+                            </field>
+                            -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-8 col-sm-8 col-lg-6'>
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <footer><!-- TODO: Fill correctly this, and set invisible, false -->
+                        <p class="oe_help">
+                            You should use this windows on this way.
+                            <ol>
+                                <li>Write the Serial/Lot Number to search the product</li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ol>
+                            <strong><a href="https://youtube.com/vauxoomedia">A video with this working on the here</a></strong>
+                        </p>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
     </data>
 </openerp>
