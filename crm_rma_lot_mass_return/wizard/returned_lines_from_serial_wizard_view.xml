@@ -111,14 +111,21 @@
                             </div>
                         </div>
                     </div>
-                    <!--
                     <div class="row">
-                        <div class='col-md-8 col-sm-8 col-lg-6'>
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
+                            <div class="row">
+                            </div>
+                        </div>
+                        <div class='col-md-16 col-sm-16 col-lg-16'>
+                            <div class="row">
+                                <-- Lista de lineas de factura -->
+                            </div>
+                        </div>
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
                             <div class="row">
                             </div>
                         </div>
                     </div>
-                    -->
                     <footer>
                         <p class="oe_help">
                             You should use this windows on this way.
