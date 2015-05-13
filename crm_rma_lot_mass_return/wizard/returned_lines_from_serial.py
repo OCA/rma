@@ -59,10 +59,29 @@ class returned_lines_from_serial(models.TransientModel):
             product_id = product
         return product_id
 
+    @api.model
+    def create_claim_line(self, claim_id, claim_origine,
+                          product_brw, prodlot_id, qty, invline_brw=False):
+        return_line = self.env['claim.line']
+        return_line.create({
+            'claim_id': claim_id,
+            'claim_origine': claim_origine,
+            'product_id': product_brw and product_brw.id or False,
+            'name': product_brw and product_brw.name or invline_brw.name,
+            'invoice_line_id': invline_brw and invline_brw.id or
+            self.prodlot_2_invoice_line(prodlot_id),
+            'product_returned_quantity': qty,
+            'prodlot_id': prodlot_id,
+            'selected': False,
+            'state': 'draft',
+            # 'guarantee_limit' :
+            # warranty['value']['guarantee_limit'],
+            # 'warning' : warranty['value']['warning'],
+        })
+
     # Method to create return lines
     @api.model
     def add_return_lines(self):
-        return_line = self.env['claim.line']
         # Refactor code : create 1 "createmethode" called by each if with
         # values as parameters
         product_obj = self.env['product.product']
@@ -109,22 +128,12 @@ class returned_lines_from_serial(models.TransientModel):
                         qty = result.qty_5
                         claim_origine = result.claim_5
 
-                    return_line.create({
-                        'claim_id': context['active_id'],
-                        'claim_origine': claim_origine,
-                        'product_id': product_brw.id,
-                        'name': product_brw.name,
-                        'invoice_line_id':
-                        self.prodlot_2_invoice_line(prodlot_id),
-                        # PRODLOT_ID can be in many invoice !!
-                        'product_returned_quantity': qty,
-                        'prodlot_id': prodlot_id,
-                        'selected': False,
-                        'state': 'draft',
-                        # 'guarantee_limit' :
-                        # warranty['value']['guarantee_limit'],
-                        # 'warning' : warranty['value']['warning'],
-                    })
+                    self.create_claim_line(context['active_id'],
+                                           claim_origine,
+                                           product_brw,
+                                           prodlot_id,
+                                           qty
+                                           )
 
     # If "Cancel" button pressed
     @api.multi
@@ -427,29 +436,31 @@ class returned_lines_from_serial(models.TransientModel):
         # recorrer cada codigo de busqueda
         for product in prod or []:
             if product:
-                quant_obj = self.env['stock.quant']
                 invoice_obj = self.env['account.invoice']
-                quants = quant_obj.search([('lot_id', '=', product)])
+                invoice_line_obj = self.env['account.invoice.line']
+
                 invoices = invoice_obj.search([('number', '=', product)])
 
                 if invoices:
-                    searched = invoices[0]
-                    name_s = searched.partner_id.name
-                elif quants:
-                    searched = quants[0]
-                    name_s = searched.product_id.name
+                    searched = [inv for inv in invoices.invoice_line]
                 else:
-                    searched = False
+                    invoice_line_move_id = self.prodlot_2_invoice_line(product)
+                    if invoice_line_move_id:
+                        searched = invoice_line_obj.browse(invoice_line_move_id)
+                    else:
+                        searched = False
 
                 if searched:
-                    line_id = '{pid}+{pname}'.format(pid=searched.id,
-                                                     pname=name_s)
-                    if line_id in all_prod:
-                        all_prod.\
-                            update({line_id: all_prod[line_id] +
-                                    prod[product]})
-                    else:
-                        all_prod.update({line_id: prod[product]})
+                    for item in searched:
+                        item_name = item.product_id and item.product_id.name or item.name
+                        line_id = '{pid}+{pname}'.format(pid=item.id,
+                                                         pname=item_name)
+                        if line_id in all_prod:
+                            all_prod.\
+                                update({line_id: all_prod[line_id] +
+                                        prod[product]})
+                        else:
+                            all_prod.update({line_id: prod[product]})
 
                     total_qty.append(prod[product])
                 else:
@@ -475,3 +486,25 @@ class returned_lines_from_serial(models.TransientModel):
                          'total_products': total_products,
                          'total_counted': total_counted}}
         return res
+
+    @api.multi
+    def add_claim_lines(self):
+        context = self._context
+        invline_obj = self.env['account.invoice.line']
+        inv_recs = [invline_obj.browse(int(inv_id))
+                    for inv_id in self.scaned_data.strip().split('\n')]
+
+        for inv_brw in inv_recs:
+
+            product_brw = inv_brw.product_id
+            if inv_brw.move_id:
+                prodlot_id = inv_brw.move_id.quant_ids[0].lot_id.id
+            else:
+                prodlot_id = False
+
+            self.create_claim_line(context.get('active_id'),
+                                   'none',
+                                   product_brw,
+                                   prodlot_id, 1, inv_brw)
+
+        return {'type': 'ir.actions.act_window_close'}
