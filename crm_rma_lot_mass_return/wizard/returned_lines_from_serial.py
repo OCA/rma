@@ -23,7 +23,6 @@
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from counter import Counter
-import re
 from openerp.exceptions import except_orm
 
 
@@ -272,7 +271,6 @@ class returned_lines_from_serial(models.TransientModel):
         """
         # If there is a lot number, the product
         # vendor is searched accurately.
-        claim_obj = self.env['crm.claim']
         inv_obj = self.env['account.invoice']
         invline_obj = self.env['account.invoice.line']
         lot_obj = self.env['stock.production.lot']
@@ -296,7 +294,8 @@ class returned_lines_from_serial(models.TransientModel):
         # If product was sold just once, moves will be just one id
         # If product was sold more than once, the list have multiple ids
         sm_all = sm_obj.search([('quant_ids.lot_id', '=', prodlot_id),
-                                ('picking_id.picking_type_id', 'in', picking_out)])
+                                ('picking_id.picking_type_id',
+                                 'in', picking_out)])
 
         moves = [sm.id for sm in sm_all]
 
@@ -412,7 +411,7 @@ class returned_lines_from_serial(models.TransientModel):
             }
 
     @api.multi
-    def onchange_load_products(self, products, packaged_qty, context=None):
+    def onchange_load_products(self, products, context=None):
         context = context or None
         new_pro = ''
         # Se divide el campo texto por salto de linea
@@ -446,13 +445,15 @@ class returned_lines_from_serial(models.TransientModel):
                 else:
                     invoice_line_move_id = self.prodlot_2_invoice_line(product)
                     if invoice_line_move_id:
-                        searched = invoice_line_obj.browse(invoice_line_move_id)
+                        searched = invoice_line_obj.\
+                            browse(invoice_line_move_id)
                     else:
                         searched = False
 
                 if searched:
                     for item in searched:
-                        item_name = item.product_id and item.product_id.name or item.name
+                        item_name = item.product_id \
+                            and item.product_id.name or item.name
                         line_id = '{pid}+{pname}'.format(pid=item.id,
                                                          pname=item_name)
                         if line_id in all_prod:
@@ -468,22 +469,21 @@ class returned_lines_from_serial(models.TransientModel):
                             {'message': _('''The product {produ} \
                                                 was not found
                                             '''.format(produ=product.
-                                                        encode('utf-8', 'ignore')
-                                                        ))},
+                                                       encode('utf-8',
+                                                              'ignore')
+                                                       ))},
                             'value':
-                            {'scan_data': '\n'.join(products.split('\n')[0:-1])
-                                }}
-        # endfor
+                            {'scan_data': '\n'.join(
+                                products.split('\n')[0:-1])}}
         total_counted = sum(total_qty)
         for line in all_prod:
             name = line.split('+')
             mes = mes + '{0} \t {1}\n'.format(name[1],
                                               all_prod[line])
             ids_data = ids_data + '{pid}\n'.format(pid=name[0])*all_prod[line]
-        total_products = total_counted + (packaged_qty or 0)
+
         res = {'value': {'current_status': mes,
                          'scaned_data': ids_data,
-                         'total_products': total_products,
                          'total_counted': total_counted}}
         return res
 
