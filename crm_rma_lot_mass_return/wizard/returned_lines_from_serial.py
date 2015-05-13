@@ -22,6 +22,9 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from counter import Counter
+import re
+from openerp.exceptions import except_orm
 
 
 class returned_lines_from_serial(models.TransientModel):
@@ -264,23 +267,46 @@ class returned_lines_from_serial(models.TransientModel):
         inv_obj = self.env['account.invoice']
         invline_obj = self.env['account.invoice.line']
         lot_obj = self.env['stock.production.lot']
+        sm_obj = self.env['stock.move']
+
+        user_obj = self.env['res.users']
+        user = user_obj.browse(self._uid)
+        company_id = user.company_id.id
+        wh_obj = self.env['stock.warehouse']
+        wh_ids = wh_obj.search([('company_id', '=', company_id)])
+        if not wh_ids:
+            raise except_orm(
+                _('Error!'),
+                _('There is no warehouse for the current user\'s company.'))
+
+        picking_out = [wh.out_type_id.id for wh in wh_ids]
 
         # Take all stock moves with outgoing type of operation
-        sm_delivery = claim_obj._get_stock_moves_with_code('outgoing')
-
         # Get traceability of serial/lot number
-        quant_obj = self.env['stock.quant']
-        quants = quant_obj.search([('lot_id', '=', prodlot_id)])
-        moves = set()
-        for quant in quants:
-            moves |= {move.id for move in quant.history_ids}
-
         # Make intersection between delivery moves and traceability moves
         # If product was sold just once, moves will be just one id
         # If product was sold more than once, the list have multiple ids
-        moves &= {sm_d.id for sm_d in sm_delivery}
+        sm_all = sm_obj.search([('quant_ids.lot_id', '=', prodlot_id),
+                                ('picking_id.picking_type_id', 'in', picking_out)])
 
-        moves = list(moves)
+        moves = [sm.id for sm in sm_all]
+
+        # # Take all stock moves with outgoing type of operation
+        # sm_delivery = claim_obj._get_stock_moves_with_code('outgoing')
+
+        # # Get traceability of serial/lot number
+        # quant_obj = self.env['stock.quant']
+        # quants = quant_obj.search([('lot_id', '=', prodlot_id)])
+        # moves = set()
+        # for quant in quants:
+        #     moves |= {move.id for move in quant.history_ids}
+
+        # # Make intersection between delivery moves and traceability moves
+        # # If product was sold just once, moves will be just one id
+        # # If product was sold more than once, the list have multiple ids
+        # moves &= {sm_d.id for sm_d in sm_delivery}
+
+        # moves = list(moves)
         # The last move correspond to the last sale
         moves.sort(reverse=True)
         moves = self.env['stock.move'].browse(moves)
@@ -310,25 +336,46 @@ class returned_lines_from_serial(models.TransientModel):
     l_storage = fields.Text('Storage',
                             help='Field used to avoid use sql for every '
                             'product loaded')
+
     current_tracking_id = fields.Many2one('stock.quant.package',
                                           string='Current Pack',
                                           help='Used to set the current '
                                           'package where your products '
                                           'are been stored')
+
     last_tracking_id = fields.Many2one('stock.quant.package',
                                        help='Used to set the last package '
                                        'where your products were stored '
                                        'before thethe current pack')
+
     scan_data = fields.Text('Products',
                             help='Field used to load and show the '
                             'products')
+
     scaned_data = fields.Text('Products',
                               help='Field used to load the ids of '
                               'products loaded')
+
     current_status = fields.Text('Status',
                                  help='Field used to show the current '
                                  'status of the product '
                                  'loaded(Name and quantity)')
+
+    total_products = fields.Integer("Total",
+                                    help='Computation resulted '
+                                    'of the sum the products '
+                                    'packaged in the current '
+                                    'package and the currently '
+                                    'products scanned without package')
+
+    product_packaged = fields.Integer("Quantity Packaged",
+                                      help='Total quantity of products '
+                                      'packaged, in the current pack')
+
+    total_counted = fields.Integer("Quantity Scanned",
+                                   help='Total quantity of products '
+                                   'scanned, ready to move into '
+                                   'to the current pack')
 
     @api.multi
     def get_view_search(self):
@@ -354,3 +401,77 @@ class returned_lines_from_serial(models.TransientModel):
                 'res_id': self.ids[0],
                 # 'context': self.env.context,
             }
+
+    @api.multi
+    def onchange_load_products(self, products, packaged_qty, context=None):
+        context = context or None
+        new_pro = ''
+        # Se divide el campo texto por salto de linea
+        # y se busca si alguno posee asterisco
+        for np in products and products.split('\n') or []:
+            if '*' in np:
+                comput = np.split('*')
+                if comput[1].isdigit():
+                    new_pro = new_pro + int(comput[1])*(comput[0]+'\n')
+                else:
+                    new_pro = new_pro + np + '\n'
+            else:
+                new_pro = np.strip() and \
+                    (new_pro + np.strip() + '\n') or new_pro
+        # Counter({u'': 1, u'0000005': 1})
+        prod = Counter(products and new_pro.split('\n') or [])
+        mes = ''
+        ids_data = ''
+        total_qty = []
+        all_prod = {}
+        # recorrer cada codigo de busqueda
+        for product in prod or []:
+            if product:
+                quant_obj = self.env['stock.quant']
+                invoice_obj = self.env['account.invoice']
+                quants = quant_obj.search([('lot_id', '=', product)])
+                invoices = invoice_obj.search([('number', '=', product)])
+
+                if invoices:
+                    searched = invoices[0]
+                    name_s = searched.partner_id.name
+                elif quants:
+                    searched = quants[0]
+                    name_s = searched.product_id.name
+                else:
+                    searched = False
+
+                if searched:
+                    line_id = '{pid}+{pname}'.format(pid=searched.id,
+                                                     pname=name_s)
+                    if line_id in all_prod:
+                        all_prod.\
+                            update({line_id: all_prod[line_id] +
+                                    prod[product]})
+                    else:
+                        all_prod.update({line_id: prod[product]})
+
+                    total_qty.append(prod[product])
+                else:
+                    return {'warning':
+                            {'message': _('''The product {produ} \
+                                                was not found
+                                            '''.format(produ=product.
+                                                        encode('utf-8', 'ignore')
+                                                        ))},
+                            'value':
+                            {'scan_data': '\n'.join(products.split('\n')[0:-1])
+                                }}
+        # endfor
+        total_counted = sum(total_qty)
+        for line in all_prod:
+            name = line.split('+')
+            mes = mes + '{0} \t {1}\n'.format(name[1],
+                                              all_prod[line])
+            ids_data = ids_data + '{pid}\n'.format(pid=name[0])*all_prod[line]
+        total_products = total_counted + (packaged_qty or 0)
+        res = {'value': {'current_status': mes,
+                         'scaned_data': ids_data,
+                         'total_products': total_products,
+                         'total_counted': total_counted}}
+        return res

@@ -96,7 +96,6 @@
                                     <td>
                                         <field name="scan_data"
                                                widget='barcode_text'
-                                               attrs="{'readonly':[('current_tracking_id', '=', False)]}"
                                                on_change="onchange_load_products(scan_data, product_packaged, context)"
                                                nolabel='1'/>
                                     </td>
@@ -115,11 +114,9 @@
                                         </div>
                                     </group>
                                 </li>
-                                        <!--
                                 <li class="list-group-item"><label for="product_packaged" readonly="1"/><span class="badge"><field name="product_packaged" readonly="1"/></span></li>
                                 <li class="list-group-item"><label for="total_counted" readonly="1"/><span class="badge"><field name="total_counted" readonly="1"/></span></li>
                                 <li class="list-group-item"><label for="total_products" readonly="1"/><span class="badge"><field name="total_products" readonly="1"/></span></li>
-                                        -->
                             </ul>
                         </div>
                         <div class="list-group col-md-8 col-sm-8 col-lg-8">

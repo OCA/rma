@@ -1,4 +1,4 @@
-openerp.lodi_packing = function(openerp) {
+openerp.crm_rma_lot_mass_return = function(openerp) {
 var _t = openerp.web._t,
    _lt = openerp.web._lt;
 var QWeb = openerp.web.qweb;
@@ -79,7 +79,7 @@ openerp.web.FormView.include({
     on_processed_onchange: function(result) {
         try {
         var result = result;
-        if (!_.isEmpty(result.warning) && this.model=='stock.transfer_details') {
+        if (!_.isEmpty(result.warning) && this.model=='returned_lines_from_serial.wizard') {
               playAlert.volume(0.9)
               playAlert('purr')
               new openerp.web.Dialog(this, {
