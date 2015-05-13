@@ -22,7 +22,7 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@string='Claim Description']//div[@name='serial']" position="inside">
                 <button name="search_return"
-                    string="Mass return from serial/lot" type="object"/>
+                    string="Mass return from serial/lot or invoice" type="object"/>
             </xpath>
         </field>
     </record>

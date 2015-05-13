@@ -105,7 +105,7 @@
                                 <div class="pull-right" name="buttons">
                                 <button name="add_claim_lines"
                                     help="Validate the actual picking, it will execute all the validations and the inventory will be affected"
-                                    confirm="You are close to confirm totally the actual move, it will affect your inventories, are you sure?."
+                                    confirm="You add new returns in claim, are you sure?."
                                     string="_Validate" colspan="1" type="object" class="oe_highlight"/>
                                 </div>
                             </div>
