@@ -346,11 +346,13 @@ class returned_lines_from_serial(models.TransientModel):
                             'product loaded')
 
     lines_list_id = fields.Many2many('account.invoice.line',
-                                string='Lines',
-                                domain=[('id', 'in', [])],
-                                help='Used to set the current '
-                                'package where your products '
-                                'are been stored')
+                                     'account_invoice_line_returned_wizard',
+                                     'wizard_id',
+                                     'invoice_line_id',
+                                     string='Lines',
+                                     help='Used to set the current '
+                                     'package where your products '
+                                     'are been stored')
 
     lines_id = fields.Many2many('account.invoice.line',
                                 string='Lines',
@@ -471,19 +473,20 @@ class returned_lines_from_serial(models.TransientModel):
                         searched = False
 
                 if searched:
-                    for item in searched:
-                        item_name = item.product_id \
-                            and item.product_id.name or item.name
-                        line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                         pname=item_name)
-                        if line_id in all_prod:
-                            all_prod.\
-                                update({line_id: all_prod[line_id] +
-                                        prod[product]})
-                        else:
-                            all_prod.update({line_id: prod[product]})
+                    if not invoices:
+                        for item in searched:
+                            item_name = item.product_id \
+                                and item.product_id.name or item.name
+                            line_id = '{pid}+{pname}'.format(pid=item.id,
+                                                             pname=item_name)
+                            if line_id in all_prod:
+                                all_prod.\
+                                    update({line_id: all_prod[line_id] +
+                                            prod[product]})
+                            else:
+                                all_prod.update({line_id: prod[product]})
 
-                    total_qty.append(prod[product])
+                        total_qty.append(prod[product])
                 else:
                     return {'warning':
                             {'message': _('''The product {produ} \
@@ -515,8 +518,12 @@ class returned_lines_from_serial(models.TransientModel):
     def add_claim_lines(self):
         context = self._context
         invline_obj = self.env['account.invoice.line']
-        inv_recs = [invline_obj.browse(int(inv_id))
-                    for inv_id in self.scaned_data.strip().split('\n')]
+        inv_recs = []
+        if self.scaned_data:
+            inv_recs += [invline_obj.browse(int(inv_id))
+                         for inv_id in self.scaned_data.strip().split('\n')]
+        if self.lines_list_id:
+            inv_recs += self.lines_list_id
 
         for inv_brw in inv_recs:
 
@@ -532,3 +539,10 @@ class returned_lines_from_serial(models.TransientModel):
                                    prodlot_id, 1, inv_brw)
 
         return {'type': 'ir.actions.act_window_close'}
+
+    @api.multi
+    def change_list(self, lines):
+        res = {'value': {'lines_list_id': lines,
+                         }
+               }
+        return res

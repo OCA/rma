@@ -116,7 +116,8 @@
                             <div class="row">
                                 <field name="lines_id" invisible="1"/>
                                 <field name="lines_list_id"
-                                    widget="many2many_checkboxes"/>
+                                    domain="[('id', 'in', [])]"
+                                    widget="many2many_checkboxes" on_change="change_list(lines_list_id)"/>
                             </div>
                         </div>
                         <div class='col-md-16 col-sm-16 col-lg-16'>
