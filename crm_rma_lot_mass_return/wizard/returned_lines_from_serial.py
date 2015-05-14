@@ -482,10 +482,10 @@ class returned_lines_from_serial(models.TransientModel):
                                               all_prod[line])
             ids_data = ids_data + '{pid}\n'.format(pid=name[0])*all_prod[line]
 
-        res = {'value': {'current_status': mes,
-                         'scaned_data': ids_data,
-                         'total_counted': total_counted}}
-        return res
+        # res = {'value': {'current_status': mes,
+        #                  'scaned_data': ids_data,
+        #                  'total_counted': total_counted}}
+        # return res
 
     @api.multi
     def add_claim_lines(self):
