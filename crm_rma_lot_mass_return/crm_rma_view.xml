@@ -21,7 +21,7 @@
         <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@string='Claim Description']//div[@name='serial']" position="inside">
-                <button name="search_return"
+                <button name="render_metasearch_view"
                     string="Mass return from serial/lot or invoice" type="object"/>
             </xpath>
         </field>

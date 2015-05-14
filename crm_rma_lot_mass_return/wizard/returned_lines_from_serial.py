@@ -349,16 +349,15 @@ class returned_lines_from_serial(models.TransientModel):
                                      'account_invoice_line_returned_wizard',
                                      'wizard_id',
                                      'invoice_line_id',
-                                     string='Lines',
-                                     help='Used to set the current '
-                                     'package where your products '
-                                     'are been stored')
+                                     string='Invoice Lines selected',
+                                     help='Field used to show the current '
+                                          'status of the invoice lines '
+                                          'loaded')
 
     lines_id = fields.Many2many('account.invoice.line',
-                                string='Lines',
-                                help='Used to set the current '
-                                'package where your products '
-                                'are been stored')
+                                string='Invoice Lines to Select',
+                                help='Field used to load the ids of '
+                                     'invoice lines in invoices writed')
 
     current_tracking_id = fields.Many2one('stock.quant.package',
                                           string='Current Pack',
@@ -401,15 +400,20 @@ class returned_lines_from_serial(models.TransientModel):
                                    'to the current pack')
 
     @api.multi
-    def get_view_search(self):
+    def get_metasearch_view_brw(self):
+        """
+        @return: view with metasearch field
+        """
         view_id = self.env.\
             ref('crm_rma_lot_mass_return.view_enter_product')
         return view_id
 
     @api.multi
-    def search_return(self):
-        # res = super(stock_transfer_details, self).wizard_view()
-        view = self.get_view_search()
+    def render_metasearch_view(self):
+        """
+        Render wizard view with metasearch field
+        """
+        view = self.get_metasearch_view_brw()
         if view:
             return {
                 'name': _('Search Product'),
@@ -418,11 +422,9 @@ class returned_lines_from_serial(models.TransientModel):
                 'view_mode': 'form',
                 'res_model': 'returned_lines_from_serial.wizard',
                 'view_id': view.id,
-                # 'src_model': 'crm.claim',
                 'views': [(view.id, 'form')],
                 'target': 'new',
                 'res_id': self.ids[0],
-                # 'context': self.env.context,
             }
 
     @api.multi
