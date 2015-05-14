@@ -17,7 +17,7 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - git clone --single-branch --depth=1 https://github.com/Vauxoo/addons-vauxoo.git -b ${VERSION} ${HOME}/addons-vauxoo
-  - pip install coveralls flake8 Counter
+  - pip install coveralls flake8 Counter lxml
 
 script:
   - travis_run_tests
