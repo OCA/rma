@@ -345,6 +345,19 @@ class returned_lines_from_serial(models.TransientModel):
                             help='Field used to avoid use sql for every '
                             'product loaded')
 
+    lines_list_id = fields.Many2many('account.invoice.line',
+                                string='Lines',
+                                domain=[('id', 'in', [])],
+                                help='Used to set the current '
+                                'package where your products '
+                                'are been stored')
+
+    lines_id = fields.Many2many('account.invoice.line',
+                                string='Lines',
+                                help='Used to set the current '
+                                'package where your products '
+                                'are been stored')
+
     current_tracking_id = fields.Many2one('stock.quant.package',
                                           string='Current Pack',
                                           help='Used to set the current '
@@ -411,11 +424,9 @@ class returned_lines_from_serial(models.TransientModel):
             }
 
     @api.multi
-    def onchange_load_products(self, products, context=None):
+    def onchange_load_products(self, products, lines_list_id, context=None):
         context = context or None
         new_pro = ''
-        # Se divide el campo texto por salto de linea
-        # y se busca si alguno posee asterisco
         for np in products and products.split('\n') or []:
             if '*' in np:
                 comput = np.split('*')
@@ -426,13 +437,12 @@ class returned_lines_from_serial(models.TransientModel):
             else:
                 new_pro = np.strip() and \
                     (new_pro + np.strip() + '\n') or new_pro
-        # Counter({u'': 1, u'0000005': 1})
         prod = Counter(products and new_pro.split('\n') or [])
         mes = ''
         ids_data = ''
         total_qty = []
         all_prod = {}
-        # recorrer cada codigo de busqueda
+        line_ids = []
         for product in prod or []:
             if product:
                 invoice_obj = self.env['account.invoice']
@@ -442,6 +452,16 @@ class returned_lines_from_serial(models.TransientModel):
 
                 if invoices:
                     searched = [inv for inv in invoices.invoice_line]
+                    actual_ids = lines_list_id[0][2]
+
+                    line_new_ids = [line.id for line in searched]
+                    if actual_ids:
+                        line_ids = list(set(line_ids + actual_ids +
+                                            line_new_ids))
+                    else:
+                        line_ids = list(set(line_ids + line_new_ids))
+
+                    searched = invoice_line_obj.browse(line_ids)
                 else:
                     invoice_line_move_id = self.prodlot_2_invoice_line(product)
                     if invoice_line_move_id:
@@ -482,10 +502,14 @@ class returned_lines_from_serial(models.TransientModel):
                                               all_prod[line])
             ids_data = ids_data + '{pid}\n'.format(pid=name[0])*all_prod[line]
 
-        # res = {'value': {'current_status': mes,
-        #                  'scaned_data': ids_data,
-        #                  'total_counted': total_counted}}
-        # return res
+        res = {'value': {'lines_id': [(6, 0, line_ids)],
+                         'current_status': mes,
+                         'scaned_data': ids_data,
+                         'total_counted': total_counted,
+                         },
+               'domain': {'lines_list_id': [('id', 'in', line_ids)]}
+               }
+        return res
 
     @api.multi
     def add_claim_lines(self):

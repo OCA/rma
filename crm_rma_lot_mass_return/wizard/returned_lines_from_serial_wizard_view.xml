@@ -94,7 +94,7 @@
                                     <td>
                                         <field name="scan_data"
                                                widget='barcode_text'
-                                               on_change="onchange_load_products(scan_data, context)"
+                                               on_change="onchange_load_products(scan_data, lines_id, context)"
                                                nolabel='1'/>
                                     </td>
                                 </tbody>
@@ -114,6 +114,9 @@
                     <div class="row">
                         <div class='col-md-4 col-sm-4 col-lg-4'>
                             <div class="row">
+                                <field name="lines_id" invisible="1"/>
+                                <field name="lines_list_id"
+                                    widget="many2many_checkboxes"/>
                             </div>
                         </div>
                         <div class='col-md-16 col-sm-16 col-lg-16'>
