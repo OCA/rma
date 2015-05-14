@@ -30,7 +30,7 @@ class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
     @api.multi
-    def search_return(self):
+    def render_metasearch_view(self):
         context = self._context.copy()
         context.update({
             'active_model': self._name,
@@ -40,4 +40,4 @@ class crm_claim(models.Model):
         created_id = self.env['returned_lines_from_serial.wizard'].\
             with_context(context).\
             create({'claim_id': len(self.ids) and self.ids[0] or False})
-        return created_id.search_return()
+        return created_id.render_metasearch_view()
