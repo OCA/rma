@@ -215,6 +215,7 @@
                                     </group>
                                     <separator string="State" colspan="4"/>
                                     <group col="6" colspan="4">
+                                        <field name="state"/>
                                         <field name="substate_id" widget='selection' />
                                         <field name="last_state_change"/>
                                         <field name="location_dest_id" invisible="1"/>
