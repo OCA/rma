@@ -399,6 +399,8 @@ class returned_lines_from_serial(models.TransientModel):
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id, context=None):
         context = context or None
+        invoice_obj = self.env['account.invoice']
+        invoice_line_obj = self.env['account.invoice.line']
         new_pro = ''
         for np in input_data and input_data.split('\n') or []:
             if '*' in np:
@@ -417,43 +419,35 @@ class returned_lines_from_serial(models.TransientModel):
         line_ids = []
         for product in prod or []:
             if product:
-                invoice_obj = self.env['account.invoice']
-                invoice_line_obj = self.env['account.invoice.line']
-
                 invoices = invoice_obj.search([('number', '=', product)])
 
+                element_searched = False
                 if invoices:
-                    searched = [inv for inv in invoices.invoice_line]
-
-                    line_new_ids = [line.id for line in searched]
+                    invoice_lines = [inv for inv in invoices.invoice_line]
+                    line_new_ids = [line.id for line in invoice_lines]
                     line_ids = list(set(line_ids + line_new_ids))
-
-                    searched = invoice_line_obj.browse(line_ids)
+                    element_searched = invoice_line_obj.browse(line_ids)
                 else:
                     invoice_line_move_id = self.prodlot_2_invoice_line(product)
                     if invoice_line_move_id:
-                        searched = invoice_line_obj.\
+                        element_searched = invoice_line_obj.\
                             browse(invoice_line_move_id)
-                    else:
-                        searched = False
 
-                if searched:
-                    if not invoices:
-                        for item in searched:
-                            item_name = item.product_id \
-                                and item.product_id.name or item.name
-                            line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                             pname=item_name)
-                            if line_id in all_prod:
-                                all_prod.\
-                                    update({line_id: all_prod[line_id] +
-                                            prod[product]})
-                            else:
-                                all_prod.update({line_id: prod[product]})
+                    for item in element_searched:
+                        item_name = item.product_id \
+                            and item.product_id.name or item.name
+                        line_id = '{pid}+{pname}'.format(pid=item.id,
+                                                            pname=item_name)
+                        if line_id in all_prod:
+                            all_prod.\
+                                update({line_id: all_prod[line_id] +
+                                        prod[product]})
+                        else:
+                            all_prod.update({line_id: prod[product]})
 
-                else:
+                if not element_searched:
                     return {'warning':
-                            {'message': _('''The product {produ} \
+                            {'message': _('''The product or invoice {produ} \
                                                 was not found
                                             '''.format(produ=product.
                                                        encode('utf-8',
