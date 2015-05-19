@@ -424,14 +424,9 @@ class returned_lines_from_serial(models.TransientModel):
 
                 if invoices:
                     searched = [inv for inv in invoices.invoice_line]
-                    actual_ids = lines_list_id[0][2]
 
                     line_new_ids = [line.id for line in searched]
-                    if actual_ids:
-                        line_ids = list(set(line_ids + actual_ids +
-                                            line_new_ids))
-                    else:
-                        line_ids = list(set(line_ids + line_new_ids))
+                    line_ids = list(set(line_ids + line_new_ids))
 
                     searched = invoice_line_obj.browse(line_ids)
                 else:
