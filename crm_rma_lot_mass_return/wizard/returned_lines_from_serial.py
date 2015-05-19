@@ -368,11 +368,6 @@ class returned_lines_from_serial(models.TransientModel):
                                  'status of the product '
                                  'loaded(Name and quantity)')
 
-    total_counted = fields.Integer("Quantity Scanned",
-                                   help='Total quantity of products '
-                                   'scanned, ready to move into '
-                                   'to the current pack')
-
     @api.multi
     def get_metasearch_view_brw(self):
         """
@@ -402,10 +397,10 @@ class returned_lines_from_serial(models.TransientModel):
             }
 
     @api.multi
-    def onchange_load_products(self, products, lines_list_id, context=None):
+    def onchange_load_products(self, input_data, lines_list_id, context=None):
         context = context or None
         new_pro = ''
-        for np in products and products.split('\n') or []:
+        for np in input_data and input_data.split('\n') or []:
             if '*' in np:
                 comput = np.split('*')
                 if comput[1].isdigit():
@@ -415,10 +410,9 @@ class returned_lines_from_serial(models.TransientModel):
             else:
                 new_pro = np.strip() and \
                     (new_pro + np.strip() + '\n') or new_pro
-        prod = Counter(products and new_pro.split('\n') or [])
+        prod = Counter(input_data and new_pro.split('\n') or [])
         mes = ''
         ids_data = ''
-        total_qty = []
         all_prod = {}
         line_ids = []
         for product in prod or []:
@@ -462,7 +456,6 @@ class returned_lines_from_serial(models.TransientModel):
                             else:
                                 all_prod.update({line_id: prod[product]})
 
-                        total_qty.append(prod[product])
                 else:
                     return {'warning':
                             {'message': _('''The product {produ} \
@@ -473,8 +466,7 @@ class returned_lines_from_serial(models.TransientModel):
                                                        ))},
                             'value':
                             {'scan_data': '\n'.join(
-                                products.split('\n')[0:-1])}}
-        total_counted = sum(total_qty)
+                                input_data.split('\n')[0:-1])}}
         for line in all_prod:
             name = line.split('+')
             mes = mes + '{0} \t {1}\n'.format(name[1],
@@ -484,7 +476,6 @@ class returned_lines_from_serial(models.TransientModel):
         res = {'value': {'lines_id': [(6, 0, line_ids)],
                          'current_status': mes,
                          'scaned_data': ids_data,
-                         'total_counted': total_counted,
                          },
                'domain': {'lines_list_id': [('id', 'in', line_ids)]}
                }
