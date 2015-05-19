@@ -78,186 +78,10 @@ class returned_lines_from_serial(models.TransientModel):
             # 'warning' : warranty['value']['warning'],
         })
 
-    # Method to create return lines
-    @api.model
-    def add_return_lines(self):
-        # Refactor code : create 1 "createmethode" called by each if with
-        # values as parameters
-        product_obj = self.env['product.product']
-        context = self._context
-
-        for result in self:
-            for num in xrange(1, 6):
-                prodlot_id = False
-                if result:
-                    # deleted by problems in pylint
-                    # exec("prodlot_id = result.prodlot_id_"
-                    # + str(num) + ".id")
-                    if num == 1:
-                        prodlot_id = result.prodlot_id_1.id
-                    elif num == 2:
-                        prodlot_id = result.prodlot_id_2.id
-                    elif num == 3:
-                        prodlot_id = result.prodlot_id_3.id
-                    elif num == 4:
-                        prodlot_id = result.prodlot_id_4.id
-                    else:
-                        prodlot_id = result.prodlot_id_5.id
-                if prodlot_id:
-                    product_id = \
-                        self.get_product_id(prodlot_id)
-                    product_brw = product_obj.browse(product_id)
-                    qty = 0.0
-                    # deleted by problems in pylint
-                    # claim_origine = eval("result.claim_" + str(num))
-                    # exec("qty = result.qty_" + str(num))
-                    if num == 1:
-                        qty = result.qty_1
-                        claim_origine = result.claim_1
-                    elif num == 2:
-                        qty = result.qty_2
-                        claim_origine = result.claim_2
-                    elif num == 3:
-                        qty = result.qty_3
-                        claim_origine = result.claim_3
-                    elif num == 4:
-                        qty = result.qty_4
-                        claim_origine = result.claim_4
-                    else:
-                        qty = result.qty_5
-                        claim_origine = result.claim_5
-
-                    self.create_claim_line(context['active_id'],
-                                           claim_origine,
-                                           product_brw,
-                                           prodlot_id,
-                                           qty
-                                           )
-
     # If "Cancel" button pressed
     @api.multi
     def action_cancel(self):
         return {'type': 'ir.actions.act_window_close'}
-
-    # If "Add & new" button pressed
-    @api.multi
-    def action_add_and_new(self):
-        self.add_return_lines()
-        return {
-            'context': self._context,
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'returned_lines_from_serial.wizard',
-            'view_id': False,
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
-
-    # If "Add & close" button pressed
-    @api.multi
-    def action_add_and_close(self):
-        self.add_return_lines()
-        return {'type': 'ir.actions.act_window_close'}
-
-    prodlot_id_1 = fields.Many2one('stock.production.lot',
-                                   'Serial / Lot Number 1',
-                                   )
-
-    prodlot_id_2 = fields.Many2one('stock.production.lot',
-                                   'Serial / Lot Number 2')
-
-    prodlot_id_3 = fields.Many2one('stock.production.lot',
-                                   'Serial / Lot Number 3')
-
-    prodlot_id_4 = fields.Many2one('stock.production.lot',
-                                   'Serial / Lot Number 4')
-
-    prodlot_id_5 = fields.Many2one('stock.production.lot',
-                                   'Serial / Lot Number 5')
-
-    qty_1 = fields.Float('Quantity 1',
-                         default=lambda *a: 1.0,
-                         digits=(12, 2))
-
-    qty_2 = fields.Float('Quantity 2',
-                         default=lambda *a: 1.0,
-                         digits=(12, 2))
-
-    qty_3 = fields.Float('Quantity 3',
-                         default=lambda *a: 1.0,
-                         digits=(12, 2))
-
-    qty_4 = fields.Float('Quantity 4',
-                         default=lambda *a: 1.0,
-                         digits=(12, 2))
-
-    qty_5 = fields.Float('Quantity 5',
-                         default=lambda *a: 1.0,
-                         digits=(12, 2))
-
-    claim_1 = fields.Selection([('none', 'Not specified'),
-                                ('legal', 'Legal retractation'),
-                                ('cancellation', 'Order cancellation'),
-                                ('damaged', 'Damaged delivered product'),
-                                ('error', 'Shipping error'),
-                                ('exchange', 'Exchange request'),
-                                ('lost', 'Lost during transport'),
-                                ('other', 'Other')], 'Claim Subject',
-                                                     default=lambda *a: "none",
-                                                     help="To describe"
-                                                     " the product problem")
-
-    claim_2 = fields.Selection([('none', 'Not specified'),
-                                ('legal', 'Legal retractation'),
-                                ('cancellation', 'Order cancellation'),
-                                ('damaged', 'Damaged delivered product'),
-                                ('error', 'Shipping error'),
-                                ('exchange', 'Exchange request'),
-                                ('lost', 'Lost during transport'),
-                                ('other', 'Other')], 'Claim Subject',
-                                                     default=lambda *a: "none",
-                                                     help="To describe the"
-                                                     " line product"
-                                                     " problem")
-
-    claim_3 = fields.Selection([('none', 'Not specified'),
-                                ('legal', 'Legal retractation'),
-                                ('cancellation', 'Order cancellation'),
-                                ('damaged', 'Damaged delivered product'),
-                                ('error', 'Shipping error'),
-                                ('exchange', 'Exchange request'),
-                                ('lost', 'Lost during transport'),
-                                ('other', 'Other')], 'Claim Subject',
-                                                     default=lambda *a: "none",
-                                                     help="To describe the"
-                                                     " line product"
-                                                     " problem")
-
-    claim_4 = fields.Selection([('none', 'Not specified'),
-                                ('legal', 'Legal retractation'),
-                                ('cancellation', 'Order cancellation'),
-                                ('damaged', 'Damaged delivered product'),
-                                ('error', 'Shipping error'),
-                                ('exchange', 'Exchange request'),
-                                ('lost', 'Lost during transport'),
-                                ('other', 'Other')], 'Claim Subject',
-                                                     default=lambda *a: "none",
-                                                     help="To describe the"
-                                                     " line product"
-                                                     " problem")
-
-    claim_5 = fields.Selection([('none', 'Not specified'),
-                                ('legal', 'Legal retractation'),
-                                ('cancellation', 'Order cancellation'),
-                                ('damaged', 'Damaged delivered product'),
-                                ('error', 'Shipping error'),
-                                ('exchange', 'Exchange request'),
-                                ('lost', 'Lost during transport'),
-                                ('other', 'Other')], 'Claim Subject',
-                                                     default=lambda *a: "none",
-                                                     help="To describe "
-                                                     "the line product"
-                                                     " problem")
 
     partner_id = fields.Many2one('res.partner',
                                  'Partner',
@@ -437,7 +261,7 @@ class returned_lines_from_serial(models.TransientModel):
                         item_name = item.product_id \
                             and item.product_id.name or item.name
                         line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                            pname=item_name)
+                                                         pname=item_name)
                         if line_id in all_prod:
                             all_prod.\
                                 update({line_id: all_prod[line_id] +
@@ -494,7 +318,7 @@ class returned_lines_from_serial(models.TransientModel):
                                    product_brw,
                                    prodlot_id, 1, inv_brw)
 
-        return {'type': 'ir.actions.act_window_close'}
+        self.action_cancel()
 
     @api.multi
     def change_list(self, lines):
