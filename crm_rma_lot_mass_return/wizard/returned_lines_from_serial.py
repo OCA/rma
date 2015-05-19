@@ -341,10 +341,6 @@ class returned_lines_from_serial(models.TransientModel):
 
         return False
 
-    l_storage = fields.Text('Storage',
-                            help='Field used to avoid use sql for every '
-                            'product loaded')
-
     lines_list_id = fields.Many2many('account.invoice.line',
                                      'account_invoice_line_returned_wizard',
                                      'wizard_id',
@@ -359,17 +355,6 @@ class returned_lines_from_serial(models.TransientModel):
                                 help='Field used to load the ids of '
                                      'invoice lines in invoices writed')
 
-    current_tracking_id = fields.Many2one('stock.quant.package',
-                                          string='Current Pack',
-                                          help='Used to set the current '
-                                          'package where your products '
-                                          'are been stored')
-
-    last_tracking_id = fields.Many2one('stock.quant.package',
-                                       help='Used to set the last package '
-                                       'where your products were stored '
-                                       'before thethe current pack')
-
     scan_data = fields.Text('Products',
                             help='Field used to load and show the '
                             'products')
@@ -382,17 +367,6 @@ class returned_lines_from_serial(models.TransientModel):
                                  help='Field used to show the current '
                                  'status of the product '
                                  'loaded(Name and quantity)')
-
-    total_products = fields.Integer("Total",
-                                    help='Computation resulted '
-                                    'of the sum the products '
-                                    'packaged in the current '
-                                    'package and the currently '
-                                    'products scanned without package')
-
-    product_packaged = fields.Integer("Quantity Packaged",
-                                      help='Total quantity of products '
-                                      'packaged, in the current pack')
 
     total_counted = fields.Integer("Quantity Scanned",
                                    help='Total quantity of products '

@@ -81,7 +81,6 @@
                                 <div class="panel-heading">
                                     <h2><field name="partner_id" readonly="1"/></h2>
                                     <group>
-                                        <field name="l_storage" invisible="1"/>
                                         <field name="scaned_data" invisible="1"/>
                                     </group>
                                 </div>
