@@ -18,5 +18,12 @@
         <field name="active">1</field>
     </record>
 
+    <record id="crm_claim_stage_draft" model="crm.claim.stage">
+       <field name="name">Draft</field>
+       <field name="sequence">1</field>
+       <field name="claim_common" eval="True"/>
+       <field name="case_default" eval="True"/>
+    </record>
+
     </data>
 </openerp>
