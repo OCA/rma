@@ -488,9 +488,9 @@ class crm_claim(models.Model):
     stage_id = fields.Many2one('crm.claim.stage',
                                'Stage',
                                track_visibility='onchange',
-                               domain="['|', '|', '|',('section_ids', '=', "
+                               domain="[ '&','|',('section_ids', '=', "
                                "section_id), ('case_default', '=', True), "
-                               "('claim_type', '=', claim_type)"
+                               "'|',('claim_type', '=', claim_type)"
                                ",('claim_common', '=', True)]")
 
     claim_line_ids = fields.One2many('claim.line', 'claim_id',

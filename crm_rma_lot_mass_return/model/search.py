@@ -22,5 +22,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import crm_claim_rma
-from . import search
+from openerp import models, api
+
+
+class crm_claim(models.Model):
+
+    _inherit = 'crm.claim'
+
+    @api.multi
+    def render_metasearch_view(self):
+        context = self._context.copy()
+        context.update({
+            'active_model': self._name,
+            'active_ids': self.ids,
+            'active_id': len(self.ids) and self.ids[0] or False,
+        })
+        created_id = self.env['returned_lines_from_serial.wizard'].\
+            with_context(context).\
+            create({'claim_id': len(self.ids) and self.ids[0] or False})
+        return created_id.render_metasearch_view()

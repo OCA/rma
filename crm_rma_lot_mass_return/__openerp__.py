@@ -49,6 +49,7 @@ his author to be.
     'data': [
         'wizard/returned_lines_from_serial_wizard_view.xml',
         'crm_rma_view.xml',
+        'view/search_view.xml',
         ],
     'installable': True,
     'application': True,
