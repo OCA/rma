@@ -266,17 +266,17 @@ class returned_lines_from_serial(models.TransientModel):
                         element_searched = invoice_line_obj.\
                             browse(invoice_line_move_id)
 
-                    for item in element_searched:
-                        item_name = item.product_id \
-                            and item.product_id.name or item.name
-                        line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                         pname=item_name)
-                        if line_id in all_prod:
-                            all_prod.\
-                                update({line_id: all_prod[line_id] +
-                                        data[product]})
-                        else:
-                            all_prod.update({line_id: data[product]})
+                        for item in element_searched:
+                            item_name = item.product_id \
+                                and item.product_id.name or item.name
+                            line_id = '{pid}+{pname}'.format(pid=item.id,
+                                                             pname=item_name)
+                            if line_id in all_prod:
+                                all_prod.\
+                                    update({line_id: all_prod[line_id] +
+                                            data[product]})
+                            else:
+                                all_prod.update({line_id: data[product]})
 
                 if not element_searched:
                     return {'warning':
