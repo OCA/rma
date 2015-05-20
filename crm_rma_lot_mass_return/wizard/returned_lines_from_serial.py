@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 #########################################################################
-#                                                                       #
-#                                                                       #
+#    Module Writen to OpenERP, Open Source Management Solution
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
+#    All Rights Reserved
+# ############ Credits ##################################################
+#    Coded by: Yanina Aular <yani@vauxoo.com>
+#    Planified by: Yanina Aular <yani@vauxoo.com>
+#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #########################################################################
 #                                                                       #
 # Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
@@ -222,26 +227,30 @@ class returned_lines_from_serial(models.TransientModel):
 
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id, context=None):
+        """
+        To load products or invoice lines for the claim lines
+        """
         context = context or None
         invoice_obj = self.env['account.invoice']
         invoice_line_obj = self.env['account.invoice.line']
-        new_pro = ''
+        new_input_data = ''
         for np in input_data and input_data.split('\n') or []:
             if '*' in np:
                 comput = np.split('*')
                 if comput[1].isdigit():
-                    new_pro = new_pro + int(comput[1])*(comput[0]+'\n')
+                    new_input_data = new_input_data + \
+                        int(comput[1])*(comput[0]+'\n')
                 else:
-                    new_pro = new_pro + np + '\n'
+                    new_input_data = new_input_data + np + '\n'
             else:
-                new_pro = np.strip() and \
-                    (new_pro + np.strip() + '\n') or new_pro
-        prod = Counter(input_data and new_pro.split('\n') or [])
+                new_input_data = np.strip() and \
+                    (new_input_data + np.strip() + '\n') or new_input_data
+        data = Counter(input_data and new_input_data.split('\n') or [])
         mes = ''
         ids_data = ''
         all_prod = {}
         line_ids = []
-        for product in prod or []:
+        for product in data or []:
             if product:
                 invoices = invoice_obj.search([('number', '=', product)])
 
@@ -265,9 +274,9 @@ class returned_lines_from_serial(models.TransientModel):
                         if line_id in all_prod:
                             all_prod.\
                                 update({line_id: all_prod[line_id] +
-                                        prod[product]})
+                                        data[product]})
                         else:
-                            all_prod.update({line_id: prod[product]})
+                            all_prod.update({line_id: data[product]})
 
                 if not element_searched:
                     return {'warning':
@@ -306,18 +315,15 @@ class returned_lines_from_serial(models.TransientModel):
             inv_recs += self.lines_list_id
 
         for inv_brw in inv_recs:
-
             product_brw = inv_brw.product_id
+            prodlot_id = False
             if inv_brw.move_id:
                 prodlot_id = inv_brw.move_id.quant_ids[0].lot_id.id
-            else:
-                prodlot_id = False
 
             self.create_claim_line(context.get('active_id'),
                                    'none',
                                    product_brw,
                                    prodlot_id, 1, inv_brw)
-
         self.action_cancel()
 
     @api.multi
