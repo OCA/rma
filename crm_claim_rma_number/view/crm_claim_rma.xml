@@ -60,5 +60,16 @@
         </field>
     </record>
 
+    <record id="crm_claim_line_tree_type_view_inherited_xml" model="ir.ui.view">
+        <field name="name">crm.claim.line.tree.type.view.inherited.xml</field>
+        <field name="model">claim.line</field>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_line_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="number"/>
+            </xpath>
+        </field>
+    </record>
+
     </data>
 </openerp>
