@@ -13,7 +13,7 @@
                     <field name="company_registry" position="after">
                         <separator string="Crm product return address" colspan="4"/>
                         <field name="crm_return_address_id"/>
-                    </field> 
+                    </field>
                 </data>
             </field>
         </record>
