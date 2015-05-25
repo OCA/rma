@@ -481,23 +481,6 @@ class crm_claim(orm.Model):
         'warehouse_id': _get_default_warehouse,
     }
 
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
-                                    context=None):
-        res = super(crm_claim, self
-                    ).onchange_partner_address_id(cr, uid, ids, add,
-                                                  email=email)
-        if add:
-            if (not res['value']['email_from']
-                    or not res['value']['partner_phone']):
-                partner_obj = self.pool.get('res.partner')
-                address = partner_obj.browse(cr, uid, add, context=context)
-                for other_add in address.partner_id.address:
-                    if other_add.email and not res['value']['email_from']:
-                        res['value']['email_from'] = other_add.email
-                    if other_add.phone and not res['value']['partner_phone']:
-                        res['value']['partner_phone'] = other_add.phone
-        return res
-
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
                             claim_type, claim_date, company_id, lines,
                             create_lines=False, context=None):
