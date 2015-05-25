@@ -160,6 +160,29 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
+            <field name="stage_id" position="before">
+                <button name="%(action_claim_picking_in)d"
+                        type="action" string="New Products Return"
+                        attrs="{'invisible': [('partner_id','=', False)]}"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                <button name="%(action_claim_picking_out)d"
+                        type="action" string="New Delivery"
+                        attrs="{'invisible': [('partner_id','=', False)]}"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                <button name="%(account.action_account_invoice_refund)d"
+                        type='action' string='New Refund'
+                        attrs="{'invisible': [('invoice_id','=', False)]}"
+                        context="{
+                            'invoice_ids': [invoice_id],
+                            'claim_line_ids': claim_line_ids,
+                            'description': name,
+                            'claim_id': id,
+                            }"/>
+            </field>
             <page string="Follow Up" position="before">
                 <page string="Claimed Items">
                     <group name="Claimed Items">
@@ -223,29 +246,6 @@
                                 </sheet>
                             </form>
                         </field>
-                    </group>
-                    <group col="4" colspan="4">
-                        <separator string="Action" colspan="4" />
-                        <button name="%(action_claim_picking_in)d"
-                                string="New Products Return"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
-
-                        <button name="%(action_claim_picking_out)d"
-                                string="New Delivery"
-                                type="action" target="new"
-                                context="{'warehouse_id': warehouse_id,
-                                    'partner_id': partner_id}"/>
-
-                        <button name="%(account.action_account_invoice_refund)d"
-                                type='action' string='New Refund'
-                                icon="gtk-execute" context="{
-                                    'invoice_ids': [invoice_id],
-                                    'claim_line_ids': claim_line_ids,
-                                    'description': name,
-                                    'claim_id': id,
-                                    }"/>
                     </group>
                 </page>
                 <page string="Generated Documents">
@@ -317,35 +317,35 @@
                     <field name="name" />
                     <field name="date" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, False, context)"/>
                 </field>
-                <xpath expr="//sheet[@string='Claims']/group[1]" position="inside">
-                    <div class="oe_right oe_button_box" name="buttons">
+                <xpath expr="//sheet[@string='Claims']/group[1]" position="after">
+                    <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
                         <button name="%(act_crm_claim_rma_sale_orders)d" type="action"
-                                string="Quotations and Sales"
+                                string="Quotations/Sales" class="oe_stat_button" icon="fa-strikethrough"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button name="%(act_crm_claim_rma_invoice_out)d" type="action"
-                                string="Customer Invoices"
+                                string="Invoices" class="oe_stat_button" icon="fa-pencil-square-o"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button name="%(act_crm_claim_rma_refunds_out)d" type="action"
-                                string="Customer Refunds"
+                                string="Refunds" class="oe_stat_button" icon="fa-pencil-square-o"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button name="%(act_crm_claim_rma_invoice_in)d" type="action"
-                                string="Supplier Invoices"
+                                string="Invoices" class="oe_stat_button" icon="fa-pencil-square-o"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button name="%(act_crm_claim_rma_refunds_in)d" type="action"
-                                string="Supplier Refunds"
+                                string="Refunds" class="oe_stat_button" icon="fa-pencil-square-o"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button name="%(act_crm_claim_rma_pickings)d" type="action"
-                                string="Deliveries and returns"
+                                string="Deliveries/Returns" class="oe_stat_button" icon="fa-arrows-v"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
                                 context="{'search_default_claim_id': active_id,'search_default_user_id':False}"
                                />

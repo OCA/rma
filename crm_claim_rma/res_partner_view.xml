@@ -7,7 +7,7 @@
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
         <tree string="Contacts">
-          <field name="name"/>
+          <field name="display_name"/>
           <field name="function" invisible="1"/>
           <field name="street"/>
           <field name="zip"/>
