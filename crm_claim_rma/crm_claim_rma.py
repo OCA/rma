@@ -119,7 +119,7 @@ class claim_line(orm.Model):
             help="Quantity of product returned"),
         'unit_sale_price': fields.float(
             'Unit sale price', digits=(12, 2),
-            help="Unit sale price of the product. Auto filled if retrun done "
+            help="Unit sale price of the product. Auto filled if return done "
                  "by invoice selection. Be careful and check the automatic "
                  "value as don't take into account previous refunds, invoice "
                  "discount, can be for 0 if product for free,..."),
@@ -466,7 +466,7 @@ class crm_claim(orm.Model):
         'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
         'invoice_id': fields.many2one(
             'account.invoice', string='Invoice',
-            help='Related original Cusotmer invoice'),
+            help='Related original Customer invoice'),
         'delivery_address_id': fields.many2one(
             'res.partner', string='Partner delivery address',
             help="This address will be used to deliver repaired or replacement"

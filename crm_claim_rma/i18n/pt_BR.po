@@ -394,7 +394,7 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: help:crm.claim,invoice_id:0
-msgid "Related original Cusotmer invoice"
+msgid "Related original Customer invoice"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -575,7 +575,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,unit_sale_price:0
 msgid ""
-"Unit sale price of the product. Auto filled if retrun done by invoice "
+"Unit sale price of the product. Auto filled if return done by invoice "
 "selection. Be careful and check the automatic value as don't take into "
 "account previous refunds, invoice discount, can be for 0 if product for "
 "free,..."
