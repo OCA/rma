@@ -76,7 +76,6 @@ class returned_lines_from_serial(models.TransientModel):
             self.prodlot_2_invoice_line(prodlot_id),
             'product_returned_quantity': qty,
             'prodlot_id': prodlot_id,
-            'selected': False,
             'state': 'draft',
             # 'guarantee_limit' :
             # warranty['value']['guarantee_limit'],

@@ -106,14 +106,14 @@ class crm_claim(models.Model):
                         #                         '=',
                         #                         claim_line_id.product_id.id
                         #                         )])
-
                         claim_line_new = \
                             claim_line_id.copy({
                                 'claim_id': False,
-                                # 'number': '/',
-                                'claim_type': self.env.ref('crm_claim_rma.'
-                                                           'crm_claim_type'
-                                                           '_supplier'),
+                                'number': '/',
+                                'claim_type':
+                                self.env.ref('crm_claim_rma_config.'
+                                             'crm_claim_type'
+                                             '_supplier').id,
                                 'claim_line_id': claim_line_id.id,
                                 # 'state': 'draft',
                                 # 'invoice_id': claim_line_id.
