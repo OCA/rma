@@ -2,8 +2,9 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion,
+#    Author: Emmanuel Samyn, Raphaël Valyi,
+#            Sébastien Beau, Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,9 +20,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-#import returned_lines_from_invoice
-#import picking_from_returned_lines
-#import refund_from_returned_lines
-#import exchange_from_returned_lines
-#import picking_from_exchange_lines
+
+# import returned_lines_from_invoice
+# import picking_from_returned_lines
+# import refund_from_returned_lines
+# import exchange_from_returned_lines
+# import picking_from_exchange_lines
 from . import get_empty_serial

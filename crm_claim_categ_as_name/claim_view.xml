@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  crm_claim_categ_as_name for OpenERP
+  Copyright (C) 2012 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="crm_claim_rma_form_view_categ">
+        <field name="name">CRM - Claim product return Form</field>
+        <field name="model">crm.claim</field>
+        <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@string='Claim Description']/group/field[@name='categ_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="name" invisible="1" required="False"/>
+            </xpath>
+            <xpath expr="//field[@name='warehouse_id']" position="after">
+                <field name="categ_id" string='Name'/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>
