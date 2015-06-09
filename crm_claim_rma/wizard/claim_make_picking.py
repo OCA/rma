@@ -230,7 +230,7 @@ class claim_make_picking(orm.TransientModel):
                  'product_id': wizard_claim_line.product_id.id,
                  'product_uom_qty':
                     wizard_claim_line.product_returned_quantity,
-                 'product_uom': wizard_claim_line.product_id.uom_id.id,
+                 'product_uom': wizard_claim_line.product_uom.id,
                  'partner_id': partner_id,
                  'prodlot_id': wizard_claim_line.prodlot_id.id,
                  'picking_id': picking_id,

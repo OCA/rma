@@ -117,6 +117,7 @@ class claim_line(orm.Model):
         'product_returned_quantity': fields.float(
             'Quantity', digits=(12, 2),
             help="Quantity of product returned"),
+        'product_uom': fields.many2one('product.uom', 'UoM', required=True),
         'unit_sale_price': fields.float(
             'Unit sale price', digits=(12, 2),
             help="Unit sale price of the product. Auto filled if return done "
@@ -316,13 +317,19 @@ class claim_line(orm.Model):
             # if we have a claim_id, we get the info from there,
             # otherwise we get it from the args (on creation typically)
             return {}
-        if not (product_id and invoice_line_id):
-            return {}
+        values = {}
+
         product_obj = self.pool['product.product']
         claim_obj = self.pool['crm.claim']
         invoice_line_obj = self.pool['account.invoice.line']
         claim_line_obj = self.pool.get('claim.line')
-        product = product_obj.browse(cr, uid, product_id, context=context)
+
+        if product_id:
+            product = product_obj.browse(cr, uid, product_id, context=context)
+            values['product_uom'] = product.uom_id.id
+        if not (product_id and invoice_line_id):
+            return {'value': values}
+
         invoice_line = invoice_line_obj.browse(cr, uid, invoice_line_id,
                                                context=context)
         invoice = invoice_line.invoice_id
@@ -340,7 +347,6 @@ class claim_line(orm.Model):
             warehouse = warehouse_obj.browse(cr, uid, warehouse_id,
                                              context=context)
 
-        values = {}
         try:
             warranty = claim_line_obj._warranty_limit_values(
                 cr, uid, [], invoice,
@@ -535,6 +541,7 @@ class crm_claim(orm.Model):
                     'invoice_line_id': invoice_line.id,
                     'product_id': invoice_line.product_id.id,
                     'product_returned_quantity': invoice_line.quantity,
+                    'product_uom': invoice_line.uos_id.id,
                     'unit_sale_price': invoice_line.price_unit,
                     'location_dest_id': location_dest_id,
                     'state': 'draft',

@@ -54,6 +54,8 @@ class test_picking_creation(common.TransactionCase):
                 'name': 'TEST CLAIM LINE',
                 'claim_origine': 'none',
                 'product_id': self.product_id.id,
+                'product_returned_quantity': 3,
+                'product_uom': self.product_id.uom_id.id,
                 'claim_id': self.claim_id.id,
                 'location_dest_id': self.warehouse_id.lot_stock_id.id,
             })
@@ -111,3 +113,14 @@ class test_picking_creation(common.TransactionCase):
                           "Incorrect source location")
         self.assertEquals(picking.location_dest_id, self.customer_location_id,
                           "Incorrect destination location")
+
+        self.assertEquals(len(picking.move_lines), 1,
+                          "Incorrect number of stock moves created")
+        move = picking.move_lines[0]
+        self.assertEquals(move.product_id, self.claim_line_id.product_id,
+                          "Incorrect product on move")
+        self.assertEquals(move.product_uom,
+                          self.claim_line_id.product_id.uom_id,
+                          "Incorrect uom on move")
+        self.assertEquals(move.product_qty, 3,
+                          "Incorrect quantity on move")

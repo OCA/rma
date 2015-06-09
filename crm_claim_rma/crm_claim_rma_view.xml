@@ -64,7 +64,8 @@
                     <field name="warranty_type"/>
                     <field name="warranty_return_partner"/>
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
-                    <field name="product_returned_quantity"/>
+                    <field name="product_returned_quantity" class="oe_inline"/>
+                    <field name="product_uom" class="oe_inline" groups="product.group_uom"/>
                     <field name="claim_origine"/>
                     <field name="refund_line_id"/>
                     <field name="move_in_id"/>
@@ -92,7 +93,11 @@
                     </div>
                     <group>
                         <group string="Claimed goods">
-                            <field name="product_returned_quantity"/>
+                            <label for="product_returned_quantity" string="Quantity"/>
+                            <div>
+                                <field name="product_returned_quantity" class="oe_inline"/>
+                                <field name="product_uom" class="oe_inline" groups="product.group_uom"/>
+                            </div>
                             <field name="product_id"
                               on_change="onchange_product_id(product_id, invoice_line_id, claim_id, False, False, False, False, context)"/>
                             <field name="prodlot_id"/>
@@ -209,7 +214,11 @@
                                     </div>
                                     <group>
                                         <group string="Claimed goods">
-                                            <field name="product_returned_quantity"/>
+                                            <label for="product_returned_quantity" string="Quantity"/>
+                                            <div>
+                                                <field name="product_returned_quantity" class="oe_inline"/>
+                                                <field name="product_uom" class="oe_inline" groups="product.group_uom"/>
+                                            </div>
                                             <field name="product_id"
                                               on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
                                             <field name="prodlot_id"/>
