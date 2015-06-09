@@ -53,7 +53,7 @@
             <field name="name">CRM - Claims Tree</field>
             <field name="model">claim.line</field>
             <field name="arch" type="xml">
-                <tree string="Returned lines">
+                <tree string="Claimed goods">
                     <field name="claim_id" invisible="1"/>
                     <field name="state"/>
                     <field name="substate_id"/>
@@ -91,7 +91,7 @@
                             </group>
                     </div>
                     <group>
-                        <group string="Returned good">
+                        <group string="Claimed goods">
                             <field name="product_returned_quantity"/>
                             <field name="product_id"
                               on_change="onchange_product_id(product_id, invoice_line_id, claim_id, False, False, False, False, context)"/>
@@ -161,9 +161,9 @@
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
             <page string="Follow Up" position="before">
-                <page string="Product Return">
-                    <group name="Product Return">
-                        <separator string="Product Return" colspan="4"/>
+                <page string="Claimed Items">
+                    <group name="Claimed Items">
+                        <separator string="Claimed Items" colspan="4"/>
                         <group>
                             <field name="company_id" invisible="1"/>
                             <field name="invoice_id" on_change="onchange_invoice_id(invoice_id, warehouse_id, claim_type, date, company_id, claim_line_ids, True, context)" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" />
@@ -185,7 +185,7 @@
                                             </group>
                                     </div>
                                     <group>
-                                        <group string="Returned good">
+                                        <group string="Claimed goods">
                                             <field name="product_returned_quantity"/>
                                             <field name="product_id"
                                               on_change="onchange_product_id(product_id, invoice_line_id, False, parent.company_id, parent.warehouse_id, parent.claim_type, parent.date, context)"/>
@@ -388,9 +388,9 @@
             <field name="view_type">form</field>
         </record>
     <!-- Menu -->
-        <menuitem name="Return lines" id="menu_crm_case_claims_claim_lines"
+        <menuitem name="Claim lines" id="menu_crm_case_claims_claim_lines"
             parent="base.menu_aftersale" action="act_crm_case_claim_lines" sequence="2"/>
-        <menuitem name="Returned line substates" id="menu_crm_case_claims_claim_line_substates"
+        <menuitem name="Claim line substates" id="menu_crm_case_claims_claim_line_substates"
             parent="crm_claim.menu_config_claim" action="act_crm_claim_substates" sequence="2"/>
      </data>
 </openerp>
