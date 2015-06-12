@@ -112,7 +112,7 @@ class crm_claim(models.Model):
 
     @api.v7
     def copy_data(self, cr, uid,
-                  id, default=None, context=None):  # pylint: disable=W0622
+                  ids, default=None, context=None):  # pylint: disable=W0622
         if default is None:
             default = {}
         std_default = {
@@ -122,5 +122,4 @@ class crm_claim(models.Model):
         }
         std_default.update(default)
         return super(crm_claim, self).copy_data(
-            cr, uid, id, default=std_default, context=context)
-
+            cr, uid, ids, default=std_default, context=context)
