@@ -413,11 +413,6 @@ class crm_claim(models.Model):
                OR ("number" = '/');
         """)
 
-    def _get_sequence_number(self, cr, uid, context=None):
-        seq_obj = self.pool.get('ir.sequence')
-        res = seq_obj.get(cr, uid, 'crm.claim.rma', context=context) or '/'
-        return res
-
     @api.model
     def _get_default_warehouse(self):
         # TODO must be an smarter method
@@ -440,26 +435,6 @@ class crm_claim(models.Model):
             number = claim.number and str(claim.number) or ''
             res.append((claim.id, '[' + number + '] ' + claim.name))
         return res
-
-    def create(self, cr, uid, vals, context=None):
-        if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number(cr, uid,
-                                                       context=context)
-        new_id = super(crm_claim, self).create(cr, uid, vals, context=context)
-        return new_id
-
-    def copy_data(self, cr, uid,
-                  id, default=None, context=None):  # pylint: disable=W0622
-        if default is None:
-            default = {}
-        std_default = {
-            'invoice_ids': False,
-            'picking_ids': False,
-            'number': self._get_sequence_number(cr, uid, context=context),
-        }
-        std_default.update(default)
-        return super(crm_claim, self).copy_data(
-            cr, uid, id, default=std_default, context=context)
 
     company_id = fields.Many2one(
         change_default=True,
