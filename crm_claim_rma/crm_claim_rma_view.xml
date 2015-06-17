@@ -168,7 +168,7 @@
         <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="replace">
-                <field name="categ_id" />
+                <field name="categ_id" invisible="1"/>
             </xpath>
         </field>
     </record>
@@ -203,21 +203,24 @@
                             'claim_id': id,
                             }"/>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_phone']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//page[@string='Claim Description']//group[1]" position="inside">
+                <field name="delivery_address_id"
+                    context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
+            </xpath>
             <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
+                    <div name="serial">
+                        <!-- Place for mass return button from crm_rma_lot_mass_return -->
+                    </div>
                 <separator colspan="2" string="Product Returns"/>
-                    <group colspan="6">
-                        <field name="invoice_id"
-                            on_change="onchange_invoice_id(invoice_id,warehouse_id,context)"
-                            domain="['|',('commercial_partner_id','=',partner_id),
-                            ('partner_id','=',partner_id)]" />
-                        <field name="delivery_address_id"
-                            context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
-                    </group>
-                    <group>
-                        <div class="oe_button_box oe_right" name="serial">
-                            <!-- Place for mass return button from crm_rma_lot_mass_return -->
-                        </div>
-                    </group>
                     <field name="claim_line_ids" editable="top"/>
             </xpath>
             <xpath expr="//page[@string='Claim Description']" position="after">
@@ -227,6 +230,12 @@
                     <separator colspan="2" string="Receptions / Deliveries"/>
                     <field name="picking_ids" colspan="4" readonly="1"/>
                 </page>
+            </xpath>
+            <xpath expr="//separator[@string='Responsibilities']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='user_fault']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="replace">
             </xpath>
         </field>
     </record>
