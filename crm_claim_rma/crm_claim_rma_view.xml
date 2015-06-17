@@ -237,6 +237,11 @@
             </xpath>
             <xpath expr="//field[@name='ref']" position="replace">
             </xpath>
+            <xpath expr="//page[@string='Follow Up']" position="replace">
+            </xpath>
+            <xpath expr="//separator[@string='Claim/Action Description']" position="attributes">
+                <attribute name="string">Claim Description</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -306,7 +311,6 @@
                 <field name="date" position="replace">
                 </field>
                 <field name="user_id" position="before">
-                    <field name="name" />
                     <field name="date"/>
                 </field>
                 <xpath expr="//sheet[@string='Claims']/group[1]" position="before">

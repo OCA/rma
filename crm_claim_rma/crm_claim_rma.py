@@ -448,6 +448,11 @@ class crm_claim(models.Model):
                          help="Company internal "
                          "claim unique number")
 
+    name = fields.Char(related='number', readonly=True,
+                       default="/",
+                       store=True,
+                       string="Name")
+
     @api.model
     def _get_claim_type_default(self):
         claim_type = self.env['crm.claim.type'].search([])
