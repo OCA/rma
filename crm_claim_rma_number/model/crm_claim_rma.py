@@ -109,3 +109,17 @@ class crm_claim(models.Model):
                                                        context=context)
         new_id = super(crm_claim, self).create(cur, uid, vals, context=context)
         return new_id
+
+    @api.v7
+    def copy_data(self, cr, uid,
+                  ids, default=None, context=None):  # pylint: disable=W0622
+        if default is None:
+            default = {}
+        std_default = {
+            'invoice_ids': False,
+            'picking_ids': False,
+            'number': '/',
+        }
+        std_default.update(default)
+        return super(crm_claim, self).copy_data(
+            cr, uid, ids, default=std_default, context=context)

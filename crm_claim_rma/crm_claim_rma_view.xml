@@ -124,8 +124,9 @@
                     </group>
                     <group>
                         <group string="Problem">
-                            <field name="claim_origine" nolabel="1" colspan="4"/>
-                            <field name="claim_descr" nolabel="1" colspan="4"/>
+                            <field name="claim_origine" colspan="2"/>
+                            <field name="claim_diagnosis" colspan="2"/>
+                            <field name="claim_descr" colspan="2"/>
                         </group>
                         <group string="Warranty">
                             <field name="guarantee_limit"/>
