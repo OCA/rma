@@ -23,13 +23,13 @@
 
 import calendar
 import math
+from openerp import api, SUPERUSER_ID
 from openerp.osv import fields, orm, osv
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
 from openerp.tools.translate import _
-from openerp import SUPERUSER_ID
 
 
 class InvoiceNoDate(Exception):
@@ -205,6 +205,7 @@ class claim_line(orm.Model):
     _defaults = {
         'state': 'draft',
         'name': 'none',
+        'product_returned_quantity': 1.0,
     }
 
     @staticmethod
@@ -486,6 +487,12 @@ class crm_claim(orm.Model):
         'claim_type': 'customer',
         'warehouse_id': _get_default_warehouse,
     }
+
+    @api.onchange('user_id')
+    @api.one
+    def onchange_user_id(self):
+        if self.user_id and self.user_id.default_section_id:
+            self.section_id = self.user_id.default_section_id
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
                             claim_type, claim_date, company_id, lines,
