@@ -252,35 +252,27 @@
         name="Quotations and Sales"
         res_model="sale.order"
         src_model="crm.claim"/>
-<!-- Right side link to invoices -->
+
         <act_window
-        domain="[('type', '=', 'out_invoice')]"
-        id="act_crm_claim_rma_invoice_out"
-        name="Customer Invoices"
+        id="act_crm_claim_rma_purchase_orders"
+        name="Purchases"
+        res_model="purchase.order"
+        src_model="crm.claim"/>
+
+        <act_window
+        domain="[('type', 'in', ('in_invoice', 'out_invoice'))]"
+        id="act_crm_claim_rma_invoice"
+        name="Invoices"
         res_model="account.invoice"
         src_model="crm.claim"/>
-<!-- Right side link to invoices -->
+
         <act_window
-        domain="[('type', '=', 'in_invoice')]"
-        id="act_crm_claim_rma_invoice_in"
-        name="Supplier Invoices"
+            domain="[('type', 'in', ('in_refund', 'out_refund'))]"
+        id="act_crm_claim_rma_refunds"
+        name="Refunds"
         res_model="account.invoice"
         src_model="crm.claim"/>
-<!-- Right side link to refunds -->
-        <act_window
-        domain="[('type', '=', 'out_refund')]"
-        id="act_crm_claim_rma_refunds_out"
-        name="Customer Refunds"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
-<!-- Right side link to refunds -->
-        <act_window
-        domain="[('type', '=', 'in_refund')]"
-        id="act_crm_claim_rma_refunds_in"
-        name="Supplier Refunds"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
-<!-- Right side link to picking in -->
+
         <act_window
         id="act_crm_claim_rma_picking_in"
         name="Incoming Shipment and Returns"
@@ -303,10 +295,6 @@
                     </group>
                 </xpath>
                 <field name="name" position="replace">
-                    <div class="oe_title">
-                        <label for="number" class="oe_edit_only"/>
-                        <h1><field name="number"/></h1>
-                    </div>
                 </field>
                 <field name="date" position="replace">
                 </field>
@@ -314,27 +302,42 @@
                     <field name="date"/>
                 </field>
                 <xpath expr="//sheet[@string='Claims']/group[1]" position="before">
+                    <div class="oe_title">
+                        <label for="number" class="oe_edit_only"/>
+                        <h1><field name="number"/></h1>
+                    </div>
                     <div class="oe_right oe_button_box" name="buttons">
                         <button class="oe_inline oe_stat_button"
                                 name="%(act_crm_claim_rma_sale_orders)d" type="action"
                                 icon="fa-strikethrough"
                                 string="Sales"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['supplier','other'])]}"
+                                attrs="{'invisible': ['|',('partner_id','=', False)]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button class="oe_inline oe_stat_button"
-                                name="%(act_crm_claim_rma_invoice_in)d" type="action"
-                                string="Invoices"
+                            name="%(act_crm_claim_rma_purchase_orders)d" type="action"
                                 icon="fa-shopping-cart"
-                                attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
+                                string="Purchases"
+                                attrs="{'invisible': ['|',('partner_id','=', False)]}"
                                 context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
                                />
                         <button class="oe_inline oe_stat_button"
-                                name="%(act_crm_claim_rma_refunds_in)d" type="action"
+                            name="%(act_crm_claim_rma_invoice)d" type="action"
+                                string="Invoices"
+                                icon="fa-pencil-square"
+                                attrs="{'invisible': ['|',('partner_id','=', False)]}"
+                                context="{'search_default_partner_id': [partner_id],
+                                'group_by':'type',
+                                'search_default_user_id':False}"
+                               />
+                        <button class="oe_inline oe_stat_button"
+                                name="%(act_crm_claim_rma_refunds)d" type="action"
                                 string="Refunds"
                                 icon="fa-file-text"
                                 attrs="{'invisible': ['|',('partner_id','=', False),('claim_type','in', ['customer','other'])]}"
-                                context="{'search_default_partner_id': [partner_id],'search_default_user_id':False}"
+                                context="{'search_default_partner_id': [partner_id],
+                                'group_by':'type',
+                                'search_default_user_id':False}"
                                />
                        <button  class="oe_inline oe_stat_button"
                                 icon="fa-reply"
