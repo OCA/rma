@@ -252,52 +252,27 @@
         name="Quotations and Sales"
         res_model="sale.order"
         src_model="crm.claim"/>
+
         <act_window
-            id="act_crm_claim_rma_purchase_orders"
-            name="Purchases"
-            res_model="purchase.order"
+        id="act_crm_claim_rma_purchase_orders"
+        name="Purchases"
+        res_model="purchase.order"
         src_model="crm.claim"/>
-<!-- Right side link to invoices -->
+
         <act_window
-        domain="[('type', '=', 'out_invoice')]"
-        id="act_crm_claim_rma_invoice_out"
-        name="Customer Invoices"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
-<!-- Right side link to invoices -->
-        <act_window
-        domain="[('type', '=', 'in_invoice')]"
-        id="act_crm_claim_rma_invoice_in"
-        name="Supplier Invoices"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
-        <act_window
-            domain="[('type', 'in', ('in_invoice', 'out_invoice'))]"
+        domain="[('type', 'in', ('in_invoice', 'out_invoice'))]"
         id="act_crm_claim_rma_invoice"
         name="Invoices"
         res_model="account.invoice"
         src_model="crm.claim"/>
-<!-- Right side link to refunds -->
-        <act_window
-        domain="[('type', '=', 'out_refund')]"
-        id="act_crm_claim_rma_refunds_out"
-        name="Customer Refunds"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
-<!-- Right side link to refunds -->
-        <act_window
-        domain="[('type', '=', 'in_refund')]"
-        id="act_crm_claim_rma_refunds_in"
-        name="Supplier Refunds"
-        res_model="account.invoice"
-        src_model="crm.claim"/>
+
         <act_window
             domain="[('type', 'in', ('in_refund', 'out_refund'))]"
         id="act_crm_claim_rma_refunds"
         name="Refunds"
         res_model="account.invoice"
         src_model="crm.claim"/>
-<!-- Right side link to picking in -->
+
         <act_window
         id="act_crm_claim_rma_picking_in"
         name="Incoming Shipment and Returns"
