@@ -23,7 +23,7 @@
 
 import calendar
 import math
-from openerp import api, SUPERUSER_ID
+from openerp import api, models, SUPERUSER_ID
 from openerp.osv import fields, orm, osv
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -42,7 +42,7 @@ class ProductNoSupplier(Exception):
     because the product has no supplier. """
 
 
-class substate_substate(orm.Model):
+class substate_substate(models.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
     _description = "substate that precise a given state"
@@ -54,7 +54,7 @@ class substate_substate(orm.Model):
     }
 
 
-class claim_line(orm.Model):
+class claim_line(models.Model):
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
@@ -424,7 +424,7 @@ class claim_line(orm.Model):
 
 # TODO add the option to split the claim_line in order to manage the same
 # product separately
-class crm_claim(orm.Model):
+class crm_claim(models.Model):
     _inherit = 'crm.claim'
 
     def _get_default_warehouse(self, cr, uid, context=None):
