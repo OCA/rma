@@ -73,19 +73,14 @@
                 <tree string="Returned lines">
                     <field name="claim_id" invisible="1"/>
                     <field name="state"/>
-                    <field name="substate_id"/>
                     <field name="product_id"/>
                     <field name="name"/>
                     <field name="prodlot_id"/>
                     <field name="warning"/>
                     <field name="warranty_type"/>
-                    <field name="warranty_return_partner"/>
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
-                    <field name="product_returned_quantity"/>
                     <field name="claim_origine"/>
-                    <field name="refund_line_id"/>
-                    <field name="move_in_id"/>
-                    <field name="move_out_id"/>
+                    <field name="claim_diagnosis"/>
                 </tree>
             </field>
         </record>
@@ -98,48 +93,37 @@
                 <form string="Claim Line" version="7.0">
                 <header>
                     <button name="set_warranty" string="Calculate warranty state" type="object" class="oe_highlight"/>
+                    <field name="state"
+                        widget="statusbar"/>
                 </header>
                 <sheet string="Claims">
-                    <div class="oe_title">
-                            <group>
-                                <label for="name" class="oe_edit_only"/>
-                                <h1><field name="name"/></h1>
-                            </group>
+                    <div class="oe_title" colspan="4">
+                        <group >
+                            <h1><field name="name" colspan="6" class="oe_inline"/></h1>
+                         </group>
                     </div>
-                    <group>
-                        <group string="Returned good">
-                            <field name="product_returned_quantity"/>
-                            <field name="product_id"/>
-                            <field name="prodlot_id"/>
-                            <field name="unit_sale_price"/>
-                            <field name="return_value"/>
-                        </group>
-                        <group string="Linked Document">
-                            <field name="claim_id" />
-                            <field name="invoice_line_id"/>
-                            <field name="refund_line_id"/>
-                            <field name="move_in_id"/>
-                            <field name="move_out_id"/>
-                        </group>
+                    <separator string="Problem" colspan="4"/>
+                    <group col="6" colspan="4">
+                        <field name="product_id" readonly="1" colspan="6"/>
+                        <field name="prodlot_id" readonly="1" colspan="6"/>
+                        <field name="claim_origine" colspan="6"/>
+                        <field name="claim_diagnosis" colspan="6"/>
+                        <field name="claim_descr" colspan="6"/>
                     </group>
                     <group>
-                        <group string="Problem">
-                            <field name="claim_origine" colspan="2"/>
-                            <field name="claim_diagnosis" colspan="2"/>
-                            <field name="claim_descr" colspan="2"/>
+                        <group string="Linked Document">
+                            <field name="claim_id" readonly="1"/>
+                            <field name="invoice_line_id" readonly="1"/>
+                            <field name="refund_line_id" readonly="1"/>
+                            <field name="move_in_id" readonly="1"/>
+                            <field name="move_out_id" readonly="1"/>
                         </group>
                         <group string="Warranty">
-                            <field name="guarantee_limit"/>
-                            <field name="warning"/>
+                            <field name="guarantee_limit" readonly="1"/>
+                            <field name="warning" readonly="1"/>
+                            <field name="warranty_type" readonly="1"/>
                             <field name="warranty_return_partner"/>
-                            <field name="warranty_type"/>
                         </group>
-                    </group>
-                    <separator string="State" colspan="4"/>
-                    <group col="6" colspan="4">
-                        <field name="state"/>
-                        <field name="substate_id" widget='selection' />
-                        <field name="last_state_change"/>
                     </group>
                 </sheet>
             </form>
