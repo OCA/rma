@@ -111,18 +111,18 @@
                         <field name="claim_descr" colspan="6"/>
                     </group>
                     <group>
+                        <group string="Warranty">
+                            <field name="guarantee_limit" readonly="1"/>
+                            <field name="warning" readonly="1"/>
+                            <field name="warranty_type" readonly="1"/>
+                            <field name="warranty_return_partner"/>
+                        </group>
                         <group string="Linked Document">
                             <field name="claim_id" readonly="1"/>
                             <field name="invoice_line_id" readonly="1"/>
                             <field name="refund_line_id" readonly="1"/>
                             <field name="move_in_id" readonly="1"/>
                             <field name="move_out_id" readonly="1"/>
-                        </group>
-                        <group string="Warranty">
-                            <field name="guarantee_limit" readonly="1"/>
-                            <field name="warning" readonly="1"/>
-                            <field name="warranty_type" readonly="1"/>
-                            <field name="warranty_return_partner"/>
                         </group>
                     </group>
                 </sheet>
