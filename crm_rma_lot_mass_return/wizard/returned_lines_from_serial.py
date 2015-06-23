@@ -67,7 +67,7 @@ class returned_lines_from_serial(models.TransientModel):
     def create_claim_line(self, claim_id, claim_origine,
                           product_brw, prodlot_id, qty, invline_brw=False):
         return_line = self.env['claim.line']
-        return_line.create({
+        line_rec = return_line.create({
             'claim_id': claim_id,
             'claim_origine': claim_origine,
             'product_id': product_brw and product_brw.id or False,
@@ -76,11 +76,8 @@ class returned_lines_from_serial(models.TransientModel):
             self.prodlot_2_invoice_line(prodlot_id),
             'product_returned_quantity': qty,
             'prodlot_id': prodlot_id,
-            # 'state': 'draft',
-            # 'guarantee_limit' :
-            # warranty['value']['guarantee_limit'],
-            # 'warning' : warranty['value']['warning'],
         })
+        line_rec.set_warranty()
 
     # If "Cancel" button pressed
     @api.multi
