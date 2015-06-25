@@ -483,6 +483,7 @@ class crm_claim(models.Model):
     picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA')
     invoice_id = fields.Many2one('account.invoice', string='Invoice',
                                  help='Related original Cusotmer invoice')
+    pick = fields.Boolean('Pick the product in store')
     delivery_address_id = fields.Many2one('res.partner',
                                           string='Partner delivery address',
                                           help="This address will be"
