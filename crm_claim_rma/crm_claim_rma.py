@@ -483,6 +483,7 @@ class crm_claim(models.Model):
     picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA')
     invoice_id = fields.Many2one('account.invoice', string='Invoice',
                                  help='Related original Cusotmer invoice')
+    pick = fields.Boolean('Pick the product in store')
     delivery_address_id = fields.Many2one('res.partner',
                                           string='Partner delivery address',
                                           help="This address will be"
@@ -501,23 +502,6 @@ class crm_claim(models.Model):
     #    ('number_uniq', 'unique(number, company_id)',
     #     'Number/Reference must be unique per Company!'),
     # ]
-
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
-                                    context=None):
-        res = super(crm_claim, self
-                    ).onchange_partner_address_id(cr, uid, ids, add,
-                                                  email=email)
-        if add:
-            if (not res['value']['email_from']
-                    or not res['value']['partner_phone']):
-                partner_obj = self.pool.get('res.partner')
-                address = partner_obj.browse(cr, uid, add, context=context)
-                for other_add in address.partner_id.address:
-                    if other_add.email and not res['value']['email_from']:
-                        res['value']['email_from'] = other_add.email
-                    if other_add.phone and not res['value']['partner_phone']:
-                        res['value']['partner_phone'] = other_add.phone
-        return res
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
                             context=None):
@@ -586,14 +570,6 @@ class crm_claim(models.Model):
             # because this imply modifying followers
             pass
         return recipients
-
-    @api.onchange('delivery_address_id')
-    def _fill_email_and_phone(self):
-        """
-        When the delivery address is set will add the email and phone data.
-        """
-        self.email_from = self.delivery_address_id.email
-        self.partner_phone = self.delivery_address_id.phone
 
 
 class crm_claim_stage(models.Model):

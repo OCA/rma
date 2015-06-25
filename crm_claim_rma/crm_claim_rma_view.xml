@@ -197,7 +197,10 @@
                 <attribute name="required">1</attribute>
             </xpath>
             <xpath expr="//page[@string='Claim Description']//group[1]" position="inside">
+                <field name="pick"/>
                 <field name="delivery_address_id"
+                    domain="[('id','child_of',partner_id)]"
+                    attrs="{'invisible': ['|',('pick','=', True)], 'required': [('pick','=', False)]}"
                     context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree', 'search_default_parent_id': partner_id}"/>
             </xpath>
             <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
