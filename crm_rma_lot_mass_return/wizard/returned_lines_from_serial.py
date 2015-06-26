@@ -230,7 +230,7 @@ class returned_lines_from_serial(models.TransientModel):
         invoice_obj = self.env['account.invoice']
         invoice_line_obj = self.env['account.invoice.line']
 
-        data_line = {}
+        data_line = []
         new_input_data = ''
         for np in input_data and input_data.split('\n') or []:
             if '*' in np:
@@ -242,23 +242,23 @@ class returned_lines_from_serial(models.TransientModel):
                    data_it_1 = comput[1]
                 if len(comput) >= 3:
                    data_it_2 = comput[2]
-                data_line[comput[0]] = (data_it_1, data_it_2)
+                data_line.append((comput[0], data_it_1, data_it_2))
 
                 new_input_data = comput[0].strip() and \
                     (new_input_data + comput[0].strip() + '\n') or new_input_data
             else:
-                data_line[np.strip()] = ( 0, '' )
+                data_line.append((np.strip(), 0, ''))
                 new_input_data = np.strip() and \
                     (new_input_data + np.strip() + '\n') or new_input_data
         data = Counter(input_data and new_input_data.split('\n') or [])
-        data_line.pop('')
+        # data_line.pop('')
         mes = ''
         ids_data = ''
-        all_prod = {}
+        all_prod = []
         line_ids = []
-        for product in data or []:
-            if product:
-                invoices = invoice_obj.search([('number', '=', product)])
+        for product in data_line or []:
+            if product[0]:
+                invoices = invoice_obj.search([('number', '=', product[0])])
 
                 element_searched = False
                 if invoices:
@@ -267,7 +267,7 @@ class returned_lines_from_serial(models.TransientModel):
                     line_ids = list(set(line_ids + line_new_ids))
                     element_searched = invoice_line_obj.browse(line_ids)
                 else:
-                    invoice_line_move_id = self.prodlot_2_invoice_line(product)
+                    invoice_line_move_id = self.prodlot_2_invoice_line(product[0])
                     if invoice_line_move_id:
                         element_searched = invoice_line_obj.\
                             browse(invoice_line_move_id)
@@ -277,18 +277,18 @@ class returned_lines_from_serial(models.TransientModel):
                                 and item.product_id.name or item.name
                             line_id = '{pid}+{pname}'.format(pid=item.id,
                                                              pname=item_name)
-                            if line_id in all_prod:
-                                all_prod.\
-                                    update({line_id: all_prod[line_id] +
-                                            data[product]})
-                            else:
-                                all_prod.update({line_id: data[product]})
+                            # if line_id in all_prod:
+                            #     all_prod.\
+                            #         update({line_id: all_prod[line_id] +
+                            #                 data[product]})
+                            # else:
+                            all_prod.append((line_id, 1))
 
                 if not element_searched:
                     return {'warning':
                             {'message': _('''The product or invoice {produ} \
                                                 was not found
-                                            '''.format(produ=product.
+                                            '''.format(produ=product[0].
                                                        encode('utf-8',
                                                               'ignore')
                                                        ))},
@@ -296,10 +296,10 @@ class returned_lines_from_serial(models.TransientModel):
                             {'scan_data': '\n'.join(
                                 input_data.split('\n')[0:-1])}}
         for line in all_prod:
-            name = line.split('+')
+            name = line[0].split('+')
             mes = mes + '{0} \t {1}\n'.format(name[1],
-                                              all_prod[line])
-            ids_data = ids_data + '{pid}\n'.format(pid=name[0])*all_prod[line]
+                                              line[1])
+            ids_data = ids_data + '{pid}\n'.format(pid=name[0])*line[1]
 
         res = {'value': {'lines_id': [(6, 0, line_ids)],
                          'current_status': mes,
