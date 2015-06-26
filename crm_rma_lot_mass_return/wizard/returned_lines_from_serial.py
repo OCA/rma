@@ -229,19 +229,29 @@ class returned_lines_from_serial(models.TransientModel):
         context = context or None
         invoice_obj = self.env['account.invoice']
         invoice_line_obj = self.env['account.invoice.line']
+
+        data_line = {}
         new_input_data = ''
         for np in input_data and input_data.split('\n') or []:
             if '*' in np:
+
                 comput = np.split('*')
-                if comput[1].isdigit():
-                    new_input_data = new_input_data + \
-                        int(comput[1])*(comput[0]+'\n')
-                else:
-                    new_input_data = new_input_data + np + '\n'
+                data_it_1 = 0
+                data_it_2 = ''
+                if len(comput) >= 2:
+                   data_it_1 = comput[1]
+                if len(comput) >= 3:
+                   data_it_2 = comput[2]
+                data_line[comput[0]] = (data_it_1, data_it_2)
+
+                new_input_data = comput[0].strip() and \
+                    (new_input_data + comput[0].strip() + '\n') or new_input_data
             else:
+                data_line[np.strip()] = ( 0, '' )
                 new_input_data = np.strip() and \
                     (new_input_data + np.strip() + '\n') or new_input_data
         data = Counter(input_data and new_input_data.split('\n') or [])
+        data_line.pop('')
         mes = ''
         ids_data = ''
         all_prod = {}
