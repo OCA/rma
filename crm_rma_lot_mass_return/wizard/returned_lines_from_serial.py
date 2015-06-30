@@ -27,7 +27,7 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
-from counter import Counter
+from collections import Counter
 from openerp.exceptions import except_orm
 
 
