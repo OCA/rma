@@ -88,8 +88,7 @@ class crm_claim(models.Model):
 
                     # Search if have claim line have a child
                     claim_lines_exists = claim_line_obj.search(
-                        [('claim_line_id', '=', claim_line_id)],
-                        )
+                        [('claim_line_id', '=', claim_line_id)],)
                     claim_lines_exists = [cla.id for cla in claim_lines_exists]
 
                     # If claim_line_id does not have child

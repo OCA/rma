@@ -27,7 +27,6 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
-from collections import Counter
 from openerp.exceptions import except_orm
 
 
@@ -232,26 +231,25 @@ class returned_lines_from_serial(models.TransientModel):
 
         data_line = []
         new_input_data = ''
-        for np in input_data and input_data.split('\n') or []:
-            if '*' in np:
+        for item in input_data and input_data.split('\n') or []:
+            if '*' in item:
 
-                comput = np.split('*')
+                comput = item.split('*')
                 data_it_1 = 0
                 data_it_2 = ''
                 if len(comput) >= 2:
-                   data_it_1 = comput[1]
+                    data_it_1 = comput[1]
                 if len(comput) >= 3:
-                   data_it_2 = comput[2]
+                    data_it_2 = comput[2]
                 data_line.append((comput[0], data_it_1, data_it_2))
 
                 new_input_data = comput[0].strip() and \
-                    (new_input_data + comput[0].strip() + '\n') or new_input_data
+                    (new_input_data + comput[0].strip() + '\n') \
+                    or new_input_data
             else:
-                data_line.append((np.strip(), 0, ''))
-                new_input_data = np.strip() and \
-                    (new_input_data + np.strip() + '\n') or new_input_data
-        data = Counter(input_data and new_input_data.split('\n') or [])
-        # data_line.pop('')
+                data_line.append((item.strip(), 0, ''))
+                new_input_data = item.strip() and \
+                    (new_input_data + item.strip() + '\n') or new_input_data
         mes = ''
         ids_data = ''
         all_prod = []
@@ -267,7 +265,8 @@ class returned_lines_from_serial(models.TransientModel):
                     line_ids = list(set(line_ids + line_new_ids))
                     element_searched = invoice_line_obj.browse(line_ids)
                 else:
-                    invoice_line_move_id = self.prodlot_2_invoice_line(product[0])
+                    invoice_line_move_id = \
+                        self.prodlot_2_invoice_line(product[0])
                     if invoice_line_move_id:
                         element_searched = invoice_line_obj.\
                             browse(invoice_line_move_id)
@@ -277,11 +276,6 @@ class returned_lines_from_serial(models.TransientModel):
                                 and item.product_id.name or item.name
                             line_id = '{pid}+{pname}'.format(pid=item.id,
                                                              pname=item_name)
-                            # if line_id in all_prod:
-                            #     all_prod.\
-                            #         update({line_id: all_prod[line_id] +
-                            #                 data[product]})
-                            # else:
                             all_prod.append((line_id, 1))
 
                 if not element_searched:
@@ -299,7 +293,7 @@ class returned_lines_from_serial(models.TransientModel):
             name = line[0].split('+')
             mes = mes + '{0} \t {1}\n'.format(name[1],
                                               line[1])
-            ids_data = ids_data + '{pid}\n'.format(pid=name[0])*line[1]
+            ids_data = ids_data + '{pid}\n'.format(pid=name[0]) * line[1]
 
         res = {'value': {'lines_id': [(6, 0, line_ids)],
                          'current_status': mes,
