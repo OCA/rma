@@ -159,7 +159,7 @@ class claim_line(orm.Model):
             string='Warranty Address',
             help="Where the customer has to send back the product(s)"),
         'claim_id': fields.many2one(
-            'crm.claim', string='Related claim',
+            'crm.claim', string='Related claim', select=True,
             help="To link to the case.claim object"),
         'state': fields.selection(
             [('draft', 'Draft'),

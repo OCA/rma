@@ -28,7 +28,7 @@ class stock_picking(orm.Model):
     _inherit = "stock.picking"
 
     _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
+        'claim_id': fields.many2one('crm.claim', 'Claim', select=True),
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -50,7 +50,7 @@ class stock_picking_out(orm.Model):
     _inherit = "stock.picking.out"
 
     _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
+        'claim_id': fields.many2one('crm.claim', 'Claim', select=True),
     }
 
 
@@ -59,7 +59,7 @@ class stock_picking_in(orm.Model):
     _inherit = "stock.picking.in"
 
     _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
+        'claim_id': fields.many2one('crm.claim', 'Claim', select=True),
     }
 
 
