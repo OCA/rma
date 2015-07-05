@@ -64,13 +64,15 @@ class returned_lines_from_serial(models.TransientModel):
 
     @api.model
     def create_claim_line(self, claim_id, claim_origine,
-                          product_brw, prodlot_id, qty, invline_brw=False):
+                          product_brw, prodlot_id, qty, name,
+                          invline_brw=False):
         return_line = self.env['claim.line']
         line_rec = return_line.create({
             'claim_id': claim_id,
             'claim_origine': claim_origine,
             'product_id': product_brw and product_brw.id or False,
-            'name': product_brw and product_brw.name or invline_brw.name,
+            'name': name and name or (product_brw and
+                                      product_brw.name or invline_brw.name),
             'invoice_line_id': invline_brw and invline_brw.id or
             self.prodlot_2_invoice_line(prodlot_id),
             'product_returned_quantity': qty,
@@ -220,6 +222,26 @@ class returned_lines_from_serial(models.TransientModel):
                 'res_id': self.ids[0],
             }
 
+    @api.model
+    def get_data_of_products(self, input_data):
+        data_line = []
+        for item in input_data and input_data.split('\n') or []:
+            if '*' in item:
+
+                comput = item.split('*')
+                data_it_1 = '0'
+                data_it_2 = ''
+                if len(comput) >= 2:
+                    data_it_1 = comput[1]
+                if len(comput) >= 3:
+                    data_it_2 = comput[2]
+                if comput[0]:
+                    data_line.append((comput[0], data_it_1, data_it_2))
+            else:
+                if item.strip():
+                    data_line.append((item.strip(), '0', ''))
+        return data_line
+
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id, context=None):
         """
@@ -229,27 +251,8 @@ class returned_lines_from_serial(models.TransientModel):
         invoice_obj = self.env['account.invoice']
         invoice_line_obj = self.env['account.invoice.line']
 
-        data_line = []
-        new_input_data = ''
-        for item in input_data and input_data.split('\n') or []:
-            if '*' in item:
+        data_line = self.get_data_of_products(input_data)
 
-                comput = item.split('*')
-                data_it_1 = 0
-                data_it_2 = ''
-                if len(comput) >= 2:
-                    data_it_1 = comput[1]
-                if len(comput) >= 3:
-                    data_it_2 = comput[2]
-                data_line.append((comput[0], data_it_1, data_it_2))
-
-                new_input_data = comput[0].strip() and \
-                    (new_input_data + comput[0].strip() + '\n') \
-                    or new_input_data
-            else:
-                data_line.append((item.strip(), 0, ''))
-                new_input_data = item.strip() and \
-                    (new_input_data + item.strip() + '\n') or new_input_data
         mes = ''
         ids_data = ''
         all_prod = []
@@ -308,22 +311,38 @@ class returned_lines_from_serial(models.TransientModel):
         context = self._context
         invline_obj = self.env['account.invoice.line']
         inv_recs = []
+        info = self.get_data_of_products(self.scan_data)
         if self.scaned_data:
             inv_recs += [invline_obj.browse(int(inv_id))
                          for inv_id in self.scaned_data.strip().split('\n')]
         if self.lines_list_id:
             inv_recs += self.lines_list_id
 
+        len_info = len(info)
+        index = 0
         for inv_brw in inv_recs:
             product_brw = inv_brw.product_id
             prodlot_id = False
             if inv_brw.move_id:
                 prodlot_id = inv_brw.move_id.quant_ids[0].lot_id.id
 
+            name = ''
+            num = 0
+            if index < len_info:
+                num = info[index][1]
+                if num.isdigit():
+                    num = int(num)
+                else:
+                    num = 0
+                name = info[index][2]
+                index += 1
+
             self.create_claim_line(context.get('active_id'),
-                                   'none',
+                                   self.env['claim.line']._get_subject(num),
                                    product_brw,
-                                   prodlot_id, 1, inv_brw)
+                                   prodlot_id, 1,
+                                   name,
+                                   inv_brw)
         self.action_cancel()
 
     @api.multi
