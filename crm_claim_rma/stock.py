@@ -56,8 +56,8 @@ class stock_move(orm.Model):
             picking_obj = self.pool.get('stock.picking')
             picking = picking_obj.browse(cr, uid, vals['picking_id'],
                                          context=context)
-            if (picking.claim_id
-               and picking.picking_type_id.code == 'incoming'):
+            if (picking.claim_id and
+                    picking.picking_type_id.code == 'incoming'):
                 self.write(cr, uid, move_id, {'state': 'confirmed'},
                            context=context)
         return move_id

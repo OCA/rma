@@ -56,21 +56,23 @@ class stock_warehouse(models.Model):
         # create new sequences
 
         if not warehouse.rma_in_type_id:
-            in_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
-                                              + _(' Sequence in'),
-                                              'prefix': warehouse.code
-                                              + '/RMA/IN/', 'padding': 5})
+            in_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
+                                                      _(' Sequence in'),
+                                              'prefix': warehouse.code +
+                                                      '/RMA/IN/',
+                                                      'padding': 5})
         if not warehouse.rma_out_type_id:
-            out_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
-                                               + _(' Sequence out'),
-                                               'prefix': warehouse.code
-                                               + '/RMA/OUT/', 'padding': 5})
+            out_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
+                                                       _(' Sequence out'),
+                                               'prefix': warehouse.code +
+                                                       '/RMA/OUT/',
+                                                       'padding': 5})
         if not warehouse.rma_int_type_id:
-            int_seq_id = seq_obj.sudo().create(values={'name': warehouse.name
-                                               + _(' Sequence internal'),
-                                               'prefix': warehouse.code
-                                               + '/RMA/INT/',
-                                               'padding': 5})
+            int_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
+                                                       _(' Sequence internal'),
+                                               'prefix': warehouse.code +
+                                                       '/RMA/INT/',
+                                                       'padding': 5})
 
         wh_stock_loc = warehouse.lot_rma_id
 

@@ -138,21 +138,29 @@ class claim_line(models.Model):
                   string='Claim Diagnosis',
                   help="To describe the line product diagnosis")
 
-    claim_origine = fields.Selection([('none', 'Not specified'),
-                                      ('legal', 'Legal retractation'),
-                                      ('cancellation', 'Order cancellation'),
-                                      ('damaged', 'Damaged delivered product'),
-                                      ('error', 'Shipping error'),
-                                      ('exchange', 'Exchange request'),
-                                      ('lost', 'Lost during transport'),
-                                      ('perfect_conditions',
-                                       'Perfect Conditions'),
-                                      ('imperfection', 'Imperfection'),
-                                      ('physical_damage_client',
-                                       'Physical Damage by Client'),
-                                      ('physical_damage_company',
-                                       'Physical Damage by Company'),
-                                      ('other', 'Other')], 'Claim Subject',
+    subject_list = [('none', 'Not specified'),
+                    ('legal', 'Legal retractation'),
+                    ('cancellation', 'Order cancellation'),
+                    ('damaged', 'Damaged delivered product'),
+                    ('error', 'Shipping error'),
+                    ('exchange', 'Exchange request'),
+                    ('lost', 'Lost during transport'),
+                    ('perfect_conditions',
+                     'Perfect Conditions'),
+                    ('imperfection', 'Imperfection'),
+                    ('physical_damage_client',
+                     'Physical Damage by Client'),
+                    ('physical_damage_company',
+                     'Physical Damage by Company'),
+                    ('other', 'Other')]
+
+    def _get_subject(self, num):
+        if num > 0 and num <= len(self.subject_list):
+            return self.subject_list[num-1][0]
+        else:
+            return self.subject_list[0][0]
+
+    claim_origine = fields.Selection(subject_list, 'Claim Subject',
                                      required=True,
                                      help="To describe the "
                                      "line product problem")
