@@ -429,6 +429,11 @@
         </field>
     </record>
 
+    <menuitem id="crm_claim.menu_claim_stage_view"
+              name="Stages" groups="base.group_no_one"
+              action="crm_claim.crm_claim_stage_act"
+              parent="crm_claim.menu_config_claim" sequence="20"/>
+
      </data>
 </openerp>
 
