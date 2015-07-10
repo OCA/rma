@@ -90,6 +90,7 @@
                                 <li>Write the Serial/Lot Number to search the product</li>
                                 <li>Write the Invoice Number to search the products in lines</li>
                             </ol>
+                            <!--
                             Claim Subject Options:
                             <ol>
                                 <li>Not specified</li>
@@ -105,6 +106,7 @@
                                 <li>Physical Damage by Company</li>
                                 <li>Other</li>
                             </ol>
+                            -->
                             <!--
                             <strong><a href="https://youtube.com/vauxoomedia">A video with this working on the here</a></strong>
                             -->

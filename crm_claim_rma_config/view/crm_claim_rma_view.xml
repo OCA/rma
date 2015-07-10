@@ -36,7 +36,9 @@
         </record>
 
         <menuitem action="crm_claim_type_act" name="Claim Types"
-            id="menu_crm_claim_type_act" parent="crm_claim.menu_config_claim" groups="base.group_no_one"/>
+                  id="menu_crm_claim_type_act"
+                  parent="crm_claim.menu_config_claim"
+                  groups="base.group_no_one"/>
 
     </data>
 </openerp>
