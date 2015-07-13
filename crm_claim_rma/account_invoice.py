@@ -107,3 +107,19 @@ class account_invoice_line(orm.Model):
                                  {'refund_line_id': line_id},
                                  context=context)
         return line_id
+
+    def name_get(self, cr, user, ids, context=None):
+        """
+        overwrite openerp method like the one for
+        account.invoice.line model in the
+        rma module.
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        result = []
+        if not len(ids):
+            return result
+        for ail in self.browse(cr, user, ids, context=context):
+            name = "%s - %s" % (ail.invoice_id.number, ail.name)
+            result.append((ail.id, name))
+        return result
