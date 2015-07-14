@@ -50,6 +50,7 @@ class claim_line(models.Model):
     Class to handle a product return line (corresponding to one invoice line)
     """
     _name = "claim.line"
+    _inherit = 'mail.thread'
     _description = "List of product to return"
 
     # Comment written in a claim.line to know about the warranty status
