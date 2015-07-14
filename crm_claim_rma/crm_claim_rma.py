@@ -71,8 +71,11 @@ class claim_line(models.Model):
     def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.unit_sale_price *
-                            line.product_returned_quantity)
+            qty = line.product_returned_quantity
+            if line.product_uom != line.product_id.uom_id:
+                qty = line.product_uom._compute_qty(
+                    qty, line.product_id.uom_id.id)
+            res[line.id] = line.unit_sale_price * qty
         return res
 
     def copy_data(self, cr, uid, id, default=None, context=None):
@@ -328,6 +331,7 @@ class claim_line(models.Model):
         if product_id:
             product = product_obj.browse(cr, uid, product_id, context=context)
             values['product_uom'] = product.uom_id.id
+            values['unit_sale_price'] = product.standard_price
         if not (product_id and invoice_line_id):
             return {'value': values}
 
@@ -542,6 +546,11 @@ class crm_claim(models.Model):
                 location_dest_id = claim_line_obj.get_destination_location(
                     cr, uid, invoice_line.product_id.id,
                     warehouse_id, context=context)
+
+                unit_price = invoice_line.price_unit
+                if invoice_line.discount:
+                    discount = 100 - invoice_line.discount
+                    unit_price *= discount / 100.0
                 line = {
                     'name': invoice_line.name,
                     'claim_origine': "none",
@@ -549,7 +558,7 @@ class crm_claim(models.Model):
                     'product_id': invoice_line.product_id.id,
                     'product_returned_quantity': invoice_line.quantity,
                     'product_uom': invoice_line.uos_id.id,
-                    'unit_sale_price': invoice_line.price_unit,
+                    'unit_sale_price': unit_price,
                     'location_dest_id': location_dest_id,
                     'state': 'draft',
                 }
