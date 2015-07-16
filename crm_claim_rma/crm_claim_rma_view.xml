@@ -35,6 +35,7 @@
                     <field name="invoice_line_id" select='1'/>
                     <field name="product_id" select='1'/>
                     <field name="prodlot_id" select='1'/>
+                    <field name="move_in_id"/>
                     <newline/>
                     <group expand="0" string="More">
                         <field name="last_state_change" select='1'/>
@@ -81,6 +82,8 @@
                     <button name="set_warranty" string="Compute Waranty" type="object" icon="gtk-justify-fill"/>
                     <field name="claim_origine"/>
                     <field name="claim_diagnosis"/>
+                    <field name="move_in_id"/>
+                    <field name="move_out_id"/>
                 </tree>
             </field>
         </record>
@@ -126,6 +129,10 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
             </field>
         </record>
@@ -428,6 +435,11 @@
             </search>
         </field>
     </record>
+
+    <menuitem id="crm_claim.menu_claim_stage_view"
+              name="Stages" groups="base.group_no_one"
+              action="crm_claim.crm_claim_stage_act"
+              parent="crm_claim.menu_config_claim" sequence="20"/>
 
      </data>
 </openerp>
