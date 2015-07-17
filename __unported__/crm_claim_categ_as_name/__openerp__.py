@@ -2,8 +2,13 @@
 ###############################################################################
 #
 #   Module for OpenERP
+#
+#   Original work
 #   Copyright (C) 2012-2014 Akretion. All Rights Reserved
 #   @author Benoît GUILLOT <benoit.guillot@akretion.com>
+#
+#   Modified work
+#   Copyright (c) 2015 Eezee-It  (www.eezee-it.com). All rights reserved.
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -30,7 +35,7 @@
     """
     Replace claim name by category. It makes easier to filter on claims.
     """,
-    'author': "akretion,Odoo Community Association (OCA)",
+    'author': "Eezee-It",
     'website': 'http://www.akretion.com/',
     'depends': ['crm_claim_rma'],
     'data': [
