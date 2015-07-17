@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_rma_stock_location
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-17 19:57+0000\n"
+"PO-Revision-Date: 2015-07-17 19:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma_a
+msgid "RMA - Box A"
+msgstr "RMA - Caja A"
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma_b
+msgid "RMA - Box B"
+msgstr "RMA - Caja B"
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma
+msgid "RMA Demo"
+msgstr "RMA Demo"
+
+#. module: crm_rma_stock_location
+#: model:product.template,name:crm_rma_stock_location.product_socket_product_template
+msgid "Socket"
+msgstr "Socket"
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de inventario"
+
