@@ -393,7 +393,8 @@ class ClaimLine(Model):
         """ Calculate warranty limit and address """
         for claim_line in self:
             if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise Warning(_('Please set product and invoice.'))
+                raise osv.except_osv(
+                    _('Error'), _('Please set product and invoice.'))
             claim_line.set_warranty_limit()
             claim_line.set_warranty_return_address()
 
@@ -572,13 +573,9 @@ class CrmClaim(Model):
     @api.model
     def message_get_reply_to(self):
         """ Override to get the reply_to of the parent project. """
-        # return [claim.section_id.message_get_reply_to()[0]
-        #         if claim.section_id else False
-        #         for claim in self.browse(cr, SUPERUSER_ID, ids,
-        #                                  context=context)]
         return [claim.section_id.message_get_reply_to()[0]
                 if claim.section_id else False
-                for claim in self]
+                for claim in self.sudo()]
 
     @api.model
     def message_get_suggested_recipients(self):
