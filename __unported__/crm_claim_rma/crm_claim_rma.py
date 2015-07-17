@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Eezee-It
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
@@ -24,11 +25,13 @@
 import calendar
 import math
 from openerp.osv import fields, orm, osv
+from openerp.models import Model, api, _, NewId
+from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
+                            Text)
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
 
@@ -42,19 +45,17 @@ class ProductNoSupplier(Exception):
     because the product has no supplier. """
 
 
-class substate_substate(orm.Model):
+class SubstateSubstate(Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
     _description = "substate that precise a given state"
-    _columns = {
-        'name': fields.char('Sub state', required=True),
-        'substate_descr': fields.text(
-            'Description',
-            help="To give more information about the sub state"),
-    }
+
+    name = Char(string='Sub state', required=True)
+    substate_descr = Text(string='Description',
+                          help="To give more information about the sub state")
 
 
-class claim_line(orm.Model):
+class ClaimLine(Model):
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
@@ -68,143 +69,133 @@ class claim_line(orm.Model):
         'not_define': "Not Defined"}
 
     # Method to calculate total amount of the line : qty*UP
-    def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
+    @api.one
+    def _line_total_amount(self):
         res = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.unit_sale_price *
-                            line.product_returned_quantity)
-        return res
+        self.return_value = (self.unit_sale_price *
+                             self.product_returned_quantity)
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    @api.model
+    def copy_data(self, default=None):
         if default is None:
             default = {}
+
         std_default = {
             'move_in_id': False,
             'move_out_id': False,
             'refund_line_id': False,
         }
         std_default.update(default)
-        return super(claim_line, self).copy_data(
-            cr, uid, id, default=std_default, context=context)
+        return super(ClaimLine, self).copy_data(default=std_default)
 
-    def get_warranty_return_partner(self, cr, uid, context=None):
-        seller = self.pool.get('product.supplierinfo')
-        result = seller.get_warranty_return_partner(cr, uid, context=context)
+    def get_warranty_return_partner(self):
+        seller = self.env['product.supplierinfo']
+        result = seller.get_warranty_return_partner()
         return result
 
-    _columns = {
-        'name': fields.char('Description', required=True),
-        'claim_origine': fields.selection(
-            [('none', 'Not specified'),
-             ('legal', 'Legal retractation'),
-             ('cancellation', 'Order cancellation'),
-             ('damaged', 'Damaged delivered product'),
-             ('error', 'Shipping error'),
-             ('exchange', 'Exchange request'),
-             ('lost', 'Lost during transport'),
-             ('other', 'Other')
-             ],
-            'Claim Subject',
-            required=True,
-            help="To describe the line product problem"),
-        'claim_descr': fields.text(
-            'Claim description',
-            help="More precise description of the problem"),
-        'product_id': fields.many2one(
-            'product.product',
-            string='Product',
-            help="Returned product"),
-        'product_returned_quantity': fields.float(
-            'Quantity', digits=(12, 2),
-            help="Quantity of product returned"),
-        'unit_sale_price': fields.float(
-            'Unit sale price', digits=(12, 2),
-            help="Unit sale price of the product. Auto filled if retrun done "
-                 "by invoice selection. Be careful and check the automatic "
-                 "value as don't take into account previous refunds, invoice "
-                 "discount, can be for 0 if product for free,..."),
-        'return_value': fields.function(
-            _line_total_amount, string='Total return', type='float',
-            help="Quantity returned * Unit sold price",),
-        'prodlot_id': fields.many2one(
-            'stock.production.lot',
-            string='Serial/Lot n°',
-            help="The serial/lot of the returned product"),
-        'applicable_guarantee': fields.selection(
-            [('us', 'Company'),
-             ('supplier', 'Supplier'),
-             ('brand', 'Brand manufacturer')],
-            'Warranty type'),
-        'guarantee_limit': fields.date(
-            'Warranty limit',
-            readonly=True,
-            help="The warranty limit is computed as: invoice date + warranty "
-                 "defined on selected product."),
-        'warning': fields.char(
-            'Warranty',
-            readonly=True,
-            help="If warranty has expired"),
-        'warranty_type':  fields.selection(
-            get_warranty_return_partner,
-            'Warranty type',
-            readonly=True,
-            help="Who is in charge of the warranty return treatment towards "
-                 "the end customer. Company will use the current company "
-                 "delivery or default address and so on for supplier and brand"
-                 " manufacturer. Does not necessarily mean that the warranty "
-                 "to be applied is the one of the return partner (ie: can be "
-                 "returned to the company and be under the brand warranty"),
-        'warranty_return_partner': fields.many2one(
-            'res.partner',
-            string='Warranty Address',
-            help="Where the customer has to send back the product(s)"),
-        'claim_id': fields.many2one(
-            'crm.claim', string='Related claim',
-            help="To link to the case.claim object"),
-        'state': fields.selection(
-            [('draft', 'Draft'),
-             ('refused', 'Refused'),
-             ('confirmed', 'Confirmed, waiting for product'),
-             ('in_to_control', 'Received, to control'),
-             ('in_to_treate', 'Controlled, to treate'),
-             ('treated', 'Treated')],
-            string='State'),
-        'substate_id': fields.many2one(
-            'substate.substate',
-            string='Sub state',
-            help="Select a sub state to precise the standard state. Example 1:"
-                 " state = refused; substate could be warranty over, not in "
-                 "warranty, no problem,... . Example 2: state = to treate; "
-                 "substate could be to refund, to exchange, to repair,..."),
-        'last_state_change': fields.date(
-            string='Last change',
-            help="To set the last state / substate change"),
-        'invoice_line_id': fields.many2one(
-            'account.invoice.line',
-            string='Invoice Line',
-            help='The invoice line related to the returned product'),
-        'refund_line_id': fields.many2one(
-            'account.invoice.line',
-            string='Refund Line',
-            help='The refund line related to the returned product'),
-        'move_in_id': fields.many2one(
-            'stock.move',
-            string='Move Line from picking in',
-            help='The move line related to the returned product'),
-        'move_out_id': fields.many2one(
-            'stock.move',
-            string='Move Line from picking out',
-            help='The move line related to the returned product'),
-        'location_dest_id': fields.many2one(
-            'stock.location',
-            string='Return Stock Location',
-            help='The return stock location of the returned product'),
-    }
-
-    _defaults = {
-        'state': 'draft',
-        'name': 'none',
-    }
+    name = Char(string='Description', required=True, default=None)
+    claim_origine = Selection(
+        [('none', 'Not specified'),
+         ('legal', 'Legal retractation'),
+         ('cancellation', 'Order cancellation'),
+         ('damaged', 'Damaged delivered product'),
+         ('error', 'Shipping error'),
+         ('exchange', 'Exchange request'),
+         ('lost', 'Lost during transport'),
+         ('other', 'Other')
+         ],
+        string='Claim Subject', required=True,
+        help="To describe the line product problem")
+    claim_descr = Text(
+        string='Claim description',
+        help="More precise description of the problem")
+    product_id = Many2one(
+        'product.product', string='Product', help="Returned product")
+    product_returned_quantity = Float(
+        string='Quantity', digits=(12, 2), help="Quantity of product returned")
+    unit_sale_price = Float(
+        string='Unit sale price', digits=(12, 2),
+        help="Unit sale price of the product. Auto filled if retrun done "
+             "by invoice selection. Be careful and check the automatic "
+             "value as don't take into account previous refunds, invoice "
+             "discount, can be for 0 if product for free,...")
+    return_value = Float(
+        string='Total return', compute='_line_total_amount',
+        help="Quantity returned * Unit sold price",)
+    prodlot_id = Many2one(
+        'stock.production.lot',
+        string='Serial/Lot n°', help="The serial/lot of the returned product")
+    applicable_guarantee = Selection(
+        [('us', 'Company'),
+         ('supplier', 'Supplier'),
+         ('brand', 'Brand manufacturer')],
+        string='Warranty type')
+    guarantee_limit = Date(
+        string='Warranty limit',
+        readonly=True,
+        help="The warranty limit is computed as: invoice date + warranty "
+             "defined on selected product.")
+    warning = Char(
+        string='Warranty',
+        readonly=True,
+        help="If warranty has expired")
+    warranty_type = Selection(
+        get_warranty_return_partner,
+        string='Warranty type',
+        readonly=True,
+        help="Who is in charge of the warranty return treatment towards "
+             "the end customer. Company will use the current company "
+             "delivery or default address and so on for supplier and brand"
+             " manufacturer. Does not necessarily mean that the warranty "
+             "to be applied is the one of the return partner (ie: can be "
+             "returned to the company and be under the brand warranty")
+    warranty_return_partner = Many2one(
+        'res.partner',
+        string='Warranty Address',
+        help="Where the customer has to send back the product(s)")
+    claim_id = Many2one(
+        'crm.claim',
+        string='Related claim',
+        help="To link to the case.claim object")
+    state = Selection(
+        [('draft', 'Draft'),
+         ('refused', 'Refused'),
+         ('confirmed', 'Confirmed, waiting for product'),
+         ('in_to_control', 'Received, to control'),
+         ('in_to_treate', 'Controlled, to treate'),
+         ('treated', 'Treated')],
+        string='State',
+        default="draft")
+    substate_id = Many2one(
+        'substate.substate',
+        string='Sub state',
+        help="Select a sub state to precise the standard state. Example 1:"
+             " state = refused; substate could be warranty over, not in "
+             "warranty, no problem,... . Example 2: state = to treate; "
+             "substate could be to refund, to exchange, to repair,...")
+    last_state_change = Date(
+        string='Last change',
+        help="To set the last state / substate change")
+    invoice_line_id = Many2one(
+        'account.invoice.line',
+        string='Invoice Line',
+        help='The invoice line related to the returned product')
+    refund_line_id = Many2one(
+        'account.invoice.line',
+        string='Refund Line',
+        help='The refund line related to the returned product')
+    move_in_id = Many2one(
+        'stock.move',
+        string='Move Line from picking in',
+        help='The move line related to the returned product')
+    move_out_id = Many2one(
+        'stock.move',
+        string='Move Line from picking out',
+        help='The move line related to the returned product')
+    location_dest_id = Many2one(
+        'stock.location',
+        string='Return Stock Location',
+        help='The return stock location of the returned product')
 
     @staticmethod
     def warranty_limit(start, warranty_duration):
@@ -227,14 +218,14 @@ class claim_line(orm.Model):
         days = int(days_month * decimal_part)
         return start + relativedelta(months=months, days=days)
 
-    def _warranty_limit_values(self, cr, uid, ids, invoice,
-                               claim_type, product, claim_date,
-                               context=None):
+    def _warranty_limit_values(self, invoice, claim_type, product, claim_date):
         if not (invoice and claim_type and product and claim_date):
             return {'guarantee_limit': False, 'warning': False}
+
         date_invoice = invoice.date_invoice
         if not date_invoice:
             raise InvoiceNoDate
+
         warning = _(self.WARRANT_COMMENT['not_define'])
         date_invoice = datetime.strptime(date_invoice,
                                          DEFAULT_SERVER_DATE_FORMAT)
@@ -246,6 +237,7 @@ class claim_line(orm.Model):
             warranty_duration = supplier.warranty_duration
         else:
             warranty_duration = product.warranty
+
         limit = self.warranty_limit(date_invoice, warranty_duration)
         if warranty_duration > 0:
             claim_date = datetime.strptime(claim_date,
@@ -254,99 +246,94 @@ class claim_line(orm.Model):
                 warning = _(self.WARRANT_COMMENT['expired'])
             else:
                 warning = _(self.WARRANT_COMMENT['valid'])
+
         return {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
                 'warning': warning}
 
-    def set_warranty_limit(self, cr, uid, ids, claim_line, context=None):
-        claim = claim_line.claim_id
+    def set_warranty_limit(self):
+        claim = self.claim_id
         invoice = claim.invoice_id
         claim_type = claim.claim_type
         claim_date = claim.date
-        product = claim_line.product_id
+        product = self.product_id
         try:
-            values = self._warranty_limit_values(cr, uid, ids, invoice,
-                                                 claim_type, product,
-                                                 claim_date,
-                                                 context=context)
+            values = self._warranty_limit_values(invoice, claim_type, product,
+                                                 claim_date)
         except InvoiceNoDate:
-            raise orm.except_orm(
-                _('Error'),
-                _('Cannot find any date for invoice. '
-                  'Must be a validated invoice.'))
+            raise osv.except_osv(
+                _('Error'), _('Cannot find any date for invoice. '
+                              'Must be a validated invoice.'))
         except ProductNoSupplier:
-                raise orm.except_orm(
-                    _('Error'),
-                    _('The product has no supplier configured.'))
-        self.write(cr, uid, ids, values, context=context)
+                raise osv.except_osv(
+                    _('Error'), _('The product has no supplier configured.'))
+
+        self.write(values)
         return True
 
-    def auto_set_warranty(self, cr, uid, ids, context):
+    @api.multi
+    def auto_set_warranty(self):
         """ Set warranty automatically
         if the user has not himself pressed on 'Calculate warranty state'
         button, it sets warranty for him"""
-        for line in self.browse(cr, uid, ids, context=context):
+        for line in self:
             if not line.warning:
-                self.set_warranty(cr, uid, [line.id], context=context)
+                line.set_warranty()
         return True
 
-    def get_destination_location(self, cr, uid, product_id,
-                                 warehouse_id, context=None):
+    def get_destination_location(self, product, warehouse):
         """Compute and return the destination location ID to take
         for a return. Always take 'Supplier' one when return type different
         from company."""
-        prod = False
-        if product_id:
-            prod_obj = self.pool.get('product.product')
-            prod = prod_obj.browse(cr, uid, product_id, context=context)
-        wh_obj = self.pool.get('stock.warehouse')
-        wh = wh_obj.browse(cr, uid, warehouse_id, context=context)
-        location_dest_id = wh.lot_stock_id.id
-        if prod:
-            seller = prod.seller_info_id
-            if seller:
+        location_dest_id = warehouse.lot_stock_id.id
+        if product:
+            sellers = product.seller_ids
+            if sellers:
+                seller = sellers[0]
                 return_type = seller.warranty_return_partner
                 if return_type != 'company':
                     location_dest_id = seller.name.property_stock_supplier.id
         return location_dest_id
 
-    def onchange_product_id(self, cr, uid, ids, product_id, invoice_line_id,
-                            claim_id, company_id, warehouse_id,
-                            claim_type, claim_date, context=None):
-        if not claim_id and not (company_id and warehouse_id and
-                                 claim_type and claim_date):
+    @api.onchange('product_id', 'invoice_line_id')
+    def _onchange_product_invoice_line(self):
+        product = self.product_id
+        invoice_line = self.invoice_line_id
+        context = self.env.context
+
+        claim = context.get('claim_id')
+        company_id = context.get('company_id')
+        warehouse_id = context.get('warehouse_id')
+        claim_type = context.get('claim_type')
+        claim_date = context.get('claim_date')
+
+        # claim_exists = not isinstance(claim.id, NewId)
+        if not claim and not (company_id and warehouse_id and
+                                     claim_type and claim_date):
             # if we have a claim_id, we get the info from there,
             # otherwise we get it from the args (on creation typically)
-            return {}
-        if not (product_id and invoice_line_id):
-            return {}
-        product_obj = self.pool['product.product']
-        claim_obj = self.pool['crm.claim']
-        invoice_line_obj = self.pool['account.invoice.line']
-        claim_line_obj = self.pool.get('claim.line')
-        product = product_obj.browse(cr, uid, product_id, context=context)
-        invoice_line = invoice_line_obj.browse(cr, uid, invoice_line_id,
-                                               context=context)
-        invoice = invoice_line.invoice_id
+            return False
+        if not (product and invoice_line):
+            return False
 
-        if claim_id:
-            claim = claim_obj.browse(cr, uid, claim_id, context=context)
+        invoice = invoice_line.invoice_id
+        claim_line_obj = self.env['claim.line']
+
+        if claim:
+            claim = self.env['crm.claim'].browse(claim)
             company = claim.company_id
             warehouse = claim.warehouse_id
             claim_type = claim.claim_type
             claim_date = claim.date
         else:
-            warehouse_obj = self.pool['stock.warehouse']
-            company_obj = self.pool['res.company']
-            company = company_obj.browse(cr, uid, company_id, context=context)
-            warehouse = warehouse_obj.browse(cr, uid, warehouse_id,
-                                             context=context)
+            warehouse_obj = self.env['stock.warehouse']
+            company_obj = self.env['res.company']
+            company = company_obj.browse(company_id)
+            warehouse = warehouse_obj.browse(warehouse_id)
 
         values = {}
         try:
             warranty = claim_line_obj._warranty_limit_values(
-                cr, uid, [], invoice,
-                claim_type, product,
-                claim_date, context=context)
+                invoice, claim_type, product, claim_date)
         except (InvoiceNoDate, ProductNoSupplier):
             # we don't mind at this point if the warranty can't be
             # computed and we don't want to block the user
@@ -355,12 +342,12 @@ class claim_line(orm.Model):
             values.update(warranty)
 
         warranty_address = claim_line_obj._warranty_return_address_values(
-            cr, uid, [], product, company, warehouse, context=context)
+            product, company, warehouse)
         values.update(warranty_address)
-        return {'value': values}
 
-    def _warranty_return_address_values(self, cr, uid, ids, product, company,
-                                        warehouse, context=None):
+        self.update(values)
+
+    def _warranty_return_address_values(self, product, company, warehouse):
         """Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
@@ -375,8 +362,9 @@ class claim_line(orm.Model):
                     'warranty_type': False,
                     'location_dest_id': False}
         return_address = None
-        seller = product.seller_info_id
-        if seller:
+        sellers = product.seller_ids
+        if sellers:
+            seller = sellers[0]
             return_address_id = seller.warranty_return_address.id
             return_type = seller.warranty_return_partner
         else:
@@ -385,83 +373,77 @@ class claim_line(orm.Model):
                               company.partner_id)
             return_address_id = return_address.id
             return_type = 'company'
-        location_dest_id = self.get_destination_location(
-            cr, uid, product.id, warehouse.id, context=context)
+        location_dest_id = self.get_destination_location(product, warehouse)
         return {'warranty_return_partner': return_address_id,
                 'warranty_type': return_type,
                 'location_dest_id': location_dest_id}
 
-    def set_warranty_return_address(self, cr, uid, ids, claim_line,
-                                    context=None):
-        claim = claim_line.claim_id
-        product = claim_line.product_id
+    def set_warranty_return_address(self):
+        claim = self.claim_id
+        product = self.product_id
         company = claim.company_id
         warehouse = claim.warehouse_id
         values = self._warranty_return_address_values(
-            cr, uid, ids, product, company, warehouse, context=context)
-        self.write(cr, uid, ids, values, context=context)
+            product, company, warehouse)
+        self.write(values)
         return True
 
-    def set_warranty(self, cr, uid, ids, context=None):
+    @api.multi
+    def set_warranty(self):
         """ Calculate warranty limit and address """
-        for claim_line in self.browse(cr, uid, ids, context=context):
+        for claim_line in self:
             if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise orm.except_orm(
-                    _('Error !'),
-                    _('Please set product and invoice.'))
-            self.set_warranty_limit(cr, uid, ids,
-                                    claim_line, context=context)
-            self.set_warranty_return_address(cr, uid, ids,
-                                             claim_line, context=context)
-        return True
+                raise Warning(_('Please set product and invoice.'))
+            claim_line.set_warranty_limit()
+            claim_line.set_warranty_return_address()
 
 
 # TODO add the option to split the claim_line in order to manage the same
 # product separately
-class crm_claim(orm.Model):
+class CrmClaim(Model):
     _inherit = 'crm.claim'
 
     def init(self, cr):
+
         cr.execute("""
             UPDATE "crm_claim" SET "number"=id::varchar
             WHERE ("number" is NULL)
                OR ("number" = '/');
         """)
 
-    def _get_sequence_number(self, cr, uid, context=None):
-        seq_obj = self.pool.get('ir.sequence')
-        res = seq_obj.get(cr, uid, 'crm.claim.rma', context=context) or '/'
+    @api.model
+    def _get_sequence_number(self):
+        seq_obj = self.env['ir.sequence']
+        res = seq_obj.get('crm.claim.rma') or '/'
         return res
 
-    def _get_default_warehouse(self, cr, uid, context=None):
-        user_obj = self.pool.get('res.users')
-        user = user_obj.browse(cr, uid, uid, context=context)
+    def _get_default_warehouse(self):
+        user = self.env.user
         company_id = user.company_id.id
-        wh_obj = self.pool.get('stock.warehouse')
-        wh_ids = wh_obj.search(cr, uid,
-                               [('company_id', '=', company_id)],
-                               context=context)
-        if not wh_ids:
-            raise orm.except_orm(
-                _('Error!'),
+        wh_obj = self.env['stock.warehouse']
+        wh = wh_obj.search([
+            ('company_id', '=', company_id)
+        ], limit=1)
+        if not wh:
+            raise Warning(
                 _('There is no warehouse for the current user\'s company.'))
-        return wh_ids[0]
+        return wh
 
-    def name_get(self, cr, uid, ids, context=None):
+    @api.multi
+    def name_get(self):
         res = []
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for claim in self.browse(cr, uid, ids, context=context):
+        for claim in self:
             number = claim.number and str(claim.number) or ''
             res.append((claim.id, '[' + number + '] ' + claim.name))
         return res
 
-    def create(self, cr, uid, vals, context=None):
+    @api.model
+    def create(self, vals):
         if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number(cr, uid,
-                                                       context=context)
-        new_id = super(crm_claim, self).create(cr, uid, vals, context=context)
-        return new_id
+            vals['number'] = self._get_sequence_number()
+
+        claim = super(CrmClaim, self).create(vals)
+        return claim
 
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -469,125 +451,102 @@ class crm_claim(orm.Model):
         std_default = {
             'invoice_ids': False,
             'picking_ids': False,
-            'number': self._get_sequence_number(cr, uid, context=context),
+            'number': self._get_sequence_number(cr, uid, context),
         }
         std_default.update(default)
-        return super(crm_claim, self).copy_data(
-            cr, uid, id, default=std_default, context=context)
+        return super(CrmClaim, self).copy_data(cr, uid, id, std_default,
+                                               context=context)
 
-    _columns = {
-        'number': fields.char(
-            'Number', readonly=True,
-            states={'draft': [('readonly', False)]},
-            required=True,
-            select=True,
-            help="Company internal claim unique number"),
-        'claim_type': fields.selection(
-            [('customer', 'Customer'),
-             ('supplier', 'Supplier'),
-             ('other', 'Other')],
-            string='Claim type',
-            required=True,
-            help="Customer: from customer to company.\n "
-                 "Supplier: from company to supplier."),
-        'claim_line_ids': fields.one2many(
-            'claim.line', 'claim_id',
-            string='Return lines'),
-        'planned_revenue': fields.float('Expected revenue'),
-        'planned_cost': fields.float('Expected cost'),
-        'real_revenue': fields.float('Real revenue'),
-        'real_cost': fields.float('Real cost'),
-        'invoice_ids': fields.one2many(
-            'account.invoice', 'claim_id', 'Refunds'),
-        'picking_ids': fields.one2many('stock.picking', 'claim_id', 'RMA'),
-        'invoice_id': fields.many2one(
-            'account.invoice', string='Invoice',
-            help='Related original Cusotmer invoice'),
-        'delivery_address_id': fields.many2one(
-            'res.partner', string='Partner delivery address',
-            help="This address will be used to deliver repaired or replacement"
-                 "products."),
-        'warehouse_id': fields.many2one(
-            'stock.warehouse', string='Warehouse',
-            required=True),
-    }
-
-    _defaults = {
-        'number': '/',
-        'claim_type': 'customer',
-        'warehouse_id': _get_default_warehouse,
-    }
+    number = Char(
+        string='Number', readonly=True,
+        required=True,
+        select=True,
+        default='/',
+        help="Company internal claim unique number")
+    claim_type = Selection(
+        [('customer', 'Customer'),
+         ('supplier', 'Supplier'),
+         ('other', 'Other')],
+        string='Claim type',
+        required=True,
+        default='customer',
+        help="Customer: from customer to company.\n "
+             "Supplier: from company to supplier.")
+    claim_line_ids = One2many(
+        'claim.line',
+        'claim_id',
+        string='Return lines')
+    planned_revenue = Float(string='Expected revenue')
+    planned_cost = Float(string='Expected cost')
+    real_revenue = Float(string='Real revenue')
+    real_cost = Float(string='Real cost')
+    invoice_ids = One2many(
+        'account.invoice',
+        'claim_id',
+        string='Refunds')
+    picking_ids = One2many(
+        'stock.picking',
+        'claim_id',
+        string='RMA')
+    invoice_id = Many2one(
+        'account.invoice',
+        string='Invoice',
+        help='Related original Customer invoice')
+    delivery_address_id = Many2one(
+        'res.partner',
+        string='Partner delivery address',
+        help="This address will be used to deliver repaired or replacement"
+             "products.")
+    warehouse_id = Many2one(
+        'stock.warehouse',
+        string='Warehouse',
+        default=_get_default_warehouse,
+        required=True)
 
     _sql_constraints = [
         ('number_uniq', 'unique(number, company_id)',
          'Number/Reference must be unique per Company!'),
     ]
 
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
-                                    context=None):
-        res = super(crm_claim, self
-                    ).onchange_partner_address_id(cr, uid, ids, add,
-                                                  email=email)
-        if add:
-            if (not res['value']['email_from']
-                    or not res['value']['partner_phone']):
-                partner_obj = self.pool.get('res.partner')
-                address = partner_obj.browse(cr, uid, add, context=context)
-                for other_add in address.partner_id.address:
-                    if other_add.email and not res['value']['email_from']:
-                        res['value']['email_from'] = other_add.email
-                    if other_add.phone and not res['value']['partner_phone']:
-                        res['value']['partner_phone'] = other_add.phone
-        return res
-
-    def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
-                            claim_type, claim_date, company_id, lines,
-                            create_lines=False, context=None):
-        invoice_line_obj = self.pool.get('account.invoice.line')
-        invoice_obj = self.pool.get('account.invoice')
-        product_obj = self.pool['product.product']
-        claim_line_obj = self.pool.get('claim.line')
-        company_obj = self.pool['res.company']
-        warehouse_obj = self.pool['stock.warehouse']
-        invoice_line_ids = invoice_line_obj.search(
-            cr, uid,
-            [('invoice_id', '=', invoice_id)],
-            context=context)
+    @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
+    def _onchange_invoice_warehouse_type_date(self):
+        context = self.env.context
+        invoice_obj = self.env['account.invoice']
+        invoice_line_obj = self.env['account.invoice.line']
+        product_obj = self.env['product.product']
+        claim_line_obj = self.env['claim.line']
+        invoice_lines = self.invoice_id.invoice_line
         claim_lines = []
-        value = {}
-        if not warehouse_id:
-            warehouse_id = self._get_default_warehouse(cr, uid,
-                                                       context=context)
-        invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids,
-                                                context=context)
+        if not self.warehouse_id:
+            self.warehouse_id = self._get_default_warehouse()
+
+        claim_type = self.claim_type
+        claim_date = self.date
+        warehouse = self.warehouse_id
+        company = self.company_id
+        create_lines = context.get('create_lines')
 
         def warranty_values(invoice, product):
             values = {}
             try:
                 warranty = claim_line_obj._warranty_limit_values(
-                    cr, uid, [], invoice,
-                    claim_type, product,
-                    claim_date, context=context)
+                    invoice, claim_type, product, claim_date)
             except (InvoiceNoDate, ProductNoSupplier):
                 # we don't mind at this point if the warranty can't be
                 # computed and we don't want to block the user
                 values.update({'guarantee_limit': False, 'warning': False})
             else:
                 values.update(warranty)
-            company = company_obj.browse(cr, uid, company_id, context=context)
-            warehouse = warehouse_obj.browse(cr, uid, warehouse_id,
-                                             context=context)
+
             warranty_address = claim_line_obj._warranty_return_address_values(
-                cr, uid, [], product, company,
-                warehouse, context=context)
+                product, company, warehouse)
             values.update(warranty_address)
             return values
 
         if create_lines:  # happens when the invoice is changed
             for invoice_line in invoice_lines:
                 location_dest_id = claim_line_obj.get_destination_location(
-                    cr, uid, invoice_line.product_id.id,
-                    warehouse_id, context=context)
+                    invoice_line.product_id, warehouse)
                 line = {
                     'name': invoice_line.name,
                     'claim_origine': "none",
@@ -600,78 +559,40 @@ class crm_claim(orm.Model):
                 }
                 line.update(warranty_values(invoice_line.invoice_id,
                                             invoice_line.product_id))
-                claim_lines.append(line)
-        elif lines:  # happens when the date, warehouse or claim type is
-                     # modified
-            for command in lines:
-                code = command[0]
-                assert code != 6, "command 6 not supported in on_change"
-                if code in (0, 1, 4):
-                    # 0: link a new record with values
-                    # 1: update an existing record with values
-                    # 4: link to existing record
-                    line_id = command[1]
-                    if code == 4:
-                        code = 1  # we want now to update values
-                        values = {}
-                    else:
-                        values = command[2]
-                    invoice_line_id = values.get('invoice_line_id')
-                    product_id = values.get('product_id')
-                    if code == 1:  # get the existing line
-                        # if the fields have not changed, fallback
-                        # on the database values
-                        browse_line = claim_line_obj.read(cr, uid,
-                                                          line_id,
-                                                          ['invoice_line_id',
-                                                           'product_id'],
-                                                          context=context)
-                        if not invoice_line_id:
-                            invoice_line_id = browse_line['invoice_line_id'][0]
-                        if not product_id:
-                            product_id = browse_line['product_id'][0]
+                claim_lines.append([0, 0, line])
 
-                    if invoice_line_id and product_id:
-                        invoice_line = invoice_line_obj.browse(cr, uid,
-                                                               invoice_line_id,
-                                                               context=context)
-                        product = product_obj.browse(cr, uid, product_id,
-                                                     context=context)
-                        values.update(warranty_values(invoice_line.invoice_id,
-                                                      product))
-                    claim_lines.append((code, line_id, values))
-                elif code in (2, 3, 5):
-                    claim_lines.append(command)
+        for line in claim_lines:
+            value = self._convert_to_cache(
+                {'claim_line_ids': line}, validate=False)
+            self.update(value)
 
-        value = {'claim_line_ids': claim_lines}
-        delivery_address_id = False
-        if invoice_id:
-            invoice = invoice_obj.browse(cr, uid, invoice_id, context=context)
-            delivery_address_id = invoice.partner_id.id
-        value['delivery_address_id'] = delivery_address_id
+        if self.invoice_id:
+            self.delivery_address_id = self.invoice_id.partner_id.id
 
-        return {'value': value}
-
-    def message_get_reply_to(self, cr, uid, ids, context=None):
+    @api.model
+    def message_get_reply_to(self):
         """ Override to get the reply_to of the parent project. """
+        # return [claim.section_id.message_get_reply_to()[0]
+        #         if claim.section_id else False
+        #         for claim in self.browse(cr, SUPERUSER_ID, ids,
+        #                                  context=context)]
         return [claim.section_id.message_get_reply_to()[0]
                 if claim.section_id else False
-                for claim in self.browse(cr, SUPERUSER_ID, ids,
-                                         context=context)]
+                for claim in self]
 
-    def message_get_suggested_recipients(self, cr, uid, ids, context=None):
-        recipients = super(crm_claim, self
-                           ).message_get_suggested_recipients(cr, uid, ids,
-                                                              context=context)
+    @api.model
+    def message_get_suggested_recipients(self):
+        recipients = super(CrmClaim, self
+                           ).message_get_suggested_recipients()
         try:
-            for claim in self.browse(cr, uid, ids, context=context):
+            for claim in self:
                 if claim.partner_id:
                     self._message_add_suggested_recipient(
-                        cr, uid, recipients, claim,
+                        recipients, claim,
                         partner=claim.partner_id, reason=_('Customer'))
                 elif claim.email_from:
                     self._message_add_suggested_recipient(
-                        cr, uid, recipients, claim,
+                        recipients, claim,
                         email=claim.email_from, reason=_('Customer Email'))
         except (osv.except_osv, orm.except_orm):
             # no read access rights -> just ignore suggested recipients
