@@ -64,15 +64,18 @@ class claim_line(models.Model):
         'expired': "Expired",
         'not_define': "Not Defined"}
 
-    # Method to calculate total amount of the line : qty*UP
-    def _line_total_amount(self, cr, uid, ids, field_name, arg, context=None):
+    @api.multi
+    @api.depends('product_returned_quantity', 'product_uom', 'product_id',
+                 'unit_sale_price')
+    def _line_total_amount(self):
+        """Method to calculate total amount of the line : qty*UP"""
         res = {}
-        for line in self.browse(cr, uid, ids, context=context):
+        for line in self:
             qty = line.product_returned_quantity
             if line.product_uom != line.product_id.uom_id:
                 qty = line.product_uom._compute_qty(
                     qty, line.product_id.uom_id.id)
-            res[line.id] = line.unit_sale_price * qty
+            line.return_value = line.unit_sale_price * qty
         return res
 
     def copy_data(self, cr, uid, id, default=None, context=None):
@@ -424,6 +427,13 @@ class crm_claim(models.Model):
                 _('There is no warehouse for the current user\'s company.'))
         return wh_ids[0]
 
+    @api.multi
+    @api.depends('claim_line_ids.return_value')
+    def _claim_value(self):
+        for claim in self:
+            claim.claim_value = \
+                sum(claim.mapped('claim_line_ids.return_value'))
+
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
@@ -461,6 +471,7 @@ class crm_claim(models.Model):
     warehouse_id = fields.Many2one(
         'stock.warehouse', string='Warehouse',
         required=True)
+    claim_value = fields.Float(compute='_claim_value', store=True)
 
     _defaults = {
         'claim_type': 'customer',
