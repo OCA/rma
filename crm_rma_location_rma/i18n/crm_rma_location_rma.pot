@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_rma_location_rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-17 19:39+0000\n"
+"PO-Revision-Date: 2015-07-17 19:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:60
+#, python-format
+msgid " Sequence in"
+msgstr "Secuencia de entrada"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:72
+#, python-format
+msgid " Sequence internal"
+msgstr "Secuencia interna"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:66
+#, python-format
+msgid " Sequence out"
+msgstr "Secuencia de salida"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:166
+#, python-format
+msgid "RMA"
+msgstr "RMA"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:120
+#, python-format
+msgid "RMA Delivery Orders"
+msgstr "Órdenes de envío de RMA"
+
+#. module: crm_rma_location_rma
+#: field:stock.warehouse,rma_in_type_id:0
+msgid "RMA In Type"
+msgstr "Entradas en RMA"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:134
+#, python-format
+msgid "RMA Internal Transfers"
+msgstr "Transferencias internas en RMA"
+
+#. module: crm_rma_location_rma
+#: field:stock.warehouse,rma_int_type_id:0
+msgid "RMA Internal Type"
+msgstr "Internos en RMA"
+
+#. module: crm_rma_location_rma
+#: field:stock.warehouse,lot_rma_id:0
+msgid "RMA Location"
+msgstr "Locación de RMA"
+
+#. module: crm_rma_location_rma
+#: field:stock.warehouse,rma_out_type_id:0
+msgid "RMA Out Type"
+msgstr "Salidas en RMA"
+
+#. module: crm_rma_location_rma
+#: code:addons/crm_rma_location_rma/stock.py:108
+#, python-format
+msgid "RMA Receipts"
+msgstr "Recepciones de RMA"
+
+#. module: crm_rma_location_rma
+#: model:ir.model,name:crm_rma_location_rma.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Almacén"
+
