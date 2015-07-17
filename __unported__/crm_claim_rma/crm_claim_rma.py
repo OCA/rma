@@ -24,7 +24,7 @@
 
 import calendar
 import math
-from openerp.osv import fields, orm, osv
+from openerp.osv import osv
 from openerp.models import Model, api, _, NewId
 from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
                             Text)

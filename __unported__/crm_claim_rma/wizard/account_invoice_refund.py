@@ -28,25 +28,25 @@ from openerp.fields import Char
 class AccountInvoiceRefund(TransientModel):
     _inherit = "account.invoice.refund"
 
-    @api.one
     def _get_description(self):
         context = self.env.context
         if context is None:
             context = {}
 
         description = context.get('description') or ''
-        self.description = description
+        return description
 
     description = Char(default=_get_description)
 
-    @api.model
+    @api.one
     def compute_refund(self, mode='refund'):
-        context = self.env.context
+        context = self.env.context.copy()
         if context is None:
             context = {}
 
         if context.get('invoice_ids'):
             context['active_ids'] = context.get('invoice_ids')
 
+        self = self.with_context(context)
         return super(AccountInvoiceRefund, self).compute_refund(mode=mode)
 
