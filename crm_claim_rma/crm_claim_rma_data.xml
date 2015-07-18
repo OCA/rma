@@ -91,6 +91,7 @@
 
     <record id="crm_claim.stage_claim1" model="crm.claim.stage">
        <field name="claim_common">1</field>
+       <field name="stage_name_uniq">new</field>
     </record>
 
     </data>
