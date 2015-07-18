@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
 
@@ -115,14 +115,14 @@ class ProductProduct(models.Model):
 
     rma_qty_available = fields.Float(compute='_rma_product_available',
                                      digits_compute=dp.
-                                     get_precision(_('Product Unit '
-                                                     'of Measure')),
+                                     get_precision('Product Unit '
+                                                     'of Measure'),
                                      string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
-                                         get_precision(_('Product Unit '
-                                                       'of Measure')),
+                                         get_precision('Product Unit '
+                                                       'of Measure'),
                                          string='RMA Forecasted Quantity')
 
 
@@ -142,12 +142,12 @@ class ProductTemplate(models.Model):
 
     rma_qty_available = fields.Float(compute='_rma_product_available',
                                      digits_compute=dp.
-                                     get_precision(_('Product Unit '
-                                                   'of Measure')),
+                                     get_precision('Product Unit '
+                                                   'of Measure'),
                                      string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
-                                         get_precision(_('Product Unit'
-                                                       ' of Measure')),
+                                         get_precision('Product Unit'
+                                                       ' of Measure'),
                                          string='RMA Forecasted Quantity')
