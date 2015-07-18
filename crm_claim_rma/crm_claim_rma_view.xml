@@ -406,6 +406,7 @@
         <field name="inherit_id" ref="crm_claim.crm_claim_stage_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='sequence']" position="after">
+                <field name="stage_name_uniq" required="1"/>
                 <field name="claim_type"/>
                 <field name="claim_common"/>
             </xpath>
@@ -418,6 +419,7 @@
         <field name="inherit_id" ref="crm_claim.crm_claim_stage_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
+                <field name="stage_name_uniq"/>
                 <field name="claim_type"/>
                 <field name="claim_common"/>
             </xpath>

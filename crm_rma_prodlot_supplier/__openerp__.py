@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    'name': 'Yoytec CRM Claim Custom',
+    'name': 'Claim Prodlot Supplier',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
