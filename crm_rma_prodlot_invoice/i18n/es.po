@@ -14,3 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: crm_rma_prodlot_invoice
+#: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order
+msgid "Sales Order"
+msgstr "Órdenes de venta"
+
+#. module: crm_rma_prodlot_invoice
+#: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de orden de venta"
+
