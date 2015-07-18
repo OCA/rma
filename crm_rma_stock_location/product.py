@@ -117,13 +117,13 @@ class ProductProduct(models.Model):
                                      digits_compute=dp.
                                      get_precision(_('Product Unit '
                                                      'of Measure')),
-                                     string=_('RMA Quantity On Hand'))
+                                     string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
                                          get_precision(_('Product Unit '
                                                        'of Measure')),
-                                         string=_('RMA Forecasted Quantity'))
+                                         string='RMA Forecasted Quantity')
 
 
 class ProductTemplate(models.Model):
@@ -144,10 +144,10 @@ class ProductTemplate(models.Model):
                                      digits_compute=dp.
                                      get_precision(_('Product Unit '
                                                    'of Measure')),
-                                     string=_('RMA Quantity On Hand'))
+                                     string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
                                          get_precision(_('Product Unit'
                                                        ' of Measure')),
-                                         string=_('RMA Forecasted Quantity'))
+                                         string='RMA Forecasted Quantity')
