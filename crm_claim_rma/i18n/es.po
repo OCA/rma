@@ -90,7 +90,7 @@ msgstr "Reclamación"
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "Claim Description"
-msgstr "Descripción reclamación"
+msgstr "Descripción del reclamo"
 
 #. module: crm_claim_rma
 #: field:claim.line,claim_diagnosis:0
@@ -641,7 +641,7 @@ msgstr "Daño físico por compañía"
 #. module: crm_claim_rma
 #: field:crm.claim,pick:0
 msgid "Pick the product in store"
-msgstr "Enviar el producto en existencia"
+msgstr "Recoger el producto en tienda"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_picking
@@ -694,7 +694,7 @@ msgstr "Producto reparado"
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "Product Returns"
-msgstr "Producto devuelto"
+msgstr "Productos en reclamo"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
