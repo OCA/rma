@@ -61,6 +61,11 @@
                                 domain="[]"
                                 context="{'group_by':'priority'}"
                                 help="Priority"/>
+                        <filter string="State"
+                                name="group_by_state"
+                                domain="[]"
+                                context="{'group_by':'state'}"
+                                help="Grouping by state"/>
                     </group>
                 </search>
             </field>
@@ -386,7 +391,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="crm_claim_line_tree_view"/>
             <field name="search_view_id" ref="view_crm_claim_lines_filter"/>
-            <field name="context">{'search_default_group_by_priority': True}</field>
+            <field name="context">{'search_default_group_by_priority': True, 'search_default_group_by_state': True}</field>
         </record>
     <!-- substates action -->
         <record id="act_crm_claim_substates" model="ir.actions.act_window">
