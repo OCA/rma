@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 19:54+0000\n"
-"PO-Revision-Date: 2015-07-17 19:54+0000\n"
+"POT-Creation-Date: 2015-07-21 01:59+0000\n"
+"PO-Revision-Date: 2015-07-21 01:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:112
+#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:111
 #, python-format
 msgid "Error!"
 msgstr "Error!"
@@ -117,7 +117,7 @@ msgid "Products"
 msgstr "Productos"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:214
+#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:213
 #, python-format
 msgid "Search Product"
 msgstr "Buscar producto"
@@ -128,14 +128,13 @@ msgid "Status"
 msgstr "Estado"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:289
+#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:285
 #, python-format
-msgid "The product or invoice {produ}                                                 was not found\n"
-"                                            "
-msgstr "El producto o factura {produ} no fue encontrado\n"
+msgid "The product or invoice %s was not found"
+msgstr "El producto o factura %s no fué encontrado"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:113
+#: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:112
 #, python-format
 msgid "There is no warehouse for the current user's company."
 msgstr "No existe un almacén para la compañia del usuario actual"

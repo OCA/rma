@@ -25,8 +25,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 #########################################################################
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from openerp import models, fields, api, _
 from openerp.exceptions import except_orm
 
 
@@ -283,12 +282,8 @@ class returned_lines_from_serial(models.TransientModel):
 
                 if not element_searched:
                     return {'warning':
-                            {'message': _('''The product or invoice {produ} \
-                                                was not found
-                                            '''.format(produ=product[0].
-                                                       encode('utf-8',
-                                                              'ignore')
-                                                       ))},
+                            {'message': (_('The product or invoice %s'
+                                          ' was not found') % product[0])},
                             'value':
                             {'scan_data': '\n'.join(
                                 input_data.split('\n')[0:-1])}}

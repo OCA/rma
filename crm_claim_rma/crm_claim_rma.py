@@ -54,10 +54,10 @@ class claim_line(models.Model):
     _description = "List of product to return"
 
     # Comment written in a claim.line to know about the warranty status
-    WARRANT_COMMENT = {
-        'valid': "Valid",
-        'expired': "Expired",
-        'not_define': "Not Defined"}
+    WARRANT_COMMENT = [
+        ('valid', _("Valid")),
+        ('expired', _("Expired")),
+        ('not_define', _("Not Defined"))]
 
     # Method to calculate total amount of the line : qty*UP
     @api.multi
@@ -198,9 +198,10 @@ class claim_line(models.Model):
                                   help="The warranty limit is"
                                        " computed as: invoice date + warranty "
                                        "defined on selected product.")
-    warning = fields.Char('Warranty',
-                          readonly=True,
-                          help="If warranty has expired")
+    warning = fields.Selection(WARRANT_COMMENT,
+                               'Warranty',
+                               readonly=True,
+                               help="If warranty has expired")
     warranty_type = fields.Selection(get_warranty_return_partner,
                                      'Warranty type',
                                      readonly=True,
@@ -306,7 +307,7 @@ class claim_line(models.Model):
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
-        warning = _(self.WARRANT_COMMENT['not_define'])
+        warning = 'not_define'
         date_inv_at_server = datetime.strptime(self.date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
@@ -332,9 +333,9 @@ class claim_line(models.Model):
             claim_date = datetime.strptime(self.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
-                warning = _(self.WARRANT_COMMENT['expired'])
+                warning = 'expired'
             else:
-                warning = _(self.WARRANT_COMMENT['valid'])
+                warning = 'valid'
         self.write(
             {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
              'warning': warning},)
