@@ -282,12 +282,8 @@ class returned_lines_from_serial(models.TransientModel):
 
                 if not element_searched:
                     return {'warning':
-                            {'message': _('''The product or invoice {produ} \
-                                                was not found
-                                            '''.format(produ=product[0].
-                                                       encode('utf-8',
-                                                              'ignore')
-                                                       ))},
+                            {'message': (_('The product or invoice %s'
+                                          ' was not found') % product[0])},
                             'value':
                             {'scan_data': '\n'.join(
                                 input_data.split('\n')[0:-1])}}
