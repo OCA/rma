@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-21 01:35+0000\n"
-"PO-Revision-Date: 2015-07-21 01:35+0000\n"
+"POT-Creation-Date: 2015-07-21 03:06+0000\n"
+"PO-Revision-Date: 2015-07-21 03:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:307
+#: code:addons/crm_claim_rma/crm_claim_rma.py:308
 #, python-format
 msgid "Cannot find any date for invoice. Must be a validated invoice."
 msgstr "No se puede encontrar una fecha para la factura. Debe ser una fecha validada."
@@ -222,13 +222,13 @@ msgid "Current"
 msgstr "Actual"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:572
+#: code:addons/crm_claim_rma/crm_claim_rma.py:573
 #, python-format
 msgid "Customer"
 msgstr "Cliente"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:576
+#: code:addons/crm_claim_rma/crm_claim_rma.py:577
 #, python-format
 msgid "Customer Email"
 msgstr "Email del cliente"
@@ -299,8 +299,8 @@ msgid "Draft and Open Claims"
 msgstr "Reclamaciones abiertas o en borrador"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:306
-#: code:addons/crm_claim_rma/crm_claim_rma.py:316
+#: code:addons/crm_claim_rma/crm_claim_rma.py:307
+#: code:addons/crm_claim_rma/crm_claim_rma.py:317
 #: code:addons/crm_claim_rma/wizard/claim_make_picking.py:89
 #, python-format
 msgid "Error"
@@ -308,7 +308,7 @@ msgstr "Error"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/account_invoice.py:76
-#: code:addons/crm_claim_rma/crm_claim_rma.py:405
+#: code:addons/crm_claim_rma/crm_claim_rma.py:406
 #: code:addons/crm_claim_rma/wizard/claim_make_picking.py:254
 #: code:addons/crm_claim_rma/wizard/claim_make_picking.py:263
 #, python-format
@@ -316,7 +316,7 @@ msgid "Error !"
 msgstr "¡Error!"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:435
+#: code:addons/crm_claim_rma/crm_claim_rma.py:436
 #, python-format
 msgid "Error!"
 msgstr "Error"
@@ -338,6 +338,7 @@ msgstr "Expectativa de ingreso"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:59
+#: selection:claim.line,warning:0
 #, python-format
 msgid "Expired"
 msgstr "Expirado"
@@ -611,6 +612,7 @@ msgstr "No definida"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:60
+#: selection:claim.line,warning:0
 #, python-format
 msgid "Not Defined"
 msgstr "No Definido"
@@ -671,7 +673,7 @@ msgid "Picking List"
 msgstr "Albarán"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:406
+#: code:addons/crm_claim_rma/crm_claim_rma.py:407
 #, python-format
 msgid "Please set product or/and invoice line."
 msgstr "Por favor asignar un producto o una linea de factura"
@@ -950,7 +952,7 @@ msgid "The move line related to the returned product"
 msgstr "Línea de traslado relacionada con el producto devuelto"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:317
+#: code:addons/crm_claim_rma/crm_claim_rma.py:318
 #, python-format
 msgid "The product has no supplier configured."
 msgstr "El producto no tiene proveedor configurado."
@@ -976,7 +978,7 @@ msgid "The warranty limit is computed as: invoice date + warranty defined on sel
 msgstr "El límite de la garantía se calcula como: fecha de factura + garantía seleccionada en el producto seleccionado."
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:436
+#: code:addons/crm_claim_rma/crm_claim_rma.py:437
 #, python-format
 msgid "There is no warehouse for the current user's company."
 msgstr "No hay almacén definido para la compañía del usuario actual"
@@ -1034,6 +1036,7 @@ msgstr "Mensajes sin leer"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:58
+#: selection:claim.line,warning:0
 #, python-format
 msgid "Valid"
 msgstr "Válida"
@@ -1102,19 +1105,7 @@ msgstr "Quién se encarga del tratamiento de retorno de garantía hacia el clien
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
 msgid "Wizard to create pickings from claim lines"
-msgstr "Asistente para crear envíos desde la línea de reclamación"
-
-#. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:335
-#, python-format
-msgid "expired"
-msgstr "expirado"
-
-#. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:309
-#, python-format
-msgid "not_define"
-msgstr "sin_definir"
+msgstr "Wizard para crear albaranes desde una linea de reclamo pendiente"
 
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
@@ -1125,10 +1116,4 @@ msgstr "o"
 #: model:ir.model,name:crm_claim_rma.model_substate_substate
 msgid "substate that precise a given state"
 msgstr "Los sub-estados necesitan un estado padre"
-
-#. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:337
-#, python-format
-msgid "valid"
-msgstr "válido"
 

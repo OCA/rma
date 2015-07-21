@@ -45,7 +45,7 @@ class claim_line(models.Model):
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
-        warning = _(self.WARRANT_COMMENT['not_define'])
+        warning = 'not_define'
         date_inv_at_server = datetime.strptime(self.date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
@@ -78,9 +78,9 @@ class claim_line(models.Model):
             claim_date = datetime.strptime(self.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
-                warning = _(self.WARRANT_COMMENT['expired'])
+                warning = 'expired'
             else:
-                warning = _(self.WARRANT_COMMENT['valid'])
+                warning = 'valid'
         self.write(
             {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
              'warning': warning},)
