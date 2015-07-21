@@ -55,9 +55,9 @@ class claim_line(models.Model):
 
     # Comment written in a claim.line to know about the warranty status
     WARRANT_COMMENT = {
-        'valid': "Valid",
-        'expired': "Expired",
-        'not_define': "Not Defined"}
+        'valid': _("Valid"),
+        'expired': _("Expired"),
+        'not_define': _("Not Defined")}
 
     # Method to calculate total amount of the line : qty*UP
     @api.multi

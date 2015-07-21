@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 18:30+0000\n"
-"PO-Revision-Date: 2015-07-17 18:30+0000\n"
+"POT-Creation-Date: 2015-07-21 01:35+0000\n"
+"PO-Revision-Date: 2015-07-21 01:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,7 @@ msgstr "No pudo enviarse"
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_out
 msgid "Create Outgoing Shipments"
-msgstr "Crear envíos salientes"
+msgstr "Crear envíos de salida"
 
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
@@ -337,6 +337,12 @@ msgid "Expected revenue"
 msgstr "Expectativa de ingreso"
 
 #. module: crm_claim_rma
+#: code:addons/crm_claim_rma/crm_claim_rma.py:59
+#, python-format
+msgid "Expired"
+msgstr "Expirado"
+
+#. module: crm_claim_rma
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
@@ -366,6 +372,11 @@ msgstr "Agrupar por..."
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Group By..."
 msgstr "Agrupar por..."
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Grouping by state"
+msgstr "Agrupar por estado"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
@@ -452,6 +463,11 @@ msgid "Is a Follower"
 msgstr "Is a Follower"
 
 #. module: crm_claim_rma
+#: help:crm.claim.stage,stage_name_uniq:0
+msgid "It used like name unique for readonly in view"
+msgstr "It used like name unique for readonly in view"
+
+#. module: crm_claim_rma
 #: field:claim.line,message_last_post:0
 #: field:stock.move,message_last_post:0
 msgid "Last Message Date"
@@ -489,7 +505,7 @@ msgstr "Documento relacionado"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_claim_line
 msgid "List of product to return"
-msgstr "Listado de productos a devolver"
+msgstr "Lista de productos a retornar"
 
 #. module: crm_claim_rma
 #: help:claim_make_picking.wizard,claim_line_source_location:0
@@ -591,7 +607,13 @@ msgstr "Normal"
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "Not Define"
-msgstr "No definido"
+msgstr "No definida"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/crm_claim_rma.py:60
+#, python-format
+msgid "Not Defined"
+msgstr "No Definido"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origine:0
@@ -878,6 +900,12 @@ msgid "Stage"
 msgstr "Etapa"
 
 #. module: crm_claim_rma
+#: field:crm.claim.stage,stage_name_uniq:0
+msgid "Stage Name"
+msgstr "Nombre de la etapa"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,state:0
 msgid "State"
 msgstr "Estado"
@@ -885,7 +913,7 @@ msgstr "Estado"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento stock"
+msgstr "Movimiento de Inventario"
 
 #. module: crm_claim_rma
 #: field:claim.line,substate_id:0
@@ -1003,6 +1031,12 @@ msgstr "Precio de venta unitario del producto. Auto-completado si la devolución
 #: field:stock.move,message_unread:0
 msgid "Unread Messages"
 msgstr "Mensajes sin leer"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/crm_claim_rma.py:58
+#, python-format
+msgid "Valid"
+msgstr "Válida"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
