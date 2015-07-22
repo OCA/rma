@@ -18,10 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tests import common
+from openerp.tests.common import TransactionCase
 
 
-class test_lp_1282584(common.TransactionCase):
+class test_lp_1282584(TransactionCase):
     """ Test wizard open the right type of view
 
     The wizard can generate picking.in and picking.out
@@ -30,83 +30,72 @@ class test_lp_1282584(common.TransactionCase):
 
     def setUp(self):
         super(test_lp_1282584, self).setUp()
-        cr, uid = self.cr, self.uid
 
-        self.WizardMakePicking = self.registry('claim_make_picking.wizard')
-        ClaimLine = self.registry('claim.line')
-        Claim = self.registry('crm.claim')
+        self.wizard_make_picking_obj = self.env['claim_make_picking.wizard']
+        line_obj = self.env['claim.line']
+        claim_obj = self.env['crm.claim']
 
-        self.product_id = self.ref('product.product_product_4')
+        self.product = self.env.ref('product.product_product_4')
 
-        self.partner_id = self.ref('base.res_partner_12')
+        self.partner = self.env.ref('base.res_partner_12')
 
         # Create the claim with a claim line
-        self.claim_id = Claim.create(
-            cr, uid,
+        self.claim = claim_obj.create(
             {
                 'name': 'TEST CLAIM',
                 'number': 'TEST CLAIM',
                 'claim_type': 'customer',
-                'delivery_address_id': self.partner_id,
-            })
+                'delivery_address_id': self.partner.id,
+            }
+        )
 
-        claim = Claim.browse(cr, uid, self.claim_id)
-        self.warehouse_id = claim.warehouse_id.id
-        self.claim_line_id = ClaimLine.create(
-            cr, uid,
+        self.warehouse = self.claim.warehouse_id
+        self.claim_line = line_obj.create(
             {
                 'name': 'TEST CLAIM LINE',
                 'claim_origine': 'none',
-                'product_id': self.product_id,
-                'claim_id': self.claim_id,
-                'location_dest_id': claim.warehouse_id.lot_stock_id.id
-            })
+                'product_id': self.product.id,
+                'claim_id': self.claim.id,
+                'location_dest_id': self.warehouse.lot_stock_id.id
+            }
+        )
 
     def test_00(self):
-        """Test wizard opened view model for a new product return
-
-        """
-        cr, uid = self.cr, self.uid
-        wiz_context = {
-            'active_id': self.claim_id,
-            'partner_id': self.partner_id,
-            'warehouse_id': self.warehouse_id,
+        """ Test wizard opened view model for a new product return """
+        context = {
+            'active_id': self.claim.id,
+            'partner_id': self.partner.id,
+            'warehouse_id': self.warehouse.id,
             'picking_type': 'in',
         }
-        wizard_id = self.WizardMakePicking.create(cr, uid, {
-        }, context=wiz_context)
 
-        res = self.WizardMakePicking.action_create_picking(
-            cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.in',
+        wizard = self.wizard_make_picking_obj.with_context(context).create({})
+
+        res = wizard.action_create_picking()
+        self.assertEquals(res.get('res_model'), 'stock.picking',
                           "Wrong model defined")
 
     def test_01(self):
-        """Test wizard opened view model for a new delivery
+        """ Test wizard opened view model for a new delivery """
 
-        """
+        wizard_change_product_qty_obj = self.env['stock.change.product.qty']
+        context = {'active_id': self.product.id}
+        wizard_change_product_qty = wizard_change_product_qty_obj.create({
+            'product_id': self.product.id,
+            'new_quantity': 12
+        })
 
-        cr, uid = self.cr, self.uid
+        wizard_change_product_qty.with_context(context).change_product_qty()
 
-        WizardChangeProductQty = self.registry('stock.change.product.qty')
-        wiz_context = {'active_id': self.product_id}
-        wizard_chg_qty_id = WizardChangeProductQty.create(cr, uid, {
-            'product_id': self.product_id,
-            'new_quantity': 12})
-        WizardChangeProductQty.change_product_qty(cr, uid,
-                                                  [wizard_chg_qty_id],
-                                                  context=wiz_context)
-
-        wiz_context = {
-            'active_id': self.claim_id,
-            'partner_id': self.partner_id,
-            'warehouse_id': self.warehouse_id,
+        context = {
+            'active_id': self.claim.id,
+            'partner_id': self.partner.id,
+            'warehouse_id': self.warehouse.id,
             'picking_type': 'out',
         }
-        wizard_id = self.WizardMakePicking.create(cr, uid, {
-        }, context=wiz_context)
 
-        res = self.WizardMakePicking.action_create_picking(
-            cr, uid, [wizard_id], context=wiz_context)
-        self.assertEquals(res.get('res_model'), 'stock.picking.out',
+        wizard = self.wizard_make_picking_obj.with_context(context).create({})
+
+        res = wizard.action_create_picking()
+        self.assertEquals(res.get('res_model'), 'stock.picking',
                           "Wrong model defined")
