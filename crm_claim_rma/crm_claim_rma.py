@@ -22,17 +22,17 @@
 #
 ##############################################################################
 
-import calendar
-import math
-from openerp.osv import osv
 from openerp.models import Model, api, _, NewId
 from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
-                            Text)
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp import SUPERUSER_ID
+                            Text)
+from openerp.exceptions import except_orm, Warning
+
+import math
+import calendar
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class InvoiceNoDate(Exception):
@@ -260,11 +260,11 @@ class ClaimLine(Model):
             values = self._warranty_limit_values(invoice, claim_type, product,
                                                  claim_date)
         except InvoiceNoDate:
-            raise osv.except_osv(
+            raise Warning(
                 _('Error'), _('Cannot find any date for invoice. '
                               'Must be a validated invoice.'))
         except ProductNoSupplier:
-                raise osv.except_osv(
+                raise Warning(
                     _('Error'), _('The product has no supplier configured.'))
 
         self.write(values)
@@ -361,7 +361,6 @@ class ClaimLine(Model):
             return {'warranty_return_partner': False,
                     'warranty_type': False,
                     'location_dest_id': False}
-        return_address = None
         sellers = product.seller_ids
         if sellers:
             seller = sellers[0]
@@ -393,7 +392,7 @@ class ClaimLine(Model):
         """ Calculate warranty limit and address """
         for claim_line in self:
             if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise osv.except_osv(
+                raise Warning(
                     _('Error'), _('Please set product and invoice.'))
             claim_line.set_warranty_limit()
             claim_line.set_warranty_return_address()
@@ -512,9 +511,6 @@ class CrmClaim(Model):
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
-        invoice_obj = self.env['account.invoice']
-        invoice_line_obj = self.env['account.invoice.line']
-        product_obj = self.env['product.product']
         claim_line_obj = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
         claim_lines = []
@@ -591,8 +587,9 @@ class CrmClaim(Model):
                     self._message_add_suggested_recipient(
                         recipients, claim,
                         email=claim.email_from, reason=_('Customer Email'))
-        except (osv.except_osv, orm.except_orm):
+        except except_orm:
             # no read access rights -> just ignore suggested recipients
             # because this imply modifying followers
+
             pass
         return recipients
