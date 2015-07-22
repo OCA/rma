@@ -24,9 +24,9 @@
 
 from openerp.models import Model, api, _, NewId
 from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
+                            Text)
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-                            Text)
 from openerp.exceptions import except_orm, Warning
 
 import math
