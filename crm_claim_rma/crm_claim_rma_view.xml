@@ -239,7 +239,6 @@
 
                         <button name="%(account.action_account_invoice_refund)d"
                                 type='action' string='New Refund'
-                                icon="gtk-execute"
                                 context="{
                                     'invoice_ids': [invoice_id],
                                     'claim_line_ids': claim_line_ids,
