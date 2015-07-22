@@ -191,8 +191,7 @@ class ClaimMakePicking(TransientModel):
 
         claim = self.env['crm.claim'].browse(context['active_id'])
         partner_id = claim.delivery_address_id.id
-        wizard = self
-        claim_lines = wizard.claim_line_ids
+        claim_lines = self.claim_line_ids
 
         # In case of product return, we don't allow one picking for various
         # product if location are different
@@ -230,15 +229,15 @@ class ClaimMakePicking(TransientModel):
              'partner_id': partner_id,
              'invoice_state': "none",
              'company_id': claim.company_id.id,
-             'location_id': wizard.claim_line_source_location.id,
-             'location_dest_id': wizard.claim_line_dest_location.id,
+             'location_id': self.claim_line_source_location.id,
+             'location_dest_id': self.claim_line_dest_location.id,
              'note': note,
              'claim_id': claim.id,
              })
 
         # Create picking lines
         fmt = DEFAULT_SERVER_DATETIME_FORMAT
-        for line in wizard.claim_line_ids:
+        for line in self.claim_line_ids:
             move_id = self.env['stock.move'].create({
                 'name': line.product_id.name_template,
                 'priority': '0',
@@ -248,13 +247,12 @@ class ClaimMakePicking(TransientModel):
                 'product_uom_qty': line.product_returned_quantity,
                 'product_uom': line.product_id.product_tmpl_id.uom_id.id,
                 'partner_id': partner_id,
-                'prodlot_id': line.prodlot_id.id,
                 'picking_id': picking.id,
                 'state': 'draft',
                 'price_unit': line.unit_sale_price,
                 'company_id': claim.company_id.id,
-                'location_id': wizard.claim_line_source_location.id,
-                'location_dest_id': wizard.claim_line_dest_location.id,
+                'location_id': self.claim_line_source_location.id,
+                'location_dest_id': self.claim_line_dest_location.id,
                 'note': note}).id
 
             line.write({write_field: move_id})
