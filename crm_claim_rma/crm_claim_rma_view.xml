@@ -221,9 +221,8 @@
                             </form>
                         </field>
                     </group>
-                    <!--TODO: make visible only to valid claim stages -->
-                    <group col="4" colspan="4" >
-                        <separator string="Action" colspan="4" />
+                    <group col="4" colspan="4" attrs="{'invisible':[('stage_id', 'not in', [%(crm_claim.stage_claim1)d, %(crm_claim.stage_claim5)d])]}">
+                        <separator string="Actions" colspan="4"/>
                         <button name="%(action_claim_picking_in)d"
                                 string="New Products Return"
                                 type="action" target="new"
