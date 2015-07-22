@@ -35,4 +35,4 @@ class CrmClaim(Model):
                 related='categ_id.name')
     categ_id = Many2one('crm.case.categ', string='Category', required=True,
                         domain="[('section_id', '=', section_id), "
-                               "('object_id.model', '=', 'crm.claim')]",)
+                               "('object_id.model', '=', 'crm.claim')]")
