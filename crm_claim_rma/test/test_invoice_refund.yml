@@ -25,13 +25,13 @@
     claim_type: customer
     partner_id: base.res_partner_3
     invoice_id: account_invoice_claim_refund
-    state: open
+    stage_id: crm_claim.stage_claim1
 -
   I prepare the wizard context.
 -
   !python {model: account.invoice.refund}: |
     claim_lines = self.pool.get('claim.line').search(cr, uid, [('claim_id','=',ref('claim_refund'))])
-    context.update({'active_model': 'crm_claim', 'active_id': ref('claim_refund'), 'claim_id': ref('claim_refund'), 'claim_line_ids': [[4, claim_lines[0], False], [4, claim_lines[1], False]], 'invoice_ids':[ref('account_invoice_claim_refund')]  })
+    context.update({'active_model': 'crm_claim', 'active_id': ref('claim_refund'), 'claim_id': ref('claim_refund'), 'invoice_ids': [ref('account_invoice_claim_refund')]  })
 -
   I create a refund wizard
 -
