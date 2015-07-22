@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Eezee-It
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
@@ -20,6 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     'name': 'RMA Claim (Product Return Management)',
     'version': '1.1',
@@ -66,10 +68,13 @@ Contributors:
  * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
  * Guewen Baconnier <guewen.baconnier@camptocamp.com>
  * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+ * Javier Carrasco <javier.carrasco@eezee-it.com>
 
 """,
-    'author': "Akretion, Camptocamp,Odoo Community Association (OCA)",
-    'website': 'http://www.akretion.com, http://www.camptocamp.com',
+    'author': "Akretion, Camptocamp, Eezee-it, "
+              "Odoo Community Association (OCA)",
+    'website': 'http://www.akretion.com, http://www.camptocamp.com, '
+               'http://www.eezee-it.com',
     'license': 'AGPL-3',
     'depends': ['sale',
                 'stock',
@@ -80,7 +85,6 @@ Contributors:
              'crm_claim_rma_view.xml',
              'security/ir.model.access.csv',
              'account_invoice_view.xml',
-             'stock_view.xml',
              'res_partner_view.xml',
              'crm_claim_rma_data.xml',
              ],

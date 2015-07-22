@@ -2,8 +2,13 @@
 ###############################################################################
 #
 #   Module for OpenERP
+#
+#   Original work
 #   Copyright (C) 2012-2014 Akretion. All Rights Reserved
 #   @author Benoît GUILLOT <benoit.guillot@akretion.com>
+#
+#   Modified work
+#   Copyright (c) 2015 Eezee-It  (www.eezee-it.com). All rights reserved.
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -20,25 +25,24 @@
 #
 ###############################################################################
 
-from openerp.osv import fields, orm
 
+{
+    'name': 'crm_claim_categ_as_name',
+    'version': '1.0',
+    'category': 'Generic Modules/CRM & SRM',
+    'license': 'AGPL-3',
+    'description':
+    """
+    Replace claim name by category. It makes easier to filter on claims.
+    """,
+    'author': "Eezee-It",
+    'website': 'http://www.akretion.com/',
+    'depends': ['crm_claim_rma'],
+    'data': [
+        'claim_view.xml',
+    ],
+    'demo': [],
+    'installable': True,
+}
 
-class crm_claim(orm.Model):
-    _inherit = 'crm.claim'
-
-    _columns = {
-        'name': fields.related(
-            'categ_id',
-            'name',
-            relation='crm.case.categ',
-            type='char',
-            string='Claim Subject',
-            size=128,
-            store=True),
-        'categ_id': fields.many2one(
-            'crm.case.categ',
-            'Category',
-            domain="[('section_id', '=', section_id), \
-                    ('object_id.model', '=', 'crm.claim')]",
-            required=True),
-    }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
