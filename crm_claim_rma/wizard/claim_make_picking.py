@@ -22,11 +22,12 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
 from openerp.models import api, TransientModel, _
 from openerp.fields import Many2many, Many2one
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.exceptions import Warning
 from openerp import netsvc
+
 import time
 
 
@@ -114,7 +115,7 @@ class ClaimMakePicking(TransientModel):
                 good_lines.append(line.id)
 
         if not good_lines:
-            raise osv.except_osv(_('Error'),
+            raise Warning(_('Error'),
                 _('A picking has already been created for this claim.'))
 
         return good_lines
@@ -155,7 +156,6 @@ class ClaimMakePicking(TransientModel):
     def action_cancel(self):
         return {'type': 'ir.actions.act_window_close'}
 
-    # If "Create" button pressed
     @api.multi
     def action_create_picking(self):
         picking_obj = self.env['stock.picking']
@@ -179,15 +179,14 @@ class ClaimMakePicking(TransientModel):
                 name = note
 
         picking_type_id = picking_type_obj.search([
-                ('code', '=', picking_type_code),
-                ('default_location_dest_id', '=',
-                 self.claim_line_dest_location.id)], limit=1).id
+            ('code', '=', picking_type_code),
+            ('default_location_dest_id', '=',
+             self.claim_line_dest_location.id)], limit=1).id
 
         model = 'stock.picking'
         view_id = view_obj.search([
             ('model', '=', model),
-            ('type', '=', 'form')
-        ], limit=1).id
+            ('type', '=', 'form')], limit=1).id
 
         claim = self.env['crm.claim'].browse(context['active_id'])
         partner_id = claim.delivery_address_id.id
@@ -201,7 +200,8 @@ class ClaimMakePicking(TransientModel):
             common_dest_loc_id = self._get_common_dest_location_from_line(
                 claim_lines.ids)
             if not common_dest_loc_id:
-                raise osv.except_osv(_('Error'),
+                raise Warning(
+                    _('Error'),
                     _('A product return cannot be created for various '
                       'destination locations, please choose line with a '
                       'same destination location.'))
@@ -211,7 +211,8 @@ class ClaimMakePicking(TransientModel):
                 claim_lines.ids)
 
             if not common_dest_partner_id:
-                raise osv.except_osv(_('Error'),
+                raise Warning(
+                    _('Error'),
                     _('A product return cannot be created for various '
                       'destination addresses, please choose line with a '
                       'same address.'))
@@ -236,28 +237,26 @@ class ClaimMakePicking(TransientModel):
 
         # Create picking lines
         fmt = DEFAULT_SERVER_DATETIME_FORMAT
-        for wizard_claim_line in wizard.claim_line_ids:
-            move_obj = self.env['stock.move']
-            move_id = move_obj.create(
-                {'name': wizard_claim_line.product_id.name_template,
-                 'priority': '0',
-                 'date': time.strftime(fmt),
-                 'date_expected': time.strftime(fmt),
-                 'product_id': wizard_claim_line.product_id.id,
-                 'product_uom_qty': wizard_claim_line.product_returned_quantity,
-                 'product_uom': wizard_claim_line.product_id.product_tmpl_id.uom_id.id,
-                 'partner_id': partner_id,
-                 'prodlot_id': wizard_claim_line.prodlot_id.id,
-                 'picking_id': picking.id,
-                 'state': 'draft',
-                 'price_unit': wizard_claim_line.unit_sale_price,
-                 'company_id': claim.company_id.id,
-                 'location_id': wizard.claim_line_source_location.id,
-                 'location_dest_id': wizard.claim_line_dest_location.id,
-                 'note': note,
-                 }).id
+        for line in wizard.claim_line_ids:
+            move_id = self.env['stock.move'].create({
+                'name': line.product_id.name_template,
+                'priority': '0',
+                'date': time.strftime(fmt),
+                'date_expected': time.strftime(fmt),
+                'product_id': line.product_id.id,
+                'product_uom_qty': line.product_returned_quantity,
+                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
+                'partner_id': partner_id,
+                'prodlot_id': line.prodlot_id.id,
+                'picking_id': picking.id,
+                'state': 'draft',
+                'price_unit': line.unit_sale_price,
+                'company_id': claim.company_id.id,
+                'location_id': wizard.claim_line_source_location.id,
+                'location_dest_id': wizard.claim_line_dest_location.id,
+                'note': note}).id
 
-            wizard_claim_line.write({write_field: move_id})
+            line.write({write_field: move_id})
 
         wf_service = netsvc.LocalService("workflow")
         if picking:
@@ -278,6 +277,3 @@ class ClaimMakePicking(TransientModel):
             'res_id': picking.id,
             'type': 'ir.actions.act_window',
         }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
