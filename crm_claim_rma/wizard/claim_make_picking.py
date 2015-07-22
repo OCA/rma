@@ -26,7 +26,8 @@ from openerp.models import api, TransientModel, _
 from openerp.fields import Many2many, Many2one
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.exceptions import Warning
-from openerp import netsvc
+from openerp import workflow
+from openerp import workflow
 
 import time
 
@@ -258,7 +259,7 @@ class ClaimMakePicking(TransientModel):
 
             line.write({write_field: move_id})
 
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         if picking:
             cr, uid = self.env.cr, self.env.uid
             wf_service.trg_validate(uid, 'stock.picking',
