@@ -116,7 +116,8 @@ class ClaimMakePicking(TransientModel):
                 good_lines.append(line.id)
 
         if not good_lines:
-            raise Warning(_('Error'),
+            raise Warning(
+                _('Error'),
                 _('A picking has already been created for this claim.'))
 
         return good_lines
