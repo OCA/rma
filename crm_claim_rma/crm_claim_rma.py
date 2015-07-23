@@ -27,7 +27,7 @@ from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
                             Text)
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp.exceptions import except_orm, Warning
+from openerp.exceptions import except_orm, Warning, ValidationError
 
 import math
 import calendar
@@ -403,7 +403,6 @@ class CrmClaim(Model):
     _inherit = 'crm.claim'
 
     def init(self, cr):
-
         cr.execute("""
             UPDATE "crm_claim" SET "number"=id::varchar
             WHERE ("number" is NULL)
@@ -417,12 +416,9 @@ class CrmClaim(Model):
         return res
 
     def _get_default_warehouse(self):
-        user = self.env.user
-        company_id = user.company_id.id
+        company_id = self.env.user.company_id.id
         wh_obj = self.env['stock.warehouse']
-        wh = wh_obj.search([
-            ('company_id', '=', company_id)
-        ], limit=1)
+        wh = wh_obj.search([('company_id', '=', company_id)], limit=1)
         if not wh:
             raise Warning(
                 _('There is no warehouse for the current user\'s company.'))
@@ -471,22 +467,13 @@ class CrmClaim(Model):
         default='customer',
         help="Customer: from customer to company.\n "
              "Supplier: from company to supplier.")
-    claim_line_ids = One2many(
-        'claim.line',
-        'claim_id',
-        string='Return lines')
+    claim_line_ids = One2many('claim.line', 'claim_id', string='Return lines')
     planned_revenue = Float(string='Expected revenue')
     planned_cost = Float(string='Expected cost')
     real_revenue = Float(string='Real revenue')
     real_cost = Float(string='Real cost')
-    invoice_ids = One2many(
-        'account.invoice',
-        'claim_id',
-        string='Refunds')
-    picking_ids = One2many(
-        'stock.picking',
-        'claim_id',
-        string='RMA')
+    invoice_ids = One2many('account.invoice', 'claim_id', string='Refunds')
+    picking_ids = One2many('stock.picking', 'claim_id', string='RMA')
     invoice_id = Many2one(
         'account.invoice',
         string='Invoice',
@@ -502,10 +489,14 @@ class CrmClaim(Model):
         default=_get_default_warehouse,
         required=True)
 
-    _sql_constraints = [
-        ('number_uniq', 'unique(number, company_id)',
-         'Number/Reference must be unique per Company!'),
-    ]
+    @api.one
+    @api.constraint('number')
+    def _check_unq_number(self):
+        if self.search([
+                ('company_id', '=', self.company_id.id),
+                ('number', '=', self.number),
+                ('id', '!=', self.id)]):
+            raise ValidationError(_('Claim number has to be unique!'))
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
@@ -589,6 +580,5 @@ class CrmClaim(Model):
         except except_orm:
             # no read access rights -> just ignore suggested recipients
             # because this imply modifying followers
-
             pass
         return recipients
