@@ -490,7 +490,7 @@ class CrmClaim(Model):
         required=True)
 
     @api.one
-    @api.constraint('number')
+    @api.constrains('number')
     def _check_unq_number(self):
         if self.search([
                 ('company_id', '=', self.company_id.id),
