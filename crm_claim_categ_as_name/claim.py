@@ -24,7 +24,7 @@
 #
 ##############################################################################
 
-from openerp.models import Model, api
+from openerp.models import Model
 from openerp.fields import Char, Many2one
 
 
