@@ -25,6 +25,7 @@
 from openerp.models import api, TransientModel
 from openerp.fields import Char
 
+
 class AccountInvoiceRefund(TransientModel):
     _inherit = "account.invoice.refund"
 
@@ -49,4 +50,3 @@ class AccountInvoiceRefund(TransientModel):
 
         self = self.with_context(context)
         return super(AccountInvoiceRefund, self).compute_refund(mode=mode)
-

@@ -22,7 +22,7 @@
 #
 ##############################################################################
 
-from openerp.models import Model, api, _, NewId
+from openerp.models import Model, api, _
 from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
                             Text)
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
@@ -71,7 +71,6 @@ class ClaimLine(Model):
     # Method to calculate total amount of the line : qty*UP
     @api.one
     def _line_total_amount(self):
-        res = {}
         self.return_value = (self.unit_sale_price *
                              self.product_returned_quantity)
 
@@ -308,7 +307,7 @@ class ClaimLine(Model):
 
         # claim_exists = not isinstance(claim.id, NewId)
         if not claim and not (company_id and warehouse_id and
-                                     claim_type and claim_date):
+                              claim_type and claim_date):
             # if we have a claim_id, we get the info from there,
             # otherwise we get it from the args (on creation typically)
             return False

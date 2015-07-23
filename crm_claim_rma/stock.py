@@ -41,6 +41,7 @@ class StockPicking(Model):
         picking = super(StockPicking, self).create(vals)
         return picking
 
+
 # This part concern the case of a wrong picking out. We need to create a new
 # stock_move in a picking already open.
 # In order to don't have to confirm the stock_move we override the create and
