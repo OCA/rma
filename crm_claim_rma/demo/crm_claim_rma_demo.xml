@@ -62,21 +62,25 @@
         <record model="crm.claim.stage" id="crm_claim.stage_claim1">
             <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
             <field name="claim_common" eval="True"/>
+            <field name="stage_name_uniq">new</field>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim5">
             <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
             <field name="claim_common" eval="True"/>
+            <field name="stage_name_uniq">in_progress</field>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim2">
             <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
             <field name="claim_common" eval="True"/>
+            <field name="stage_name_uniq">settled</field>
         </record>
 
         <record model="crm.claim.stage" id="crm_claim.stage_claim3">
             <field name="claim_type" ref="crm_claim_rma_config.crm_claim_type_customer"/>
             <field name="claim_common" eval="True"/>
+            <field name="stage_name_uniq">rejected</field>
         </record>
 
     </data>

@@ -115,7 +115,8 @@ class ProductProduct(models.Model):
 
     rma_qty_available = fields.Float(compute='_rma_product_available',
                                      digits_compute=dp.
-                                     get_precision('Product Unit of Measure'),
+                                     get_precision('Product Unit '
+                                                   'of Measure'),
                                      string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
@@ -141,7 +142,8 @@ class ProductTemplate(models.Model):
 
     rma_qty_available = fields.Float(compute='_rma_product_available',
                                      digits_compute=dp.
-                                     get_precision('Product Unit of Measure'),
+                                     get_precision('Product Unit '
+                                                   'of Measure'),
                                      string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',

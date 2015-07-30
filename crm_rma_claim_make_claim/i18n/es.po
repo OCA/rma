@@ -1,0 +1,74 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_rma_claim_make_claim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-17 19:38+0000\n"
+"PO-Revision-Date: 2015-07-17 19:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_rma_claim_make_claim
+#: help:crm.claim,claim_ids:0
+msgid " - For a Vendor Claim means the RMA-C that generate the current RMA-V.\n"
+" - For a Custtomer Claim means the RMA-V generated to fullfill the current RMA-C."
+msgstr " - Para un reclamo a proveedor corresponde a los reclamos a cliente relacionados con él.\n
+ - Para un reclamo a cliente, corresponde a los reclamos a proveedor que fueron generados a partir de él."
+
+#. module: crm_rma_claim_make_claim
+#: model:ir.model,name:crm_rma_claim_make_claim.model_crm_claim
+msgid "Claim"
+msgstr "Reclamo"
+
+#. module: crm_rma_claim_make_claim
+#: view:crm.claim:crm_rma_claim_make_claim.crm_claim_workflow_view
+msgid "Create RMA Vendor"
+msgstr "Crear RMA proveedor"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/model/crm_claim_rma.py:74
+#: code:addons/crm_rma_claim_make_claim/model/crm_claim_rma.py:133
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: crm_rma_claim_make_claim
+#: model:ir.model,name:crm_rma_claim_make_claim.model_claim_line
+msgid "List of product to return"
+msgstr "Lista de productos a devolver"
+
+#. module: crm_rma_claim_make_claim
+#: view:crm.claim:crm_rma_claim_make_claim.crm_claim_form_view_inherited
+#: field:crm.claim,claim_ids:0
+msgid "Related Claims"
+msgstr "Reclamos relacionados"
+
+#. module: crm_rma_claim_make_claim
+#: field:claim.line,claim_line_id:0
+msgid "Related claim line"
+msgstr "Línea de reclamo relacionada"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/model/crm_claim_rma.py:134
+#, python-format
+msgid "The Supplier Claim Was Not Created."
+msgstr "El reclamo a proveedor no fue creado"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/model/crm_claim_rma.py:75
+#, python-format
+msgid "The claim client have claim supplier created."
+msgstr "El reclamo de cliente tiene un reclamo a proveedor creado."
+
+#. module: crm_rma_claim_make_claim
+#: help:claim.line,claim_line_id:0
+msgid "To link to the claim line object"
+msgstr "Relacionar a la línea de reclamo"
+

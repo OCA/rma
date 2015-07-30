@@ -50,13 +50,14 @@ class claim_line(models.Model):
     Class to handle a product return line (corresponding to one invoice line)
     """
     _name = "claim.line"
+    _inherit = 'mail.thread'
     _description = "List of product to return"
 
     # Comment written in a claim.line to know about the warranty status
-    WARRANT_COMMENT = {
-        'valid': "Valid",
-        'expired': "Expired",
-        'not_define': "Not Defined"}
+    WARRANT_COMMENT = [
+        ('valid', _("Valid")),
+        ('expired', _("Expired")),
+        ('not_define', _("Not Defined"))]
 
     # Method to calculate total amount of the line : qty*UP
     @api.multi
@@ -138,21 +139,29 @@ class claim_line(models.Model):
                   string='Claim Diagnosis',
                   help="To describe the line product diagnosis")
 
-    claim_origine = fields.Selection([('none', 'Not specified'),
-                                      ('legal', 'Legal retractation'),
-                                      ('cancellation', 'Order cancellation'),
-                                      ('damaged', 'Damaged delivered product'),
-                                      ('error', 'Shipping error'),
-                                      ('exchange', 'Exchange request'),
-                                      ('lost', 'Lost during transport'),
-                                      ('perfect_conditions',
-                                       'Perfect Conditions'),
-                                      ('imperfection', 'Imperfection'),
-                                      ('physical_damage_client',
-                                       'Physical Damage by Client'),
-                                      ('physical_damage_company',
-                                       'Physical Damage by Company'),
-                                      ('other', 'Other')], 'Claim Subject',
+    subject_list = [('none', 'Not specified'),
+                    ('legal', 'Legal retractation'),
+                    ('cancellation', 'Order cancellation'),
+                    ('damaged', 'Damaged delivered product'),
+                    ('error', 'Shipping error'),
+                    ('exchange', 'Exchange request'),
+                    ('lost', 'Lost during transport'),
+                    ('perfect_conditions',
+                     'Perfect Conditions'),
+                    ('imperfection', 'Imperfection'),
+                    ('physical_damage_client',
+                     'Physical Damage by Client'),
+                    ('physical_damage_company',
+                     'Physical Damage by Company'),
+                    ('other', 'Other')]
+
+    def _get_subject(self, num):
+        if num > 0 and num <= len(self.subject_list):
+            return self.subject_list[num-1][0]
+        else:
+            return self.subject_list[0][0]
+
+    claim_origine = fields.Selection(subject_list, 'Claim Subject',
                                      required=True,
                                      help="To describe the "
                                      "line product problem")
@@ -189,9 +198,10 @@ class claim_line(models.Model):
                                   help="The warranty limit is"
                                        " computed as: invoice date + warranty "
                                        "defined on selected product.")
-    warning = fields.Char('Warranty',
-                          readonly=True,
-                          help="If warranty has expired")
+    warning = fields.Selection(WARRANT_COMMENT,
+                               'Warranty',
+                               readonly=True,
+                               help="If warranty has expired")
     warranty_type = fields.Selection(get_warranty_return_partner,
                                      'Warranty type',
                                      readonly=True,
@@ -297,7 +307,7 @@ class claim_line(models.Model):
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
-        warning = _(self.WARRANT_COMMENT['not_define'])
+        warning = 'not_define'
         date_inv_at_server = datetime.strptime(self.date_invoice,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
@@ -323,9 +333,9 @@ class claim_line(models.Model):
             claim_date = datetime.strptime(self.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
-                warning = _(self.WARRANT_COMMENT['expired'])
+                warning = 'expired'
             else:
-                warning = _(self.WARRANT_COMMENT['valid'])
+                warning = 'valid'
         self.write(
             {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
              'warning': warning},)
@@ -448,6 +458,11 @@ class crm_claim(models.Model):
                          help="Company internal "
                          "claim unique number")
 
+    name = fields.Char(related='number', readonly=True,
+                       default="/",
+                       store=True,
+                       string="Name")
+
     @api.model
     def _get_claim_type_default(self):
         claim_type = self.env['crm.claim.type'].search([])
@@ -478,6 +493,7 @@ class crm_claim(models.Model):
     picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA')
     invoice_id = fields.Many2one('account.invoice', string='Invoice',
                                  help='Related original Cusotmer invoice')
+    pick = fields.Boolean('Pick the product in store')
     delivery_address_id = fields.Many2one('res.partner',
                                           string='Partner delivery address',
                                           help="This address will be"
@@ -496,23 +512,6 @@ class crm_claim(models.Model):
     #    ('number_uniq', 'unique(number, company_id)',
     #     'Number/Reference must be unique per Company!'),
     # ]
-
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False,
-                                    context=None):
-        res = super(crm_claim, self
-                    ).onchange_partner_address_id(cr, uid, ids, add,
-                                                  email=email)
-        if add:
-            if (not res['value']['email_from']
-                    or not res['value']['partner_phone']):
-                partner_obj = self.pool.get('res.partner')
-                address = partner_obj.browse(cr, uid, add, context=context)
-                for other_add in address.partner_id.address:
-                    if other_add.email and not res['value']['email_from']:
-                        res['value']['email_from'] = other_add.email
-                    if other_add.phone and not res['value']['partner_phone']:
-                        res['value']['partner_phone'] = other_add.phone
-        return res
 
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, warehouse_id,
                             context=None):
@@ -582,14 +581,6 @@ class crm_claim(models.Model):
             pass
         return recipients
 
-    @api.onchange('delivery_address_id')
-    def _fill_email_and_phone(self):
-        """
-        When the delivery address is set will add the email and phone data.
-        """
-        self.email_from = self.delivery_address_id.email
-        self.partner_phone = self.delivery_address_id.phone
-
 
 class crm_claim_stage(models.Model):
 
@@ -598,6 +589,11 @@ class crm_claim_stage(models.Model):
     @api.model
     def _get_claim_type(self):
         return self.env['crm.claim']._get_claim_type()
+
+    stage_name_uniq = fields.Char('Stage Name',
+                                  help='It used like name '
+                                       'unique for readonly in view',
+                                  translate=False)
 
     claim_type = \
         fields.Many2one('crm.claim.type',

@@ -123,7 +123,7 @@ class claim_make_picking_from_picking(models.TransientModel):
             ('model', '=', 'stock.picking'),
             ('type', '=', 'form'),
             ('name', '=', 'stock.picking.form')
-            ])[0]
+        ])[0]
         prev_picking = picking_obj.browse(context['active_id'])
         partner_id = prev_picking.partner_id.id
         # create picking

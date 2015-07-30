@@ -91,6 +91,23 @@
                                 <li>Write the Invoice Number to search the products in lines</li>
                             </ol>
                             <!--
+                            Claim Subject Options:
+                            <ol>
+                                <li>Not specified</li>
+                                <li>Legal retractation</li>
+                                <li>Order Cancellation</li>
+                                <li>Damaged Delivered Product</li>
+                                <li>Shipping error</li>
+                                <li>Exchange request</li>
+                                <li>Lost during transport</li>
+                                <li>Perfect Conditions</li>
+                                <li>Imperfection</li>
+                                <li>Physical Damage by Client</li>
+                                <li>Physical Damage by Company</li>
+                                <li>Other</li>
+                            </ol>
+                            -->
+                            <!--
                             <strong><a href="https://youtube.com/vauxoomedia">A video with this working on the here</a></strong>
                             -->
                         </p>

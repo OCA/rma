@@ -20,10 +20,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp.osv import fields, osv
 
 
-class stock_picking(orm.Model):
+class stock_picking(osv.Model):
 
     _inherit = "stock.picking"
 
@@ -45,9 +45,10 @@ class stock_picking(orm.Model):
 # stock_move in a picking already open.
 # In order to don't have to confirm the stock_move we override the create and
 # confirm it at the creation only for this case
-class stock_move(orm.Model):
+class stock_move(osv.Model):
 
-    _inherit = "stock.move"
+    _name = 'stock.move'
+    _inherit = ['stock.move', 'mail.thread']
 
     def create(self, cr, uid, vals, context=None):
         move_id = super(stock_move, self
@@ -56,8 +57,8 @@ class stock_move(orm.Model):
             picking_obj = self.pool.get('stock.picking')
             picking = picking_obj.browse(cr, uid, vals['picking_id'],
                                          context=context)
-            if (picking.claim_id
-               and picking.picking_type_id.code == 'incoming'):
+            if (picking.claim_id and
+                    picking.picking_type_id.code == 'incoming'):
                 self.write(cr, uid, move_id, {'state': 'confirmed'},
                            context=context)
         return move_id
