@@ -29,7 +29,7 @@ class account_invoice(orm.Model):
     _inherit = "account.invoice"
 
     _columns = {
-        'claim_id': fields.many2one('crm.claim', 'Claim'),
+        'claim_id': fields.many2one('crm.claim', 'Claim', select=True),
     }
 
     def _refund_cleanup_lines(self, cr, uid, lines, context=None):
