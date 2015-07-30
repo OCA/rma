@@ -5,19 +5,26 @@ language: python
 python:
   - "2.7"
 
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
+
+env:
+  - VERSION="8.0" LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" INCLUDE="rma"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0" INCLUDE="rma"
+
 virtualenv:
 
   system_site_packages: true
 
-env:
-  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" INCLUDE="rma"
-
 install:
-  - git clone https://github.com/Vauxoo/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
+  - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
   - travis_install_nightly
-  - git clone --single-branch --depth=1 https://github.com/Vauxoo/addons-vauxoo.git -b ${VERSION} ${HOME}/addons-vauxoo
-  - pip install coveralls flake8 Counter lxml
+  - pip install Counter
 
 script:
   - travis_run_tests
