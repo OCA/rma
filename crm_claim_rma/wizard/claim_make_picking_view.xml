@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   crm_claim_rma for OpenERP
+  Copyright (c) 2015 Eezee-It  (www.eezee-it.com)
   Copyright (C) 2011 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
   The licence is in the file __openerp__.py
 -->

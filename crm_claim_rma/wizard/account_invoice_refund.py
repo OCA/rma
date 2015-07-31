@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Eezee-It
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
@@ -20,5 +21,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import claim_make_picking
-from . import account_invoice_refund
+
+from openerp.models import api, TransientModel
+from openerp.fields import Char
+
+
+class AccountInvoiceRefund(TransientModel):
+    _inherit = "account.invoice.refund"
+
+    def _get_description(self):
+        context = self.env.context
+        if context is None:
+            context = {}
+
+        description = context.get('description') or ''
+        return description
+
+    description = Char(default=_get_description)
+
+    @api.one
+    def compute_refund(self, mode='refund'):
+        context = self.env.context.copy()
+        if context is None:
+            context = {}
+
+        if context.get('invoice_ids'):
+            context['active_ids'] = context.get('invoice_ids')
+
+        self = self.with_context(context)
+        return super(AccountInvoiceRefund, self).compute_refund(mode=mode)
