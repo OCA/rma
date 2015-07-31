@@ -35,21 +35,16 @@ class AccountInvoice(Model):
     def _refund_cleanup_lines(self, lines):
         """ Override when from claim to update the quantity and link to the
         claim line."""
-
-        context = self.env.context
-        if context is None:
-            context = {}
-
         new_lines = []
         inv_line_obj = self.env['account.invoice.line']
         claim_line_obj = self.env['claim.line']
 
         # check if is an invoice_line and we are from a claim
-        if not (context.get('claim_line_ids') and lines and
+        if not (self.env.context.get('claim_line_ids') and lines and
                 lines[0]._name == 'account.invoice.line'):
             return super(AccountInvoice, self)._refund_cleanup_lines(lines)
 
-        for __, claim_line_id, __ in context.get('claim_line_ids'):
+        for __, claim_line_id, __ in self.env.context.get('claim_line_ids'):
             line = claim_line_obj.browse(claim_line_id)
             if not line.refund_line_id:
                 # For each lines replace quantity and add claim_line_id
