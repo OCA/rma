@@ -35,8 +35,8 @@
     """
     Replace claim name by category. It makes easier to filter on claims.
     """,
-    'author': "Eezee-It",
-    'website': 'http://www.akretion.com/',
+    'author': "akretion, Eezee-It, Odoo Community Association (OCA)",
+    'website': 'http://www.akretion.com/ www.eezee-it.com',
     'depends': ['crm_claim_rma'],
     'data': [
         'claim_view.xml',
