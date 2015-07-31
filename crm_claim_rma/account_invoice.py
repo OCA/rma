@@ -79,17 +79,12 @@ class AccountInvoice(Model):
     @api.model
     def _prepare_refund(self, invoice, date=None, period_id=None,
                         description=None, journal_id=None):
-
-        context = self.env.context
-        if context is None:
-            context = {}
-
         result = super(AccountInvoice, self)._prepare_refund(
             invoice, date=date, period_id=period_id, description=description,
             journal_id=journal_id)
 
-        if context.get('claim_id'):
-            result['claim_id'] = context['claim_id']
+        if self.env.context.get('claim_id'):
+            result['claim_id'] = self.env.context.get('claim_id')
 
         return result
 
