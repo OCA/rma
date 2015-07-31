@@ -49,8 +49,8 @@ class SubstateSubstate(Model):
     _name = "substate.substate"
     _description = "substate that precise a given state"
 
-    name = Char(string='Sub state', required=True)
-    substate_descr = Text(string='Description',
+    name = fields.Char(string='Sub state', required=True)
+    substate_descr = fields.Text(string='Description',
                           help="To give more information about the sub state")
 
 
@@ -109,7 +109,7 @@ class ClaimLine(Model):
         help="More precise description of the problem")
     product_id = fields.Many2one(
         'product.product', string='Product', help="Returned product")
-    product_returned_quantity = Float(
+    product_returned_quantity = fields.Float(
         string='Quantity', digits=(12, 2), help="Quantity of product returned")
     unit_sale_price = fields.Float(
         string='Unit sale price', digits=(12, 2),
@@ -466,13 +466,13 @@ class CrmClaim(Model):
         default='customer',
         help="Customer: from customer to company.\n "
              "Supplier: from company to supplier.")
-    claim_line_ids = fields.One2many('claim.line', 'claim_id', 
+    claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
     planned_revenue = fields.Float(string='Expected revenue')
     planned_cost = fields.Float(string='Expected cost')
     real_revenue = fields.Float(string='Real revenue')
     real_cost = fields.Float(string='Real cost')
-    invoice_ids = fields.One2many('account.invoice', 'claim_id', 
+    invoice_ids = fields.One2many('account.invoice', 'claim_id',
                                   string='Refunds')
     picking_ids = fields.One2many('stock.picking', 'claim_id', string='RMA')
     invoice_id = fields.Many2one(
