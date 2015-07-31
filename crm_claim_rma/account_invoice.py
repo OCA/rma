@@ -23,13 +23,13 @@
 ##############################################################################
 
 from openerp.models import Model, api, _
-from openerp.fields import Many2one
+from openerp import fields
 
 
 class AccountInvoice(Model):
     _inherit = "account.invoice"
 
-    claim_id = Many2one('crm.claim', string='Claim')
+    claim_id = fields.Many2one('crm.claim', string='Claim')
 
     @api.model
     def _refund_cleanup_lines(self, lines):
