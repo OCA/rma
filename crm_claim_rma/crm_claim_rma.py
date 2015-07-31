@@ -402,12 +402,6 @@ class ClaimLine(Model):
 class CrmClaim(Model):
     _inherit = 'crm.claim'
 
-    @api.model
-    def _get_sequence_number(self):
-        seq_obj = self.env['ir.sequence']
-        res = seq_obj.get('crm.claim.rma') or '/'
-        return res
-
     def _get_default_warehouse(self):
         company_id = self.env.user.company_id.id
         wh_obj = self.env['stock.warehouse']
@@ -421,17 +415,9 @@ class CrmClaim(Model):
     def name_get(self):
         res = []
         for claim in self:
-            number = claim.number and str(claim.number) or ''
-            res.append((claim.id, '[' + number + '] ' + claim.name))
+            code = claim.code and str(claim.code) or ''
+            res.append((claim.id, '[' + code + '] ' + claim.name))
         return res
-
-    @api.model
-    def create(self, vals):
-        if ('number' not in vals) or (vals.get('number') == '/'):
-            vals['number'] = self._get_sequence_number()
-
-        claim = super(CrmClaim, self).create(vals)
-        return claim
 
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -439,18 +425,13 @@ class CrmClaim(Model):
         std_default = {
             'invoice_ids': False,
             'picking_ids': False,
-            'number': self._get_sequence_number(cr, uid, context),
+            'code': self.env['ir.sequence'].get('crm.claim'),
         }
         std_default.update(default)
         return super(CrmClaim, self).copy_data(cr, uid, id, std_default,
                                                context=context)
 
-    number = fields.Char(
-        string='Number', readonly=True,
-        required=True,
-        select=True,
-        default='/',
-        help="Company internal claim unique number")
+    
     claim_type = fields.Selection(
         [('customer', 'Customer'),
          ('supplier', 'Supplier'),
@@ -483,15 +464,6 @@ class CrmClaim(Model):
         string='Warehouse',
         default=_get_default_warehouse,
         required=True)
-
-    @api.one
-    @api.constrains('number')
-    def _check_unq_number(self):
-        if self.search([
-                ('company_id', '=', self.company_id.id),
-                ('number', '=', self.number),
-                ('id', '!=', self.id)]):
-            raise ValidationError(_('Claim number has to be unique!'))
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):

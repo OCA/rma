@@ -79,6 +79,7 @@ Contributors:
     'depends': ['sale',
                 'stock',
                 'crm_claim',
+                'crm_claim_code',
                 'product_warranty',
                 ],
     'data': ['wizard/claim_make_picking_view.xml',
@@ -94,7 +95,6 @@ Contributors:
                'images/return_line.png',
                'images/exchange.png',
                ],
-    'pre_init_hook': 'fill_claim_number',
     'installable': True,
     'auto_install': False,
 }

@@ -26,10 +26,3 @@ from . import wizard
 from . import crm_claim_rma
 from . import account_invoice
 from . import stock
-
-
-def fill_claim_number(cr):
-    cr.execute("""
-        UPDATE crm_claim SET number=id::varchar
-        WHERE number is NULL OR number = '/';
-    """)

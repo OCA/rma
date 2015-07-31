@@ -43,7 +43,7 @@ class test_lp_1282584(TransactionCase):
         self.claim = claim_obj.create(
             {
                 'name': 'TEST CLAIM',
-                'number': 'TEST CLAIM',
+                'code': 'TEST CLAIM',
                 'claim_type': 'customer',
                 'delivery_address_id': self.partner.id,
             }

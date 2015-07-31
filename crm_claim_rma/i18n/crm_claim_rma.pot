@@ -563,11 +563,6 @@ msgid "Unit sale price of the product. Auto filled if retrun done by invoice sel
 msgstr ""
 
 #. module: crm_claim_rma
-#: sql_constraint:crm.claim:0
-msgid "Number/Reference must be unique per Company!"
-msgstr ""
-
-#. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:313
 #, python-format
 msgid "Please set product and invoice."
@@ -626,11 +621,6 @@ msgid "Merchandise Not Received"
 msgstr ""
 
 #. module: crm_claim_rma
-#: help:crm.claim,number:0
-msgid "Company internal claim unique number"
-msgstr ""
-
-#. module: crm_claim_rma
 #: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_line_substates
 msgid "Returned line substates"
 msgstr ""
@@ -650,12 +640,6 @@ msgstr ""
 #: field:claim_make_picking.wizard,claim_line_source_location:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_source_location
 msgid "Source Location"
-msgstr ""
-
-#. module: crm_claim_rma
-#: field:crm.claim,number:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_crm_claim_number
-msgid "Number"
 msgstr ""
 
 #. module: crm_claim_rma

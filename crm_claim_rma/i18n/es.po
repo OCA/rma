@@ -600,11 +600,6 @@ msgstr ""
 "descuento de facturas, puede ser 0 si el producto es gratuito, etc..."
 
 #. module: crm_claim_rma
-#: sql_constraint:crm.claim:0
-msgid "Number/Reference must be unique per Company!"
-msgstr "El número/referencia debe ser único por compañía"
-
-#. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:313
 #, python-format
 msgid "Please set product and invoice."
@@ -663,11 +658,6 @@ msgid "Merchandise Not Received"
 msgstr "Mercancía no recibida"
 
 #. module: crm_claim_rma
-#: help:crm.claim,number:0
-msgid "Company internal claim unique number"
-msgstr "Número único de reclamación interno en la compañia"
-
-#. module: crm_claim_rma
 #: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_line_substates
 msgid "Returned line substates"
 msgstr "Sub-estados para lineas devueltas"
@@ -688,12 +678,6 @@ msgstr "Facturas de cliente"
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_source_location
 msgid "Source Location"
 msgstr "Localización de origen"
-
-#. module: crm_claim_rma
-#: field:crm.claim,number:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_crm_claim_number
-msgid "Number"
-msgstr "Número"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_out

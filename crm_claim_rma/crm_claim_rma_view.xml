@@ -138,9 +138,6 @@
             <field name="stage_id" position="after">
                 <field name="section_id" />
             </field>
-            <field name="name" position="before">
-                <field name="number" />
-            </field>
         </field>
     </record>
 
@@ -316,12 +313,6 @@
                     <field name="claim_type" context="{'create_lines': False}" />
                     <field name="warehouse_id" context="{'create_lines': False}"/>
                 </field>
-                <field name="name" position="replace">
-                    <div class="oe_title">
-                        <label for="number" class="oe_edit_only"/>
-                        <h1><field name="number"/></h1>
-                    </div>
-                </field>
                 <field name="date" position="replace">
                 </field>
                 <field name="user_id" position="before">
@@ -389,9 +380,6 @@
         <field name="model">crm.claim</field>
         <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
         <field name="arch" type="xml">
-            <field name="name" string="Claims" position="before">
-                <field name="number"/>
-            </field>
             <filter string="Stage" icon="terp-stage" domain="[]" context="{'group_by':'stage_id'}" position="before">
                 <filter string="Sales Team" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'section_id'}"/>
             </filter>

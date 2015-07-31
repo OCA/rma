@@ -222,7 +222,7 @@ class ClaimMakePicking(TransientModel):
 
         # create picking
         picking = picking_obj.create(
-            {'origin': claim.number,
+            {'origin': claim.code,
              'picking_type_id': picking_type_id,
              'move_type': 'one',  # direct
              'state': 'draft',
