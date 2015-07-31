@@ -28,7 +28,7 @@ from . import account_invoice
 from . import stock
 
 
-def fill_claim_number(self, cr):
+def fill_claim_number(cr):
     cr.execute("""
         UPDATE "crm_claim" SET "number"=id::varchar
         WHERE ("number" is NULL)
