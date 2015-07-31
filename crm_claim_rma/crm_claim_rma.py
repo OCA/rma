@@ -22,17 +22,17 @@
 #
 ##############################################################################
 
-import calendar
-import math
-from openerp.osv import fields, orm, osv
-from openerp.models import Model, api, _, NewId
+from openerp.models import Model, api, _
 from openerp.fields import (Char, Date, Float, One2many, Many2one, Selection,
                             Text)
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp import SUPERUSER_ID
+from openerp.exceptions import except_orm, Warning, ValidationError
+
+import math
+import calendar
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class InvoiceNoDate(Exception):
@@ -71,7 +71,6 @@ class ClaimLine(Model):
     # Method to calculate total amount of the line : qty*UP
     @api.one
     def _line_total_amount(self):
-        res = {}
         self.return_value = (self.unit_sale_price *
                              self.product_returned_quantity)
 
@@ -260,11 +259,11 @@ class ClaimLine(Model):
             values = self._warranty_limit_values(invoice, claim_type, product,
                                                  claim_date)
         except InvoiceNoDate:
-            raise osv.except_osv(
+            raise Warning(
                 _('Error'), _('Cannot find any date for invoice. '
                               'Must be a validated invoice.'))
         except ProductNoSupplier:
-                raise osv.except_osv(
+                raise Warning(
                     _('Error'), _('The product has no supplier configured.'))
 
         self.write(values)
@@ -308,7 +307,7 @@ class ClaimLine(Model):
 
         # claim_exists = not isinstance(claim.id, NewId)
         if not claim and not (company_id and warehouse_id and
-                                     claim_type and claim_date):
+                              claim_type and claim_date):
             # if we have a claim_id, we get the info from there,
             # otherwise we get it from the args (on creation typically)
             return False
@@ -361,7 +360,6 @@ class ClaimLine(Model):
             return {'warranty_return_partner': False,
                     'warranty_type': False,
                     'location_dest_id': False}
-        return_address = None
         sellers = product.seller_ids
         if sellers:
             seller = sellers[0]
@@ -393,7 +391,8 @@ class ClaimLine(Model):
         """ Calculate warranty limit and address """
         for claim_line in self:
             if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise Warning(_('Please set product and invoice.'))
+                raise Warning(
+                    _('Error'), _('Please set product and invoice.'))
             claim_line.set_warranty_limit()
             claim_line.set_warranty_return_address()
 
@@ -404,7 +403,6 @@ class CrmClaim(Model):
     _inherit = 'crm.claim'
 
     def init(self, cr):
-
         cr.execute("""
             UPDATE "crm_claim" SET "number"=id::varchar
             WHERE ("number" is NULL)
@@ -418,12 +416,9 @@ class CrmClaim(Model):
         return res
 
     def _get_default_warehouse(self):
-        user = self.env.user
-        company_id = user.company_id.id
+        company_id = self.env.user.company_id.id
         wh_obj = self.env['stock.warehouse']
-        wh = wh_obj.search([
-            ('company_id', '=', company_id)
-        ], limit=1)
+        wh = wh_obj.search([('company_id', '=', company_id)], limit=1)
         if not wh:
             raise Warning(
                 _('There is no warehouse for the current user\'s company.'))
@@ -472,22 +467,13 @@ class CrmClaim(Model):
         default='customer',
         help="Customer: from customer to company.\n "
              "Supplier: from company to supplier.")
-    claim_line_ids = One2many(
-        'claim.line',
-        'claim_id',
-        string='Return lines')
+    claim_line_ids = One2many('claim.line', 'claim_id', string='Return lines')
     planned_revenue = Float(string='Expected revenue')
     planned_cost = Float(string='Expected cost')
     real_revenue = Float(string='Real revenue')
     real_cost = Float(string='Real cost')
-    invoice_ids = One2many(
-        'account.invoice',
-        'claim_id',
-        string='Refunds')
-    picking_ids = One2many(
-        'stock.picking',
-        'claim_id',
-        string='RMA')
+    invoice_ids = One2many('account.invoice', 'claim_id', string='Refunds')
+    picking_ids = One2many('stock.picking', 'claim_id', string='RMA')
     invoice_id = Many2one(
         'account.invoice',
         string='Invoice',
@@ -503,17 +489,18 @@ class CrmClaim(Model):
         default=_get_default_warehouse,
         required=True)
 
-    _sql_constraints = [
-        ('number_uniq', 'unique(number, company_id)',
-         'Number/Reference must be unique per Company!'),
-    ]
+    @api.one
+    @api.constrains('number')
+    def _check_unq_number(self):
+        if self.search([
+                ('company_id', '=', self.company_id.id),
+                ('number', '=', self.number),
+                ('id', '!=', self.id)]):
+            raise ValidationError(_('Claim number has to be unique!'))
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
-        invoice_obj = self.env['account.invoice']
-        invoice_line_obj = self.env['account.invoice.line']
-        product_obj = self.env['product.product']
         claim_line_obj = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
         claim_lines = []
@@ -572,13 +559,9 @@ class CrmClaim(Model):
     @api.model
     def message_get_reply_to(self):
         """ Override to get the reply_to of the parent project. """
-        # return [claim.section_id.message_get_reply_to()[0]
-        #         if claim.section_id else False
-        #         for claim in self.browse(cr, SUPERUSER_ID, ids,
-        #                                  context=context)]
         return [claim.section_id.message_get_reply_to()[0]
                 if claim.section_id else False
-                for claim in self]
+                for claim in self.sudo()]
 
     @api.model
     def message_get_suggested_recipients(self):
@@ -594,7 +577,7 @@ class CrmClaim(Model):
                     self._message_add_suggested_recipient(
                         recipients, claim,
                         email=claim.email_from, reason=_('Customer Email'))
-        except (osv.except_osv, orm.except_orm):
+        except except_orm:
             # no read access rights -> just ignore suggested recipients
             # because this imply modifying followers
             pass
