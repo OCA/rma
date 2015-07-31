@@ -2,8 +2,13 @@
 ###############################################################################
 #
 #   Module for OpenERP
+#
+#   Original work
 #   Copyright (C) 2012-2014 Akretion. All Rights Reserved
 #   @author Benoît GUILLOT <benoit.guillot@akretion.com>
+#
+#   Modified work
+#   Copyright (c) 2015 Eezee-It  (www.eezee-it.com). All rights reserved.
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -20,25 +25,4 @@
 #
 ###############################################################################
 
-from openerp.osv import fields, orm
-
-
-class crm_claim(orm.Model):
-    _inherit = 'crm.claim'
-
-    _columns = {
-        'name': fields.related(
-            'categ_id',
-            'name',
-            relation='crm.case.categ',
-            type='char',
-            string='Claim Subject',
-            size=128,
-            store=True),
-        'categ_id': fields.many2one(
-            'crm.case.categ',
-            'Category',
-            domain="[('section_id', '=', section_id), \
-                    ('object_id.model', '=', 'crm.claim')]",
-            required=True),
-    }
+from . import claim
