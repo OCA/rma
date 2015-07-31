@@ -401,13 +401,6 @@ class ClaimLine(Model):
 class CrmClaim(Model):
     _inherit = 'crm.claim'
 
-    def init(self, cr):
-        cr.execute("""
-            UPDATE "crm_claim" SET "number"=id::varchar
-            WHERE ("number" is NULL)
-               OR ("number" = '/');
-        """)
-
     @api.model
     def _get_sequence_number(self):
         seq_obj = self.env['ir.sequence']

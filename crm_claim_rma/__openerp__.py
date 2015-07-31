@@ -94,6 +94,7 @@ Contributors:
                'images/return_line.png',
                'images/exchange.png',
                ],
+    'pre_init_hook': 'fill_claim_number',
     'installable': True,
     'auto_install': False,
 }
