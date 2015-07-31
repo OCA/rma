@@ -30,7 +30,6 @@ from . import stock
 
 def fill_claim_number(cr):
     cr.execute("""
-        UPDATE "crm_claim" SET "number"=id::varchar
-        WHERE ("number" is NULL)
-           OR ("number" = '/');
+        UPDATE crm_claim SET number=id::varchar
+        WHERE number is NULL OR number = '/';
     """)
