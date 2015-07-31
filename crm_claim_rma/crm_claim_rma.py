@@ -26,7 +26,7 @@ from openerp.models import Model, api, _
 from openerp import fields
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp.exceptions import except_orm, Warning, ValidationError
+from openerp.exceptions import except_orm, Warning
 
 import math
 import calendar
@@ -431,7 +431,6 @@ class CrmClaim(Model):
         return super(CrmClaim, self).copy_data(cr, uid, id, std_default,
                                                context=context)
 
-    
     claim_type = fields.Selection(
         [('customer', 'Customer'),
          ('supplier', 'Supplier'),
