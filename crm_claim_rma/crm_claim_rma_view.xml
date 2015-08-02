@@ -117,8 +117,8 @@
                         <field name="prodlot_id" readonly="1" colspan="6"/>
                         <field name="claim_origine" colspan="6"/>
                         <field name="claim_diagnosis" colspan="6"/>
-                        <field name="claim_descr" colspan="6"/>
-                        <field name="priority"/>
+                        <field name="name" colspan="6"/>
+                        <field name="priority" colspan="6"/>
                     </group>
                     <group>
                         <group string="Warranty">

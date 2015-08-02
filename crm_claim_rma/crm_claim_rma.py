@@ -112,7 +112,8 @@ class claim_line(models.Model):
                        select=True,
                        default=fields.date.today())
 
-    name = fields.Char('Description', default='none', required=True)
+    name = fields.Char('Description', default='none', required=True,
+                       help="More precise description of the problem")
 
     priority = fields.Selection([('0_not_define', 'Not Define'),
                                 ('1_normal', 'Normal'),
@@ -165,8 +166,6 @@ class claim_line(models.Model):
                                      required=True,
                                      help="To describe the "
                                      "line product problem")
-    claim_descr = fields.Text('Claim description',
-                              help="More precise description of the problem")
     product_id = fields.Many2one('product.product',
                                  string='Product',
                                  help="Returned product")
