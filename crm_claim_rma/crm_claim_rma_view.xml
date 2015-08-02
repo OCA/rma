@@ -89,6 +89,7 @@
                     <field name="claim_diagnosis"/>
                     <field name="move_in_id"/>
                     <field name="move_out_id"/>
+                    <field name="priority"/>
                 </tree>
             </field>
         </record>
@@ -117,6 +118,7 @@
                         <field name="claim_origine" colspan="6"/>
                         <field name="claim_diagnosis" colspan="6"/>
                         <field name="claim_descr" colspan="6"/>
+                        <field name="priority"/>
                     </group>
                     <group>
                         <group string="Warranty">
