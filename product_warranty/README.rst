@@ -31,6 +31,7 @@ Contributors
 * Maxime Chambreuil <maxime.chambreuil@savoirfairelinux.com>
 * Joël Grand-Guillaume <joel.grandguillaume@gmail.com>
 * Ondřej Kuzník <ondrej.kuznik@credativ.co.uk>
+* Yanina Aular <yanina.aular@vauxoo.com>
 
 Maintainer
 ----------

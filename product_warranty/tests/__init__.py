@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#    Author: Yanina Aular
+#    Copyright 2015 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,18 +19,4 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
-
-
-class res_company(orm.Model):
-
-    _inherit = "res.company"
-
-    _columns = {
-        'crm_return_address_id': fields.many2one(
-            'res.partner',
-            'Return address',
-            help="Default address where the customers has to send back the "
-                 "returned product. If empty, the address is the "
-                 "company address"),
-    }
+from . import test_product_warranty
