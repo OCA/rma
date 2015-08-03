@@ -1,0 +1,35 @@
+-
+  I create a physical inventory with 50 units in Box A and 30 in Box B
+-
+ !record {model: stock.inventory, id: stock_inventory_socket}:
+    name: Inventory for Sockets
+-
+ !record {model: stock.inventory.line, id: stock_inventory_line_socket_1}:
+    product_id: product_socket
+    product_uom_id: product.product_uom_unit
+    inventory_id: stock_inventory_socket
+    product_qty: 50.0
+    location_id: location_rma_a
+-
+ !record {model: stock.inventory.line, id: stock_inventory_line_socket_2}:
+    product_id: product_socket
+    product_uom_id: product.product_uom_unit
+    inventory_id: stock_inventory_socket
+    product_qty: 30.0
+    location_id: location_rma_b
+-
+  I confirm the physical inventory
+-
+  !python {model: stock.inventory}: |
+    self.prepare_inventory(cr, uid, [ref('stock_inventory_socket')], context=context)
+-
+  I validate the physical inventory
+-
+  !python {model: stock.inventory}: |
+    self.action_done(cr, uid, [ref('stock_inventory_socket')], context=context)
+-
+  I check my RMA quantities, I should have 80 on hands and 80 forecasted
+-
+  !assert {model: product.product, id: product_socket, string: RMA quantity is wrong}:
+    - rma_qty_available == 80
+    - rma_virtual_available == 80
