@@ -20,4 +20,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 #########################################################################
 
-from . import models
+from . import return_instruction
+from . import product_supplierinfo
+from . import res_company
