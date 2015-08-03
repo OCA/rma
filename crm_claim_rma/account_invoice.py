@@ -120,6 +120,9 @@ class account_invoice_line(orm.Model):
         if not len(ids):
             return result
         for ail in self.browse(cr, user, ids, context=context):
-            name = "%s - %s" % (ail.invoice_id.number, ail.name)
+            lot = ail.move_id.lot_ids and \
+                ail.move_id.lot_ids[0].name or _('No lot number')
+            name = _("%s - %s - Lot Number: %s") % \
+                (ail.invoice_id.number, ail.name, lot)
             result.append((ail.id, name))
         return result
