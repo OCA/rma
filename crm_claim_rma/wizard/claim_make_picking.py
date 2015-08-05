@@ -21,23 +21,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.models import api, TransientModel, _
-from openerp.fields import Many2many, Many2one
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp.exceptions import Warning
-from openerp import workflow
-from openerp import workflow
-
 import time
 
+from openerp import models, fields, exceptions, api, workflow, _
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-class ClaimMakePicking(TransientModel):
+
+class ClaimMakePicking(models.TransientModel):
     _name = 'claim_make_picking.wizard'
     _description = 'Wizard to create pickings from claim lines'
 
-    # Get default source location
     def _get_source_loc(self):
+        """Get default source location"""
         loc_id = False
         context = self.env.context
         if context is None:
@@ -57,8 +52,10 @@ class ClaimMakePicking(TransientModel):
         return loc_id
 
     def _get_common_dest_location_from_line(self, line_ids):
-        """Return the ID of the common location between all lines. If no common
-        destination was  found, return False"""
+        """
+        Return the ID of the common location between all lines. If no common
+        destination was found, return False
+        """
         loc_id = False
         line_obj = self.env['claim.line']
         line_location = []
@@ -75,9 +72,11 @@ class ClaimMakePicking(TransientModel):
     # Get default destination location
     def _get_dest_loc(self):
         """Return the location_id to use as destination.
+
         If it's an outoing shippment: take the customer stock property
         If it's an incoming shippment take the location_dest_id common to all
-        lines, or if different, return None."""
+        lines, or if different, return None.
+        """
         context = self.env.context
         if context is None:
             context = {}
@@ -116,21 +115,21 @@ class ClaimMakePicking(TransientModel):
                 good_lines.append(line.id)
 
         if not good_lines:
-            raise Warning(
+            raise exceptions.Warning(
                 _('Error'),
                 _('A picking has already been created for this claim.'))
 
         return good_lines
 
-    claim_line_source_location = Many2one(
+    claim_line_source_location = fields.Many2one(
         'stock.location', string='Source Location', required=True,
         default=_get_source_loc,
         help="Location where the returned products are from.")
-    claim_line_dest_location = Many2one(
+    claim_line_dest_location = fields.Many2one(
         'stock.location', string='Dest. Location', required=True,
         default=_get_dest_loc,
         help="Location where the system will stock the returned products.")
-    claim_line_ids = Many2many(
+    claim_line_ids = fields.Many2many(
         'claim.line',
         'claim_line_picking',
         'claim_picking_id',
@@ -138,8 +137,10 @@ class ClaimMakePicking(TransientModel):
         string='Claim lines', default=_get_claim_lines)
 
     def _get_common_partner_from_line(self, line_ids):
-        """Return the ID of the common partner between all lines. If no common
-        partner was found, return False"""
+        """
+        Return the ID of the common partner between all lines. If no common
+        partner was found, return False
+        """
         partner_id = False
         line_obj = self.env['claim.line']
         line_partner = []
@@ -212,7 +213,7 @@ class ClaimMakePicking(TransientModel):
                 claim_lines.ids)
 
             if not common_dest_partner_id:
-                raise Warning(
+                raise exceptions.Warning(
                     _('Error'),
                     _('A product return cannot be created for various '
                       'destination addresses, please choose line with a '
@@ -221,20 +222,20 @@ class ClaimMakePicking(TransientModel):
             partner_id = common_dest_partner_id
 
         # create picking
-        picking = picking_obj.create(
-            {'origin': claim.code,
-             'picking_type_id': picking_type_id,
-             'move_type': 'one',  # direct
-             'state': 'draft',
-             'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-             'partner_id': partner_id,
-             'invoice_state': "none",
-             'company_id': claim.company_id.id,
-             'location_id': self.claim_line_source_location.id,
-             'location_dest_id': self.claim_line_dest_location.id,
-             'note': note,
-             'claim_id': claim.id,
-             })
+        picking = picking_obj.create({
+            'origin': claim.code,
+            'picking_type_id': picking_type_id,
+            'move_type': 'one',  # direct
+            'state': 'draft',
+            'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+            'partner_id': partner_id,
+            'invoice_state': "none",
+            'company_id': claim.company_id.id,
+            'location_id': self.claim_line_source_location.id,
+            'location_dest_id': self.claim_line_dest_location.id,
+            'note': note,
+            'claim_id': claim.id,
+        })
 
         # Create picking lines
         fmt = DEFAULT_SERVER_DATETIME_FORMAT

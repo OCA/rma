@@ -22,11 +22,10 @@
 #
 ##############################################################################
 
-from openerp.models import api, TransientModel
-from openerp.fields import Char
+from openerp import models, fields, api
 
 
-class AccountInvoiceRefund(TransientModel):
+class AccountInvoiceRefund(models.TransientModel):
     _inherit = "account.invoice.refund"
 
     def _get_description(self):
@@ -37,7 +36,7 @@ class AccountInvoiceRefund(TransientModel):
         description = context.get('description') or ''
         return description
 
-    description = Char(default=_get_description)
+    description = fields.Char(default=_get_description)
 
     @api.one
     def compute_refund(self, mode='refund'):

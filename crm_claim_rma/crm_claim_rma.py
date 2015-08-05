@@ -21,30 +21,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.models import Model, api, _
-from openerp import fields
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
-                           DEFAULT_SERVER_DATETIME_FORMAT)
-from openerp.exceptions import except_orm, Warning
-
 import math
 import calendar
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+from openerp.models import models, fields, api, exceptions
+from openerp.tools.misc import (DEFAULT_SERVER_DATE_FORMAT,
+                                DEFAULT_SERVER_DATETIME_FORMAT)
+from openerp.tools.translate import _
 
-class InvoiceNoDate(Exception):
+
+class InvoiceNoDate(exceptions.Exception):
     """ Raised when a warranty cannot be computed for a claim line
     because the invoice has no date. """
 
 
-class ProductNoSupplier(Exception):
+class ProductNoSupplier(exceptions.Exception):
     """ Raised when a warranty cannot be computed for a claim line
     because the product has no supplier. """
 
 
-class SubstateSubstate(Model):
+class SubstateSubstate(models.Model):
     """ To precise a state (state=refused; substates= reason 1, 2,...) """
     _name = "substate.substate"
     _description = "substate that precise a given state"
@@ -55,7 +53,7 @@ class SubstateSubstate(Model):
         help="To give more information about the sub state")
 
 
-class ClaimLine(Model):
+class ClaimLine(models.Model):
     """
     Class to handle a product return line (corresponding to one invoice line)
     """
@@ -203,7 +201,6 @@ class ClaimLine(Model):
         ``relative_delta(months=...)`` only accepts integers.
         We have to extract the decimal part, and then, extend the delta with
         days.
-
         """
         decimal_part, months = math.modf(warranty_duration)
         months = int(months)
@@ -259,11 +256,11 @@ class ClaimLine(Model):
             values = self._warranty_limit_values(invoice, claim_type, product,
                                                  claim_date)
         except InvoiceNoDate:
-            raise Warning(
+            raise exceptions.Warning(
                 _('Error'), _('Cannot find any date for invoice. '
                               'Must be a validated invoice.'))
         except ProductNoSupplier:
-                raise Warning(
+                raise exceptions.Warning(
                     _('Error'), _('The product has no supplier configured.'))
 
         self.write(values)
@@ -391,7 +388,7 @@ class ClaimLine(Model):
         """ Calculate warranty limit and address """
         for claim_line in self:
             if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise Warning(
+                raise exceptions.Warning(
                     _('Error'), _('Please set product and invoice.'))
             claim_line.set_warranty_limit()
             claim_line.set_warranty_return_address()
@@ -399,7 +396,7 @@ class ClaimLine(Model):
 
 # TODO add the option to split the claim_line in order to manage the same
 # product separately
-class CrmClaim(Model):
+class CrmClaim(models.Model):
     _inherit = 'crm.claim'
 
     def _get_default_warehouse(self):
@@ -407,7 +404,7 @@ class CrmClaim(Model):
         wh_obj = self.env['stock.warehouse']
         wh = wh_obj.search([('company_id', '=', company_id)], limit=1)
         if not wh:
-            raise Warning(
+            raise exceptions.Warning(
                 _('There is no warehouse for the current user\'s company.'))
         return wh
 
@@ -531,8 +528,7 @@ class CrmClaim(Model):
 
     @api.model
     def message_get_suggested_recipients(self):
-        recipients = super(CrmClaim, self
-                           ).message_get_suggested_recipients()
+        recipients = super(CrmClaim, self).message_get_suggested_recipients()
         try:
             for claim in self:
                 if claim.partner_id:
@@ -543,7 +539,7 @@ class CrmClaim(Model):
                     self._message_add_suggested_recipient(
                         recipients, claim,
                         email=claim.email_from, reason=_('Customer Email'))
-        except except_orm:
+        except exceptions.AccessError:
             # no read access rights -> just ignore suggested recipients
             # because this imply modifying followers
             pass

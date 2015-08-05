@@ -22,14 +22,13 @@
 #
 ##############################################################################
 
-from openerp.models import Model, api
-from openerp.fields import Many2one
+from openerp import models, fields, api
 
 
-class StockPicking(Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    claim_id = Many2one('crm.claim', string='Claim')
+    claim_id = fields.Many2one('crm.claim', string='Claim')
 
     @api.model
     def create(self, vals):
@@ -42,15 +41,17 @@ class StockPicking(Model):
         return picking
 
 
-# This part concern the case of a wrong picking out. We need to create a new
-# stock_move in a picking already open.
-# In order to don't have to confirm the stock_move we override the create and
-# confirm it at the creation only for this case
-class StockMove(Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
     @api.model
     def create(self, vals):
+        """
+        In case of a wrong picking out, We need to create a new stock_move in a
+        picking already open.
+        To avoid having to confirm the stock_move, we override the create and
+        confirm it at the creation only for this case.
+        """
         move = super(StockMove, self).create(vals)
         if vals.get('picking_id'):
             picking_obj = self.env['stock.picking']

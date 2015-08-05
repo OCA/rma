@@ -22,19 +22,21 @@
 #
 ##############################################################################
 
-from openerp.models import Model, api, _
-from openerp import fields
+from openerp import models, fields, api, exceptions
+from openerp.tools.translate import _
 
 
-class AccountInvoice(Model):
+class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
     @api.model
     def _refund_cleanup_lines(self, lines):
-        """ Override when from claim to update the quantity and link to the
-        claim line."""
+        """
+        Override when from claim to update the quantity and link to the
+        claim line.
+        """
         new_lines = []
         inv_line_obj = self.env['account.invoice.line']
         claim_line_obj = self.env['claim.line']
@@ -67,7 +69,7 @@ class AccountInvoice(Model):
         if not new_lines:
             # TODO use custom states to show button of this wizard or
             # not instead of raise an error
-            raise Warning(
+            raise exceptions.Warning(
                 _('A refund has already been created for this claim !'))
         return [(0, 0, l) for l in new_lines]
 
@@ -79,12 +81,12 @@ class AccountInvoice(Model):
             journal_id=journal_id)
 
         if self.env.context.get('claim_id'):
-            result['claim_id'] = self.env.context.get('claim_id')
+            result['claim_id'] = self.env.context['claim_id']
 
         return result
 
 
-class AccountInvoiceLine(Model):
+class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     @api.model
