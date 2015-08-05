@@ -46,13 +46,8 @@ class ProductSupplierInfo(models.Model):
     @api.one
     @api.depends('warranty_return_partner')
     def _compute_warranty_return_address(self):
-        """ Method to return the partner delivery address or if none,
-        the default address
-
-        dedicated_delivery_address stand for the case a new type of
-        address more particularly dedicated to return delivery would be
-        implemented.
-
+        """ Method to return the partner delivery address or if none, the
+        default address
         """
         return_partner = self.warranty_return_partner
         partner_id = self.company_id.partner_id.id
