@@ -71,7 +71,7 @@ class claim_make_picking(orm.TransientModel):
         if not good_lines:
             raise orm.except_orm(
                 _('Error'),
-                _('A picking has already been created for this claim.'))
+                _('No products remain to be processed for this claim.'))
         return good_lines
 
     # Get default source location
@@ -157,34 +157,29 @@ class claim_make_picking(orm.TransientModel):
         picking_obj = self.pool.get('stock.picking')
         if context is None:
             context = {}
-        view_obj = self.pool.get('ir.ui.view')
         name = 'RMA picking out'
         if context.get('picking_type') == 'out':
-            p_type = 'out'
             write_field = 'move_out_id'
             note = 'RMA picking out'
         else:
-            p_type = 'in'
             write_field = 'move_in_id'
             if context.get('picking_type'):
                 note = 'RMA picking ' + str(context.get('picking_type'))
                 name = note
-        model = 'stock.picking.' + p_type
-        view_id = view_obj.search(cr, uid,
-                                  [('model', '=', model),
-                                   ('type', '=', 'form'),
-                                   ],
-                                  context=context)[0]
         wizard = self.browse(cr, uid, ids[0], context=context)
         claim = self.pool.get('crm.claim').browse(cr, uid,
                                                   context['active_id'],
                                                   context=context)
         partner_id = claim.delivery_address_id.id
         line_ids = [x.id for x in wizard.claim_line_ids]
+        # FIXME: this is extremely naive
+        picking_type_id = claim.warehouse_id.delivery_route_id.pull_ids.\
+            picking_type_id
         # In case of product return, we don't allow one picking for various
         # product if location are different
         # or if partner address is different
         if context.get('product_return'):
+            picking_type_id = picking_type_id.return_picking_type_id
             common_dest_loc_id = self._get_common_dest_location_from_line(
                 cr, uid, line_ids, context=context)
             if not common_dest_loc_id:
@@ -209,7 +204,6 @@ class claim_make_picking(orm.TransientModel):
         picking_id = picking_obj.create(
             cr, uid,
             {'origin': claim.number,
-             'type': p_type,
              'move_type': 'one',  # direct
              'state': 'draft',
              'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
@@ -218,6 +212,7 @@ class claim_make_picking(orm.TransientModel):
              'company_id': claim.company_id.id,
              'location_id': wizard.claim_line_source_location.id,
              'location_dest_id': wizard.claim_line_dest_location.id,
+             'picking_type_id': picking_type_id.id,
              'note': note,
              'claim_id': claim.id,
              },
@@ -233,8 +228,9 @@ class claim_make_picking(orm.TransientModel):
                  'date': time.strftime(fmt),
                  'date_expected': time.strftime(fmt),
                  'product_id': wizard_claim_line.product_id.id,
-                 'product_qty': wizard_claim_line.product_returned_quantity,
-                 'product_uom': wizard_claim_line.product_id.uom_id.id,
+                 'product_uom_qty':
+                    wizard_claim_line.product_returned_quantity,
+                 'product_uom': wizard_claim_line.product_uom.id,
                  'partner_id': partner_id,
                  'prodlot_id': wizard_claim_line.prodlot_id.id,
                  'picking_id': picking_id,
@@ -254,17 +250,13 @@ class claim_make_picking(orm.TransientModel):
             wf_service.trg_validate(uid, 'stock.picking',
                                     picking_id, 'button_confirm', cr)
             picking_obj.action_assign(cr, uid, [picking_id])
-        domain = ("[('type', '=', '%s'), ('partner_id', '=', %s)]" %
-                  (p_type, partner_id))
+        domain = ("[('partner_id', '=', %s)]" % (partner_id))
         return {
             'name': '%s' % name,
             'view_type': 'form',
             'view_mode': 'form',
-            'view_id': view_id,
             'domain': domain,
-            'res_model': model,
+            'res_model': 'stock.picking',
             'res_id': picking_id,
             'type': 'ir.actions.act_window',
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
