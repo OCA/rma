@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -26,18 +26,18 @@ import calendar
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from openerp.models import models, fields, api, exceptions
+from openerp import models, fields, api, exceptions
 from openerp.tools.misc import (DEFAULT_SERVER_DATE_FORMAT,
                                 DEFAULT_SERVER_DATETIME_FORMAT)
 from openerp.tools.translate import _
 
 
-class InvoiceNoDate(exceptions.Exception):
+class InvoiceNoDate(Exception):
     """ Raised when a warranty cannot be computed for a claim line
     because the invoice has no date. """
 
 
-class ProductNoSupplier(exceptions.Exception):
+class ProductNoSupplier(Exception):
     """ Raised when a warranty cannot be computed for a claim line
     because the product has no supplier. """
 
@@ -86,9 +86,7 @@ class ClaimLine(models.Model):
         return super(ClaimLine, self).copy_data(default=std_default)
 
     def get_warranty_return_partner(self):
-        seller = self.env['product.supplierinfo']
-        result = seller.get_warranty_return_partner()
-        return result
+        return self.env['product.supplierinfo'].get_warranty_return_partner()
 
     name = fields.Char(string='Description', required=True, default=None)
     claim_origine = fields.Selection(
@@ -226,11 +224,10 @@ class ClaimLine(models.Model):
         date_invoice = datetime.strptime(date_invoice,
                                          DEFAULT_SERVER_DATE_FORMAT)
         if claim_type == 'supplier':
-            suppliers = product.seller_ids
-            if not suppliers:
+            try:
+                warranty_duration = product.seller_ids[0].warranty_duration
+            except IndexError:
                 raise ProductNoSupplier
-            supplier = suppliers[0]
-            warranty_duration = supplier.warranty_duration
         else:
             warranty_duration = product.warranty
 
@@ -248,13 +245,9 @@ class ClaimLine(models.Model):
 
     def set_warranty_limit(self):
         claim = self.claim_id
-        invoice = claim.invoice_id
-        claim_type = claim.claim_type
-        claim_date = claim.date
-        product = self.product_id
         try:
-            values = self._warranty_limit_values(invoice, claim_type, product,
-                                                 claim_date)
+            values = self._warranty_limit_values(
+                claim.invoice_id, claim.claim_type, self.product_id, claim.date)
         except InvoiceNoDate:
             raise exceptions.Warning(
                 _('Error'), _('Cannot find any date for invoice. '
@@ -276,19 +269,20 @@ class ClaimLine(models.Model):
                 line.set_warranty()
         return True
 
+    @api.returns('stock.location')
     def get_destination_location(self, product, warehouse):
-        """Compute and return the destination location ID to take
+        """
+        Compute and return the destination location to take
         for a return. Always take 'Supplier' one when return type different
-        from company."""
-        location_dest_id = warehouse.lot_stock_id.id
-        if product:
-            sellers = product.seller_ids
-            if sellers:
-                seller = sellers[0]
-                return_type = seller.warranty_return_partner
-                if return_type != 'company':
-                    location_dest_id = seller.name.property_stock_supplier.id
-        return location_dest_id
+        from company.
+        """
+        location_dest_id = warehouse.lot_stock_id
+        try:
+            seller = product.seller_ids[0]
+            if seller.warranty_return_partner != 'company':
+                location_dest_id = seller.name.property_stock_supplier
+        finally:
+            return location_dest_id
 
     @api.onchange('product_id', 'invoice_line_id')
     def _onchange_product_invoice_line(self):
@@ -312,7 +306,7 @@ class ClaimLine(models.Model):
             return False
 
         invoice = invoice_line.invoice_id
-        claim_line_obj = self.env['claim.line']
+        claim_line_model = self.env['claim.line']
 
         if claim:
             claim = self.env['crm.claim'].browse(claim)
@@ -328,7 +322,7 @@ class ClaimLine(models.Model):
 
         values = {}
         try:
-            warranty = claim_line_obj._warranty_limit_values(
+            warranty = claim_line_model._warranty_limit_values(
                 invoice, claim_type, product, claim_date)
         except (InvoiceNoDate, ProductNoSupplier):
             # we don't mind at this point if the warranty can't be
@@ -336,11 +330,9 @@ class ClaimLine(models.Model):
             values.update({'guarantee_limit': False, 'warning': False})
         else:
             values.update(warranty)
-
-        warranty_address = claim_line_obj._warranty_return_address_values(
+        warranty_address = claim_line_model._warranty_return_address_values(
             product, company, warehouse)
         values.update(warranty_address)
-
         self.update(values)
 
     def _warranty_return_address_values(self, product, company, warehouse):
@@ -368,10 +360,10 @@ class ClaimLine(models.Model):
                               company.partner_id)
             return_address_id = return_address.id
             return_type = 'company'
-        location_dest_id = self.get_destination_location(product, warehouse)
+        location_dest = self.get_destination_location(product, warehouse)
         return {'warranty_return_partner': return_address_id,
                 'warranty_type': return_type,
-                'location_dest_id': location_dest_id}
+                'location_dest_id': location_dest.id}
 
     def set_warranty_return_address(self):
         claim = self.claim_id
@@ -383,15 +375,14 @@ class ClaimLine(models.Model):
         self.write(values)
         return True
 
-    @api.multi
+    @api.one
     def set_warranty(self):
         """ Calculate warranty limit and address """
-        for claim_line in self:
-            if not (claim_line.product_id and claim_line.invoice_line_id):
-                raise exceptions.Warning(
-                    _('Error'), _('Please set product and invoice.'))
-            claim_line.set_warranty_limit()
-            claim_line.set_warranty_return_address()
+        if not (self.product_id and self.invoice_line_id):
+            raise exceptions.Warning(
+                _('Error'), _('Please set product and invoice.'))
+        self.set_warranty_limit()
+        self.set_warranty_return_address()
 
 
 # TODO add the option to split the claim_line in order to manage the same
@@ -408,15 +399,12 @@ class CrmClaim(models.Model):
                 _('There is no warehouse for the current user\'s company.'))
         return wh
 
-    @api.multi
+    @api.one
     def name_get(self):
-        res = []
-        for claim in self:
-            code = claim.code and str(claim.code) or ''
-            res.append((claim.id, '[' + code + '] ' + claim.name))
-        return res
+        return (self.id, '[{}] {}'.format(self.code or '', self.name))
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    @api.model
+    def copy_data(self, default=None):
         if default is None:
             default = {}
         std_default = {
@@ -425,8 +413,7 @@ class CrmClaim(models.Model):
             'code': self.env['ir.sequence'].get('crm.claim'),
         }
         std_default.update(default)
-        return super(CrmClaim, self).copy_data(cr, uid, id, std_default,
-                                               context=context)
+        return super(CrmClaim, self).copy_data(std_default)
 
     claim_type = fields.Selection(
         [('customer', 'Customer'),
@@ -495,7 +482,7 @@ class CrmClaim(models.Model):
 
         if create_lines:  # happens when the invoice is changed
             for invoice_line in invoice_lines:
-                location_dest_id = claim_line_obj.get_destination_location(
+                location_dest = claim_line_obj.get_destination_location(
                     invoice_line.product_id, warehouse)
                 line = {
                     'name': invoice_line.name,
@@ -504,7 +491,7 @@ class CrmClaim(models.Model):
                     'product_id': invoice_line.product_id.id,
                     'product_returned_quantity': invoice_line.quantity,
                     'unit_sale_price': invoice_line.price_unit,
-                    'location_dest_id': location_dest_id,
+                    'location_dest_id': location_dest.id,
                     'state': 'draft',
                 }
                 line.update(warranty_values(invoice_line.invoice_id,

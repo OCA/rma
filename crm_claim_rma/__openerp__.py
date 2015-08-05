@@ -71,10 +71,10 @@ Contributors:
  * Javier Carrasco <javier.carrasco@eezee-it.com>
 
 """,
-    'author': "Akretion, Camptocamp, Eezee-it, "
+    'author': "Akretion, Camptocamp, Eezee-it, MONK Software"
               "Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
-               'http://www.eezee-it.com',
+               'http://www.eezee-it.com, http://www.wearemonk.com',
     'license': 'AGPL-3',
     'depends': [
         'sale',

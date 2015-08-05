@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -28,24 +28,14 @@ from openerp import models, fields, api
 class AccountInvoiceRefund(models.TransientModel):
     _inherit = "account.invoice.refund"
 
-    def _get_description(self):
-        context = self.env.context
-        if context is None:
-            context = {}
+    def _default_description(self):
+        return self.env.context.get('description', '')
 
-        description = context.get('description') or ''
-        return description
-
-    description = fields.Char(default=_get_description)
+    description = fields.Char(default=_default_description)
 
     @api.one
     def compute_refund(self, mode='refund'):
-        context = self.env.context.copy()
-        if context is None:
-            context = {}
-
-        if context.get('invoice_ids'):
-            context['active_ids'] = context.get('invoice_ids')
-
-        self = self.with_context(context)
+        invoice_ids = self.env.context.get('invoice_ids', [])
+        if invoice_ids:
+            self = self.with_context(active_ids=invoice_ids)
         return super(AccountInvoiceRefund, self).compute_refund(mode=mode)

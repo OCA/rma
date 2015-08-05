@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,183 +24,166 @@
 import time
 
 from openerp import models, fields, exceptions, api, workflow, _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 
 
 class ClaimMakePicking(models.TransientModel):
     _name = 'claim_make_picking.wizard'
     _description = 'Wizard to create pickings from claim lines'
 
-    def _get_source_loc(self):
-        """Get default source location"""
-        loc_id = False
-        context = self.env.context
-        if context is None:
-            context = {}
-
-        warehouse_obj = self.env['stock.warehouse']
-        warehouse_id = context.get('warehouse_id')
-        picking_type = context.get('picking_type')
-        partner_id = context.get('partner_id')
-        if picking_type == 'out':
-            loc_id = warehouse_obj.browse(
-                warehouse_id).lot_stock_id.id
-        elif partner_id:
-            loc_id = self.env['res.partner'].browse(
-                partner_id).property_stock_customer.id
-
-        return loc_id
-
-    def _get_common_dest_location_from_line(self, line_ids):
+    def _get_common_field_from_lines(self, lines, field):
         """
-        Return the ID of the common location between all lines. If no common
-        destination was found, return False
+        Read the supplied field from all the lines.
+        Lines that do not have the supplied field set are ignored.
+        If all the remaining lines have the same value for the field,
+        that value is returned, else False is returned
         """
-        loc_id = False
-        line_obj = self.env['claim.line']
-        line_location = []
+        field_values = lines.mapped(field)
+        return field_values[0] if len(field_values) == 1 else False
 
-        for line in line_obj.browse(line_ids):
-            if line.location_dest_id.id not in line_location:
-                line_location.append(line.location_dest_id.id)
+    def _get_common_dest_location_from_line(self, lines):
+        return self._get_common_field_from_lines(
+            lines, 'location_dest_id.id')
 
-        if len(line_location) == 1:
-            loc_id = line_location[0]
+    def _get_common_partner_from_line(self, lines):
+        return self._get_common_field_from_lines(
+            lines, 'warranty_return_partner.id')
 
-        return loc_id
+    def _default_claim_line_source_location_id(self):
+        picking_type = self.env.context.get('picking_type')
+        partner_id = self.env.context.get('partner_id')
+        warehouse_id = self.env.context.get('warehouse_id')
 
-    # Get default destination location
-    def _get_dest_loc(self):
+        if picking_type == 'out' and warehouse_id:
+            return self.env['stock.warehouse'].browse(warehouse_id).lot_stock_id
+
+        if partner_id:
+            partner = self.env['res.partner'].browse(partner_id)
+            return partner.property_stock_customer
+
+        return False
+
+    def _default_claim_line_dest_location_id(self):
         """Return the location_id to use as destination.
 
-        If it's an outoing shippment: take the customer stock property
-        If it's an incoming shippment take the location_dest_id common to all
+        If it's an outoing shipment: take the customer stock property
+        If it's an incoming shipment take the location_dest_id common to all
         lines, or if different, return None.
         """
-        context = self.env.context
-        if context is None:
-            context = {}
 
-        loc_id = False
-        picking_type = context.get('picking_type')
-        partner_id = context.get('partner_id')
+        picking_type = self.env.context.get('picking_type')
+        partner_id = self.env.context.get('partner_id')
+
         if picking_type == 'out' and partner_id:
-            loc_id = self.env['res.partner'].browse(
-                partner_id).property_stock_customer.id
-        elif picking_type == 'in' and partner_id:
+            return self.env['res.partner'].browse(
+                partner_id).property_stock_customer
+
+        if picking_type == 'in' and partner_id:
             # Add the case of return to supplier !
-            line_ids = self._get_claim_lines()
-            loc_id = self._get_common_dest_location_from_line(line_ids)
+            lines = self._default_claim_line_ids()
+            return self._get_common_dest_location_from_line(lines)
 
-        return loc_id
+        return False
 
-    def _get_claim_lines(self):
+    @api.returns('claim.line')
+    def _default_claim_line_ids(self):
         # TODO use custom states to show buttons of this wizard or not instead
         # of raise an error
-        context = self.env.context
-        if context is None:
-            context = {}
-
-        line_obj = self.env['claim.line']
-        if context.get('picking_type') == 'out':
-            move_field = 'move_out_id'
-        else:
-            move_field = 'move_in_id'
-
-        good_lines = []
-        lines = line_obj.search(
-            [('claim_id', '=', context['active_id'])])
-        for line in lines:
-            if not line[move_field] or line[move_field].state == 'cancel':
-                good_lines.append(line.id)
-
-        if not good_lines:
+        move_field = ('move_out_id'
+                      if self.env.context.get('picking_type') == 'out'
+                      else 'move_in_id')
+        domain = [
+            ('claim_id', '=', self.env.context['active_id']),
+            '|', (move_field, '=', False), (move_field+'.state', '=', 'cancel')
+        ]
+        lines = self.env['claim.line'].search(domain)
+        if not lines:
             raise exceptions.Warning(
                 _('Error'),
                 _('A picking has already been created for this claim.'))
+        return lines
 
-        return good_lines
-
-    claim_line_source_location = fields.Many2one(
+    claim_line_source_location_id = fields.Many2one(
         'stock.location', string='Source Location', required=True,
-        default=_get_source_loc,
+        default=_default_claim_line_source_location_id,
         help="Location where the returned products are from.")
-    claim_line_dest_location = fields.Many2one(
+    claim_line_dest_location_id = fields.Many2one(
         'stock.location', string='Dest. Location', required=True,
-        default=_get_dest_loc,
+        default=_default_claim_line_dest_location_id,
         help="Location where the system will stock the returned products.")
     claim_line_ids = fields.Many2many(
         'claim.line',
         'claim_line_picking',
         'claim_picking_id',
         'claim_line_id',
-        string='Claim lines', default=_get_claim_lines)
+        string='Claim lines', default=_default_claim_line_ids)
 
-    def _get_common_partner_from_line(self, line_ids):
-        """
-        Return the ID of the common partner between all lines. If no common
-        partner was found, return False
-        """
-        partner_id = False
-        line_obj = self.env['claim.line']
-        line_partner = []
-        for line in line_obj.browse(line_ids):
-            if (line.warranty_return_partner
-                    and line.warranty_return_partner.id
-                    not in line_partner):
-                line_partner.append(line.warranty_return_partner.id)
+    def _get_picking_name(self):
+        return 'RMA picking {}'.format(
+            self.env.context.get('picking_type', 'in'))
 
-        if len(line_partner) == 1:
-            partner_id = line_partner[0]
+    def _get_picking_note(self):
+        return self._get_picking_name()
 
-        return partner_id
+    def _get_picking_data(self, claim, picking_type, partner_id):
+        return {
+            'origin': claim.code,
+            'picking_type_id': picking_type.id,
+            'move_type': 'one', # direct
+            'state': 'draft',
+            'date': time.strftime(DT_FORMAT),
+            'partner_id': partner_id,
+            'invoice_state': "none",
+            'company_id': claim.company_id.id,
+            'location_id': self.claim_line_source_location.id,
+            'location_dest_id': self.claim_line_dest_location.id,
+            'note': self._get_picking_note(),
+            'claim_id': claim.id,
+        }
 
-    @api.multi
-    def action_cancel(self):
-        return {'type': 'ir.actions.act_window_close'}
+    def _get_picking_line_data(self, claim, picking, line):
+        return {
+            'name': line.product_id.name_template,
+            'priority': '0',
+            'date': time.strftime(DT_FORMAT),
+            'date_expected': time.strftime(DT_FORMAT),
+            'product_id': line.product_id.id,
+            'product_uom_qty': line.product_returned_quantity,
+            'product_uom': line.product_id.product_tmpl_id.uom_id.id,
+            'partner_id': claim.delivery_address_id.id,
+            'picking_id': picking.id,
+            'state': 'draft',
+            'price_unit': line.unit_sale_price,
+            'company_id': claim.company_id.id,
+            'location_id': self.claim_line_source_location.id,
+            'location_dest_id': self.claim_line_dest_location.id,
+            'note': self._get_picking_note(),
+        }
 
     @api.multi
     def action_create_picking(self):
-        picking_obj = self.env['stock.picking']
-        picking_type_obj = self.env['stock.picking.type']
-        context = self.env.context
-        if context is None:
-            context = {}
 
-        view_obj = self.env['ir.ui.view']
-        name = 'RMA picking out'
-        if context.get('picking_type') == 'out':
+        picking_type_code = 'incoming'
+        write_field = 'move_out_id'
+        if self.env.context.get('picking_type') == 'out':
             picking_type_code = 'outgoing'
-            write_field = 'move_out_id'
-            note = 'RMA picking out'
-        else:
-            picking_type_code = 'incoming'
             write_field = 'move_in_id'
-
-            if context.get('picking_type'):
-                note = 'RMA picking ' + str(context.get('picking_type'))
-                name = note
-
-        picking_type_id = picking_type_obj.search([
+        destination_id = self.claim_line_dest_location_id.id
+        picking_type = self.env['stock.picking.type'].search([
             ('code', '=', picking_type_code),
-            ('default_location_dest_id', '=',
-             self.claim_line_dest_location.id)], limit=1).id
+            ('default_location_dest_id', '=', destination_id)
+        ], limit=1)
 
-        model = 'stock.picking'
-        view_id = view_obj.search([
-            ('model', '=', model),
-            ('type', '=', 'form')], limit=1).id
-
-        claim = self.env['crm.claim'].browse(context['active_id'])
+        claim = self.env['crm.claim'].browse(self.env.context['active_id'])
         partner_id = claim.delivery_address_id.id
         claim_lines = self.claim_line_ids
 
         # In case of product return, we don't allow one picking for various
         # product if location are different
         # or if partner address is different
-        if context.get('product_return'):
+        if self.env.context.get('product_return'):
             common_dest_loc_id = self._get_common_dest_location_from_line(
-                claim_lines.ids)
+                claim_lines)
             if not common_dest_loc_id:
                 raise Warning(
                     _('Error'),
@@ -209,54 +192,25 @@ class ClaimMakePicking(models.TransientModel):
                       'same destination location.'))
 
             claim_lines.auto_set_warranty()
-            common_dest_partner_id = self._get_common_partner_from_line(
-                claim_lines.ids)
 
+            common_dest_partner_id = self._get_common_partner_from_line(
+                claim_lines)
             if not common_dest_partner_id:
                 raise exceptions.Warning(
                     _('Error'),
                     _('A product return cannot be created for various '
                       'destination addresses, please choose line with a '
                       'same address.'))
-
             partner_id = common_dest_partner_id
 
         # create picking
-        picking = picking_obj.create({
-            'origin': claim.code,
-            'picking_type_id': picking_type_id,
-            'move_type': 'one',  # direct
-            'state': 'draft',
-            'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-            'partner_id': partner_id,
-            'invoice_state': "none",
-            'company_id': claim.company_id.id,
-            'location_id': self.claim_line_source_location.id,
-            'location_dest_id': self.claim_line_dest_location.id,
-            'note': note,
-            'claim_id': claim.id,
-        })
+        picking = self.env['stock.picking'].create(
+            self._get_picking_data(claim, picking_type, partner_id))
 
         # Create picking lines
-        fmt = DEFAULT_SERVER_DATETIME_FORMAT
         for line in self.claim_line_ids:
-            move_id = self.env['stock.move'].create({
-                'name': line.product_id.name_template,
-                'priority': '0',
-                'date': time.strftime(fmt),
-                'date_expected': time.strftime(fmt),
-                'product_id': line.product_id.id,
-                'product_uom_qty': line.product_returned_quantity,
-                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
-                'partner_id': partner_id,
-                'picking_id': picking.id,
-                'state': 'draft',
-                'price_unit': line.unit_sale_price,
-                'company_id': claim.company_id.id,
-                'location_id': self.claim_line_source_location.id,
-                'location_dest_id': self.claim_line_dest_location.id,
-                'note': note}).id
-
+            move_id = self.env['stock.move'].create(
+                self._get_picking_line_data(claim, picking, line))
             line.write({write_field: move_id})
 
         wf_service = workflow
@@ -265,16 +219,17 @@ class ClaimMakePicking(models.TransientModel):
             wf_service.trg_validate(uid, 'stock.picking',
                                     picking.id, 'button_confirm', cr)
             picking.action_assign()
-        domain = ("[('picking_type_id.code', '=', '%s'), "
-                  "('partner_id', '=', %s)]" % (picking_type_code, partner_id))
 
+        domain = [
+            ('picking_type_id.code', '=', picking_type_code),
+            ('partner_id', '=', partner_id)
+        ]
         return {
-            'name': '%s' % name,
+            'name': self._get_picking_name(),
             'view_type': 'form',
             'view_mode': 'form',
-            'view_id': view_id,
             'domain': domain,
-            'res_model': model,
+            'res_model': 'stock.picking',
             'res_id': picking.id,
             'type': 'ir.actions.act_window',
         }
