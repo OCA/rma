@@ -425,7 +425,7 @@ class CrmClaim(models.Model):
         help="Customer: from customer to company.\n "
              "Supplier: from company to supplier.")
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
-                                     string='Return lines')
+                                     string='Claim lines')
     planned_revenue = fields.Float(string='Expected revenue')
     planned_cost = fields.Float(string='Expected cost')
     real_revenue = fields.Float(string='Real revenue')
