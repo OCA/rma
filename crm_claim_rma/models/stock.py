@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,40 +22,35 @@
 #
 ##############################################################################
 
-from openerp.models import Model, api
-from openerp.fields import Many2one
+from openerp import models, fields, api
 
 
-class StockPicking(Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    claim_id = Many2one('crm.claim', string='Claim')
+    claim_id = fields.Many2one('crm.claim', string='Claim')
 
     @api.model
     def create(self, vals):
         if ('name' not in vals) or (vals.get('name') == '/'):
-            sequence_obj = self.env['ir.sequence']
-            seq_obj_name = self._name
-            vals['name'] = sequence_obj.get(seq_obj_name)
-
-        picking = super(StockPicking, self).create(vals)
-        return picking
+            vals['name'] = self.env['ir.sequence'].get(self._name)
+        return super(StockPicking, self).create(vals)
 
 
-# This part concern the case of a wrong picking out. We need to create a new
-# stock_move in a picking already open.
-# In order to don't have to confirm the stock_move we override the create and
-# confirm it at the creation only for this case
-class StockMove(Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
     @api.model
     def create(self, vals):
+        """
+        In case of a wrong picking out, We need to create a new stock_move in a
+        picking already open.
+        To avoid having to confirm the stock_move, we override the create and
+        confirm it at the creation only for this case.
+        """
         move = super(StockMove, self).create(vals)
         if vals.get('picking_id'):
-            picking_obj = self.env['stock.picking']
-            picking = picking_obj.browse(vals['picking_id'])
+            picking = self.env['stock.picking'].browse(vals['picking_id'])
             if picking.claim_id and picking.picking_type_id.code == 'incoming':
                 move.write({'state': 'confirmed'})
-
         return move

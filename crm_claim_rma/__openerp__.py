@@ -71,30 +71,33 @@ Contributors:
  * Javier Carrasco <javier.carrasco@eezee-it.com>
 
 """,
-    'author': "Akretion, Camptocamp, Eezee-it, "
+    'author': "Akretion, Camptocamp, Eezee-it, MONK Software"
               "Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
-               'http://www.eezee-it.com',
+               'http://www.eezee-it.com, http://www.wearemonk.com',
     'license': 'AGPL-3',
-    'depends': ['sale',
-                'stock',
-                'crm_claim',
-                'crm_claim_code',
-                'product_warranty',
-                ],
-    'data': ['wizard/claim_make_picking_view.xml',
-             'crm_claim_rma_view.xml',
-             'security/ir.model.access.csv',
-             'account_invoice_view.xml',
-             'res_partner_view.xml',
-             'crm_claim_rma_data.xml',
-             ],
+    'depends': [
+        'sale',
+        'stock',
+        'crm_claim',
+        'crm_claim_code',
+        'product_warranty',
+    ],
+    'data': [
+        'wizards/claim_make_picking.xml',
+        'views/crm_claim_rma.xml',
+        'views/account_invoice.xml',
+        'views/res_partner.xml',
+        'data/crm_claim_rma.xml',
+        'security/ir.model.access.csv',
+    ],
     'test': ['test/test_invoice_refund.yml'],
-    'images': ['images/product_return.png',
-               'images/claim.png',
-               'images/return_line.png',
-               'images/exchange.png',
-               ],
+    'images': [
+        'images/product_return.png',
+        'images/claim.png',
+        'images/return_line.png',
+        'images/exchange.png',
+    ],
     'installable': True,
     'auto_install': False,
 }
