@@ -61,7 +61,7 @@ class AccountInvoice(models.Model):
                     elif field_name == 'invoice_line_tax_id':
                         tax_ids = inv_line[field_name].ids
                         clean_line[field_name] = [(6, 0, tax_ids)]
-                clean_line['quantity'] = claim_line['product_returned_quantity']
+                clean_line['quantity'] = claim_line.product_returned_quantity
                 clean_line['claim_line_id'] = [claim_line.id]
                 new_lines.append(clean_line)
         if not new_lines:
