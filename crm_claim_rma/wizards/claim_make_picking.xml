@@ -13,15 +13,19 @@
             <field name="model">claim_make_picking.wizard</field>
             <field name="arch" type="xml">
                 <form string="Select exchange lines to add in picking" version="7.0">
-                    <separator string="Locations" colspan="4"/>
-                    <field name="claim_line_source_location_id" nolabel="1" />
-                    <field name="claim_line_dest_location_id" nolabel="1" />
-                    <separator string="Select lines for picking" colspan="4"/>
-                    <field name="claim_line_ids" nolabel="1" colspan="4"/>
+                    <group name="locations" string="Locations">
+                        <field name="claim_line_source_location_id"/>
+                        <field name="claim_line_dest_location_id"/>
+                    </group>
+                    <separator string="Select lines for picking"/>
+                    <field name="claim_line_ids" nolabel="1"/>
                     <footer>
-                        <button name="action_create_picking" string="Create picking" type="object" class="oe_highlight"/>
+                        <button
+                            string="Create picking"
+                            name="action_create_picking" type="object"
+                            class="oe_highlight"/>
                         or
-                        <button string="Cancel" class="oe_link" special="cancel" />
+                        <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
                 </form>
             </field>
