@@ -31,23 +31,23 @@ class ClaimMakePicking(models.TransientModel):
     _name = 'claim_make_picking.wizard'
     _description = 'Wizard to create pickings from claim lines'
 
-    def _get_common_field_from_lines(self, lines, field):
-        """
-        Read the supplied field from all the lines.
-        Lines that do not have the supplied field set are ignored.
-        If all the remaining lines have the same value for the field,
-        that value is returned, else False is returned
-        """
-        field_values = lines.mapped(field)
-        return field_values[0] if len(field_values) == 1 else False
-
+    @api.returns('stock.location')
     def _get_common_dest_location_from_line(self, lines):
-        return self._get_common_field_from_lines(
-            lines, 'location_dest_id.id')
+        """
+        If all the lines have the same destination location return that,
+        else return an empty recordset
+        """
+        dests = lines.mapped('location_dest_id')
+        return dests[0] if len(dests) == 1 else self.env['stock.location']
 
+    @api.returns('res.partner')
     def _get_common_partner_from_line(self, lines):
-        return self._get_common_field_from_lines(
-            lines, 'warranty_return_partner.id')
+        """
+        If all the lines have the same warranty return partner return that,
+        else return an empty recordset
+        """
+        partners = lines.mapped('warranty_return_partner')
+        return partners[0] if len(partners) == 1 else self.env['res.partner']
 
     def _default_claim_line_source_location_id(self):
         picking_type = self.env.context.get('picking_type')
@@ -61,7 +61,8 @@ class ClaimMakePicking(models.TransientModel):
             partner = self.env['res.partner'].browse(partner_id)
             return partner.property_stock_customer
 
-        return False
+        # return empty recordset, see https://github.com/odoo/odoo/issues/4384
+        return self.env['stock.location']
 
     def _default_claim_line_dest_location_id(self):
         """Return the location_id to use as destination.
@@ -70,7 +71,6 @@ class ClaimMakePicking(models.TransientModel):
         If it's an incoming shipment take the location_dest_id common to all
         lines, or if different, return None.
         """
-
         picking_type = self.env.context.get('picking_type')
         partner_id = self.env.context.get('partner_id')
 
@@ -83,7 +83,8 @@ class ClaimMakePicking(models.TransientModel):
             lines = self._default_claim_line_ids()
             return self._get_common_dest_location_from_line(lines)
 
-        return False
+        # return empty recordset, see https://github.com/odoo/odoo/issues/4384
+        return self.env['stock.location']
 
     @api.returns('claim.line')
     def _default_claim_line_ids(self):
@@ -182,9 +183,9 @@ class ClaimMakePicking(models.TransientModel):
         # product if location are different
         # or if partner address is different
         if self.env.context.get('product_return'):
-            common_dest_loc_id = self._get_common_dest_location_from_line(
+            common_dest_location = self._get_common_dest_location_from_line(
                 claim_lines)
-            if not common_dest_loc_id:
+            if not common_dest_location:
                 raise Warning(
                     _('Error'),
                     _('A product return cannot be created for various '
@@ -193,15 +194,15 @@ class ClaimMakePicking(models.TransientModel):
 
             claim_lines.auto_set_warranty()
 
-            common_dest_partner_id = self._get_common_partner_from_line(
+            common_dest_partner = self._get_common_partner_from_line(
                 claim_lines)
-            if not common_dest_partner_id:
+            if not common_dest_partner:
                 raise exceptions.Warning(
                     _('Error'),
                     _('A product return cannot be created for various '
                       'destination addresses, please choose line with a '
                       'same address.'))
-            partner_id = common_dest_partner_id
+            partner_id = common_dest_partner.id
 
         # create picking
         picking = self.env['stock.picking'].create(
