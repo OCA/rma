@@ -135,8 +135,8 @@ class ClaimMakePicking(models.TransientModel):
             'partner_id': partner_id,
             'invoice_state': "none",
             'company_id': claim.company_id.id,
-            'location_id': self.claim_line_source_location.id,
-            'location_dest_id': self.claim_line_dest_location.id,
+            'location_id': self.claim_line_source_location_id.id,
+            'location_dest_id': self.claim_line_dest_location_id.id,
             'note': self._get_picking_note(),
             'claim_id': claim.id,
         }
@@ -155,8 +155,8 @@ class ClaimMakePicking(models.TransientModel):
             'state': 'draft',
             'price_unit': line.unit_sale_price,
             'company_id': claim.company_id.id,
-            'location_id': self.claim_line_source_location.id,
-            'location_dest_id': self.claim_line_dest_location.id,
+            'location_id': self.claim_line_source_location_id.id,
+            'location_dest_id': self.claim_line_dest_location_id.id,
             'note': self._get_picking_note(),
         }
 
@@ -209,9 +209,9 @@ class ClaimMakePicking(models.TransientModel):
 
         # Create picking lines
         for line in self.claim_line_ids:
-            move_id = self.env['stock.move'].create(
+            move = self.env['stock.move'].create(
                 self._get_picking_line_data(claim, picking, line))
-            line.write({write_field: move_id})
+            line.write({write_field: move.id})
 
         wf_service = workflow
         if picking:
