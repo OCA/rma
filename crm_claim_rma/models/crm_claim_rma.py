@@ -244,6 +244,7 @@ class ClaimLine(models.Model):
                 'warning': warning}
 
     def set_warranty_limit(self):
+        self.ensure_one()
         claim = self.claim_id
         try:
             values = self._warranty_limit_values(
@@ -336,19 +337,21 @@ class ClaimLine(models.Model):
         self.update(values)
 
     def _warranty_return_address_values(self, product, company, warehouse):
-        """Return the partner to be used as return destination and
+        """
+        Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
-        We can have various case here:
+        We can have various cases here:
             - company or other: return to company partner or
               crm_return_address_id if specified
             - supplier: return to the supplier address
-
         """
         if not (product and company and warehouse):
-            return {'warranty_return_partner': False,
-                    'warranty_type': False,
-                    'location_dest_id': False}
+            return {
+                'warranty_return_partner': False,
+                'warranty_type': False,
+                'location_dest_id': False
+            }
         sellers = product.seller_ids
         if sellers:
             seller = sellers[0]
@@ -361,17 +364,17 @@ class ClaimLine(models.Model):
             return_address_id = return_address.id
             return_type = 'company'
         location_dest = self.get_destination_location(product, warehouse)
-        return {'warranty_return_partner': return_address_id,
-                'warranty_type': return_type,
-                'location_dest_id': location_dest.id}
+        return {
+            'warranty_return_partner': return_address_id,
+            'warranty_type': return_type,
+            'location_dest_id': location_dest.id
+        }
 
     def set_warranty_return_address(self):
+        self.ensure_one()
         claim = self.claim_id
-        product = self.product_id
-        company = claim.company_id
-        warehouse = claim.warehouse_id
         values = self._warranty_return_address_values(
-            product, company, warehouse)
+            self.product_id, claim.company_id, claim.warehouse_id)
         self.write(values)
         return True
 
