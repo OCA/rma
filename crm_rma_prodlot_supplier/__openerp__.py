@@ -34,7 +34,7 @@
         'crm_claim',
     ],
     'data': [
-        'view/stock_view.xml',
+        'views/stock_view.xml',
     ],
     'active': False,
     'installable': True,
