@@ -30,7 +30,6 @@
                 ],
     'test': [],
     'images': [],
-    # 'demo': ['crm_claim_rma_demo.xml'],
     'installable': True,
     'auto_install': False,
 }
