@@ -28,14 +28,9 @@
     'depends': ['base',
                 'crm_claim',
                 ],
-    'data': [
-            'crm_claim_rma_data.xml',
-            'view/crm_claim_rma_view.xml',
-            'security/ir.model.access.csv',
-    ],
     'test': [],
     'images': [],
-    'demo': ['crm_claim_rma_demo.xml'],
+    # 'demo': ['crm_claim_rma_demo.xml'],
     'installable': True,
     'auto_install': False,
 }
