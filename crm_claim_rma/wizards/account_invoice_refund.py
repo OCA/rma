@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,7 +21,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import wizard
-from . import crm_claim_rma
-from . import account_invoice
-from . import stock
+
+from openerp import models, fields, api
+
+
+class AccountInvoiceRefund(models.TransientModel):
+    _inherit = "account.invoice.refund"
+
+    def _default_description(self):
+        return self.env.context.get('description', '')
+
+    description = fields.Char(default=_default_description)
+
+    @api.one
+    def compute_refund(self, mode='refund'):
+        invoice_ids = self.env.context.get('invoice_ids', [])
+        if invoice_ids:
+            self = self.with_context(active_ids=invoice_ids)
+        return super(AccountInvoiceRefund, self).compute_refund(mode=mode)
