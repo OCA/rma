@@ -248,7 +248,8 @@ class ClaimLine(models.Model):
         claim = self.claim_id
         try:
             values = self._warranty_limit_values(
-                claim.invoice_id, claim.claim_type, self.product_id, claim.date)
+                claim.invoice_id, claim.claim_type,
+                self.product_id, claim.date)
         except InvoiceNoDate:
             raise exceptions.Warning(
                 _('Error'), _('Cannot find any date for invoice. '

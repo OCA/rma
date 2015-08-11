@@ -55,7 +55,8 @@ class ClaimMakePicking(models.TransientModel):
         warehouse_id = self.env.context.get('warehouse_id')
 
         if picking_type == 'out' and warehouse_id:
-            return self.env['stock.warehouse'].browse(warehouse_id).lot_stock_id
+            return self.env['stock.warehouse'].browse(
+                warehouse_id).lot_stock_id
 
         if partner_id:
             partner = self.env['res.partner'].browse(partner_id)
@@ -130,7 +131,7 @@ class ClaimMakePicking(models.TransientModel):
         return {
             'origin': claim.code,
             'picking_type_id': picking_type.id,
-            'move_type': 'one', # direct
+            'move_type': 'one',  # direct
             'state': 'draft',
             'date': time.strftime(DT_FORMAT),
             'partner_id': partner_id,
