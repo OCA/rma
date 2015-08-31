@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-
         <record id="crm_claim_rma_form_view_meta" model="ir.ui.view">
             <field name="name">CRM - Claim product return Form</field>
             <field name="model">crm.claim</field>

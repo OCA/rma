@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#            Joel Grand-Guillaume,
+#            Yanina Aular, Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,4 +22,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from . import returned_lines_from_serial
