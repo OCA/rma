@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
         <record id="view_production_lot_form_supplier" model="ir.ui.view">
             <field name="name">lot.supplier</field>
             <field name="model">stock.production.lot</field>
@@ -12,7 +11,6 @@
                 </xpath>
             </field>
         </record>
-
         <record id="view_lot_form_supplier_context" model="ir.ui.view">
             <field name="name">lot.supplier.context</field>
             <field name="model">stock.transfer_details</field>
@@ -27,7 +25,5 @@
                 </xpath>
             </field>
         </record>
-
     </data>
 </openerp>
-
