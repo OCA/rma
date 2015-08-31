@@ -31,7 +31,7 @@ When a warehouse transfer is made, the supplier field for the product lot is aut
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/rma/8.0
+   :target: https://runbot.odoo-community.org/runbot/145/8.0
 
 For further information, please visit:
 

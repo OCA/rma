@@ -22,7 +22,7 @@
 {
     'name': 'Claim Prodlot Supplier',
     'version': '1.0',
-    'author': 'Vauxoo, Odoo Community Association (OCA)',
+    'author': 'Vauxoo,Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
     'category': 'RMA',
     'license': 'AGPL-3',
