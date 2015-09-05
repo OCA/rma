@@ -22,7 +22,7 @@
 -
   !record {model: crm.claim, id: claim_refund}:
     name: 'Angry Customer'
-    claim_type: customer
+    claim_type: crm_claim_type.crm_claim_type_customer
     partner_id: base.res_partner_3
     invoice_id: account_invoice_claim_refund
     stage_id: crm_claim.stage_claim1
@@ -54,3 +54,4 @@
     refund_lines = self.pool.get('account.invoice.line').browse(cr, uid, refund_line_ids)
     assert ref('product.product_product_4') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "First line is checked"
     assert ref('product.product_product_5') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "Second line is checked"
+
