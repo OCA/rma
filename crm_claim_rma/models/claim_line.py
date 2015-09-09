@@ -361,12 +361,14 @@ class ClaimLine(models.Model):
             product_id = self.env['product.product']\
                 .browse(product_id)
 
-        try:
+        if product_id.seller_ids:
             seller = product_id.seller_ids[0]
-            if seller.warranty_return_partner != 'company':
+            if seller.warranty_return_partner != 'company' \
+                    and seller.name and \
+                    seller.name.property_stock_supplier:
                 location_dest_id = seller.name.property_stock_supplier
-        finally:
-            return location_dest_id
+
+        return location_dest_id
 
     @api.onchange('product_id', 'invoice_line_id')
     def _onchange_product_invoice_line(self):
@@ -484,7 +486,6 @@ class ClaimLine(models.Model):
         @return write the identify number once the claim line is create.
         """
         vals = vals or {}
-
         if ('number' not in vals) or (vals.get('number', False) == '/'):
             vals['number'] = self._get_sequence_number()
 

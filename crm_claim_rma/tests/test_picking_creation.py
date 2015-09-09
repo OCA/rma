@@ -30,9 +30,9 @@ class TestPickingCreation(common.TransactionCase):
     def setUp(self):
         super(TestPickingCreation, self).setUp()
 
-        self.WizardMakePicking = self.env['claim_make_picking.wizard']
-        self.StockPicking = self.env['stock.picking']
-        Claim = self.env['crm.claim']
+        self.wizardmakepicking = self.env['claim_make_picking.wizard']
+        self.stockpicking = self.env['stock.picking']
+        claim = self.env['crm.claim']
 
         self.product_id = self.env.ref('product.product_product_4')
 
@@ -49,7 +49,7 @@ class TestPickingCreation(common.TransactionCase):
             signal_workflow('invoice_open')
 
         # Create the claim with a claim line
-        self.claim_id = Claim.create(
+        self.claim_id = claim.create(
             {
                 'name': 'TEST CLAIM',
                 'code': '/',
@@ -67,7 +67,7 @@ class TestPickingCreation(common.TransactionCase):
         """Test wizard creates a correct picking for product return
 
         """
-        wizard = self.WizardMakePicking.with_context({
+        wizard = self.wizardmakepicking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
@@ -90,8 +90,8 @@ class TestPickingCreation(common.TransactionCase):
 
         """
 
-        WizardChangeProductQty = self.env['stock.change.product.qty']
-        wizard_chg_qty = WizardChangeProductQty.with_context({
+        wizardchangeproductqty = self.env['stock.change.product.qty']
+        wizard_chg_qty = wizardchangeproductqty.with_context({
             'active_id': self.product_id.id,
         }).create({
             'product_id': self.product_id.id,
@@ -100,7 +100,7 @@ class TestPickingCreation(common.TransactionCase):
 
         wizard_chg_qty.change_product_qty()
 
-        wizard = self.WizardMakePicking.with_context({
+        wizard = self.wizardmakepicking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
@@ -126,7 +126,7 @@ class TestPickingCreation(common.TransactionCase):
         warehouse_rec = \
             warehouse_obj.search([('company_id',
                                    '=', company.id)])[0]
-        wizard = self.WizardMakePicking.with_context({
+        wizard = self.wizardmakepicking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,

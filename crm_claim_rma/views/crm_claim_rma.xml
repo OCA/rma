@@ -391,8 +391,6 @@
                         <field name="picking_ids" colspan="4" readonly="1"/>
                     </page>
 	            </page>
-                <xpath expr="//page[@string='Follow Up']" position="replace">
-                </xpath>
             </field>
         </record>
 
