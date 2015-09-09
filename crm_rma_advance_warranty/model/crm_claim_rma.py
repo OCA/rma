@@ -40,13 +40,13 @@ class claim_line(models.Model):
     @api.one
     @api.model
     def set_warranty_limit(self):
-        if not self.date_invoice:
+        if not self.date_due:
             raise except_orm(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
         warning = 'not_define'
-        date_inv_at_server = datetime.strptime(self.date_invoice,
+        date_inv_at_server = datetime.strptime(self.date_due,
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
@@ -112,7 +112,7 @@ class claim_line(models.Model):
         if supplier:
             domain = [('name', '=', supplier.id),
                       ('product_tmpl_id', '=',
-                      self.product_id.product_tmpl_id.id)]
+                       self.product_id.product_tmpl_id.id)]
             supplier = psi_obj.search(domain)
             return_address_id = \
                 supplier.warranty_return_address.id
@@ -128,7 +128,8 @@ class claim_line(models.Model):
 
         location_dest_id = self.get_destination_location(
             self.product_id.id,
-            self.claim_id.warehouse_id.id)
+            self.claim_id.warehouse_id.id).id
+
         self.write({'warranty_return_partner': return_address_id,
                     'warranty_type': return_type,
                     'location_dest_id': location_dest_id})

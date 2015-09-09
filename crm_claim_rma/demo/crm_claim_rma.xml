@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="crm_rma_invoice_001" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_9"/>
+        </record>
+
+        <record id="crm_rma_invoice_1_line_1" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">iMac</field>
+            <field name="price_unit">1799</field>
+            <field name="quantity">3</field>
+        </record>
+
+        <record id="crm_rma_invoice_1_line_2" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">PC Assemble</field>
+            <field name="price_unit">450</field>
+            <field name="quantity">1</field>
+        </record>
+
+        <record id="crm_claim.crm_claim_6" model="crm.claim">
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="delivery_address_id" ref="base.res_partner_9"/>
+        </record>
+    </data>
+</openerp>

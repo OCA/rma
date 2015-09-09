@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="search_product assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/crm_rma_lot_mass_return/static/lib/alert.js"></script>
+                <script type="text/javascript" src="/crm_rma_lot_mass_return/static/src/js/barcode_text.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

@@ -24,30 +24,14 @@
     'name': 'Product warranty',
     'version': '1.0',
     'category': 'Generic Modules/Product',
-    'description': """
-Product Warranty
-================
-
-Extend the product warranty management with warranty details on product /
-supplier relation:
-
-* supplier warranty duration
-* Set default return address for company (if different from standard one)
-* return product to company, supplier, other
-
-
-Those informations are used in the RMA Claim (Product Return Management)
-module.
-
-""",
-    'author': "Akretion,Odoo Community Association (OCA)",
+    'author': "Akretion,Odoo Community Association (OCA),Vauxoo",
     'website': 'http://akretion.com',
     'license': 'AGPL-3',
     'depends': ['product'],
     'data': [
         'security/ir.model.access.csv',
-        'res_company_view.xml',
-        'product_warranty_view.xml',
+        'views/res_company_view.xml',
+        'views/product_warranty_view.xml',
     ],
     'demo': [
         'demo/product_warranty.xml',
@@ -56,8 +40,5 @@ module.
     'test': [],
     'installable': True,
     'active': False,
-    'certificate': '',
     'images': ['images/product_warranty.png'],
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="crm_claim_type_form_sequence" model="ir.ui.view">
+            <field name="name">crm.claim.type.form</field>
+            <field name="model">crm.claim.type</field>
+            <field name="inherit_id" ref="crm_claim_type.crm_claim_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="before">
+                    <field name="ir_sequence_id" attrs="{'required':  True}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="crm_claim_type_tree_sequence" model="ir.ui.view">
+            <field name="name">crm.claim.type.tree</field>
+            <field name="model">crm.claim.type</field>
+            <field name="inherit_id" ref="crm_claim_type.crm_claim_type_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="before">
+                    <field name="ir_sequence_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

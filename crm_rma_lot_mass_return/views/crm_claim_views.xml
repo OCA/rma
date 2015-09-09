@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="crm_claim_rma_form_view_meta" model="ir.ui.view">
+            <field name="name">CRM - Claim product return Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='serial']" position="inside">
+                    <button name="render_metasearch_view"
+                        string="Mass return from serial/lot or invoice" type="object"/>
+                </xpath>
+            </field>
+        </record>
+     </data>
+</openerp>

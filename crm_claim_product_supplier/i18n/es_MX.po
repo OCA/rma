@@ -14,3 +14,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: crm_claim_product_supplier
+#: help:claim.line,supplier_id:0
+msgid "Supplier of good in claim"
+msgstr "Proveedor de productos en el reclamo"

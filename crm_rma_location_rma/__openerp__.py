@@ -26,7 +26,6 @@
  'category': 'Generic Modules/CRM & SRM',
  'depends': ['stock',
              'procurement',
-             'crm_claim_rma_config',
              ],
  'website': 'http://www.camptocamp.com',
  'data': ['stock_warehouse_view.xml',
