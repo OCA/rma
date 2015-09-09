@@ -26,7 +26,6 @@
     'version': '1.0',
     'category': 'Generic Modules/CRM & SRM',
     'depends': ['crm_claim_rma',
-                'crm_rma_location_rma',
                 ],
     'author': 'Akretion',
     'license': 'AGPL-3',

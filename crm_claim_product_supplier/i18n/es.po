@@ -38,5 +38,5 @@ msgstr "Factura de proveedor con la orden de compra de materiales vendidos al cl
 #. module: crm_claim_product_supplier
 #: help:claim.line,supplier_id:0
 msgid "Supplier of good in claim"
-msgstr "Proveedor de productos en el reclamo"
+msgstr "Proveedor de productos en el reclamación"
 

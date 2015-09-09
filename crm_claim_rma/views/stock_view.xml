@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- INHERITED VIEW FOR THE OBJECT : stock_picking -->
+        <record id="picking_in_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_in_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_type']" position="after">
+                    <field name="claim_id" />
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_move_mail_thread" model="ir.ui.view">
+            <field name="name">stock_move_mail_thread</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <!-- SEARCH -->
+        <record id="view_picking_internal_search_claim_id" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search[@string='Picking Lists']">
+                    <field name="claim_id" help="Moves created from claims"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

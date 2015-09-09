@@ -64,6 +64,17 @@ class TestPickingFromPicking(TransactionCase):
 
         # Create Picking from Customers to RMA
         # with button New Products Return
+        claimline_obj = self.env['claim.line']
+        product_id = self.env.ref('product.product_product_4')
+        warehouse_id = self.claim_test.warehouse_id
+        self.claim_line_id = claimline_obj.create(
+            {
+                'name': 'TEST CLAIM LINE',
+                'claim_origine': 'none',
+                'product_id': product_id.id,
+                'claim_id': self.claim_test.id,
+                'location_dest_id': warehouse_id.lot_stock_id.id
+            })
 
         wiz_context = {
             'active_id': self.claim_test.id,

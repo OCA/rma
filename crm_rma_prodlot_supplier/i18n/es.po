@@ -34,10 +34,3 @@ msgstr "Proveedor"
 #: help:stock.production.lot,supplier_id:0
 msgid "Supplier of good in claim"
 msgstr "Proveedor del producto en el reclamo"
-
-#. module: crm_rma_prodlot_supplier
-#: view:stock.transfer_details:crm_rma_prodlot_supplier.view_lot_form_supplier_context
-msgid "{'product_id': product_id,\n"
-"                            'active_id': active_id}"
-msgstr ""
-

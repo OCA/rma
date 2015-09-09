@@ -31,18 +31,12 @@
     'category': '',
     'depends': [
         'stock',
-        'crm_claim',
+        'crm_claim_rma',
         'crm_claim_product_supplier',
-        'crm_claim_rma_config',
     ],
     'data': [
         'view/crm_claim_view.xml',
     ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
     'active': False,
     'installable': True,
 }

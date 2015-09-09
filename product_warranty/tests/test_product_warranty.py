@@ -34,23 +34,18 @@ class TestProductWarranty(TransactionCase):
         """
         Create a record of product.supplier for next tests
         """
-        cr, uid = self.cr, self.uid
 
-        product_tmpl_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "product",
-                                 "product_product_3")[1]
+        product_tmpl_id = self.env.ref('product.product_product_3')
 
-        partner_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "base",
-                                 "res_partner_4")[1]
+        partner_id = self.env.ref('base.res_partner_4')
 
-        supplierinfo_data = dict(name=partner_id,
+        supplierinfo_data = dict(name=partner_id.id,
                                  product_name='Test SupplierInfo for'
                                  ' display Default Instruction',
                                  min_qty=4,
                                  delay=5,
                                  warranty_return_partner='supplier',
-                                 product_tmpl_id=product_tmpl_id,)
+                                 product_tmpl_id=product_tmpl_id.id,)
         self.supplierinfo_brw = \
             self.supplierinfo.create(supplierinfo_data)
 
@@ -61,14 +56,12 @@ class TestProductWarranty(TransactionCase):
         correctly when one record of
         product.supplierinfo is created
         """
-        cr, uid = self.cr, self.uid
 
-        return_instructions_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "product_warranty",
-                                 "return_instruction_1")[1]
+        return_instructions_id = self.env.ref('product_warranty.'
+                                              'return_instruction_1')
 
         self.assertEquals(self.supplierinfo_brw.return_instructions.id,
-                          return_instructions_id)
+                          return_instructions_id.id)
 
     def test_warranty_return_address(self):
         """

@@ -163,7 +163,7 @@ msgstr "Instrucciones"
 #. module: product_warranty
 #: field:product.supplierinfo,active_supplier:0
 msgid "Active supplier"
-msgstr ""
+msgstr "Proveedor activo"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_res_company

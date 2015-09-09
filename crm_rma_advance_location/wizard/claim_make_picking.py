@@ -29,7 +29,7 @@ class claim_make_picking(models.TransientModel):
     _inherit = 'claim_make_picking.wizard'
 
     @api.model
-    def _get_dest_loc(self):
+    def _default_claim_line_dest_location_id(self):
         """ Get default destination location """
         context = self._context
         warehouse_obj = self.env['stock.warehouse']
@@ -41,8 +41,10 @@ class claim_make_picking(models.TransientModel):
         elif picking_type and picking_type == 'new_rma':
             loc_id = warehouse_rec.lot_rma_id
         else:
-            loc_id = super(claim_make_picking, self)._get_dest_loc()
+            loc_id = super(claim_make_picking, self).\
+                _default_claim_line_dest_location_id()
 
         return loc_id
 
-    claim_line_dest_location = fields.Many2one(default=_get_dest_loc)
+    claim_line_dest_location_id = \
+        fields.Many2one(default=_default_claim_line_dest_location_id)

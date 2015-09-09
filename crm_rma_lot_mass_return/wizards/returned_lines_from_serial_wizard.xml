@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_enter_product" model="ir.ui.view">
+            <field name="name">returned_lines_from_serial_wiew</field>
+            <field name="model">returned.lines.from.serial.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class='row'>
+                        <div class="col-md-10 col-sm-10 col-lg-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h2><field name="partner_id" readonly="1"/></h2>
+                                    <group>
+                                        <field name="scaned_data" invisible="1"/>
+                                    </group>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <td>
+                                        <field name="current_status" readonly="1" widget="barcode_text"  nolabel='1'/>
+                                    </td>
+                                    <td>
+                                        <field name="scan_data"
+                                               widget='barcode_text'
+                                               on_change="onchange_load_products(scan_data, lines_id, context)"
+                                               nolabel='1'/>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-10 col-sm-10 col-lg-10">
+                            <div class="row">
+                                <div class="pull-right" name="buttons">
+                                <button name="add_claim_lines"
+                                    help="Validate the actual picking, it will execute all the validations and the inventory will be affected"
+                                    confirm="You add new returns in claim, are you sure?."
+                                    string="_Validate" colspan="1" type="object" class="oe_highlight"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
+                            <div class="row">
+                                <field name="lines_id" invisible="1"/>
+                                <field name="lines_list_id"
+                                    domain="[('id', 'in', [])]"
+                                    widget="many2many_checkboxes" on_change="change_list(lines_list_id)"/>
+                            </div>
+                        </div>
+                        <div class='col-md-16 col-sm-16 col-lg-16'>
+                            <div class="row">
+                                <!-- Invoice lines list -->
+                            </div>
+                        </div>
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <p class="oe_help">
+                            You should use this windows on this way.
+                            <ol>
+                                <li>Write the Serial/Lot Number to search the product</li>
+                                <li>Write the Invoice Number to search the products in lines</li>
+                            </ol>
+                        </p>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

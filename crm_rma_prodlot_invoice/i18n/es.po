@@ -24,4 +24,3 @@ msgstr "Órdenes de venta"
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de orden de venta"
-

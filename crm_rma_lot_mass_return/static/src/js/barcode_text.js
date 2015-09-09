@@ -104,11 +104,6 @@ openerp.web.FormView.include({
 
 
     },
-
-
-
-
-
 });
 openerp.web.form.widgets.add('barcode_text', 'openerp.web.form.BarcodeText')
 openerp.web.form.widgets.add('change_focus', 'openerp.web.form.ChangeFocus')

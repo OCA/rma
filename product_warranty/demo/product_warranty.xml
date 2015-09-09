@@ -10,7 +10,7 @@ Select the product you want to return and the reason for the return. You will ne
         </record>
 
         <record id="return_instruction_2" model="return.instruction">
-            <field name="name">Provicional Instruction</field>
+            <field name="name">Provisional Instruction</field>
             <field name="instructions">Under the provisions of these Conditions of Sale, you may return the products received once you have contacted our customer service department adidas Mexico and the request is authorized. If you choose to return your order, we will refund: the full purchase price, as long as we have previously returned the products you order in perfect condition: (i) new product unused, (ii) with packaging, original box and tags (iii) be in the period of 30 calendar days after receiving the product. If you do not return the products to fulfill the above conditions, we are entitled to charge the products or the costs of recovery.</field>
         </record>
 
