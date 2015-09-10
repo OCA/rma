@@ -107,7 +107,7 @@ class stock_warehouse(models.Model):
             in_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Receipts'),
                 'warehouse_id': warehouse.id,
-                'code': 'outgoing',
+                'code': 'incoming',
                 'sequence_id': in_seq_id.id,
                 'default_location_src_id': customer_loc.id,
                 'default_location_dest_id': wh_stock_loc.id,
@@ -119,7 +119,7 @@ class stock_warehouse(models.Model):
             out_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Delivery Orders'),
                 'warehouse_id': warehouse.id,
-                'code': 'incoming',
+                'code': 'outgoing',
                 'sequence_id': out_seq_id.id,
                 'return_picking_type_id': in_type_id.id,
                 'default_location_src_id': wh_stock_loc.id,

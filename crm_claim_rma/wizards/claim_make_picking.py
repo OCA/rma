@@ -104,14 +104,14 @@ class ClaimMakePicking(models.TransientModel):
             picking_obj = self.env['stock.picking.type']
             if picking_obj.\
                     browse(picking_type).\
-                    code == 'outgoing':
-                picking_type = 'out'
-            else:
+                    code == 'incoming':
                 picking_type = 'in'
+            else:
+                picking_type = 'out'
 
-        move_field = ('move_out_id'
-                      if picking_type == 'out'
-                      else 'move_in_id')
+        move_field = ('move_in_id'
+                      if picking_type == 'in'
+                      else 'move_out_id')
         domain = [('claim_id', '=', self.env.context['active_id'])]
         lines = self.env['claim.line'].\
             search(domain)
@@ -193,12 +193,13 @@ class ClaimMakePicking(models.TransientModel):
         picking_type = self.env.context.get('picking_type')
         if isinstance(picking_type, int):
             picking_obj = self.env['stock.picking.type']
-            if picking_obj.\
-                    browse(picking_type).\
-                    code == 'outgoing':
+            picking_type_rec = picking_obj.browse(picking_type)
+            if picking_type_rec.code == 'incoming':
+                picking_type = 'in'
+            elif picking_type_rec.code == 'outgoing':
                 picking_type = 'out'
             else:
-                picking_type = 'in'
+                picking_type = 'int'
 
         warehouse_obj = self.env['stock.warehouse']
         warehouse_rec = warehouse_obj.browse(context.get('warehouse_id'))
@@ -208,6 +209,9 @@ class ClaimMakePicking(models.TransientModel):
         elif picking_type == 'in':
             picking_type = warehouse_rec.in_type_id
             write_field = 'move_in_id'
+        else:
+            picking_type = warehouse_rec.int_type_id
+            write_field = 'move_out_id'
 
         claim = self.env['crm.claim'].browse(self.env.context['active_id'])
         partner_id = claim.delivery_address_id.id
