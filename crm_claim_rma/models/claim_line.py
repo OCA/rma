@@ -486,6 +486,7 @@ class ClaimLine(models.Model):
         @return write the identify number once the claim line is create.
         """
         vals = vals or {}
+
         if ('number' not in vals) or (vals.get('number', False) == '/'):
             vals['number'] = self._get_sequence_number()
 

@@ -81,7 +81,7 @@ class ClaimMakePicking(models.TransientModel):
         if isinstance(picking_type, int):
             picking_obj = self.env['stock.picking.type']
             return picking_obj.browse(picking_type)\
-                .default_location_dest_id.id
+                .default_location_dest_id
 
         if picking_type == 'out' and partner_id:
             return self.env['res.partner'].browse(

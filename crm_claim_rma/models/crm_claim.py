@@ -104,7 +104,6 @@ class CrmClaim(models.Model):
         context = self.env.context
         claim_line_obj = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
-        claim_lines = []
         if not self.warehouse_id:
             self.warehouse_id = self._get_default_warehouse()
         claim_type = self.claim_type
@@ -131,6 +130,7 @@ class CrmClaim(models.Model):
             return values
 
         if create_lines:  # happens when the invoice is changed
+            claim_lines = []
             for invoice_line in invoice_lines:
                 location_dest = claim_line_obj.get_destination_location(
                     invoice_line.product_id, warehouse)
@@ -148,9 +148,9 @@ class CrmClaim(models.Model):
                                             invoice_line.product_id))
                 claim_lines.append((0, 0, line))
 
-        value = self._convert_to_cache(
-            {'claim_line_ids': claim_lines}, validate=False)
-        self.update(value)
+            value = self._convert_to_cache(
+                {'claim_line_ids': claim_lines}, validate=False)
+            self.update(value)
 
         if self.invoice_id:
             self.delivery_address_id = self.invoice_id.partner_id.id
