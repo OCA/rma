@@ -1,31 +1,36 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-CRM RMA Production Lot Supplier
-===============================
+RMA Stock Location
+==================
 
-It allows to keep track of supplier when warehouse transfers are made for a
-product lot, this helps that product warranties rules can be taken directly
-from supplier.
+A RMA location can be selected on the warehouses.
+The product views displays the quantity available and virtual in this
+RMA location (including its children locations).
+
 
 Installation
 ============
 
-To install this module, just select it from availables modules
+To install this module, just select it from availables modules.
 
 Configuration
 =============
 
-No configuration is needed
+To configure this module, you need to:
+
+* go to ...
 
 Usage
 =====
 
-When a warehouse transfer is made, the supplier field for the product lot is automatically filled.
+To use this module, you need to:
+
+* go to ...
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/145/8.0
+   :target: https://runbot.odoo-community.org/runbot/8.0/145
 
 For further information, please visit:
 
@@ -34,7 +39,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* No issues are currently known
+* ...
 
 Bug Tracker
 ===========
@@ -42,7 +47,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_prodlot_supplier%0Aversion:%208.0.1.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_stock_location%0Aversion:%208.0.1.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits

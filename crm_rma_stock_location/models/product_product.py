@@ -124,30 +124,3 @@ class ProductProduct(models.Model):
                                          get_precision('Product Unit '
                                                        'of Measure'),
                                          string='RMA Forecasted Quantity')
-
-
-class ProductTemplate(models.Model):
-
-    _inherit = 'product.template'
-
-    @api.one
-    @api.depends('rma_qty_available', 'rma_virtual_available')
-    def _rma_product_available(self):
-        self.rma_qty_available = sum([p.rma_qty_available
-                                      for p in
-                                      self.product_variant_ids])
-        self.rma_virtual_available = sum([p.rma_virtual_available
-                                         for p in
-                                         self.product_variant_ids])
-
-    rma_qty_available = fields.Float(compute='_rma_product_available',
-                                     digits_compute=dp.
-                                     get_precision('Product Unit '
-                                                   'of Measure'),
-                                     string='RMA Quantity On Hand')
-
-    rma_virtual_available = fields.Float(compute='_rma_product_available',
-                                         digits_compute=dp.
-                                         get_precision('Product Unit'
-                                                       ' of Measure'),
-                                         string='RMA Forecasted Quantity')

@@ -16,25 +16,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: crm_rma_advance_warranty
-#: code:addons/crm_rma_advance_warranty/model/crm_claim_rma.py:41
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:41
 #, python-format
 msgid "Cannot find any date for invoice. Must be a validated invoice."
-msgstr "No se puede encontrar ninguna fecha para la factura. Debe ser una factura validada."
+msgstr ""
 
 #. module: crm_rma_advance_warranty
-#: code:addons/crm_rma_advance_warranty/model/crm_claim_rma.py:40
-#: code:addons/crm_rma_advance_warranty/model/crm_claim_rma.py:57
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:40
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:57
 #, python-format
 msgid "Error"
-msgstr "Error"
+msgstr ""
 
 #. module: crm_rma_advance_warranty
 #: model:ir.model,name:crm_rma_advance_warranty.model_claim_line
 msgid "List of product to return"
-msgstr "Lista de productos a retornar"
+msgstr ""
 
 #. module: crm_rma_advance_warranty
-#: code:addons/crm_rma_advance_warranty/model/crm_claim_rma.py:58
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:58
 #, python-format
 msgid "The product has no supplier configured for %s."
-msgstr "El producto no tiene un proveedor configurado para %s"
+msgstr ""

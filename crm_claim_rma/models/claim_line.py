@@ -466,9 +466,12 @@ class ClaimLine(models.Model):
     @api.one
     def set_warranty(self):
         """ Calculate warranty limit and address """
-        if not (self.product_id and self.invoice_line_id):
-            raise exceptions.Warning(
-                _('Error'), _('Please set product and invoice.'))
+        if not self.product_id:
+            raise exceptions.Warning(_('Error'), _('Please set product first'))
+
+        if not self.invoice_line_id:
+            raise exceptions.Warning(_('Error'), _('Please set invoice first'))
+
         self.set_warranty_limit()
         self.set_warranty_return_address()
 

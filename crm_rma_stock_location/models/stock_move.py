@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Vauxoo
-#    Author: Osval Reyes, Yanina Aular
+#    Author: Yanina Aular
+#    Copyright 2014 Vauxoo
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,4 +19,12 @@
 #
 ##############################################################################
 
-from . import models
+from openerp import models
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    defaults = {
+        'invoice_state': 'none'
+    }

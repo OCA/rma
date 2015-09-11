@@ -44,12 +44,13 @@
         'product_warranty',
     ],
     'data': [
-        'wizards/claim_make_picking.xml',
-        'views/crm_claim_rma.xml',
+        'data/crm_claim_rma.xml',
         'views/account_invoice.xml',
+        'wizards/claim_make_picking.xml',
+        'views/crm_claim.xml',
+        "views/claim_line.xml",
         'views/res_partner.xml',
         'views/stock_view.xml',
-        'data/crm_claim_rma.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

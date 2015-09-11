@@ -186,7 +186,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_type': 'form',
                 'view_mode': 'form',
-                'res_model': 'returned.lines.from.serial.wizard',
+                'res_model': 'returned_lines_from_serial.wizard',
                 'view_id': view.id,
                 'views': [(view.id, 'form')],
                 'target': 'new',

@@ -31,12 +31,19 @@ class StockProductionLot(models.Model):
 
     @api.model
     def default_get(self, fields_list):
+        """
+        Set partner when product lot is created
+        @param fields_list: record values
+        @return: return record
+        """
         res = super(StockProductionLot, self).default_get(fields_list)
         transfer_item_id = self._context.get('active_id', False)
         if transfer_item_id:
             picking = self.env['stock.transfer_details_items'].\
                 browse(transfer_item_id)
-            partner_id = picking.transfer_id.picking_id.partner_id
-            if partner_id:
-                res.update({'supplier_id': partner_id.id})
+            if picking.transfer_id.picking_id.\
+                    picking_type_id.code == 'incoming':
+                partner_id = picking.transfer_id.picking_id.partner_id
+                if partner_id:
+                    res.update({'supplier_id': partner_id.id})
         return res

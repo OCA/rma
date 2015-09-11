@@ -130,7 +130,7 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: view:claim.line:0
-msgid "Compute Waranty"
+msgid "Compute Warranty"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -563,9 +563,15 @@ msgid "Unit sale price of the product. Auto filled if retrun done by invoice sel
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:313
+#: code:addons/crm_claim_rma/crm_claim_rma.py:473
 #, python-format
-msgid "Please set product and invoice."
+msgid "Please set invoice first"
+msgstr ""
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/crm_claim_rma.py:470
+#, python-format
+msgid "Please set product first"
 msgstr ""
 
 #. module: crm_claim_rma

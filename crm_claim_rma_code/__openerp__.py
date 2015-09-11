@@ -21,7 +21,7 @@
 
 {
     'name': 'CRM Claim RMA Code',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'Generic Modules/CRM & SRM',
     'author': 'Vauxoo,Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
@@ -31,7 +31,7 @@
         'crm_claim_code',
     ],
     'data': [
-        'data/crm_claim_rma_number.xml',
+        'data/ir_sequence_type.xml',
         'views/crm_claim_type.xml',
     ],
     'active': True,

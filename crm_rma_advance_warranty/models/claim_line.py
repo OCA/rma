@@ -1,18 +1,13 @@
-# -*- encoding: utf-8 -*-
-# ##############################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
-#    All Rights Reserved
-# ############ Credits ########################################################
-#    Coded by: Yanina Aular <yani@vauxoo.com>
-#    Planified by: Yanina Aular <yani@vauxoo.com>
-#    Audited by: Moises Lopez <moylop260@vauxoo.com>
-#                Nhomar Hernandez <nhomar@vauxoo.com>
-# ##############################################################################
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Copyright 2015 Vauxoo
+#    Author: Osval Reyes, Yanina Aular
+#
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,27 +16,26 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################
+#
+##############################################################################
 
-from openerp import models, api
-from openerp.exceptions import except_orm
-from openerp.tools.translate import _
+from openerp import _, api, exceptions, models
 from datetime import datetime
-# from dateutil.relativedelta import relativedelta
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
 
 
-class claim_line(models.Model):
+class ClaimLine(models.Model):
 
     _inherit = 'claim.line'
 
-    # Method to calculate warranty limit
-    @api.one
     @api.model
     def set_warranty_limit(self):
+        """
+        Calculate warranty limit
+        """
         if not self.date_due:
-            raise except_orm(
+            raise exceptions.Warning(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
@@ -50,18 +44,12 @@ class claim_line(models.Model):
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
-                supplier_rec = self.prodlot_id.supplier_id
-                supplier = False
-                for seller_rec in self.product_id.seller_ids:
-                    if supplier_rec.id == seller_rec.name.id:
-                        supplier = supplier_rec
-                        break
-
-                if not supplier:
-                    raise except_orm(
+                supplier = self.prodlot_id.supplier_id
+                if supplier not in self.product_id.mapped('seller_ids.name'):
+                    raise exceptions.Warning(
                         _('Error'),
                         _('The product has no supplier'
-                          ' configured for %s.' % supplier_rec.name))
+                          ' configured for %s.' % supplier.name))
 
                 psi_obj = self.env['product.supplierinfo']
                 domain = [('name', '=', supplier.id),
@@ -81,15 +69,16 @@ class claim_line(models.Model):
                 warning = 'expired'
             else:
                 warning = 'valid'
-        self.write(
-            {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
-             'warning': warning},)
 
-    # Method to calculate warranty return address
-    @api.one
+        self.write({
+            'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
+            'warning': warning
+        })
+
     @api.model
     def set_warranty_return_address(self):
-        """Return the partner to be used as return destination and
+        """
+        Set the partner to be used as return destination and
         the destination stock location of the line in case of Return.
 
         We can have various case here:
@@ -100,16 +89,9 @@ class claim_line(models.Model):
         """
         return_address = None
         psi_obj = self.env['product.supplierinfo']
-        supplier = False
-        if self.prodlot_id:
-            supplier_rec = self.prodlot_id.supplier_id
-            supplier = False
-            for seller_rec in self.product_id.seller_ids:
-                if supplier_rec.id == seller_rec.name.id:
-                    supplier = supplier_rec
-                    break
+        supplier = self.prodlot_id.supplier_id if self.prodlot_id else False
 
-        if supplier:
+        if supplier and supplier in self.product_id.mapped('seller_ids.name'):
             domain = [('name', '=', supplier.id),
                       ('product_tmpl_id', '=',
                        self.product_id.product_tmpl_id.id)]
@@ -130,6 +112,8 @@ class claim_line(models.Model):
             self.product_id.id,
             self.claim_id.warehouse_id.id).id
 
-        self.write({'warranty_return_partner': return_address_id,
-                    'warranty_type': return_type,
-                    'location_dest_id': location_dest_id})
+        self.write({
+            'warranty_return_partner': return_address_id,
+            'warranty_type': return_type,
+            'location_dest_id': location_dest_id
+        })

@@ -29,16 +29,14 @@ class SaleOrderLine(models.Model):
     @api.model
     def _prepare_order_line_invoice_line(self, line, account_id=False):
         """
-        @param cur: A database cursor
-        @param uid: ID of the user currently logged in
         @param line: sale order line browse
         """
         res = super(SaleOrderLine, self).\
             _prepare_order_line_invoice_line(line, account_id=account_id)
-        sm_obj = self.env['stock.move']
         if line.procurement_ids:
-            sm_id = sm_obj.search([('procurement_id', '=',
-                                    line.procurement_ids[0].id)], limit=1)
-            if sm_id:
-                res['move_id'] = sm_id and sm_id.id or False
+            move_id = self.env['stock.move'].\
+                search([('procurement_id', '=',
+                         line.procurement_ids[0].id)], limit=1)
+            if move_id:
+                res['move_id'] = move_id and move_id.id or False
         return res

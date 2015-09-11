@@ -4,28 +4,18 @@
 CRM Claim Prodlot Invoice
 =========================
 
-When invoice is created from sale order, the move_id field
-filled with information in picking and procurement.
-
-Features
---------
-
-* Filled move_id in lines of invoice when sale order is
-validated and invoice is created before picking
-* Filled move_id in lines of invoice when sale order is
-validated and picking is created before invoice
+When an invoice is created from sale order, picking and procurement information
+is set into invoice line.
 
 Installation
 ============
 
-To install this module, you need to:
-
-* do this ...
+To install this module, just select it from availables modules
 
 Configuration
 =============
 
-To install this module, just select it from available modules
+No extra configurations is needed
 
 Usage
 =====
@@ -45,15 +35,15 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* ...
+* No issues are known
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/{project_repo}/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/{project_repo}/issues/new?body=module:%20{module_name}%0Aversion:%20{version}%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_prodlot_invoice%0Aversion:%208.0.1.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits

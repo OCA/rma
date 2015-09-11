@@ -29,9 +29,10 @@ class StockTransferDetails(models.TransientModel):
     @api.one
     def do_detailed_transfer(self):
         """
-        When make transfer of incoming type, and stock move have serial/lot
-        number, the supplier is assigned in serial/lot number, take from
+        When incoming type transfer are made and stock move have serial/lot
+        number, the supplier is assigned to the serial/lot number taken from
         picking.
+        @return: do_detailed_transfer boolean results
         """
         stock_prod = self.env['stock.production.lot']
         stock_picking = self.env['stock.picking']
@@ -44,5 +45,4 @@ class StockTransferDetails(models.TransientModel):
                         if not stock_prod_brw.supplier_id:
                             stock_prod_brw.write({'supplier_id':
                                                   picking_brw.partner_id.id})
-        super(StockTransferDetails, self).do_detailed_transfer()
-        return True
+        return super(StockTransferDetails, self).do_detailed_transfer()

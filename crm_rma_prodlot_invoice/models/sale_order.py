@@ -29,16 +29,19 @@ class SaleOrder(models.Model):
     @api.one
     @api.multi
     def action_ship_create(self):
+        """
+        Set stock moves to invoice lines that matches with
+        product and product quantity
+        """
         res = super(SaleOrder, self).action_ship_create()
-        move_id = self.picking_ids.move_lines
+        move_id = [move for move in self.picking_ids.move_lines]
         invoice_line = self.invoice_ids.invoice_line
-        move_id = [move for move in move_id]
         if invoice_line:
             for inv_line in invoice_line:
                 for mov in move_id:
-                    if inv_line.product_id.id == mov.product_id.id and \
-                        inv_line.quantity == mov.product_qty and \
-                            not inv_line.move_id:
+                    if not inv_line.move_id and \
+                            inv_line.product_id.id == mov.product_id.id and \
+                            inv_line.quantity == mov.product_qty:
                         inv_line.write({'move_id': mov.id})
                         move_id.remove(mov)
                     elif inv_line.move_id.id == mov.id:
