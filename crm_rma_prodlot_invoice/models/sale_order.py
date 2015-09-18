@@ -30,7 +30,8 @@ class SaleOrder(models.Model):
     @api.multi
     def action_ship_create(self):
         res = super(SaleOrder, self).action_ship_create()
-        move_id = self.picking_ids.move_lines
+        move_id = [move for pick in self.picking_ids
+                   for move in pick.move_lines]
         invoice_line = self.invoice_ids.invoice_line
         move_id = [move for move in move_id]
         if invoice_line:
