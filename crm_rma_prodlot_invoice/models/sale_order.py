@@ -31,14 +31,14 @@ class SaleOrder(models.Model):
     def action_ship_create(self):
         res = super(SaleOrder, self).action_ship_create()
         move_ids = [move for pick in self.picking_ids
-                   for move in pick.move_lines]
+                    for move in pick.move_lines]
         invoice_line = self.invoice_ids.invoice_line
         if invoice_line:
             for inv_line in invoice_line:
                 for mov in move_ids:
                     if inv_line.product_id.id == mov.product_id.id and \
                         inv_line.quantity == mov.product_qty and \
-                            not inv_line.move_ids:
+                            not inv_line.move_id:
                         inv_line.write({'move_id': mov.id})
                         move_ids.remove(mov)
                     elif inv_line.move_id.id == mov.id:
