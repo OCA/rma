@@ -44,6 +44,6 @@ The product views displays the quantity available and virtual in this
           ],
  'test': ['test/quantity.yml',
           ],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  }
