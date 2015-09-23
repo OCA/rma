@@ -38,3 +38,24 @@ Upgrade the standard crm_claim module to add :
 * product exchange
 * access to related customer data (orders, invoices, refunds, picking in/out)
 
+
+[//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[crm_claim_rma](crm_claim_rma/) | 1.1 | RMA Claim (Product Return Management)
+[product_warranty](product_warranty/) | 1.0 | Product warranty
+
+Unported addons
+---------------
+addon | version | summary
+--- | --- | ---
+[crm_claim_categ_as_name](__unported__/crm_claim_categ_as_name/) | 1.0 (unported) | crm_claim_categ_as_name
+[crm_claim_ext](__unported__/crm_claim_ext/) | 1.0 (unported) | CRM claim extension
+[crm_rma_advance_location](__unported__/crm_rma_advance_location/) | 1.0 (unported) | RMA Claims Advance Location
+[crm_rma_by_shop](__unported__/crm_rma_by_shop/) | 1.0 (unported) | RMA Claims by shop
+[crm_rma_lot_mass_return](__unported__/crm_rma_lot_mass_return/) | 1.0 (unported) | RMA Claims Mass Return by Lot
+[crm_rma_stock_location](__unported__/crm_rma_stock_location/) | 1.0 (unported) | RMA Stock Location
+
+[//]: # (end addons)
