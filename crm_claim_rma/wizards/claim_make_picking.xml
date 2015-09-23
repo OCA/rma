@@ -25,11 +25,12 @@
                             name="action_create_picking" type="object"
                             class="oe_highlight"/>
                         or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        <button name="action_cancel"
+                            string="Cancel" class="oe_link" special="cancel" />
                     </footer>
                 </form>
             </field>
-        </record> 
+        </record>
 
         <record id="action_claim_picking_in" model="ir.actions.act_window">
             <field name="name">Return Products</field>
@@ -38,7 +39,7 @@
             <field name="src_model">crm.claim</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="target">new</field> 
+            <field name="target">new</field>
             <field name="context">{'picking_type': 'in','product_return': True}</field>
         </record>
 
@@ -49,7 +50,7 @@
             <field name="src_model">crm.claim</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="target">new</field> 
+            <field name="target">new</field>
             <field name="context">{'picking_type': 'out'}</field>
         </record>
 

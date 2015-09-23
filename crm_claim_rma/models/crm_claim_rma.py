@@ -220,10 +220,15 @@ class ClaimLine(models.Model):
         if not date_invoice:
             raise InvoiceNoDate
 
-        warning = _(self.WARRANT_COMMENT['not_define'])
+        warning = 'not_define'
         date_invoice = datetime.strptime(date_invoice,
                                          DEFAULT_SERVER_DATE_FORMAT)
-        if claim_type == 'supplier':
+
+        if isinstance(claim_type, self.env['crm.claim.type'].__class__):
+            claim_type = claim_type.id
+
+        if claim_type == self.env.ref('crm_claim_type.'
+                                      'crm_claim_type_supplier').id:
             try:
                 warranty_duration = product.seller_ids[0].warranty_duration
             except IndexError:
@@ -236,9 +241,9 @@ class ClaimLine(models.Model):
             claim_date = datetime.strptime(claim_date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
             if limit < claim_date:
-                warning = _(self.WARRANT_COMMENT['expired'])
+                warning = 'expired'
             else:
-                warning = _(self.WARRANT_COMMENT['valid'])
+                warning = 'valid'
 
         return {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
                 'warning': warning}
@@ -278,7 +283,15 @@ class ClaimLine(models.Model):
         for a return. Always take 'Supplier' one when return type different
         from company.
         """
-        location_dest_id = warehouse.lot_stock_id
+        if isinstance(warehouse, int):
+            location_dest_id = self.env['stock.warehouse']\
+                .browse(warehouse).lot_stock_id
+        else:
+            location_dest_id = warehouse.lot_stock_id
+
+        if isinstance(product, int):
+            product = self.env['product.product']\
+                .browse(product)
         try:
             seller = product.seller_ids[0]
             if seller.warranty_return_partner != 'company':
@@ -419,15 +432,6 @@ class CrmClaim(models.Model):
         std_default.update(default)
         return super(CrmClaim, self).copy_data(std_default)
 
-    claim_type = fields.Selection(
-        [('customer', 'Customer'),
-         ('supplier', 'Supplier'),
-         ('other', 'Other')],
-        string='Claim type',
-        required=True,
-        default='customer',
-        help="Customer: from customer to company.\n "
-             "Supplier: from company to supplier.")
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Claim lines')
     planned_revenue = fields.Float(string='Expected revenue')
@@ -500,11 +504,10 @@ class CrmClaim(models.Model):
                 }
                 line.update(warranty_values(invoice_line.invoice_id,
                                             invoice_line.product_id))
-                claim_lines.append([0, 0, line])
+                claim_lines.append((0, 0, line))
 
-        for line in claim_lines:
             value = self._convert_to_cache(
-                {'claim_line_ids': line}, validate=False)
+                {'claim_line_ids': claim_lines}, validate=False)
             self.update(value)
 
         if self.invoice_id:

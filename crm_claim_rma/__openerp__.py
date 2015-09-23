@@ -81,6 +81,7 @@ Contributors:
         'stock',
         'crm_claim',
         'crm_claim_code',
+        'crm_claim_type',
         'product_warranty',
     ],
     'data': [
