@@ -520,7 +520,7 @@ class CrmClaim(models.Model):
                 if claim.section_id else False
                 for claim in self.sudo()]
 
-    @api.model
+    @api.multi
     def message_get_suggested_recipients(self):
         recipients = super(CrmClaim, self).message_get_suggested_recipients()
         try:
