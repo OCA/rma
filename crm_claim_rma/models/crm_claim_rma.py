@@ -418,7 +418,7 @@ class CrmClaim(models.Model):
 
     @api.one
     def name_get(self):
-        return (self.id, '[{}] {}'.format(self.code or '', self.name))
+        return (self.id, u'[{}] {}'.format(self.code or '', self.name))
 
     @api.model
     def copy_data(self, default=None):
