@@ -142,3 +142,14 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(picking.location_dest_id,
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
+
+    def test_copy(self):
+        new_claim = self.claim_id.copy()
+        self.assertNotEqual(new_claim.code, self.claim_id.code)
+
+    def test_mail_thread_recipient(self):
+        recipients = self.claim_id.message_get_suggested_recipients()
+        recipients = recipients[self.claim_id.id]
+        recipient_ids = [r[0] for r in recipients]
+        self.assertEqual(recipient_ids,
+                         [self.claim_id.partner_id.id])

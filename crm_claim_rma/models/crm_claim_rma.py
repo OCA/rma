@@ -72,19 +72,6 @@ class ClaimLine(models.Model):
         self.return_value = (self.unit_sale_price *
                              self.product_returned_quantity)
 
-    @api.multi
-    def copy_data(self, default=None):
-        if default is None:
-            default = {}
-
-        std_default = {
-            'move_in_id': False,
-            'move_out_id': False,
-            'refund_line_id': False,
-        }
-        std_default.update(default)
-        return super(ClaimLine, self).copy_data(default=std_default)
-
     def get_warranty_return_partner(self):
         return self.env['product.supplierinfo'].get_warranty_return_partner()
 
@@ -178,14 +165,17 @@ class ClaimLine(models.Model):
     refund_line_id = fields.Many2one(
         'account.invoice.line',
         string='Refund Line',
+        copy=False,
         help='The refund line related to the returned product')
     move_in_id = fields.Many2one(
         'stock.move',
         string='Move Line from picking in',
+        copy=False,
         help='The move line related to the returned product')
     move_out_id = fields.Many2one(
         'stock.move',
         string='Move Line from picking out',
+        copy=False,
         help='The move line related to the returned product')
     location_dest_id = fields.Many2one(
         'stock.location',
@@ -420,18 +410,6 @@ class CrmClaim(models.Model):
     def name_get(self):
         return (self.id, u'[{}] {}'.format(self.code or '', self.name))
 
-    @api.multi
-    def copy_data(self, default=None):
-        if default is None:
-            default = {}
-        std_default = {
-            'invoice_ids': False,
-            'picking_ids': False,
-            'code': self.env['ir.sequence'].get('crm.claim'),
-        }
-        std_default.update(default)
-        return super(CrmClaim, self).copy_data(std_default)
-
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Claim lines')
     planned_revenue = fields.Float(string='Expected revenue')
@@ -439,8 +417,11 @@ class CrmClaim(models.Model):
     real_revenue = fields.Float(string='Real revenue')
     real_cost = fields.Float(string='Real cost')
     invoice_ids = fields.One2many('account.invoice', 'claim_id',
-                                  string='Refunds')
-    picking_ids = fields.One2many('stock.picking', 'claim_id', string='RMA')
+                                  string='Refunds',
+                                  copy=False)
+    picking_ids = fields.One2many('stock.picking', 'claim_id',
+                                  string='RMA',
+                                  copy=False)
     invoice_id = fields.Many2one(
         'account.invoice',
         string='Invoice',
