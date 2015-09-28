@@ -88,6 +88,7 @@ class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     @api.model
+    @api.returns('self', lambda value: value.id)
     def create(self, vals):
         claim_line_id = vals.get('claim_line_id')
         if claim_line_id:

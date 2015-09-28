@@ -72,7 +72,7 @@ class ClaimLine(models.Model):
         self.return_value = (self.unit_sale_price *
                              self.product_returned_quantity)
 
-    @api.model
+    @api.multi
     def copy_data(self, default=None):
         if default is None:
             default = {}
@@ -420,7 +420,7 @@ class CrmClaim(models.Model):
     def name_get(self):
         return (self.id, u'[{}] {}'.format(self.code or '', self.name))
 
-    @api.model
+    @api.multi
     def copy_data(self, default=None):
         if default is None:
             default = {}
@@ -513,12 +513,18 @@ class CrmClaim(models.Model):
         if self.invoice_id:
             self.delivery_address_id = self.invoice_id.partner_id.id
 
-    @api.model
+    @api.multi
     def message_get_reply_to(self):
         """ Override to get the reply_to of the parent project. """
-        return [claim.section_id.message_get_reply_to()[0]
-                if claim.section_id else False
-                for claim in self.sudo()]
+        result = {}
+        for claim in self.sudo():
+            section = claim.section_id
+            if section:
+                section_reply_to = section.message_get_reply_to()
+                result[claim.id] = section_reply_to[section.id]
+            else:
+                result[claim.id] = False
+        return result
 
     @api.multi
     def message_get_suggested_recipients(self):
