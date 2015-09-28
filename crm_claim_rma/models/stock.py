@@ -31,6 +31,7 @@ class StockPicking(models.Model):
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
     @api.model
+    @api.returns('self', lambda value: value.id)
     def create(self, vals):
         if ('name' not in vals) or (vals.get('name') == '/'):
             vals['name'] = self.env['ir.sequence'].get(self._name)
@@ -41,6 +42,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     @api.model
+    @api.returns('self', lambda value: value.id)
     def create(self, vals):
         """
         In case of a wrong picking out, We need to create a new stock_move in a

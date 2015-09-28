@@ -72,19 +72,6 @@ class ClaimLine(models.Model):
         self.return_value = (self.unit_sale_price *
                              self.product_returned_quantity)
 
-    @api.model
-    def copy_data(self, default=None):
-        if default is None:
-            default = {}
-
-        std_default = {
-            'move_in_id': False,
-            'move_out_id': False,
-            'refund_line_id': False,
-        }
-        std_default.update(default)
-        return super(ClaimLine, self).copy_data(default=std_default)
-
     def get_warranty_return_partner(self):
         return self.env['product.supplierinfo'].get_warranty_return_partner()
 
@@ -178,14 +165,17 @@ class ClaimLine(models.Model):
     refund_line_id = fields.Many2one(
         'account.invoice.line',
         string='Refund Line',
+        copy=False,
         help='The refund line related to the returned product')
     move_in_id = fields.Many2one(
         'stock.move',
         string='Move Line from picking in',
+        copy=False,
         help='The move line related to the returned product')
     move_out_id = fields.Many2one(
         'stock.move',
         string='Move Line from picking out',
+        copy=False,
         help='The move line related to the returned product')
     location_dest_id = fields.Many2one(
         'stock.location',
@@ -420,18 +410,6 @@ class CrmClaim(models.Model):
     def name_get(self):
         return (self.id, u'[{}] {}'.format(self.code or '', self.name))
 
-    @api.model
-    def copy_data(self, default=None):
-        if default is None:
-            default = {}
-        std_default = {
-            'invoice_ids': False,
-            'picking_ids': False,
-            'code': self.env['ir.sequence'].get('crm.claim'),
-        }
-        std_default.update(default)
-        return super(CrmClaim, self).copy_data(std_default)
-
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Claim lines')
     planned_revenue = fields.Float(string='Expected revenue')
@@ -439,8 +417,11 @@ class CrmClaim(models.Model):
     real_revenue = fields.Float(string='Real revenue')
     real_cost = fields.Float(string='Real cost')
     invoice_ids = fields.One2many('account.invoice', 'claim_id',
-                                  string='Refunds')
-    picking_ids = fields.One2many('stock.picking', 'claim_id', string='RMA')
+                                  string='Refunds',
+                                  copy=False)
+    picking_ids = fields.One2many('stock.picking', 'claim_id',
+                                  string='RMA',
+                                  copy=False)
     invoice_id = fields.Many2one(
         'account.invoice',
         string='Invoice',
@@ -513,12 +494,18 @@ class CrmClaim(models.Model):
         if self.invoice_id:
             self.delivery_address_id = self.invoice_id.partner_id.id
 
-    @api.model
+    @api.multi
     def message_get_reply_to(self):
         """ Override to get the reply_to of the parent project. """
-        return [claim.section_id.message_get_reply_to()[0]
-                if claim.section_id else False
-                for claim in self.sudo()]
+        result = {}
+        for claim in self.sudo():
+            section = claim.section_id
+            if section:
+                section_reply_to = section.message_get_reply_to()
+                result[claim.id] = section_reply_to[section.id]
+            else:
+                result[claim.id] = False
+        return result
 
     @api.multi
     def message_get_suggested_recipients(self):
