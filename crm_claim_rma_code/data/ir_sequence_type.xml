@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Claims Sequence n° -->
+        <record id="seq_type_claim_supplier" model="ir.sequence.type">
+            <field name="name">CRM Claim Supplier</field>
+            <field name="code">crm.claim.rma.supplier</field>
+        </record>
+
+        <record id="seq_claim_supplier" model="ir.sequence">
+            <field name="name">CRM Claim Supplier</field>
+            <field name="code">crm.claim.rma.supplier</field>
+            <field name="padding">5</field>
+            <field name="prefix">RMA-V/%(year)s/</field>
+        </record>
+
+        <record id="seq_type_claim_customer" model="ir.sequence.type">
+            <field name="name">CRM Claim Client</field>
+            <field name="code">crm.claim.rma.customer</field>
+        </record>
+
+        <record id="seq_claim_customer" model="ir.sequence">
+            <field name="name">CRM Claim Client</field>
+            <field name="code">crm.claim.rma.customer</field>
+            <field name="padding">5</field>
+            <field name="prefix">RMA-C/%(year)s/</field>
+        </record>
+
+        <record id="seq_type_claim_basic" model="ir.sequence.type">
+            <field name="name">CRM Claim</field>
+            <field name="code">crm.claim.rma.basic</field>
+        </record>
+
+        <record id="seq_claim_basic" model="ir.sequence">
+            <field name="name">CRM Claim</field>
+            <field name="code">crm.claim.rma.basic</field>
+            <field name="padding">5</field>
+            <field name="prefix">RMA/%(year)s/</field>
+        </record>
+
+        <record id="seq_type_claim_line" model="ir.sequence.type">
+            <field name="name">Claim Line</field>
+            <field name="code">claim.line</field>
+        </record>
+
+        <record id="seq_claim_line" model="ir.sequence">
+            <field name="name">Claim Line</field>
+            <field name="code">claim.line</field>
+            <field eval="5" name="padding"/>
+            <field name="implementation">no_gap</field>
+            <field name="prefix">RMA-R/</field>
+        </record>
+
+        <!-- Claims Type -->
+        <record id="crm_claim_type.crm_claim_type_supplier" model="crm.claim.type">
+            <field name="ir_sequence_id"
+                search="[('code', '=', 'crm.claim.rma.supplier')]"
+                model="ir.sequence"
+                />
+        </record>
+
+        <record id="crm_claim_type.crm_claim_type_customer" model="crm.claim.type">
+            <field name="ir_sequence_id"
+                search="[('code', '=', 'crm.claim.rma.customer')]"
+                model="ir.sequence"
+                />
+        </record>
+    </data>
+</openerp>
