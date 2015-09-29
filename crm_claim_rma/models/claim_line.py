@@ -223,7 +223,7 @@ class ClaimLine(models.Model):
             line.return_value = (line.unit_sale_price *
                                  line.product_returned_quantity)
 
-    @api.model
+    @api.multi
     def copy(self, default=None):
         if default is None:
             default = {}

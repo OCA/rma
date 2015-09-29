@@ -4,34 +4,27 @@
 CRM Claim Product Supplier
 ==========================
 
-Supplier and Supplier Invoice is filled when Serial/Lot number (prodlot) field is filled in claim Line.
+This module adds information in claim lines to keep supplier and supplier
+invoice when creating/editing a claim.
 
-Features
---------
-
-- Supplier and Supplier invoice fields are added in claim line
-- When the product lot is filled in claim line then, Supplier and supplier invoice must be filled with information
+As this module shows, this is not used directly be the end user, it may be used
+as complementary for another modules to explode information stored by this one.
 
 Installation
 ============
 
-To install this module, you need to:
-
-* Select it from availables modules
+To install this module, just select it from available modules
 
 Configuration
 =============
 
-To configure this module, you need to:
-
-* go to ...
+Aditional configuration is not needed
 
 Usage
 =====
 
-To use this module, you need to:
-
-* go to ...
+* End-user direct usage is not possible, all the functionality contained in this
+module is done under the hood and no view is included
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -44,7 +37,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* No issues are known
+No issues exists yet
 
 Bug Tracker
 ===========
@@ -77,3 +70,4 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
+

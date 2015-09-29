@@ -51,9 +51,8 @@ class CrmClaim(models.Model):
         context.update({
             'active_model': self._name,
             'active_ids': self.ids,
-            'active_id': len(self.ids) and self.ids[0] or False,
+            'active_id': self.id or False,
         })
-        created_id = self.env['returned.lines.from.serial.wizard'].\
-            with_context(context).\
-            create({'claim_id': len(self.ids) and self.ids[0] or False})
-        return created_id.render_metasearch_view()
+        wizard = self.env['returned.lines.from.serial.wizard'].\
+            with_context(context).create({})
+        return wizard.render_metasearch_view()

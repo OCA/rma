@@ -1,31 +1,28 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-CRM RMA Claim make Claim
+CRM RMA Claim Make Claim
 ========================
 
-This module allow create supplier claim in customer claim.
+This module allows to create Vendor claim lines from Customer claims grouping those customer claims lines by its supplier.
 
 Installation
 ============
 
-To install this module, you need to:
-
-* do this ...
+To install this module, you need to select it from available modules
 
 Configuration
 =============
 
-To configure this module, you need to:
-
-* go to ...
+No extra configuration is needed for this module
 
 Usage
 =====
 
-To use this module, you need to:
-
-* go to ...
+* Go to **After-sale services** > **Claims**.
+* Note that new button red-highlighted called **Create RMA Vendor** has taken place.
+* Click on it and after lines are processed, it will show RMA Claim lines
+  ready to be processed.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -41,7 +38,10 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* ...
+* **Create RMA Vendor** button shows even if a claim is vendor-based
+* Claims lines have no vendor claim associated, after-button process must be done
+  manually
+
 
 Bug Tracker
 ===========

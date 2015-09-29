@@ -29,7 +29,6 @@
     'depends': [
         'crm_rma_lot_mass_return',
     ],
-    'active': False,
     'installable': True,
     'auto_install': False,
 }

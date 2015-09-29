@@ -30,6 +30,8 @@
         'account_anglo_saxon',
         'sale',
     ],
-    'active': False,
+    'data': [
+        'views/stock_production_lot.xml',
+    ],
     'installable': True,
 }

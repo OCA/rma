@@ -20,7 +20,7 @@
                     <field name="substate_id" select='1'/>
                     <field name="name" select='1'/>
                     <field name="warning" select='1'/>
-                    <field name="invoice_line_id" select='1'/>
+                    <field name="invoice_line_id" select='1' readonly='1'/>
                     <field name="product_id" select='1'/>
                     <field name="prodlot_id" select='1'/>
                     <field name="move_in_id"/>
@@ -348,7 +348,6 @@
                 <xpath expr="//page[@string='Claim Description']//group[1]"
                     position="inside">
                     <field name="pick" string="Pick the product in the store"/>
-                    <field name="invoice_id" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" context="{'create_lines': True}"/>
                     <field name="delivery_address_id"
                         string="Partner delivery address"
                         domain="[('id','child_of',partner_id)]"
@@ -356,6 +355,7 @@
                             'required': [('pick','=', False)]}"
                         context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree',
                             'search_default_parent_id': partner_id}"/>
+                    <field name="invoice_id" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" context="{'create_lines': True}"/>
                 </xpath>
                 <xpath expr="//page[@string='Claim Description']//group[1]"
                     position="after">

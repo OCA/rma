@@ -4,37 +4,23 @@
 CRM RMA Advanced Warranty
 =========================
 
-- To calculate the warranty using supplier that generates in the crm_claim_product_supplier using the prodlot of claim line.
-
-Features
---------
-
-- Modify the set_warranty_return_address method
-- Modify the set_warranty_limit method
-- Review warranty_limit method and improvement
-- Check that the supplier of claim line is in
-  product.supplierinfo list of product.
+This module makes improvements for warranty return address and warranty limit calculations method from **CRM Claim RMA** module using stored supplier information
 
 Installation
 ============
 
-To install this module, you need to:
-
-* do this ...
+To install this module, you need to select it from available modules
 
 Configuration
 =============
 
-To configure this module, you need to:
-
-* go to ...
+No configuration is needed by this module
 
 Usage
 =====
 
-To use this module, you need to:
-
-* go to ...
+This module will compute return address and warranty limit automatically when
+adding/editing claim lines
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -47,8 +33,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* In crm_claim_rma it is calculate take the first seller
-  in the seller list of product form.
+No issues are known yet
 
 Bug Tracker
 ===========

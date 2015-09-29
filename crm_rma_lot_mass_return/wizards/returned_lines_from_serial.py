@@ -4,7 +4,8 @@
 #    Copyright 2015 Vauxoo
 #    Copyright (C) 2009-2011 Akretion
 #    Author: Emmanuel Samyn,
-#            Osval Reyes, Yanina Aular
+#            Yanina Aular,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,31 +21,35 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from openerp import models, fields, api, _
-from openerp.exceptions import except_orm
 
 
 class ReturnedLinesFromSerial(models.TransientModel):
 
     _name = 'returned.lines.from.serial.wizard'
-    _description = 'Wizard to create product return lines from serial numbers'
+    _description = 'Wizard to create product return lines'
+    ' from serial numbers or invoices'
 
     # Get partner from case is set to filter serials
     @api.model
     def _get_default_partner_id(self):
-        partner_id = self.env['crm.claim'].browse(
-            [self._context['active_id']]).partner_id
-        if partner_id:
-            return partner_id[0]
-        else:
-            return partner_id
+        """
+        Obtain partner from the claim
+        """
+        crm_claim_model = self.env['crm.claim']
+        claim_id = self.env.context.get('active_id')
+        partner_record = crm_claim_model.browse(claim_id).\
+            partner_id
+        return partner_record and partner_record[0] or \
+            self.env['res.partner']
 
     @api.model
     def prodlot_2_product(self, prodlot_ids):
-        stock_quant_ids = self.env['stock.production.lot'].search(
-            [('id', 'in', prodlot_ids)])
+        quant_model = self.env['stock.production.lot']
+        quant_records = quant_model.search([('id', 'in', prodlot_ids)])
         res = [prod.product_id.id for prod
-               in stock_quant_ids if prod.product_id]
+               in quant_records if prod.product_id]
         return set(res)
 
     # Method to get the product id from set
@@ -57,19 +62,18 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def create_claim_line(self, claim_id, claim_origine,
-                          product_brw, prodlot_id, qty, name,
-                          invline_brw=False):
-        return_line = self.env['claim.line']
-        line_rec = return_line.create({
+                          product_record, prodlot_id, qty, name,
+                          invline_record=False):
+        claim_line_model = self.env['claim.line']
+        line_rec = claim_line_model.create({
             'claim_id': claim_id,
             'claim_origine': claim_origine,
-            'product_id': product_brw and product_brw.id or False,
-            'name': name and name or (product_brw and
-                                      product_brw.name or invline_brw.name),
-            'invoice_line_id': invline_brw and invline_brw.id or
-            self.prodlot_2_invoice_line(prodlot_id),
+            'product_id': product_record and product_record.id or False,
+            'name': product_record and product_record.name or
+            invline_record.name,
+            'invoice_line_id': self.prodlot_2_invoice_line(prodlot_id.name).id,
             'product_returned_quantity': qty,
-            'prodlot_id': prodlot_id,
+            'prodlot_id': prodlot_id.id,
         })
         line_rec.set_warranty()
 
@@ -83,74 +87,27 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                  default=_get_default_partner_id)
 
     @api.model
-    def prodlot_2_invoice_line(self, prodlot_id):
+    def prodlot_2_invoice_line(self, prodlot):
         """
         Return the last line of customer invoice
         based in serial/lot number
         """
-        # If there is a lot number, the product
-        # vendor is searched accurately.
-        inv_obj = self.env['account.invoice']
-        invline_obj = self.env['account.invoice.line']
         lot_obj = self.env['stock.production.lot']
-        sm_obj = self.env['stock.move']
+        prodlot = lot_obj.search([('name', '=', str(prodlot))])
+        if prodlot.invoice_line_id:
+            return prodlot.invoice_line_id
+        else:
+            return False
 
-        company_id = self.env.user.company_id.id
-        wh_obj = self.env['stock.warehouse']
-        wh_ids = wh_obj.search([('company_id', '=', company_id)])
-        if not wh_ids:
-            raise except_orm(
-                _('Error!'),
-                _('There is no warehouse for the current user\'s company.'))
-
-        picking_out = [wh.out_type_id.id for wh in wh_ids]
-
-        # Take all stock moves with outgoing type of operation
-        # Get traceability of serial/lot number
-        # Make intersection between delivery moves and traceability moves
-        # If product was sold just once, moves will be just one id
-        # If product was sold more than once, the list have multiple ids
-        sm_all = sm_obj.search([('quant_ids.lot_id', '=', prodlot_id),
-                                ('picking_id.picking_type_id',
-                                 'in', picking_out)])
-
-        moves = [sm.id for sm in sm_all]
-
-        # The last move correspond to the last sale
-        moves.sort(reverse=True)
-        moves = self.env['stock.move'].browse(moves)
-
-        prodlot_id = lot_obj.browse(prodlot_id)
-
-        # Filter invoices lines by customer invoice lines
-        invoice_client = False
-        invoice_customer = inv_obj.search([('type', '=', 'out_invoice')])
-        invoice_customer = [inv.id for inv in invoice_customer]
-        invline_customer = invline_obj.search([('invoice_id',
-                                                'in',
-                                                invoice_customer)])
-
-        # The move(s) is searched in invoice lines.
-        # It will take the last line of customer invoice
-        for stock_move in moves:
-            invoice_client = \
-                invline_customer.search([('move_id',
-                                          '=',
-                                          stock_move.id)])
-            if invoice_client:
-                return invoice_client.id
-
-        return False
-
-    lines_list_id = fields.Many2many('account.invoice.line',
-                                     'account_invoice_line_returned_wizard',
+    lines_list_id = fields.Many2many('stock.production.lot',
+                                     'lot_returned_wizard',
                                      'wizard_id',
-                                     'invoice_line_id',
-                                     string='Invoice Lines selected',
+                                     'lot_id',
+                                     string='Lots selected',
                                      help='Field used to show the current '
-                                          'status of the invoice lines '
+                                          'status of the lots '
                                           'loaded')
-    lines_id = fields.Many2many('account.invoice.line',
+    lines_id = fields.Many2many('stock.production.lot',
                                 string='Invoice Lines to Select',
                                 help='Field used to load the ids of '
                                      'invoice lines in invoices writed')
@@ -186,11 +143,11 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_type': 'form',
                 'view_mode': 'form',
-                'res_model': 'returned_lines_from_serial.wizard',
+                'res_model': 'returned.lines.from.serial.wizard',
                 'view_id': view.id,
                 'views': [(view.id, 'form')],
                 'target': 'new',
-                'res_id': self.ids[0],
+                'res_id': self.id,
             }
 
     @api.model
@@ -220,8 +177,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         """
         context = context or None
         invoice_obj = self.env['account.invoice']
-        invoice_line_obj = self.env['account.invoice.line']
-
+        lot_obj = self.env['stock.production.lot']
         data_line = self.get_data_of_products(input_data)
 
         mes = ''
@@ -237,17 +193,17 @@ class ReturnedLinesFromSerial(models.TransientModel):
                     invoice_lines = [inv for inv in invoices.invoice_line]
                     line_new_ids = [line.id for line in invoice_lines]
                     line_ids = list(set(line_ids + line_new_ids))
-                    element_searched = invoice_line_obj.browse(line_ids)
+                    line_ids = lot_obj.\
+                        search([('invoice_line_id', 'in', line_ids)])
+                    element_searched = line_ids
+                    line_ids = line_ids.mapped('id')
                 else:
-                    invoice_line_move_id = \
-                        self.prodlot_2_invoice_line(product[0])
-                    if invoice_line_move_id:
-                        element_searched = invoice_line_obj.\
-                            browse(invoice_line_move_id)
-
+                    element_searched = lot_obj.search([('name', '=',
+                                                        str(product[0]))])
+                    if element_searched:
                         for item in element_searched:
                             item_name = item.product_id \
-                                and item.product_id.name or item.name
+                                and item.product_id.name or False
                             line_id = '{pid}+{pname}'.format(pid=item.id,
                                                              pname=item_name)
                             all_prod.append((line_id, 1))
@@ -267,7 +223,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
             mes = mes + '{0} \t {1}\n'.format(name[1],
                                               line[1])
             ids_data = ids_data + '{pid}\n'.format(pid=name[0]) * line[1]
-
         res = {
             'value': {
                 'lines_id': [(6, 0, line_ids)],
@@ -283,22 +238,19 @@ class ReturnedLinesFromSerial(models.TransientModel):
     @api.multi
     def add_claim_lines(self):
         context = self._context
-        invline_obj = self.env['account.invoice.line']
+        prodlot_obj = self.env['stock.production.lot']
         inv_recs = []
         info = self.get_data_of_products(self.scan_data)
         if self.scaned_data:
-            inv_recs += [invline_obj.browse(int(inv_id))
+            inv_recs += [prodlot_obj.browse(int(inv_id))
                          for inv_id in self.scaned_data.strip().split('\n')]
         if self.lines_list_id:
             inv_recs += self.lines_list_id
 
         len_info = len(info)
         index = 0
-        for inv_brw in inv_recs:
-            product_brw = inv_brw.product_id
-            prodlot_id = False
-            if inv_brw.move_id:
-                prodlot_id = inv_brw.move_id.quant_ids[0].lot_id.id
+        for prodlot_brw in inv_recs:
+            product_brw = prodlot_brw.product_id
 
             name = ''
             num = 0
@@ -314,9 +266,9 @@ class ReturnedLinesFromSerial(models.TransientModel):
             self.create_claim_line(context.get('active_id'),
                                    self.env['claim.line']._get_subject(num),
                                    product_brw,
-                                   prodlot_id, 1,
+                                   prodlot_brw, 1,
                                    name,
-                                   inv_brw)
+                                   prodlot_brw.invoice_line_id)
         self.action_cancel()
 
     @api.multi

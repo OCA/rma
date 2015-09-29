@@ -38,7 +38,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         self.picking_id2 = self.env.ref('stock.incomming_shipment2')
         self.partner_id2 = self.picking_id2.partner_id
 
-        self.Wizard = self.env['stock.transfer_details']
+        self.wizard = self.env['stock.transfer_details']
         self.transfer_item_obj = self.env['stock.transfer_details_items']
         self.lot_obj = self.env['stock.production.lot']
 
@@ -48,7 +48,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         """
         lot_ids = []
         # create wizard
-        wizard = self.Wizard.create({
+        wizard_id = self.wizard.create({
             'picking_id': self.picking_id1.id,
         })
 
@@ -62,7 +62,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
             lot_ids.append(lot_id)
 
             self.transfer_item_obj.create({
-                'transfer_id': wizard.id,
+                'transfer_id': wizard_id.id,
                 'product_id': stock_move.product_id.id,
                 'quantity': stock_move.product_qty,
                 'sourceloc_id': stock_move.location_id.id,
@@ -71,7 +71,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
                 'product_uom_id': stock_move.product_uom.id,
             })
 
-        wizard.do_detailed_transfer()
+        wizard_id.do_detailed_transfer()
 
         # check lot_ids
         failed_lot_ids = [
@@ -86,7 +86,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         """
         lot_ids = []
         # create wizard
-        wizard = self.Wizard.with_context({
+        wizard_id = self.wizard.with_context({
             'active_id': self.picking_id2.id,
             'active_ids': [self.picking_id2.id],
             'active_model': self.picking_id2._name
@@ -98,7 +98,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         for stock_move in self.picking_id2.move_lines:
 
             transfer_item = self.transfer_item_obj.create({
-                'transfer_id': wizard.id,
+                'transfer_id': wizard_id.id,
                 'product_id': stock_move.product_id.id,
                 'quantity': stock_move.product_qty,
                 'sourceloc_id': stock_move.location_id.id,

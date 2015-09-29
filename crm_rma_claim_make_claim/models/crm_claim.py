@@ -44,37 +44,39 @@ class CrmClaim(models.Model):
         Create RMA Vendor.
         """
 
-        claim_line_obj = self.env['claim.line']
+        claim_line = self.env['claim.line']
         good_lines = []
 
-        for claim_brw in self:
+        for claim_id in self:
 
-            if claim_brw.claim_ids:
+            if claim_id.claim_ids:
                 raise exceptions.Warning(
                     _('Error'),
                     _('The claim client have claim supplier created.'))
 
             partner_claim_line_ids = {}
-            # Grouping claim lines by partner (it is supplier of product)
-            for cl in claim_brw.claim_line_ids:
+            # Grouping claim lines by products' supplier
+            for line_id in claim_id.claim_line_ids:
                 # If the claim line is in warranty, to do...
-                if cl.supplier_id.id in partner_claim_line_ids:
-                    partner_claim_line_ids.get(cl.supplier_id.id).append(cl.id)
+                if line_id.supplier_id.id in partner_claim_line_ids:
+                    partner_claim_line_ids.get(line_id.supplier_id.id).\
+                        append(line_id.id)
                 else:
-                    partner_claim_line_ids[cl.supplier_id.id] = [cl.id]
+                    partner_claim_line_ids[
+                        line_id.supplier_id.id] = [line_id.id]
 
             for partner_id in partner_claim_line_ids:
                 for claim_line_id in partner_claim_line_ids.get(partner_id):
 
                     # Search if claim line have a child
-                    claim_lines_exists = claim_line_obj.\
+                    claim_lines_exists = claim_line.\
                         search([('claim_line_id', '=', claim_line_id)],)
                     claim_lines_exists = [cla.id for cla in claim_lines_exists]
 
                     # If claim_line_id does not have child
                     if not claim_lines_exists:
                         # The claim line of supplier claim is created
-                        claim_line_id = claim_line_obj.browse(claim_line_id)
+                        claim_line_id = claim_line.browse(claim_line_id)
 
                         claim_line_new = \
                             claim_line_id.copy({

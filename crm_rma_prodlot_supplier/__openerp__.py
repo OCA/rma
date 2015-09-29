@@ -29,10 +29,10 @@
     'depends': [
         'stock',
         'crm_claim',
+        'purchase',
     ],
     'data': [
         'views/stock_view.xml',
     ],
-    'active': False,
     'installable': True,
 }

@@ -19,12 +19,10 @@
 #
 ##############################################################################
 
-from openerp import models
+from openerp import fields, models
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    defaults = {
-        'invoice_state': 'none'
-    }
+    invoice_state = fields.Selection(default='none')

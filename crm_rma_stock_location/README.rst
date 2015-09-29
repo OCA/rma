@@ -4,9 +4,9 @@
 RMA Stock Location
 ==================
 
-A RMA location can be selected on the warehouses.
-The product views displays the quantity available and virtual in this
-RMA location (including its children locations).
+This module addss that lets the user know how much for a product is available 'on hand' and how much is virtually (expected to be) available for RMA locations. Adding for the different views (Tree, Form and Kanban) showing that information.
+
+Both quantities are computed and includes its children locations.
 
 
 Installation
@@ -17,16 +17,13 @@ To install this module, just select it from availables modules.
 Configuration
 =============
 
-To configure this module, you need to:
-
-* go to ...
+No configuration is needed
 
 Usage
 =====
 
-To use this module, you need to:
-
-* go to ...
+* Go to Sales > Products > Products and noted that 'RMA Quantity On Hand' and
+  'RMA Forecasted Quantity' had been included.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -39,7 +36,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* ...
+* There are no issues registered yet
 
 Bug Tracker
 ===========

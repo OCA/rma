@@ -26,7 +26,7 @@ class StockTransferDetails(models.TransientModel):
 
     _inherit = 'stock.transfer_details'
 
-    @api.one
+    @api.multi
     def do_detailed_transfer(self):
         """
         When incoming type transfer are made and stock move have serial/lot
@@ -45,4 +45,33 @@ class StockTransferDetails(models.TransientModel):
                         if not stock_prod_brw.supplier_id:
                             stock_prod_brw.write({'supplier_id':
                                                   picking_brw.partner_id.id})
+
+                        for move_line in picking_brw.move_lines:
+                            if stock_prod_brw.product_id.id == \
+                                    move_line.product_id.id:
+                                lots = stock_prod.\
+                                    search([('supplier_invoice_line_id',
+                                             'in',
+                                             move_line.
+                                             purchase_line_id.
+                                             invoice_lines.
+                                             mapped('id'))])
+
+                                if len(lots) < move_line.\
+                                        purchase_line_id.product_qty:
+
+                                    for inv_line in move_line.\
+                                            purchase_line_id.invoice_lines:
+                                        lots = stock_prod.\
+                                            search([('supplier_invoice'
+                                                     '_line_id',
+                                                     '=', inv_line.id)])
+                                        if len(lots) < inv_line.quantity and \
+                                                inv_line.product_id.id == \
+                                                stock_prod_brw.product_id.id:
+                                            stock_prod_brw.\
+                                                write({'supplier'
+                                                       '_invoice_line_id':
+                                                       inv_line.id})
+
         return super(StockTransferDetails, self).do_detailed_transfer()
