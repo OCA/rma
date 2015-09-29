@@ -39,58 +39,10 @@ class ClaimLine(models.Model):
                              "purchase of goods sold to "
                              "customer")
 
-    @api.multi
-    @api.one
     @api.depends('prodlot_id')
     def _compute_supplier_and_supplier_invoice(self):
-
-        if self.prodlot_id:
-
-            self.supplier_id = self.prodlot_id.supplier_id.id
-
-            # Take all stock moves with incoming type of operation
-            sm_receipts = self.env['crm.claim']._get_stock_moves_with_code()
-
-            # Get traceability of serial/lot number
-            quants = self.env['stock.quant'].\
-                search([('lot_id', '=', self.prodlot_id.id)])
-            moves = set()
-            for quant in quants:
-                moves |= {move.id for move in quant.history_ids}
-
-            # Make intersection between delivery moves and traceability moves
-            # If product was sold just once, moves will be just one id
-            # If product was sold more than once, the list have multiple ids
-            moves &= {sm_d.id for sm_d in sm_receipts}
-
-            moves = list(moves)
-            # The FIRST move correspond to the original sale
-            moves.sort()
-            moves = self.env['stock.move'].browse(moves)
-
-            # Filter invoices lines by customer invoice lines
-            invoice_supplier = False
-            invoice_supplier = self.env['account.invoice'].\
-                search([('type', '=', 'in_invoice')])
-            invoice_supplier = [inv.id for inv in invoice_supplier]
-            invline_supplier = self.env['account.invoice.line'].\
-                search([('invoice_id', 'in', invoice_supplier),
-                        ('product_id', '=', self.prodlot_id.product_id.id)])
-
-            # The move(s) is searched in invoice lines.
-            # It will take the first line of supplier invoice
-            for stock_move in moves:
-                if stock_move.purchase_line_id:
-                    invoice_ids = stock_move.purchase_line_id.\
-                        order_id.invoice_ids
-                    inv_line = False
-                    for inv in invoice_ids:
-                        inv_line = set(inv.invoice_line) \
-                            & set(invline_supplier)
-                        inv_line = list(inv_line)
-                        if inv_line:
-                            invoice_supplier = inv.id
-                            break
-                    if inv_line:
-                        break
-            self.supplier_invoice_id = invoice_supplier
+        for claim_line in self:
+            if claim_line.prodlot_id:
+                claim_line.supplier_id = claim_line.prodlot_id.supplier_id.id
+                claim_line.supplier_invoice_id = claim_line.prodlot_id.\
+                    supplier_invoice_line_id.invoice_id.id

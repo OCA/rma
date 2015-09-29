@@ -21,7 +21,7 @@
 
 {
     'name': 'CRM Claim Product Supplier',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'Vauxoo, Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
     'license': 'AGPL-3',
@@ -29,7 +29,6 @@
     'depends': [
         'crm_rma_lot_mass_return',
     ],
-    'active': False,
     'installable': True,
     'auto_install': False,
 }

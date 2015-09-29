@@ -593,10 +593,16 @@ msgstr ""
 "sur la facture,..."
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:313
+#: code:addons/crm_claim_rma/crm_claim_rma.py:473
 #, python-format
-msgid "Please set product and invoice."
-msgstr ""
+msgid "Please set invoice first"
+msgstr "S'il vous plaît d'abord définir le facture"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/crm_claim_rma.py:470
+#, python-format
+msgid "Please set product first"
+msgstr "S'il vous plaît d'abord définir le produit"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origine:0

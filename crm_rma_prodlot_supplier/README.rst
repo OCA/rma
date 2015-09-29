@@ -1,23 +1,16 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-CRM RMA Production Lot Supplier
+CRM RMA Product Lot Supplier
 ===============================
 
-Supplier field is added in Serial Number model to know supplier of these product.
-
-Features
---------
-
-- Supplier field in stock.production.lot
-- To create a serial/lot number from wizard for transfers, the supplier is assigned in default method
-- Supplier is added to view stock.production.lot
-- The id of stock.tranfers item is passed from context to stock.production.lot for get picking_id
+It allows to know the real supplier for a specific product having beforehand its serial/lot number simplifying obtaining it.
+For example, when creating/editing a claim for a laptop that it may have two o more suppliers, using this module (taking advantage of lot number) let you know which supplier has provided which specific product related to the claim, or use time frame given by supplier or its address based on stored information about supplier without any aditional steps.
 
 Installation
 ============
 
-To install this module, just select it from available modules
+To install this module, just select it from availables modules
 
 Configuration
 =============
@@ -27,7 +20,7 @@ No configuration is needed
 Usage
 =====
 
-When a warehouse transfer is made, the supplier field for the product lot is automatically filled
+When a warehouse transfer is made, the supplier field for the product lot is automatically filled.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -48,7 +41,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_prodlot_supplier%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_prodlot_supplier%0Aversion:%208.0.1.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits

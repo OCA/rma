@@ -22,10 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import _, api, models
+from openerp import api, models
 
 
 class AccountInvoiceLine(models.Model):
+
     """
     Account Invoice Line
     """
@@ -44,22 +45,3 @@ class AccountInvoiceLine(models.Model):
             claim_line.refund_line_id = line.id
 
         return line
-
-    def name_get(self, cr, user, ids, context=None):
-        """
-        overwrite openerp method like the one for
-        account.invoice.line model in the
-        rma module.
-        """
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        result = []
-        if not len(ids):
-            return result
-        for ail in self.browse(cr, user, ids, context=context):
-            lot = ail.move_id.lot_ids and \
-                ail.move_id.lot_ids[0].name or _('No lot number')
-            name = _("%s - %s - Lot Number: %s") % \
-                (ail.invoice_id.number, ail.name, lot)
-            result.append((ail.id, name))
-        return result

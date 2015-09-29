@@ -25,7 +25,7 @@
 
 {
     'name': 'RMA Claims Mass Return by Lot',
-    'version': '8.0.1.0',
+    'version': '8.0.1.0.0',
     'category': 'Generic Modules/CRM & SRM',
     'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
     'license': 'AGPL-3',
@@ -37,7 +37,7 @@
     ],
     'data': [
         'wizards/returned_lines_from_serial_wizard.xml',
-        'views/crm_claim_views.xml',
+        'views/crm_claim.xml',
         'templates/search_view.xml'
     ],
     'installable': True,

@@ -21,7 +21,7 @@
 
 {
     'name': 'CRM Claim Prodlot Invoice',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'Vauxoo,Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
     'category': 'RMA',
@@ -30,6 +30,8 @@
         'account_anglo_saxon',
         'sale',
     ],
-    'active': False,
+    'data': [
+        'views/stock_production_lot.xml',
+    ],
     'installable': True,
 }

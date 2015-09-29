@@ -223,7 +223,7 @@ class ClaimLine(models.Model):
             line.return_value = (line.unit_sale_price *
                                  line.product_returned_quantity)
 
-    @api.model
+    @api.multi
     def copy(self, default=None):
         if default is None:
             default = {}
@@ -466,9 +466,12 @@ class ClaimLine(models.Model):
     @api.one
     def set_warranty(self):
         """ Calculate warranty limit and address """
-        if not (self.product_id and self.invoice_line_id):
-            raise exceptions.Warning(
-                _('Error'), _('Please set product and invoice.'))
+        if not self.product_id:
+            raise exceptions.Warning(_('Error'), _('Please set product first'))
+
+        if not self.invoice_line_id:
+            raise exceptions.Warning(_('Error'), _('Please set invoice first'))
+
         self.set_warranty_limit()
         self.set_warranty_return_address()
 

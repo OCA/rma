@@ -1,13 +1,8 @@
-# -*- encoding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
+# -*- coding: utf-8 -*-
+##############################################################################
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-############################################################################
-#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
-############################################################################
+#    Copyright 2015 Vauxoo
+#    Author: Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,13 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name": "App RMA",
-    "version": "0.1",
-    "author": "Vauxoo",
-    "category": "RMA",
-    "website": "http://vauxoo.com",
-    "license": "",
+    "version": "8.0.1.0.0",
+    "author": "Vauxoo,Odoo Community Association (OCA)",
+    "category": "Generic Modules/CRM & SRM",
+    "website": "http://www.vauxoo.com",
+    "license": "AGPL-3",
     "depends": [
         "crm_rma_location_rma",
         "crm_claim_type",
@@ -43,13 +39,7 @@
         "crm_rma_claim_make_claim",
         "crm_rma_advance_warranty",
     ],
-    "demo": [],
-    "data": [],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
     "installable": True,
-    "auto_install": False
+    "auto_install": False,
+    "application": True
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

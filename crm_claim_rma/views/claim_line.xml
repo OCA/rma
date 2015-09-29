@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="crm_claim_rma.crm_claim_line_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="before">
-                    <field name="number" required="1" class="oe_inline"/> -
+                    <field name="number" class="oe_inline"/> -
                 </xpath>
             </field>
         </record>

@@ -19,4 +19,28 @@
 #
 ##############################################################################
 
-from . import models
+from openerp import _, api, models
+
+
+class AccountInvoiceLine(models.Model):
+
+    """
+    Invoice Line inherited class
+    """
+    _inherit = 'account.invoice.line'
+
+    @api.one
+    def name_get(self):
+        """
+        Overwrite Odoo method like the one for
+        account.invoice.line model in the
+        rma module.
+        """
+
+        lot = self.move_id.lot_ids and \
+            self.move_id.lot_ids[0].name or _('No lot number')
+
+        name = _("%s - %s - Lot Number: %s") % \
+                (self.invoice_id.number, self.name, lot)
+
+        return (self.id, name)
