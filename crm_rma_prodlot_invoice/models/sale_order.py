@@ -34,16 +34,17 @@ class SaleOrder(models.Model):
         product and product quantity
         """
         res = super(SaleOrder, self).action_ship_create()
-        move_id = [move for move in self.picking_ids.move_lines]
+        move_ids = [move for pick in self.picking_ids
+                    for move in pick.move_lines]
         invoice_line = self.invoice_ids.invoice_line
         if invoice_line:
             for inv_line in invoice_line:
-                for mov in move_id:
-                    if not inv_line.move_id and \
-                            inv_line.product_id.id == mov.product_id.id and \
-                            inv_line.quantity == mov.product_qty:
+                for mov in move_ids:
+                    if inv_line.product_id.id == mov.product_id.id and \
+                        inv_line.quantity == mov.product_qty and \
+                            not inv_line.move_id:
                         inv_line.write({'move_id': mov.id})
-                        move_id.remove(mov)
+                        move_ids.remove(mov)
                     elif inv_line.move_id.id == mov.id:
-                        move_id.remove(mov)
+                        move_ids.remove(mov)
         return res
