@@ -498,4 +498,9 @@ class ClaimLine(models.Model):
 
     @api.multi
     def name_get(self):
-        return [(self.id, "%s - %s" % (self.claim_id.code, self.name))]
+        res = []
+        for claim in self:
+            res.append((claim.id,
+                        "%s - %s" % (claim.claim_id.code,
+                                     claim.name)))
+        return res
