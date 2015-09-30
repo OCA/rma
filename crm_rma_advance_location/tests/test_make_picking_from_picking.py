@@ -30,19 +30,15 @@ class TestPickingFromPicking(TransactionCase):
         self.crm_claim = self.env['crm.claim']
         self.wizardmakepicking = self.env['claim_make_picking.wizard']
         self.claim_picking_wizard = \
-            self.env['claim_make_picking_from_picking.wizard']
+            self.env['claim.make.picking.from.picking.wizard']
         self.get_default_locations()
 
     def get_default_locations(self):
         """
         Create a record of product.supplier for next tests
         """
-        cr, uid = self.cr, self.uid
-
-        main_warehouse = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "stock",
-                                 "warehouse0")[1]
-        self.main_warehouse = self.stock_warehouse.browse(main_warehouse)
+        wh_id = self.ref("stock.warehouse0")
+        self.main_warehouse = self.stock_warehouse.browse(wh_id)
 
         self.loc_rma = self.main_warehouse.lot_rma_id
 
@@ -52,11 +48,7 @@ class TestPickingFromPicking(TransactionCase):
 
         self.loc_refurbish = self.main_warehouse.lot_refurbish_id
 
-        # self.loc_mistake_loss = self.main_warehouse.lot_mistake_loss_id
-
-        claim_test = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "crm_claim",
-                                 "crm_claim_6")[1]
+        claim_test = self.ref("crm_claim.crm_claim_6")
 
         self.claim_test = self.crm_claim.browse(claim_test)
 
@@ -64,17 +56,6 @@ class TestPickingFromPicking(TransactionCase):
 
         # Create Picking from Customers to RMA
         # with button New Products Return
-        claimline_obj = self.env['claim.line']
-        product_id = self.env.ref('product.product_product_4')
-        warehouse_id = self.claim_test.warehouse_id
-        self.claim_line_id = claimline_obj.create(
-            {
-                'name': 'TEST CLAIM LINE',
-                'claim_origine': 'none',
-                'product_id': product_id.id,
-                'claim_id': self.claim_test.id,
-                'location_dest_id': warehouse_id.lot_stock_id.id
-            })
 
         wiz_context = {
             'active_id': self.claim_test.id,
@@ -84,19 +65,15 @@ class TestPickingFromPicking(TransactionCase):
         }
         wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
 
-        # res = self.wizardmakepicking.with_context(wiz_context).\
-        #     action_create_picking(wizard_id.id)
         res = wizard_id.action_create_picking()
-        # res = self.wizardmakepicking.action_create_picking(
-        #     [wizard_id])
 
         stock_picking_id = res.get('res_id')
 
         # Create Picking 'Product to stock'
-        context = {'active_id':
-                   stock_picking_id,
-                   'picking_type': 'picking_stock',
-                   }
+        context = {
+            'active_id': stock_picking_id,
+            'picking_type': 'picking_stock',
+        }
 
         claim_wizard = self.claim_picking_wizard.\
             with_context(context).create({})
@@ -126,14 +103,18 @@ class TestPickingFromPicking(TransactionCase):
 
         # Create Picking 'Product to Loss'
         claim_wizard = self.claim_picking_wizard.\
-            with_context({'active_id':
-                          stock_picking_id,
-                          'picking_type': 'picking_breakage_loss',
-                          # self.claim_test.warehouse_id.rma_int_type_id.id,
-                          }).create({})
+            with_context({
+                'active_id': stock_picking_id,
+                'picking_type': 'picking_breakage_loss',
+            }).create({})
 
         self.assertEquals(claim_wizard.picking_line_source_location.id,
                           self.loc_rma.id)
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
                           self.loc_breakage_loss.id)
+
+    def test_create_warehouse(self):
+        wh = self.env['stock.warehouse'].create({'name': 'WH Test',
+                                                 'code': 'WHT'})
+        wh.create_locations_rma(wh)

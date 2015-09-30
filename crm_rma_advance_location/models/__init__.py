@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#            Joel Grand-Guillaume,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,14 +22,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import models
-from . import wizards
-from openerp import SUPERUSER_ID
-
-
-def post_init_hook(cr, registry):
-    stock_wh = registry['stock.warehouse']
-    for wh_id in stock_wh.browse(cr, SUPERUSER_ID,
-                                 stock_wh.search(cr, SUPERUSER_ID, [])):
-        vals = stock_wh.create_locations_rma(cr, SUPERUSER_ID, wh_id)
-        stock_wh.write(cr, SUPERUSER_ID, wh_id.id, vals)
+from . import stock_warehouse

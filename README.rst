@@ -1,5 +1,7 @@
-[![Build Status](https://travis-ci.org/OCA/rma.svg?branch=8.0)](https://travis-ci.org/OCA/rma)
-[![Coverage Status](https://coveralls.io/repos/OCA/rma/badge.png?branch=8.0)](https://coveralls.io/r/OCA/rma?branch=8.0)
+.. image:: https://travis-ci.org/Vauxoo/rma.svg?branch=8.0
+    :target: https://travis-ci.org/Vauxoo/rma
+.. image:: https://coveralls.io/repos/Vauxoo/rma/badge.svg?branch=8.0&service=github 
+    :target: https://coveralls.io/github/Vauxoo/rma?branch=8.0 
 
 RMA (Return Merchandise Authorization) 
 =======================================
