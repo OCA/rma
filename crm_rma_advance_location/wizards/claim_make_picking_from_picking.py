@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
-#########################################################################
-#                                                                       #
-#                                                                       #
-#########################################################################
-#                                                                       #
-# crm_claim_rma for OpenERP                                             #
-# Copyright (C) 2009-2012  Akretion, Emmanuel Samyn,                    #
-#       Benoît GUILLOT <benoit.guillot@akretion.com>                    #
-# This program is free software: you can redistribute it and/or modify  #
-# it under the terms of the GNU General Public License as published by  #
-# the Free Software Foundation, either version 3 of the License, or     #
-# (at your option) any later version.                                   #
-#                                                                       #
-# This program is distributed in the hope that it will be useful,       #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-# GNU General Public License for more details.                          #
-#                                                                       #
-# You should have received a copy of the GNU General Public License     #
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. #
-#########################################################################
+##############################################################################
+#
+#    Copyright 2015 Vauxoo
+#    Copyright (C) 2009-2012  Akretion
+#    Author: Emmanuel Samyn, Benoît GUILLOT <benoit.guillot@akretion.com>,
+#            Osval Reyes
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 
 from openerp import models, fields, api
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -27,9 +27,9 @@ from openerp import workflow
 import time
 
 
-class claim_make_picking_from_picking(models.TransientModel):
+class ClaimMakePickingFromPicking(models.TransientModel):
 
-    _name = 'claim_make_picking_from_picking.wizard'
+    _name = 'claim.make.picking.from.picking.wizard'
     _description = 'Wizard to create pickings from picking lines'
 
     @api.model
@@ -44,9 +44,11 @@ class claim_make_picking_from_picking(models.TransientModel):
             browse(context['active_id']).move_lines
         return [mov.id for mov in move_lines]
 
-    # Get default source location
     @api.model
     def _get_source_loc(self):
+        """
+        Get default source location
+        """
         context = self._context
         warehouse_id = self._get_default_warehouse()
         picking_obj = self.env['stock.picking']
@@ -57,9 +59,11 @@ class claim_make_picking_from_picking(models.TransientModel):
         else:
             return warehouse_id.lot_rma_id.id
 
-    # Get default destination location
     @api.model
     def _get_dest_loc(self):
+        """
+        Get default destination location
+        """
         context = self._context
         warehouse_id = self._get_default_warehouse()
         loc_id = self.env['stock.location']
@@ -76,10 +80,6 @@ class claim_make_picking_from_picking(models.TransientModel):
                     lot_breakage_loss_id.id
             if context.get('picking_type') == 'picking_refurbish':
                 loc_id = warehouse_id.lot_refurbish_id.id
-            # TODO picking_mistake_loss must be added
-            # if context.get('picking_type') == 'picking_mistake_loss':
-            #     loc_id = warehouse_obj.browse(warehouse_id).\
-            #    lot_mistake_loss_id.id
         return loc_id
 
     picking_line_source_location = fields.Many2one(
@@ -88,14 +88,12 @@ class claim_make_picking_from_picking(models.TransientModel):
         help="Location where the returned products are from.",
         required=True,
         default=_get_source_loc)
-
     picking_line_dest_location = fields.Many2one(
         'stock.location',
         'Dest. Location',
         help="Location where the system will stock the returned products.",
         required=True,
         default=_get_dest_loc)
-
     picking_line_ids = fields.Many2many(
         'stock.move',
         'claim_picking_line_picking',
@@ -108,9 +106,11 @@ class claim_make_picking_from_picking(models.TransientModel):
     def action_cancel(self):
         return {'type': 'ir.actions.act_window_close'}
 
-    # If "Create" button pressed
     @api.multi
     def action_create_picking_from_picking(self):
+        """
+        If "Create" button pressed
+        """
         picking_obj = self.env['stock.picking']
         move_obj = self.env['stock.move']
         view_obj = self.env['ir.ui.view']
@@ -146,7 +146,6 @@ class claim_make_picking_from_picking(models.TransientModel):
         for wizard_picking_line in self.picking_line_ids:
             move_id = move_obj.create({
                 'name': wizard_picking_line.product_id.name_template,
-                # Motif : crm id ? stock_picking_id ?
                 'priority': '0',
                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                 'date_expected': time.strftime(
@@ -186,5 +185,3 @@ class claim_make_picking_from_picking(models.TransientModel):
             'res_id': picking_id.id,
             'type': 'ir.actions.act_window',
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -2,13 +2,11 @@
 <openerp>
     <data>
         <!-- INHERITED VIEW FOR THE OBJECT : stock_picking -->
-
         <record id="picking_in_form" model="ir.ui.view">
             <field name="name">crm_claim_rma.picking_in_form</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <!-- Those wizard aren't working yet -->
                 <xpath expr="//field[@name='state']" position="before">
                         <button name="%(action_stock_picking_from_claim_picking)d"
                                 string="Product to stock" type="action"
@@ -28,19 +26,5 @@
                 </xpath>
             </field>
         </record>
-
-        <record id="warehouse_form" model="ir.ui.view">
-            <field name="name">crm_claim_rma.warehouse_form</field>
-            <field name="model">stock.warehouse</field>
-            <field name="inherit_id" ref="crm_rma_location_rma.view_warehouse_form" />
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='lot_rma_id']" position="after">
-                    <field name="lot_carrier_loss_id"/>
-                    <field name="lot_breakage_loss_id"/>
-                    <field name="lot_refurbish_id"/>
-                </xpath>
-            </field>
-        </record>
-
     </data>
 </openerp>

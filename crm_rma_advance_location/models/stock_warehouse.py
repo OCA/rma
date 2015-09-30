@@ -21,11 +21,10 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, SUPERUSER_ID
-from openerp.tools.translate import _
+from openerp import _, api, fields, models
 
 
-class stock_warehouse(models.Model):
+class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
@@ -39,12 +38,6 @@ class stock_warehouse(models.Model):
         'stock.location',
         'Refurbish Location')
 
-    def init(self, cr):
-        for wh_id in self.browse(cr, SUPERUSER_ID,
-                                 self.search(cr, SUPERUSER_ID, [])):
-            vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
-            self.write(cr, SUPERUSER_ID, wh_id.id, vals)
-
     @api.model
     def create_locations_rma(self, wh_id):
         vals = {}
@@ -55,7 +48,7 @@ class stock_warehouse(models.Model):
         context_with_inactive['active_test'] = False
         wh_loc_id = wh_id.view_location_id.id
 
-        vals_new = super(stock_warehouse, self).create_locations_rma(wh_id)
+        vals_new = super(StockWarehouse, self).create_locations_rma(wh_id)
 
         loc_vals = {
             'usage': 'internal',
