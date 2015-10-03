@@ -45,6 +45,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [crm_claim_rma](crm_claim_rma/) | 1.1 | RMA Claim (Product Return Management)
+[crm_claim_rma_code](crm_claim_rma_code/) | 8.0.1.0.0 | CRM Claim RMA Code
 [product_warranty](product_warranty/) | 1.0 | Product warranty
 
 Unported addons
