@@ -14,14 +14,22 @@ addons:
       - expect-dev  # provides unbuffer utility
       - python-lxml  # because pip installation is slow
 
-env:
-  - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" INCLUDE="rma"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0" INCLUDE="rma"
+#env:
+#  - VERSION="8.0" LINT_CHECK="1"
+#  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" INCLUDE="rma"
+#  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0" INCLUDE="rma"
 
 virtualenv:
 
   system_site_packages: true
+
+env:
+  global:
+  - LINT_CHECK=0 TESTS="0" VERSION="8.0" ODOO_REPO="vauxoo/odoo" INCLUDE="rma"
+
+  matrix:
+  - LINT_CHECK=1
+  - TESTS="1"
 
 install:
   - git clone https://github.com/Vauxoo/maintainer-quality-tools.git $HOME/maintainer-quality-tools
