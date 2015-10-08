@@ -28,30 +28,33 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def invoice_line_create(self):
-        res = super(SaleOrderLine, self).\
-            invoice_line_create()
+        res = super(SaleOrderLine, self).invoice_line_create()
         for order_line in self:
             prodlot_obj = self.env['stock.production.lot']
             procurements = order_line.procurement_ids
-            if procurements:
-                move_id = self.env['stock.move'].\
-                    search([('procurement_id', '=',
-                             order_line.procurement_ids[0].id)], limit=1)
-                if move_id and move_id.quant_ids:
-                    lot = move_id.quant_ids[0].lot_id
 
-                    if not lot.invoice_line_id:
-                        for inv_line_id in res:
+            if not procurements:
+                continue
 
-                            inv_line = self.env['account.invoice.line'].\
-                                browse(inv_line_id)
+            move_id = self.env['stock.move'].\
+                search([('procurement_id', '=',
+                         order_line.procurement_ids[0].id)], limit=1)
 
-                            lots = prodlot_obj.\
-                                search([('invoice_line_id', '=',
-                                        inv_line.id)])
+            if move_id and move_id.quant_ids:
+                lot = move_id.quant_ids[0].lot_id
 
-                            if inv_line.product_id.id == \
-                                    lot.product_id.id and \
-                                    len(lots) < inv_line.quantity:
-                                lot.write({'invoice_line_id': inv_line.id})
+                if lot.invoice_line_id:
+                    continue
+
+                for inv_line_id in res:
+
+                    inv_line = self.env['account.invoice.line'].\
+                        browse(inv_line_id)
+
+                    lots = prodlot_obj.search([('invoice_line_id', '=',
+                                                inv_line.id)])
+
+                    if inv_line.product_id.id == lot.product_id.id and \
+                            len(lots) < inv_line.quantity:
+                        lot.write({'invoice_line_id': inv_line.id})
         return res

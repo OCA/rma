@@ -223,7 +223,7 @@ class ClaimLine(models.Model):
             line.return_value = (line.unit_sale_price *
                                  line.product_returned_quantity)
 
-    @api.multi
+    @api.model
     def copy(self, default=None):
         if default is None:
             default = {}
@@ -318,10 +318,13 @@ class ClaimLine(models.Model):
 
     def set_warranty_limit(self):
         self.ensure_one()
+
         claim = self.claim_id
+        invoice_id = self.invoice_line_id and self.invoice_line_id.invoice_id \
+            or claim.invoice_id
         try:
             values = self._warranty_limit_values(
-                claim.invoice_id, claim.claim_type,
+                invoice_id, claim.claim_type,
                 self.product_id, claim.date)
         except InvoiceNoDate:
             raise exceptions.Warning(
@@ -500,7 +503,6 @@ class ClaimLine(models.Model):
     def name_get(self):
         res = []
         for claim in self:
-            res.append((claim.id,
-                        "%s - %s" % (claim.claim_id.code,
-                                     claim.name)))
+            res.append(
+                (claim.id, "%s - %s" % (claim.claim_id.code, claim.name)))
         return res

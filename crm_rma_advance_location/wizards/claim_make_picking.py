@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class ClaimMakePicking(models.TransientModel):
@@ -54,8 +54,8 @@ class ClaimMakePicking(models.TransientModel):
         elif picking_type == 'int':
             return claim_record.warehouse_id.rma_int_type_id.\
                 default_location_dest_id
-        elif picking_type == 'carrier_loss':
-            return claim_record.warehouse_id.lot_carrier_loss_id
+        elif picking_type == 'loss':
+            return claim_record.warehouse_id.loss_loc_id
 
         return self.env['stock.location']
 

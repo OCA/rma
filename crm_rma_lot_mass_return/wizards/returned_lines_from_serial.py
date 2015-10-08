@@ -21,7 +21,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp import models, fields, api, _
 
 
@@ -176,61 +175,71 @@ class ReturnedLinesFromSerial(models.TransientModel):
         To load products or invoice lines for the claim lines
         """
         context = context or None
-        invoice_obj = self.env['account.invoice']
+        invoice = self.env['account.invoice']
         lot_obj = self.env['stock.production.lot']
-        data_line = self.get_data_of_products(input_data)
-
+        input_lines = self.get_data_of_products(input_data)
         mes = ''
         ids_data = ''
         all_prod = []
-        line_ids = []
-        for product in data_line or []:
-            if product[0]:
-                invoices = invoice_obj.search([('number', '=', product[0])])
+        lot_ids = set()
+        for line in input_lines or []:
+            # if there is no invoice/serial in it
+            if not line[0]:
+                continue
 
-                element_searched = False
-                if invoices:
-                    invoice_lines = [inv for inv in invoices.invoice_line]
-                    line_new_ids = [line.id for line in invoice_lines]
-                    line_ids = list(set(line_ids + line_new_ids))
-                    line_ids = lot_obj.\
-                        search([('invoice_line_id', 'in', line_ids)])
-                    element_searched = line_ids
-                    line_ids = line_ids.mapped('id')
-                else:
-                    element_searched = lot_obj.search([('name', '=',
-                                                        str(product[0]))])
-                    if element_searched:
-                        for item in element_searched:
-                            item_name = item.product_id \
-                                and item.product_id.name or False
-                            line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                             pname=item_name)
-                            all_prod.append((line_id, 1))
+            number_serial = line[0].encode('utf8')
 
-                if not element_searched:
-                    return {
-                        'warning': {
-                            'message': (_('The product or invoice %s'
-                                          ' was not found') % product[0])},
-                            'value': {
-                                'scan_data': '\n'.join(
-                                    input_data.split('\n')[0:-1])
-                        }
+            # search invoices first
+            invoice_ids = invoice.search([('number', '=', number_serial)])
+
+            element_searched = False
+            if invoice_ids:
+                line_ids = lot_obj.\
+                    search([('invoice_line_id', 'in',
+                             invoice_ids.mapped('invoice_line.id'))])
+                lot_ids |= set(line_ids.mapped('id'))
+                element_searched = lot_ids
+            else:
+                prodlot_ids = lot_obj.search(
+                    ['&', ('name', '=', number_serial),
+                     ('invoice_line_id', '!=', False)])
+
+                if prodlot_ids:
+                    for item in prodlot_ids:
+                        item_name = item.product_id \
+                            and item.product_id.name.encode('utf8') \
+                            or False
+                        line_id = '{pid}+{pname}'.format(pid=item.id,
+                                                         pname=item_name)
+                        all_prod.append((line_id, 1))
+                element_searched = prodlot_ids
+
+            if not element_searched:
+                return {
+                    'warning': {
+                        'message': (_('The product or invoice %s'
+                                      ' was not found') % line[0])},
+                        'value': {
+                            'scan_data': '\n'.join(
+                                input_data.split('\n')[0:-1])
                     }
+                }
+
         for line in all_prod:
             name = line[0].split('+')
-            mes = mes + '{0} \t {1}\n'.format(name[1],
-                                              line[1])
+            mes = mes + '{0} \t {1}\n'.format(name[1], line[1])
             ids_data = ids_data + '{pid}\n'.format(pid=name[0]) * line[1]
+
+        lot_ids = list(lot_ids)
+
         res = {
             'value': {
-                'lines_id': [(6, 0, line_ids)],
+                'lines_id': [(6, 0, lot_ids)],
                 'current_status': mes,
                 'scaned_data': ids_data,
             },
             'domain': {
-                'lines_list_id': [('id', 'in', line_ids)]
+                'lines_list_id': [('id', 'in', lot_ids)]
             }
         }
         return res

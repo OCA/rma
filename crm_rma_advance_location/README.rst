@@ -6,11 +6,9 @@ RMA Claim Advance Location
 
 This module adds the following location on warehouses :
 
- * Carrier Loss
+ * Loss
  * RMA
- * Breakage Loss
  * Refurbish
- * Mistake Loss
 
 And also various wizards on incoming deliveries that allow you to move your
 goods easily in those new locations from a done reception.
@@ -48,7 +46,6 @@ Known issues / Roadmap
 
 * Use with caution, this module is currently not yet completely debugged
   and is waiting his author to be.
-* TODO : In ClaimMakePickingFromPicking wizard picking_mistake_loss must be added
 
 Bug Tracker
 ===========

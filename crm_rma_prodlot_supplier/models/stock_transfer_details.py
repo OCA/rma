@@ -34,44 +34,43 @@ class StockTransferDetails(models.TransientModel):
         picking.
         @return: do_detailed_transfer boolean results
         """
-        stock_prod = self.env['stock.production.lot']
-        stock_picking = self.env['stock.picking']
-        picking_brw = stock_picking.browse(self.picking_id.id)
-        if picking_brw.picking_type_id.code == 'incoming':
-            for lstits in [self.item_ids, self.packop_ids]:
-                for prod in lstits:
-                    if prod.lot_id:
-                        stock_prod_brw = stock_prod.browse(prod.lot_id.id)
-                        if not stock_prod_brw.supplier_id:
-                            stock_prod_brw.write({'supplier_id':
-                                                  picking_brw.partner_id.id})
+        prodlot = self.env['stock.production.lot']
 
-                        for move_line in picking_brw.move_lines:
-                            if stock_prod_brw.product_id.id == \
-                                    move_line.product_id.id:
-                                lots = stock_prod.\
-                                    search([('supplier_invoice_line_id',
-                                             'in',
-                                             move_line.
-                                             purchase_line_id.
-                                             invoice_lines.
-                                             mapped('id'))])
+        if self.picking_id.picking_type_id.code != 'incoming':
+            return super(StockTransferDetails, self).do_detailed_transfer()
 
-                                if len(lots) < move_line.\
-                                        purchase_line_id.product_qty:
+        for items_packs_ids in [self.item_ids, self.packop_ids]:
+            for prod in items_packs_ids:
+                lot_id = prod.lot_id
+                if not lot_id:
+                    continue
 
-                                    for inv_line in move_line.\
-                                            purchase_line_id.invoice_lines:
-                                        lots = stock_prod.\
-                                            search([('supplier_invoice'
-                                                     '_line_id',
-                                                     '=', inv_line.id)])
-                                        if len(lots) < inv_line.quantity and \
-                                                inv_line.product_id.id == \
-                                                stock_prod_brw.product_id.id:
-                                            stock_prod_brw.\
-                                                write({'supplier'
-                                                       '_invoice_line_id':
-                                                       inv_line.id})
+                if not lot_id.supplier_id:
+                    lot_id.write({
+                        'supplier_id': self.picking_id.partner_id.id
+                    })
+
+                for move_id in self.picking_id.move_lines:
+
+                    if lot_id.product_id.id != move_id.product_id.id:
+                        continue
+
+                    lots = prodlot.search([
+                        ('supplier_invoice_line_id',
+                         'in',
+                         move_id.purchase_line_id.invoice_lines.mapped('id'))
+                    ])
+
+                    if len(lots) < move_id.purchase_line_id.product_qty:
+
+                        for inv_line in move_id.purchase_line_id.invoice_lines:
+                            lots = prodlot.search([('supplier_invoice_line_id',
+                                                    '=', inv_line.id)])
+                            if len(lots) < inv_line.quantity and \
+                                    inv_line.product_id.id == \
+                                    lot_id.product_id.id:
+                                lot_id.write({
+                                    'supplier_invoice_line_id': inv_line.id
+                                })
 
         return super(StockTransferDetails, self).do_detailed_transfer()

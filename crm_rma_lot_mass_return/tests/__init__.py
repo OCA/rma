@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Author: Yanina Aular
+#    Author: Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,21 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'RMA Location',
-    'version': '8.0.1.0.0',
-    'author': "Vauxoo, Odoo Community Association (OCA)",
-    'license': 'AGPL-3',
-    'website': 'http://www.camptocamp.com,http://www.vauxoo.com',
-    'category': 'Generic Modules/CRM & SRM',
-    'depends': [
-        'stock',
-        'procurement',
-    ],
-    'data': [
-        'views/stock_warehouse.xml',
-    ],
-    'post_init_hook': 'post_init_hook',
-    'installable': True,
-    'auto_install': False,
-}
+from . import test_crm_rma_lot_mass_return

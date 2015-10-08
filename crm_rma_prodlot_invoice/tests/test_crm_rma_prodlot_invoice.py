@@ -51,22 +51,76 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
             browse(self.ref("account.cash"))
         self.journal_id = self.env['account.journal'].\
             browse(self.ref("account.bank_journal"))
+        self.wizard = self.env['stock.transfer_details']
+        self.wizard_item = self.env['stock.transfer_details_items']
+        self.production_lot = self.env['stock.production.lot']
 
-    def test_01_action_ship_create(self):
-        """
-        Create sale order with Before Delivery policy
-        """
+    def create_sale_order(self, invoicing_rule):
+        # Create a sale order manual
         sale_order_id = self.sale_order.create({
             'partner_id': self.partner_id.id,
             'client_order_ref': 'TEST_SO',
-            'order_policy': 'prepaid',  # 'before delivery' invoice creation
+            'order_policy': invoicing_rule,
             'order_line': [(0, 0, {
                 'product_id': self.product_id.id,
+                'product_uom_qty': 1
             })]
         })
 
-        # confirm sale order and generate its invoice
         sale_order_id.action_button_confirm()
+
+        return sale_order_id
+
+    def test_01_prodlot_invoice(self):
+        """
+        Create sale order with 'On Demand' policy in order to
+        test name_get for stock production lot model and do_detail_transfer
+        as well.
+        """
+
+        sale_order_id = self.create_sale_order('manual')
+
+        self.assertTrue(sale_order_id.picking_ids)
+        sale_order_id.action_invoice_create()
+
+        lot_ids = []
+        for picking_id in sale_order_id.picking_ids:
+
+            # create wizard
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id,
+            })
+
+            # make the transfers
+            for move_id in picking_id.move_lines:
+
+                wizard_item_id = self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id':
+                    self.ref('stock.stock_location_stock'),
+                    'lot_id': False,
+                    'product_uom_id': move_id.product_uom.id,
+                })
+
+                lot_id = self.production_lot.create({
+                    'product_id': move_id.product_id.id,
+                    'name': 'Test Lot'
+                })
+
+                # keep lot_id for later check
+                lot_ids.append(lot_id)
+
+                wizard_item_id.write({
+                    'lot_id': lot_id.id
+                })
+
+            wizard_id.do_detailed_transfer()
+
+        sale_order_id.action_ship_create()
+        self.assertTrue(sale_order_id.invoice_ids)
 
         for invoice_id in sale_order_id.invoice_ids:
             invoice_id.signal_workflow('invoice_open')
@@ -83,8 +137,6 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
                 self.period_id.id, self.journal_id.id,
                 name="Payment for Invoice")
 
-            # in order to proceed is necessary to get the sale order invoiced
-            # and the invoice paid as well
             self.assertTrue(sale_order_id.invoiced)
             self.assertEqual(invoice_id.state, 'paid')
 
@@ -93,9 +145,67 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
 
             self.assertNotEqual(len(inv_lines), 0)
 
-            failed_olines = [inv_line
-                             for inv_line in invoice_id.invoice_line
-                             if inv_line.move_id is False]
+        # assert if invoice_line_id actually have been related within the lot
+        for lot_id in lot_ids:
+            self.assertTrue(lot_id.invoice_line_id)
 
-            # if any line is left without move_id then is something wrong
-            self.assertEqual(failed_olines, [])
+    def test_02_prodlot_invoice(self):
+        """
+        Create
+        """
+        sale_order_id = self.create_sale_order('manual')
+        self.assertTrue(sale_order_id.picking_ids)
+
+        lot_ids = []
+        for picking_id in sale_order_id.picking_ids:
+
+            # create wizard
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id,
+            })
+
+            # make the transfers
+            for move_id in picking_id.move_lines:
+
+                wizard_item_id = self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id':
+                    self.ref('stock.stock_location_stock'),
+                    'lot_id': False,
+                    'product_uom_id': move_id.product_uom.id,
+                })
+
+                lot_id = self.production_lot.create({
+                    'product_id': move_id.product_id.id,
+                    'name': 'Test Lot'
+                })
+
+                # keep lot_id for later check
+                lot_ids.append(lot_id)
+
+                wizard_item_id.write({
+                    'lot_id': lot_id.id
+                })
+
+            wizard_id.do_detailed_transfer()
+
+        # check if lot is related with an invoice line
+        for lot_id in lot_ids:
+            self.assertFalse(lot_id.invoice_line_id)
+
+        # create an invoice with transfer done
+        sale_order_id.action_invoice_create()
+
+        # check if lot is related with an invoice line
+        for lot_id in lot_ids:
+            self.assertTrue(lot_id.invoice_line_id)
+
+    def test_03_prodlot_invoice(self):
+        """
+        A Sale Order for a product which origin has a production lot number
+        from a incoming picking.
+        """
+        pass

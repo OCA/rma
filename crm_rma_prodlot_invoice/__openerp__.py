@@ -27,8 +27,9 @@
     'category': 'RMA',
     'license': 'AGPL-3',
     'depends': [
-        'account_anglo_saxon',
         'sale',
+        'sale_stock',
+        'product_unique_serial',
     ],
     'data': [
         'views/stock_production_lot.xml',
