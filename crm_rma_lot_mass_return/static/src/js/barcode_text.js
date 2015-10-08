@@ -59,13 +59,13 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                 });
                 $('body').keypress(function(p) {
                     if ($._data($('body')[0], 'events').keypress.length > 1) {
-                        $._data($('body')[0], 'events').keypress.pop()
+                        $._data($('body')[0], 'events').keypress.pop();
 
                     }
                     var search = p.target.parentElement.className.search('pack_search');
-                    if (p.target.name != 'scan_data' && search < 0 && p.keyCode === $.ui.keyCode.ENTER) {
-                        playAlert.volume(0.9)
-                        playAlert('purr')
+                    if (p.target.name != 'scan_data' && search < 0 && p.keyCode === $.ui.keyCode.ENTER){
+                        playAlert.volume(0.9);
+                        playAlert('purr');
                     }
                 });
                 $('textarea[name="scan_data"]').focus();
@@ -77,15 +77,15 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
 
     });
     openerp.web.FormView.include({
-        on_processed_onchange: function(result) {
+        on_processed_onchange: function(result){
             try {
-                var result = result;
-                if (!_.isEmpty(result.warning) && this.model == 'returned_lines_from_serial.wizard') {
-                    playAlert.volume(0.9)
-                    playAlert('purr')
+                var result2 = result;
+                if (!_.isEmpty(result_2.warning) && this.model == 'returned_lines_from_serial.wizard') {
+                    playAlert.volume(0.9);
+                    playAlert('purr');
                     new openerp.web.Dialog(this, {
                         size: 'medium',
-                        title: result.warning.title,
+                        title: result2.warning.title,
                         buttons: [{
                             text: _t("-->"),
                             click: function() {}
@@ -95,9 +95,9 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                                 this.parents('.modal').modal('hide');
                             }
                         }]
-                    }, QWeb.render("CrashManager.warning", result.warning)).open();
+                    }, QWeb.render("CrashManager.warning", result2.warning)).open();
 
-                    $("span:contains('-->')").focus()
+                    $("span:contains('-->')").focus();
                 } else {
                     this._super.apply(this, arguments);
                 }
@@ -110,6 +110,6 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
 
         },
     });
-    openerp.web.form.widgets.add('barcode_text', 'openerp.web.form.BarcodeText')
-    openerp.web.form.widgets.add('change_focus', 'openerp.web.form.ChangeFocus')
+    openerp.web.form.widgets.add('barcode_text', 'openerp.web.form.BarcodeText');
+    openerp.web.form.widgets.add('change_focus', 'openerp.web.form.ChangeFocus');
 };

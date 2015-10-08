@@ -35,8 +35,9 @@ class AccountInvoiceRefund(models.TransientModel):
 
     description = fields.Char(default=_default_description)
 
-    @api.one
+    @api.multi
     def compute_refund(self, mode='refund'):
+        self.ensure_one()
         invoice_ids = self.env.context.get('invoice_ids', [])
         if invoice_ids:
             self = self.with_context(active_ids=invoice_ids)

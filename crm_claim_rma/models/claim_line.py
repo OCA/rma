@@ -223,35 +223,38 @@ class ClaimLine(models.Model):
             line.return_value = (line.unit_sale_price *
                                  line.product_returned_quantity)
 
-    @api.model
+    @api.multi
     def copy(self, default=None):
-        if default is None:
-            default = {}
+        default = default or {}
         std_default = {
             'move_in_id': False,
             'move_out_id': False,
             'refund_line_id': False,
         }
         std_default.update(default)
-        return super(ClaimLine, self).copy(default=std_default)
 
-    @api.one
+        for line_id in self:
+            super(ClaimLine, line_id).copy(default=std_default)
+
+        return True
+
     @api.depends('date_due', 'date')
     def _set_priority(self):
         """
         To determine the priority of claim line
         """
-        if self.date_due:
-            days = fields.datetime.strptime(self.date,
-                                            '%Y-%m-%d') - \
-                fields.datetime.strptime(self.date_due,
-                                         '%Y-%m-%d')
-            if days.days <= 1:
-                self.priority = '3_very_high'
-            elif days.days <= 7:
-                self.priority = '2_high'
-            else:
-                self.priority = '1_normal'
+        for line_id in self:
+            if line_id.date_due:
+                days = fields.datetime.strptime(line_id.date,
+                                                '%Y-%m-%d') - \
+                    fields.datetime.strptime(line_id.date_due,
+                                             '%Y-%m-%d')
+                if days.days <= 1:
+                    line_id.priority = '3_very_high'
+                elif days.days <= 7:
+                    line_id.priority = '2_high'
+                else:
+                    line_id.priority = '1_normal'
 
     def _get_subject(self, num):
         if num > 0 and num <= len(self.SUBJECT_LIST):
@@ -466,17 +469,22 @@ class ClaimLine(models.Model):
         self.write(values)
         return True
 
-    @api.one
+    @api.multi
     def set_warranty(self):
-        """ Calculate warranty limit and address """
-        if not self.product_id:
-            raise exceptions.Warning(_('Error'), _('Please set product first'))
+        """
+        Calculate warranty limit and address
+        """
+        for line_id in self:
+            if not line_id.product_id:
+                raise exceptions.Warning(
+                    _('Error'), _('Please set product first'))
 
-        if not self.invoice_line_id:
-            raise exceptions.Warning(_('Error'), _('Please set invoice first'))
+            if not line_id.invoice_line_id:
+                raise exceptions.Warning(
+                    _('Error'), _('Please set invoice first'))
 
-        self.set_warranty_limit()
-        self.set_warranty_return_address()
+            line_id.set_warranty_limit()
+            line_id.set_warranty_return_address()
 
     @api.model
     def _get_sequence_number(self):
@@ -502,7 +510,8 @@ class ClaimLine(models.Model):
     @api.multi
     def name_get(self):
         res = []
-        for claim in self:
+        for line_id in self:
             res.append(
-                (claim.id, "%s - %s" % (claim.claim_id.code, claim.name)))
+                (line_id.id, "%s - %s" %
+                    (line_id.claim_id.code, line_id.name)))
         return res

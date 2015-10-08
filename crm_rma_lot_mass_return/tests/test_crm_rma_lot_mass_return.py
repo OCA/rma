@@ -20,7 +20,6 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from datetime import date
 
 
 class TestCrmRmaLotMassReturn(TransactionCase):
@@ -34,8 +33,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
         self.partner_id = self.env['res.partner'].browse(
             self.ref('base.res_partner_2'))
-        self.sale_order_id = self.create_sale_order()
-        self.invoice_id = self.sale_order_id.invoice_ids[0]
+        self.invoice_id = self.create_sale_invoice()
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
@@ -45,11 +43,11 @@ class TestCrmRmaLotMassReturn(TransactionCase):
                 'pick': True
             })
 
-    def create_sale_order(self):
-        self.sale_order_id = self.env['sale.order'].create({
+    def create_sale_order(self, order_policy='manual'):
+        sale_order_id = self.env['sale.order'].create({
             'partner_id': self.partner_id.id,
             'note': 'Sale Order Test',
-            'order_policy': 'prepaid',
+            'order_policy': order_policy,
             'payment_term': self.ref('account.account_payment_term'),
             'order_line': [(0, 0, {
                     'name': 'Test',
@@ -58,9 +56,9 @@ class TestCrmRmaLotMassReturn(TransactionCase):
             })]
         })
 
-        self.sale_order_id.action_button_confirm()
+        sale_order_id.action_button_confirm()
 
-        return self.sale_order_id
+        return sale_order_id
 
     def test_01_render_metasearch_view(self):
         res = self.claim_id.render_metasearch_view()
@@ -99,3 +97,51 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         # Claim record it must have same line count as the invoice
         self.assertEqual(len(self.claim_id.claim_line_ids),
                          len(self.invoice_id.invoice_line))
+
+    def create_sale_invoice(self):
+        sale_order_id = self.create_sale_order('manual')
+
+        lot_ids = []
+        for picking_id in sale_order_id.picking_ids:
+
+            picking_id.force_assign()
+
+            # create wizard
+            wizard_id = self.env['stock.transfer_details'].create({
+                'picking_id': picking_id.id,
+            })
+
+            # make the transfers
+            for move_id in picking_id.move_lines:
+
+                wizard_item_id = self.env['stock.transfer_details_items'].\
+                    create({
+                        'transfer_id': wizard_id.id,
+                        'product_id': move_id.product_id.id,
+                        'quantity': move_id.product_qty,
+                        'sourceloc_id': move_id.location_id.id,
+                        'destinationloc_id':
+                        self.ref('stock.stock_location_stock'),
+                        'lot_id': False,
+                        'product_uom_id': move_id.product_uom.id,
+                    })
+
+                lot_id = self.env['stock.production.lot'].create({
+                    'product_id': move_id.product_id.id,
+                    'name': 'Test Lot'
+                })
+
+                # keep lot_id for later check
+                lot_ids.append(lot_id)
+
+                wizard_item_id.write({
+                    'lot_id': lot_id.id
+                })
+
+            wizard_id.do_detailed_transfer()
+
+        sale_order_id.action_invoice_create()
+        invoice_id = sale_order_id.invoice_ids[0]
+        invoice_id.signal_workflow('invoice_open')
+
+        return invoice_id

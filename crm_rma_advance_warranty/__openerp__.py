@@ -24,11 +24,11 @@
     'version': '8.0.1.0.0',
     'author': 'Vauxoo,Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
+    'license': 'AGPL-3',
     'category': 'Generic Modules/CRM & SRM',
     'depends': [
         'crm_claim_rma',
         'crm_claim_product_supplier',
     ],
-    'active': False,
     'installable': True,
 }
