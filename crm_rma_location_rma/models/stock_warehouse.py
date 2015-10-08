@@ -20,33 +20,21 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, SUPERUSER_ID
-from openerp.tools.translate import _
+from openerp import _, api, fields, models
 
 
-class stock_warehouse(models.Model):
+class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
     lot_rma_id = fields.Many2one('stock.location',
                                  'RMA Location')
-
     rma_out_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Out Type')
-
     rma_in_type_id = fields.Many2one('stock.picking.type',
                                      'RMA In Type')
-
     rma_int_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Internal Type')
-
-    def init(self, cr):
-        for wh_id in self.browse(cr, SUPERUSER_ID,
-                                 self.search(cr, SUPERUSER_ID, [])):
-            vals = self.create_locations_rma(cr, SUPERUSER_ID, wh_id)
-            self.write(cr, SUPERUSER_ID, wh_id.id, vals)
-            vals = self.create_sequences_picking_types(cr, SUPERUSER_ID, wh_id)
-            self.write(cr, SUPERUSER_ID, wh_id.id, vals)
 
     @api.model
     def create_sequences_picking_types(self, warehouse):
@@ -56,35 +44,35 @@ class stock_warehouse(models.Model):
         # create new sequences
 
         if not warehouse.rma_in_type_id:
-            in_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
-                                                      _(' Sequence in'),
-                                              'prefix': warehouse.code +
-                                                      '/RMA/IN/',
-                                                      'padding': 5})
+            in_seq_id = seq_obj.sudo().create(
+                values={
+                    'name': warehouse.name + _(' Sequence in'),
+                    'prefix': warehouse.code + '/RMA/IN/',
+                    'padding': 5
+                })
         if not warehouse.rma_out_type_id:
-            out_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
-                                                       _(' Sequence out'),
-                                               'prefix': warehouse.code +
-                                                       '/RMA/OUT/',
-                                                       'padding': 5})
+            out_seq_id = seq_obj.sudo().create(
+                values={
+                    'name': warehouse.name + _(' Sequence out'),
+                    'prefix': warehouse.code + '/RMA/OUT/',
+                    'padding': 5
+                })
         if not warehouse.rma_int_type_id:
-            int_seq_id = seq_obj.sudo().create(values={'name': warehouse.name +
-                                                       _(' Sequence internal'),
-                                               'prefix': warehouse.code +
-                                                       '/RMA/INT/',
-                                                       'padding': 5})
+            int_seq_id = seq_obj.sudo().create(
+                values={
+                    'name': warehouse.name + _(' Sequence internal'),
+                    'prefix': warehouse.code + '/RMA/INT/',
+                    'padding': 5
+                })
 
         wh_stock_loc = warehouse.lot_rma_id
 
         # fetch customer and supplier locations, for references
-        customer_loc, supplier_loc = self.\
-            _get_partner_locations()
+        customer_loc, supplier_loc = self._get_partner_locations()
 
         # choose the next available color for
         # the picking types of this warehouse
-        color = 0
-        available_colors = [c % 9 for c in
-                            range(3, 12)]  # put flashy colors first
+        available_colors = [c % 9 for c in range(3, 12)]
         all_used_colors = self.env['stock.picking.type'].\
             search_read([('warehouse_id', '!=', False),
                          ('color', '!=', False)],
@@ -93,8 +81,8 @@ class stock_warehouse(models.Model):
         for col in all_used_colors:
             if col['color'] in available_colors:
                 available_colors.remove(col['color'])
-        if available_colors:
-            color = available_colors[0]
+
+        color = available_colors[0] if available_colors else 0
 
         # order the picking types with a sequence
         # allowing to have the following suit for
@@ -103,7 +91,8 @@ class stock_warehouse(models.Model):
             search_read([], ['sequence'], order='sequence desc')
         max_sequence = max_sequence and max_sequence[0]['sequence'] or 0
 
-        if not warehouse.rma_in_type_id:
+        in_type_id = warehouse.rma_in_type_id
+        if not in_type_id:
             in_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Receipts'),
                 'warehouse_id': warehouse.id,
@@ -113,9 +102,9 @@ class stock_warehouse(models.Model):
                 'default_location_dest_id': wh_stock_loc.id,
                 'sequence': max_sequence + 4,
                 'color': color})
-        else:
-            in_type_id = warehouse.rma_in_type_id
-        if not warehouse.rma_out_type_id:
+
+        out_type_id = warehouse.rma_out_type_id
+        if not out_type_id:
             out_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Delivery Orders'),
                 'warehouse_id': warehouse.id,
@@ -127,9 +116,9 @@ class stock_warehouse(models.Model):
                 'sequence': max_sequence + 1,
                 'color': color})
             in_type_id.write({'return_picking_type_id': out_type_id.id})
-        else:
-            out_type_id = warehouse.rma_out_type_id
-        if not warehouse.rma_int_type_id:
+
+        int_type_id = warehouse.rma_int_type_id
+        if not int_type_id:
             int_type_id = picking_type_obj.create(vals={
                 'name': _('RMA Internal Transfers'),
                 'warehouse_id': warehouse.id,
@@ -140,8 +129,6 @@ class stock_warehouse(models.Model):
                 'active': True,
                 'sequence': max_sequence + 2,
                 'color': color})
-        else:
-            int_type_id = warehouse.rma_int_type_id
 
         # write picking types on WH
         vals = {
@@ -178,8 +165,10 @@ class stock_warehouse(models.Model):
 
     @api.model
     def create(self, vals):
-
-        new_id_warehouse = super(stock_warehouse, self).create(vals=vals)
+        """
+        Create Locations and picking types for warehouse
+        """
+        new_id_warehouse = super(StockWarehouse, self).create(vals=vals)
         new_vals = self.create_locations_rma(new_id_warehouse)
         new_id_warehouse.write(vals=new_vals)
         new_vals = self.create_sequences_picking_types(new_id_warehouse)

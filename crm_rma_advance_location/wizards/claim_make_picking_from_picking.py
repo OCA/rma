@@ -75,9 +75,9 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         else:
             if context.get('picking_type') == 'picking_stock':
                 loc_id = warehouse_id.lot_stock_id.id
-            if context.get('picking_type') == 'picking_breakage_loss':
+            if context.get('picking_type') == 'picking_loss':
                 loc_id = warehouse_id.\
-                    lot_breakage_loss_id.id
+                    loss_loc_id.id
             if context.get('picking_type') == 'picking_refurbish':
                 loc_id = warehouse_id.lot_refurbish_id.id
         return loc_id

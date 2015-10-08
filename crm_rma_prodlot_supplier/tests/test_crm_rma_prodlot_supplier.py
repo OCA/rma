@@ -20,106 +20,133 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
+from datetime import date
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class TestCrmRmaProdLotSupplier(TransactionCase):
 
-    """
-    Test Cases
-    """
-
     def setUp(self):
         super(TestCrmRmaProdLotSupplier, self).setUp()
         self.picking = self.env['stock.picking']
-
-        self.picking_id1 = self.env.ref('stock.incomming_shipment1')
-        self.partner_id1 = self.picking_id1.partner_id
-
-        self.picking_id2 = self.env.ref('stock.incomming_shipment2')
-        self.partner_id2 = self.picking_id2.partner_id
-
         self.wizard = self.env['stock.transfer_details']
-        self.transfer_item_obj = self.env['stock.transfer_details_items']
-        self.lot_obj = self.env['stock.production.lot']
+        self.wizard_item = self.env['stock.transfer_details_items']
+        self.production_lot = self.env['stock.production.lot']
+        self.purchase_order = self.env['purchase.order']
+        self.product_id = self.env['product.product'].\
+            browse(self.ref('product.product_product_8'))
+        self.purchase_order_id = self.create_purchase_order()
+
+    def create_purchase_order(self):
+        purchase_order_id = self.purchase_order.create({
+            'partner_id': self.ref('base.res_partner_1'),
+            'location_id': self.ref('stock.picking_type_in'),
+            'pricelist_id': 1,
+            'order_line': [(0, 0, {
+                'name': 'test',
+                'product_id': self.product_id.id,
+                'price_unit': self.product_id.list_price,
+                'product_qty': 16,
+                'date_planned': date.today().replace(day=31, month=12).
+                strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+            })]
+        })
+
+        purchase_order_id.wkf_confirm_order()
+        purchase_order_id.action_invoice_create()
+        purchase_order_id.action_picking_create()
+        self.assertEquals(purchase_order_id.state, 'confirmed')
+        self.assertEquals(1, len(self.picking.
+                                 search([('origin', '=',
+                                          purchase_order_id.name)])))
+        self.picking_ids = purchase_order_id.picking_ids
+        return purchase_order_id
 
     def test_01_do_detail_transfer(self):
         """
-        Testing supplier_id when a transfer is made
+        Testing do_detailed_transfer method
         """
         lot_ids = []
-        # create wizard
-        wizard_id = self.wizard.create({
-            'picking_id': self.picking_id1.id,
-        })
-
-        # make the transfers
-        for stock_move in self.picking_id1.move_lines:
-            lot_id = self.lot_obj.create({
-                'product_id': stock_move.product_id.id,
+        for picking_id in self.picking_ids:
+            # create wizard
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id,
             })
 
-            # keep lot_id for later check
-            lot_ids.append(lot_id)
+            # make the transfers
+            for move_id in picking_id.move_lines:
+                lot_id = self.production_lot.create({
+                    'product_id': move_id.product_id.id,
+                })
 
-            self.transfer_item_obj.create({
-                'transfer_id': wizard_id.id,
-                'product_id': stock_move.product_id.id,
-                'quantity': stock_move.product_qty,
-                'sourceloc_id': stock_move.location_id.id,
-                'destinationloc_id': stock_move.location_dest_id.id,
-                'lot_id': lot_id.id,
-                'product_uom_id': stock_move.product_uom.id,
-            })
+                self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id':
+                    self.ref('stock.stock_location_stock'),
+                    'lot_id': lot_id.id,
+                    'product_uom_id': move_id.product_uom.id,
+                })
 
-        wizard_id.do_detailed_transfer()
+                # keep lot_id for later check
+                lot_ids.append(lot_id)
 
-        # check lot_ids
-        failed_lot_ids = [
-            lid for lid in lot_ids
-            if lot_id.supplier_id.id != self.picking_id1.partner_id.id]
+            wizard_id.do_detailed_transfer()
+
+            # check lot_ids
+            failed_lot_ids = [
+                lid for lid in lot_ids
+                if not lid.supplier_id
+                or not lid.supplier_invoice_line_id]
 
         self.assertEquals(failed_lot_ids, [])
 
     def test_02_default_get(self):
         """
-        Testing supplier_id when a transfer is made
+        Test default_get method
         """
-        lot_ids = []
-        # create wizard
-        wizard_id = self.wizard.with_context({
-            'active_id': self.picking_id2.id,
-            'active_ids': [self.picking_id2.id],
-            'active_model': self.picking_id2._name
-        }).create({
-            'picking_id': self.picking_id2.id,
-        })
+
+        failed_lot_ids = lot_ids = []
 
         # make the transfers
-        for stock_move in self.picking_id2.move_lines:
+        for picking_id in self.picking_ids:
 
-            transfer_item = self.transfer_item_obj.create({
-                'transfer_id': wizard_id.id,
-                'product_id': stock_move.product_id.id,
-                'quantity': stock_move.product_qty,
-                'sourceloc_id': stock_move.location_id.id,
-                'destinationloc_id': stock_move.location_dest_id.id,
-                'product_uom_id': stock_move.product_uom.id,
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id
             })
 
-            lot_id = self.lot_obj.with_context({
-                'active_id': transfer_item.id
-            }).create({
-                'product_id': stock_move.product_id.id,
-                'name': stock_move.product_id.name
-            })
+            for move_id in picking_id.move_lines:
 
-            # keep lot_id for later check
-            lot_ids.append(lot_id)
-            transfer_item.write({'lot_id': lot_id.id})
+                wizard_item_id = self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id':
+                    self.ref('stock.stock_location_stock'),
+                    'lot_id': False,
+                    'product_uom_id': move_id.product_uom.id,
+                })
 
-        # check lot_ids
-        failed_lot_ids = [
-            lid for lid in lot_ids
-            if lot_id.supplier_id.id != self.picking_id2.partner_id.id]
+                lot_id = self.production_lot.with_context({
+                    'active_model': wizard_item_id._name,
+                    'active_id': wizard_item_id.id,
+                    'product_id': move_id.product_id.id
+                }).create({
+                    'name': 'Transfer for ' + self.purchase_order_id.name
+                })
+
+                # keep lot_id for later check
+                lot_ids.append(lot_id)
+
+            wizard_id.do_detailed_transfer()
+
+            # check lot_ids
+            failed_lot_ids = [
+                lid for lid in lot_ids
+                if not lid.supplier_id
+                or not lid.supplier_invoice_line_id]
 
         self.assertEquals(failed_lot_ids, [])

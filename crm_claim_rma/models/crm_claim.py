@@ -197,11 +197,14 @@ class CrmClaim(models.Model):
 
         return super(CrmClaim, self).create(values)
 
-    @api.model
+    @api.multi
     def copy(self, default=None):
-        default = default if default else {}
+        self.ensure_one()
+
+        default = default or {}
         std_default = {
             'code': '/'
         }
+
         std_default.update(default)
         return super(CrmClaim, self).copy(default=std_default)

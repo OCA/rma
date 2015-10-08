@@ -42,9 +42,7 @@ class TestPickingFromPicking(TransactionCase):
 
         self.loc_rma = self.main_warehouse.lot_rma_id
 
-        self.loc_carrier_loss = self.main_warehouse.lot_carrier_loss_id
-
-        self.loc_breakage_loss = self.main_warehouse.lot_breakage_loss_id
+        self.loss_loc = self.main_warehouse.loss_loc_id
 
         self.loc_refurbish = self.main_warehouse.lot_refurbish_id
 
@@ -105,16 +103,11 @@ class TestPickingFromPicking(TransactionCase):
         claim_wizard = self.claim_picking_wizard.\
             with_context({
                 'active_id': stock_picking_id,
-                'picking_type': 'picking_breakage_loss',
+                'picking_type': 'picking_loss',
             }).create({})
 
         self.assertEquals(claim_wizard.picking_line_source_location.id,
                           self.loc_rma.id)
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
-                          self.loc_breakage_loss.id)
-
-    def test_create_warehouse(self):
-        wh = self.env['stock.warehouse'].create({'name': 'WH Test',
-                                                 'code': 'WHT'})
-        wh.create_locations_rma(wh)
+                          self.loss_loc.id)

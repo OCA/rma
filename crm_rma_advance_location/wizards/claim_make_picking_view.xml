@@ -14,7 +14,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            <field name="context">{'picking_type': 'carrier_loss'}</field>
+            <field name="context">{'picking_type': 'loss'}</field>
         </record>
     </data>
 </openerp>

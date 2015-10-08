@@ -28,12 +28,10 @@ class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    lot_carrier_loss_id = fields.Many2one(
+    loss_loc_id = fields.Many2one(
         'stock.location',
-        'Carrier Loss Location')
-    lot_breakage_loss_id = fields.Many2one(
-        'stock.location',
-        'Breakage Loss Location')
+        'Loss Location')
+
     lot_refurbish_id = fields.Many2one(
         'stock.location',
         'Refurbish Location')
@@ -65,17 +63,11 @@ class StockWarehouse(models.Model):
                 create(loc_vals, context=context_with_inactive)
             vals['lot_refurbish_id'] = location_id.id
 
-        if not wh_id.lot_carrier_loss_id:
-            loc_vals.update({'name': _('Carrier Loss')})
+        if not wh_id.loss_loc_id:
+            loc_vals.update({'name': _('Loss')})
             location_id = location_obj.\
                 create(loc_vals, context=context_with_inactive)
-            vals['lot_carrier_loss_id'] = location_id.id
-
-        if not wh_id.lot_breakage_loss_id:
-            loc_vals.update({'name': _('Breakage Loss')})
-            location_id = location_obj.\
-                create(loc_vals, context=context_with_inactive)
-            vals['lot_breakage_loss_id'] = location_id.id
+            vals['loss_loc_id'] = location_id.id
 
         vals.update(vals_new)
         return vals

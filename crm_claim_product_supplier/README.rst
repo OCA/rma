@@ -24,7 +24,7 @@ Usage
 =====
 
 * End-user direct usage is not possible, all the functionality contained in this
-module is done under the hood and no view is included
+  module is done under the hood and no view is included
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -70,4 +70,3 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
-

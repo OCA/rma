@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Author: Osval Reyes, Yanina Aular
+#    Author: Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,28 +19,4 @@
 #
 ##############################################################################
 
-from openerp import _, api, models
-
-
-class AccountInvoiceLine(models.Model):
-
-    """
-    Invoice Line inherited class
-    """
-    _inherit = 'account.invoice.line'
-
-    @api.one
-    def name_get(self):
-        """
-        Overwrite Odoo method like the one for
-        account.invoice.line model in the
-        rma module.
-        """
-
-        lot = self.move_id.lot_ids and \
-            self.move_id.lot_ids[0].name or _('No lot number')
-
-        name = _("%s - %s - Lot Number: %s") % \
-                (self.invoice_id.number, self.name, lot)
-
-        return (self.id, name)
+from . import test_crm_rma_lot_mass_return

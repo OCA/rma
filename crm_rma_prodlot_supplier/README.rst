@@ -1,8 +1,10 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
+============================
 CRM RMA Product Lot Supplier
-===============================
+============================
 
 It allows to know the real supplier for a specific product having beforehand its serial/lot number simplifying obtaining it.
 For example, when creating/editing a claim for a laptop that it may have two o more suppliers, using this module (taking advantage of lot number) let you know which supplier has provided which specific product related to the claim, or use time frame given by supplier or its address based on stored information about supplier without any aditional steps.

@@ -7,8 +7,7 @@
             <field name="inherit_id" ref="crm_rma_location_rma.view_warehouse_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='lot_rma_id']" position="after">
-                    <field name="lot_carrier_loss_id"/>
-                    <field name="lot_breakage_loss_id"/>
+                    <field name="loss_loc_id"/>
                     <field name="lot_refurbish_id"/>
                 </xpath>
             </field>
