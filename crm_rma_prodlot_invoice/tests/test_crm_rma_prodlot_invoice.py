@@ -84,7 +84,9 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         sale_order_id.action_invoice_create()
 
         lot_ids = []
+        lot_id = False
         for picking_id in sale_order_id.picking_ids:
+            picking_id.force_assign()
 
             # create wizard
             wizard_id = self.wizard.create({
@@ -94,27 +96,24 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
             # make the transfers
             for move_id in picking_id.move_lines:
 
-                wizard_item_id = self.wizard_item.create({
+                if not lot_id:
+                    lot_id = self.production_lot.create({
+                        'product_id': move_id.product_id.id,
+                        'name': 'Test Lot %s%s' % (move_id.id,
+                                                   move_id.product_id.id)
+                    })
+
+                    # keep lot_id for later check
+                    lot_ids.append(lot_id)
+                self.wizard_item.create({
                     'transfer_id': wizard_id.id,
                     'product_id': move_id.product_id.id,
                     'quantity': move_id.product_qty,
                     'sourceloc_id': move_id.location_id.id,
                     'destinationloc_id':
                     self.ref('stock.stock_location_stock'),
-                    'lot_id': False,
+                    'lot_id': lot_id.id,
                     'product_uom_id': move_id.product_uom.id,
-                })
-
-                lot_id = self.production_lot.create({
-                    'product_id': move_id.product_id.id,
-                    'name': 'Test Lot'
-                })
-
-                # keep lot_id for later check
-                lot_ids.append(lot_id)
-
-                wizard_item_id.write({
-                    'lot_id': lot_id.id
                 })
 
             wizard_id.do_detailed_transfer()
@@ -157,7 +156,9 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         self.assertTrue(sale_order_id.picking_ids)
 
         lot_ids = []
+        lot_id = False
         for picking_id in sale_order_id.picking_ids:
+            picking_id.force_assign()
 
             # create wizard
             wizard_id = self.wizard.create({
@@ -167,34 +168,28 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
             # make the transfers
             for move_id in picking_id.move_lines:
 
-                wizard_item_id = self.wizard_item.create({
+                if not lot_id:
+                    lot_id = self.production_lot.create({
+                        'product_id': move_id.product_id.id,
+                        'name': 'Test Lot %s%s' % (move_id.id,
+                                                   move_id.product_id.id)
+                    })
+
+                    # keep lot_id for later check
+                    lot_ids.append(lot_id)
+
+                self.wizard_item.create({
                     'transfer_id': wizard_id.id,
                     'product_id': move_id.product_id.id,
                     'quantity': move_id.product_qty,
                     'sourceloc_id': move_id.location_id.id,
                     'destinationloc_id':
                     self.ref('stock.stock_location_stock'),
-                    'lot_id': False,
+                    'lot_id': lot_id.id,
                     'product_uom_id': move_id.product_uom.id,
                 })
 
-                lot_id = self.production_lot.create({
-                    'product_id': move_id.product_id.id,
-                    'name': 'Test Lot'
-                })
-
-                # keep lot_id for later check
-                lot_ids.append(lot_id)
-
-                wizard_item_id.write({
-                    'lot_id': lot_id.id
-                })
-
             wizard_id.do_detailed_transfer()
-
-        # check if lot is related with an invoice line
-        for lot_id in lot_ids:
-            self.assertFalse(lot_id.invoice_line_id)
 
         # create an invoice with transfer done
         sale_order_id.action_invoice_create()

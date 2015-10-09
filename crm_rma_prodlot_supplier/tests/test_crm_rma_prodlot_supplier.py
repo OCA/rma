@@ -98,8 +98,8 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
             # check lot_ids
             failed_lot_ids = [
                 lid for lid in lot_ids
-                if not lid.supplier_id
-                or not lid.supplier_invoice_line_id]
+                if not lid.supplier_id or not
+                lid.supplier_invoice_line_id]
 
         self.assertEquals(failed_lot_ids, [])
 
@@ -146,7 +146,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
             # check lot_ids
             failed_lot_ids = [
                 lid for lid in lot_ids
-                if not lid.supplier_id
-                or not lid.supplier_invoice_line_id]
+                if not lid.supplier_id or not
+                lid.supplier_invoice_line_id]
 
         self.assertEquals(failed_lot_ids, [])

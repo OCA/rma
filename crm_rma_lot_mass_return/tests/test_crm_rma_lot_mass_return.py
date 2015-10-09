@@ -128,7 +128,8 @@ class TestCrmRmaLotMassReturn(TransactionCase):
 
                 lot_id = self.env['stock.production.lot'].create({
                     'product_id': move_id.product_id.id,
-                    'name': 'Test Lot'
+                    'name': 'Test Lot %s%s' % (move_id.id,
+                                               move_id.product_id.id)
                 })
 
                 # keep lot_id for later check
