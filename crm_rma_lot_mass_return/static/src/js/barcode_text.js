@@ -80,7 +80,7 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
         on_processed_onchange: function(result){
             try {
                 var result2 = result;
-                if (!_.isEmpty(result_2.warning) && this.model == 'returned_lines_from_serial.wizard') {
+                if (!_.isEmpty(result2.warning) && this.model == 'returned_lines_from_serial.wizard') {
                     playAlert.volume(0.9);
                     playAlert('purr');
                     new openerp.web.Dialog(this, {

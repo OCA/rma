@@ -225,6 +225,7 @@ class ClaimLine(models.Model):
 
     @api.multi
     def copy(self, default=None):
+        self.ensure_one()
         default = default or {}
         std_default = {
             'move_in_id': False,
@@ -232,11 +233,7 @@ class ClaimLine(models.Model):
             'refund_line_id': False,
         }
         std_default.update(default)
-
-        for line_id in self:
-            super(ClaimLine, line_id).copy(default=std_default)
-
-        return True
+        return super(ClaimLine, self).copy(default=std_default)
 
     @api.depends('date_due', 'date')
     def _set_priority(self):
