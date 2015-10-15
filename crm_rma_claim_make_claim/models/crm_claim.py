@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp import _, api, exceptions, fields, models
+from openerp import fields, models
 
 
 class CrmClaim(models.Model):

@@ -20,7 +20,6 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from openerp import exceptions
 
 
 class TestCrmRmaClaimMakeClaim(TransactionCase):
@@ -39,24 +38,8 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
             'product.product_product_6_product_template')
         self.sale_order_id = sale_order.browse(self.ref('sale.sale_order_7'))
         self.sale_order_line_ids = self.sale_order_id.order_line
-        self.claim_line_ids = [(0, 0, {
-            'supplier_id': self.supplier_id_1.id,
-            'claim_origin': u'damaged',
-            'name': self.supplier_id_1.name,
-            'product_id': self.sale_order_line_ids[1].id
-        }), (0, 0, {
-            'supplier_id': self.supplier_id_2.id,
-            'claim_origin': u'damaged',
-            'name': self.supplier_id_2.name,
-            'product_id': self.sale_order_line_ids[2].id
-        }), (0, 0, {
-            'supplier_id': self.supplier_id_3.id,
-            'claim_origin': u'damaged',
-            'name': self.supplier_id_3.name,
-            'product_id': self.sale_order_line_ids[3].id
-        }), ]
 
-    def create_customer_claim(self, includelines):
+    def create_customer_claim(self):
         """
         Create a customer claim with or without claim lines based
         on include_lines parameter
@@ -69,16 +52,26 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
                 'partner_id': self.customer_id.id,
                 'pick': True,
                 'code': '/',
-                'claim_line_ids': includelines and self.claim_line_ids or False
+                'claim_line_ids': [(0, 0, {
+                    'supplier_id': self.supplier_id_1.id,
+                    'claim_origin': u'damaged',
+                    'name': self.supplier_id_1.name,
+                    'product_id': self.sale_order_line_ids[1].id
+                }), (0, 0, {
+                    'supplier_id': self.supplier_id_2.id,
+                    'claim_origin': u'damaged',
+                    'name': self.supplier_id_2.name,
+                    'product_id': self.sale_order_line_ids[2].id
+                }), (0, 0, {
+                    'supplier_id': self.supplier_id_3.id,
+                    'claim_origin': u'damaged',
+                    'name': self.supplier_id_3.name,
+                    'product_id': self.sale_order_line_ids[3].id
+                }), ]
             })
 
     def test_01_claim_make_claim(self):
-        claim_id = self.create_customer_claim(True)
-        res = claim_id.button_create_rma_vendor()
-        lines_added = eval(res['domain'])[0][2]
+        claim_id = self.create_customer_claim()
+        res = claim_id.claim_line_ids.button_create_line_rma_vendor()
+        lines_added = eval(res[0]['domain'])[0][2]
         self.assertEquals(len(claim_id.claim_line_ids), len(lines_added))
-
-    def test_02_claim_make_claim(self):
-        claim_id = self.create_customer_claim(False)
-        with self.assertRaises(exceptions.Warning):
-            claim_id.button_create_rma_vendor()
