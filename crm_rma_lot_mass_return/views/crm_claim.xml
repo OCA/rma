@@ -10,6 +10,9 @@
                     <button name="render_metasearch_view"
                         string="Mass return from serial/lot or invoice" type="object"/>
                 </xpath>
+                <xpath expr="//field[@name='invoice_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
             </field>
         </record>
      </data>

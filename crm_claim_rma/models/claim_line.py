@@ -102,11 +102,11 @@ class ClaimLine(models.Model):
                    ('hidden', 'Product with hidden physical damage'),
                    ],
                   help="To describe the line product diagnosis")
-    claim_origine = fields.Selection(SUBJECT_LIST,
-                                     'Claim Subject',
-                                     required=True,
-                                     help="To describe the "
-                                     "line product problem")
+    claim_origin = fields.Selection(SUBJECT_LIST,
+                                    'Claim Subject',
+                                    required=True,
+                                    help="To describe the "
+                                    "line product problem")
     product_id = fields.Many2one('product.product',
                                  string='Product',
                                  help="Returned product")
@@ -212,9 +212,9 @@ class ClaimLine(models.Model):
                                  string="Claim Line Type",
                                  store=True,
                                  help="Claim classification")
-    date_due = fields.Date(related='invoice_line_id.invoice_id.'
-                           'date_due',
-                           help="Date of Claim Invoice")
+    invoice_date = fields.Datetime(related='invoice_line_id.invoice_id.'
+                                   'create_date',
+                                   help="Date of Claim Invoice")
 
     # Method to calculate total amount of the line : qty*UP
     @api.multi
@@ -235,17 +235,16 @@ class ClaimLine(models.Model):
         std_default.update(default)
         return super(ClaimLine, self).copy(default=std_default)
 
-    @api.depends('date_due', 'date')
+    @api.depends('invoice_date', 'date')
     def _set_priority(self):
         """
         To determine the priority of claim line
         """
         for line_id in self:
-            if line_id.date_due:
-                days = fields.datetime.strptime(line_id.date,
-                                                '%Y-%m-%d') - \
-                    fields.datetime.strptime(line_id.date_due,
-                                             '%Y-%m-%d')
+            if line_id.invoice_date:
+                days = fields.datetime.strptime(line_id.date, '%Y-%m-%d') - \
+                    fields.datetime.strptime(line_id.invoice_date,
+                                             DEFAULT_SERVER_DATETIME_FORMAT)
                 if days.days <= 1:
                     line_id.priority = '3_very_high'
                 elif days.days <= 7:
@@ -284,13 +283,13 @@ class ClaimLine(models.Model):
         if not (invoice and claim_type and product and claim_date):
             return {'guarantee_limit': False, 'warning': False}
 
-        date_due = invoice.date_due
-        if not date_due:
+        invoice_date = invoice.create_date
+        if not invoice_date:
             raise InvoiceNoDate
 
         warning = 'not_define'
-        date_due = datetime.strptime(date_due,
-                                     DEFAULT_SERVER_DATE_FORMAT)
+        invoice_date = datetime.strptime(invoice_date,
+                                         DEFAULT_SERVER_DATETIME_FORMAT)
 
         if isinstance(claim_type, self.env['crm.claim.type'].__class__):
             claim_type = claim_type.id
@@ -304,7 +303,7 @@ class ClaimLine(models.Model):
         else:
             warranty_duration = product.warranty
 
-        limit = self.warranty_limit(date_due, warranty_duration)
+        limit = self.warranty_limit(invoice_date, warranty_duration)
         if warranty_duration > 0:
             claim_date = datetime.strptime(claim_date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)

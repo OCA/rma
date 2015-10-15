@@ -77,7 +77,7 @@ msgid "Company"
 msgstr "Empresa"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Order cancellation"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 
 #. module: crm_claim_rma
 #: view:claim.line:0
-msgid "Compute Waranty"
+msgid "Compute Warranty"
 msgstr ""
 
 #. module: crm_claim_rma
@@ -220,7 +220,7 @@ msgid "To set the last state / substate change"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Not specified"
 msgstr ""
 
@@ -261,7 +261,7 @@ msgid "Warehouse"
 msgstr ""
 
 #. module: crm_claim_rma
-#: help:claim.line,claim_origine:0
+#: help:claim.line,claim_origin:0
 msgid "To describe the line product problem"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgid "More"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Legal retractation"
 msgstr ""
 
@@ -297,8 +297,8 @@ msgid ""
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:claim.line,claim_origine:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origine
+#: field:claim.line,claim_origin:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origin
 msgid "Claim Subject"
 msgstr "Assunto da Solicitação"
 
@@ -377,12 +377,12 @@ msgid "Quotations and Sales"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Lost during transport"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Shipping error"
 msgstr ""
 
@@ -582,7 +582,7 @@ msgid ""
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Damaged delivered product"
 msgstr ""
 
@@ -704,7 +704,7 @@ msgid "Merchandise Not As Described"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Exchange request"
 msgstr ""
 
@@ -730,7 +730,7 @@ msgid "Current"
 msgstr ""
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 #: selection:crm.claim,claim_type:0
 msgid "Other"
 msgstr ""

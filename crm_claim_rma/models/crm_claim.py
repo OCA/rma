@@ -136,7 +136,7 @@ class CrmClaim(models.Model):
                     invoice_line.product_id, warehouse)
                 line = {
                     'name': invoice_line.name,
-                    'claim_origine': "none",
+                    'claim_origin': "none",
                     'invoice_line_id': invoice_line.id,
                     'product_id': invoice_line.product_id.id,
                     'product_returned_quantity': invoice_line.quantity,

@@ -21,12 +21,12 @@ msgid "Mass return from serial/lot"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Claim short description"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Select serial numbers to create"
 msgstr ""
 
@@ -41,27 +41,27 @@ msgid "Wizard to create product return lines from serial numbers"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Quantity returned"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Save and close"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Save and new"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Cancel"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: view:returned_lines_from_serial.wizard:0
+#: view:returned.lines.from.serial.wizard:0
 msgid "Serial / Lot Number"
 msgstr ""
 

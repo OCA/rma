@@ -31,9 +31,7 @@ class SaleOrder(models.Model):
         Set stock moves to invoice lines that matches with
         product and product quantity when sale order is done
         """
-        res = super(SaleOrder, self).action_done()
-        self.set_lot_invoice_line(self)
-        return res
+        return self.set_lot_invoice_line(self, 'action_done')
 
     @api.multi
     def action_ship_create(self):
@@ -41,11 +39,10 @@ class SaleOrder(models.Model):
         Set stock moves to invoice lines that matches with
         product and product quantity when delivery is created
         """
-        res = super(SaleOrder, self).action_ship_create()
-        self.set_lot_invoice_line(self)
-        return res
+        return self.set_lot_invoice_line(self, 'action_ship_create')
 
-    def set_lot_invoice_line(self, record_set):
+    def set_lot_invoice_line(self, record_set, method=False):
+        res = getattr(super(SaleOrder, self), method)() if method else False
         for order_id in record_set:
             move_ids = order_id.mapped('picking_ids.move_lines')
             invoice_lines = order_id.mapped('invoice_ids.invoice_line')
@@ -54,16 +51,15 @@ class SaleOrder(models.Model):
                 continue
 
             for inv_line in invoice_lines:
+                qty_lots_with_inv_line = len(self.env['stock.production.lot'].
+                                             search([('invoice_line_id', '=',
+                                                      inv_line.id)]))
                 for move_id in move_ids:
-
                     lots = move_id.mapped('quant_ids.lot_id')
                     for lot in lots:
-
-                        lots_with_inv_line = self.env['stock.production.lot'].\
-                            search([('invoice_line_id', '=', inv_line.id)])
-
                         if not lot.invoice_line_id and \
                                 inv_line.product_id.id == \
                                 lot.product_id.id and \
-                                len(lots_with_inv_line) < inv_line.quantity:
+                                qty_lots_with_inv_line < inv_line.quantity:
                             lot.write({'invoice_line_id': inv_line.id})
+        return res

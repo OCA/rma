@@ -9,7 +9,7 @@ module.exports.volume = playing.volume;
 module.exports.player = playing;
 
 function playAlert(name){
-  name || ( name = 'bottle' );
+  if (!name) { name = "bottle"; }
 
   if (!content[name]) return;
 
@@ -34,8 +34,8 @@ module.exports = play;
 
 function play(urls, dom){
   var el, chain, url;
+  if (!dom) { dom = document.documentElement; }
 
-  dom || ( dom = document.documentElement );
   el = render();
   dom.appendChild(el);
 
@@ -75,10 +75,11 @@ function play(urls, dom){
   function bool(name){
     return function(value){
       if (value === false) {
-        return el[name] = false;
+        el[name] = false;
+        return el[name];
       }
-
-      return el[name] = true;
+      el[name] = true;
+      return el[name];
     };
   }
 
@@ -140,7 +141,7 @@ module.exports = render;
 function render(src){
   return domify(templates['audio.html']);
 }
- },{"./templates":8,"domify":9}],8:[function(require,module,exports){ exports["audio.html"] = "<audio preload=\"auto\" /></audio>" },{}],6:[function(require,module,exports){ var table = {
+ },{"./templates":8,"domify":9}],8:[function(require,module,exports){ exports["audio.html"] = "<audio preload=\"auto\" /></audio>"; },{}],6:[function(require,module,exports){ var table = {
   aif  : "audio/x-aiff",
   aiff : "audio/x-aiff",
   wav  : "audio/x-wav",
@@ -248,6 +249,7 @@ var map = {
  */
 
 function parse(html) {
+  var el;
   if ('string' != typeof html) throw new TypeError('String expected');
 
   // tag name
@@ -257,7 +259,7 @@ function parse(html) {
 
   // body support
   if (tag == 'body') {
-    var el = document.createElement('html');
+    el = document.createElement('html');
     el.innerHTML = html;
     return el.removeChild(el.lastChild);
   }
@@ -267,7 +269,7 @@ function parse(html) {
   var depth = wrap[0];
   var prefix = wrap[1];
   var suffix = wrap[2];
-  var el = document.createElement('div');
+  el = document.createElement('div');
   el.innerHTML = prefix + html + suffix;
   while (depth--) el = el.lastChild;
 
@@ -283,4 +285,4 @@ function parse(html) {
 
   return fragment;
 }
- },{}] }; function require(o){ if(o[2]) return o[2].exports; o[0](function(u){ if(!require.m[o[1][u]]) { throw new Error('Cannot find module "' + u + '"'); } return require(require.m[o[1][u]]); }, o[2] = { exports: {} }, o[2].exports); return o[2].exports; };  return require(require.m[0]); }({ env:{} }));
+ },{}] }; function require(o){ if(o[2]) return o[2].exports; o[0](function(u){ if(!require.m[o[1][u]]) { throw new Error('Cannot find module "' + u + '"'); } return require(require.m[o[1][u]]); }, o[2] = { exports: {} }, o[2].exports); return o[2].exports; }  return require(require.m[0]); }({ env:{} }));
