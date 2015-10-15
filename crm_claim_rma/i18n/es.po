@@ -85,7 +85,7 @@ msgid "Company"
 msgstr "Compañía"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Order cancellation"
 msgstr "Cancelación de orden"
 
@@ -237,7 +237,7 @@ msgid "To set the last state / substate change"
 msgstr "Para definir el último cambio de estado / sub-estado"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Not specified"
 msgstr "No especificado"
 
@@ -278,7 +278,7 @@ msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: crm_claim_rma
-#: help:claim.line,claim_origine:0
+#: help:claim.line,claim_origin:0
 msgid "To describe the line product problem"
 msgstr "Para describir el problema de la línea de producto"
 
@@ -294,7 +294,7 @@ msgid "More"
 msgstr "Más"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Legal retractation"
 msgstr "Retractación legal"
 
@@ -317,8 +317,8 @@ msgstr ""
 "seleccionada en el producto seleccionado."
 
 #. module: crm_claim_rma
-#: field:claim.line,claim_origine:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origine
+#: field:claim.line,claim_origin:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origin
 msgid "Claim Subject"
 msgstr "Objeto de la reclamación"
 
@@ -397,12 +397,12 @@ msgid "Quotations and Sales"
 msgstr "Presupuestos y pedidos"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Lost during transport"
 msgstr "Perdido durante el transporte"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Shipping error"
 msgstr "Error de envío"
 
@@ -621,7 +621,7 @@ msgid "Please set product first"
 msgstr "Por favor, establezca el producto primero"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Damaged delivered product"
 msgstr "Producto enviado dañado"
 
@@ -743,7 +743,7 @@ msgid "Merchandise Not As Described"
 msgstr "El producto no se corresponde con la descripción"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Exchange request"
 msgstr "Solicitar cambio"
 
@@ -769,7 +769,7 @@ msgid "Current"
 msgstr "Actual"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 #: selection:crm.claim,claim_type:0
 msgid "Other"
 msgstr "Otro"

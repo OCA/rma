@@ -60,13 +60,13 @@ class ReturnedLinesFromSerial(models.TransientModel):
         return product_id
 
     @api.model
-    def create_claim_line(self, claim_id, claim_origine,
+    def create_claim_line(self, claim_id, claim_origin,
                           product_record, prodlot_id, qty, name,
                           invline_record=False):
         claim_line_model = self.env['claim.line']
         line_rec = claim_line_model.create({
             'claim_id': claim_id,
-            'claim_origine': claim_origine,
+            'claim_origin': claim_origin,
             'product_id': product_record and product_record.id or False,
             'name': product_record and product_record.name or
             invline_record.name,

@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Author : Yanina Aular <yani@vauxoo.com>
-#             Osval Reyes <osval@vauxoo.com>
+#    Author : Osval Reyes <osval@vauxoo.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,21 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'CRM RMA Claim Make Claim',
-    'version': '8.0.1.0.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'license': 'AGPL-3',
-    'category': '',
-    'depends': [
-        'stock',
-        'crm_claim_rma',
-        'crm_claim_product_supplier',
-    ],
-    'data': [
-        'views/crm_claim.xml',
-        'views/claim_line.xml',
-    ],
-    'installable': True,
-}
+
+from . import test_crm_rma_claim_make_claim

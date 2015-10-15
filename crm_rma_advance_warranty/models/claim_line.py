@@ -34,14 +34,14 @@ class ClaimLine(models.Model):
         """
         Calculate warranty limit
         """
-        if not self.date_due:
+        if not self.invoice_date:
             raise exceptions.Warning(
                 _('Error'),
                 _('Cannot find any date for invoice. '
                   'Must be a validated invoice.'))
         warning = 'not_define'
-        date_inv_at_server = datetime.strptime(self.date_due,
-                                               DEFAULT_SERVER_DATE_FORMAT)
+        date_inv_at_server = datetime.strptime(self.invoice_date,
+                                               DEFAULT_SERVER_DATETIME_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
                 supplier = self.prodlot_id.supplier_id
