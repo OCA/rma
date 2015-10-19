@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
+#    Copyright 2015 Vauxoo
 #    Copyright 2014 Camptocamp SA
+#    Author: Guewen Baconnier,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -27,16 +29,6 @@ class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
-    @api.one
-    @api.depends('rma_qty_available', 'rma_virtual_available')
-    def _rma_product_available(self):
-        self.rma_qty_available = sum([p.rma_qty_available
-                                      for p in
-                                      self.product_variant_ids])
-        self.rma_virtual_available = sum([p.rma_virtual_available
-                                          for p in
-                                          self.product_variant_ids])
-
     rma_qty_available = fields.Float(compute='_rma_product_available',
                                      digits_compute=dp.
                                      get_precision('Product Unit '
@@ -48,3 +40,10 @@ class ProductTemplate(models.Model):
                                          get_precision('Product Unit'
                                                        ' of Measure'),
                                          string='RMA Forecasted Quantity')
+
+    @api.depends('rma_qty_available', 'rma_virtual_available')
+    def _rma_product_available(self):
+        self.rma_qty_available = sum(
+            [p.rma_qty_available for p in self.product_variant_ids])
+        self.rma_virtual_available = sum(
+            [p.rma_virtual_available for p in self.product_variant_ids])

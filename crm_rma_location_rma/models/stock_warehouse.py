@@ -4,6 +4,7 @@
 #    Copyright 2013 Camptocamp
 #    Copyright 2015 Vauxoo
 #    Author: Yanina Aular
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -27,12 +28,9 @@ class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    lot_rma_id = fields.Many2one('stock.location',
-                                 'RMA Location')
-    rma_out_type_id = fields.Many2one('stock.picking.type',
-                                      'RMA Out Type')
-    rma_in_type_id = fields.Many2one('stock.picking.type',
-                                     'RMA In Type')
+    lot_rma_id = fields.Many2one('stock.location', 'RMA Location')
+    rma_out_type_id = fields.Many2one('stock.picking.type', 'RMA Out Type')
+    rma_in_type_id = fields.Many2one('stock.picking.type', 'RMA In Type')
     rma_int_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Internal Type')
 
@@ -143,8 +141,7 @@ class StockWarehouse(models.Model):
         vals = {}
 
         location_obj = self.env['stock.location']
-        context = self._context
-        context_with_inactive = context.copy()
+        context_with_inactive = self.env.context.copy()
         context_with_inactive['active_test'] = False
         wh_loc_id = wh_id.view_location_id.id
 
@@ -157,8 +154,8 @@ class StockWarehouse(models.Model):
             }
             if vals.get('company_id'):
                 loc_vals['company_id'] = vals.get('company_id')
-            location_id = location_obj.\
-                create(loc_vals, context=context_with_inactive)
+            location_id = location_obj.with_context(context_with_inactive).\
+                create(loc_vals)
             vals['lot_rma_id'] = location_id.id
 
         return vals

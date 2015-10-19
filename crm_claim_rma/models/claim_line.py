@@ -372,57 +372,6 @@ class ClaimLine(models.Model):
 
         return location_dest_id
 
-    @api.onchange('product_id', 'invoice_line_id')
-    def _onchange_product_invoice_line(self):
-        product = self.product_id
-        invoice_line = self.invoice_line_id
-        context = self.env.context
-
-        claim = context.get('claim_id')
-        company_id = context.get('company_id')
-        warehouse_id = context.get('warehouse_id')
-        claim_type = context.get('claim_type')
-        claim_date = context.get('claim_date')
-
-        # claim_exists = not isinstance(claim.id, NewId)
-        if not claim and not (company_id and warehouse_id and
-                              claim_type and claim_date):
-            # if we have a claim_id, we get the info from there,
-            # otherwise we get it from the args (on creation typically)
-            return False
-        if not (product and invoice_line):
-            return False
-
-        invoice = invoice_line.invoice_id
-        claim_line_model = self.env['claim.line']
-
-        if claim:
-            claim = self.env['crm.claim'].browse(claim)
-            company = claim.company_id
-            warehouse = claim.warehouse_id
-            claim_type = claim.claim_type
-            claim_date = claim.date
-        else:
-            warehouse_obj = self.env['stock.warehouse']
-            company_obj = self.env['res.company']
-            company = company_obj.browse(company_id)
-            warehouse = warehouse_obj.browse(warehouse_id)
-
-        values = {}
-        try:
-            warranty = claim_line_model._warranty_limit_values(
-                invoice, claim_type, product, claim_date)
-        except (InvoiceNoDate, ProductNoSupplier):
-            # we don't mind at this point if the warranty can't be
-            # computed and we don't want to block the user
-            values.update({'guarantee_limit': False, 'warning': False})
-        else:
-            values.update(warranty)
-        warranty_address = claim_line_model._warranty_return_address_values(
-            product, company, warehouse)
-        values.update(warranty_address)
-        self.update(values)
-
     def _warranty_return_address_values(self, product, company, warehouse):
         """
         Return the partner to be used as return destination and

@@ -1,8 +1,9 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
-CRM RMA Advanced Warranty
-=========================
+CRM RMA Advance Warranty
+========================
 
 This module makes improvements for warranty return address and warranty limit calculations method from **CRM Claim RMA** module using stored supplier information
 
@@ -50,7 +51,7 @@ Credits
 Contributors
 ------------
 
-* Yanine Aular <yanina.aular@vauxoo.com>
+* Yanina Aular <yanina.aular@vauxoo.com>
 * Osval Reyes <osval@vauxoo.com>
 
 Maintainer

@@ -39,9 +39,8 @@ class ClaimMakePickingFromPicking(models.TransientModel):
 
     @api.model
     def _get_picking_lines(self):
-        context = self._context
         move_lines = self.env['stock.picking'].\
-            browse(context['active_id']).move_lines
+            browse(self.env.context.get('active_id')).move_lines
         return [mov.id for mov in move_lines]
 
     @api.model
@@ -49,10 +48,9 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         """
         Get default source location
         """
-        context = self._context
         warehouse_id = self._get_default_warehouse()
         picking_obj = self.env['stock.picking']
-        picking_id = context.get('active_id')
+        picking_id = self.env.context.get('active_id')
         picking_rec = picking_obj.browse(picking_id)
         if picking_rec.location_dest_id:
             return picking_rec.location_dest_id.id
@@ -64,21 +62,22 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         """
         Get default destination location
         """
-        context = self._context
         warehouse_id = self._get_default_warehouse()
         loc_id = self.env['stock.location']
-        picking_type = context.get('picking_type')
+        picking_type = self.env.context.get('picking_type')
         picking_type_obj = self.env['stock.picking.type']
+
         if isinstance(picking_type, int):
             pick_t = picking_type_obj.browse(picking_type)
             loc_id = pick_t.default_location_dest_id
         else:
-            if context.get('picking_type') == 'picking_stock':
+            if picking_type == 'picking_stock':
                 loc_id = warehouse_id.lot_stock_id.id
-            if context.get('picking_type') == 'picking_loss':
-                loc_id = warehouse_id.\
-                    loss_loc_id.id
-            if context.get('picking_type') == 'picking_refurbish':
+
+            if picking_type == 'picking_loss':
+                loc_id = warehouse_id.loss_loc_id.id
+
+            if picking_type == 'picking_refurbish':
                 loc_id = warehouse_id.lot_refurbish_id.id
         return loc_id
 
@@ -114,9 +113,9 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         picking_obj = self.env['stock.picking']
         move_obj = self.env['stock.move']
         view_obj = self.env['ir.ui.view']
-        context = self._context
-        if context.get('picking_type'):
-            context_type = context.get('picking_type')[8:]
+
+        if self.env.context.get('picking_type'):
+            context_type = self.env.context.get('picking_type')[8:]
             note = 'Internal picking from RMA to %s' % context_type
             name = 'Internal picking to %s' % context_type
         view_id = view_obj.search([
@@ -124,7 +123,7 @@ class ClaimMakePickingFromPicking(models.TransientModel):
             ('type', '=', 'form'),
             ('name', '=', 'stock.picking.form')
         ])[0]
-        prev_picking = picking_obj.browse(context['active_id'])
+        prev_picking = picking_obj.browse(self.env.context.get('active_id'))
         partner_id = prev_picking.partner_id.id
         # create picking
         picking_id = picking_obj.create({

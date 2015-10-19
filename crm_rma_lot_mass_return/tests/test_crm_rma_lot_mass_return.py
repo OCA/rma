@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Author: Osval Reyes
+#    Author: Osval Reyes,
+#            Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -33,7 +34,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
         self.partner_id = self.env['res.partner'].browse(
             self.ref('base.res_partner_2'))
-        self.invoice_id = self.create_sale_invoice()
+        self.invoice_id, self.lot_ids = self.create_sale_invoice()
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
@@ -91,7 +92,9 @@ class TestCrmRmaLotMassReturn(TransactionCase):
                          len(self.invoice_id.invoice_line.ids))
 
         wizard_id.change_list(lines_list_id)
-        wizard_id.scan_data = self.invoice_id.number + '\n'
+        wizard_id.scan_data = self.invoice_id.number + \
+            '*5*description here' + '\n' + self.lot_ids[0].name
+        wizard_id._set_message()
         wizard_id.add_claim_lines()
 
         # Claim record it must have same line count as the invoice
@@ -145,4 +148,4 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         invoice_id = sale_order_id.invoice_ids[0]
         invoice_id.signal_workflow('invoice_open')
 
-        return invoice_id
+        return invoice_id, lot_ids

@@ -28,7 +28,18 @@ class ProductProduct(models.Model):
 
     _inherit = 'product.product'
 
-    @api.one
+    rma_qty_available = fields.Float(compute='_rma_product_available',
+                                     digits_compute=dp.
+                                     get_precision('Product Unit '
+                                                   'of Measure'),
+                                     string='RMA Quantity On Hand')
+
+    rma_virtual_available = fields.Float(compute='_rma_product_available',
+                                         digits_compute=dp.
+                                         get_precision('Product Unit '
+                                                       'of Measure'),
+                                         string='RMA Forecasted Quantity')
+
     @api.depends('rma_qty_available', 'rma_virtual_available')
     def _rma_product_available(self):
         """ Finds the incoming and outgoing quantity of product for the RMA
@@ -112,15 +123,3 @@ class ProductProduct(models.Model):
                         moves_in.get(self.id, 0.0) -
                         moves_out.get(self.id, 0.0),
                         precision_rounding=self.uom_id.rounding)
-
-    rma_qty_available = fields.Float(compute='_rma_product_available',
-                                     digits_compute=dp.
-                                     get_precision('Product Unit '
-                                                   'of Measure'),
-                                     string='RMA Quantity On Hand')
-
-    rma_virtual_available = fields.Float(compute='_rma_product_available',
-                                         digits_compute=dp.
-                                         get_precision('Product Unit '
-                                                       'of Measure'),
-                                         string='RMA Forecasted Quantity')

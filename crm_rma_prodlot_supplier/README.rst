@@ -35,7 +35,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* No issues are currently known
+* The functionalities contained in this module only applies for Invoice Control: Based on generated draft invoices and Based on incoming shipments
 
 Bug Tracker
 ===========
