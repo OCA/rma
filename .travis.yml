@@ -25,6 +25,7 @@ install:
   - travis_install_nightly
   # add OCA/crm dependencies
   - git clone --depth=1 https://github.com/OCA/crm -b ${VERSION} $HOME/crm
+  - git clone --depth=1 https://github.com/OCA/stock-logistics-workflow -b ${VERSION} $HOME/stock-logistics-workflow
 
 script:
   - travis_run_tests
