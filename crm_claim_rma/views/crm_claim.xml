@@ -217,7 +217,7 @@
                         <separator colspan="2" string="Receptions / Deliveries"/>
                         <field name="picking_ids" colspan="4" readonly="1"/>
                     </page>
-	            </page>
+                </page>
             </field>
         </record>
 
@@ -226,13 +226,13 @@
             <field name="context">{"search_default_user_id":uid, "stage_type":'claim'}</field>
         </record>
 
-
         <!-- substates action -->
         <record id="act_crm_claim_substates" model="ir.actions.act_window">
             <field name="name">Claim line substates</field>
             <field name="res_model">substate.substate</field>
             <field name="view_type">form</field>
         </record>
+
         <menuitem
             name="Claim line substates"
             id="menu_crm_case_claims_claim_line_substates"

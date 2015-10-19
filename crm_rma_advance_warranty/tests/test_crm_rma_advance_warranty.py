@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Author: Osval Reyes
+#    Author: Osval Reyes,
+#            Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -96,9 +97,9 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
         for line_id in claim_id.claim_line_ids:
             # warranty return address values
 
-            self.assertTrue(line_id.warranty_return_partner
-                            and line_id.warranty_type
-                            and line_id.location_dest_id)
+            self.assertTrue(line_id.warranty_return_partner and
+                            line_id.warranty_type and
+                            line_id.location_dest_id)
             # warranty limit values
-            self.assertTrue(line_id.guarantee_limit
-                            and line_id.set_warranty_limit)
+            self.assertTrue(line_id.guarantee_limit and
+                            line_id.set_warranty_limit)

@@ -28,21 +28,16 @@ class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    loss_loc_id = fields.Many2one(
-        'stock.location',
-        'Loss Location')
+    loss_loc_id = fields.Many2one('stock.location', 'Loss Location')
 
-    lot_refurbish_id = fields.Many2one(
-        'stock.location',
-        'Refurbish Location')
+    lot_refurbish_id = fields.Many2one('stock.location', 'Refurbish Location')
 
     @api.model
     def create_locations_rma(self, wh_id):
         vals = {}
 
         location_obj = self.env['stock.location']
-        context = self._context
-        context_with_inactive = context.copy()
+        context_with_inactive = self.env.context.copy()
         context_with_inactive['active_test'] = False
         wh_loc_id = wh_id.view_location_id.id
 
@@ -59,14 +54,14 @@ class StockWarehouse(models.Model):
 
         if not wh_id.lot_refurbish_id:
             loc_vals.update({'name': _('Refurbish')})
-            location_id = location_obj.\
-                create(loc_vals, context=context_with_inactive)
+            location_id = location_obj.with_context(context_with_inactive).\
+                create(loc_vals)
             vals['lot_refurbish_id'] = location_id.id
 
         if not wh_id.loss_loc_id:
             loc_vals.update({'name': _('Loss')})
-            location_id = location_obj.\
-                create(loc_vals, context=context_with_inactive)
+            location_id = location_obj.with_context(context_with_inactive).\
+                create(loc_vals)
             vals['loss_loc_id'] = location_id.id
 
         vals.update(vals_new)

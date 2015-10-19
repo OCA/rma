@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'CRM RMA Advanced Warranty',
+    'name': 'CRM RMA Advance Warranty',
     'version': '8.0.1.0.0',
     'author': 'Vauxoo,Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',

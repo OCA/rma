@@ -21,7 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 
 
 class ReturnedLinesFromSerial(models.TransientModel):
@@ -63,13 +63,12 @@ class ReturnedLinesFromSerial(models.TransientModel):
     def create_claim_line(self, claim_id, claim_origin,
                           product_record, prodlot_id, qty, name,
                           invline_record=False):
-        claim_line_model = self.env['claim.line']
-        line_rec = claim_line_model.create({
+        clima_line = self.env['claim.line']
+        line_rec = clima_line.create({
             'claim_id': claim_id,
             'claim_origin': claim_origin,
             'product_id': product_record and product_record.id or False,
-            'name': product_record and product_record.name or
-            invline_record.name,
+            'name': name and name or product_record.name,
             'invoice_line_id': self.prodlot_2_invoice_line(prodlot_id.name).id,
             'product_returned_quantity': qty,
             'prodlot_id': prodlot_id.id,
@@ -163,128 +162,209 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 if len(comput) >= 3:
                     data_it_2 = comput[2]
                 if comput[0]:
-                    data_line.append((comput[0], data_it_1, data_it_2))
+                    data_line.append((comput[0], (data_it_1, data_it_2)))
             else:
                 if item.strip():
-                    data_line.append((item.strip(), '0', ''))
+                    data_line.append((item.strip(), ('0', '')))
         return data_line
 
-    @api.multi
-    def onchange_load_products(self, input_data, lines_list_id, context=None):
-        """
-        To load products or invoice lines for the claim lines
-        """
-        context = context or None
-        invoice = self.env['account.invoice']
-        lot_obj = self.env['stock.production.lot']
+    def _get_lots_from_scan_data(self, input_data):
+
         input_lines = self.get_data_of_products(input_data)
-        mes = ''
-        ids_data = ''
-        all_prod = []
-        lot_ids = set()
-        for line in input_lines or []:
+        invoice = self.env['account.invoice']
+        lot = self.env['stock.production.lot']
+
+        prodlot_set_ids = set()
+        lot_set_ids = set()
+        invoice_lot_set_ids = set()
+        lots_lot_set_ids = set()
+
+        if not input_lines:
+            return False, False
+
+        for line in input_lines:
             # if there is no invoice/serial in it
             if not line[0]:
                 continue
 
             number_serial = line[0].encode('utf8')
-
             # search invoices first
             invoice_ids = invoice.search([('number', '=', number_serial)])
-
             element_searched = False
             if invoice_ids:
-                line_ids = lot_obj.\
+                line_ids = lot.\
                     search([('invoice_line_id', 'in',
                              invoice_ids.mapped('invoice_line.id'))])
-                lot_ids |= set(line_ids.mapped('id'))
-                element_searched = lot_ids
+                lot_set_ids |= set(line_ids.mapped('id'))
+                element_searched = lot_set_ids
+                invoice_lot_set_ids |= lot_set_ids
+
             else:
-                prodlot_ids = lot_obj.search(
-                    ['&', ('name', '=', number_serial),
-                     ('invoice_line_id', '!=', False)])
+                # if not, it must be a serial lot number
+                prodlot_ids = lot.search([('name', '=', number_serial),
+                                          ('invoice_line_id', '!=', False)])
 
                 if prodlot_ids:
-                    for item in prodlot_ids:
-                        item_name = item.product_id \
-                            and item.product_id.name.encode('utf8') \
-                            or False
-                        line_id = '{pid}+{pname}'.format(pid=item.id,
-                                                         pname=item_name)
-                        all_prod.append((line_id, 1))
-                element_searched = prodlot_ids
+                    element_searched = True
 
+                for item in prodlot_ids:
+                    item_name = item.product_id \
+                        and item.product_id.name.encode('utf8') or False
+                    prodlot_set_ids |= {'%s+%s' % (item.id, item_name)}
+
+                lots_lot_set_ids |= set(prodlot_ids.mapped('id'))
+
+            # if at least one line is not found, then return error
             if not element_searched:
-                return {
-                    'warning': {
-                        'message': (_('The product or invoice %s'
-                                      ' was not found') % line[0])},
-                        'value': {
-                            'scan_data': '\n'.join(
-                                input_data.split('\n')[0:-1])
-                    }
+                return False, line[0], False
+
+        # all lines were found, then return those lots
+        return invoice_lot_set_ids, prodlot_set_ids, lots_lot_set_ids
+
+    @api.multi
+    def onchange_load_products(self, input_data, lines_list_id):
+        """
+        Load claim lines from partner invoices or related production lots
+        into the current claim massively
+        """
+        lot_lots_ids = set()
+        prodlot_set_ids = set()
+        lines_set_ids = set()
+        current_status = scaned_data = ''
+
+        elements_searched, line_found, lot_lots_ids = \
+            self._get_lots_from_scan_data(input_data)
+
+        if not elements_searched and not line_found:
+            return {
+                'value': {
+                    'lines_id': [],
+                    'current_status': current_status,
+                    'scaned_data': scaned_data,
+                },
+                'domain': {
+                    'lines_list_id': [('id', 'in', [])]
                 }
+            }
+        if not elements_searched and not lot_lots_ids and line_found:
+            return {
+                'warning': {
+                    'message': (_('The product or invoice %s'
+                                  ' was not found') % line_found)},
+            }
+        else:
+            lines_set_ids = elements_searched
+            prodlot_set_ids = line_found
 
-        for line in all_prod:
-            name = line[0].split('+')
-            mes = mes + '{0} \t {1}\n'.format(name[1], line[1])
-            ids_data = ids_data + '{pid}\n'.format(pid=name[0]) * line[1]
+        for line in prodlot_set_ids:
+            name = line.split('+')
+            current_status += name[1] + '\n'
+            scaned_data += name[0] + '\n'
 
-        lot_ids = list(lot_ids)
-
-        res = {
+        return {
             'value': {
-                'lines_id': [(6, 0, lot_ids)],
-                'current_status': mes,
-                'scaned_data': ids_data,
+                'lines_id': [(6, 0, list(lines_set_ids))],
+                'current_status': current_status,
+                'scaned_data': scaned_data,
             },
             'domain': {
-                'lines_list_id': [('id', 'in', lot_ids)]
+                'lines_list_id': [('id', 'in', list(lines_set_ids))]
             }
         }
-        return res
+
+    def _get_lot_ids(self):
+        lot = self.env['stock.production.lot']
+        lot_ids = set()
+        if self.scaned_data:
+            lot_ids |= {lot_id
+                        for lid in self.scaned_data.strip().split('\n')
+                        for lot_id in lot.browse(int(lid))}
+
+        if self.lines_list_id:
+            lot_ids |= {lid for lid in self.lines_list_id}
+
+        return lot_ids
+
+    @api.model
+    def _get_invalid_lots_set(self):
+        """
+        Return only those lots are related to claim lines
+        """
+        lot_ids = self._get_lot_ids()
+        invalid_lots = self.env['claim.line'].search(
+            [('prodlot_id', 'in', [lid.id for lid in lot_ids])]
+        )
+        return invalid_lots and invalid_lots.mapped('prodlot_id') or []
 
     @api.multi
     def add_claim_lines(self):
-        context = self._context
-        prodlot_obj = self.env['stock.production.lot']
-        inv_recs = []
         info = self.get_data_of_products(self.scan_data)
-        if self.scaned_data:
-            inv_recs += [prodlot_obj.browse(int(inv_id))
-                         for inv_id in self.scaned_data.strip().split('\n')]
-        if self.lines_list_id:
-            inv_recs += self.lines_list_id
 
-        len_info = len(info)
-        index = 0
-        for prodlot_brw in inv_recs:
-            product_brw = prodlot_brw.product_id
+        valid_lot_ids = set(self._get_lot_ids()) - \
+            set(self._get_invalid_lots_set())
 
-            name = ''
-            num = 0
-            if index < len_info:
-                num = info[index][1]
+        # It creates only those claim lines that have a valid production lot,
+        # i. e. not using in others claims
+        info = dict(info)
+        if valid_lot_ids:
+            for lot_id in valid_lot_ids:
+                product_id = lot_id.product_id
+
+                claim_line_info = False
+                if lot_id.name in info:
+                    claim_line_info = info.get(lot_id.name, False)
+                elif lot_id.invoice_line_id.invoice_id.number in info:
+                    claim_line_info = \
+                        info.get(lot_id.invoice_line_id.invoice_id.number,
+                                 False)
+
+                num = claim_line_info and claim_line_info[0] or '0'
+                name = claim_line_info and claim_line_info[1] or ''
                 if num.isdigit():
                     num = int(num)
                 else:
                     num = 0
-                name = info[index][2]
-                index += 1
 
-            self.create_claim_line(context.get('active_id'),
-                                   self.env['claim.line']._get_subject(num),
-                                   product_brw,
-                                   prodlot_brw, 1,
-                                   name,
-                                   prodlot_brw.invoice_line_id)
+                self.create_claim_line(self.env.context.get('active_id'),
+                                       self.env[
+                                           'claim.line']._get_subject(num),
+                                       product_id, lot_id, 1, name,
+                                       lot_id.invoice_line_id)
+        # normal execution
         self.action_cancel()
 
     @api.multi
     def change_list(self, lines):
-        res = {
+        return {
             'value': {
                 'lines_list_id': lines,
             }
         }
-        return res
+
+    message = fields.Text(string='Message', compute='_set_message')
+
+    @api.depends('current_status', 'lines_list_id', 'scan_data')
+    def _set_message(self):
+        """
+        Notify for missing (not added) claim lines that are in use in others
+        claims
+        """
+        msg = ''
+        all_lots = self._get_lots_from_scan_data(self.scan_data)
+        not_valid_lot_ids = len(
+            all_lots) > 2 and all_lots[0] | all_lots[2] or False
+        if not_valid_lot_ids:
+            not_valid_lot_ids = self.env['claim.line'].search(
+                [('prodlot_id', 'in', list(not_valid_lot_ids))]
+            ).mapped('prodlot_id')
+            claim_with_lots_msg = ""
+
+            for line_id in not_valid_lot_ids:
+                claim_with_lots_msg += "\t- %s\n" % \
+                    line_id._get_lot_complete_name()
+            if claim_with_lots_msg:
+                msg = _("The following Serial/Lot numbers won't be added,"
+                        " because all of them (listed below) are currently in"
+                        " used:\n\n %s" % (claim_with_lots_msg)) or ''
+
+        self.message = msg

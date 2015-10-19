@@ -36,6 +36,7 @@
     ],
     'data': [
         'views/product_product.xml',
+        'views/product_template.xml',
     ],
     'demo': [
         'demo/stock_location.xml',

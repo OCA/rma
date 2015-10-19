@@ -31,18 +31,13 @@ class StockProductionLot(models.Model):
                                       help="Invoice Line Of "
                                       "Product to Customer Invoice")
 
-    @api.multi
-    def name_get(self):
-        """
-        Overwrite Odoo method like the one for
-        stock.production.lot model in the
-        rma module.
-        """
-        res = []
-        for lot in self:
-            name = _("%s - Lot Number: %s - %s") % \
-                (lot.invoice_line_id.invoice_id.number,
-                 lot.name or _('No lot number'),
-                 lot.invoice_line_id.name)
-            res.append((lot.id, name))
-        return res
+    lot_complete_name = fields.Char(compute="_get_lot_complete_name",
+                                    string="Complete Lot Name")
+
+    @api.depends('invoice_line_id', 'name')
+    def _get_lot_complete_name(self):
+        name = _("%s - Lot Number: %s - %s") % \
+            (self.invoice_line_id.invoice_id.number,
+             self.name or _('No lot number'),
+             self.invoice_line_id.name)
+        return name
