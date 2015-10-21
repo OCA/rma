@@ -180,7 +180,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         lots_lot_set_ids = set()
 
         if not input_lines:
-            return False, False
+            return False, False, False
 
         for line in input_lines:
             # if there is no invoice/serial in it
@@ -286,22 +286,23 @@ class ReturnedLinesFromSerial(models.TransientModel):
         return lot_ids
 
     @api.model
-    def _get_invalid_lots_set(self):
+    def _get_invalid_lots_set(self, lot_ids):
         """
         Return only those lots are related to claim lines
         """
-        lot_ids = self._get_lot_ids()
         invalid_lots = self.env['claim.line'].search(
-            [('prodlot_id', 'in', [lid.id for lid in lot_ids])]
+            [('prodlot_id', 'in', lot_ids)]
         )
         return invalid_lots and invalid_lots.mapped('prodlot_id') or []
 
     @api.multi
     def add_claim_lines(self):
         info = self.get_data_of_products(self.scan_data)
+        lot_ids = self._get_lot_ids()
+        lot_ids = [lid.id for lid in lot_ids]
 
         valid_lot_ids = set(self._get_lot_ids()) - \
-            set(self._get_invalid_lots_set())
+            set(self._get_invalid_lots_set(lot_ids))
 
         # It creates only those claim lines that have a valid production lot,
         # i. e. not using in others claims
@@ -354,9 +355,8 @@ class ReturnedLinesFromSerial(models.TransientModel):
         not_valid_lot_ids = len(
             all_lots) > 2 and all_lots[0] | all_lots[2] or False
         if not_valid_lot_ids:
-            not_valid_lot_ids = self.env['claim.line'].search(
-                [('prodlot_id', 'in', list(not_valid_lot_ids))]
-            ).mapped('prodlot_id')
+            not_valid_lot_ids = self.\
+                _get_invalid_lots_set(list(not_valid_lot_ids))
             claim_with_lots_msg = ""
 
             for line_id in not_valid_lot_ids:
