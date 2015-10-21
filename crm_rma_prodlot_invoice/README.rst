@@ -7,10 +7,10 @@
 CRM Claim Prodlot Invoice
 =========================
 
-When an invoice is created from sale order, picking and procurement information
-is kept into invoice line.
+When an invoice is created from sale order, invoice line information
+is kept into production lot.
 
-Also, helps to display invoice line lot information when an invoice line is displayed
+Also, helps to display invoice line information when an production lot is displayed
 
 Installation
 ============

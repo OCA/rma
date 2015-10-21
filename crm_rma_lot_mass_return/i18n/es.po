@@ -95,8 +95,8 @@ msgstr "Última actualización hecha en"
 
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
-msgid "Mass return from serial/lot or invoice"
-msgstr "Devoluciones masivas usando serial o número de lote"
+msgid "Add claim lines using serial or invoice number"
+msgstr "Agregar devoluciones usando número de serial o de factura"
 
 #. module: crm_rma_lot_mass_return
 #. openerp-web

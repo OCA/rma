@@ -320,7 +320,7 @@ msgstr ""
 #: field:claim.line,claim_origin:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origin
 msgid "Claim Subject"
-msgstr "Objeto de la reclamación"
+msgstr "Motivo de la reclamación"
 
 #. module: crm_claim_rma
 #: field:crm.claim,real_cost:0
@@ -994,3 +994,80 @@ msgstr "Prioridad"
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "Product Returns"
 msgstr "Productos Devueltos"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+#: field:crm.claim,pick:0
+msgid "Pick the product in the store"
+msgstr "Retirar el producto en recepción"
+
+#. module: crm_claim_rma
+#: field:claim.line,number:0
+msgid "Number"
+msgstr "Número"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Valid"
+msgstr "Válida"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Expired"
+msgstr "Expirada"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Not Defined"
+msgstr "No Definida"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Other"
+msgstr "Otro"
+
+#. module: crm_claim_rma
+#: field:crm.claim,pick:0
+msgid "Pick the product in the store"
+msgstr "Retirar el producto en recepción"
+
+#. module: crm_claim_rma
+#: field:crm.claim,name:0
+msgid "Name"
+msgstr "Reclamo"
+
+#. module: crm_claim_rma
+#: field:crm.claim,rma_number:0
+msgid "Rma number"
+msgstr "Número RMA"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Imperfection"
+msgstr "Imperfección"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Client"
+msgstr "Daño físico por el cliente"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Company"
+msgstr "Daño físico por la compañía"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Perfect Conditions"
+msgstr "Perfectas condiciones"
+
