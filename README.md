@@ -46,6 +46,7 @@ addon | version | summary
 --- | --- | ---
 [crm_claim_rma](crm_claim_rma/) | 8.0.1.1.0 | RMA Claim (Product Return Management)
 [crm_claim_rma_code](crm_claim_rma_code/) | 8.0.1.0.0 | CRM Claim RMA Code
+[crm_rma_prodlot_invoice](crm_rma_prodlot_invoice/) | 8.0.1.0.0 | CRM Claim Prodlot Invoice
 [crm_rma_prodlot_supplier](crm_rma_prodlot_supplier/) | 8.0.1.0.0 | Claim Prodlot Supplier
 [product_warranty](product_warranty/) | 8.0.1.0.0 | Product warranty
 
