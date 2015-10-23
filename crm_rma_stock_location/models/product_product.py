@@ -32,94 +32,115 @@ class ProductProduct(models.Model):
                                      digits_compute=dp.
                                      get_precision('Product Unit '
                                                    'of Measure'),
+                                     search='_search_rma_product_quantity',
                                      string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
                                          get_precision('Product Unit '
                                                        'of Measure'),
+                                     search='_search_rma_product_quantity',
                                          string='RMA Forecasted Quantity')
 
-    @api.depends('rma_qty_available', 'rma_virtual_available')
+    def _search_rma_product_quantity(self, operator, value):
+        res = []
+        #to prevent sql injections
+        assert operator in ('<', '>', '=', '!=', '<=', '>='), 'Invalid domain operator'
+        assert isinstance(value, (float, int)), 'Invalid domain right operand'
+
+        if operator == '=':
+            operator = '=='
+
+        ids = []
+        product_ids = self.search([])
+        if product_ids:
+            #TODO: Still optimization possible when searching virtual quantities
+            for element in product_ids:
+                if eval('element.rma_virtual_available' + operator + str(value)) or \
+                        eval('element.rma_qty_available' + operator + str(value)):
+                    ids.append(element.id)
+            res.append(('id', 'in', ids))
+        return res
+
     def _rma_product_available(self):
         """ Finds the incoming and outgoing quantity of product for the RMA
         locations.
         """
         context = self._context
-
         warehouse_id = context.get('warehouse_id')
         warehouse_obj = self.env['stock.warehouse']
-        # no dependency on 'sale', the same oddness is done in
-        # 'stock' so I kept it here
         ctx = context.copy()
+        for product in self:
+            # no dependency on 'sale', the same oddness is done in
+            # 'stock' so I kept it here
 
-        if warehouse_id:
-            rma_id = warehouse_obj.read(warehouse_id,
-                                        ['lot_rma_id'])['lot_rma_id'][0]
-            if rma_id:
-                ctx['location'] = rma_id
-        else:
-            location_ids = set()
-            wids = warehouse_obj.search([])
-            if not wids:
-                return
-            for wh in wids:
-                if wh.lot_rma_id:
-                    location_ids.add(wh.lot_rma_id.id)
-            if not location_ids:
-                return
-            ctx['location'] = list(location_ids)
+            if warehouse_id:
+                rma_id = warehouse_obj.read(warehouse_id,
+                                            ['lot_rma_id'])['lot_rma_id'][0]
+                if rma_id:
+                    ctx['location'] = rma_id
+            else:
+                location_ids = set()
+                wids = warehouse_obj.search([])
+                if not wids:
+                    return
+                for wh in wids:
+                    if wh.lot_rma_id:
+                        location_ids.add(wh.lot_rma_id.id)
+                if not location_ids:
+                    return
+                ctx['location'] = list(location_ids)
 
-        domain_products = [('product_id', 'in', [self.id])]
-        domain_quant, domain_move_in, domain_move_out = \
-            self.with_context(ctx)._get_domain_locations()
-        domain_move_in += self.with_context(ctx)._get_domain_dates() + \
-            [('state',
-              'not in',
-              ('done', 'cancel', 'draft'))] + domain_products
-        domain_move_out += self.with_context(ctx)._get_domain_dates() + \
-            [('state',
-              'not in',
-              ('done', 'cancel', 'draft'))] + domain_products
-        domain_quant += domain_products
-        if context.get('lot_rma_id'):
+            domain_products = [('product_id', 'in', [product.id])]
+            domain_quant, domain_move_in, domain_move_out = \
+                product.with_context(ctx)._get_domain_locations()
+            domain_move_in += product.with_context(ctx)._get_domain_dates() + \
+                [('state',
+                'not in',
+                ('done', 'cancel', 'draft'))] + domain_products
+            domain_move_out += product.with_context(ctx)._get_domain_dates() + \
+                [('state',
+                'not in',
+                ('done', 'cancel', 'draft'))] + domain_products
+            domain_quant += domain_products
             if context.get('lot_rma_id'):
-                domain_quant.append(('lot_rma_id', '=', context['lot_rma_id']))
-            moves_in = []
-            moves_out = []
-        else:
-            moves_in = self.env['stock.move'].\
-                with_context(ctx).read_group(domain_move_in,
-                                             ['product_id',
-                                              'product_qty'],
-                                             ['product_id'])
-            moves_out = self.env['stock.move'].\
-                with_context(ctx).read_group(domain_move_out,
-                                             ['product_id',
-                                              'product_qty'],
-                                             ['product_id'])
+                if context.get('lot_rma_id'):
+                    domain_quant.append(('lot_rma_id', '=', context['lot_rma_id']))
+                moves_in = []
+                moves_out = []
+            else:
+                moves_in = self.env['stock.move'].\
+                    with_context(ctx).read_group(domain_move_in,
+                                                ['product_id',
+                                                'product_qty'],
+                                                ['product_id'])
+                moves_out = self.env['stock.move'].\
+                    with_context(ctx).read_group(domain_move_out,
+                                                ['product_id',
+                                                'product_qty'],
+                                                ['product_id'])
 
-        quants = self.env['stock.quant'].\
-            with_context(ctx).read_group(domain_quant,
-                                         ['product_id',
-                                          'qty'],
-                                         ['product_id'])
+            quants = self.env['stock.quant'].\
+                with_context(ctx).read_group(domain_quant,
+                                            ['product_id',
+                                            'qty'],
+                                            ['product_id'])
 
-        quants = dict([(item.get('product_id')[0],
-                        item.get('qty')) for item in quants])
+            quants = dict([(item.get('product_id')[0],
+                            item.get('qty')) for item in quants])
 
-        moves_in = dict([(item.get('product_id')[0],
-                          item.get('product_qty')) for item in moves_in])
+            moves_in = dict([(item.get('product_id')[0],
+                            item.get('product_qty')) for item in moves_in])
 
-        moves_out = dict([(item.get('product_id')[0],
-                           item.get('product_qty')) for item in moves_out])
+            moves_out = dict([(item.get('product_id')[0],
+                            item.get('product_qty')) for item in moves_out])
 
-        self.rma_qty_available = \
-            float_round(quants.get(self.id, 0.0),
-                        precision_rounding=self.uom_id.rounding)
+            product.rma_qty_available = \
+                float_round(quants.get(product.id, 0.0),
+                            precision_rounding=product.uom_id.rounding)
 
-        self.rma_virtual_available = \
-            float_round(quants.get(self.id, 0.0) +
-                        moves_in.get(self.id, 0.0) -
-                        moves_out.get(self.id, 0.0),
-                        precision_rounding=self.uom_id.rounding)
+            product.rma_virtual_available = \
+                float_round(quants.get(product.id, 0.0) +
+                            moves_in.get(product.id, 0.0) -
+                            moves_out.get(product.id, 0.0),
+                            precision_rounding=product.uom_id.rounding)

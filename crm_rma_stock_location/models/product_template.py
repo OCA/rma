@@ -41,9 +41,9 @@ class ProductTemplate(models.Model):
                                                        ' of Measure'),
                                          string='RMA Forecasted Quantity')
 
-    @api.depends('rma_qty_available', 'rma_virtual_available')
     def _rma_product_available(self):
-        self.rma_qty_available = sum(
-            [p.rma_qty_available for p in self.product_variant_ids])
-        self.rma_virtual_available = sum(
-            [p.rma_virtual_available for p in self.product_variant_ids])
+        for product in self:
+            product.rma_qty_available = sum(
+                [p.rma_qty_available for p in product.product_variant_ids])
+            product.rma_virtual_available = sum(
+                [p.rma_virtual_available for p in product.product_variant_ids])
