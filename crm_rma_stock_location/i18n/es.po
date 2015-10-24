@@ -40,15 +40,16 @@ msgstr "RMA - Caja B"
 msgid "RMA Demo"
 msgstr "RMA Demo"
 
+
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/product.py:125
-#, python-format
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
 msgid "RMA Forecasted Quantity"
 msgstr "Cantidades pronosticadas en RMA"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/product.py:119
-#, python-format
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
 msgid "RMA Quantity On Hand"
 msgstr "Cantidades a la mano en RMA"
 
@@ -61,3 +62,14 @@ msgstr "Socket"
 #: model:ir.model,name:crm_rma_stock_location.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de inventario"
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.rma_product_variant_action
+#: model:ir.ui.menu,name:crm_rma_stock_location.menu_stock_rma
+msgid "Stock RMA"
+msgstr "Inventario RMA"
+
+#. module: crm_rma_stock_location
+#: view:product.product:crm_rma_stock_location.rma_product_search_view
+msgid "RMA Available Products"
+msgstr "Productos disponibles en RMA"
