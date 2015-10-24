@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
 
@@ -39,13 +39,14 @@ class ProductProduct(models.Model):
                                          digits_compute=dp.
                                          get_precision('Product Unit '
                                                        'of Measure'),
-                                     search='_search_rma_product_quantity',
+                                         search='_search_rma_product_quantity',
                                          string='RMA Forecasted Quantity')
 
     def _search_rma_product_quantity(self, operator, value):
         res = []
-        #to prevent sql injections
-        assert operator in ('<', '>', '=', '!=', '<=', '>='), 'Invalid domain operator'
+        # to prevent sql injections
+        assert operator in ('<', '>', '=', '!=',
+                            '<=', '>='), 'Invalid domain operator'
         assert isinstance(value, (float, int)), 'Invalid domain right operand'
 
         if operator == '=':
@@ -54,10 +55,13 @@ class ProductProduct(models.Model):
         ids = []
         product_ids = self.search([])
         if product_ids:
-            #TODO: Still optimization possible when searching virtual quantities
+            # TODO: Still optimization possible
+            # when searching virtual quantities
             for element in product_ids:
-                if eval('element.rma_virtual_available' + operator + str(value)) or \
-                        eval('element.rma_qty_available' + operator + str(value)):
+                if eval('element.rma_virtual_available' +
+                        operator + str(value)) or \
+                        eval('element.rma_qty_available' +
+                             operator + str(value)):
                     ids.append(element.id)
             res.append(('id', 'in', ids))
         return res
@@ -95,36 +99,35 @@ class ProductProduct(models.Model):
             domain_quant, domain_move_in, domain_move_out = \
                 product.with_context(ctx)._get_domain_locations()
             domain_move_in += product.with_context(ctx)._get_domain_dates() + \
-                [('state',
-                'not in',
-                ('done', 'cancel', 'draft'))] + domain_products
-            domain_move_out += product.with_context(ctx)._get_domain_dates() + \
-                [('state',
-                'not in',
-                ('done', 'cancel', 'draft'))] + domain_products
+                [('state', 'not in',
+                  ('done', 'cancel', 'draft'))] + domain_products
+            domain_move_out += product.with_context(ctx).\
+                _get_domain_dates() + \
+                [('state', 'not in',
+                  ('done', 'cancel', 'draft'))] + domain_products
             domain_quant += domain_products
             if context.get('lot_rma_id'):
                 if context.get('lot_rma_id'):
-                    domain_quant.append(('lot_rma_id', '=', context['lot_rma_id']))
+                    domain_quant.append(('lot_rma_id',
+                                         '=', context['lot_rma_id']))
                 moves_in = []
                 moves_out = []
             else:
                 moves_in = self.env['stock.move'].\
                     with_context(ctx).read_group(domain_move_in,
-                                                ['product_id',
-                                                'product_qty'],
-                                                ['product_id'])
+                                                 ['product_id',
+                                                  'product_qty'],
+                                                 ['product_id'])
                 moves_out = self.env['stock.move'].\
                     with_context(ctx).read_group(domain_move_out,
-                                                ['product_id',
-                                                'product_qty'],
-                                                ['product_id'])
+                                                 ['product_id',
+                                                  'product_qty'],
+                                                 ['product_id'])
 
             quants = self.env['stock.quant'].\
                 with_context(ctx).read_group(domain_quant,
-                                            ['product_id',
-                                            'qty'],
-                                            ['product_id'])
+                                             ['product_id', 'qty'],
+                                             ['product_id'])
 
             quants = dict([(item.get('product_id')[0],
                             item.get('qty')) for item in quants])
@@ -133,7 +136,7 @@ class ProductProduct(models.Model):
                             item.get('product_qty')) for item in moves_in])
 
             moves_out = dict([(item.get('product_id')[0],
-                            item.get('product_qty')) for item in moves_out])
+                               item.get('product_qty')) for item in moves_out])
 
             product.rma_qty_available = \
                 float_round(quants.get(product.id, 0.0),

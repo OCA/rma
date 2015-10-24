@@ -1071,3 +1071,8 @@ msgstr "Daño físico por la compañía"
 msgid "Perfect Conditions"
 msgstr "Perfectas condiciones"
 
+#. module: yoytec_customer_rma_workflow
+#: field:claim.line,claim_diagnosis:0
+msgid "Claim diagnosis"
+msgstr "Diagnóstico del reclamo"
+
