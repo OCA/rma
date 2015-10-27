@@ -61,8 +61,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def create_claim_line(self, claim_id, claim_origin,
-                          product_record, prodlot_id, qty, name,
-                          invline_record=False):
+                          product_record, prodlot_id, qty, name):
         clima_line = self.env['claim.line']
         line_rec = clima_line.create({
             'claim_id': claim_id,
@@ -84,6 +83,16 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                  'Partner',
                                  default=_get_default_partner_id)
 
+    def _get_claim_type(self):
+        claim_id = self.env.context.get('active_id')
+        claim_record = self.env['crm.claim'].browse(claim_id)
+        current_claim_type = claim_record.claim_type
+        customer_claim_type = \
+            self.env.ref('crm_claim_type.crm_claim_type_customer')
+        supplier_claim_type = \
+            self.env.ref('crm_claim_type.crm_claim_type_supplier')
+        return current_claim_type, customer_claim_type, supplier_claim_type
+
     @api.model
     def prodlot_2_invoice_line(self, prodlot):
         """
@@ -91,11 +100,24 @@ class ReturnedLinesFromSerial(models.TransientModel):
         based in serial/lot number
         """
         lot_obj = self.env['stock.production.lot']
+        current_claim_type, customer_claim_type, supplier_claim_type = \
+            self._get_claim_type()
+
         prodlot = lot_obj.search([('name', '=', str(prodlot))])
-        if prodlot.invoice_line_id:
-            return prodlot.invoice_line_id
+
+        if supplier_claim_type == current_claim_type:
+            if prodlot.supplier_invoice_line_id:
+                return prodlot.supplier_invoice_line_id
+        elif customer_claim_type == current_claim_type:
+            if prodlot.invoice_line_id:
+                return prodlot.invoice_line_id
         else:
-            return False
+            if prodlot.invoice_line_id:
+                return prodlot.invoice_line_id
+            elif prodlot.supplier_invoice_line_id:
+                return prodlot.supplier_invoice_line_id
+
+        return False
 
     lines_list_id = fields.Many2many('stock.production.lot',
                                      'lot_returned_wizard',
@@ -182,6 +204,9 @@ class ReturnedLinesFromSerial(models.TransientModel):
         if not input_lines:
             return False, False, False
 
+        current_claim_type, customer_claim_type, supplier_claim_type = \
+            self._get_claim_type()
+
         for line in input_lines:
             # if there is no invoice/serial in it
             if not line[0]:
@@ -192,17 +217,36 @@ class ReturnedLinesFromSerial(models.TransientModel):
             invoice_ids = invoice.search([('number', '=', number_serial)])
             element_searched = False
             if invoice_ids:
-                line_ids = lot.\
-                    search([('invoice_line_id', 'in',
-                             invoice_ids.mapped('invoice_line.id'))])
+                line_ids = lot
+                if supplier_claim_type == current_claim_type:
+                    line_ids = lot.\
+                        search([('supplier_invoice_line_id', 'in',
+                                invoice_ids.mapped('invoice_line.id'))])
+                elif customer_claim_type == current_claim_type:
+                    line_ids = lot.\
+                        search([('invoice_line_id', 'in',
+                                invoice_ids.mapped('invoice_line.id'))])
+
                 lot_set_ids |= set(line_ids.mapped('id'))
                 element_searched = lot_set_ids
                 invoice_lot_set_ids |= lot_set_ids
-
             else:
                 # if not, it must be a serial lot number
-                prodlot_ids = lot.search([('name', '=', number_serial),
-                                          ('invoice_line_id', '!=', False)])
+                prodlot_ids = lot
+                if supplier_claim_type == current_claim_type:
+                    prodlot_ids = \
+                        lot.search([('name', '=', number_serial),
+                                    ('supplier_invoice_line_id', '!=', False)])
+                elif customer_claim_type == current_claim_type:
+                    prodlot_ids = \
+                        lot.search([('name', '=', number_serial),
+                                    ('invoice_line_id', '!=', False)])
+                else:
+                    prodlot_ids = \
+                        lot.search([('name', '=', number_serial), '|',
+                                    ('supplier_invoice_line_id', '!=', False),
+                                    ('invoice_line_id', '!=', False),
+                                    ])
 
                 if prodlot_ids:
                     element_searched = True
@@ -326,11 +370,14 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 else:
                     num = 0
 
+                current_claim_type, customer_claim_type, \
+                    supplier_claim_type = \
+                    self._get_claim_type()
+
                 self.create_claim_line(self.env.context.get('active_id'),
                                        self.env[
                                            'claim.line']._get_subject(num),
-                                       product_id, lot_id, 1, name,
-                                       lot_id.invoice_line_id)
+                                       product_id, lot_id, 1, name)
         # normal execution
         self.action_cancel()
 

@@ -27,28 +27,40 @@ class TestPickingFromPicking(TransactionCase):
     def setUp(self):
         super(TestPickingFromPicking, self).setUp()
         self.stock_warehouse = self.env['stock.warehouse']
-        self.crm_claim = self.env['crm.claim']
+        self.claim_id = self.create_claim()
         self.wizardmakepicking = self.env['claim_make_picking.wizard']
         self.claim_picking_wizard = \
             self.env['claim.make.picking.from.picking.wizard']
         self.get_default_locations()
 
+    def create_claim(self):
+        claim_id = self.env['crm.claim'].browse(
+            self.ref("crm_claim.crm_claim_6"))
+
+        claim_id.write({
+            'claim_line_ids': [(0, 0, {
+                'name': str(claim_id.id) + 'test 1',
+                'claim_origin': u'damaged',
+                'product_id': self.ref('product.product_product_8')
+            }), (0, 0, {
+                'name': str(claim_id.id) + 'test 2',
+                'claim_origin': u'none',
+                'product_id': self.ref('product.product_product_6')
+            })]
+        })
+
+        return claim_id
+
     def get_default_locations(self):
         """
-        Create a record of product.supplier for next tests
+        Return locations for RMA, Loss and Refurbish
         """
-        wh_id = self.ref("stock.warehouse0")
-        self.main_warehouse = self.stock_warehouse.browse(wh_id)
+        self.main_warehouse_id = self.stock_warehouse.browse(
+            self.ref("stock.warehouse0"))
 
-        self.loc_rma = self.main_warehouse.lot_rma_id
-
-        self.loss_loc = self.main_warehouse.loss_loc_id
-
-        self.loc_refurbish = self.main_warehouse.lot_refurbish_id
-
-        claim_test = self.ref("crm_claim.crm_claim_6")
-
-        self.claim_test = self.crm_claim.browse(claim_test)
+        self.loc_rma = self.main_warehouse_id.lot_rma_id
+        self.loss_loc = self.main_warehouse_id.loss_loc_id
+        self.loc_refurbish = self.main_warehouse_id.lot_refurbish_id
 
     def test_get_dest_loc(self):
 
@@ -56,10 +68,10 @@ class TestPickingFromPicking(TransactionCase):
         # with button New Products Return
 
         wiz_context = {
-            'active_id': self.claim_test.id,
-            'warehouse_id': self.claim_test.warehouse_id.id,
-            'partner_id': self.claim_test.partner_id.id,
-            'picking_type': self.claim_test.warehouse_id.rma_in_type_id.id,
+            'active_id': self.claim_id.id,
+            'warehouse_id': self.claim_id.warehouse_id.id,
+            'partner_id': self.claim_id.partner_id.id,
+            'picking_type': self.claim_id.warehouse_id.rma_in_type_id.id,
         }
         wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
 
@@ -80,14 +92,14 @@ class TestPickingFromPicking(TransactionCase):
                           self.loc_rma.id)
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
-                          self.main_warehouse.lot_stock_id.id)
+                          self.main_warehouse_id.lot_stock_id.id)
 
         self.assertEquals(len(claim_wizard.picking_line_ids),
-                          len(self.claim_test.claim_line_ids))
+                          len(self.claim_id.claim_line_ids))
 
         # Review number of picking lines with claim lines
         picking_lines = claim_wizard.picking_line_ids
-        claim_lines = self.claim_test.claim_line_ids
+        claim_lines = self.claim_id.claim_line_ids
 
         for num in xrange(0, len(picking_lines)):
             band = False

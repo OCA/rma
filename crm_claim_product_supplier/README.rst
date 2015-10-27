@@ -56,6 +56,7 @@ Contributors
 ------------
 
 * Yanina Aular <yanina.aular@vauxoo.com>
+* Osval Reyes <osval@vauxoo.com>
 
 Maintainer
 ----------
