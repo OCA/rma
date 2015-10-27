@@ -56,8 +56,6 @@ class ProductProduct(models.Model):
         ids = []
         product_ids = self.search([])
         if product_ids:
-            # TODO: Still optimization possible
-            # when searching virtual quantities
             for element in product_ids:
 
                 localdict = {'virtual': element.rma_virtual_available,
@@ -81,7 +79,7 @@ class ProductProduct(models.Model):
         ctx = context.copy()
         for product in self:
             # no dependency on 'sale', the same oddness is done in
-            # 'stock' so I kept it here
+            # 'stock' so is kept here
 
             if warehouse_id:
                 rma_id = warehouse_obj.read(warehouse_id,
@@ -138,7 +136,7 @@ class ProductProduct(models.Model):
                             item.get('qty')) for item in quants])
 
             moves_in = dict([(item.get('product_id')[0],
-                            item.get('product_qty')) for item in moves_in])
+                              item.get('product_qty')) for item in moves_in])
 
             moves_out = dict([(item.get('product_id')[0],
                                item.get('product_qty')) for item in moves_out])

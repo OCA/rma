@@ -6,10 +6,11 @@
 RMA Stock Location
 ==================
 
-This module addss that lets the user know how much for a product is available 'on hand' and how much is virtually (expected to be) available for RMA locations. Adding for the different views (Tree, Form and Kanban) showing that information.
+Allow the user to know how much for a product is available 'On Hand' and how much is virtually (expected to be) available for RMA locations. Adding for the different product views (Tree, Form and Kanban) information about it.
 
 Both quantities are computed and includes its children locations.
 
+It is useful use it as a quick snapshot for RMA from product perspective.
 
 Installation
 ============
@@ -38,7 +39,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* There are no issues registered yet
+* Optimization is possible when searching virtual quantities in the search function
 
 Bug Tracker
 ===========
