@@ -22,6 +22,7 @@
 from openerp import models, fields
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
+from openerp.tools.safe_eval import safe_eval as eval
 
 
 class ProductProduct(models.Model):
@@ -55,13 +56,15 @@ class ProductProduct(models.Model):
         ids = []
         product_ids = self.search([])
         if product_ids:
-            # TODO: Still optimization possible
-            # when searching virtual quantities
             for element in product_ids:
-                if eval('element.rma_virtual_available' +
-                        operator + str(value)) or \
-                        eval('element.rma_qty_available' +
-                             operator + str(value)):
+
+                localdict = {'virtual': element.rma_virtual_available,
+                             'qty': element.rma_qty_available,
+                             'value': value}
+
+                if eval('qty %s value or virtual %s value' %
+                        (operator, operator),
+                        localdict):
                     ids.append(element.id)
             res.append(('id', 'in', ids))
         return res
@@ -76,7 +79,7 @@ class ProductProduct(models.Model):
         ctx = context.copy()
         for product in self:
             # no dependency on 'sale', the same oddness is done in
-            # 'stock' so I kept it here
+            # 'stock' so is kept here
 
             if warehouse_id:
                 rma_id = warehouse_obj.read(warehouse_id,
@@ -133,7 +136,7 @@ class ProductProduct(models.Model):
                             item.get('qty')) for item in quants])
 
             moves_in = dict([(item.get('product_id')[0],
-                            item.get('product_qty')) for item in moves_in])
+                              item.get('product_qty')) for item in moves_in])
 
             moves_out = dict([(item.get('product_id')[0],
                                item.get('product_qty')) for item in moves_out])

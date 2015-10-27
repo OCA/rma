@@ -2,12 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
+================
 CRM RMA Location
 ================
 
-This module adds a warehouse's location and 3 picking types for RMA operations when creating a new Warehouse for the company. The picking types includes one Incoming Picking Type, an Internal and Outgoing.
-
-Also it creates sequences related to each picking type.
+This module adds a warehouse's stock location for RMA movements in the warehouse and 3 picking types for RMA operations, these picking types are one for Incoming Picking, another for Internal and the third for Outgoing picking. Creating it also document sequences for each of them.
 
 Installation
 ============

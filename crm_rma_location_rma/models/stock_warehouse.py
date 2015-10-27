@@ -36,7 +36,10 @@ class StockWarehouse(models.Model):
 
     @api.model
     def create_sequences_picking_types(self, warehouse):
-
+        """
+        Takes care of create picking types for internal,
+        incoming and outgoing RMA
+        """
         seq_obj = self.env['ir.sequence']
         picking_type_obj = self.env['stock.picking.type']
         # create new sequences
@@ -137,19 +140,23 @@ class StockWarehouse(models.Model):
         return vals
 
     @api.model
-    def create_locations_rma(self, wh_id):
+    def create_locations_rma(self, warehouse_id):
+        """
+        Create a RMA location for RMA movements that takes place when internal,
+        outgoing or incoming pickings are made from/to this location
+        """
         vals = {}
 
         location_obj = self.env['stock.location']
         context_with_inactive = self.env.context.copy()
         context_with_inactive['active_test'] = False
-        wh_loc_id = wh_id.view_location_id.id
+        view_location_id = warehouse_id.view_location_id.id
 
-        if not wh_id.lot_rma_id:
+        if not warehouse_id.lot_rma_id:
             loc_vals = {
                 'name': _('RMA'),
                 'usage': 'internal',
-                'location_id': wh_loc_id,
+                'location_id': view_location_id,
                 'active': True,
             }
             if vals.get('company_id'):
