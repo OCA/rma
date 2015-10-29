@@ -48,10 +48,10 @@ class ClaimLineWizard(models.TransientModel):
             if record.product_id != \
                     record.invoice_line_id.product_id:
                 raise ValidationError("The product of the"
-                                      "invoice %s is not same"
-                                      " that product" %
-                                      record.invoice_line_id.invoice_id.name,
-                                      record.product_id.name)
+                                      " invoice %s is not same"
+                                      " that product %s" %
+                                      (record.invoice_line_id.product_id.name,
+                                       record.product_id.name))
 
     @api.depends('invoice_line_id', 'lot_id', 'product_id')
     def _get_complete_name(self):

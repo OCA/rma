@@ -80,7 +80,8 @@ class TestCrmRmaLotMassReturn(TransactionCase):
 
         # Get ids for invoice lines
         lines_list_id = wizard_id.onchange_load_products(
-            self.invoice_id.number,
+            self.invoice_id.number +
+            '*5*description here' + '\n' + self.lot_ids[0].name,
             [(6, 0, [])])['domain']['lines_list_id'][0][2]
         option_ids = wizard_id.onchange_load_products(
             self.invoice_id.number, [(6, 0, [])])['value']['option_ids'][0][2]
@@ -94,9 +95,6 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id),
                          int(self.invoice_id.invoice_line.quantity))
-
-        # wizard_id.onchange_load_products(self.invoice_id.number +
-        # '*5*description here' + '\n' + self.lot_ids[0].name, [(6, 0, [])])
 
         wizard_id._set_message()
 

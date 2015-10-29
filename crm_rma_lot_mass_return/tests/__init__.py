@@ -20,3 +20,4 @@
 ##############################################################################
 
 from . import test_crm_rma_lot_mass_return
+from . import test_constrains
