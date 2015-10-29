@@ -85,7 +85,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         wizard_id.lines_list_id = lines_list_id
 
         # it exists at least one line
-        self.assertNotEqual(len(lines_list_id), 0)
+        self.assertEqual(len(lines_list_id), 1)
 
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id),
@@ -95,6 +95,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         wizard_id.scan_data = self.invoice_id.number + \
             '*5*description here' + '\n' + self.lot_ids[0].name
         wizard_id._set_message()
+
         wizard_id.add_claim_lines()
 
         # Claim record it must have same line count as the invoice

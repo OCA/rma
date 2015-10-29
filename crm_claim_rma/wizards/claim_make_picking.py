@@ -118,7 +118,7 @@ class ClaimMakePicking(models.TransientModel):
         if lines:
             domain = domain + [
                 '|', (move_field, '=', False),
-                (move_field+'.state', '=', 'cancel')
+                (move_field + '.state', '=', 'cancel')
             ]
             lines = lines.search(domain)
             if not lines:
