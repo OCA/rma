@@ -53,7 +53,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
             'order_line': [(0, 0, {
                     'name': 'Test',
                     'product_id': self.ref('product.product_product_8'),
-                    'product_uom_qty': 16
+                'product_uom_qty': 2
             })]
         })
 
@@ -80,27 +80,34 @@ class TestCrmRmaLotMassReturn(TransactionCase):
 
         # Get ids for invoice lines
         lines_list_id = wizard_id.onchange_load_products(
-            self.invoice_id.number, [(0, 6, [])])['value']['lines_id'][0][2]
+            self.invoice_id.number,
+            [(6, 0, [])])['domain']['lines_list_id'][0][2]
+        option_ids = wizard_id.onchange_load_products(
+            self.invoice_id.number, [(6, 0, [])])['value']['option_ids'][0][2]
 
-        wizard_id.lines_list_id = lines_list_id
+        wizard_id.option_ids = option_ids
+        wizard_id.lines_list_id = [(6, 0, lines_list_id)]
 
-        # it exists at least one line
-        self.assertEqual(len(lines_list_id), 1)
+        # the invoice lines are two
+        self.assertEqual(len(lines_list_id), 2)
 
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id),
-                         len(self.invoice_id.invoice_line.ids))
+                         int(self.invoice_id.invoice_line.quantity))
 
-        wizard_id.change_list(lines_list_id)
-        wizard_id.scan_data = self.invoice_id.number + \
-            '*5*description here' + '\n' + self.lot_ids[0].name
+        # wizard_id.onchange_load_products(self.invoice_id.number +
+        # '*5*description here' + '\n' + self.lot_ids[0].name, [(6, 0, [])])
+
         wizard_id._set_message()
 
         wizard_id.add_claim_lines()
 
         # Claim record it must have same line count as the invoice
+        qty = 0
+        for inv_line in self.invoice_id.invoice_line:
+            qty += inv_line.quantity
         self.assertEqual(len(self.claim_id.claim_line_ids),
-                         len(self.invoice_id.invoice_line))
+                         int(qty))
 
     def create_sale_invoice(self):
         sale_order_id = self.create_sale_order('manual')
