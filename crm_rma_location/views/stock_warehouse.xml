@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_warehouse_form" model="ir.ui.view">
+            <field name="name">view_warehouse_form</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='wh_output_stock_loc_id']" position="after">
+                    <field name="lot_rma_id"/>
+                </xpath>
+                <xpath expr="//field[@name='out_type_id']" position="after">
+                    <field name="rma_in_type_id"/>
+                    <field name="rma_int_type_id"/>
+                    <field name="rma_out_type_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
