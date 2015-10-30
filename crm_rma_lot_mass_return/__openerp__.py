@@ -40,6 +40,12 @@
         'views/crm_claim.xml',
         'templates/search_view.xml'
     ],
+    'demo': [
+        'demo/stock_production_lot.xml',
+        'demo/purchase_order.xml',
+        'demo/sale_order.xml',
+        'demo/transfer_details.xml',
+    ],
     'installable': True,
     'auto_install': False
 }
