@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Purchase Order -->
+
+        <record id="po_wizard_rma_1" model="purchase.order">
+            <field name="name">POWIZARDCLAIM001</field>
+            <field name="date_order">2015-05-08 18:17:05</field>
+            <field name="invoice_method">order</field>
+            <field name="partner_id" ref="base.res_partner_21"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="location_id" ref="stock.stock_location_company"/>
+        </record>
+
+        <!-- Purchase Order Lines-->
+
+        <record id="po_wizard_rma_1_line_1" model="purchase.order.line">
+            <field name="name">POWIZARDCLAIM001 Line 1</field>
+            <field name="order_id" ref="po_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_38"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">60.0</field>
+            <field name="date_planned">2015-05-08</field>
+        </record>
+
+        <record id="po_wizard_rma_1_line_2" model="purchase.order.line">
+            <field name="name">POWIZARDCLAIM001 Line 2</field>
+            <field name="order_id" ref="po_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">66.0</field>
+            <field name="date_planned">2015-05-08</field>
+        </record>
+
+        <record id="po_wizard_rma_1_line_3" model="purchase.order.line">
+            <field name="name">POWIZARDCLAIM001 Line 3</field>
+            <field name="order_id" ref="po_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">800.0</field>
+            <field name="date_planned">2015-05-08</field>
+        </record>
+
+        <record id="po_wizard_rma_1_line_4" model="purchase.order.line">
+            <field name="name">POWIZARDCLAIM001 Line 4</field>
+            <field name="order_id" ref="po_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">4</field>
+            <field name="price_unit">1299.0</field>
+            <field name="date_planned">2015-05-08</field>
+        </record>
+
+        <record id="po_wizard_rma_1_line_5" model="purchase.order.line">
+            <field name="name">POWIZARDCLAIM001 Line 5</field>
+            <field name="order_id" ref="po_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">1299.0</field>
+            <field name="date_planned">2015-05-08</field>
+        </record>
+
+        <!-- Confirm Purchase Order, (Invoice and Picking is created automatically) -->
+
+        <workflow action="purchase_confirm"
+            model="purchase.order"
+            ref="po_wizard_rma_1"/>
+
+        <workflow action="purchase_approve"
+            model="purchase.order"
+            ref="po_wizard_rma_1"/>
+
+        <!--Transfer of Products in the Picking of Purchase Order -->
+
+        <record id="transfer_purchase_wizard_rma" model="stock.transfer_details">
+            <field name="picking_id" model="stock.picking" search="[('origin', '=', 'POWIZARDCLAIM001')]"/>
+            <field name="picking_source_location_id" ref="stock.stock_location_suppliers"/>
+            <field name="picking_destination_location_id" ref="stock.stock_location_company"/>
+        </record>
+
+        <!-- Lot of Products -->
+
+        <record id="lot_purchase_wizard_rma_item_1" model="stock.production.lot">
+            <field name="name">MAC0001</field>
+            <field name="ref">MAC0001</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="last_location_id" ref="stock.stock_location_company"/>
+            <field name="supplier_id"  ref="base.res_partner_21"/>
+            <field name="supplier_invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_2" model="stock.production.lot">
+            <field name="name">MAC0002</field>
+            <field name="ref">MAC0002</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="last_location_id" ref="stock.stock_location_company"/>
+            <field name="supplier_id"  ref="base.res_partner_21"/>
+            <field name="supplier_invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_3" model="stock.production.lot">
+            <field name="name">MAC0003</field>
+            <field name="ref">MAC0003</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="last_location_id" ref="stock.stock_location_company"/>
+            <field name="supplier_id"  ref="base.res_partner_21"/>
+            <field name="supplier_invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_4" model="stock.production.lot">
+            <field name="name">MAC0004</field>
+            <field name="ref">MAC0004</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="last_location_id" ref="stock.stock_location_company"/>
+            <field name="supplier_id"  ref="base.res_partner_21"/>
+            <field name="supplier_invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_5" model="stock.production.lot">
+            <field name="name">IPAD0001</field>
+            <field name="ref">IPAD0001</field>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="last_location_id" ref="stock.stock_location_company"/>
+            <field name="supplier_id"  ref="base.res_partner_21"/>
+            <field name="supplier_invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 2')]"/>
+        </record>
+
+        <!-- Transfer Detail Items of Product Transfer -->
+
+        <record id="transfer_purchase_wizard_rma_item_1" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="lot_id" ref="lot_purchase_wizard_rma_item_1"/>
+        </record>
+
+        <record id="transfer_purchase_wizard_rma_item_2" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="lot_id" ref="lot_purchase_wizard_rma_item_2"/>
+        </record>
+
+        <record id="transfer_purchase_wizard_rma_item_3" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="lot_id" ref="lot_purchase_wizard_rma_item_3"/>
+        </record>
+
+        <record id="transfer_purchase_wizard_rma_item_4" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="lot_id" ref="lot_purchase_wizard_rma_item_4"/>
+        </record>
+
+        <record id="transfer_purchase_wizard_rma_item_5" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="lot_id" ref="lot_purchase_wizard_rma_item_5"/>
+        </record>
+
+        <!-- two MAC without lot -->
+        <record id="transfer_purchase_wizard_rma_item_6" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+        </record>
+
+        <!-- MAC without lot -->
+        <record id="transfer_purchase_wizard_rma_item_7" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+        </record>
+
+
+
+        <record id="transfer_purchase_wizard_rma_item_8" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+        </record>
+
+
+        <record id="transfer_purchase_wizard_rma_item_9" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+        </record>
+
+
+        <record id="transfer_purchase_wizard_rma_item_10" model="stock.transfer_details_items">
+            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
+            <field name="product_id" ref="product.product_product_38"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="quantity">1</field>
+            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+        </record>
+
+
+        <!-- Make transfer of product -->
+
+        <function model="stock.transfer_details"
+            name="do_detailed_transfer" eval="[ref('transfer_purchase_wizard_rma')]"/>
+
+        <workflow action="invoice_open" model="account.invoice">
+            <value eval="obj(ref('po_wizard_rma_1')).invoice_ids[0].id" model="purchase.order"/>
+        </workflow>
+    </data>
+</openerp>
