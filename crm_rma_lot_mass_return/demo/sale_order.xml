@@ -38,15 +38,7 @@
             <field name="name">SOWIZARDCLAIM001 Line 4</field>
             <field name="order_id" ref="so_wizard_rma_1"/>
             <field name="product_id" ref="product.product_product_8"/>
-            <field name="product_uom_qty">2</field>
-            <field name="price_unit">1299.0</field>
-        </record>
-
-        <record id="so_wizard_rma_1_line_5" model="sale.order.line">
-            <field name="name">SOWIZARDCLAIM001 Line 5</field>
-            <field name="order_id" ref="so_wizard_rma_1"/>
-            <field name="product_id" ref="product.product_product_8"/>
-            <field name="product_uom_qty">3</field>
+            <field name="product_uom_qty">5</field>
             <field name="price_unit">1299.0</field>
         </record>
 
@@ -151,8 +143,28 @@
             <!-- writeoff_period_id = -->    <value eval="ref('account.period_10')"/>
             <!-- writeoff_journal_id = -->    <value eval="ref('account.bank_journal')"/>
             <!-- context = -->              <value eval="{}"/>
-            <!-- name = -->                 <value eval="str('Payment Maria RMA')"/>
+            <!-- name = -->                 <value eval="str('Payment WIzard RMA')"/>
         </function>
+
+        <record id="crm_rma_lot_mass_return.lot_purchase_wizard_rma_item_1" model="stock.production.lot">
+            <field name="invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'SOWIZARDCLAIM001'), ('name', '=', 'SOWIZARDCLAIM001 Line 4')]"/>
+        </record>
+
+        <record id="crm_rma_lot_mass_return.lot_purchase_wizard_rma_item_2" model="stock.production.lot">
+            <field name="invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'SOWIZARDCLAIM001'), ('name', '=', 'SOWIZARDCLAIM001 Line 4')]"/>
+        </record>
+
+        <record id="crm_rma_lot_mass_return.lot_purchase_wizard_rma_item_3" model="stock.production.lot">
+            <field name="invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'SOWIZARDCLAIM001'), ('name', '=', 'SOWIZARDCLAIM001 Line 4')]"/>
+        </record>
+
+        <record id="crm_rma_lot_mass_return.lot_purchase_wizard_rma_item_4" model="stock.production.lot">
+            <field name="invoice_line_id"  model="account.invoice.line"
+                search="[('origin', '=', 'SOWIZARDCLAIM001'), ('name', '=', 'SOWIZARDCLAIM001 Line 4')]"/>
+        </record>
 
     </data>
 </openerp>

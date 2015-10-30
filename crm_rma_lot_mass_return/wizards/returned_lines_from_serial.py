@@ -281,7 +281,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
                         lot_ids = lot.\
                             search([(invoice_field, '=',
                                      inv_line.id)])
-                        if len(clw) < inv_line.quantity:
+                        if len(clw) < int(inv_line.quantity):
                             for asd in clw:
                                 if asd not in lot_set_ids:
                                     lot_set_ids.append(asd)
@@ -491,7 +491,8 @@ class ReturnedLinesFromSerial(models.TransientModel):
                             ('id', 'in', clws.mapped('id')),
                             ('id', 'not in', [rdy.id for rdy in invalid_lots]),
                         ])
-                    invalid_lots.append(add[0])
+                    if add:
+                        invalid_lots.append(add[0])
 
         # mac1, None -> like claim.line.wizard
         return invalid_lots and invalid_lots or []

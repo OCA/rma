@@ -88,7 +88,7 @@
             <field name="last_location_id" ref="stock.stock_location_company"/>
             <field name="supplier_id"  ref="base.res_partner_21"/>
             <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 4')]"/>
         </record>
 
         <record id="lot_purchase_wizard_rma_item_2" model="stock.production.lot">
@@ -98,7 +98,7 @@
             <field name="last_location_id" ref="stock.stock_location_company"/>
             <field name="supplier_id"  ref="base.res_partner_21"/>
             <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 4')]"/>
         </record>
 
         <record id="lot_purchase_wizard_rma_item_3" model="stock.production.lot">
@@ -108,7 +108,7 @@
             <field name="last_location_id" ref="stock.stock_location_company"/>
             <field name="supplier_id"  ref="base.res_partner_21"/>
             <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 5')]"/>
         </record>
 
         <record id="lot_purchase_wizard_rma_item_4" model="stock.production.lot">
@@ -118,7 +118,7 @@
             <field name="last_location_id" ref="stock.stock_location_company"/>
             <field name="supplier_id"  ref="base.res_partner_21"/>
             <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 1')]"/>
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 5')]"/>
         </record>
 
         <record id="lot_purchase_wizard_rma_item_5" model="stock.production.lot">
@@ -128,7 +128,7 @@
             <field name="last_location_id" ref="stock.stock_location_company"/>
             <field name="supplier_id"  ref="base.res_partner_21"/>
             <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 2')]"/>
+                search="[('origin', '=', 'POWIZARDCLAIM001'), ('name', '=', 'POWIZARDCLAIM001 Line 3')]"/>
         </record>
 
         <!-- Transfer Detail Items of Product Transfer -->
@@ -188,21 +188,21 @@
             <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
             <field name="product_id" ref="product.product_product_8"/>
             <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="quantity">1</field>
+            <field name="quantity">2</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
             <field name="destinationloc_id"  ref="stock.stock_location_company"/>
         </record>
 
-        <!-- MAC without lot -->
+
+
         <record id="transfer_purchase_wizard_rma_item_7" model="stock.transfer_details_items">
             <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
-            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_id" ref="product.product_product_39"/>
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
             <field name="destinationloc_id"  ref="stock.stock_location_company"/>
         </record>
-
 
 
         <record id="transfer_purchase_wizard_rma_item_8" model="stock.transfer_details_items">
@@ -216,16 +216,6 @@
 
 
         <record id="transfer_purchase_wizard_rma_item_9" model="stock.transfer_details_items">
-            <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
-            <field name="product_id" ref="product.product_product_39"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="quantity">1</field>
-            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
-        </record>
-
-
-        <record id="transfer_purchase_wizard_rma_item_10" model="stock.transfer_details_items">
             <field name="transfer_id" ref="transfer_purchase_wizard_rma"/>
             <field name="product_id" ref="product.product_product_38"/>
             <field name="product_uom_id" ref="product.product_uom_unit"/>
