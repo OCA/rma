@@ -21,7 +21,6 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-import re
 
 
 class TestCrmRmaLotMassReturn2(TransactionCase):
