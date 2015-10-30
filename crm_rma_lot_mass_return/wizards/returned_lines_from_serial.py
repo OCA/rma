@@ -450,7 +450,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         Return only those lots are related to claim lines
         """
         claim_line_wizard = self.env['claim.line.wizard']
-        invalid = claim_line_wizard.browse(claim_line_wizard_ids)
+        valid = claim_line_wizard.browse(claim_line_wizard_ids)
         invalid_lots = []
         for clw in claim_line_wizard.browse(claim_line_wizard_ids):
             if clw.lot_id:
@@ -460,22 +460,40 @@ class ReturnedLinesFromSerial(models.TransientModel):
                     ('prodlot_id', '=', clw.lot_id.id),
                 ])
                 if not invalid_lot:
-                    invalid = invalid - clw
+                    valid = valid - clw
                 if invalid_lot:
                     invalid_lots.append(clw)
 
-        for clw in invalid.mapped('invoice_line_id'):
+        for clw in valid.mapped('invoice_line_id'):
 
+            # mac1, None -> claim.line
             invalid_lot = self.env['claim.line'].search([
                 ('invoice_line_id', '=', clw.id),
-                ('product_id', '=', clw.product_id.id)])
+                ('product_id', '=', clw.product_id.id),
+            ])
 
+            # mac1, mac2, mac3, mac4, None -> breaked down
             clws = self.env['claim.line.wizard'].\
-                search([('invoice_line_id', '=', clw.id)])
-            if len(invalid_lot):
-                for item in xrange(0, len(invalid_lot)):
-                    invalid_lots.append(clws[item])
+                search([('invoice_line_id', '=', clw.id),
+                        ])
 
+            if invalid_lot:
+                for item in invalid_lot:
+                    if item.prodlot_id:
+                        add = clws.search([
+                            ('lot_id', '=', item.prodlot_id.id),
+                            ('id', 'in', clws.mapped('id')),
+                            ('id', 'not in', [rdy.id for rdy in invalid_lots]),
+                        ])
+                    else:
+                        add = clws.search([
+                            ('lot_id', '=', False),
+                            ('id', 'in', clws.mapped('id')),
+                            ('id', 'not in', [rdy.id for rdy in invalid_lots]),
+                        ])
+                    invalid_lots.append(add[0])
+
+        # mac1, None -> like claim.line.wizard
         return invalid_lots and invalid_lots or []
 
     @api.multi
@@ -537,27 +555,32 @@ class ReturnedLinesFromSerial(models.TransientModel):
         Notify for missing (not added) claim lines that are in use in others
         claims
         """
-        msg = ''
-        all_lots = self._get_lots_from_scan_data(self.scan_data)
-        not_valid_lot_ids = set()
-        if all_lots[0]:
-            not_valid_lot_ids = set(all_lots[0])
-        if all_lots[2]:
-            not_valid_lot_ids |= set(all_lots[2])
+        for wizard in self:
+            msg = ''
+            all_lots = wizard._get_lots_from_scan_data(wizard.scan_data)
+            not_valid_lot_ids = set()
+            if all_lots[0]:
+                all_lots_0 = [item for item in all_lots[0]]
+                not_valid_lot_ids = set(all_lots_0)
+            if all_lots[2]:
+                all_lots_2 = [item for item in all_lots[2]]
+                not_valid_lot_ids |= set(all_lots_2)
 
-        if not_valid_lot_ids:
-            not_valid_lot_ids = [item.id for item in list(not_valid_lot_ids)]
-            not_valid_lot_ids = self.\
-                _get_invalid_lots_set(not_valid_lot_ids)
-            not_valid_lot_ids = list(set(not_valid_lot_ids))
-            claim_with_lots_msg = ""
+            if not_valid_lot_ids:
+                not_valid_lot_ids = [item.id for
+                                     item in list(not_valid_lot_ids)]
+                not_valid_lot_ids = wizard.\
+                    _get_invalid_lots_set(not_valid_lot_ids)
+                not_valid_lot_ids = list(set(not_valid_lot_ids))
+                claim_with_lots_msg = ""
 
-            for line_id in not_valid_lot_ids:
-                claim_with_lots_msg += "\t- %s\n" % \
-                    line_id.name
-            if claim_with_lots_msg:
-                msg = _("The following Serial/Lot numbers won't be added,"
-                        " because all of them (listed below) are currently in"
-                        " used:\n\n %s" % (claim_with_lots_msg)) or ''
+                for line_id in not_valid_lot_ids:
+                    claim_with_lots_msg += "\t- %s\n" % \
+                        line_id.name
+                if claim_with_lots_msg:
+                    msg = _("The following Serial/Lot numbers won't be added,"
+                            " because all of them (listed below)"
+                            " are currently in"
+                            " used:\n\n %s" % (claim_with_lots_msg)) or ''
 
-        self.message = msg
+            wizard.message = msg
