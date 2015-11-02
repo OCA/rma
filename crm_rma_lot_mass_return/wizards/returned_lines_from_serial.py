@@ -582,6 +582,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
                     msg = _("The following Serial/Lot numbers won't be added,"
                             " because all of them (listed below)"
                             " are currently in"
-                            " used:\n\n %s" % (claim_with_lots_msg)) or ''
+                            " use:\n\n %s" % (claim_with_lots_msg)) or ''
 
             wizard.message = msg
