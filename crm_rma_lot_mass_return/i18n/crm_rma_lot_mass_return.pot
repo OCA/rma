@@ -124,7 +124,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:299
 #, python-format
-msgid "The following Serial/Lot numbers were not added, because all of them (listed below) are currently in used:\n"
+msgid "The following Serial/Lot numbers were not added, because all of them (listed below) are currently in use:\n"
 "\n"
 ""
 msgstr ""
