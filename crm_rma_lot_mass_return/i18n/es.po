@@ -174,3 +174,8 @@ msgstr "Deberías usar ésta ventana"
 msgid "_Validate"
 msgstr "_Validar"
 
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:585
+#, python-format
+msgid "The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n\n %s"
+msgstr "los siguientes números de seriales no pueden ser agregados, porque todos ellos (listados abajo) están actualmente en uso:\n\n %s"
