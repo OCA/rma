@@ -32,7 +32,7 @@
     'depends': [
         'stock',
         'procurement',
-        'crm_rma_location_rma',
+        'crm_rma_location',
     ],
     'data': [
         'views/product_product.xml',
