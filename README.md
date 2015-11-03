@@ -63,3 +63,8 @@ addon | version | summary
 [crm_rma_stock_location](crm_rma_stock_location/) | 1.0 (unported) | RMA Stock Location
 
 [//]: # (end addons)
+
+Translation status
+------------------
+
+[![Transifex Status](https://www.transifex.com/projects/p/OCA-rma-8-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-rma-8-0)
