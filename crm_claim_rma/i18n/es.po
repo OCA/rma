@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* crm_claim_rma
+#   * crm_claim_rma
 #
 msgid ""
 msgstr ""
@@ -384,8 +384,8 @@ msgstr "Ubicación de existencias para devolución"
 #. module: crm_claim_rma
 #: view:crm.claim:0
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
-msgid "Quotations and Sales"
-msgstr "Presupuestos y pedidos"
+msgid "Quotation/Sales"
+msgstr "Presupuestos/Pedidos"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origine:0
@@ -668,18 +668,13 @@ msgid "Substate"
 msgstr "Sub-estado"
 
 #. module: crm_claim_rma
-#: view:crm.claim:0
-#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice_out
-msgid "Customer Invoices"
-msgstr "Facturas de cliente"
-
-#. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_source_location:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_source_location
 msgid "Source Location"
 msgstr "Localización de origen"
 
 #. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_out
 msgid "Deliveries"
 msgstr "Entregas"
@@ -767,8 +762,9 @@ msgstr "Nueva devolución de productos"
 #. module: crm_claim_rma
 #: view:crm.claim:0
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice_in
-msgid "Supplier Invoices"
-msgstr "Facturas de proveedor"
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice_in
+msgid "Invoices"
+msgstr "Facturas"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
