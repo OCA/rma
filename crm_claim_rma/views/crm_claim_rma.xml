@@ -374,7 +374,7 @@
                 </xpath>
                 <!-- Remove domain and widget attributes -->
                 <field name="categ_id" widget="selection" position="replace">
-                    <field name="categ_id"/>
+                    <field name="categ_id" context="{'object_name': 'crm.claim'}"/>
                 </field>
                 <!-- New tabs for products return and generated documents -->
                 <page string="Follow Up" position="before">
