@@ -4,7 +4,7 @@
         <record id="warehouse_form" model="ir.ui.view">
             <field name="name">crm_claim_rma.warehouse_form</field>
             <field name="model">stock.warehouse</field>
-            <field name="inherit_id" ref="crm_rma_location_rma.view_warehouse_form" />
+            <field name="inherit_id" ref="crm_rma_location.view_warehouse_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='lot_rma_id']" position="after">
                     <field name="loss_loc_id"/>

@@ -27,7 +27,7 @@
     "website": "http://www.vauxoo.com",
     "license": "AGPL-3",
     "depends": [
-        "crm_rma_location_rma",
+        "crm_rma_location",
         "crm_claim_type",
         "crm_rma_advance_location",
         "crm_rma_prodlot_invoice",

@@ -34,56 +34,61 @@ class StockWarehouse(models.Model):
     rma_int_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Internal Type')
 
+    def compute_next_color(self):
+        """
+        Choose the next available color for
+        the picking types of this warehouse
+        """
+        available_colors = [c % 9 for c in range(3, 12)]
+        all_used_colors = self.env['stock.picking.type'].\
+            search_read([('warehouse_id', '!=', False),
+                         ('color', '!=', False)],
+                        ['color'], order='color')
+        for col in all_used_colors:
+            if col['color'] in available_colors:
+                available_colors.remove(col['color'])
+
+        return available_colors[0] if available_colors else 0
+
+    def create_sequence(self, warehouse_id, name, prefix, padding):
+        return self.env['ir.sequence'].sudo().\
+            create(values={
+                'name': warehouse_id.name + name,
+                'prefix': warehouse_id.code + prefix,
+                'padding': padding,
+                'company_id': warehouse_id.company_id.id
+            })
+
     @api.model
     def create_sequences_picking_types(self, warehouse):
         """
         Takes care of create picking types for internal,
         incoming and outgoing RMA
         """
-        seq_obj = self.env['ir.sequence']
-        picking_type_obj = self.env['stock.picking.type']
-        # create new sequences
+        picking_type = self.env['stock.picking.type']
 
+        # create new sequences
         if not warehouse.rma_in_type_id:
-            in_seq_id = seq_obj.sudo().create(
-                values={
-                    'name': warehouse.name + _(' Sequence in'),
-                    'prefix': warehouse.code + '/RMA/IN/',
-                    'padding': 5
-                })
+            in_seq_id = self.create_sequence(
+                warehouse, _(' Sequence in'), '/RMA/IN/', 5
+            )
+
         if not warehouse.rma_out_type_id:
-            out_seq_id = seq_obj.sudo().create(
-                values={
-                    'name': warehouse.name + _(' Sequence out'),
-                    'prefix': warehouse.code + '/RMA/OUT/',
-                    'padding': 5
-                })
+            out_seq_id = self.create_sequence(
+                warehouse, _(' Sequence out'), '/RMA/OUT/', 5
+            )
+
         if not warehouse.rma_int_type_id:
-            int_seq_id = seq_obj.sudo().create(
-                values={
-                    'name': warehouse.name + _(' Sequence internal'),
-                    'prefix': warehouse.code + '/RMA/INT/',
-                    'padding': 5
-                })
+            int_seq_id = self.create_sequence(
+                warehouse, _(' Sequence internal'), '/RMA/INT/', 5
+            )
 
         wh_stock_loc = warehouse.lot_rma_id
 
         # fetch customer and supplier locations, for references
         customer_loc, supplier_loc = self._get_partner_locations()
 
-        # choose the next available color for
-        # the picking types of this warehouse
-        available_colors = [c % 9 for c in range(3, 12)]
-        all_used_colors = self.env['stock.picking.type'].\
-            search_read([('warehouse_id', '!=', False),
-                         ('color', '!=', False)],
-                        ['color'], order='color')
-        # don't use sets to preserve the list order
-        for col in all_used_colors:
-            if col['color'] in available_colors:
-                available_colors.remove(col['color'])
-
-        color = available_colors[0] if available_colors else 0
+        color = self.compute_next_color()
 
         # order the picking types with a sequence
         # allowing to have the following suit for
@@ -94,7 +99,7 @@ class StockWarehouse(models.Model):
 
         in_type_id = warehouse.rma_in_type_id
         if not in_type_id:
-            in_type_id = picking_type_obj.create(vals={
+            in_type_id = picking_type.create(vals={
                 'name': _('RMA Receipts'),
                 'warehouse_id': warehouse.id,
                 'code': 'incoming',
@@ -106,7 +111,7 @@ class StockWarehouse(models.Model):
 
         out_type_id = warehouse.rma_out_type_id
         if not out_type_id:
-            out_type_id = picking_type_obj.create(vals={
+            out_type_id = picking_type.create(vals={
                 'name': _('RMA Delivery Orders'),
                 'warehouse_id': warehouse.id,
                 'code': 'outgoing',
@@ -120,7 +125,7 @@ class StockWarehouse(models.Model):
 
         int_type_id = warehouse.rma_int_type_id
         if not int_type_id:
-            int_type_id = picking_type_obj.create(vals={
+            int_type_id = picking_type.create(vals={
                 'name': _('RMA Internal Transfers'),
                 'warehouse_id': warehouse.id,
                 'code': 'internal',
@@ -150,17 +155,15 @@ class StockWarehouse(models.Model):
         location_obj = self.env['stock.location']
         context_with_inactive = self.env.context.copy()
         context_with_inactive['active_test'] = False
-        view_location_id = warehouse_id.view_location_id.id
 
         if not warehouse_id.lot_rma_id:
             loc_vals = {
                 'name': _('RMA'),
                 'usage': 'internal',
-                'location_id': view_location_id,
+                'location_id': warehouse_id.view_location_id.id,
+                'company_id': warehouse_id.company_id.id,
                 'active': True,
             }
-            if vals.get('company_id'):
-                loc_vals['company_id'] = vals.get('company_id')
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['lot_rma_id'] = location_id.id
@@ -172,9 +175,9 @@ class StockWarehouse(models.Model):
         """
         Create Locations and picking types for warehouse
         """
-        new_id_warehouse = super(StockWarehouse, self).create(vals=vals)
-        new_vals = self.create_locations_rma(new_id_warehouse)
-        new_id_warehouse.write(vals=new_vals)
-        new_vals = self.create_sequences_picking_types(new_id_warehouse)
-        new_id_warehouse.write(vals=new_vals)
-        return new_id_warehouse
+        warehouse_id = super(StockWarehouse, self).create(vals=vals)
+        new_vals = self.create_locations_rma(warehouse_id)
+        warehouse_id.write(vals=new_vals)
+        new_vals = self.create_sequences_picking_types(warehouse_id)
+        warehouse_id.write(vals=new_vals)
+        return warehouse_id
