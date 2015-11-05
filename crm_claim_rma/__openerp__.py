@@ -24,7 +24,7 @@
 
 {
     'name': 'RMA Claim (Product Return Management)',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
     'category': 'Generic Modules/CRM & SRM',
     'description': """
 Management of Return Merchandise Authorization (RMA)
