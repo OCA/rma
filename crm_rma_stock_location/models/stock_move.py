@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Author: Yanina Aular
 #    Copyright 2015 Vauxoo
-#    Copyright 2014 Camptocamp SA
-#    Author: Guewen Baconnier,
-#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,4 +19,11 @@
 #
 ##############################################################################
 
-from . import models
+from openerp import fields, models
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    invoice_state = fields.Selection(
+        [("none", "Not Applicable")], default='none')

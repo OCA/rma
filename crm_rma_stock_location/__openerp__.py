@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
+#    Copyright 2015 Vauxoo
 #    Copyright 2014 Camptocamp SA
+#    Author: Guewen Baconnier,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,31 +21,27 @@
 #
 ##############################################################################
 
-{'name': 'RMA Stock Location',
- 'version': '1.0',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Generic Modules/CRM & SRM',
- 'depends': ['stock',
-             'procurement',
-             ],
- 'description': """
-RMA Stock Location
-==================
-
-A RMA location can be selected on the warehouses.
-The product views displays the quantity available and virtual in this
- RMA location (including the children locations).
-
- """,
- 'website': 'http://www.camptocamp.com',
- 'data': ['stock_data.xml',
-          'stock_warehouse_view.xml',
-          'product_view.xml',
-          ],
- 'test': ['test/quantity.yml',
-          ],
- 'installable': False,
- 'auto_install': False,
- }
+{
+    'name': 'RMA Stock Location',
+    'version': '8.0.1.0.0',
+    'author': "Vauxoo,Camptocamp,Odoo Community Association (OCA)",
+    'maintainer': 'Camptocamp',
+    'website': 'http://www.camptocamp.com',
+    'license': 'AGPL-3',
+    'category': 'Generic Modules/CRM & SRM',
+    'depends': [
+        'crm_claim',
+        'stock',
+        'procurement',
+        'crm_rma_location',
+    ],
+    'data': [
+        'views/product_product.xml',
+        'views/product_template.xml',
+    ],
+    'demo': [
+        'demo/stock_location.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

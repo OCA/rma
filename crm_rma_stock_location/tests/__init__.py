@@ -2,9 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Copyright 2014 Camptocamp SA
-#    Author: Guewen Baconnier,
-#            Osval Reyes
+#    Author: Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,4 +19,4 @@
 #
 ##############################################################################
 
-from . import models
+from . import test_crm_rma_stock_location
