@@ -57,14 +57,11 @@ class ProductProduct(models.Model):
         product_ids = self.search([])
         if product_ids:
             for element in product_ids:
-
                 localdict = {'virtual': element.rma_virtual_available,
                              'qty': element.rma_qty_available,
                              'value': value}
-
                 if eval('qty %s value or virtual %s value' %
-                        (operator, operator),
-                        localdict):
+                        (operator, operator), localdict):
                     ids.append(element.id)
             res.append(('id', 'in', ids))
         return res
@@ -76,28 +73,22 @@ class ProductProduct(models.Model):
         """
         context = self.env.context
         warehouse_id = context.get('warehouse_id')
-        warehouse = self.env['stock.warehouse']
         ctx = context.copy()
+        location_ids = set()
         for product in self:
-            # no dependency on 'sale', the same oddness is done in
-            # 'stock' so is kept here
-
-            if warehouse_id:
-                rma_id = warehouse.read(warehouse_id,
-                                        ['lot_rma_id'])['lot_rma_id'][0]
-                if rma_id:
-                    ctx['location'] = rma_id
+            if warehouse_id and warehouse_id.lot_rma_id:
+                location_ids.add(warehouse_id.lot_rma_id.id)
             else:
-                location_ids = set()
-                warehouse_ids = warehouse.search([])
+                warehouse_ids = self.env['stock.warehouse'].search([])
                 if not warehouse_ids:
                     return
                 for warehouse_id in warehouse_ids:
                     if warehouse_id.lot_rma_id:
                         location_ids.add(warehouse_id.lot_rma_id.id)
-                if not location_ids:
-                    return
-                ctx['location'] = list(location_ids)
+
+            if not location_ids:
+                return
+            ctx['location'] = list(location_ids)
 
             domain_products = [('product_id', 'in', [product.id])]
             domain_quant, domain_move_in, domain_move_out = \
@@ -110,42 +101,33 @@ class ProductProduct(models.Model):
                 [('state', 'not in', ('done', 'cancel', 'draft'))] + \
                 domain_products
             domain_quant += domain_products
-            if context.get('lot_rma_id'):
-                if context.get('lot_rma_id'):
-                    domain_quant.append(('lot_rma_id',
-                                         '=', context['lot_rma_id']))
+            if ctx.get('location'):
+                domain_quant.append(
+                    ('location_id', 'in', ctx.get('location')))
                 moves_in = []
                 moves_out = []
             else:
                 moves_in = self.env['stock.move'].\
                     with_context(ctx).read_group(domain_move_in,
-                                                 ['product_id',
-                                                  'product_qty'],
+                                                 ['product_id', 'product_qty'],
                                                  ['product_id'])
                 moves_out = self.env['stock.move'].\
                     with_context(ctx).read_group(domain_move_out,
-                                                 ['product_id',
-                                                  'product_qty'],
+                                                 ['product_id', 'product_qty'],
                                                  ['product_id'])
-
             quants = self.env['stock.quant'].\
                 with_context(ctx).read_group(domain_quant,
                                              ['product_id', 'qty'],
                                              ['product_id'])
-
             quants = dict([(item.get('product_id')[0],
                             item.get('qty')) for item in quants])
-
             moves_in = dict([(item.get('product_id')[0],
                               item.get('product_qty')) for item in moves_in])
-
             moves_out = dict([(item.get('product_id')[0],
                                item.get('product_qty')) for item in moves_out])
-
             product.rma_qty_available = \
                 float_round(quants.get(product.id, 0.0),
                             precision_rounding=product.uom_id.rounding)
-
             product.rma_virtual_available = \
                 float_round(quants.get(product.id, 0.0) +
                             moves_in.get(product.id, 0.0) -

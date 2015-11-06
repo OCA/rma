@@ -68,3 +68,6 @@ class TestCrmRmaStockLocation(TransactionCase):
         self.assertEquals(self.product_socket_id.rma_qty_available,
                           inventory_line_id_a.product_qty
                           + inventory_line_id_b.product_qty)
+
+        res = self.product_socket_id._search_rma_product_quantity('>', 0)
+        self.assertEquals(self.product_socket_id.id, res[0][2][0])
