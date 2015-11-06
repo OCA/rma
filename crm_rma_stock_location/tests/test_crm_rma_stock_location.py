@@ -44,7 +44,6 @@ class TestCrmRmaStockLocation(TransactionCase):
             'location_id': self.location_id.id,
             'filter': 'product',
             'product_id': self.product_socket_id.id,
-            'warehouse_id': self.warehouse_id.id,
         })
 
         inventory_line_id_a = self.inventory_line.create({
