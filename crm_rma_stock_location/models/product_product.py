@@ -101,11 +101,11 @@ class ProductProduct(models.Model):
                 [('state', 'not in', ('done', 'cancel', 'draft'))] + \
                 domain_products
             domain_quant += domain_products
-            if ctx.get('location'):
-                domain_quant.append(
-                    ('location_id', 'in', ctx.get('location')))
-                moves_in = []
-                moves_out = []
+            moves_in = []
+            moves_out = []
+            lot_id = context.get('lot_id')
+            if lot_id:
+                domain_quant.append(('lot_id', '=', lot_id))
             else:
                 moves_in = self.env['stock.move'].\
                     with_context(ctx).read_group(domain_move_in,
@@ -115,10 +115,8 @@ class ProductProduct(models.Model):
                     with_context(ctx).read_group(domain_move_out,
                                                  ['product_id', 'product_qty'],
                                                  ['product_id'])
-            quants = self.env['stock.quant'].\
-                with_context(ctx).read_group(domain_quant,
-                                             ['product_id', 'qty'],
-                                             ['product_id'])
+            quants = self.env['stock.quant'].with_context(ctx).read_group(
+                domain_quant, ['product_id', 'qty'], ['product_id'])
             quants = dict([(item.get('product_id')[0],
                             item.get('qty')) for item in quants])
             moves_in = dict([(item.get('product_id')[0],
