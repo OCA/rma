@@ -31,7 +31,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'depends': [
         'crm_claim',
-        'stock',
+        'stock_account',
         'procurement',
         'crm_rma_location',
     ],
