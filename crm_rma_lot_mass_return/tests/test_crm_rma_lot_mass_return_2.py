@@ -153,13 +153,46 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         self.assertEqual(len(lines_list_id),
                          int(qty))
 
-        # wizard_id._set_message()
-        # regex = re.compile("The following Serial/Lot numbers"
-        #                    " won't be added.*MAC0001.*")
-        # self.assertTrue(regex.match(wizard_id.message))
-
         wizard_id.add_claim_lines()
 
         # 2 Macs
         self.assertEqual(len(self.claim_id_2.claim_line_ids),
                          5)
+
+    def test_03_claim_line_creation(self):
+        """
+            Challenge the wizard when a claim line is created, to set
+            claim_origin and the name correctly in a claim line itself
+        """
+
+        scanned_data = 'MAC0001*5*Comment about MAC0001' + '\n'
+        wizard_id = self.metasearch_wizard.with_context({
+            'active_model': self.claim_id_2._name,
+            'active_id': self.claim_id_2.id,
+            'active_ids': [self.claim_id_2.id]
+        }).create({})
+        wizard_id.scan_data = scanned_data
+        # Get ids for invoice lines
+        lines_list_id = wizard_id.onchange_load_products(
+            scanned_data,
+            [(6, 0, [])])['domain']['lines_list_id'][0][2]
+
+        wizard_id.option_id = wizard_id.onchange_load_products(
+            scanned_data,
+            [(6, 0, [])])['value']['option_ids'][0][2]
+
+        items_to_select = self.env['claim.line.wizard'].browse(lines_list_id)
+        mac0001 = items_to_select.search([('lot_id.name', '=', 'MAC0001')])
+        wizard_id.lines_list_id = [(6, 0, [mac0001.id])]
+        self.assertEqual(len(lines_list_id), 1)
+
+        wizard_id.add_claim_lines()
+        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
+
+        line_id = self.claim_id_2.claim_line_ids
+        subject_list = self.env['claim.line'].SUBJECT_LIST
+        for my_index in range(1, len(subject_list)):
+            if subject_list[my_index-1][0] == line_id.claim_origin:
+                break
+        self.assertEqual(scanned_data, line_id.prodlot_id.name + '*'
+                         + str(my_index) + '*' + line_id.name + '\n')
