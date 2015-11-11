@@ -147,8 +147,11 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         that already is part of another claim.
         """
 
+        subject_list = self.env['claim.line'].SUBJECT_LIST
         lot_name = "MAC0001"
-        scanned_data = lot_name + '*3*A short description to test\n'
+        subject_index = 3
+        scanned_data = lot_name + '*' + \
+            str(subject_index) + '*A short description to test\n'
         wizard_id = self.metasearch_wizard.with_context({
             'active_model': self.claim_id_2._name,
             'active_id': self.claim_id_2.id,
@@ -172,12 +175,10 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
 
         line_id = self.claim_id_2.claim_line_ids
-        subject_list = self.env['claim.line'].SUBJECT_LIST
-        for my_index in range(1, len(subject_list)):
-            if subject_list[my_index-1][0] == line_id.claim_origin:
-                break
+        self.assertEqual(
+            subject_list[subject_index-1][0], line_id.claim_origin)
         self.assertEqual(scanned_data, line_id.prodlot_id.name + '*'
-                         + str(my_index) + '*' + line_id.name + '\n')
+                         + str(subject_index) + '*' + line_id.name + '\n')
 
         # create again the wizard
         wizard_id = self.metasearch_wizard.with_context({
