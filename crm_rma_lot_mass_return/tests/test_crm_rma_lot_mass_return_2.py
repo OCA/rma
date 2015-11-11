@@ -200,7 +200,9 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         self.assertEqual(len(lines_list_id), 1)
 
         wizard_id._set_message()
-        regex = re.compile(".*" + lot_name + ".*")
+        wizard_id.add_claim_lines()
+        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
 
         # if the message exists, then it's being displayed
+        regex = re.compile(".*" + lot_name + ".*")
         self.assertTrue(regex.search(wizard_id.message))
