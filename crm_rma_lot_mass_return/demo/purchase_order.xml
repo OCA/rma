@@ -11,7 +11,7 @@
             <field name="partner_id" ref="base.res_partner_21"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pricelist_id" ref="purchase.list0"/>
-            <field name="location_id" ref="stock.stock_location_company"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
         <!-- Purchase Order Lines-->
