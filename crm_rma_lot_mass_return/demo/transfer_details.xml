@@ -6,7 +6,7 @@
         <record id="transfer_purchase_wizard_rma" model="stock.transfer_details">
             <field name="picking_id" model="stock.picking" search="[('origin', '=', 'POWIZARDCLAIM001')]"/>
             <field name="picking_source_location_id" ref="stock.stock_location_suppliers"/>
-            <field name="picking_destination_location_id" ref="stock.stock_location_company"/>
+            <field name="picking_destination_location_id" ref="stock.stock_location_stock"/>
         </record>
 
 
@@ -18,7 +18,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
             <field name="lot_id" ref="lot_purchase_wizard_rma_item_1"/>
         </record>
 
@@ -28,7 +28,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
             <field name="lot_id" ref="lot_purchase_wizard_rma_item_2"/>
         </record>
 
@@ -38,7 +38,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
             <field name="lot_id" ref="lot_purchase_wizard_rma_item_3"/>
         </record>
 
@@ -48,7 +48,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
             <field name="lot_id" ref="lot_purchase_wizard_rma_item_4"/>
         </record>
 
@@ -58,7 +58,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
             <field name="lot_id" ref="lot_purchase_wizard_rma_item_5"/>
         </record>
 
@@ -69,7 +69,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">2</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
         </record>
 
 
@@ -79,7 +79,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
         </record>
 
 
@@ -89,7 +89,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
         </record>
 
 
@@ -99,7 +99,7 @@
             <field name="product_uom_id" ref="product.product_uom_unit"/>
             <field name="quantity">1</field>
             <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
+            <field name="destinationloc_id"  ref="stock.stock_location_stock"/>
         </record>
 
         <!-- Make transfer of product -->
