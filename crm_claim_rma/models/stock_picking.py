@@ -30,9 +30,3 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     claim_id = fields.Many2one('crm.claim', 'Claim')
-
-    @api.model
-    def create(self, vals):
-        if ('name' not in vals) or (vals.get('name') == '/'):
-            vals['name'] = self.env['ir.sequence'].get(self._name)
-        return super(StockPicking, self).create(vals)
