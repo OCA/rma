@@ -2,11 +2,10 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Copyright 2015 Eezee-It
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#            Benoît Guillot, Joel Grand-Guillaume,
 #            Osval Reyes, Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,6 +22,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api, models
 
-from . import models
-from . import wizards
+
+class AccountInvoiceLine(models.Model):
+
+    _inherit = "account.invoice.line"
+
+    @api.model
+    def create(self, vals):
+        claim_line_id = vals.get('claim_line_id')
+        if claim_line_id:
+            del vals['claim_line_id']
+
+        line = super(AccountInvoiceLine, self).create(vals)
+        if claim_line_id:
+            claim_line = self.env['claim.line'].browse(claim_line_id)
+            claim_line.refund_line_id = line.id
+
+        return line

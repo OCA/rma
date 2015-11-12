@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Vauxoo
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
-#            Osval Reyes, Yanina Aular
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,5 +23,9 @@
 #
 ##############################################################################
 
-from . import models
-from . import wizards
+
+class InvoiceNoDate(Exception):
+    """
+    Raised when a warranty cannot be computed for a claim line
+    because the invoice has no date.
+    """

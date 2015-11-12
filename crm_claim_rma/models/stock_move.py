@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It, MONK Software
+#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,28 +22,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp import models, fields, api
-
-
-class StockPicking(models.Model):
-    _inherit = "stock.picking"
-
-    claim_id = fields.Many2one('crm.claim', string='Claim')
-
-    @api.model
-    @api.returns('self', lambda value: value.id)
-    def create(self, vals):
-        if ('name' not in vals) or (vals.get('name') == '/'):
-            vals['name'] = self.env['ir.sequence'].get(self._name)
-        return super(StockPicking, self).create(vals)
+from openerp import api, models
 
 
 class StockMove(models.Model):
-    _inherit = "stock.move"
+
+    _name = 'stock.move'
+    _inherit = ['stock.move', 'mail.thread']
 
     @api.model
-    @api.returns('self', lambda value: value.id)
     def create(self, vals):
         """
         In case of a wrong picking out, We need to create a new stock_move in a

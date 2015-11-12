@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="crm_claim.crm_claim_6" model="crm.claim">
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="delivery_address_id" ref="base.res_partner_9"/>
+        </record>
+    </data>
+</openerp>

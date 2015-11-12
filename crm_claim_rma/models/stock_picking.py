@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Vauxoo
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
-#            Osval Reyes, Yanina Aular
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,6 +22,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api, fields, models
 
-from . import models
-from . import wizards
+
+class StockPicking(models.Model):
+
+    _inherit = "stock.picking"
+
+    claim_id = fields.Many2one('crm.claim', 'Claim')
+
+    @api.model
+    def create(self, vals):
+        if ('name' not in vals) or (vals.get('name') == '/'):
+            vals['name'] = self.env['ir.sequence'].get(self._name)
+        return super(StockPicking, self).create(vals)
