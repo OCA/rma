@@ -109,7 +109,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
         else:
             inv_line = claim_line_wizard.invoice_line_id
             lot_id = False
-
         line_rec = clima_line.create({
             'claim_id': claim_id,
             'claim_origin': claim_origin,
@@ -502,23 +501,23 @@ class ReturnedLinesFromSerial(models.TransientModel):
         info = self.get_data_of_products(self.scan_data)
         lot_ids = self._get_lot_ids()
         lot_ids = [lid.id for lid in lot_ids]
-        valid_lot_ids = set(self._get_lot_ids()) - \
+        clw_ids = set(self._get_lot_ids()) - \
             set(self._get_invalid_lots_set(lot_ids, True))
-        valid_lot_ids = list(valid_lot_ids)
+        clw_ids = list(clw_ids)
         # It creates only those claim lines that have a valid production lot,
         # i. e. not using in others claims
         info = dict(info)
 
-        if valid_lot_ids:
-            for lot_id in valid_lot_ids:
-                product_id = lot_id.product_id
+        if clw_ids:
+            for clw_id in clw_ids:
+                product_id = clw_id.product_id
 
                 claim_line_info = False
-                if lot_id.name in info:
-                    claim_line_info = info.get(lot_id.name, False)
-                elif lot_id.invoice_line_id.invoice_id.number in info:
+                if clw_id.lot_id.name in info:
+                    claim_line_info = info.get(clw_id.lot_id.name, False)
+                elif clw_id.invoice_line_id.invoice_id.number in info:
                     claim_line_info = \
-                        info.get(lot_id.invoice_line_id.invoice_id.number,
+                        info.get(clw_id.invoice_line_id.invoice_id.number,
                                  False)
 
                 num = claim_line_info and claim_line_info[0] or '0'
@@ -534,7 +533,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 self.create_claim_line(self.env.context.get('active_id'),
                                        self.env[
                                            'claim.line']._get_subject(num),
-                                       product_id, lot_id, 1, name)
+                                       product_id, clw_id, 1, name)
         # normal execution
         self.action_cancel()
 
