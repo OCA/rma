@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Vauxoo
-#    Copyright 2015 Eezee-It
+#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
-#            Osval Reyes, Yanina Aular
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,6 +22,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import fields, models
 
-from . import models
-from . import wizards
+
+class SubstateSubstate(models.Model):
+
+    """
+    To precise a state (state=refused; substates= reason 1, 2,...)
+    """
+
+    _name = "substate.substate"
+    _description = "substate that precise a given state"
+
+    name = fields.Char('Sub state', required=True)
+    substate_descr = fields.Text('Description',
+                                 help="To give more "
+                                 "information about the sub state")

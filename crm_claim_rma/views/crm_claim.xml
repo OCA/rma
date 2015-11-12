@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- CLAIM VIEWS -->
+        <record model="ir.ui.view" id="crm_case_claims_tree_view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="stage_id" position="after">
+                    <field name="section_id"/>
+                </field>
+            </field>
+        </record>
+        <!-- Crm claim Search view -->
+        <record id="view_crm_case_claims_filter" model="ir.ui.view">
+            <field name="name">CRM - Claims Search</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Stage" icon="terp-stage" domain="[]" context="{'group_by':'stage_id'}" position="before">
+                    <filter string="Sales Team" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'section_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+
+    <!-- Right side link to orders -->
+    <act_window
+        id="act_crm_claim_rma_sale_orders"
+        name="Quotations and Sales"
+        res_model="sale.order"
+        src_model="crm.claim"/>
+
+    <act_window
+        id="act_crm_claim_rma_purchase_orders"
+        name="Purchases"
+        res_model="purchase.order"
+        src_model="crm.claim"/>
+
+    <act_window
+        domain="[('type', 'in', ('in_invoice', 'out_invoice'))]"
+        id="act_crm_claim_rma_invoice"
+        name="Invoices"
+        res_model="account.invoice"
+        src_model="crm.claim"/>
+
+    <act_window
+        id="act_crm_claim_rma_refunds"
+        name="Refunds"
+        res_model="account.invoice"
+        src_model="crm.claim"
+        domain="[('type', 'in', ('in_refund', 'out_refund'))]"/>
+
+    <act_window
+        id="act_crm_claim_rma_picking_in"
+        name="Incoming Shipment and Returns"
+        res_model="stock.picking"
+        src_model="crm.claim"/>
+
+
+        <record model="ir.ui.view" id="crm_claim_rma_form_view">
+            <field name="name">CRM - Claim product return Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Header/workflow Buttons -->
+                <xpath expr="//field[@name='stage_id']" position="before">
+                    <button name="%(action_claim_picking_in)d"
+                        string="New Products Return"
+                        class="oe_inline"
+                        type="action" target="new"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                    <button name="%(action_claim_picking_out)d"
+                        class="oe_inline"
+                        string="New Delivery"
+                        type="action" target="new"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                    <button name="%(account.action_account_invoice_refund)d"
+                        class="oe_inline"
+                        type='action' string='New Refund'
+                        context="{
+                            'invoice_ids': [invoice_id],
+                            'claim_line_ids': claim_line_ids,
+                            'description': name,
+                            'claim_id': id,
+                            }"/>
+                </xpath>
+                <xpath expr="//sheet/group[2]" position="replace">
+                    <group colspan="4" col="4"  groups="base.group_user">
+                        <field name="warehouse_id" />
+                        <field name="date"/>
+                        <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_sale_salesman_all_leads']}"/>
+                        <field name="priority" widget="priority"/>
+                        <field name="date_deadline"/>
+                        <field name="section_id" groups="base.group_multi_salesteams"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_phone']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <!-- Smart buttons -->
+                <xpath expr="//sheet[@string='Claims']/group[1]" position="after">
+                    <div class="oe_right oe_button_box" name="buttons">
+                          <button class="oe_inline oe_stat_button"
+                            name="%(act_crm_claim_rma_sale_orders)d" type="action"
+                            icon="fa-strikethrough"
+                            string="Sales"
+                            attrs="{'invisible': ['|',('partner_id','=', False)]}"
+                            context="{'search_default_partner_id': [partner_id],
+                            'search_default_user_id':False}" />
+                        <button class="oe_inline oe_stat_button"
+                            name="%(act_crm_claim_rma_purchase_orders)d"
+                            type="action"
+                            icon="fa-shopping-cart"
+                            string="Purchases"
+                            attrs="{'invisible': ['|',('partner_id','=', False)]}"
+                            context="{'search_default_partner_id': [partner_id],
+                            'search_default_user_id':False}"
+                               />
+                        <button class="oe_inline oe_stat_button"
+                            name="%(act_crm_claim_rma_invoice)d"
+                            type="action"
+                            string="Invoices"
+                            icon="fa-pencil-square"
+                            attrs="{'invisible': ['|',('partner_id','=', False)]}"
+                            context="{'search_default_partner_id': [partner_id],
+                            'group_by':'type',
+                            'search_default_user_id':False}" />
+
+                        <button class="oe_inline oe_stat_button"
+                            name="%(act_crm_claim_rma_refunds)d"
+                            type="action"
+                            string="Refunds"
+                            icon="fa-file-text"
+                            attrs="{'invisible': ['|',('partner_id','=', False),
+                            ('claim_type','in', ['customer','other'])]}"
+                            context="{'search_default_partner_id': [partner_id],
+                            'group_by':'type',
+                            'search_default_user_id':False}" />
+                       <button class="oe_inline oe_stat_button"
+                            icon="fa-reply"
+                            name="%(act_crm_claim_rma_picking_in)d"
+                            type="action"
+                            string="Returns"
+                            attrs="{'invisible': ['|',('partner_id','=', False),
+                            ('claim_type','in', ['supplier','other'])]}"
+                            context="{'search_default_claim_id': active_id,
+                            'search_default_user_id':False}"/>
+                        </div>
+                </xpath>
+                <xpath expr="//sheet[@string='Claims']/group[1]" position="replace">
+                    <div class="oe_title oe_left">
+                        <h1><field name="code"/></h1>
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1><small><field name="name"/></small></h1>
+                    </div>
+                </xpath>
+                <xpath expr="//page[@string='Claim Description']//group[1]"
+                    position="inside">
+                    <field name="pick" string="Pick the product in the store"/>
+                    <field name="delivery_address_id"
+                        string="Partner delivery address"
+                        domain="[('id','child_of',partner_id)]"
+                        attrs="{'invisible': ['|',('pick','=', True)],
+                            'required': [('pick','=', False)]}"
+                        context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree',
+                            'search_default_parent_id': partner_id}"/>
+                    <field name="invoice_id" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" context="{'create_lines': True}"/>
+                </xpath>
+                <xpath expr="//page[@string='Claim Description']//group[1]"
+                    position="after">
+                    <div name="serial">
+                        <!-- Place for mass return button from crm_rma_lot_mass_return -->
+                    </div>
+                    <separator colspan="2" string="Product Returns"/>
+                    <field name="claim_line_ids">
+                        <tree string="Returned lines" create="false">
+                            <field name="claim_id" invisible="1"/>
+                            <field name="state"/>
+                            <field name="product_id"/>
+                            <field name="name"/>
+                            <field name="prodlot_id"/>
+                            <field name="invoice_line_id">
+                                <attribute name="readonly">1</attribute>
+                            </field>
+                            <field name="warning"/>
+                            <field name="warranty_type"/>
+                            <button name="set_warranty" string="Compute Warranty"
+                                type="object" icon="gtk-justify-fill"/>
+                            <field name="claim_origin"/>
+                            <field name="claim_diagnosis"/>
+                        </tree>
+                    </field>
+                </xpath>
+                <!-- Remove domain and widget attributes -->
+                <field name="categ_id" widget="selection" position="replace">
+                    <field name="categ_id"/>
+                </field>
+                <!-- New tabs for products return and generated documents -->
+                <page string="Follow Up" position="before">
+                    <page string="Generated Documents">
+                        <separator colspan="2" string="Refunds"/>
+                        <field name="invoice_ids" colspan="4" readonly="1"/>
+                        <separator colspan="2" string="Receptions / Deliveries"/>
+                        <field name="picking_ids" colspan="4" readonly="1"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="crm_claim.crm_case_categ_claim0">
+            <field name="context">{"search_default_user_id":uid, "stage_type":'claim'}</field>
+        </record>
+
+        <!-- substates action -->
+        <record id="act_crm_claim_substates" model="ir.actions.act_window">
+            <field name="name">Claim line substates</field>
+            <field name="res_model">substate.substate</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <menuitem
+            name="Claim line substates"
+            id="menu_crm_case_claims_claim_line_substates"
+            parent="crm_claim.menu_config_claim"
+            action="act_crm_claim_substates"
+            sequence="2"/>
+
+        <!-- Update account invoice !-->
+        <record id="crm_claim_rma_form" model="ir.ui.view">
+            <field name="name">CRM Claim RMA</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='date_deadline']" position="after">
+                        <field name="rma_number"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="search_crm_claim_rma_number" model="ir.ui.view">
+            <field name="name">CRM - Claims Search</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rma_number"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="tree_crm_claim_rma_number" model="ir.ui.view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="rma_number"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crm_case_claims_form_view">
+            <field name="name">CRM - Claims Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim_type.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='claim_type']" position="attributes">
+                    <attribute name="context">{'create_lines': False}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

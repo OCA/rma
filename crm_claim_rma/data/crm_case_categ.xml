@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+	    <record id="categ_claim10" model="crm.case.categ">
+            <field name="name">No Inventory</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+	    <record id="categ_claim11" model="crm.case.categ">
+            <field name="name">Customer Return</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim12" model="crm.case.categ">
+            <field name="name">Buyer Cancelled</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim13" model="crm.case.categ">
+            <field name="name">General Adjustement</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim14" model="crm.case.categ">
+            <field name="name">Could Not Ship</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim15" model="crm.case.categ">
+            <field name="name">Different Item</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim16" model="crm.case.categ">
+            <field name="name">Merchandise Not Received</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim17" model="crm.case.categ">
+            <field name="name">Merchandise Not As Described</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim18" model="crm.case.categ">
+            <field name="name">Pricing Error</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim19" model="crm.case.categ">
+            <field name="name">Shipping Address Undeliverable</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim20" model="crm.case.categ">
+            <field name="name">Delivered Late by Carrier</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+
+        <record id="categ_claim21" model="crm.case.categ">
+            <field name="name">Missed Fulfilment Promise</field>
+            <field name="section_id" ref="section_after_sales_service"/>
+            <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+        </record>
+    </data>
+</openerp>
