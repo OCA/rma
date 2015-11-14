@@ -46,7 +46,11 @@ class StockProductionLot(models.Model):
         res = super(StockProductionLot, self).default_get(fields_list)
 
         prodlot_obj = self.env['stock.production.lot']
-        transfer_item_id = self._context.get('active_id', False)
+
+        transfer_item_id = False
+        if self._context.get('active_model', '') ==\
+                'stock.transfer_details_items':
+            transfer_item_id = self._context.get('active_id', False)
 
         if not transfer_item_id:
             return res
