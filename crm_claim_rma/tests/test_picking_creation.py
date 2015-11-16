@@ -30,7 +30,7 @@ class TestPickingCreation(common.TransactionCase):
     def setUp(self):
         super(TestPickingCreation, self).setUp()
 
-        self.wizardmakepicking = self.env['claim_make_picking.wizard']
+        self.wizard_make_picking = self.env['claim_make_picking.wizard']
         self.stockpicking = self.env['stock.picking']
         claim = self.env['crm.claim']
 
@@ -67,7 +67,7 @@ class TestPickingCreation(common.TransactionCase):
         """Test wizard creates a correct picking for product return
 
         """
-        wizard = self.wizardmakepicking.with_context({
+        wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
@@ -100,7 +100,7 @@ class TestPickingCreation(common.TransactionCase):
 
         wizard_chg_qty.change_product_qty()
 
-        wizard = self.wizardmakepicking.with_context({
+        wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
@@ -126,7 +126,7 @@ class TestPickingCreation(common.TransactionCase):
         warehouse_rec = \
             warehouse_obj.search([('company_id',
                                    '=', company.id)])[0]
-        wizard = self.wizardmakepicking.with_context({
+        wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
@@ -143,3 +143,46 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(picking.location_dest_id,
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
+
+    def create_invoice(self):
+        sale_order_id = self.env['sale.order'].create({
+            'partner_id': self.ref('base.res_partner_9'),
+            'client_order_ref': 'TEST_SO',
+            'order_policy': 'manual',
+            'order_line': [(0, 0, {
+                'product_id': self.ref('product.product_product_8'),
+                'product_uom_qty': 2
+            })]
+        })
+        sale_order_id.action_button_confirm()
+        sale_order_id.action_invoice_create()
+        self.assertTrue(sale_order_id.invoice_ids)
+        invoice_id = sale_order_id.invoice_ids
+        invoice_id.signal_workflow('invoice_open')
+        return invoice_id
+
+    def test_03_invoice_refund(self):
+        claim_id = self.env['crm.claim'].browse(
+            self.ref('crm_claim.crm_claim_6'))
+        invoice_id = self.env['account.invoice'].browse(
+            self.ref('account.invoice_5'))
+        claim_id.write({
+            'invoice_id': invoice_id.id
+        })
+        claim_id.with_context({'create_lines': True}).\
+            _onchange_invoice_warehouse_type_date()
+
+        invoice_refund_wizard_id = self.env['account.invoice.refund'].\
+            with_context({
+                'active_ids': [claim_id.invoice_id.id],
+                'claim_line_ids':
+                [[4, cl.id, False] for cl in claim_id.claim_line_ids],
+            }).create({
+                'description': "Testing Invoice Refund for Claim"
+            })
+
+        res = invoice_refund_wizard_id.invoice_refund()
+
+        self.assertTrue(res)
+        self.assertEquals(res['res_model'], 'account.invoice')
+        self.assertEquals(eval(res['context'])['type'], 'out_refund')

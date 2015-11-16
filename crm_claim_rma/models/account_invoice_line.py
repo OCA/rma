@@ -27,10 +27,6 @@ from openerp import api, models
 
 class AccountInvoiceLine(models.Model):
 
-    """
-    Account Invoice Line
-    """
-
     _inherit = "account.invoice.line"
 
     @api.model
