@@ -105,6 +105,7 @@
                         <group>
                             <h1><field name="number" class="oe_inline"/></h1>
                         </group>
+                        <field name="claim_type" nolabel="1" readonly="1"/>
                     </div>
                     <separator string="Problem" colspan="4"/>
                     <group col="6" colspan="4">
