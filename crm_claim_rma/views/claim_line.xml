@@ -105,13 +105,13 @@
                         <group>
                             <h1><field name="number" class="oe_inline"/></h1>
                         </group>
-                        <field name="claim_type" nolabel="1"/>
+                        <field name="claim_type" nolabel="1" readonly="1"/>
                     </div>
                     <separator string="Problem" colspan="4"/>
                     <group col="6" colspan="4">
                         <field name="name" colspan="6"/>
                         <field name="product_id" readonly="1" colspan="6"/>
-                        <field name="prodlot_id" readonly="1" colspan="6"/>
+                        <field name="prodlot_id" colspan="6"/>
                         <field name="claim_origin" colspan="6"/>
                         <field name="claim_diagnosis" colspan="6"/>
                         <field name="priority" colspan="6"/>

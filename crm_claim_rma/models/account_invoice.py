@@ -27,12 +27,10 @@ from openerp import _, api, exceptions, fields, models
 
 
 class AccountInvoice(models.Model):
-    """
-    Account Invoice
-    """
+
     _inherit = "account.invoice"
 
-    claim_id = fields.Many2one('crm.claim', string='Claim', translate=True)
+    claim_id = fields.Many2one('crm.claim', string='Claim')
 
     def _refund_cleanup_lines(self, lines):
         """
@@ -54,7 +52,6 @@ class AccountInvoice(models.Model):
             if not claim_line.refund_line_id:
                 # For each lines replace quantity and add claim_line_id
                 inv_line = claim_line.invoice_line_id
-
                 clean_line = {}
                 for field_name, field in inv_line._all_columns.iteritems():
                     column_type = field.column._type

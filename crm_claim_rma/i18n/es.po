@@ -1,28 +1,18 @@
-#. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:473
-#, python-format
-msgid "Please set invoice first"
-msgstr ""
-
-#. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:470
-#, python-format
-msgid "Please set product first"
-msgstr ""# Translation of Odoo Server.
+# Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* crm_claim_rma
+#   * crm_claim_rma
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-20 18:21+0000\n"
-"PO-Revision-Date: 2014-01-22 19:38+0000\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"PO-Revision-Date: 2013-12-20 18:21+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: crm_claim_rma
@@ -464,7 +454,7 @@ msgstr "Documentos generados"
 #. module: crm_claim_rma
 #: help:claim.line,prodlot_id:0
 msgid "The serial/lot of the returned product"
-msgstr "Nº de serie/lote del producto devuelto"
+msgstr "No de Serie/Lote del producto devuelto"
 
 #. module: crm_claim_rma
 #: view:crm.claim:0
@@ -592,8 +582,8 @@ msgstr "Fabricante"
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_prodlot_id
-msgid "Serial/Lot n°"
-msgstr "N° de serie/lote:"
+msgid "Serial/Lot number"
+msgstr "No. de Serial/Lote"
 
 #. module: crm_claim_rma
 #: help:claim.line,unit_sale_price:0

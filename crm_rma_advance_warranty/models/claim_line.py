@@ -109,8 +109,8 @@ class ClaimLine(models.Model):
             return_type = 'company'
 
         location_dest_id = self.get_destination_location(
-            self.product_id.id,
-            self.claim_id.warehouse_id.id).id
+            self.product_id,
+            self.claim_id.warehouse_id).id
 
         self.write({
             'warranty_return_partner': return_address_id,

@@ -1,94 +1,73 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-	   <!-- Claims Sequence n° -->
-        <record id="seq_type_claim" model="ir.sequence.type">
-            <field name="name">CRM Claim</field>
-            <field name="code">crm.claim.rma</field>
-        </record>
-
-        <record id="seq_claim" model="ir.sequence">
-            <field name="name">CRM Claim</field>
-            <field name="code">crm.claim.rma</field>
-            <field eval="5" name="padding"/>
-            <field name="prefix">RMA-%(year)s/</field>
-        </record>
-
-        <!-- Claim sections -->
-	   <record model="crm.case.section" id="section_after_sales_service">
-            <field name="name">After Sales Service</field>
-            <field name="code">ASV</field>
-            <field name="parent_id" ref="sales_team.section_sales_department"/>
-        </record>
-
-        <!-- Claim categories -->
-	    <record model="crm.case.categ" id="categ_claim10">
+	    <record id="categ_claim10" model="crm.case.categ">
             <field name="name">No Inventory</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-	    <record model="crm.case.categ" id="categ_claim11">
+	    <record id="categ_claim11" model="crm.case.categ">
             <field name="name">Customer Return</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim12">
+        <record id="categ_claim12" model="crm.case.categ">
             <field name="name">Buyer Cancelled</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim13">
+        <record id="categ_claim13" model="crm.case.categ">
             <field name="name">General Adjustement</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim14">
+        <record id="categ_claim14" model="crm.case.categ">
             <field name="name">Could Not Ship</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim15">
+        <record id="categ_claim15" model="crm.case.categ">
             <field name="name">Different Item</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim16">
+        <record id="categ_claim16" model="crm.case.categ">
             <field name="name">Merchandise Not Received</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim17">
+        <record id="categ_claim17" model="crm.case.categ">
             <field name="name">Merchandise Not As Described</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim18">
+        <record id="categ_claim18" model="crm.case.categ">
             <field name="name">Pricing Error</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim19">
+        <record id="categ_claim19" model="crm.case.categ">
             <field name="name">Shipping Address Undeliverable</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim20">
+        <record id="categ_claim20" model="crm.case.categ">
             <field name="name">Delivered Late by Carrier</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-        <record model="crm.case.categ" id="categ_claim21">
+        <record id="categ_claim21" model="crm.case.categ">
             <field name="name">Missed Fulfilment Promise</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>

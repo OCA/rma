@@ -22,19 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import api, fields, models
+from openerp import fields, models
 
 
 class StockPicking(models.Model):
-    """
-    Stock Picking
-    """
+
     _inherit = "stock.picking"
 
     claim_id = fields.Many2one('crm.claim', 'Claim')
-
-    @api.model
-    def create(self, vals):
-        if ('name' not in vals) or (vals.get('name') == '/'):
-            vals['name'] = self.env['ir.sequence'].get(self._name)
-        return super(StockPicking, self).create(vals)

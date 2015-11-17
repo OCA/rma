@@ -38,13 +38,11 @@ from .product_no_supplier import ProductNoSupplier
 
 class ClaimLine(models.Model):
 
-    """
-    Class to handle a product return line (corresponding to one invoice line)
-    """
     _name = "claim.line"
 
     _inherit = 'mail.thread'
     _description = "List of product to return"
+    _rec_name = "display_name"
 
     SUBJECT_LIST = [('none', 'Not specified'),
                     ('legal', 'Legal retractation'),
@@ -61,7 +59,6 @@ class ClaimLine(models.Model):
                     ('physical_damage_company',
                      'Physical Damage by Company'),
                     ('other', 'Other')]
-    # Comment written in a claim.line to know about the warranty status
     WARRANT_COMMENT = [
         ('valid', _("Valid")),
         ('expired', _("Expired")),
@@ -90,11 +87,6 @@ class ClaimLine(models.Model):
                                 store=True,
                                 readonly=False,
                                 help="Priority attention of claim line")
-    claim_condition = fields.\
-        Selection([('auth_service', 'Authorized Service'),
-                   ('supplier', 'Supplier')],
-                  help="This field only applies "
-                       "for lines with 'RMA-C' type")
     claim_diagnosis = fields.\
         Selection([('damaged', 'Product Damaged'),
                    ('repaired', 'Product Repaired'),
@@ -102,13 +94,10 @@ class ClaimLine(models.Model):
                    ('hidden', 'Product with hidden physical damage'),
                    ],
                   help="To describe the line product diagnosis")
-    claim_origin = fields.Selection(SUBJECT_LIST,
-                                    'Claim Subject',
-                                    required=True,
-                                    help="To describe the "
+    claim_origin = fields.Selection(SUBJECT_LIST, 'Claim Subject',
+                                    required=True, help="To describe the "
                                     "line product problem")
-    product_id = fields.Many2one('product.product',
-                                 string='Product',
+    product_id = fields.Many2one('product.product', string='Product',
                                  help="Returned product")
     product_returned_quantity = \
         fields.Float('Quantity', digits=(12, 2),
@@ -133,50 +122,40 @@ class ClaimLine(models.Model):
                                              ('supplier', 'Supplier'),
                                              ('brand', 'Brand manufacturer')],
                                             'Warranty type')
-    guarantee_limit = fields.Date('Warranty limit',
-                                  readonly=True,
+    guarantee_limit = fields.Date('Warranty limit', readonly=True,
                                   help="The warranty limit is "
                                        "computed as: invoice date + warranty "
                                        "defined on selected product.")
     warning = fields.Selection(WARRANT_COMMENT,
-                               'Warranty',
-                               readonly=True,
+                               'Warranty', readonly=True,
                                help="If warranty has expired")
+    display_name = fields.Char('Name', compute='_get_display_name')
 
     @api.model
     def get_warranty_return_partner(self):
         return self.env['product.supplierinfo'].get_warranty_return_partner()
 
-    warranty_type = fields.Selection(get_warranty_return_partner,
-                                     readonly=True,
-                                     help="Who is in charge of the warranty "
-                                          "return treatment towards "
-                                          "the end customer. Company will use "
-                                          "the current company "
-                                          "delivery or default address  "
-                                          "and so on for supplier and brand "
-                                          "manufacturer. Does not necessarily "
-                                          "mean that the warranty "
-                                          "to be applied is the one of the "
-                                          "return partner (ie: can be "
-                                          "returned to the company and be "
-                                          "under the brand warranty")
+    warranty_type = fields.Selection(
+        get_warranty_return_partner, readonly=True,
+        help="Who is in charge of the warranty return treatment towards "
+        "the end customer. Company will use the current company "
+        "delivery or default address and so on for supplier and brand "
+        "manufacturer. Does not necessarily mean that the warranty "
+        "to be applied is the one of the return partner (ie: can be "
+        "returned to the company and be under the brand warranty")
     warranty_return_partner = \
         fields.Many2one('res.partner', string='Warranty Address',
                         help="Where the customer has to "
                         "send back the product(s)")
-    claim_id = fields.Many2one('crm.claim',
-                               string='Related claim',
+    claim_id = fields.Many2one('crm.claim', string='Related claim',
                                ondelete='cascade',
                                help="To link to the case.claim object")
-    state = fields.Selection([('draft', 'Draft'),
-                              ('refused', 'Refused'),
+    state = fields.Selection([('draft', 'Draft'), ('refused', 'Refused'),
                               ('confirmed', 'Confirmed, waiting for product'),
                               ('in_to_control', 'Received, to control'),
                               ('in_to_treate', 'Controlled, to treate'),
                               ('treated', 'Treated')],
-                             string='State',
-                             default='draft')
+                             string='State', default='draft')
     substate_id = fields.Many2one('substate.substate', string='Sub state',
                                   help="Select a sub state to precise the "
                                        "standard state. Example 1: "
@@ -210,8 +189,7 @@ class ClaimLine(models.Model):
                                        ' of the returned product')
     claim_type = fields.Many2one(related='claim_id.claim_type',
                                  string="Claim Line Type",
-                                 store=True,
-                                 help="Claim classification")
+                                 store=True, help="Claim classification")
     invoice_date = fields.Datetime(related='invoice_line_id.invoice_id.'
                                    'create_date',
                                    help="Date of Claim Invoice")
@@ -353,15 +331,7 @@ class ClaimLine(models.Model):
         for a return. Always take 'Supplier' one when return type different
         from company.
         """
-        if isinstance(warehouse_id, int):
-            location_dest_id = self.env['stock.warehouse']\
-                .browse(warehouse_id).lot_stock_id
-        else:
-            location_dest_id = warehouse_id.lot_stock_id
-
-        if isinstance(product_id, int):
-            product_id = self.env['product.product']\
-                .browse(product_id)
+        location_dest_id = warehouse_id.lot_stock_id
 
         if product_id.seller_ids:
             seller = product_id.seller_ids[0]
@@ -453,7 +423,7 @@ class ClaimLine(models.Model):
         return res
 
     @api.multi
-    def name_get(self):
+    def _get_display_name(self):
         res = []
         for line_id in self:
             res.append(

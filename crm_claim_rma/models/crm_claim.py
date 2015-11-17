@@ -28,8 +28,6 @@ from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
 
 
-# TODO add the option to split the claim_line in order to manage the same
-# product separately
 class CrmClaim(models.Model):
     _inherit = 'crm.claim'
 
@@ -50,10 +48,10 @@ class CrmClaim(models.Model):
             res.append((claim.id, '[' + code + '] ' + claim.name))
         return res
 
-    company_id = fields.Many2one(
-        change_default=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'crm.claim'))
+    company_id = fields.Many2one(change_default=True,
+                                 default=lambda self:
+                                 self.env['res.company']._company_default_get(
+                                     'crm.claim'))
 
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
@@ -61,33 +59,23 @@ class CrmClaim(models.Model):
     planned_cost = fields.Float('Expected cost')
     real_revenue = fields.Float()
     real_cost = fields.Float()
-    invoice_ids = fields.One2many(
-        'account.invoice',
-        'claim_id',
-        'Refunds',
-        copy=False)
-    picking_ids = fields.One2many(
-        'stock.picking',
-        'claim_id',
-        'RMA',
-        copy=False)
+    invoice_ids = fields.One2many('account.invoice', 'claim_id', 'Refunds',
+                                  copy=False)
+    picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA',
+                                  copy=False)
     invoice_id = fields.Many2one('account.invoice', string='Invoice',
                                  help='Related original Cusotmer invoice')
     pick = fields.Boolean('Pick the product in the store')
     delivery_address_id = fields.Many2one('res.partner',
                                           string='Partner delivery address',
-                                          help="This address will be"
-                                          " used to deliver repaired "
-                                          "or replacement"
+                                          help="This address will be used to "
+                                          "deliver repaired or replacement "
                                           "products.")
-
     sequence = fields.Integer(default=lambda *args: 1)
-
     warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse',
                                    required=True,
                                    default=_get_default_warehouse)
-    rma_number = fields.Char(size=128,
-                             help='RMA Number provided by supplier')
+    rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
 
     @api.model
     def _get_claim_type_default(self):
@@ -102,7 +90,7 @@ class CrmClaim(models.Model):
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
-        claim_line_obj = self.env['claim.line']
+        claim_line = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
         if not self.warehouse_id:
             self.warehouse_id = self._get_default_warehouse()
@@ -115,7 +103,7 @@ class CrmClaim(models.Model):
         def warranty_values(invoice, product):
             values = {}
             try:
-                warranty = claim_line_obj._warranty_limit_values(
+                warranty = claim_line._warranty_limit_values(
                     invoice, claim_type, product, claim_date)
             except (InvoiceNoDate, ProductNoSupplier):
                 # we don't mind at this point if the warranty can't be
@@ -124,7 +112,7 @@ class CrmClaim(models.Model):
             else:
                 values.update(warranty)
 
-            warranty_address = claim_line_obj._warranty_return_address_values(
+            warranty_address = claim_line._warranty_return_address_values(
                 product, company, warehouse)
             values.update(warranty_address)
             return values
@@ -132,7 +120,7 @@ class CrmClaim(models.Model):
         if create_lines:  # happens when the invoice is changed
             claim_lines = []
             for invoice_line in invoice_lines:
-                location_dest = claim_line_obj.get_destination_location(
+                location_dest = claim_line.get_destination_location(
                     invoice_line.product_id, warehouse)
                 line = {
                     'name': invoice_line.name,

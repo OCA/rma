@@ -26,6 +26,7 @@ from openerp import fields, models
 
 
 class SubstateSubstate(models.Model):
+
     """
     To precise a state (state=refused; substates= reason 1, 2,...)
     """
