@@ -186,3 +186,14 @@ class TestPickingCreation(common.TransactionCase):
         self.assertTrue(res)
         self.assertEquals(res['res_model'], 'account.invoice')
         self.assertEquals(eval(res['context'])['type'], 'out_refund')
+
+    def test_04_display_name(self):
+        """
+        It tests that display_name for each line has a message for it
+        """
+        claim_line_ids = self.env['crm.claim'].browse(
+            self.ref('crm_claim.crm_claim_6'))[0].claim_line_ids
+
+        all_values = sum([bool(line_id.display_name)
+                          for line_id in claim_line_ids])
+        self.assertEquals(len(claim_line_ids), all_values)
