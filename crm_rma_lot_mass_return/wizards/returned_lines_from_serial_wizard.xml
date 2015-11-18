@@ -38,9 +38,9 @@
                             <div class="row">
                                 <div class="pull-right" name="buttons">
                                 <button name="add_claim_lines"
-                                    help="Validate the actual picking, it will execute all the validations and the inventory will be affected"
-                                    confirm="You add new returns in claim, are you sure?."
-                                    string="_Validate" colspan="1" type="object" class="oe_highlight"/>
+                                    help="All the valid lines will be added to the claim"
+                                    confirm="You are about to add new lines to the claim, Do you want to continue?."
+                                    string="Add items to the claim" colspan="1" type="object" class="oe_highlight"/>
                                 </div>
                             </div>
                         </div>
