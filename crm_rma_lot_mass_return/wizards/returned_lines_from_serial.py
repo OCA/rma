@@ -534,6 +534,15 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                        self.env[
                                            'claim.line']._get_subject(num),
                                        product_id, clw_id, 1, name)
+
+            # Clean items in wizard model
+            if len(clw_ids) == 1:
+                ids_to_delete = "(%s)" % str(clw_ids[0].id)
+            else:
+                ids_to_delete = "%s" % str(tuple([clw.id for clw in clw_ids]))
+            self._cr.execute("DELETE FROM claim_line_wizard where id IN %s"
+                             % ids_to_delete)
+
         # normal execution
         self.action_cancel()
 

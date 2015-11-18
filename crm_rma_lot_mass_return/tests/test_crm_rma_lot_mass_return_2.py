@@ -176,9 +176,9 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
 
         line_id = self.claim_id_2.claim_line_ids
         self.assertEqual(
-            subject_list[subject_index-1][0], line_id.claim_origin)
-        self.assertEqual(scanned_data, line_id.prodlot_id.name + '*'
-                         + str(subject_index) + '*' + line_id.name + '\n')
+            subject_list[subject_index - 1][0], line_id.claim_origin)
+        self.assertEqual(scanned_data, line_id.prodlot_id.name + '*' +
+                         str(subject_index) + '*' + line_id.name + '\n')
 
         # create again the wizard
         wizard_id = self.metasearch_wizard.with_context({
