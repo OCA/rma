@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume,
+#            Yanina Aular, Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,46 +23,24 @@
 #
 ##############################################################################
 
-{'name': 'RMA Claims Advance Location',
- 'version': '1.0',
- 'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim_rma',
-             'crm_rma_stock_location',
-             ],
- 'author': "Akretion,Odoo Community Association (OCA)",
- 'license': 'AGPL-3',
- 'website': 'http://www.akretion.com',
- 'description': """
-RMA Claim Advance Location
-==========================
-
-This module adds the following location on warehouses :
-
- * Carrier Loss
- * RMA
- * Breakage Loss
- * Refurbish
- * Mistake Loss
-
-And also various wizards on icoming deliveries that allow you to move your goods easily in those
-new locations from a done reception.
-
-Using this module make the logistic flow of return a bit more complexe:
-
- * Returning product goes into RMA location with a incoming shipment
- * From the incoming shipment, forward them to another places (stock, loss,...)
-
-WARNING: Use with caution, this module is currently not yet completely debugged and is waiting his author to be.
-
-""",
-    'images': [],
-    'demo': [],
-    'data': ['wizard/claim_make_picking_from_picking_view.xml',
-              'wizard/claim_make_picking_view.xml',
-              'stock_view.xml',
-              'stock_data.xml',
-              'claim_rma_view.xml',
+{
+    'name': 'RMA Claims Advance Location',
+    'version': '8.0.1.0.0',
+    'category': 'Generic Modules/CRM & SRM',
+    'author': 'Akretion,Vauxoo,Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
+    'website': 'http://www.akretion.com,http://www.vauxoo.com',
+    'depends': [
+        'crm_claim_rma',
     ],
-    'installable': False,
-    'application': True,
+    'data': [
+        'wizards/claim_make_picking_from_picking_view.xml',
+        'wizards/claim_make_picking_view.xml',
+        'views/crm_claim.xml',
+        'views/stock_picking.xml',
+        'views/stock_warehouse.xml',
+    ],
+    'post_init_hook': 'post_init_hook',
+    'installable': True,
+    'auto_install': False
 }
