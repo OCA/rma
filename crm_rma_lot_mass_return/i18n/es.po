@@ -161,8 +161,8 @@ msgstr "Escribir el número de serie o lote para buscar el producto."
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
-msgid "You add new returns in claim, are you sure?."
-msgstr "Agregarás nuevas devoluciones en el reclamo, ¿Estás seguro?"
+msgid "You are about to add new lines to the claim, Do you want to continue?."
+msgstr "Se agregarán nuevas líneas a la reclamación, ¿Desea continuar?"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -171,8 +171,8 @@ msgstr "Deberías usar ésta ventana"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
-msgid "_Validate"
-msgstr "_Validar"
+msgid "Add items to the claim"
+msgstr "Añadir productos a la reclamación"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:585

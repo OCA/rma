@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+from datetime import date
 from openerp.tests.common import TransactionCase
 
 
@@ -66,11 +67,6 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         self.assertEqual(res['res_model'], self.metasearch_wizard._name)
 
     def test_02_load_products(self):
-        self.invoice_id.signal_workflow('invoice_open')
-
-        # Before continue, invoice must be open to get a number value
-        # and this is needed by the wizard
-        self.assertEqual(self.invoice_id.state, 'open')
 
         wizard_id = self.metasearch_wizard.with_context({
             'active_model': self.claim_id._name,
@@ -82,7 +78,10 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         lines_list_id = wizard_id.onchange_load_products(
             self.invoice_id.number +
             '*5*description here' + '\n' + self.lot_ids[0].name,
-            [(6, 0, [])])['domain']['lines_list_id'][0][2]
+            [(6, 0, [])])
+
+        lines_list_id = lines_list_id['domain']['lines_list_id'][0][2]
+
         option_ids = wizard_id.onchange_load_products(
             self.invoice_id.number, [(6, 0, [])])['value']['option_ids'][0][2]
 
@@ -106,6 +105,49 @@ class TestCrmRmaLotMassReturn(TransactionCase):
             qty += inv_line.quantity
         self.assertEqual(len(self.claim_id.claim_line_ids),
                          int(qty))
+
+    def sale_validate_invoice(self, sale):
+
+        sale_advance_obj = self.env['sale.advance.payment.inv']
+
+        context = {
+            'active_model': 'sale.order',
+            'active_ids': [sale.id],
+            'active_id': sale.id,
+        }
+
+        wizard_invoice_id = sale_advance_obj.with_context(context).create({
+            'advance_payment_method': 'all',
+        })
+
+        wizard_invoice_id.with_context(context).create_invoices()
+
+        invoice_id = sale.invoice_ids[0]
+        invoice_id.signal_workflow('invoice_open')
+
+        # check if invoice is open
+        self.assertEqual(invoice_id.state, 'open')
+
+        pay_account_id = self.env['account.account'].\
+            browse(self.ref("account.cash"))
+        journal_id = self.env['account.journal'].\
+            browse(self.ref("account.bank_journal"))
+        date_start = date.today().replace(day=1, month=1).strftime('%Y-%m-%d')
+        period_id = self.env['account.fiscalyear'].search(
+            [('date_start', '=', date_start)]).period_ids[8]
+
+        invoice_id.pay_and_reconcile(
+            invoice_id.amount_total, pay_account_id.id,
+            period_id.id, journal_id.id, pay_account_id.id,
+            period_id.id, journal_id.id,
+            name="Payment for Invoice")
+
+        # in order to proceed is necessary to get the sale order invoiced
+        # and the invoice paid as well
+        self.assertTrue(sale.invoiced)
+        self.assertEqual(invoice_id.state, 'paid')
+
+        return invoice_id
 
     def create_sale_invoice(self):
         sale_order_id = self.create_sale_order('manual')
@@ -150,8 +192,8 @@ class TestCrmRmaLotMassReturn(TransactionCase):
 
             wizard_id.do_detailed_transfer()
 
-        sale_order_id.action_invoice_create()
-        invoice_id = sale_order_id.invoice_ids[0]
-        invoice_id.signal_workflow('invoice_open')
+        # Before continue, invoice must be open to get a number value
+        # and this is needed by the wizard
+        invoice_id = self.sale_validate_invoice(sale_order_id)
 
         return invoice_id, lot_ids
