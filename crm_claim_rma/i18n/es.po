@@ -1,20 +1,19 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* crm_claim_rma
+#   * crm_claim_rma
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-20 18:21+0000\n"
-"PO-Revision-Date: 2014-01-22 19:38+0000\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"PO-Revision-Date: 2013-12-20 18:21+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-24 06:50+0000\n"
-"X-Generator: Launchpad (build 17017)\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
@@ -73,10 +72,10 @@ msgstr "Linea de Abono"
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Company"
-msgstr "Compañia"
+msgstr "Compañía"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Order cancellation"
 msgstr "Cancelación de orden"
 
@@ -84,7 +83,7 @@ msgstr "Cancelación de orden"
 #: field:claim_make_picking.wizard,claim_line_dest_location:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_make_picking_wizard_claim_line_dest_location
 msgid "Dest. Location"
-msgstr "Localizalización de destino"
+msgstr "Localización de destino"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/crm_claim_rma.py:224
@@ -132,7 +131,7 @@ msgstr "¡Ya se ha creado un abono para esta reclamación!"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
-msgid "Compute Waranty"
+msgid "Compute Warranty"
 msgstr "Calcular garantía"
 
 #. module: crm_claim_rma
@@ -183,7 +182,7 @@ msgstr "Devolución de cliente"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
 msgid "Stock Move"
-msgstr "Movimientos de stock"
+msgstr "Movimientos de Inventario"
 
 #. module: crm_claim_rma
 #: help:claim.line,product_returned_quantity:0
@@ -228,7 +227,7 @@ msgid "To set the last state / substate change"
 msgstr "Para definir el último cambio de estado / sub-estado"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Not specified"
 msgstr "No especificado"
 
@@ -269,7 +268,7 @@ msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: crm_claim_rma
-#: help:claim.line,claim_origine:0
+#: help:claim.line,claim_origin:0
 msgid "To describe the line product problem"
 msgstr "Para describir el problema de la línea de producto"
 
@@ -285,7 +284,7 @@ msgid "More"
 msgstr "Más"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Legal retractation"
 msgstr "Retractación legal"
 
@@ -308,10 +307,10 @@ msgstr ""
 "seleccionada en el producto seleccionado."
 
 #. module: crm_claim_rma
-#: field:claim.line,claim_origine:0
-#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origine
+#: field:claim.line,claim_origin:0
+#: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origin
 msgid "Claim Subject"
-msgstr "Objeto de la reclamación"
+msgstr "Motivo de la reclamación"
 
 #. module: crm_claim_rma
 #: field:crm.claim,real_cost:0
@@ -388,12 +387,12 @@ msgid "Quotations and Sales"
 msgstr "Presupuestos y pedidos"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Lost during transport"
 msgstr "Perdido durante el transporte"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Shipping error"
 msgstr "Error de envío"
 
@@ -455,7 +454,7 @@ msgstr "Documentos generados"
 #. module: crm_claim_rma
 #: help:claim.line,prodlot_id:0
 msgid "The serial/lot of the returned product"
-msgstr "Nº de serie/lote del producto devuelto"
+msgstr "No de Serie/Lote del producto devuelto"
 
 #. module: crm_claim_rma
 #: view:crm.claim:0
@@ -583,8 +582,8 @@ msgstr "Fabricante"
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_prodlot_id
-msgid "Serial/Lot n°"
-msgstr "N° de serie/lote:"
+msgid "Serial/Lot number"
+msgstr "No. de Serial/Lote"
 
 #. module: crm_claim_rma
 #: help:claim.line,unit_sale_price:0
@@ -600,13 +599,19 @@ msgstr ""
 "descuento de facturas, puede ser 0 si el producto es gratuito, etc..."
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/crm_claim_rma.py:313
+#: code:addons/crm_claim_rma/crm_claim_rma.py:473
 #, python-format
-msgid "Please set product and invoice."
-msgstr "Establezca por favor producto y factura."
+msgid "Please set invoice first"
+msgstr "Por favor, establezca la factura primero"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: code:addons/crm_claim_rma/crm_claim_rma.py:470
+#, python-format
+msgid "Please set product first"
+msgstr "Por favor, establezca el producto primero"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
 msgid "Damaged delivered product"
 msgstr "Producto enviado dañado"
 
@@ -728,7 +733,7 @@ msgid "Merchandise Not As Described"
 msgstr "El producto no se corresponde con la descripción"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 msgid "Exchange request"
 msgstr "Solicitar cambio"
 
@@ -754,7 +759,7 @@ msgid "Current"
 msgstr "Actual"
 
 #. module: crm_claim_rma
-#: selection:claim.line,claim_origine:0
+#: selection:claim.line,claim_origin:0
 #: selection:crm.claim,claim_type:0
 msgid "Other"
 msgstr "Otro"
@@ -932,3 +937,132 @@ msgstr "Reclamaciones en proceso"
 #, python-format
 msgid "The product has no supplier configured."
 msgstr "El producto no tiene proveedor configurado."
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+#: field:crm.claim,pick:0
+msgid "Pick the product in store"
+msgstr "Buscar el producto en la tienda"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+#: field:crm.claim,delivery_address_id:0
+msgid "Partner delivery address"
+msgstr "Dirección de envío"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_purchase_orders
+msgid "Purchases"
+msgstr "Compras"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
+msgid "Returns"
+msgstr "Devoluciones"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+#: field:claim.line,priority:0
+msgid "Priority"
+msgstr "Prioridad"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Product Returns"
+msgstr "Productos Devueltos"
+
+#. module: crm_claim_rma
+#: view:crm.claim:0
+#: field:crm.claim,pick:0
+msgid "Pick the product in the store"
+msgstr "Retirar el producto en recepción"
+
+#. module: crm_claim_rma
+#: field:claim.line,number:0
+msgid "Number"
+msgstr "Número"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Valid"
+msgstr "Válida"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Expired"
+msgstr "Expirada"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warning:0
+msgid "Not Defined"
+msgstr "No Definida"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: crm_claim_rma
+#: selection:claim.line,warranty_type:0
+msgid "Other"
+msgstr "Otro"
+
+#. module: crm_claim_rma
+#: field:crm.claim,pick:0
+msgid "Pick the product in the store"
+msgstr "Retirar el producto en recepción"
+
+#. module: crm_claim_rma
+#: field:crm.claim,name:0
+msgid "Name"
+msgstr "Reclamo"
+
+#. module: crm_claim_rma
+#: field:crm.claim,rma_number:0
+msgid "Rma number"
+msgstr "Número RMA"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Imperfection"
+msgstr "Imperfección"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Client"
+msgstr "Daño físico por el cliente"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Company"
+msgstr "Daño físico por la compañía"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Perfect Conditions"
+msgstr "Perfectas condiciones"
+
+#. module: yoytec_customer_rma_workflow
+#: field:claim.line,claim_diagnosis:0
+msgid "Claim diagnosis"
+msgstr "Diagnóstico del reclamo"
+

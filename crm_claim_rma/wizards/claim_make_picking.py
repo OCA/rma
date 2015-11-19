@@ -102,24 +102,18 @@ class ClaimMakePicking(models.TransientModel):
         picking_type = self.env.context.get('picking_type')
         if isinstance(picking_type, int):
             picking_obj = self.env['stock.picking.type']
-            if picking_obj.\
-                    browse(picking_type).\
-                    code == 'incoming':
+            if picking_obj.browse(picking_type).code == 'incoming':
                 picking_type = 'in'
             else:
                 picking_type = 'out'
 
-        move_field = ('move_in_id'
-                      if picking_type == 'in'
-                      else 'move_out_id')
+        move_field = 'move_in_id' if picking_type == 'in' else 'move_out_id'
         domain = [('claim_id', '=', self.env.context['active_id'])]
         lines = self.env['claim.line'].\
             search(domain)
         if lines:
-            domain = domain + [
-                '|', (move_field, '=', False),
-                (move_field+'.state', '=', 'cancel')
-            ]
+            domain = domain + ['|', (move_field, '=', False),
+                               (move_field + '.state', '=', 'cancel')]
             lines = lines.search(domain)
             if not lines:
                 raise exceptions.Warning(
@@ -258,10 +252,9 @@ class ClaimMakePicking(models.TransientModel):
         domain = ("[('picking_type_id', '=', %s), ('partner_id', '=', %s)]" %
                   (picking_type.id, partner_id))
 
-        view_obj = self.env['ir.ui.view']
-        view_id = view_obj.search([('model', '=', 'stock.picking'),
-                                   ('type', '=', 'form'),
-                                   ])[0]
+        view_id = self.env['ir.ui.view'].search(
+            [('model', '=', 'stock.picking'),
+             ('type', '=', 'form')])[0]
         return {
             'name': self._get_picking_name(),
             'view_type': 'form',

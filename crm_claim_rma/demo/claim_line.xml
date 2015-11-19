@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <record id="claim_line_1" model="claim.line">
+            <field name="name">Claim Line 1 of Claim 6</field>
+            <field name="claim_id" ref="crm_claim.crm_claim_6"/>
+            <field name="claim_origin">legal</field>
+            <field name="invoice_line_id" ref="crm_rma_invoice_1_line_1"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_returned_quantity">1</field>
+            <field name="unit_sale_price">1799</field>
+            <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
+            <field name="number">00013</field>
+        </record>
+
+        <record id="claim_line_2" model="claim.line">
+            <field name="name">Claim Line 2 of Claim 6</field>
+            <field name="claim_id" ref="crm_claim.crm_claim_6"/>
+            <field name="claim_origin">damaged</field>
+            <field name="invoice_line_id" ref="crm_rma_invoice_1_line_2"/>
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="product_returned_quantity">1</field>
+            <field name="unit_sale_price">450</field>
+            <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
+            <field name="number">00012</field>
+        </record>
+    </data>
+</openerp>

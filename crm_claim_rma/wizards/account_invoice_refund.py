@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Vauxoo
 #    Copyright 2015 Eezee-It, MONK Software
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
+#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +24,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class AccountInvoiceRefund(models.TransientModel):
@@ -33,8 +35,9 @@ class AccountInvoiceRefund(models.TransientModel):
 
     description = fields.Char(default=_default_description)
 
-    @api.one
+    @api.multi
     def compute_refund(self, mode='refund'):
+        self.ensure_one()
         invoice_ids = self.env.context.get('invoice_ids', [])
         if invoice_ids:
             self = self.with_context(active_ids=invoice_ids)

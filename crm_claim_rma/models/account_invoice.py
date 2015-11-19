@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2015 Eezee-It, MONK Software
+#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
 #    Copyright 2013 Camptocamp
 #    Copyright 2009-2013 Akretion,
 #    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
 #            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
+#            Osval Reyes, Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,21 +23,21 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, exceptions
-from openerp.tools.translate import _
+from openerp import _, api, exceptions, fields, models
 
 
 class AccountInvoice(models.Model):
+
     _inherit = "account.invoice"
 
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
-    @api.model
     def _refund_cleanup_lines(self, lines):
         """
         Override when from claim to update the quantity and link to the
         claim line.
         """
+
         # check if is an invoice_line and we are from a claim
         if not (self.env.context.get('claim_line_ids') and lines and
                 lines[0]._name == 'account.invoice.line'):
@@ -59,14 +60,17 @@ class AccountInvoice(models.Model):
                     elif column_type not in ('many2many', 'one2many'):
                         clean_line[field_name] = inv_line[field_name]
                     elif field_name == 'invoice_line_tax_id':
+
                         tax_ids = inv_line[field_name].ids
                         clean_line[field_name] = [(6, 0, tax_ids)]
                 clean_line['quantity'] = claim_line.product_returned_quantity
                 clean_line['claim_line_id'] = [claim_line.id]
+
                 new_lines.append(clean_line)
         if not new_lines:
             # TODO use custom states to show button of this wizard or
             # not instead of raise an error
+
             raise exceptions.Warning(
                 _('A refund has already been created for this claim !'))
         return [(0, 0, l) for l in new_lines]
@@ -82,21 +86,3 @@ class AccountInvoice(models.Model):
             result['claim_id'] = self.env.context['claim_id']
 
         return result
-
-
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
-
-    @api.model
-    @api.returns('self', lambda value: value.id)
-    def create(self, vals):
-        claim_line_id = vals.get('claim_line_id')
-        if claim_line_id:
-            del vals['claim_line_id']
-
-        line = super(AccountInvoiceLine, self).create(vals)
-        if claim_line_id:
-            claim_line = self.env['claim.line'].browse(claim_line_id)
-            claim_line.refund_line_id = line.id
-
-        return line

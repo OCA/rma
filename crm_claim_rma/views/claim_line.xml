@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_crm_claim_lines_filter" model="ir.ui.view">
+            <field name="name">CRM - Claims Search</field>
+            <field name="model">claim.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Claims">
+                    <filter icon="terp-check" string="Current" name="current"
+                        domain="[('state','in',('draft', 'refused', 'treated'))]"
+                        separator="1" help="Draft and Open Claims" />
+                    <filter icon="terp-camera_test"
+                        string="In Progress"
+                        domain="[('state','in',('confirmed','in_to_control','in_to_treate'))]"
+                        separator="1" help="In Progress Claims"/>
+                    <separator orientation="vertical"/>
+                    <field name="number"/>
+                    <field name="state" select='1'/>
+                    <field name="substate_id" select='1'/>
+                    <field name="name" select='1'/>
+                    <field name="warning" select='1'/>
+                    <field name="invoice_line_id" select='1' readonly='1'/>
+                    <field name="product_id" select='1'/>
+                    <field name="prodlot_id" select='1'/>
+                    <field name="move_in_id"/>
+                    <newline/>
+                    <group expand="0" string="More">
+                        <field name="last_state_change" select='1'/>
+                        <field name="guarantee_limit" select='1'/>
+                        <field name="return_value" select='1'/>
+                        <field name="name" select='1'/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Invoice" icon="terp-dolar"
+                            domain="[]" help="Invoice"
+                            context="{'group_by':'invoice_id'}" />
+
+                        <filter string="Product" icon="terp-product"
+                            domain="[]" help="Product"
+                            context="{'group_by':'product_id'}" />
+                        <separator orientation="vertical"/>
+
+                        <filter string="Substate" icon="terp-stage"
+                            domain="[]" context="{'group_by':'substate_id'}" />
+
+                        <filter string="Claim n°" icon="terp-emblem-documents"
+                            domain="[]" context="{'group_by':'claim_id'}" />
+
+                        <filter string="Priority"
+                            name="group_by_priority"
+                            domain="[]"
+                            context="{'group_by':'priority'}"
+                            help="Priority"/>
+
+                        <filter string="State"
+                            name="group_by_state"
+                            domain="[]"
+                            context="{'group_by':'state'}"
+                            help="Grouping by state"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_claim_line_tree_view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">claim.line</field>
+            <field name="arch" type="xml">
+                <tree string="Claim lines">
+                    <field name="claim_id" invisible="1"/>
+                    <field name="number"/>
+                    <field name="state"/>
+                    <field name="substate_id"/>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="prodlot_id"/>
+                    <field name="warning"/>
+                    <field name="warranty_type"/>
+                    <field name="warranty_return_partner"/>
+                    <button name="set_warranty" string="Compute Warranty" type="object" icon="gtk-justify-fill"/>
+                    <field name="product_returned_quantity"/>
+                    <field name="claim_origin"/>
+                    <field name="claim_diagnosis"/>
+                    <field name="refund_line_id"/>
+                    <field name="move_in_id"/>
+                    <field name="move_out_id"/>
+                    <field name="priority"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_claim_line_form_view">
+            <field name="name">CRM - Claim product return line Form</field>
+            <field name="model">claim.line</field>
+            <field name="arch" type="xml">
+                <form string="Claim Line" version="7.0">
+                    <header>
+                    <button name="set_warranty" string="Calculate warranty state" type="object" class="oe_highlight"/>
+                    <field name="state"
+                        widget="statusbar"/>
+                </header>
+                <sheet string="Claims">
+                    <div class="oe_title" colspan="4">
+                        <group>
+                            <h1><field name="number" class="oe_inline"/></h1>
+                        </group>
+                    </div>
+                    <separator string="Problem" colspan="4"/>
+                    <group col="6" colspan="4">
+                        <field name="name" colspan="6"/>
+                        <field name="product_id" readonly="1" colspan="6"/>
+                        <field name="prodlot_id" colspan="6"/>
+                        <field name="claim_origin" colspan="6"/>
+                        <field name="claim_diagnosis" colspan="6"/>
+                        <field name="priority" colspan="6"/>
+                        <field name="product_returned_quantity" invisible="1"/>
+                        <field name="unit_sale_price"/>
+                        <field name="return_value"/>
+                    </group>
+                    <group>
+                        <group string="Warranty">
+                            <field name="guarantee_limit" readonly="1"/>
+                            <field name="warning" readonly="1"/>
+                            <field name="warranty_type" readonly="1"/>
+                            <field name="warranty_return_partner"/>
+                        </group>
+                        <group string="Linked Document">
+                            <field name="claim_id" readonly="1"/>
+                            <field name="invoice_line_id" readonly="1"/>
+                            <field name="refund_line_id" readonly="1"/>
+                            <field name="move_in_id" readonly="1"/>
+                            <field name="move_out_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="State" colspan="4"/>
+                    <group col="6" colspan="4">
+                        <field name="substate_id" widget='selection'/>
+                        <field name="last_state_change"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--
+            A second slightly modified form view to be used for the claim_line_ids
+            field in the crm.claim form view. Defining it here instead of directly
+            inside the field allows us to write only the changes and reference it
+        -->
+        <record id="crm_claim_line_view_form_embedded" model="ir.ui.view">
+            <field name="name">Claim line form view to be used inside claim tree</field>
+            <field name="mode">primary</field>
+            <field name="model">claim.line</field>
+            <field name="priority" eval="30"/>
+            <field name="inherit_id" ref="crm_claim_line_form_view"/>
+            <field name="arch" type="xml">
+                <field name="claim_id" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+                <field name="product_id" position="attributes">
+                    <attribute name="context">{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id': parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': parent.date}</attribute>
+                </field>
+                <field name="invoice_line_id" position="attributes">
+                    <attribute name="context">{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id': parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': parent.date}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Claim lines action -->
+        <record model="ir.actions.act_window" id="act_crm_case_claim_lines">
+            <field name="name">Claim lines</field>
+            <field name="res_model">claim.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="crm_claim_line_tree_view"/>
+            <field name="search_view_id" ref="view_crm_claim_lines_filter"/>
+            <field name="context">{'search_default_group_by_priority': True,
+                'search_default_group_by_state': True}
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem
+            name="Claim lines"
+            id="menu_crm_case_claims_claim_lines"
+            parent="base.menu_aftersale"
+            action="act_crm_case_claim_lines"
+            sequence="2"/>
+    </data>
+</openerp>
