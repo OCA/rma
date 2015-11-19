@@ -23,29 +23,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'RMA Claims Mass Return by Lot',
-    'version': '8.0.1.0.0',
-    'category': 'Generic Modules/CRM & SRM',
-    'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
-    'license': 'AGPL-3',
-    'website': 'http://www.vauxoo.com, http://www.akretion.com',
-    'depends': [
-        'crm_claim_rma',
-        'crm_rma_prodlot_invoice',
-        'crm_rma_prodlot_supplier',
-    ],
-    'data': [
-        'wizards/returned_lines_from_serial_wizard.xml',
-        'views/crm_claim.xml',
-        'templates/search_view.xml'
-    ],
-    'demo': [
-        'demo/stock_production_lot.xml',
-        'demo/purchase_order.xml',
-        # 'demo/sale_order.xml',
-        'demo/transfer_details.xml',
-    ],
-    'installable': True,
-    'auto_install': False
-}
+from . import returned_lines_from_serial

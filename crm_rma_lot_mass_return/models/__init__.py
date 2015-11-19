@@ -2,10 +2,7 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Joel Grand-Guillaume
+#    Author: Osval Reyes, Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,5 +19,4 @@
 #
 ##############################################################################
 
-from . import models
-from . import wizards
+from . import crm_claim
