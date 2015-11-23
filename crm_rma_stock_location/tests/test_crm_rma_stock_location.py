@@ -28,9 +28,8 @@ class TestCrmRmaStockLocation(TransactionCase):
         super(TestCrmRmaStockLocation, self).setUp()
         self.inventory = self.env['stock.inventory']
         self.inventory_line = self.env['stock.inventory.line']
-        self.location = self.env['stock.location']
-        self.location_id = self.location.search(
-            [('complete_name', 'like', 'WH / RMA')])
+        self.location_id = self.env['stock.location'].search(
+            [('name', '=', 'RMA'), ('location_id.name', '=', 'WH')])
         self.warehouse_id = self.env['stock.warehouse'].browse(
             self.ref('stock.warehouse0'))
         self.lot_rma_id = self.warehouse_id.lot_rma_id
@@ -64,10 +63,14 @@ class TestCrmRmaStockLocation(TransactionCase):
 
         inventory_id.prepare_inventory()
         inventory_id.action_done()
+        qty = inventory_line_id_a.product_qty + inventory_line_id_b.product_qty
+        self.assertEquals(self.product_socket_id.rma_qty_available, qty)
+        self.assertEquals(self.product_socket_id.rma_virtual_available, qty)
 
-        self.assertEquals(self.product_socket_id.rma_qty_available,
-                          inventory_line_id_a.product_qty
-                          + inventory_line_id_b.product_qty)
+        self.assertEquals(
+            self.product_socket_id.product_tmpl_id.rma_qty_available, qty)
+        self.assertEquals(
+            self.product_socket_id.product_tmpl_id.rma_virtual_available, qty)
 
         res = self.product_socket_id._search_rma_product_quantity(
             '=',
