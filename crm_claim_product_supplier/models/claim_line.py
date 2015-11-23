@@ -25,22 +25,10 @@ class ClaimLine(models.Model):
 
     _inherit = 'claim.line'
 
-    supplier_id = \
-        fields.Many2one('res.partner', string='Supplier', store=True,
-                        compute='_compute_supplier_and_supplier_invoice',
-                        help="Supplier of good in claim")
-    supplier_invoice_id = \
-        fields.Many2one('account.invoice',
-                        string='Supplier Invoice', store=True,
-                        compute='_compute_supplier_and_supplier_invoice',
-                        help="Supplier invoice with the "
-                             "purchase of goods sold to "
-                             "customer")
-
-    @api.depends('prodlot_id')
-    def _compute_supplier_and_supplier_invoice(self):
-        for claim_line in self:
-            if claim_line.prodlot_id:
-                claim_line.supplier_id = claim_line.prodlot_id.supplier_id.id
-                claim_line.supplier_invoice_id = claim_line.prodlot_id.\
-                    supplier_invoice_line_id.invoice_id.id
+    supplier_id = fields.Many2one(comodel_name='res.partner',
+                                  related='prodlot_id.supplier_id',
+                                  help="Supplier of good in claim")
+    supplier_invoice_id = fields.Many2one(
+        comodel_name='account.invoice',
+        related="prodlot_id.supplier_invoice_line_id.invoice_id",
+        help="Supplier invoice with the purchase of goods sold to customer")
