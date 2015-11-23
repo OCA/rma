@@ -29,19 +29,17 @@ class ProductProduct(models.Model):
 
     _inherit = 'product.product'
 
-    rma_qty_available = fields.Float(compute='_rma_product_available',
-                                     digits_compute=dp.
-                                     get_precision('Product Unit '
-                                                   'of Measure'),
-                                     search='_search_rma_product_quantity',
-                                     string='RMA Quantity On Hand')
+    rma_qty_available = fields.Float(
+        compute='_rma_product_available',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        search='_search_rma_product_quantity',
+        string='RMA Quantity On Hand')
 
-    rma_virtual_available = fields.Float(compute='_rma_product_available',
-                                         digits_compute=dp.
-                                         get_precision('Product Unit '
-                                                       'of Measure'),
-                                         search='_search_rma_product_quantity',
-                                         string='RMA Forecasted Quantity')
+    rma_virtual_available = fields.Float(
+        compute='_rma_product_available',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        search='_search_rma_product_quantity',
+        string='RMA Forecasted Quantity')
 
     def _search_rma_product_quantity(self, operator, value):
         res = []
