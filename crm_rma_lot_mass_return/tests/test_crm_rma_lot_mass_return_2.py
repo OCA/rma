@@ -226,7 +226,6 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
             'IPAD0001\n', [(6, 0, [])])['value']['option_ids'][0][2]
 
         wizard_id.option_ids = option_ids
-        cl_wizard = self.env['claim.line.wizard'].browse(lines_list_id)
         wizard_id.lines_list_id = [(6, 0, option_ids)]
         self.assertEqual(len(lines_list_id), 1)
         wizard_id.add_claim_lines()
