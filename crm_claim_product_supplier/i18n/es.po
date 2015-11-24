@@ -14,29 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: crm_claim_product_supplier
-#: model:ir.model,name:crm_claim_product_supplier.model_claim_line
-msgid "List of product to return"
-msgstr "Lista de productos a retornar"
-
-#. module: crm_claim_product_supplier
-#: field:claim.line,supplier_id:0
-msgid "Supplier"
-msgstr "Proveedor"
-
-#. module: crm_claim_product_supplier
-#: field:claim.line,supplier_invoice_id:0
-msgid "Supplier Invoice"
-msgstr "Factura de proveedor"
-
-#. module: crm_claim_product_supplier
-#: help:claim.line,supplier_invoice_id:0
-msgid "Supplier invoice with the purchase of goods sold to customer"
-msgstr "Factura de proveedor con la orden de compra de materiales vendidos al cliente"
-
-#. module: crm_claim_product_supplier
-#: help:claim.line,supplier_id:0
-msgid "Supplier of good in claim"
-msgstr "Proveedor de productos en el reclamación"
-

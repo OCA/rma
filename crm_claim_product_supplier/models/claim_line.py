@@ -26,9 +26,7 @@ class ClaimLine(models.Model):
     _inherit = 'claim.line'
 
     supplier_id = fields.Many2one(comodel_name='res.partner',
-                                  related='prodlot_id.supplier_id',
-                                  help="Supplier of good in claim")
+                                  related='prodlot_id.supplier_id')
     supplier_invoice_id = fields.Many2one(
         comodel_name='account.invoice',
-        related="prodlot_id.supplier_invoice_line_id.invoice_id",
-        help="Supplier invoice with the purchase of goods sold to customer")
+        related="prodlot_id.supplier_invoice_line_id.invoice_id")

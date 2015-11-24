@@ -19,24 +19,3 @@ msgstr ""
 #: model:ir.model,name:crm_claim_product_supplier.model_claim_line
 msgid "List of product to return"
 msgstr ""
-
-#. module: crm_claim_product_supplier
-#: field:claim.line,supplier_id:0
-msgid "Supplier"
-msgstr ""
-
-#. module: crm_claim_product_supplier
-#: field:claim.line,supplier_invoice_id:0
-msgid "Supplier Invoice"
-msgstr ""
-
-#. module: crm_claim_product_supplier
-#: help:claim.line,supplier_invoice_id:0
-msgid "Supplier invoice with the purchase of goods sold to customer"
-msgstr ""
-
-#. module: crm_claim_product_supplier
-#: help:claim.line,supplier_id:0
-msgid "Supplier of good in claim"
-msgstr ""
-
