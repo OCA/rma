@@ -41,6 +41,7 @@
     ],
     'demo': [
         'demo/stock_location.xml',
+        'demo/stock_inventory.xml',
     ],
     'installable': True,
     'auto_install': False,
