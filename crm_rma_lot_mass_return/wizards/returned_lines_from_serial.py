@@ -104,7 +104,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         clima_line = self.env['claim.line']
         if claim_line_wizard.lot_id:
             inv_line = self.prodlot_2_invoice_line(
-                claim_line_wizard.lot_id.name)
+                claim_line_wizard.lot_id)
             lot_id = claim_line_wizard.lot_id.id
         else:
             inv_line = claim_line_wizard.invoice_line_id
@@ -147,11 +147,8 @@ class ReturnedLinesFromSerial(models.TransientModel):
         Return the last line of customer invoice
         based in serial/lot number
         """
-        lot_obj = self.env['stock.production.lot']
         current_claim_type, customer_claim_type, supplier_claim_type = \
             self._get_claim_type()
-
-        prodlot = lot_obj.search([('name', '=', str(prodlot))])
 
         if supplier_claim_type == current_claim_type:
             if prodlot.supplier_invoice_line_id:

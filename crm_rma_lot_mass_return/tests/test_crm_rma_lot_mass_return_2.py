@@ -207,3 +207,26 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         # if the message exists, then it's being displayed
         regex = re.compile(".*" + lot_name + ".*")
         self.assertTrue(regex.search(wizard_id.message))
+
+    def test_04_load_products_from_serial_lot_number(self):
+        wizard_id = self.metasearch_wizard.with_context({
+            'active_model': self.claim_id_2._name,
+            'active_id': self.claim_id_2.id,
+            'active_ids': [self.claim_id_2.id]
+        }).create({})
+
+        wizard_id.scaned_data = self.env['stock.production.lot'].search(
+            [('name', '=', 'MAC0004')]).mapped('id')[0]
+
+        lines_list_id = wizard_id.onchange_load_products(
+            'IPAD0001\n', [(6, 0, [])]
+        )['domain']['lines_list_id'][0][2]
+
+        option_ids = wizard_id.onchange_load_products(
+            'IPAD0001\n', [(6, 0, [])])['value']['option_ids'][0][2]
+
+        wizard_id.option_ids = option_ids
+        wizard_id.lines_list_id = [(6, 0, option_ids)]
+        self.assertEqual(len(lines_list_id), 1)
+        wizard_id.add_claim_lines()
+        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
