@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import _, models, fields
 import openerp.addons.decimal_precision as dp
 
 
@@ -33,13 +33,13 @@ class ProductTemplate(models.Model):
                                      digits_compute=dp.
                                      get_precision('Product Unit '
                                                    'of Measure'),
-                                     string='RMA Quantity On Hand')
+                                     string=_('RMA Quantity On Hand'))
 
     rma_virtual_available = fields.Float(compute='_rma_product_available',
                                          digits_compute=dp.
                                          get_precision('Product Unit'
                                                        ' of Measure'),
-                                         string='RMA Forecasted Quantity')
+                                         string=_('RMA Forecasted Quantity'))
 
     def _rma_product_available(self):
         for product in self:

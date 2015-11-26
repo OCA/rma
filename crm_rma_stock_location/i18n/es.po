@@ -57,7 +57,9 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
 #: field:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
 msgid "Dest. Location"
 msgstr "Ubicación destino"
 
@@ -164,9 +166,23 @@ msgid "RMA Demo"
 msgstr "Demostración RMA"
 
 #. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/product_product.py:42
+#: code:addons/crm_rma_stock_location/models/product_template.py:42
+#, python-format
+msgid "RMA Forecasted Quantity"
+msgstr "Pronóstico de Cantidades en RMA"
+
+#. module: crm_rma_stock_location
 #: view:product.product:crm_rma_stock_location.rma_product_search_view
 msgid "RMA Products"
 msgstr "Productos en RMA"
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/product_product.py:36
+#: code:addons/crm_rma_stock_location/models/product_template.py:36
+#, python-format
+msgid "RMA Quantity On Hand"
+msgstr "Cantidades Disponibles en RMA"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/stock_warehouse.py:56
@@ -195,15 +211,17 @@ msgid "Socket"
 msgstr "Sócate"
 
 #. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:85
 #: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
 msgid "Source Location"
 msgstr "Ubicación origen"
 
 #. module: crm_rma_stock_location
 #: model:ir.actions.act_window,name:crm_rma_stock_location.rma_product_variant_action
 #: model:ir.ui.menu,name:crm_rma_stock_location.menu_stock_rma
-msgid "Stock RMA"
-msgstr "Existencia RMA"
+msgid "RMA Stock"
+msgstr "Existencias en RMA"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_stock_warehouse
