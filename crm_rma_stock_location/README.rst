@@ -6,11 +6,26 @@
 RMA Stock Location
 ==================
 
-Allow the user to know how much for a product is available 'On Hand' and how much is virtually (expected to be) available for RMA locations. Adding for the different product views (Tree, Form and Kanban) information about it.
+Allow the user to know how much for a product is available 'On Hand' and how much
+is virtually (expected to be) available for RMA locations. Adding for the
+different product views (Tree, Form and Kanban) information about it.
 
 Both quantities are computed and includes its children locations.
 
 It is useful use it as a quick snapshot for RMA from product perspective.
+
+It also adds the following location on warehouses :
+
+ * Loss
+ * Refurbish
+
+Various wizards on incoming deliveries that allow you to move your
+goods easily in those new locations from a done reception.
+
+Using this module make the logistic flow of return a bit more complex:
+
+ * Returning product goes into RMA location with a incoming shipment
+ * From the incoming shipment, forward them to another places (stock, loss, refurbish)
 
 Installation
 ============
@@ -25,8 +40,13 @@ No configuration is needed
 Usage
 =====
 
-* Go to Sales > Products > Products and noted that 'RMA Quantity On Hand' and
-  'RMA Forecasted Quantity' had been included.
+* Go to Sales > After-sale Services and note that 'RMA Quantity On Hand' and
+  'RMA Forecasted Quantity' had been included and it'll be shown when at least
+  a product has either a on hand or forecasted quantities available.
+
+* In the other hand, it provides three wizards to make stock moves (transfers)
+  allowing to do product returns (incoming), send a product to loss or, to a refurbish
+  location.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
