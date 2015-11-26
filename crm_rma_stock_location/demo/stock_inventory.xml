@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="rma_stock_location_move_01" model="stock.move">
+            <field name="name">Demo Stock Move: Customer > RMA</field>
+            <field name="product_id" ref="product.product_product_24"/>
+            <field name="product_uom">1</field>
+            <field name="product_uom_qty">1000</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="priority">1</field> <!-- Normal -->
+            <field name="picking_type_id" ref="stock.picking_type_in"/>
+            <field name="location_id" ref="stock.stock_location_customers"/>
+            <field name="location_dest_id" search="[('name', '=', 'RMA'), ('location_id.name', '=', 'WH')]"/>
+        </record>
+        <record id="rma_stock_location_move_03" model="stock.move">
+            <field name="name">Demo Stock Move: RMA > Loss</field>
+            <field name="product_id" ref="product.product_product_24"/>
+            <field name="product_uom">1</field>
+            <field name="product_uom_qty">1000</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="priority">1</field> <!-- Normal -->
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_id" search="[('name', '=', 'RMA'), ('location_id.name', '=', 'WH')]"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+        </record>
+    </data>
+</openerp>
+

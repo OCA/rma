@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="crm_claim_rma_form_view_loss">
+            <field name="name">CRM - Claim product return Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='New Delivery']" position="after">
+                    <button name="%(action_claim_picking_loss)d"
+                                    string="New Product Loss"
+                                    type="action" target="new"
+                                    context="{'warehouse_id': warehouse_id,
+                                        'partner_id': partner_id}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
