@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2015 Vauxoo
+#    Author: Yanina Aular, Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,12 +19,5 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-
-
-class StockWarehouse(orm.Model):
-    _inherit = 'stock.warehouse'
-
-    _columns = {
-        'lot_rma_id': fields.many2one('stock.location', 'Location RMA'),
-    }
+from . import test_crm_rma_stock_location
+from . import test_make_picking_from_picking
