@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import _, models, fields
+from openerp import _, api, fields, models
 import openerp.addons.decimal_precision as dp
 
 
@@ -29,19 +29,20 @@ class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
-    rma_qty_available = fields.Float(compute='_rma_product_available',
+    rma_qty_available = fields.Float(compute='_rma_template_available',
                                      digits_compute=dp.
                                      get_precision('Product Unit '
                                                    'of Measure'),
                                      string=_('RMA Quantity On Hand'))
 
-    rma_virtual_available = fields.Float(compute='_rma_product_available',
+    rma_virtual_available = fields.Float(compute='_rma_template_available',
                                          digits_compute=dp.
                                          get_precision('Product Unit'
                                                        ' of Measure'),
                                          string=_('RMA Forecasted Quantity'))
 
-    def _rma_product_available(self):
+    @api.multi
+    def _rma_template_available(self):
         for product in self:
             product.rma_qty_available = sum(
                 [p.rma_qty_available for p in product.product_variant_ids])

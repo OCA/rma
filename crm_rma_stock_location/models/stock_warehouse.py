@@ -44,7 +44,6 @@ class StockWarehouse(models.Model):
         vals_new = super(StockWarehouse, self).create_locations_rma(wh_id)
 
         loc_vals = {
-            'usage': 'internal',
             'location_id': wh_loc_id,
             'active': True,
         }
@@ -53,13 +52,19 @@ class StockWarehouse(models.Model):
             loc_vals['company_id'] = vals.get('company_id')
 
         if not wh_id.lot_refurbish_id:
-            loc_vals.update({'name': _('Refurbish')})
+            loc_vals.update({
+                'name': _('Refurbish'),
+                'usage': 'production'
+            })
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['lot_refurbish_id'] = location_id.id
 
         if not wh_id.loss_loc_id:
-            loc_vals.update({'name': _('Loss')})
+            loc_vals.update({
+                'name': _('Loss'),
+                'usage': 'inventory'
+            })
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['loss_loc_id'] = location_id.id

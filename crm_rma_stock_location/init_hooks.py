@@ -20,7 +20,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import SUPERUSER_ID
 
-from . import models
-from . import wizards
-from .init_hooks import post_init_hook
+
+def post_init_hook(cr, registry):
+    stock_wh = registry['stock.warehouse']
+    for wh_id in stock_wh.browse(cr, SUPERUSER_ID,
+                                 stock_wh.search(cr, SUPERUSER_ID, [])):
+        vals = stock_wh.create_locations_rma(cr, SUPERUSER_ID, wh_id)
+        stock_wh.write(cr, SUPERUSER_ID, wh_id.id, vals)

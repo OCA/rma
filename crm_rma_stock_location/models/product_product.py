@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import _, models, fields
+from openerp import _, api, fields, models
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
 from openerp.tools.safe_eval import safe_eval as eval
@@ -64,6 +64,7 @@ class ProductProduct(models.Model):
             res.append(('id', 'in', ids))
         return res
 
+    @api.multi
     def _rma_product_available(self):
         """
         Finds the incoming and outgoing quantity of product for the RMA
