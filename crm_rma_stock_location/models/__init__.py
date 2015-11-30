@@ -2,8 +2,11 @@
 ##############################################################################
 #
 #    Copyright 2015 Vauxoo
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2013-2014 Camptocamp SA
+#    Copyright 2009-2013 Akretion,
 #    Author: Guewen Baconnier,
+#            Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume,
 #            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,4 +26,4 @@
 
 from . import product_product
 from . import product_template
-from . import stock_move
+from . import stock_warehouse

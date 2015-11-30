@@ -7,7 +7,7 @@
 <openerp>
     <data>
         <record id="action_claim_picking_loss" model="ir.actions.act_window">
-            <field name="name">Create Products Loss</field>
+            <field name="name">Create a Product Loss</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">claim_make_picking.wizard</field>
             <field name="src_model">crm.claim</field>

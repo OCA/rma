@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yanina Aular
 #    Copyright 2015 Vauxoo
+#    Author: Yanina Aular, Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,10 +19,5 @@
 #
 ##############################################################################
 
-from openerp import fields, models
-
-
-class StockMove(models.Model):
-    _inherit = 'stock.move'
-
-    invoice_state = fields.Selection(default='none')
+from . import test_crm_rma_stock_location
+from . import test_make_picking_from_picking
