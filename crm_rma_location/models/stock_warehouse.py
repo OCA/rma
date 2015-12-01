@@ -159,7 +159,7 @@ class StockWarehouse(models.Model):
         if not warehouse_id.lot_rma_id:
             loc_vals = {
                 'name': _('RMA'),
-                'usage': 'customer',
+                'usage': 'internal',
                 'location_id': warehouse_id.view_location_id.id,
                 'company_id': warehouse_id.company_id.id,
                 'active': True,
