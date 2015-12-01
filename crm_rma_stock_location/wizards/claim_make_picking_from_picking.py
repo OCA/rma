@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import _, models, fields, api
+from openerp import api, fields, models
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import workflow
 import time
@@ -82,12 +82,12 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         return loc_id
 
     picking_line_source_location = fields.Many2one(
-        'stock.location', _('Source Location'),
-        help=_("Source location where the returned products are"),
+        'stock.location', 'Source Location',
+        help="Source location where the returned products are",
         required=True, default=_get_source_loc)
     picking_line_dest_location = fields.Many2one(
-        'stock.location', _('Dest. Location'),
-        help=_("Target location to send returned products"),
+        'stock.location', 'Dest. Location',
+        help="Target location to send returned products",
         required=True, default=_get_dest_loc)
     picking_line_ids = fields.Many2many(
         'stock.move', 'claim_picking_line_picking', 'claim_picking_id',

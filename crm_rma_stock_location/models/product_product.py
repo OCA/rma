@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import _, api, fields, models
+from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
 from openerp.tools.safe_eval import safe_eval as eval
@@ -33,13 +33,13 @@ class ProductProduct(models.Model):
         compute='_rma_product_available',
         digits_compute=dp.get_precision('Product Unit of Measure'),
         search='_search_rma_product_quantity',
-        string=_('RMA Quantity On Hand'))
+        string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(
         compute='_rma_product_available',
         digits_compute=dp.get_precision('Product Unit of Measure'),
         search='_search_rma_product_quantity',
-        string=_('RMA Forecasted Quantity'))
+        string='RMA Forecasted Quantity')
 
     def _search_rma_product_quantity(self, operator, value):
         res = []
