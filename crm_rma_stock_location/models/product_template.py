@@ -45,6 +45,6 @@ class ProductTemplate(models.Model):
     def _rma_template_available(self):
         for product in self:
             product.rma_qty_available = sum(
-                [p.rma_qty_available for p in product.product_variant_ids])
+                product.mapped('product_variant_ids.rma_virtual_available'))
             product.rma_virtual_available = sum(
-                [p.rma_virtual_available for p in product.product_variant_ids])
+                product.mapped('product_variant_ids.rma_virtual_available'))
