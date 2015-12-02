@@ -2,8 +2,9 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion,
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,21 +20,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
-
-
-class stock_warehouse(orm.Model):
-
-    _inherit = "stock.warehouse"
-
-    _columns = {
-        'lot_carrier_loss_id': fields.many2one(
-            'stock.location',
-            'Location Carrier Loss'),
-        'lot_breakage_loss_id': fields.many2one(
-            'stock.location',
-            'Location Breakage Loss'),
-        'lot_refurbish_id': fields.many2one(
-            'stock.location',
-            'Location Refurbish'),
-    }
+from . import claim_make_picking_from_picking
+from . import claim_make_picking
