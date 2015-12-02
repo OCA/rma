@@ -30,7 +30,8 @@ class StockWarehouse(models.Model):
 
     loss_loc_id = fields.Many2one('stock.location', 'Loss Location')
 
-    lot_refurbish_id = fields.Many2one('stock.location', 'Refurbish Location')
+    lot_refurbish_id = fields.Many2one(
+        'stock.location', 'Refurbished Location')
 
     @api.model
     def create_locations_rma(self, wh_id):
@@ -44,7 +45,6 @@ class StockWarehouse(models.Model):
         vals_new = super(StockWarehouse, self).create_locations_rma(wh_id)
 
         loc_vals = {
-            'usage': 'internal',
             'location_id': wh_loc_id,
             'active': True,
         }
@@ -53,13 +53,19 @@ class StockWarehouse(models.Model):
             loc_vals['company_id'] = vals.get('company_id')
 
         if not wh_id.lot_refurbish_id:
-            loc_vals.update({'name': _('Refurbish')})
+            loc_vals.update({
+                'name': _('Refurbish'),
+                'usage': 'internal'
+            })
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['lot_refurbish_id'] = location_id.id
 
         if not wh_id.loss_loc_id:
-            loc_vals.update({'name': _('Loss')})
+            loc_vals.update({
+                'name': _('Loss'),
+                'usage': 'internal'
+            })
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['loss_loc_id'] = location_id.id

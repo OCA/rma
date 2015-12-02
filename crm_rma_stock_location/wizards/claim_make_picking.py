@@ -32,7 +32,7 @@ class ClaimMakePicking(models.TransientModel):
     def _default_claim_line_dest_location_id(self):
         """Return the location_id to use as destination.
 
-        If it's an outoing shipment: take the customer stock property
+        If it's an outgoing shipment: take the customer stock property
         If it's an incoming shipment take the location_dest_id common to all
         lines, or if different, return None.
         """

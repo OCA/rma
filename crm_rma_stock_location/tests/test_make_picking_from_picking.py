@@ -62,7 +62,7 @@ class TestPickingFromPicking(TransactionCase):
         self.loss_loc = self.main_warehouse_id.loss_loc_id
         self.loc_refurbish = self.main_warehouse_id.lot_refurbish_id
 
-    def test_get_dest_loc(self):
+    def test_01_get_dest_loc(self):
 
         # Create Picking from Customers to RMA
         # with button New Products Return
@@ -123,3 +123,37 @@ class TestPickingFromPicking(TransactionCase):
 
         self.assertEquals(claim_wizard.picking_line_dest_location.id,
                           self.loss_loc.id)
+
+    def assert_picking_type(self, picking_type_str=''):
+        new_context = {
+            'active_id': self.claim_id.id,
+            'warehouse_id': self.claim_id.warehouse_id.id,
+            'partner_id': self.claim_id.partner_id.id,
+            'picking_type': picking_type_str,
+        }
+        wizard_id = self.wizardmakepicking.with_context(new_context).create({})
+
+        default_location_dest_id = eval(
+            'self.claim_id.warehouse_id.'
+            'rma_%s_type_id.default_location_dest_id' % picking_type_str)
+        self.assertEquals(
+            wizard_id.claim_line_dest_location_id, default_location_dest_id)
+
+    def test_02_picking_types_in_out_int(self):
+        self.assert_picking_type('in')
+        self.assert_picking_type('out')
+        self.assert_picking_type('int')
+
+    def test_03_picking_type_loss(self):
+        new_context = {
+            'active_id': self.claim_id.id,
+            'warehouse_id': self.claim_id.warehouse_id.id,
+            'partner_id': self.claim_id.partner_id.id,
+            'picking_type': 'loss',
+        }
+        wizard_id = self.wizardmakepicking.with_context(new_context).create({})
+
+        default_location_dest_id = eval(
+            'self.claim_id.warehouse_id.loss_loc_id')
+        self.assertEquals(
+            wizard_id.claim_line_dest_location_id, default_location_dest_id)

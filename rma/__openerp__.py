@@ -29,7 +29,6 @@
     "depends": [
         "crm_rma_location",
         "crm_claim_type",
-        "crm_rma_advance_location",
         "crm_rma_prodlot_invoice",
         "crm_rma_prodlot_supplier",
         "crm_rma_lot_mass_return",
