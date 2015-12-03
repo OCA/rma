@@ -50,6 +50,7 @@ addon | version | summary
 [crm_rma_lot_mass_return](crm_rma_lot_mass_return/) | 8.0.1.0.0 | RMA Claims Mass Return by Lot
 [crm_rma_prodlot_invoice](crm_rma_prodlot_invoice/) | 8.0.1.0.0 | CRM Claim Prodlot Invoice
 [crm_rma_prodlot_supplier](crm_rma_prodlot_supplier/) | 8.0.1.0.0 | Claim Prodlot Supplier
+[crm_rma_stock_location](crm_rma_stock_location/) | 8.0.1.0.0 | RMA Stock Location
 [product_warranty](product_warranty/) | 8.0.1.0.0 | Product warranty
 
 Unported addons
@@ -58,9 +59,7 @@ addon | version | summary
 --- | --- | ---
 [crm_claim_categ_as_name](crm_claim_categ_as_name/) | 1.0 (unported) | crm_claim_categ_as_name
 [crm_claim_ext](crm_claim_ext/) | 1.0 (unported) | CRM claim extension
-[crm_rma_advance_location](crm_rma_advance_location/) | 1.0 (unported) | RMA Claims Advance Location
 [crm_rma_by_shop](crm_rma_by_shop/) | 1.0 (unported) | RMA Claims by shop
-[crm_rma_stock_location](crm_rma_stock_location/) | 1.0 (unported) | RMA Stock Location
 
 [//]: # (end addons)
 
