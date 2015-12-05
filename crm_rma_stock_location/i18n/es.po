@@ -1,19 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * crm_rma_stock_location
-#
+# * crm_rma_stock_location
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-25 21:48+0000\n"
-"PO-Revision-Date: 2015-11-25 21:48+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-12-03 01:39+0000\n"
+"PO-Revision-Date: 2015-12-02 21:49+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
@@ -40,7 +42,6 @@ msgstr "Crear un envío de entrada a Existencias"
 msgid "Create a Product Loss"
 msgstr "Registrar una pérdida de producto"
 
-
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Create picking"
@@ -66,7 +67,7 @@ msgstr "Ubicación destino"
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_uid:0
@@ -79,22 +80,12 @@ msgid "Last Updated on"
 msgstr "Actualizado el"
 
 #. module: crm_rma_stock_location
-#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
-msgid "Source location where the returned products are"
-msgstr "Ubicación origen de los productos devueltos"
-
-#. module: crm_rma_stock_location
-#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
-msgid "Target location to send returned products"
-msgstr "Ubicación destino de los productos devueltos"
-
-#. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Locations"
 msgstr "Ubicaciones"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:62
+#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:65
 #, python-format
 msgid "Loss"
 msgstr "Pérdida"
@@ -138,7 +129,6 @@ msgstr "Producto a Pérdida"
 #: view:stock.picking:crm_rma_stock_location.picking_in_form
 msgid "Product to refurbish stock"
 msgstr "Producto a Existencias de restaurados"
-
 
 #. module: crm_rma_stock_location
 #: view:stock.picking:crm_rma_stock_location.picking_in_form
@@ -185,6 +175,12 @@ msgid "RMA Quantity On Hand"
 msgstr "Cantidades Disponibles en RMA"
 
 #. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.rma_product_variant_action
+#: model:ir.ui.menu,name:crm_rma_stock_location.menu_stock_rma
+msgid "RMA Stock"
+msgstr "Existencias en RMA"
+
+#. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/stock_warehouse.py:56
 #, python-format
 msgid "Refurbish"
@@ -218,10 +214,18 @@ msgid "Source Location"
 msgstr "Ubicación origen"
 
 #. module: crm_rma_stock_location
-#: model:ir.actions.act_window,name:crm_rma_stock_location.rma_product_variant_action
-#: model:ir.ui.menu,name:crm_rma_stock_location.menu_stock_rma
-msgid "RMA Stock"
-msgstr "Existencias en RMA"
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:86
+#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
+msgid "Source location where the returned products are"
+msgstr "Ubicación origen de los productos devueltos"
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:90
+#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
+msgid "Target location to send returned products"
+msgstr "Ubicación destino de los productos devueltos"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_stock_warehouse
