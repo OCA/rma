@@ -3,13 +3,14 @@
 # * crm_rma_prodlot_invoice
 # 
 # Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-05 22:30+0000\n"
-"PO-Revision-Date: 2015-11-03 17:06+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-12-12 22:57+0000\n"
+"PO-Revision-Date: 2015-12-14 06:38+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,28 +22,28 @@ msgstr ""
 #: code:addons/crm_rma_prodlot_invoice/models/stock_production_lot.py:39
 #, python-format
 msgid "%s - Lot Number: %s - %s"
-msgstr ""
+msgstr "%s - Lot številka: %s - %s"
 
 #. module: crm_rma_prodlot_invoice
 #: field:stock.production.lot,invoice_line_id:0
 msgid "Customer Invoice Line"
-msgstr ""
+msgstr "Postavka izdanega računa"
 
 #. module: crm_rma_prodlot_invoice
 #: help:stock.production.lot,invoice_line_id:0
 msgid "Invoice Line Of Product to Customer Invoice"
-msgstr ""
+msgstr "Postavka proizvoda v postavko izdanega računa"
 
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lot/Serijska"
 
 #. module: crm_rma_prodlot_invoice
 #: code:addons/crm_rma_prodlot_invoice/models/stock_production_lot.py:41
 #, python-format
 msgid "No lot number"
-msgstr ""
+msgstr "Ni številke računa"
 
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_picking
@@ -52,14 +53,14 @@ msgstr "Zbirni seznam"
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr ""
+msgstr "Zbirni čarovnik"
 
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Prodajni nalog"
 
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Postavka prodajnega naloga"
