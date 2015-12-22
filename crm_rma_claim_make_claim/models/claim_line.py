@@ -34,7 +34,7 @@ class ClaimLine(models.Model):
     @api.multi
     def button_create_line_rma_vendor(self):
         """
-        Create RMA Vendor.
+        Create supplier rma product.
         """
         good_lines = []
         claim_obj = self.env['crm.claim']
@@ -109,14 +109,19 @@ class ClaimLine(models.Model):
 
             good_lines = list(set(good_lines))
 
-            result = self.env.ref('crm_claim_rma.'
-                                  'act_crm_case_claim_lines')
-            result = result.read()
-
-        result[0]['domain'] = "[('id','in'," + str(good_lines) + ")]"
-        return result
+        return good_lines
 
     @api.multi
     def button_rma_vendor_render_view(self):
-        result = self.button_create_line_rma_vendor()
-        return result[0]
+        """
+        Create supplier rma and visualize a tree view
+        with new supplier claim products
+        """
+        good_lines = self.button_create_line_rma_vendor()
+        if good_lines:
+            result = self.env.ref('crm_claim_rma.'
+                                  'act_crm_case_claim_lines')
+            result = result.read()
+            result[0]['domain'] = "[('id','in'," + str(good_lines) + ")]"
+            return result[0]
+        return True
