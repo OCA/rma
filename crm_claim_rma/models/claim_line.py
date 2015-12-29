@@ -190,9 +190,9 @@ class ClaimLine(models.Model):
     claim_type = fields.Many2one(related='claim_id.claim_type',
                                  string="Claim Line Type",
                                  store=True, help="Claim classification")
-    invoice_date = fields.Datetime(related='invoice_line_id.invoice_id.'
-                                   'create_date',
-                                   help="Date of Claim Invoice")
+    invoice_date = fields.Date(related='invoice_line_id.invoice_id.'
+                                       'date_invoice',
+                               help="Date of Claim Invoice")
 
     # Method to calculate total amount of the line : qty*UP
     @api.multi
@@ -222,7 +222,7 @@ class ClaimLine(models.Model):
             if line_id.invoice_date:
                 days = fields.datetime.strptime(line_id.date, '%Y-%m-%d') - \
                     fields.datetime.strptime(line_id.invoice_date,
-                                             DEFAULT_SERVER_DATETIME_FORMAT)
+                                             DEFAULT_SERVER_DATE_FORMAT)
                 if days.days <= 1:
                     line_id.priority = '3_very_high'
                 elif days.days <= 7:
@@ -261,13 +261,13 @@ class ClaimLine(models.Model):
         if not (invoice and claim_type and product and claim_date):
             return {'guarantee_limit': False, 'warning': False}
 
-        invoice_date = invoice.create_date
+        invoice_date = invoice.date_invoice
         if not invoice_date:
             raise InvoiceNoDate
 
         warning = 'not_define'
         invoice_date = datetime.strptime(invoice_date,
-                                         DEFAULT_SERVER_DATETIME_FORMAT)
+                                         DEFAULT_SERVER_DATE_FORMAT)
 
         if isinstance(claim_type, self.env['crm.claim.type'].__class__):
             claim_type = claim_type.id

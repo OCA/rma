@@ -41,7 +41,7 @@ class ClaimLine(models.Model):
                   'Must be a validated invoice.'))
         warning = 'not_define'
         date_inv_at_server = datetime.strptime(self.invoice_date,
-                                               DEFAULT_SERVER_DATETIME_FORMAT)
+                                               DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
                 supplier = self.prodlot_id.supplier_id
