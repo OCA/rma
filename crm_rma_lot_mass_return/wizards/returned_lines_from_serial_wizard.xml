@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_enter_product" model="ir.ui.view">
+            <field name="name">returned_lines_from_serial_wiew</field>
+            <field name="model">returned.lines.from.serial.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class='row'>
+                        <div class="col-md-10 col-sm-10 col-lg-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h2><field name="partner_id" readonly="1"/></h2>
+                                    <field class="oe_form_box_info oe_text_center"
+                                        name='message'
+                                        readonly="1"
+                                        attrs="{'invisible':[('message', '=', '')]}"/>
+                                    <group>
+                                        <field name="scaned_data" invisible="1"/>
+                                    </group>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <td>
+                                        <field name="current_status" readonly="1" widget="barcode_text"  nolabel='1'/>
+                                    </td>
+                                    <td>
+                                        <field name="scan_data"
+                                               widget='barcode_text'
+                                               on_change="onchange_load_products(scan_data, option_ids)"
+                                               nolabel='1'/>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-10 col-sm-10 col-lg-10">
+                            <div class="row">
+                                <div class="pull-right" name="buttons">
+                                <button name="add_claim_lines"
+                                    help="All the valid lines will be added to the claim"
+                                    confirm="You are about to add new lines to the claim, Do you want to continue?."
+                                    string="Add items to the claim" colspan="1" type="object" class="oe_highlight"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
+                            <div class="row">
+                                <field name="option_ids" invisible="1"/>
+                                <field name="lines_list_id"
+                                    domain="[('id', 'in', [])]"
+                                    widget="many2many_checkboxes" on_change="change_list(lines_list_id)"/>
+                            </div>
+                        </div>
+                        <div class='col-md-16 col-sm-16 col-lg-16'>
+                            <div class="row">
+                                <!-- Invoice lines list -->
+                            </div>
+                        </div>
+                        <div class='col-md-4 col-sm-4 col-lg-4'>
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <p class="oe_help">
+                            You should use this windows on this way.
+                            <ol>
+                                <li>Write the Serial/Lot Number to search the product</li>
+                                or
+                                <li>Write the Invoice Number to search the products in lines</li>
+                                <li>Example: A4JD6JHS</li>
+                            </ol>
+                            The format for writing the reason for the claim and
+                            the description is:
+                            <ol>
+                                <li>Serial/Lot Number*reason number*Description here</li>
+                                <li>Example: A4JD6JHS*4*The display is break</li>
+                            </ol>
+
+                            The reasons for the claim can be
+                            <ol>
+                               <li>Not specified</li>
+                               <li>Legal retractation</li>
+                               <li>Order Cancellation</li>
+                               <li>Damaged Delivered Product</li>
+                               <li>Shipping error</li>
+                               <li>Exchange request</li>
+                               <li>Lost during transport</li>
+                               <li>Perfect Conditions</li>
+                               <li>Imperfection</li>
+                               <li>Physical Damage by Client</li>
+                               <li>Physical Damage by Company</li>
+                               <li>Other</li>
+                            </ol>
+                        </p>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

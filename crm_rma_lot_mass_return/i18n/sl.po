@@ -1,0 +1,311 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_lot_mass_return
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-12 22:57+0000\n"
+"PO-Revision-Date: 2015-12-13 06:18+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
+#, python-format
+msgid "(ID: %s) - %s - %s"
+msgstr "(ID: %s) - %s - %s"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:72
+#, python-format
+msgid "(ID: %s) - %s - %s - %s"
+msgstr "(ID: %s) - %s - %s - %s"
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:90
+#, python-format
+msgid "-->"
+msgstr "-->"
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "Add claim lines using serial or invoice number"
+msgstr "Dodajanje postavk zahtevka z uporabo serijske številke ali številke računa"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Add items to the claim"
+msgstr "Dodajanje artiklov v zahtevek"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "All the valid lines will be added to the claim"
+msgstr "Vse veljavne postavke bodo dodane v zahtevek"
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_crm_claim
+msgid "Claim"
+msgstr "Zahtevek"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_uid:0
+#: field:returned.lines.from.serial.wizard,create_uid:0
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_date:0
+#: field:returned.lines.from.serial.wizard,create_date:0
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Damaged Delivered Product"
+msgstr "Poškodovan dobavljeni proizvod"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS"
+msgstr "Primer: A4JD6JHS"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS*4*The display is break"
+msgstr "Primer: A4JD6JHS*4*Zaslon je okvarjen"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Exchange request"
+msgstr "Zahteva po zamenjavi"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scan_data:0
+msgid "Field used to load and show the products"
+msgstr "Polje, ki se uporablja za nalaganje in prikaz proizvodov"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,option_ids:0
+msgid "Field used to load the ids of invoice lines in invoices writed"
+msgstr "Polje, ki se uporablja za id-je postavk računa pri zapisu"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Field used to load the ids of products loaded"
+msgstr "Polje, ki se uporablja za nalaganje id-jev naloženih proizvodov"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Field used to show the current status of the lots loaded"
+msgstr "Polje, ki se uporablja za prikaz trenutnega statusa naloženih lotov"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,current_status:0
+msgid ""
+"Field used to show the current status of the product loaded(Name and "
+"quantity)"
+msgstr "Polje, ki se uporablja za prikaz trenutnega statusa naloženega proizvoda (naziv in količina)"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Imperfection"
+msgstr "Nepopolnost"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,invoice_line_id:0
+#: help:claim.line.wizard,invoice_line_id:0
+msgid "Invoice Line"
+msgstr "Postavka računa"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,option_ids:0
+msgid "Invoice Lines to Select"
+msgstr "Postavke računa za izbor"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_uid:0
+#: field:returned.lines.from.serial.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_date:0
+#: field:returned.lines.from.serial.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Legal retractation"
+msgstr "Pravni preklic"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Lost during transport"
+msgstr "Izgubljen med prevozom"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,lot_id:0
+msgid "Lot"
+msgstr "Lot"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Not specified"
+msgstr "Ni določeno"
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:93
+#, python-format
+msgid "Ok"
+msgstr "V redu"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Order Cancellation"
+msgstr "Preklic naročila"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Other"
+msgstr "Drugo"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,partner_id:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Perfect Conditions"
+msgstr "Brezhibno stanje"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Client"
+msgstr "Fizično poškodoval kupec"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Company"
+msgstr "Fizično poškodovala družba"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,product_id:0
+msgid "Product"
+msgstr "Proizvod"
+
+#. module: crm_rma_lot_mass_return
+#: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
+msgid "Product to claim"
+msgstr "Proizvod za reklamacijo"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,scan_data:0
+#: field:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Products"
+msgstr "Proizvodi"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Products selected"
+msgstr "Izbrani proizvodi"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:210
+#, python-format
+msgid "Search Product"
+msgstr "Iskanje proizvoda"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Serial/Lot Number*reason number*Description here"
+msgstr "Serijska številka/št. lota*številka razloga*opis"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Shipping error"
+msgstr "Napaka odpreme"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,current_status:0
+msgid "Status"
+msgstr "Status"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#, python-format
+msgid ""
+"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"\n"
+" %s"
+msgstr "Sledeče serijske številke/številke lotov ne bodo dodane, ker so vse (spodaj naštete) trenutno v uporabi:\n\n %s"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid ""
+"The format for writing the reason for the claim and\n"
+"                            the description is:"
+msgstr "Format zapisa razloga za zahtevek in\n                            opis je:"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:399
+#, python-format
+msgid "The product or invoice %s was not found"
+msgstr "Proizvod ali račun %s ni najden"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "The reasons for the claim can be"
+msgstr "Razlogi za zahtevek so lahko"
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "True"
+msgstr "Pravilno"
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
+msgid "Wizard to create product return lines"
+msgstr "Čarovnik za ustvarjanje postavk vračila proizvoda"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Invoice Number to search the products in lines"
+msgstr "Zapišite številko računa za iskanje proizvodov v postavkah"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Serial/Lot Number to search the product"
+msgstr "Zapišite serijsko ali številko lota za iskanje proizvoda"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You are about to add new lines to the claim, Do you want to continue?."
+msgstr "Dodali boste nove postavke v zahtevek. Želite nadaljevati?"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You should use this windows on this way."
+msgstr "Ta okna bi morali uporabljati na tak način."
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "or"
+msgstr "ali"

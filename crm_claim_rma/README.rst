@@ -71,6 +71,7 @@ Contributors:
 * Joel Grand-Guillaume <joel.grandguillaume@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Javier Carrasco <javier.carrasco@eezee-it.com>
 * Yanina Aular <yanina.aular@vauxoo.com>
 * Osval Reyes <osval@vauxoo.com>
 

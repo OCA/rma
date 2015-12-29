@@ -1,0 +1,1050 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_claim_rma
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-12 22:57+0000\n"
+"PO-Revision-Date: 2015-12-13 06:19+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:121
+#, python-format
+msgid "A picking has already been created for this claim."
+msgstr "Za ta zahtevek je že bil ustvarjen zbirnik."
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:233
+#, python-format
+msgid ""
+"A product return cannot be created for various destination addresses, please"
+" choose line with a same address."
+msgstr "Vračila proizvoda ni mogoče ustvariti za različne ciljne naslove. Izberite postavke z istim naslovom."
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:223
+#, python-format
+msgid ""
+"A product return cannot be created for various destination locations, please"
+" choose line with a same destination location."
+msgstr "Vračila proizvoda ni mogoče ustvariti za različne ciljne lokacije. Izberite postavke z isto ciljno lokacijo."
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/account_invoice.py:75
+#, python-format
+msgid "A refund has already been created for this claim !"
+msgstr "Za ta zahtevek je že bil ustvarjen dobropis!"
+
+#. module: crm_claim_rma
+#: model:crm.case.section,name:crm_claim_rma.section_after_sales_service
+msgid "After Sales Service"
+msgstr "Po prodajna storitev"
+
+#. module: crm_claim_rma
+#: selection:claim.line,applicable_guarantee:0
+msgid "Brand manufacturer"
+msgstr "Blagovna znamka proizvajalca"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim12
+msgid "Buyer Cancelled"
+msgstr "Kupec preklican"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+msgid "Calculate warranty state"
+msgstr "Izračun stanja garancije"
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "Cancel"
+msgstr "Preklic"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:308
+#, python-format
+msgid "Cannot find any date for invoice. Must be a validated invoice."
+msgstr "Za račun ni najden noben datum. Biti mora potrjen račun."
+
+#. module: crm_claim_rma
+#: field:account.invoice,claim_id:0
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+#: field:stock.picking,claim_id:0
+msgid "Claim"
+msgstr "Zahtevek"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+msgid "Claim Line"
+msgstr "Postavka zahtevka"
+
+#. module: crm_claim_rma
+#: field:claim.line,date:0
+msgid "Claim Line Date"
+msgstr "Datum postavke zahtevka"
+
+#. module: crm_claim_rma
+#: help:claim.line,number:0
+msgid "Claim Line Identification Number"
+msgstr "Identifikacijska številka postavke zahtevka"
+
+#. module: crm_claim_rma
+#: field:claim.line,claim_type:0
+msgid "Claim Line Type"
+msgstr "Tip postavke zahtevka"
+
+#. module: crm_claim_rma
+#: field:claim.line,claim_origin:0
+msgid "Claim Subject"
+msgstr "Predmet zahtevka"
+
+#. module: crm_claim_rma
+#: help:claim.line,claim_type:0
+msgid "Claim classification"
+msgstr "Klasifikacija zahtevka"
+
+#. module: crm_claim_rma
+#: field:claim.line,claim_diagnosis:0
+msgid "Claim diagnosis"
+msgstr "Diagnoza zahtevka"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_substates
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_line_substates
+msgid "Claim line substates"
+msgstr "Pod stanja postavke zahtevka"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
+#: field:claim_make_picking.wizard,claim_line_ids:0
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_case_claim_lines
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_case_claims_claim_lines
+msgid "Claim lines"
+msgstr "Postavke zahtevka"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Claim n°"
+msgstr "Zahtevek št."
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+msgid "Claims"
+msgstr "Zahtevki"
+
+#. module: crm_claim_rma
+#: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
+msgid "Company"
+msgstr "Družba"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Compute Warranty"
+msgstr "Izračun garancije"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Confirmed, waiting for product"
+msgstr "Potrjeno, čakanje na proizvod"
+
+#. module: crm_claim_rma
+#: view:res.partner:crm_claim_rma.view_partner_contact_tree
+msgid "Contacts"
+msgstr "Stiki"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Controlled, to treate"
+msgstr "Preverjeno, za obdelavo"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim14
+msgid "Could Not Ship"
+msgstr "Ni bilo mogoče odpremiti"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_out
+msgid "Create Outgoing Shipments"
+msgstr "Ustvari izhodne odpreme"
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "Create picking"
+msgstr "Ustvari zbirnik"
+
+#. module: crm_claim_rma
+#: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
+#: field:substate.substate,create_uid:0
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: crm_claim_rma
+#: field:claim.line,create_date:0
+#: field:claim_make_picking.wizard,create_date:0
+#: field:substate.substate,create_date:0
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Current"
+msgstr "Tekoči"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/crm_claim.py:161
+#, python-format
+msgid "Customer"
+msgstr "Kupec"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/crm_claim.py:165
+#, python-format
+msgid "Customer Email"
+msgstr "E-pošta kupca"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim11
+msgid "Customer Return"
+msgstr "Vračilo kupca"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Damaged delivered product"
+msgstr "Poškodovan dobavljeni proizvod"
+
+#. module: crm_claim_rma
+#: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Datum zadnjega objavljenega sporočila na zapisu."
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim20
+msgid "Delivered Late by Carrier"
+msgstr "Prevoznik pozno dostavil"
+
+#. module: crm_claim_rma
+#: field:claim.line,name:0 field:substate.substate,substate_descr:0
+msgid "Description"
+msgstr "Opis"
+
+#. module: crm_claim_rma
+#: field:claim_make_picking.wizard,claim_line_dest_location_id:0
+msgid "Dest. Location"
+msgstr "Ciljna lokacija"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim15
+msgid "Different Item"
+msgstr "Drugačen artikel"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Draft"
+msgstr "Osnutek"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Draft and Open Claims"
+msgstr "Osnutki in odprti zahtevki"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:308
+#: code:addons/crm_claim_rma/models/claim_line.py:312
+#: code:addons/crm_claim_rma/models/claim_line.py:395
+#: code:addons/crm_claim_rma/models/claim_line.py:399
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:120
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:222
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
+#, python-format
+msgid "Error"
+msgstr "Napaka"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Exchange request"
+msgstr "Zahteva po zamenjavi"
+
+#. module: crm_claim_rma
+#: field:crm.claim,planned_cost:0
+msgid "Expected cost"
+msgstr "Pričakovani strošek"
+
+#. module: crm_claim_rma
+#: field:crm.claim,planned_revenue:0
+msgid "Expected revenue"
+msgstr "Pričakovani prihodek"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:64
+#: selection:claim.line,warning:0
+#, python-format
+msgid "Expired"
+msgstr "Pretečeno"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Follow Up"
+msgstr "Sledenje"
+
+#. module: crm_claim_rma
+#: field:claim.line,message_follower_ids:0
+#: field:stock.move,message_follower_ids:0
+msgid "Followers"
+msgstr "Sledilci"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim13
+msgid "General Adjustement"
+msgstr "Splošni popravki"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Generated Documents"
+msgstr "Ustvarjeni dokumenti"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Group By..."
+msgstr "Združi po..."
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Grouping by state"
+msgstr "Združevanje po stanju"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "High"
+msgstr "Visoka"
+
+#. module: crm_claim_rma
+#: help:claim.line,message_summary:0 help:stock.move,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr "Vsebuje povzetek komunikacij (število sporočil, ...) neposredno v html formatu, da se lahko neposredno vstavi v kanban prikaze."
+
+#. module: crm_claim_rma
+#: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
+#: field:substate.substate,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_claim_rma
+#: help:claim.line,message_unread:0 help:stock.move,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Če označeno, nova sporočila zahtevajo vašo pozornost."
+
+#. module: crm_claim_rma
+#: help:claim.line,warning:0
+msgid "If warranty has expired"
+msgstr "Če je garancija potekla"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Imperfection"
+msgstr "Nepopolnost"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "In Progress"
+msgstr "V teku"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "In Progress Claims"
+msgstr "Zahtevki v teku"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_picking_in
+msgid "Incoming Shipment and Returns"
+msgstr "Vstopne pošiljke in vračila"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+#: field:crm.claim,invoice_id:0
+#: model:ir.model,name:crm_claim_rma.model_account_invoice
+msgid "Invoice"
+msgstr "Račun"
+
+#. module: crm_claim_rma
+#: field:claim.line,invoice_line_id:0
+#: model:ir.model,name:crm_claim_rma.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Postavka računa"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
+msgid "Invoice Refund"
+msgstr "Dobropis"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice
+msgid "Invoices"
+msgstr "Računi"
+
+#. module: crm_claim_rma
+#: field:claim.line,message_is_follower:0
+#: field:stock.move,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Je sledilec"
+
+#. module: crm_claim_rma
+#: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
+msgid "Last Message Date"
+msgstr "Datum zadnjega sporočila"
+
+#. module: crm_claim_rma
+#: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
+#: field:substate.substate,write_uid:0
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: crm_claim_rma
+#: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
+#: field:substate.substate,write_date:0
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: crm_claim_rma
+#: field:claim.line,last_state_change:0
+msgid "Last change"
+msgstr "Zadnja sprememba"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Legal retractation"
+msgstr "Pravni preklic"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+msgid "Linked Document"
+msgstr "Povezani dokument"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_line
+msgid "List of product to return"
+msgstr "Seznam proizvodov za vračilo"
+
+#. module: crm_claim_rma
+#: help:claim_make_picking.wizard,claim_line_source_location_id:0
+msgid "Location where the returned products are from."
+msgstr "Lokacija, od koder prihajajo vrnjeni proizvodi"
+
+#. module: crm_claim_rma
+#: help:claim_make_picking.wizard,claim_line_dest_location_id:0
+msgid "Location where the system will stock the returned products."
+msgstr "Lokacija, kamor sistem skladišči vrnjene proizvode."
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "Locations"
+msgstr "Lokacije"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Lost during transport"
+msgstr "Izgubljen med prevozom"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim17
+msgid "Merchandise Not As Described"
+msgstr "Blago ne ustreza opisu"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim16
+msgid "Merchandise Not Received"
+msgstr "Blago ni bilo prejeto"
+
+#. module: crm_claim_rma
+#: field:claim.line,message_ids:0 field:stock.move,message_ids:0
+msgid "Messages"
+msgstr "Sporočila"
+
+#. module: crm_claim_rma
+#: help:claim.line,message_ids:0 help:stock.move,message_ids:0
+msgid "Messages and communication history"
+msgstr "Sporočila in kronologija komunikacij"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim21
+msgid "Missed Fulfilment Promise"
+msgstr "Neizpolnjena obljuba"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "More"
+msgstr "Več"
+
+#. module: crm_claim_rma
+#: help:claim.line,name:0
+msgid "More precise description of the problem"
+msgstr "Natančnejši opis težave"
+
+#. module: crm_claim_rma
+#: field:claim.line,move_in_id:0
+msgid "Move Line from picking in"
+msgstr "Postavka premika iz vhodnega zbirnika"
+
+#. module: crm_claim_rma
+#: field:claim.line,move_out_id:0
+msgid "Move Line from picking out"
+msgstr "Postavka premika iz izhodnega zbirnika"
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.view_picking_internal_search_claim_id
+msgid "Moves created from claims"
+msgstr "Premiki nastali iz zahtevkov"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "New Delivery"
+msgstr "Nova dostava"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "New Products Return"
+msgstr "Novo vračilo proizvodov"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "New Refund"
+msgstr "Nov dobropis"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim10
+msgid "No Inventory"
+msgstr "Ni inventarja"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Normal"
+msgstr "Običajna"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Not Define"
+msgstr "Ne definirana"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:65
+#: selection:claim.line,warning:0
+#, python-format
+msgid "Not Defined"
+msgstr "Ni definirano"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Not specified"
+msgstr "Ni določeno"
+
+#. module: crm_claim_rma
+#: field:claim.line,number:0
+msgid "Number"
+msgstr "Številka"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Order cancellation"
+msgstr "Preklic naročila"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Other"
+msgstr "Drugo"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: field:crm.claim,delivery_address_id:0
+msgid "Partner delivery address"
+msgstr "Partnerjev dostavni naslov"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Perfect Conditions"
+msgstr "Brezhibno stanje"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Client"
+msgstr "Fizično poškodoval kupec"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Physical Damage by Company"
+msgstr "Fizično poškodovala družba"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view field:crm.claim,pick:0
+msgid "Pick the product in the store"
+msgstr "Izbira proizvoda v trgovini"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_stock_picking
+msgid "Picking List"
+msgstr "Zbirni seznam"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:399
+#, python-format
+msgid "Please set invoice first"
+msgstr "Najprej nastavite račun"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:395
+#, python-format
+msgid "Please set product first"
+msgstr "Najprej nastavite proizvod"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim18
+msgid "Pricing Error"
+msgstr "Cenovna napaka"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+#: field:claim.line,priority:0
+msgid "Priority"
+msgstr "Prioriteta"
+
+#. module: crm_claim_rma
+#: help:claim.line,priority:0
+msgid "Priority attention of claim line"
+msgstr "Prioritetna pozornost na postavko zahtevka"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+msgid "Problem"
+msgstr "Težava"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+#: field:claim.line,product_id:0
+msgid "Product"
+msgstr "Proizvod"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_diagnosis:0
+msgid "Product Damaged"
+msgstr "Proizvod poškodovan"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_diagnosis:0
+msgid "Product Repaired"
+msgstr "Proizvod popravljen"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Product Returns"
+msgstr "Vračila proizvodov"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_diagnosis:0
+msgid "Product in good condition"
+msgstr "Proizvod v dobrem stanju"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_diagnosis:0
+msgid "Product with hidden physical damage"
+msgstr "Proizvod s skritimi poškodbami"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_purchase_orders
+msgid "Purchases"
+msgstr "Nabave"
+
+#. module: crm_claim_rma
+#: field:claim.line,product_returned_quantity:0
+msgid "Quantity"
+msgstr "Količina"
+
+#. module: crm_claim_rma
+#: help:claim.line,product_returned_quantity:0
+msgid "Quantity of product returned"
+msgstr "Vrnjena količina artikla"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
+msgid "Quotations and Sales"
+msgstr "Predračuni in prodaja"
+
+#. module: crm_claim_rma
+#: field:crm.claim,picking_ids:0
+msgid "RMA"
+msgstr "Pooblastilo vračila blaga"
+
+#. module: crm_claim_rma
+#: help:crm.claim,rma_number:0
+msgid "RMA Number provided by supplier"
+msgstr "Dobaviteljeva številka vračila blaga"
+
+#. module: crm_claim_rma
+#: field:crm.claim,real_cost:0
+msgid "Real cost"
+msgstr "Dejanski strošek"
+
+#. module: crm_claim_rma
+#: field:crm.claim,real_revenue:0
+msgid "Real revenue"
+msgstr "Dejanski prihodek"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Received, to control"
+msgstr "Prejeto, za pregled"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Receptions / Deliveries"
+msgstr "Prejemi / Dobave"
+
+#. module: crm_claim_rma
+#: field:claim.line,refund_line_id:0
+msgid "Refund Line"
+msgstr "Postavka dobropisa"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: field:crm.claim,invoice_ids:0
+#: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_refunds
+msgid "Refunds"
+msgstr "Dobropisi"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Refused"
+msgstr "Zavrnjeno"
+
+#. module: crm_claim_rma
+#: field:claim.line,claim_id:0
+msgid "Related claim"
+msgstr "Povezani zahtevek"
+
+#. module: crm_claim_rma
+#: help:crm.claim,invoice_id:0
+msgid "Related original Cusotmer invoice"
+msgstr "Povezani izvorni izdani račun"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_in
+msgid "Return Products"
+msgstr "Vračilo proizvodov"
+
+#. module: crm_claim_rma
+#: field:claim.line,location_dest_id:0
+msgid "Return Stock Location"
+msgstr "Lokacija zaloge vračil"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_line_ids:0
+msgid "Return lines"
+msgstr "Postavke vračila"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Returned lines"
+msgstr "Povrnjene postavke"
+
+#. module: crm_claim_rma
+#: help:claim.line,product_id:0
+msgid "Returned product"
+msgstr "Vrnjeni proizvod"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Returns"
+msgstr "Vračila"
+
+#. module: crm_claim_rma
+#: field:crm.claim,rma_number:0
+msgid "Rma number"
+msgstr "Številka pooblastila vračila blaga"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+msgid "Sales"
+msgstr "Prodaja"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
+msgid "Sales Team"
+msgstr "Prodajna ekipa"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Search Claims"
+msgstr "Iskanje zahtevkov"
+
+#. module: crm_claim_rma
+#: help:claim.line,substate_id:0
+msgid ""
+"Select a sub state to precise the standard state. Example 1: state = "
+"refused; substate could be warranty over, not in warranty, no problem,... . "
+"Example 2: state = to treate; substate could be to refund, to exchange, to "
+"repair,..."
+msgstr "Izberite pod-stanje za določitev standardnega stanja. Primer 1: stanje = zavrnjeno; pod-stanje bi lahko bilo garancija potekla, ni v garanciji, ni težav, ... Primer 2: stanje = za obdelavo; pod-stanje bi lahko bilo za dobropis, za zamenjavo, za popravilo, ..."
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "Select exchange lines to add in picking"
+msgstr "Izberite menjalne postavke za dodajanje v zbirnik"
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "Select lines for picking"
+msgstr "Izberite postavke za zbirnik"
+
+#. module: crm_claim_rma
+#: field:crm.claim,sequence:0
+msgid "Sequence"
+msgstr "Zaporedje"
+
+#. module: crm_claim_rma
+#: field:claim.line,prodlot_id:0
+msgid "Serial/Lot number"
+msgstr "Številka serijska/lota"
+
+#. module: crm_claim_rma
+#: model:crm.case.categ,name:crm_claim_rma.categ_claim19
+msgid "Shipping Address Undeliverable"
+msgstr "Nedostavljiv naslov odpreme"
+
+#. module: crm_claim_rma
+#: selection:claim.line,claim_origin:0
+msgid "Shipping error"
+msgstr "Napaka odpreme"
+
+#. module: crm_claim_rma
+#: field:claim_make_picking.wizard,claim_line_source_location_id:0
+msgid "Source Location"
+msgstr "Izvorna lokacija"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
+msgid "Stage"
+msgstr "Stopnja"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+#: field:claim.line,state:0
+msgid "State"
+msgstr "Stanje"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_stock_move
+msgid "Stock Move"
+msgstr "Premik zaloge"
+
+#. module: crm_claim_rma
+#: field:claim.line,substate_id:0 field:substate.substate,name:0
+msgid "Sub state"
+msgstr "Pod stanje"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
+msgid "Substate"
+msgstr "Pod-stanje"
+
+#. module: crm_claim_rma
+#: field:claim.line,message_summary:0 field:stock.move,message_summary:0
+msgid "Summary"
+msgstr "Povzetek"
+
+#. module: crm_claim_rma
+#: selection:claim.line,applicable_guarantee:0
+msgid "Supplier"
+msgstr "Dobavitelj"
+
+#. module: crm_claim_rma
+#: help:claim.line,invoice_line_id:0
+msgid "The invoice line related to the returned product"
+msgstr "Postavka računa vezana na vrnjeni proizvod"
+
+#. module: crm_claim_rma
+#: help:claim.line,move_in_id:0 help:claim.line,move_out_id:0
+msgid "The move line related to the returned product"
+msgstr "Postavka premika vezana na vrnjeni proizvod"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:312
+#, python-format
+msgid "The product has no supplier configured."
+msgstr "Proizvod nima nastavljenega dobavitelja."
+
+#. module: crm_claim_rma
+#: help:claim.line,refund_line_id:0
+msgid "The refund line related to the returned product"
+msgstr "Postavka dobropisa vezana na vrnjeni proizvod"
+
+#. module: crm_claim_rma
+#: help:claim.line,location_dest_id:0
+msgid "The return stock location of the returned product"
+msgstr "Lokacija zaloge vračil za vrnjeni proizvod"
+
+#. module: crm_claim_rma
+#: help:claim.line,prodlot_id:0
+msgid "The serial/lot of the returned product"
+msgstr "Serija/lot vrnjenega proizvoda"
+
+#. module: crm_claim_rma
+#: help:claim.line,guarantee_limit:0
+msgid ""
+"The warranty limit is computed as: invoice date + warranty defined on "
+"selected product."
+msgstr "Garancijski limit izračunan kot: datum računa + garancija določena za izbrani proizvod."
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/crm_claim.py:40
+#, python-format
+msgid "There is no warehouse for the current user's company."
+msgstr "Za trenutno družbo uporabnika ni skladišča."
+
+#. module: crm_claim_rma
+#: help:crm.claim,delivery_address_id:0
+msgid "This address will be used to deliver repaired or replacement products."
+msgstr "Ta naslov bo uporabljen za dobavo popravljenih proizvodov ali zamenjav proizvodov."
+
+#. module: crm_claim_rma
+#: help:claim.line,claim_diagnosis:0
+msgid "To describe the line product diagnosis"
+msgstr "Za opis postavke diagnoze proizvoda"
+
+#. module: crm_claim_rma
+#: help:claim.line,claim_origin:0
+msgid "To describe the line product problem"
+msgstr "Za opis postavke težave proizvoda"
+
+#. module: crm_claim_rma
+#: help:substate.substate,substate_descr:0
+msgid "To give more information about the sub state"
+msgstr "Ta podajanje več informacij glede pod-stanja"
+
+#. module: crm_claim_rma
+#: help:claim.line,claim_id:0
+msgid "To link to the case.claim object"
+msgstr "Za povezavo z objektom case.claim"
+
+#. module: crm_claim_rma
+#: help:claim.line,last_state_change:0
+msgid "To set thelast state / substate change"
+msgstr "Za nastavitev zadnje spremembe stanja / pod-stanja"
+
+#. module: crm_claim_rma
+#: selection:claim.line,state:0
+msgid "Treated"
+msgstr "Obdelano"
+
+#. module: crm_claim_rma
+#: field:claim.line,unit_sale_price:0
+msgid "Unit sale price"
+msgstr "Prodajna cena enote"
+
+#. module: crm_claim_rma
+#: help:claim.line,unit_sale_price:0
+msgid ""
+"Unit sale price of the product. Auto filled if retrun done by invoice "
+"selection. Be careful and check the automatic value as don't take into "
+"account previous refunds, invoice discount, can be for 0 if product for "
+"free,..."
+msgstr "Prodajna cena enote proizvoda. Samodejno izpolnjeno pri vračilu iz izbire računa. Bodite pozorni in preverite samodejno vrednost, saj ne upošteva predhodnih dobropisov in obračunskih popustov. V primeru, da je proizvod brezplačen je lahko 0."
+
+#. module: crm_claim_rma
+#: field:claim.line,message_unread:0 field:stock.move,message_unread:0
+msgid "Unread Messages"
+msgstr "Neprebrana sporočila"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:63
+#: selection:claim.line,warning:0
+#, python-format
+msgid "Valid"
+msgstr "Veljavno"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Very High"
+msgstr "Zelo visoka"
+
+#. module: crm_claim_rma
+#: field:crm.claim,warehouse_id:0
+msgid "Warehouse"
+msgstr "Skladišče"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_form_view
+#: field:claim.line,warning:0
+msgid "Warranty"
+msgstr "Garancija"
+
+#. module: crm_claim_rma
+#: field:claim.line,warranty_return_partner:0
+msgid "Warranty Address"
+msgstr "Garancijski naslov"
+
+#. module: crm_claim_rma
+#: field:claim.line,guarantee_limit:0
+msgid "Warranty limit"
+msgstr "Garancijski limit"
+
+#. module: crm_claim_rma
+#: field:claim.line,applicable_guarantee:0 field:claim.line,warranty_type:0
+msgid "Warranty type"
+msgstr "Tip garancije"
+
+#. module: crm_claim_rma
+#: help:claim.line,warranty_return_partner:0
+msgid "Where the customer has to send back the product(s)"
+msgstr "Kam naj kupec pošlje vrnjeni/e proizvod(e)"
+
+#. module: crm_claim_rma
+#: help:claim.line,warranty_type:0
+msgid ""
+"Who is in charge of the warranty return treatment towards the end customer. "
+"Company will use the current company delivery or default address and so on "
+"for supplier and brand manufacturer. Does not necessarily mean that the "
+"warranty to be applied is the one of the return partner (ie: can be returned"
+" to the company and be under the brand warranty"
+msgstr "Kdo je zadolžen za obdelavo garancijskih vračil končnega kupca. Družba bo uporabila trenutni dostavni ali privzeti naslov dobavitelja in proizvajalca blagovne znamke. Ni nujno, da se uporabi garancije partnerja, ki mu vračamo (npr. lahko se vrne družbi, a je pod garancijo proizvajalca blagovne znamke)."
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
+msgid "Wizard to create pickings from claim lines"
+msgstr "Čarovnik za ustvarjanje zbirnikov iz postavk zahtevka"
+
+#. module: crm_claim_rma
+#: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
+msgid "or"
+msgstr "ali"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_substate_substate
+msgid "substate that precise a given state"
+msgstr "pod-stanje, ki določa dano stanje"
+
+#. module: crm_claim_rma
+#: view:claim.line:crm_claim_rma.crm_claim_line_view_form_embedded
+msgid ""
+"{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id': "
+"parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': "
+"parent.date}"
+msgstr "{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id': parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': parent.date}"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_case_claims_form_view
+msgid "{'create_lines': False}"
+msgstr "{'create_lines': False}"
