@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="so_wizard_rma_1" model="sale.order">
+            <field name="name">SOWIZARDCLAIM001</field>
+            <field name="date_order">2015-05-08 18:17:05</field>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+        </record>
+
+        <record id="so_wizard_rma_1_line_1" model="sale.order.line">
+            <field name="name">SOWIZARDCLAIM001 Line 1</field>
+            <field name="order_id" ref="so_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_38"/>
+            <field name="product_uom_qty">1</field>
+            <field name="price_unit">65.0</field>
+        </record>
+
+        <record id="so_wizard_rma_1_line_2" model="sale.order.line">
+            <field name="name">SOWIZARDCLAIM001 Line 2</field>
+            <field name="order_id" ref="so_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="product_uom_qty">2</field>
+            <field name="price_unit">66.0</field>
+        </record>
+
+        <record id="so_wizard_rma_1_line_3" model="sale.order.line">
+            <field name="name">SOWIZARDCLAIM001 Line 3</field>
+            <field name="order_id" ref="so_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_uom_qty">1</field>
+            <field name="price_unit">800.0</field>
+        </record>
+
+        <record id="so_wizard_rma_1_line_4" model="sale.order.line">
+            <field name="name">SOWIZARDCLAIM001 Line 4</field>
+            <field name="order_id" ref="so_wizard_rma_1"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_uom_qty">5</field>
+            <field name="price_unit">1299.0</field>
+        </record>
+
+        <workflow action="order_confirm" model="sale.order" ref="so_wizard_rma_1"/>
+
+        <workflow action="manual_invoice" model="sale.order" ref="so_wizard_rma_1" uid="base.user_root"/>
+
+        <workflow action="invoice_open" model="account.invoice">
+            <value eval="obj(ref('so_wizard_rma_1')).invoice_ids[0].id" model="sale.order"/>
+        </workflow>
+
+        <function model="account.invoice" name="pay_and_reconcile">
+            <!-- ids = -->  <value eval="obj(ref('so_wizard_rma_1')).invoice_ids[0].id" model="sale.order"/>
+            <!-- amount = -->            <value eval="30000"/>
+            <!-- account_id = -->        <value eval="ref('account.cash')"/>
+            <!-- period_id = -->            <value eval="ref('account.period_10')"/>
+            <!-- journal_id = -->        <value eval="ref('account.bank_journal')"/>
+            <!-- writeoff_acc_id = -->        <value eval="ref('account.cash')"/>
+            <!-- writeoff_period_id = -->    <value eval="ref('account.period_10')"/>
+            <!-- writeoff_journal_id = -->    <value eval="ref('account.bank_journal')"/>
+            <!-- context = -->              <value eval="{}"/>
+            <!-- name = -->                 <value eval="str('Payment WIzard RMA')"/>
+        </function>
+
+    </data>
+</openerp>

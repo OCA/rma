@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
+#    Copyright 2015 Vauxoo
 #    Copyright 2014 Camptocamp SA
+#    Author: Guewen Baconnier,
+#            Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,5 +21,6 @@
 #
 ##############################################################################
 
-from . import stock_warehouse
-from . import product
+from . import models
+from . import wizards
+from .init_hooks import post_init_hook

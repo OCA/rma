@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_prodlot_supplier
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-24 16:07+0000\n"
+"PO-Revision-Date: 2015-11-03 17:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: crm_rma_prodlot_supplier
+#: model:ir.model,name:crm_rma_prodlot_supplier.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: crm_rma_prodlot_supplier
+#: model:ir.model,name:crm_rma_prodlot_supplier.model_stock_picking
+msgid "Picking List"
+msgstr "Opération de manutention"
+
+#. module: crm_rma_prodlot_supplier
+#: model:ir.model,name:crm_rma_prodlot_supplier.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr ""
+
+#. module: crm_rma_prodlot_supplier
+#: field:stock.production.lot,supplier_id:0
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: crm_rma_prodlot_supplier
+#: field:stock.production.lot,supplier_invoice_line_id:0
+msgid "Supplier Invoice Line"
+msgstr ""
+
+#. module: crm_rma_prodlot_supplier
+#: help:stock.production.lot,supplier_invoice_line_id:0
+msgid "Supplier invoice with the purchase of goods sold to customer"
+msgstr ""
+
+#. module: crm_rma_prodlot_supplier
+#: help:stock.production.lot,supplier_id:0
+msgid "Supplier of good in claim"
+msgstr ""
+
+#. module: crm_rma_prodlot_supplier
+#: view:stock.transfer_details:crm_rma_prodlot_supplier.view_lot_form_supplier_context
+msgid ""
+"{'product_id': product_id,\n"
+"                            'active_id': active_id}"
+msgstr ""

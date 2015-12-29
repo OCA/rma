@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright 2015 Vauxoo
 #    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion, 
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau, Joel Grand-Guillaume
+#    Copyright 2009-2013 Akretion,
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume,
+#            Yanina Aular, Osval Reyes
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,31 +23,29 @@
 #
 ##############################################################################
 
-{'name': 'RMA Claims Mass Return by Lot',
- 'version': '1.0',
- 'category': 'Generic Modules/CRM & SRM',
- 'depends': ['crm_claim_rma'
-             ],
- 'author': "Akretion,Odoo Community Association (OCA)",
- 'license': 'AGPL-3',
- 'website': 'http://www.akretion.com',
- 'description': """
-RMA Claim Mass Return by Lot
-============================
-
-This module adds possibility to return a whole lot of product from a Claim
-and create a incoming shipment for them.
-
-
-WARNING: This module is currently not yet completely debugged and is waiting his author to be.
-
-""",
- 'images': [],
- 'demo': [],
- 'data': [
-        'wizard/returned_lines_from_serial_wizard_view.xml',
-        'crm_rma_view.xml',
- ],
- 'installable': False,
- 'application': True,
+{
+    'name': 'RMA Claims Mass Return by Lot',
+    'version': '8.0.1.0.0',
+    'category': 'Generic Modules/CRM & SRM',
+    'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
+    'website': 'http://www.vauxoo.com, http://www.akretion.com',
+    'depends': [
+        'crm_claim_rma',
+        'crm_rma_prodlot_invoice',
+        'crm_rma_prodlot_supplier',
+    ],
+    'data': [
+        'wizards/returned_lines_from_serial_wizard.xml',
+        'views/crm_claim.xml',
+        'templates/search_view.xml'
+    ],
+    'demo': [
+        'demo/stock_production_lot.xml',
+        'demo/purchase_order.xml',
+        'demo/sale_order.xml',
+        'demo/transfer_details.xml',
+    ],
+    'installable': True,
+    'auto_install': False
 }
