@@ -44,6 +44,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[crm_claim_product_supplier](crm_claim_product_supplier/) | 8.0.1.0.0 | CRM Claim Product Supplier
 [crm_claim_rma](crm_claim_rma/) | 8.0.1.1.1 | RMA Claim (Product Return Management)
 [crm_claim_rma_code](crm_claim_rma_code/) | 8.0.1.0.0 | CRM Claim RMA Code
 [crm_rma_location](crm_rma_location/) | 8.0.1.0.0 | RMA Location
