@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="crm_claim_line_form_view">
+            <field name="name">CRM - Claim product return line Form</field>
+            <field name="model">claim.line</field>
+            <field name="inherit_id" ref="crm_claim_rma.crm_claim_line_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='set_warranty']" position="after">
+                    <button name="button_rma_vendor_render_view"
+                        string="Create Supplier RMA"
+                        type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

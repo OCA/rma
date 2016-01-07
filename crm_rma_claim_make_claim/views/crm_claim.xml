@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="crm_claim_form_view_inherited" model="ir.ui.view">
+            <field name="name">crm.claim.form.view.inherited</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Related Claims">
+                        <group colspan="2" col="2">
+                            <field name="claim_ids" nolabel="1" readonly="True"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
