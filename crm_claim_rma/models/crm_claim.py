@@ -40,6 +40,13 @@ class CrmClaim(models.Model):
                 _('There is no warehouse for the current user\'s company.'))
         return wh
 
+    @api.model
+    def _get_company_default(self):
+        company_env = self.env['res.company']
+        default_company_id = company_env._company_default_get(
+            'claim.line')
+        return company_env.browse(default_company_id)
+
     @api.multi
     def name_get(self):
         res = []
@@ -49,9 +56,7 @@ class CrmClaim(models.Model):
         return res
 
     company_id = fields.Many2one(change_default=True,
-                                 default=lambda self:
-                                 self.env['res.company']._company_default_get(
-                                     'crm.claim'))
+                                 default=_get_company_default)
 
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')

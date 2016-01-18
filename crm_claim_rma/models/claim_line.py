@@ -44,6 +44,13 @@ class ClaimLine(models.Model):
     _description = "List of product to return"
     _rec_name = "display_name"
 
+    @api.model
+    def _get_company_default(self):
+        company_env = self.env['res.company']
+        default_company_id = company_env._company_default_get(
+            'claim.line')
+        return company_env.browse(default_company_id)
+
     SUBJECT_LIST = [('none', 'Not specified'),
                     ('legal', 'Legal retractation'),
                     ('cancellation', 'Order cancellation'),
@@ -71,8 +78,7 @@ class ClaimLine(models.Model):
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=False,
         change_default=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'claim.line'))
+        default=_get_company_default)
     date = fields.Date('Claim Line Date',
                        select=True,
                        default=fields.date.today())
