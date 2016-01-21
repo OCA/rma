@@ -218,7 +218,7 @@ class ClaimMakePicking(models.TransientModel):
             common_dest_location = self._get_common_dest_location_from_line(
                 claim_lines)
             if not common_dest_location:
-                raise Warning(
+                raise exceptions.Warning(
                     _('Error'),
                     _('A product return cannot be created for various '
                       'destination locations, please choose line with a '
