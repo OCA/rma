@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import datetime
 from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
@@ -69,6 +70,14 @@ class ClaimLine(models.Model):
                                                 claim_line_parent.
                                                 supplier_id.id)])
             if not claim_supplier:
+                today_datetime = datetime.datetime.now()
+                today = datetime.datetime.strftime(
+                    today_datetime, "%Y-%m-%d %H:%M:%S")
+                deadline_datetime = today_datetime + \
+                    datetime.timedelta(
+                        days=self.env.user.company_id.limit_days)
+                deadline = datetime.datetime.strftime(
+                    deadline_datetime, "%Y-%m-%d")
                 claim_supplier = claim_obj.create({
                     'name': 'Supplier Claim',
                     'code': '/',
@@ -79,6 +88,10 @@ class ClaimLine(models.Model):
                     'email_from': claim_line_parent.supplier_id.email,
                     'partner_phone': claim_line_parent.supplier_id.phone,
                     'delivery_address_id': claim_line_parent.supplier_id.id,
+                    'user_id': self.env.user.id,
+                    'company_id': self.env.user.company_id.id,
+                    'date': today,
+                    'date_deadline': deadline,
                 })
             elif len(claim_supplier) > 1:
                 # search the supplier claim with less lines

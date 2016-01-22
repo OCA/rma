@@ -67,7 +67,7 @@
             <field name="name">CRM - Claims Tree</field>
             <field name="model">claim.line</field>
             <field name="arch" type="xml">
-                <tree string="Claim lines">
+                <tree string="Claim lines" colors="red:date_deadline&lt;current_date;">
                     <field name="claim_id" invisible="1"/>
                     <field name="number"/>
                     <field name="state"/>
@@ -82,6 +82,7 @@
                     <field name="product_returned_quantity"/>
                     <field name="claim_origin"/>
                     <field name="claim_diagnosis"/>
+                    <field name="date_deadline"/>
                     <field name="refund_line_id"/>
                     <field name="move_in_id"/>
                     <field name="move_out_id"/>

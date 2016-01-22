@@ -26,6 +26,8 @@ from openerp import _, api, exceptions, fields, models
 
 from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
+from openerp.exceptions import ValidationError
+import datetime
 
 
 class CrmClaim(models.Model):
@@ -76,6 +78,92 @@ class CrmClaim(models.Model):
                                    required=True,
                                    default=_get_default_warehouse)
     rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
+
+    @api.model
+    def _get_limit_days(self):
+        """ If the limit_days parameter is not set.
+        Then, the limit_days must be one day.
+        """
+        limit_days = self.env.user.company_id.limit_days
+        if not limit_days:
+            limit_days = 1
+        return limit_days
+
+    @api.depends("date")
+    def _compute_deadline(self):
+        """ Compute the deadline with respect to date of claim.
+        The deadline should be data of claim plus limit_days or
+        can be edited manually by the rma manager
+        """
+        limit_days = self._get_limit_days()
+        for crm_claim in self:
+            if crm_claim.date:
+                deadline = fields.datetime.strptime(
+                    crm_claim.date, "%Y-%m-%d %H:%M:%S") + \
+                    datetime.timedelta(days=limit_days)
+                crm_claim.date_deadline = deadline
+
+    @api.multi
+    def _inverse_deadline(self):
+        """ When the deadline is changed manually. Two things can happend:
+        1. The deadline is the same that date plus limit_days.
+        In this case nothing happens.
+        2. If the deadline is different from the date plus limit_days, then
+        the user should be rma manager to allow the change in the deadline.
+        If the user is not rma manager, a validation message is shown
+        """
+        for crm_claim in self:
+            limit_days = self._get_limit_days()
+            # for calculating the difference of days
+            # the deadline should be: deadline + hours of claim.
+            # and the result of subtract (deadline - date) is entire
+            # because the deadline is Date type
+            # and date is Datetime type
+            date_deadline = crm_claim.date_deadline + ' ' + \
+                crm_claim.date.split()[1]
+
+            date = crm_claim.date
+
+            diff = fields.datetime.strptime(
+                date_deadline, "%Y-%m-%d %H:%M:%S") - \
+                fields.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+
+            if diff.days != limit_days:
+                group_rma_manager = self.env.ref(
+                    "crm_claim_rma.group_rma_manager")
+                if self.env.user not in group_rma_manager.users:
+                    raise ValidationError(
+                        _("In order to set a manual deadline date"
+                          " you must belong to the group RMA {group}".format(
+                              group=group_rma_manager.name)))
+
+    @api.constrains("date", "date_deadline")
+    def _check_claim_dates(self):
+        """ In case of the deadline will be changed
+        manually by the rma manager, then, the deadline
+        should be major than the date of claim
+        """
+        for crm_claim in self:
+            if crm_claim.date and crm_claim.date_deadline:
+                date = fields.datetime.strptime(
+                    crm_claim.date, "%Y-%m-%d %H:%M:%S")
+                date_deadline = fields.datetime.strptime(
+                    crm_claim.date_deadline, "%Y-%m-%d")
+                if date_deadline < date:
+                    raise ValidationError(
+                        _("Creation date must be less than deadline"))
+
+    date = fields.Datetime(
+        required=True,
+        help="The creation date of claim.")
+
+    date_deadline = fields.Date(
+        compute="_compute_deadline",
+        inverse="_inverse_deadline",
+        store=True,
+        help="The deadline for that the claim will be resolved. If the "
+        "claim is not resolved before this date. Management must inform "
+        "to the RMA team to accelerate the process.")
 
     @api.model
     def _get_claim_type_default(self):

@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+import datetime
 from openerp.tests.common import TransactionCase
 
 
@@ -45,6 +46,13 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
         on include_lines parameter
         """
 
+        today_datetime = datetime.datetime.now()
+        today = datetime.datetime.strftime(
+            today_datetime, "%Y-%m-%d %H:%M:%S")
+        deadline_datetime = today_datetime + \
+            datetime.timedelta(days=self.env.user.company_id.limit_days)
+        deadline = datetime.datetime.strftime(
+            deadline_datetime, "%Y-%m-%d")
         return self.env['crm.claim'].\
             create({
                 'name': 'Test Claim for %s' % (self.customer_id.name),
@@ -52,6 +60,10 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
                 'partner_id': self.customer_id.id,
                 'pick': True,
                 'code': '/',
+                'user_id': self.env.user.id,
+                'company_id': self.env.user.company_id.id,
+                'date': today,
+                'date_deadline': deadline,
                 'claim_line_ids': [(0, 0, {
                     'supplier_id': self.supplier_id_1.id,
                     'claim_origin': u'damaged',

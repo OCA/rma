@@ -31,3 +31,4 @@ from . import product_no_supplier
 from . import stock_move
 from . import stock_picking
 from . import substate_substate
+from . import res_company
