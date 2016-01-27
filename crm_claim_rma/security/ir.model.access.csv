@@ -1,7 +1,65 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_substate_user,substate.substate.user,model_substate_substate,base.group_sale_salesman_all_leads,1,1,1,0
-access_claim_line_user,claim.line.user,model_claim_line,base.group_sale_salesman_all_leads,1,1,1,0
-access_substate_manager,substate.substate.manager,model_substate_substate,base.group_sale_manager,1,1,1,1
-access_claim_line_manager,claim.line.manager,model_claim_line,base.group_sale_manager,1,1,1,1
-access_substate_user,substate.substate.user,model_substate_substate,base.group_sale_salesman,1,1,1,0
-access_claim_line_user,claim.line.user,model_claim_line,base.group_sale_salesman,1,1,1,0
+
+access_claim_line_portal,claim.line.portal,model_claim_line,base.group_portal,1,0,0,0
+access_crm_claim_portal_rma,crm.claim portal,model_crm_claim,base.group_portal,1,0,0,0
+
+
+crm_claim.access_crm_claim_manager,crm.claim.manager,model_crm_claim,base.group_sale_manager,1,0,0,0
+crm_claim.access_crm_claim_user,crm.claim.user,model_crm_claim,base.group_sale_salesman,1,0,0,0
+crm_claim.access_crm_claim_stage_user,crm.claim.stage.user,crm_claim.model_crm_claim_stage,base.group_sale_salesman,1,0,0,0
+crm_claim.access_crm_claim_report_manager,crm.claim.report.manager,crm_claim.model_crm_claim_report,base.group_sale_manager,1,0,0,0
+crm_claim.access_crm_claim_partner_manager,crm.claim.partner.manager,model_crm_claim,base.group_partner_manager,1,0,0,0
+access_substate_readonly,substate.substate.readonly,model_substate_substate,group_rma_readonly,1,0,0,0
+access_claim_line_readonly,claim.line.readonly,model_claim_line,group_rma_readonly,1,0,0,0
+access_crm_claim_readonly_rma,crm.claim readonly,model_crm_claim,group_rma_readonly,1,0,0,0
+access_rma_account_payment_term_readonly_rma,account.payment.term readonly,account.model_account_payment_term,group_rma_readonly,1,0,0,0
+access_rma_account_analytic_account_readonly_rma,account.analytic.account readonly,analytic.model_account_analytic_account,group_rma_readonly,1,0,0,0
+access_rma_ir_property_readonly_rma,ir.property readonly,base.model_ir_property,group_rma_readonly,1,0,0,0
+access_rma_account_journal_readonly_rma,account.journal readonly,account.model_account_journal,group_rma_readonly,1,0,0,0
+access_rma_res_partner_readonly_rma,res.partner readonly,base.model_res_partner,group_rma_readonly,1,0,0,0
+access_rma_product_template_readonly_rma,product.template readonly,product.model_product_template,group_rma_readonly,1,0,0,0
+access_rma_product_product_readonly_rma,product.product readonly,product.model_product_product,group_rma_readonly,1,0,0,0
+access_rma_account_fiscalyear_readonly_rma,account.fiscalyear readonly,account.model_account_fiscalyear,group_rma_readonly,1,0,0,0
+access_rma_account_tax_readonly_rma,account.tax readonly,account.model_account_tax,group_rma_readonly,1,0,0,0
+access_rma_ir_attachment_readonly_rma,ir.attachment readonly,base.model_ir_attachment,group_rma_readonly,1,0,0,0
+access_rma_res_partner_bank_type_readonly_rma,res.partner.bank.type readonly,base.model_res_partner_bank_type,group_rma_readonly,1,0,0,0
+access_rma_res_partner_bank_type_field_readonly_rma,res.partner.bank.type.field readonly,base.model_res_partner_bank_type_field,group_rma_readonly,1,0,0,0
+access_rma_product_uom_readonly_rma,product.uom readonly,product.model_product_uom,group_rma_readonly,1,0,0,0
+access_rma_product_pricelist_readonly_rma,product.pricelist readonly,product.model_product_pricelist,group_rma_readonly,1,0,0,0
+access_rma_account_account_readonly_rma,account.account readonly,account.model_account_account,group_rma_readonly,1,0,0,0
+access_rma_product_supplierinfo_readonly_rma,product.supplierinfo readonly,product.model_product_supplierinfo,group_rma_readonly,1,0,0,0
+access_rma_account_invoice_report_readonly_rma,account.invoice.report readonly,account.model_account_invoice_report,group_rma_readonly,1,0,0,0
+access_rma_stock_picking_type_readonly_rma,stock.picking.type readonly,stock.model_stock_picking_type,group_rma_readonly,1,0,0,0
+access_rma_stock_production_lot_readonly_rma,stock.production.lot readonly,stock.model_stock_production_lot,group_rma_readonly,1,0,0,0
+access_rma_stock_inventory_readonly_rma,stock.inventory readonly,stock.model_stock_inventory,group_rma_readonly,1,0,0,0
+access_rma_stock_inventory_line_readonly_rma,stock.inventory.line readonly,stock.model_stock_inventory_line,group_rma_readonly,1,0,0,0
+access_rma_stock_lines_date_readonly_rma,report.stock.lines.date readonly,stock.model_report_stock_lines_date,group_rma_readonly,1,0,0,0
+access_rma_product_product_stock_readonly_rma,product.product.stock readonly,product.model_product_product,group_rma_readonly,1,0,0,0
+access_rma_product_template_stock_readonly_rma,product.template.stock readonly,product.model_product_template,group_rma_readonly,1,0,0,0
+access_rma_board_stock_readonly_rma,board.board readonly,board.model_board_board,group_rma_readonly,1,0,0,0
+access_rma_stock_warehouse_orderpoint_readonly_rma,stock.warehouse.orderpoint readonly,stock.model_stock_warehouse_orderpoint,group_rma_readonly,1,0,0,0
+access_rma_stock_quant_readonly_rma,stock.quant readonly,stock.model_stock_quant,group_rma_readonly,1,0,0,0
+access_rma_stock_quant_package_stock_readonly_rma,stock.quant.package stock readonly,stock.model_stock_quant_package,group_rma_readonly,1,0,0,0
+access_rma_procurement_rule_readonly_rma,procurement.rule readonly,stock.model_procurement_rule,group_rma_readonly,1,0,0,0
+access_rma_stock_location_path_readonly_rma,stock.location.path readonly,stock.model_stock_location_path,group_rma_readonly,1,0,0,0
+access_rma_stock_pack_operation_readonly_rma,stock.pack.operation readonly,stock.model_stock_pack_operation,group_rma_readonly,1,0,0,0
+access_rma_stock_fixed_putaway_readonly_rma,stock.fixed.putaway.strat readonly,stock.model_stock_fixed_putaway_strat,group_rma_readonly,1,0,0,0
+access_rma_stock_move_operation_link_readonly_rma,stock.move.operation.link readonly,stock.model_stock_move_operation_link,group_rma_readonly,1,0,0,0
+access_rma_product_price_history_stock_readonly_rma,prices.history.stock readonly,product.model_product_price_history,group_rma_readonly,1,0,0,0
+access_rma_purchase_order_readonly_rma,purchase.order readonly,purchase.model_purchase_order,group_rma_readonly,1,0,0,0
+access_rma_purchase_order_line_readonly_rma,purchase.order.line readonly,purchase.model_purchase_order_line,group_rma_readonly,1,0,0,0
+access_crm_claim_rma_user,crm.claim.rma user,model_crm_claim,group_rma_user,1,1,1,0
+access_crm_claim_line_rma_user,crm.claim.rma user,model_claim_line,group_rma_user,1,1,1,1
+access_crm_claim_stage_rma_user,crm.claim.rma.stage user,crm_claim.model_crm_claim_stage,group_rma_user,1,0,0,0
+access_crm_claim_report_rma_user,crm.claim.rma.report user,crm_claim.model_crm_claim_report,group_rma_user,1,1,1,1
+access_crm_claim_type_rma_user,crm.claim.type user,crm_claim_type.model_crm_claim_type,group_rma_user,1,0,0,0
+access_rma_stock_picking_user,stock.picking user,stock.model_stock_picking,group_rma_user,1,1,1,0
+access_rma_stock_move_user,stock.move user,stock.model_stock_move,group_rma_user,1,1,1,0
+access_rma_account_invoice_tax_user,account.invoice.tax user,account.model_account_invoice_tax,group_rma_user,1,0,0,0
+access_rma_account_invoice_user,account.invoice user,account.model_account_invoice,group_rma_user,1,0,0,0
+access_rma_account_invoice_line_user,account.invoice.line user,account.model_account_invoice_line,group_rma_user,1,0,0,0
+access_rma_account_move_line_user,account.move.line user,account.model_account_move_line,group_rma_user,1,0,0,0
+access_rma_sale_order_user,sale.order user,sale.model_sale_order,group_rma_user,1,0,0,0
+access_rma_sale_order_line_user,sale.order.line user,sale.model_sale_order_line,group_rma_user,1,0,0,0
+access_rma_account_move_user,account.move user,account.model_account_move,group_rma_user,1,0,0,0
+access_crm_claim_rma_manager,crm.claim.rma manager,model_crm_claim,group_rma_manager,1,1,1,1

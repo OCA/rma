@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Claim Description']//div[@name='serial']" position="inside">
                     <button name="render_metasearch_view"
+                        groups="crm_claim_rma.group_rma_user"
                         string="Add claim lines using serial or invoice number" type="object"/>
                 </xpath>
                 <xpath expr="//field[@name='invoice_id']" position="attributes">
