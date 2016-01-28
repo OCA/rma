@@ -10,6 +10,12 @@
         <record id="group_rma_readonly" model="res.groups">
             <field name="name">Readonly</field>
             <field name="category_id" ref="module_category_rma"/>
+            <field name="menu_access" eval="[(6, 0, [
+                    ref('base.menu_base_partner'),
+                    ref('base.menu_aftersale'),
+                    ref('crm_claim.menu_crm_case_claims'),
+                    ref('crm_claim_rma.menu_crm_case_claims_claim_lines'),
+                    ])]"/>
         </record>
 
         <record id="base.group_sale_salesman" model="res.groups">
