@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="crm_claim_user_form_view">
+            <field name="name">CRM - Claims Form</field>
+            <field name="model">crm.claim</field>
+            <field name="priority" eval="999"/>
+            <field name="arch" type="xml">
+                <form string="Claim" create="false" edit="false" delete="false">
+                    <header>
+                        <field name="stage_id" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title oe_left">
+                            <h1><field name="code"/></h1>
+                            <div class="oe_edit_only">
+                                <label for="name"/>
+                            </div>
+                            <h1><small><field name="name"/></small></h1>
+                        </div>
+                        <group colspan="2" col="2" groups="base.group_portal">
+                            <separator colspan="2" string="Claim Reporter"/>
+                            <field name="section_id" invisible="1"/>
+                            <field name="claim_type" readonly="1" options="{'no_open': True}"/>
+                            <field name="partner_id" string="Customer" readonly="1" options="{'no_open': True}"/>
+                            <field name="partner_phone" readonly="1"/>
+                            <field name="email_from" readonly="1"/>
+                        </group>
+                        <separator colspan="2" string="Product Returns"/>
+                        <field name="claim_line_ids"  mode="tree" readonly="1">
+                            <tree string="Returned lines" create="false" editable="bottom">
+                                <field name="number"/>
+                                <field name="state"/>
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="prodlot_id"/>
+                                <field name="invoice_line_id"/>
+                                <field name="warning"/>
+                                <field name="warranty_type"/>
+                                <field name="claim_origin"/>
+                            </tree>
+                        </field>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_claim_user_tree_view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="arch" type="xml">
+                <tree string="Claim" create="false" delete="false">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                    <field name="partner_id"/>
+                    <field name="partner_phone"/>
+                    <field name="email_from"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_claim_user_search_view">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="arch" type="xml">
+                <search string="Claim">
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="crm_claim_user_action" model="ir.actions.act_window">
+            <field name="name">My Claims</field>
+            <field name="res_model">crm.claim</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="crm_claim_user_form_view"/>
+            <field name="search_view_id" ref="crm_claim_user_search_view"/>
+            <field name="help">We haven't sent you any claim.</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_crm_claim_user_tree">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_claim_user_tree_view"/>
+            <field name="act_window_id" ref="crm_claim_user_action"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_crm_claim_user_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_claim_user_form_view"/>
+            <field name="act_window_id" ref="crm_claim_user_action"/>
+        </record>
+
+        <menuitem id="portal_claim.portal_after_sales_claims"
+                  name="My Claims"
+                  parent="portal.portal_after_sales"
+                  sequence="10"
+                  action="crm_claim_user_action"
+                  groups="base.group_portal"
+                  />
+
+    </data>
+</openerp>

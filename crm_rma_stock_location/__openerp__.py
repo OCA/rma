@@ -47,6 +47,7 @@
         'views/crm_claim.xml',
         'views/stock_picking.xml',
         'views/stock_warehouse.xml',
+        'security/crm_claim_security.xml',
     ],
     'demo': [
         'demo/stock_location.xml',

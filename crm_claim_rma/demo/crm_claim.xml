@@ -5,5 +5,13 @@
             <field name="invoice_id" ref="crm_rma_invoice_001"/>
             <field name="delivery_address_id" ref="base.res_partner_9"/>
         </record>
+
+        <record id="crm_claim.crm_claim_1" model="crm.claim">
+            <field name="partner_id" ref="portal.partner_demo_portal"/>
+            <field name="partner_phone">(+886) (02) 4162 2023</field>
+            <field name="email_from">demo.portal@yourcompany.example.com</field>
+            <field name="pick">1</field>
+        </record>
+
     </data>
 </openerp>

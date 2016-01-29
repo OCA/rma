@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//header/button[@name='set_warranty']" position="after">
                     <button name="button_rma_vendor_render_view"
+                        groups="crm_claim_rma.group_rma_user"
                         string="Create Supplier RMA"
                         type="object"/>
                 </xpath>

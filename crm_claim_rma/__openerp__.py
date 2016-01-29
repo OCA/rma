@@ -53,6 +53,8 @@
         "views/claim_line.xml",
         'views/res_partner.xml',
         'views/stock_view.xml',
+        'views/crm_claim_portal.xml',
+        'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

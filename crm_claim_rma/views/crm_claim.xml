@@ -69,6 +69,7 @@
                     <button name="%(action_claim_picking_in)d"
                         string="New Products Return"
                         class="oe_inline"
+                        groups="crm_claim_rma.group_rma_user"
                         type="action" target="new"
                         context="{'warehouse_id': warehouse_id,
                             'partner_id': partner_id}"/>
@@ -76,13 +77,16 @@
                     <button name="%(action_claim_picking_out)d"
                         class="oe_inline"
                         string="New Delivery"
+                        groups="crm_claim_rma.group_rma_user"
                         type="action" target="new"
                         context="{'warehouse_id': warehouse_id,
                             'partner_id': partner_id}"/>
 
                     <button name="%(account.action_account_invoice_refund)d"
                         class="oe_inline"
-                        type='action' string='New Refund'
+                        type='action'
+                        string='New Refund'
+                        groups="crm_claim_rma.group_rma_user"
                         context="{
                             'invoice_ids': [invoice_id],
                             'claim_line_ids': claim_line_ids,

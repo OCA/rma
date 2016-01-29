@@ -96,7 +96,11 @@
             <field name="arch" type="xml">
                 <form string="Claim Line" version="7.0">
                     <header>
-                    <button name="set_warranty" string="Calculate warranty state" type="object" class="oe_highlight"/>
+                        <button name="set_warranty"
+                            groups="crm_claim_rma.group_rma_user"
+                            string="Calculate warranty state"
+                            type="object"
+                            class="oe_highlight"/>
                     <field name="state"
                         widget="statusbar"/>
                 </header>
