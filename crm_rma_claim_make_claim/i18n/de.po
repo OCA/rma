@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_claim_make_claim
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-19 12:26+0000\n"
+"PO-Revision-Date: 2016-01-18 10:19+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-rma-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: crm_rma_claim_make_claim
+#: help:crm.claim,claim_ids:0
+msgid ""
+" - For a Vendor Claim means the RMA-C that generates the current RMA-V.\n"
+" - For a Customer Claim means the RMA-V generated to fulfill the current RMA-C."
+msgstr "- Für eine Lieferanten-Reklamation erzeugt eine RMA-K die aktuelle RMA-L.\n- Für eine Kunden-Reklamation erzeugt eine RMA-L die aktuelle RMA-K."
+
+#. module: crm_rma_claim_make_claim
+#: model:ir.model,name:crm_rma_claim_make_claim.model_crm_claim
+msgid "Claim"
+msgstr "Reklamation"
+
+#. module: crm_rma_claim_make_claim
+#: view:claim.line:crm_rma_claim_make_claim.crm_claim_line_form_view
+msgid "Create Supplier RMA"
+msgstr "Lege Lieferanten-RMA an"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:58
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:107
+#, python-format
+msgid "Error"
+msgstr "Fehler"
+
+#. module: crm_rma_claim_make_claim
+#: model:ir.model,name:crm_rma_claim_make_claim.model_claim_line
+msgid "List of product to return"
+msgstr "Liste zurückzusendender Produkte"
+
+#. module: crm_rma_claim_make_claim
+#: view:crm.claim:crm_rma_claim_make_claim.crm_claim_form_view_inherited
+#: field:crm.claim,claim_ids:0
+msgid "Related Claims"
+msgstr "Zugehörige Reklamationen"
+
+#. module: crm_rma_claim_make_claim
+#: field:claim.line,claim_line_id:0
+msgid "Related claim line"
+msgstr "Bezogene Reklamationsposition"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:108
+#, python-format
+msgid "The Supplier Claim Was Not Created."
+msgstr "Die Lieferanten-Reklamation wurde nicht angelegt."
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:59
+#, python-format
+msgid "The claim client have claim supplier created."
+msgstr "Die Kunden-Reklamation legt Liefernanten-Reklamation an."
+
+#. module: crm_rma_claim_make_claim
+#: help:claim.line,claim_line_id:0
+msgid "To link to the claim line object"
+msgstr "Um Objekt der Reklamationsposition zu verknüpfen"

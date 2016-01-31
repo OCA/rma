@@ -1,0 +1,311 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_lot_mass_return
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-19 12:26+0000\n"
+"PO-Revision-Date: 2016-01-18 11:09+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-rma-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
+#, python-format
+msgid "(ID: %s) - %s - %s"
+msgstr "(ID: %s) - %s - %s"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:72
+#, python-format
+msgid "(ID: %s) - %s - %s - %s"
+msgstr "(ID: %s) - %s - %s - %s"
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:90
+#, python-format
+msgid "-->"
+msgstr "-->"
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "Add claim lines using serial or invoice number"
+msgstr "Füge Reklamationspositionen hinzu unter Verwendung von Seriennr. oder Rechnungsnummer"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Add items to the claim"
+msgstr "Produkte zur Reklamation hinzufügen"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "All the valid lines will be added to the claim"
+msgstr "Alle zulässigen Positionen werden zur Reklamation hinzugefügt"
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_crm_claim
+msgid "Claim"
+msgstr "Reklamation"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_uid:0
+#: field:returned.lines.from.serial.wizard,create_uid:0
+msgid "Created by"
+msgstr "Angelegt durch"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_date:0
+#: field:returned.lines.from.serial.wizard,create_date:0
+msgid "Created on"
+msgstr "Angelegt am"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Damaged Delivered Product"
+msgstr "Schadhaft geliefertes Produkt"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS"
+msgstr "Beispiel: A4JD6JHS"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS*4*The display is break"
+msgstr "Beispiel: A4JD6JHS*4*Die Anzeige ist defekt"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Exchange request"
+msgstr "Bitte um Austausch"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scan_data:0
+msgid "Field used to load and show the products"
+msgstr "Feld, zum Laden und Anzeigen der Produkte"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,option_ids:0
+msgid "Field used to load the ids of invoice lines in invoices writed"
+msgstr "Feld zum Laden der geschriebenen IDs von Rechnungspositionen"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Field used to load the ids of products loaded"
+msgstr "Feld zum Laden der IDs von geladenen Produkten"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Field used to show the current status of the lots loaded"
+msgstr "Feld zum anzeigen von aktuellem Status geladener Lose"
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,current_status:0
+msgid ""
+"Field used to show the current status of the product loaded(Name and "
+"quantity)"
+msgstr "Feld zum Anzeigen des aktuellen Status geladener Produkte (Bezeichnung und Menge)"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Imperfection"
+msgstr "Mangelhaft"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,invoice_line_id:0
+#: help:claim.line.wizard,invoice_line_id:0
+msgid "Invoice Line"
+msgstr "Rechnungsposition"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,option_ids:0
+msgid "Invoice Lines to Select"
+msgstr "Auszuwählende Rechnungspositionen"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_uid:0
+#: field:returned.lines.from.serial.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_date:0
+#: field:returned.lines.from.serial.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Legal retractation"
+msgstr "Gesetzl. Rücknahme"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Lost during transport"
+msgstr "Transportverlust"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,lot_id:0
+msgid "Lot"
+msgstr "Los"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Not specified"
+msgstr "Nicht angegeben"
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:93
+#, python-format
+msgid "Ok"
+msgstr "Ok"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Order Cancellation"
+msgstr "Auftragsstornierung"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Other"
+msgstr "Andere"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,partner_id:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Perfect Conditions"
+msgstr "Perfekte Bedingungen"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Client"
+msgstr "Physischer Schaden per Kunde"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Company"
+msgstr "Physischer Schaden per Unternehmen"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,product_id:0
+msgid "Product"
+msgstr "Produkt"
+
+#. module: crm_rma_lot_mass_return
+#: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
+msgid "Product to claim"
+msgstr "Zu beanstandendes Produkt"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,scan_data:0
+#: field:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Products"
+msgstr "Produkte"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Products selected"
+msgstr "Ausgewählte Produkte"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:210
+#, python-format
+msgid "Search Product"
+msgstr "Suche Produkt"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Serial/Lot Number*reason number*Description here"
+msgstr "Seriennr/Los*Grundnummer*Beschreibung hier"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Shipping error"
+msgstr "Versandfehler"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,current_status:0
+msgid "Status"
+msgstr "Status"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#, python-format
+msgid ""
+"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"\n"
+" %s"
+msgstr "Die folgenden Serien-/Losnummern werden nicht hinzugefügt, weil diese (untern aufgelistet) aktuell in Verwendung sind:\n\n%s"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid ""
+"The format for writing the reason for the claim and\n"
+"                            the description is:"
+msgstr "Das Format zum Notieren von Reklamation und\nBeschreibung ist:"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:399
+#, python-format
+msgid "The product or invoice %s was not found"
+msgstr "Das Produkt oder Rechnung %s wurden nicht gefunden"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "The reasons for the claim can be"
+msgstr "Gründe für eine Reklamation können sein"
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "True"
+msgstr "Wahr"
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
+msgid "Wizard to create product return lines"
+msgstr "Assistent zum Anlegen von Produktretourenpositionen"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Invoice Number to search the products in lines"
+msgstr "Rechnungsnummer zur Produktsuche in Positionen"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Serial/Lot Number to search the product"
+msgstr "Serien-/Losnummer zur Produktsuche"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You are about to add new lines to the claim, Do you want to continue?."
+msgstr "Sie sind dabei der Reklamation neue Positionen hinzuzufügen, wollen Sie fortsetzen?"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You should use this windows on this way."
+msgstr "Sie sollten dieses Fenster in dieser Weise nutzen."
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "or"
+msgstr "oder"
