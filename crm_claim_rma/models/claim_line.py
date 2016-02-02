@@ -39,7 +39,7 @@ from .product_no_supplier import ProductNoSupplier
 class ClaimLine(models.Model):
 
     _name = "claim.line"
-
+    _order = "date, priority desc"
     _inherit = 'mail.thread'
     _description = "List of product to return"
     _rec_name = "display_name"
@@ -82,10 +82,9 @@ class ClaimLine(models.Model):
                                  ('1_normal', 'Normal'),
                                  ('2_high', 'High'),
                                  ('3_very_high', 'Very High')],
-                                'Priority', default='0_not_define',
-                                compute='_set_priority',
+                                'Priority',
                                 store=True,
-                                readonly=False,
+                                compute='_compute_priority',
                                 help="Priority attention of claim line")
     claim_diagnosis = fields.\
         Selection([('damaged', 'Product Damaged'),
@@ -130,6 +129,7 @@ class ClaimLine(models.Model):
                                'Warranty', readonly=True,
                                help="If warranty has expired")
     display_name = fields.Char('Name', compute='_get_display_name')
+    date_deadline = fields.Date(related="claim_id.date_deadline")
 
     @api.model
     def get_warranty_return_partner(self):
@@ -213,22 +213,28 @@ class ClaimLine(models.Model):
         std_default.update(default)
         return super(ClaimLine, self).copy(default=std_default)
 
-    @api.depends('invoice_date', 'date')
-    def _set_priority(self):
+    @api.depends('invoice_line_id.invoice_id.date_invoice')
+    def _compute_priority(self):
         """
         To determine the priority of claim line
         """
+
+        priority_max = self.env.user.company_id.priority_maximum
+        priority_min = self.env.user.company_id.priority_minimum
+
         for line_id in self:
             if line_id.invoice_date:
                 days = fields.datetime.strptime(line_id.date, '%Y-%m-%d') - \
                     fields.datetime.strptime(line_id.invoice_date,
                                              DEFAULT_SERVER_DATE_FORMAT)
-                if days.days <= 1:
+                if days.days <= priority_max:
                     line_id.priority = '3_very_high'
-                elif days.days <= 7:
+                elif priority_max < days.days and days.days <= priority_min:
                     line_id.priority = '2_high'
-                else:
+                elif days.days > priority_min:
                     line_id.priority = '1_normal'
+            else:
+                line_id.priority = '0_not_define'
 
     def _get_subject(self, num):
         if num > 0 and num <= len(self.SUBJECT_LIST):

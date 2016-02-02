@@ -37,7 +37,6 @@
     'depends': [
         'purchase',
         'sale',
-        'sales_team',
         'stock',
         'crm_claim_rma_code',
         'crm_rma_location',
@@ -55,6 +54,8 @@
         'views/stock_view.xml',
         'views/crm_claim_portal.xml',
         'security/crm_claim_security.xml',
+        'views/res_config.xml',
+        'views/res_company.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
@@ -62,6 +63,7 @@
         'demo/account_invoice_line.xml',
         'demo/crm_claim.xml',
         'demo/claim_line.xml',
+        'demo/res_company.xml',
     ],
     'test': [
         'test/test_invoice_refund.yml'

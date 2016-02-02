@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="rma_config_settings_view_form" model="ir.ui.view">
+            <field name="name">rma settings</field>
+            <field name="model">rma.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="Configure Return Merchandise Authorization" class= "oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <separator string="Sales"/>
+                    <group>
+                        <label for="id" string="Technical Services"/>
+                        <div>
+                            <div>
+                                <b>Limit Days </b>
+                                <field name="limit_days" class="oe_inline"/>
+                                <label string="Days" />
+                            </div>
+                        </div>
+                    </group>
+                    <separator string="Purchase"/>
+                    <group>
+                        <label for="id" string="Claim Attention Priority"/>
+                        <div>
+                            <p>The attention priority of a claim is caculated using invoice date:
+                                <br/>
+                                <b>- Very High:</b> invoice date &lt;= priority maximum.
+                                <br/>
+                                <b>- High:</b> priority maximum &lt; invoice date &lt;= priority minimun.
+                                <br/>
+                                <b>- Normal:</b> priority minimun &lt; invoice date.
+                            </p>
+                            <div>
+                                <b>Priority Maximum </b>
+                                <field name="priority_maximum" class="oe_inline"/>
+                                <label string="Days" />
+                            </div>
+                            <div string="Priority Minimum">
+                                <b>Priority Minimum </b>
+                                <field name="priority_minimum" class="oe_inline"/>
+                                <label string="Days" />
+                            </div>
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_rma_configuration" model="ir.actions.act_window">
+            <field name="name">Configure Return Merchandise Authorization</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rma.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="rma_config_settings_view_form"/>
+            <field name="target">inline</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to configurate parameters of Return Merchandise Authorization.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_rma_config"
+            name="Return Merchandise Authorization"
+            parent="base.menu_config"
+            action="action_rma_configuration"
+            sequence="55"
+            />
+
+    </data>
+</openerp>

@@ -18,4 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from . import test_picking_creation
+from . import test_priority_and_limit_days

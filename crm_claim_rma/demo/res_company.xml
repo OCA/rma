@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="base.main_company" model="res.company">
+            <field name="limit_days">21</field>
+            <field name="priority_maximum">1</field>
+            <field name="priority_minimum">7</field>
+        </record>
+    </data>
+</openerp>
