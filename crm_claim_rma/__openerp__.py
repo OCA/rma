@@ -56,14 +56,17 @@
         'security/crm_claim_security.xml',
         'views/res_config.xml',
         'views/res_company.xml',
+        'views/res_users.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
+        'demo/res_company.xml',
         'demo/account_invoice.xml',
         'demo/account_invoice_line.xml',
+        'demo/res_partner.xml',
+        'demo/res_users.xml',
         'demo/crm_claim.xml',
         'demo/claim_line.xml',
-        'demo/res_company.xml',
     ],
     'test': [
         'test/test_invoice_refund.yml'

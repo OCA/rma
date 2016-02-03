@@ -24,6 +24,7 @@
 ##############################################################################
 from openerp import _, api, exceptions, fields, models
 
+from openerp.exceptions import Warning as UserError
 from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
 from openerp.exceptions import ValidationError
@@ -31,15 +32,51 @@ import datetime
 
 
 class CrmClaim(models.Model):
-    _inherit = 'crm.claim'
+    _inherit = "crm.claim"
+
+    @api.model
+    def _get_claim_warehouse(self, user, company):
+        """ Get the warehouse to use for this claim.
+        If the user has warehouse. It's returns.
+        If the user has not warehouse. The warehouse of
+        company is returns.
+        If the company has not warehouse. The first
+        warehouse found that have the same company_id
+        of user is returns.
+        Else return a Warning message
+        """
+        wh_obj = self.env["stock.warehouse"]
+        company_id = self.env.user.company_id.id
+        warehouse_user = user.rma_warehouse_id
+        warehouse_company = company.rma_warehouse_id
+        warehouse = wh_obj.search(
+            [("company_id", "=", company_id)], limit=1)
+        wh = warehouse_user and warehouse_user or \
+            (warehouse_company and warehouse_company or warehouse)
+        if not wh:
+            raise UserError(
+                _("There is no warehouse for the current user's company."))
+        return wh
+
+    @api.onchange("user_id", "company_id")
+    def _onchange_default_warehouse(self):
+        """ The warehouse can be defined depending of
+        user_id or company_id, if the user_id or
+        company_id is change, then, the warehouse_id
+        should be recalculated based on the new values.
+        """
+        for crm_claim in self:
+            wh = crm_claim._get_claim_warehouse(
+                crm_claim.user_id, crm_claim.company_id)
+            crm_claim.warehouse_id = wh.id
 
     def _get_default_warehouse(self):
-        company_id = self.env.user.company_id.id
-        wh_obj = self.env['stock.warehouse']
-        wh = wh_obj.search([('company_id', '=', company_id)], limit=1)
-        if not wh:
-            raise exceptions.Warning(
-                _('There is no warehouse for the current user\'s company.'))
+        """ Get a warehouse by default when a claim
+        is created. The warehouse_id field is required.
+        """
+        user = self.env.user
+        company = user.company_id
+        wh = self._get_claim_warehouse(user, company)
         return wh
 
     @api.multi
@@ -74,7 +111,8 @@ class CrmClaim(models.Model):
                                           "deliver repaired or replacement "
                                           "products.")
     sequence = fields.Integer(default=lambda *args: 1)
-    warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse',
+    warehouse_id = fields.Many2one("stock.warehouse",
+                                   string="Warehouse",
                                    required=True,
                                    default=_get_default_warehouse)
     rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
@@ -181,7 +219,7 @@ class CrmClaim(models.Model):
         claim_line = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
         if not self.warehouse_id:
-            self.warehouse_id = self._get_default_warehouse()
+            self.warehouse_id = self._onchange_default_warehouse()
         claim_type = self.claim_type
         claim_date = self.date
         warehouse = self.warehouse_id
