@@ -29,10 +29,12 @@
                                 </div>
                             </group>
                         </group>
-                        <separator colspan="6" string="Limit Days"/>
-                        <group colspan="6">
-                            <group col="2">
+                        <group>
+                            <group string="Limit Days">
                                 <field name="limit_days"/>
+                            </group>
+                            <group string="Logistic">
+                                <field name="rma_warehouse_id"/>
                             </group>
                         </group>
                     </page>

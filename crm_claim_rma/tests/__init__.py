@@ -20,4 +20,5 @@
 ##############################################################################
 
 from . import test_picking_creation
-from . import test_priority_and_limit_days
+from . import test_rma_configuration
+from . import test_warehouse_by_default

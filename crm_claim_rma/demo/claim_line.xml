@@ -24,5 +24,30 @@
             <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
             <field name="number">00012</field>
         </record>
+
+        <record id="claim_line_3" model="claim.line">
+            <field name="name">Claim Line 1 of Claim 7</field>
+            <field name="claim_id" ref="crm_claim.crm_claim_7"/>
+            <field name="claim_origin">damaged</field>
+            <field name="invoice_line_id" ref="crm_rma_invoice_2_line_1"/>
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="product_returned_quantity">1</field>
+            <field name="unit_sale_price">450</field>
+            <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
+            <field name="number">00014</field>
+        </record>
+
+        <record id="claim_line_4" model="claim.line">
+            <field name="name">Claim Line 1 of Claim 3</field>
+            <field name="claim_id" ref="crm_claim.crm_claim_3"/>
+            <field name="claim_origin">imperfection</field>
+            <field name="invoice_line_id" ref="crm_rma_invoice_3_line_1"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_returned_quantity">1</field>
+            <field name="unit_sale_price">1799</field>
+            <field name="location_dest_id" search="[('name','=','Stock'),('company_id', '=', 1)]" />
+            <field name="number">00015</field>
+        </record>
+
     </data>
 </openerp>

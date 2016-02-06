@@ -5,6 +5,7 @@
             <field name="limit_days">21</field>
             <field name="priority_maximum">1</field>
             <field name="priority_minimum">7</field>
+            <field name="rma_warehouse_id" ref="stock.warehouse0"/>
         </record>
     </data>
 </openerp>

@@ -213,10 +213,9 @@ class ClaimLine(models.Model):
         std_default.update(default)
         return super(ClaimLine, self).copy(default=std_default)
 
-    @api.depends('invoice_line_id.invoice_id.date_invoice')
+    @api.depends("claim_id.date", "invoice_line_id.invoice_id.date_invoice")
     def _compute_priority(self):
-        """
-        To determine the priority of claim line
+        """ To determine the priority of claim line
         """
 
         priority_max = self.env.user.company_id.priority_maximum
@@ -224,17 +223,17 @@ class ClaimLine(models.Model):
 
         for line_id in self:
             if line_id.invoice_date:
-                days = fields.datetime.strptime(line_id.date, '%Y-%m-%d') - \
+                days = fields.datetime.strptime(line_id.date, "%Y-%m-%d") - \
                     fields.datetime.strptime(line_id.invoice_date,
                                              DEFAULT_SERVER_DATE_FORMAT)
                 if days.days <= priority_max:
-                    line_id.priority = '3_very_high'
+                    line_id.priority = "3_very_high"
                 elif priority_max < days.days and days.days <= priority_min:
-                    line_id.priority = '2_high'
+                    line_id.priority = "2_high"
                 elif days.days > priority_min:
-                    line_id.priority = '1_normal'
+                    line_id.priority = "1_normal"
             else:
-                line_id.priority = '0_not_define'
+                line_id.priority = "0_not_define"
 
     def _get_subject(self, num):
         if num > 0 and num <= len(self.SUBJECT_LIST):
