@@ -188,6 +188,9 @@
         </record>
 
         <!-- Make transfer of product -->
+        <function model="stock.picking" name="action_assign">
+            <value eval="obj(ref('so_wizard_rma_1')).picking_ids[0].id" model="sale.order"/>
+        </function>
 
         <function model="stock.transfer_details"
             name="do_detailed_transfer" eval="[ref('transfer_sale_wizard_rma')]"/>
