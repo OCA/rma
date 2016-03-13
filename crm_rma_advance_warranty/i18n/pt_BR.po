@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_advance_warranty
+# 
+# Translators:
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-19 12:26+0000\n"
+"PO-Revision-Date: 2016-03-08 03:12+0000\n"
+"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: crm_rma_advance_warranty
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:40
+#, python-format
+msgid "Cannot find any date for invoice. Must be a validated invoice."
+msgstr "Não foi possível encontrar uma data para a fatura. Deve ser uma fatura validada."
+
+#. module: crm_rma_advance_warranty
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:39
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:50
+#, python-format
+msgid "Error"
+msgstr "Erro"
+
+#. module: crm_rma_advance_warranty
+#: model:ir.model,name:crm_rma_advance_warranty.model_claim_line
+msgid "List of product to return"
+msgstr "Lista de produtos para retornar"
+
+#. module: crm_rma_advance_warranty
+#: code:addons/crm_rma_advance_warranty/models/claim_line.py:51
+#, python-format
+msgid "The product has no supplier configured for %s."
+msgstr ""
