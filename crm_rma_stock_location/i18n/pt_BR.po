@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 01:39+0000\n"
-"PO-Revision-Date: 2015-12-02 21:49+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-01-19 12:26+0000\n"
+"PO-Revision-Date: 2016-03-08 03:12+0000\n"
+"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +50,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_date:0
