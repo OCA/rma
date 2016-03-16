@@ -93,7 +93,7 @@ class ClaimLine(models.Model):
                    ('hidden', 'Product with hidden physical damage'),
                    ],
                   help="To describe the line product diagnosis")
-    claim_origin = fields.Selection(SUBJECT_LIST, 'Claim Subject',
+    claim_origin = fields.Selection(SUBJECT_LIST, 'Subject',
                                     required=True, help="To describe the "
                                     "line product problem")
     product_id = fields.Many2one('product.product', string='Product',
