@@ -299,7 +299,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,claim_origin:0
 #: model:ir.model.fields,field_description:crm_claim_rma.field_claim_line_claim_origin
-msgid "Claim Subject"
+msgid "Subject"
 msgstr "Assunto da Solicitação"
 
 #. module: crm_claim_rma
