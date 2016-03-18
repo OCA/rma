@@ -22,7 +22,7 @@
 from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
 from openerp.tools.float_utils import float_round
-from openerp.tools.safe_eval import safe_eval as eval
+from openerp.tools.safe_eval import safe_eval
 
 
 class ProductProduct(models.Model):
@@ -58,8 +58,8 @@ class ProductProduct(models.Model):
                 localdict = {'virtual': element.rma_virtual_available,
                              'qty': element.rma_qty_available,
                              'value': value}
-                if eval('qty %s value or virtual %s value' %
-                        (operator, operator), localdict):
+                if safe_eval('qty %s value or virtual %s value' %
+                             (operator, operator), localdict):
                     ids.append(element.id)
             res.append(('id', 'in', ids))
         return res

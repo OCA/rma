@@ -21,6 +21,7 @@
 #
 ##############################################################################
 from openerp.tests import common
+from openerp.tools.safe_eval import safe_eval
 
 
 class TestPickingCreation(common.TransactionCase):
@@ -185,7 +186,7 @@ class TestPickingCreation(common.TransactionCase):
 
         self.assertTrue(res)
         self.assertEquals(res['res_model'], 'account.invoice')
-        self.assertEquals(eval(res['context'])['type'], 'out_refund')
+        self.assertEquals(safe_eval(res['context'])['type'], 'out_refund')
 
     def test_04_display_name(self):
         """

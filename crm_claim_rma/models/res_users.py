@@ -35,12 +35,11 @@ class ResUsers(models.Model):
         """
         group_rma_manager = self.env.ref(
             "crm_claim_rma.group_rma_manager")
-        for crm_claim in self:
-            if self.env.user not in group_rma_manager.users:
-                raise ValidationError(
-                    _("The rma_warehouse_id can only be edited"
-                      " by the group RMA {group}".format(
-                          group=group_rma_manager.name)))
+        if self.env.user not in group_rma_manager.users:
+            raise ValidationError(
+                _("The rma_warehouse_id can only be edited"
+                    " by the group RMA {group}".format(
+                        group=group_rma_manager.name)))
 
     rma_warehouse_id = fields.Many2one(
         "stock.warehouse",

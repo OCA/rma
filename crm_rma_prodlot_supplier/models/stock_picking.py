@@ -27,13 +27,9 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
-    def action_invoice_create(self, journal_id,
-                              group=False, type='out_invoice'):
-        invoices = super(StockPicking, self).\
-            action_invoice_create(journal_id=journal_id,
-                                  group=group,
-                                  type=type)
-        if type == 'in_invoice':
+    def action_invoice_create(self, **kwargs):
+        invoices = super(StockPicking, self).action_invoice_create(**kwargs)
+        if kwargs.get('type') == 'in_invoice':
             prodlot_obj = self.env['stock.production.lot']
             for picking in self:
                 for move in picking.move_lines:
