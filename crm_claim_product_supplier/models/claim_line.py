@@ -39,10 +39,23 @@ class ClaimLine(models.Model):
                              "purchase of goods sold to "
                              "customer")
 
-    @api.depends('prodlot_id')
+    @api.depends('prodlot_id', 'product_id')
     def _compute_supplier_and_supplier_invoice(self):
         for claim_line in self:
             if claim_line.prodlot_id:
                 claim_line.supplier_id = claim_line.prodlot_id.supplier_id.id
                 claim_line.supplier_invoice_id = claim_line.prodlot_id.\
                     supplier_invoice_line_id.invoice_id.id
+            else:
+                invoice_obj = self.env["account.invoice.line"]
+                invoice_line = invoice_obj.search(
+                    [("product_id", "=", claim_line.product_id.id),
+                     ("invoice_id.type", "=", "in_invoice")])
+                if invoice_line:
+                    invoice_line_ids = invoice_line.mapped("id")
+                    last_invoice_line_id = max(invoice_line_ids)
+                    last_invoice_line = \
+                        invoice_obj.browse(last_invoice_line_id)
+                    invoice = last_invoice_line.invoice_id
+                    claim_line.supplier_id = invoice.partner_id.id
+                    claim_line.supplier_invoice_id = invoice.id
