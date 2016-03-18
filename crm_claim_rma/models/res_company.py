@@ -28,6 +28,13 @@ from openerp.exceptions import ValidationError
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    @api.constrains("limit_days")
+    def _check_limit_days_config(self):
+        for company in self:
+            if company.limit_days <= 0:
+                raise ValidationError(
+                    _("Limit days must be greater than zero"))
+
     @api.constrains("priority_maximum", "priority_maximum")
     def _check_priority_config(self):
         for company in self:
@@ -41,25 +48,21 @@ class ResCompany(models.Model):
                 raise ValidationError(
                     _("Priority maximum must be less than priority_minimum"))
 
-    @api.constrains("limit_days")
-    def _check_limit_days_config(self):
-        for company in self:
-            if company.limit_days <= 0:
-                raise ValidationError(
-                    _("Limit days must be greater than zero"))
-
     limit_days = fields.Integer(
         help="Limit days for resolving a claim since its creation date.")
+
     priority_maximum = fields.Integer(
         help="Priority of a claim should be:\n"
         "- Very High: Purchase date <= priority maximum range.\n"
         "- High: priority maximum range < invoice date <= "
         "priority minimun range")
+
     priority_minimum = fields.Integer(
         help="Priority of a claim should be:\n"
         "- High: priority maximum range < invoice date "
         "<= priority minimun range.\n"
         "- Normal: priority minimun range < invoice date")
+
     rma_warehouse_id = fields.Many2one(
         "stock.warehouse",
         string="RMA Warehouse",

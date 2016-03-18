@@ -169,17 +169,17 @@ class TestCreateSimpleClaim(TransactionCase):
         invoice = claim_line_1.invoice_line_id.invoice_id
 
         today = datetime.datetime.now()
-        DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+        datetime_format = "%Y-%m-%d %H:%M:%S"
 
         # Test 1
-        date_invoice = datetime.datetime.strftime(today, DATETIME_FORMAT)
+        date_invoice = datetime.datetime.strftime(today, datetime_format)
         invoice.write({"date_invoice": date_invoice})
         self.assertEqual(claim_line_1.priority, "3_very_high")
 
         # Test 2
         date_invoice = today - datetime.timedelta(days=4)
         date_invoice = datetime.datetime.strftime(
-            date_invoice, DATETIME_FORMAT)
+            date_invoice, datetime_format)
         invoice.write({"date_invoice": date_invoice})
         crm_claim.write({"date": date_invoice})
         claim_line_1.refresh()
@@ -189,7 +189,7 @@ class TestCreateSimpleClaim(TransactionCase):
         # Test 3
         date_invoice = today - datetime.timedelta(days=9)
         date_invoice = datetime.datetime.strftime(
-            date_invoice, DATETIME_FORMAT)
+            date_invoice, datetime_format)
         invoice.write({"date_invoice": date_invoice})
         claim_line_1.refresh()
         claim_line_1._compute_priority()

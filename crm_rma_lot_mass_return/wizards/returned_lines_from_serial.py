@@ -283,7 +283,8 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                     lot_set_ids.append(asd)
                                     lot_ids = lot_ids - asd.lot_id
                             num_to_create = int(inv_line.quantity) - len(clw)
-                            for num in xrange(0, num_to_create):
+                            num = 0
+                            while num < num_to_create:
                                 clw = \
                                     claim_line_wizard.\
                                     create({
@@ -298,6 +299,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                 for asd in clw:
                                     if asd not in lot_set_ids:
                                         lot_set_ids.append(asd)
+                                num += 1
                             enter = True
                         if not enter:
                             for asd in clw:
@@ -524,9 +526,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 else:
                     num = 0
 
-                current_claim_type, customer_claim_type, \
-                    supplier_claim_type = \
-                    self._get_claim_type()
                 self.create_claim_line(self.env.context.get('active_id'),
                                        self.env[
                                            'claim.line']._get_subject(num),
