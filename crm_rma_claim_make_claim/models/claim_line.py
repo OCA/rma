@@ -99,6 +99,21 @@ class ClaimLine(models.Model):
                           for claim in claim_supplier]
                 claims = dict(claims)
                 claim_supplier = min(claims, key=claims.get)
+
+            # If the product has prodlot, the invoice_line_id
+            # of supplier claim line is get from prodlot,
+            # else the invoice_line_id is
+            # get from supplier_invoice_id calculated in
+            # claim.line
+            invoice_line_for_claim_line = claim_line_parent.prodlot_id.\
+                supplier_invoice_line_id
+            if not invoice_line_for_claim_line:
+                for line in claim_line_parent.\
+                        supplier_invoice_id.invoice_line:
+                    if line.product_id == claim_line_parent.product_id:
+                        invoice_line_for_claim_line = line
+                        break
+
             claim_line_supplier_new = \
                 claim_line_obj.create({
                     'name': claim_line_parent.name,
@@ -107,8 +122,7 @@ class ClaimLine(models.Model):
                     'claim_line_id': claim_line_parent.id,
                     'number': '/',
                     'product_id': claim_line_parent.product_id.id,
-                    'invoice_line_id': claim_line_parent.prodlot_id.
-                    supplier_invoice_line_id.id,
+                    'invoice_line_id': invoice_line_for_claim_line.id,
                     'claim_origin': claim_line_parent.claim_origin,
                     'prodlot_id': claim_line_parent.prodlot_id.id,
                     'priority': claim_line_parent.priority,
