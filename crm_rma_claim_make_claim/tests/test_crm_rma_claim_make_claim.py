@@ -3,6 +3,7 @@
 #
 #    Copyright 2015 Vauxoo
 #    Author: Osval Reyes
+#            Yanina Aular
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,6 +23,7 @@
 import datetime
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
+from openerp.exceptions import Warning as UserError
 
 
 class TestCrmRmaClaimMakeClaim(TransactionCase):
@@ -54,6 +56,7 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
             datetime.timedelta(days=self.env.user.company_id.limit_days)
         deadline = datetime.datetime.strftime(
             deadline_datetime, "%Y-%m-%d")
+        self.sale_order_id.signal_workflow("manual_invoice")
         return self.env['crm.claim'].\
             create({
                 'name': 'Test Claim for %s' % (self.customer_id.name),
@@ -69,17 +72,26 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
                     'supplier_id': self.supplier_id_1.id,
                     'claim_origin': u'damaged',
                     'name': self.supplier_id_1.name,
-                    'product_id': self.sale_order_line_ids[1].id
+                    'product_id': self.sale_order_line_ids[1].product_id.id,
+                    'invoice_line_id': self.sale_order_line_ids[1].
+                    invoice_lines[0].id,
+                    'supplier_invoice_id':
+                    self.env.ref("purchase.purchase_order_6").
+                    invoice_ids[0].id,
                 }), (0, 0, {
                     'supplier_id': self.supplier_id_2.id,
                     'claim_origin': u'damaged',
                     'name': self.supplier_id_2.name,
-                    'product_id': self.sale_order_line_ids[2].id
+                    'product_id': self.sale_order_line_ids[2].product_id.id,
+                    'invoice_line_id': self.sale_order_line_ids[2].
+                    invoice_lines[0].id,
                 }), (0, 0, {
                     'supplier_id': self.supplier_id_3.id,
                     'claim_origin': u'damaged',
                     'name': self.supplier_id_3.name,
-                    'product_id': self.sale_order_line_ids[3].id
+                    'product_id': self.sale_order_line_ids[3].product_id.id,
+                    'invoice_line_id': self.sale_order_line_ids[3].
+                    invoice_lines[0].id,
                 }), ]
             })
 
@@ -88,3 +100,12 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
         res = claim_id.claim_line_ids.button_rma_vendor_render_view()
         lines_added = safe_eval(res['domain'])[0][2]
         self.assertEquals(len(claim_id.claim_line_ids), len(lines_added))
+
+    def test_02_claim_make_claim(self):
+        claim_id = self.create_customer_claim()
+        res = claim_id.claim_line_ids.button_create_line_rma_vendor()
+        self.assertEquals(len(res), 3)
+
+        error = "The claim client have claim supplier created."
+        with self.assertRaisesRegexp(UserError, error):
+            claim_id.claim_line_ids.button_create_line_rma_vendor()
