@@ -126,6 +126,8 @@ class ClaimLine(models.Model):
                     'claim_origin': claim_line_parent.claim_origin,
                     'prodlot_id': claim_line_parent.prodlot_id.id,
                     'priority': claim_line_parent.priority,
+                    'product_returned_quantity':
+                    claim_line_parent.product_returned_quantity,
                 })
             good_lines += [claim_line_supplier_new.id]
 
