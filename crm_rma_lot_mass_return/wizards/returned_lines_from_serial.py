@@ -264,9 +264,8 @@ class ReturnedLinesFromSerial(models.TransientModel):
             element_searched = False
             if invoice_ids:
 
-                if supplier_claim_type == current_claim_type:
-                    invoice_field = 'supplier_invoice_line_id'
-                elif customer_claim_type == current_claim_type:
+                invoice_field = 'supplier_invoice_line_id'
+                if customer_claim_type == current_claim_type:
                     invoice_field = 'invoice_line_id'
 
                 for inv in invoice_ids:
