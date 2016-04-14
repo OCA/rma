@@ -32,6 +32,7 @@ class AccountInvoice(models.Model):
 
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
+    @api.model
     def _refund_cleanup_lines(self, lines):
         """
         Override when from claim to update the quantity and link to the
