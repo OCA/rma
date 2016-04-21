@@ -8,9 +8,11 @@
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='company_registry']" position="after">
+                <xpath expr="//field[@name='company_registry']/ancestor::group" position="after">
                     <separator string="Crm product return address"/>
-                    <field name="crm_return_address_id"/>
+                    <group>
+                        <field name="crm_return_address_id"/>
+                    </group>
                 </xpath>
             </field>
         </record>

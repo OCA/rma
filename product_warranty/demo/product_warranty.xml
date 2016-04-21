@@ -37,7 +37,7 @@ Select the product you want to return and the reason for the return. You will ne
             <field name="warranty_return_partner">supplier</field>
             <field name="warranty_duration">12</field>
             <field name="product_tmpl_id" ref="product.product_product_3_product_template"/>
-            <field name="name" ref="base.res_partner_5"/>
+            <field name="name" ref="base.res_partner_3"/>
             <field name="delay">5</field>
             <field name="min_qty">1</field>
         </record>
