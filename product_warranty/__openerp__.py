@@ -22,7 +22,7 @@
 
 {
     'name': 'Product warranty',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Generic Modules/Product',
     'author': "Akretion,Odoo Community Association (OCA),Vauxoo",
     'website': 'http://akretion.com',
@@ -38,7 +38,7 @@
         'demo/res_company.xml',
     ],
     'test': [],
-    'installable': False,
+    'installable': True,
     'active': False,
     'images': ['images/product_warranty.png'],
 }
