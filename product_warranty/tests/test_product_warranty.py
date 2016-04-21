@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Yanina Aular
-#    Copyright 2015 Vauxoo
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2016 Cyril Gaudin (Camptocamp)
+# © 2015 Vauxoo, Yanina Aular
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.tests.common import TransactionCase
 
@@ -38,16 +22,19 @@ class TestProductWarranty(TransactionCase):
         product_tmpl_id = self.env.ref('product.product_product_3')
 
         partner_id = self.env.ref('base.res_partner_4')
+        other_partner = self.env.ref('base.res_partner_12')
 
-        supplierinfo_data = dict(name=partner_id.id,
-                                 product_name='Test SupplierInfo for'
-                                 ' display Default Instruction',
-                                 min_qty=4,
-                                 delay=5,
-                                 warranty_return_partner='supplier',
-                                 product_tmpl_id=product_tmpl_id.id,)
-        self.supplierinfo_brw = \
-            self.supplierinfo.create(supplierinfo_data)
+        supplierinfo_data = dict(
+            name=partner_id.id,
+            product_name='Test SupplierInfo for display Default Instruction',
+            min_qty=4,
+            delay=5,
+            warranty_return_partner='supplier',
+            product_tmpl_id=product_tmpl_id.id,
+            warranty_return_other_address=other_partner.id,
+        )
+
+        self.supplierinfo_brw = self.supplierinfo.create(supplierinfo_data)
 
     def test_default_instruction(self):
         """
@@ -78,3 +65,10 @@ class TestProductWarranty(TransactionCase):
         self.assertEquals(self.supplierinfo_brw.warranty_return_address.id,
                           self.supplierinfo_brw.company_id.
                           crm_return_address_id.id)
+
+        self.supplierinfo_brw.write({'warranty_return_partner': 'other'})
+
+        self.assertEquals(
+            self.supplierinfo_brw.warranty_return_address.id,
+            self.supplierinfo_brw.warranty_return_other_address.id
+        )
