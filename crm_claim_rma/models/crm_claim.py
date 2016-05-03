@@ -40,6 +40,20 @@ class CrmClaim(models.Model):
                 _('There is no warehouse for the current user\'s company.'))
         return wh
 
+    def _get_picking_ids(self):
+        """ Search all stock_picking associated with this claim.
+
+        Either directly with claim_id in stock_picking or through a
+        procurement_group.
+        """
+        picking_model = self.env['stock.picking']
+        for claim in self:
+            claim.picking_ids = picking_model.search([
+                '|',
+                ('claim_id', '=', claim.id),
+                ('group_id.claim_id', '=', claim.id)
+            ])
+
     @api.multi
     def name_get(self):
         res = []
@@ -61,7 +75,9 @@ class CrmClaim(models.Model):
     real_cost = fields.Float()
     invoice_ids = fields.One2many('account.invoice', 'claim_id', 'Refunds',
                                   copy=False)
-    picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA',
+    picking_ids = fields.One2many('stock.picking',
+                                  compute=_get_picking_ids,
+                                  string='RMA',
                                   copy=False)
     invoice_id = fields.Many2one('account.invoice', string='Invoice',
                                  help='Related original Cusotmer invoice')

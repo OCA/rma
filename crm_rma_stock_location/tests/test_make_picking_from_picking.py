@@ -71,7 +71,7 @@ class TestPickingFromPicking(TransactionCase):
             'active_id': self.claim_id.id,
             'warehouse_id': self.claim_id.warehouse_id.id,
             'partner_id': self.claim_id.partner_id.id,
-            'picking_type': self.claim_id.warehouse_id.rma_in_type_id.id,
+            'picking_type': 'in',
         }
         wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
 
