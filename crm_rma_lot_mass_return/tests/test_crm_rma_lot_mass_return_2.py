@@ -32,6 +32,12 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
 
     def setUp(self):
         super(TestCrmRmaLotMassReturn2, self).setUp()
+        demo_transfer = self.browse_ref(
+            "crm_rma_lot_mass_return.transfer_sale_wizard_rma"
+        )
+        demo_transfer.picking_id.force_assign()
+        demo_transfer.do_detailed_transfer()
+
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
         self.sale_order = self.env.ref('crm_rma_lot_mass_return.'
                                        'so_wizard_rma_1')
