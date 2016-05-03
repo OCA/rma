@@ -55,13 +55,8 @@ class ClaimMakePicking(models.TransientModel):
     def _default_claim_line_source_location_id(self):
         picking_type = self.env.context.get('picking_type')
         partner_id = self.env.context.get('partner_id')
-        warehouse_id = self.env.context.get('warehouse_id')
 
-        if picking_type == 'out' and warehouse_id:
-            return self.env['stock.warehouse'].browse(
-                warehouse_id).lot_stock_id
-
-        if partner_id:
+        if picking_type == 'in' and partner_id:
             partner = self.env['res.partner'].browse(partner_id)
             return partner.property_stock_customer
 
@@ -77,11 +72,6 @@ class ClaimMakePicking(models.TransientModel):
         """
         picking_type = self.env.context.get('picking_type')
         partner_id = self.env.context.get('partner_id')
-
-        if isinstance(picking_type, int):
-            picking_obj = self.env['stock.picking.type']
-            return picking_obj.browse(picking_type)\
-                .default_location_dest_id
 
         if picking_type == 'out' and partner_id:
             return self.env['res.partner'].browse(
@@ -100,13 +90,6 @@ class ClaimMakePicking(models.TransientModel):
         # TODO use custom states to show buttons of this wizard or not instead
         # of raise an error
         picking_type = self.env.context.get('picking_type')
-        if isinstance(picking_type, int):
-            picking_obj = self.env['stock.picking.type']
-            if picking_obj.browse(picking_type).code == 'incoming':
-                picking_type = 'in'
-            else:
-                picking_type = 'out'
-
         move_field = 'move_in_id' if picking_type == 'in' else 'move_out_id'
         domain = [('claim_id', '=', self.env.context['active_id'])]
         lines = self.env['claim.line'].\
@@ -121,8 +104,14 @@ class ClaimMakePicking(models.TransientModel):
                     _('A picking has already been created for this claim.'))
         return lines
 
+    delivery_warehouse_id = fields.Many2one(
+        'stock.warehouse', string='Source Warehouse',
+        default=lambda self: self.env.context.get('warehouse_id'),
+        help="Warehouse where to take the replacement products for customers.",
+    )
+
     claim_line_source_location_id = fields.Many2one(
-        'stock.location', string='Source Location', required=True,
+        'stock.location', string='Source Location',
         default=_default_claim_line_source_location_id,
         help="Location where the returned products are from.")
 
@@ -180,34 +169,17 @@ class ClaimMakePicking(models.TransientModel):
             'note': self._get_picking_note(),
         }
 
-    @api.multi
-    def action_create_picking(self):
-
-        context = self._context
-        picking_type = self.env.context.get('picking_type')
-        if isinstance(picking_type, int):
-            picking_obj = self.env['stock.picking.type']
-            picking_type_rec = picking_obj.browse(picking_type)
-            if picking_type_rec.code == 'incoming':
-                picking_type = 'in'
-            elif picking_type_rec.code == 'outgoing':
-                picking_type = 'out'
-            else:
-                picking_type = 'int'
-
-        warehouse_obj = self.env['stock.warehouse']
-        warehouse_rec = warehouse_obj.browse(context.get('warehouse_id'))
-        if picking_type == 'out':
-            picking_type = warehouse_rec.out_type_id
-            write_field = 'move_out_id'
-        elif picking_type == 'in':
+    def _create_picking(self, claim, picking_type):
+        warehouse_rec = self.env['stock.warehouse'].browse(
+            self.env.context.get('warehouse_id')
+        )
+        if picking_type == 'in':
             picking_type = warehouse_rec.in_type_id
             write_field = 'move_in_id'
         else:
             picking_type = warehouse_rec.int_type_id
             write_field = 'move_out_id'
 
-        claim = self.env['crm.claim'].browse(self.env.context['active_id'])
         partner_id = claim.delivery_address_id.id
         claim_lines = self.claim_line_ids
 
@@ -265,6 +237,44 @@ class ClaimMakePicking(models.TransientModel):
             'res_id': picking.id,
             'type': 'ir.actions.act_window',
         }
+
+    def _create_procurement(self, claim):
+        """ Create a procurement order for each line in this claim and put
+        all procurements in a procurement group linked to this claim.
+
+        :type claim: crm_claim
+        """
+        group = self.env['procurement.group'].create({
+            'name': claim.code,
+            'claim_id': claim.id,
+            'move_type': 'direct',
+        })
+
+        for line in self.claim_line_ids:
+            procurement = self.env['procurement.order'].create({
+                'name': line.product_id.name_template,
+                'group_id': group.id,
+                'origin': claim.code,
+                'warehouse_id': self.delivery_warehouse_id.id,
+                'date_planned': time.strftime(DT_FORMAT),
+                'product_id': line.product_id.id,
+                'product_qty': line.product_returned_quantity,
+                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
+                'location_id': self.claim_line_dest_location_id.id,
+                'company_id': claim.company_id.id,
+            })
+            procurement.run()
+
+    @api.multi
+    def action_create_picking(self):
+        claim = self.env['crm.claim'].browse(self.env.context['active_id'])
+        picking_type = self.env.context.get('picking_type')
+
+        if picking_type == 'out':
+            return self._create_procurement(claim)
+
+        else:
+            return self._create_picking(claim, picking_type)
 
     @api.multi
     def action_cancel(self):

@@ -40,11 +40,6 @@ class ClaimMakePicking(models.TransientModel):
         claim_id = self.env.context.get('active_id')
         claim_record = self.env['crm.claim'].browse(claim_id)
 
-        if isinstance(picking_type, int):
-            picking_obj = self.env['stock.picking.type']
-            return picking_obj.browse(picking_type)\
-                .default_location_dest_id
-
         if picking_type == 'out':
             return claim_record.warehouse_id.rma_out_type_id.\
                 default_location_dest_id
