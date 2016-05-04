@@ -551,7 +551,8 @@ class crm_claim(orm.Model):
         warehouse_obj = self.pool['stock.warehouse']
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
-            [('invoice_id', '=', invoice_id)],
+            [('invoice_id', '=', invoice_id),
+             ('product_id.type', 'in', ('consu', 'product'))],
             context=context)
         claim_lines = []
         value = {}
