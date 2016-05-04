@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/OCA/rma.svg?branch=8.0)](https://travis-ci.org/OCA/rma)
 [![Coverage Status](https://coveralls.io/repos/OCA/rma/badge.png?branch=8.0)](https://coveralls.io/r/OCA/rma?branch=8.0)
 
-RMA (Return Merchandise Authorization) 
-=======================================
+RMA (Return Merchandise Authorization)
+======================================
 
-Management of Return Merchandise Authorization (RMA) in Odoo : product return, warranty control, product exchange, product refund,...
+Management of Return Merchandise Authorization (RMA) in Odoo takes care of product returns for customer and supplier, warranty control, product exchange, product refund, product repair. These modules provide tools that complement RMA activities and workflow.
 
 The workflow allowed by this project looks like:
 
@@ -21,13 +21,14 @@ The workflow allowed by this project looks like:
 
 Main modules:
 
-***product_warranty***
+**product_warranty**
+
 Extend the warranty details to product/supplier form
 * supplier warranty
 * return product to company, supplier, brand
 * return instructions
 
-***crm_claim_rma***
+**crm_claim_rma**
 
 Management of Return Merchandise Authorization (RMA) in OpenERP.
 Upgrade the standard crm_claim module to add :
