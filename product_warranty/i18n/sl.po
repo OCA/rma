@@ -3,13 +3,13 @@
 # * product_warranty
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 22:57+0000\n"
-"PO-Revision-Date: 2015-12-14 06:45+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-04 03:49+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,11 @@ msgid ""
 "Default address where the customers has to send back the returned product. "
 "If empty, the address is the company address"
 msgstr "Privzeti naslov kamor kupci pošiljajo vrnjeni izdelek. Če prazno, je naslov enak naslovu družbe."
+
+#. module: product_warranty
+#: field:return.instruction,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
 
 #. module: product_warranty
 #: field:return.instruction,id:0
@@ -92,6 +97,11 @@ msgid "Is this supplier still active, only for information"
 msgstr "Je za dobavitelj še aktiven; le v vednost"
 
 #. module: product_warranty
+#: field:return.instruction,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: product_warranty
 #: field:return.instruction,write_uid:0
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
@@ -113,6 +123,7 @@ msgid "Products Return Instructions"
 msgstr "Navodila vračanja izdelkov"
 
 #. module: product_warranty
+#: field:product.supplierinfo,warranty_return_address:0
 #: field:product.supplierinfo,warranty_return_other_address:0
 #: field:res.company,crm_return_address_id:0
 msgid "Return address"
@@ -153,6 +164,12 @@ msgid ""
 "Where the customer has to send back the product(s) if warranty return is set"
 " to 'other'."
 msgstr "Kam naj kupec vrača izdelek(e), če je garancijsko vračilo nastavljeno kot 'ostalo'."
+
+#. module: product_warranty
+#: help:product.supplierinfo,warranty_return_address:0
+msgid ""
+"Where the goods should be returned  (computed field based on other infos.)"
+msgstr "Kamor naj bi bilo blago vrnjeno (polje izračunano na osnovi drugih podatkov)."
 
 #. module: product_warranty
 #: help:product.supplierinfo,warranty_return_partner:0

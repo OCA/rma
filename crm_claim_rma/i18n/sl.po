@@ -3,13 +3,13 @@
 # * crm_claim_rma
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 22:57+0000\n"
-"PO-Revision-Date: 2015-12-13 06:19+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-04 03:47+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgid ""
 msgstr "Vračila proizvoda ni mogoče ustvariti za različne ciljne lokacije. Izberite postavke z isto ciljno lokacijo."
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/account_invoice.py:75
+#: code:addons/crm_claim_rma/models/account_invoice.py:76
 #, python-format
 msgid "A refund has already been created for this claim !"
 msgstr "Za ta zahtevek je že bil ustvarjen dobropis!"
@@ -72,7 +72,7 @@ msgid "Cancel"
 msgstr "Preklic"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:308
+#: code:addons/crm_claim_rma/models/claim_line.py:314
 #, python-format
 msgid "Cannot find any date for invoice. Must be a validated invoice."
 msgstr "Za račun ni najden noben datum. Biti mora potrjen račun."
@@ -191,7 +191,7 @@ msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: crm_claim_rma
-#: field:claim.line,create_date:0
+#: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
@@ -203,13 +203,13 @@ msgid "Current"
 msgstr "Tekoči"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:161
+#: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
 msgstr "Kupec"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:165
+#: code:addons/crm_claim_rma/models/crm_claim.py:170
 #, python-format
 msgid "Customer Email"
 msgstr "E-pošta kupca"
@@ -223,6 +223,11 @@ msgstr "Vračilo kupca"
 #: selection:claim.line,claim_origin:0
 msgid "Damaged delivered product"
 msgstr "Poškodovan dobavljeni proizvod"
+
+#. module: crm_claim_rma
+#: help:claim.line,invoice_date:0
+msgid "Date of Claim Invoice"
+msgstr "Datum obračuna zahtevka"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
@@ -250,6 +255,12 @@ msgid "Different Item"
 msgstr "Drugačen artikel"
 
 #. module: crm_claim_rma
+#: field:claim_make_picking.wizard,display_name:0
+#: field:substate.substate,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Draft"
 msgstr "Osnutek"
@@ -260,10 +271,10 @@ msgid "Draft and Open Claims"
 msgstr "Osnutki in odprti zahtevki"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:308
-#: code:addons/crm_claim_rma/models/claim_line.py:312
-#: code:addons/crm_claim_rma/models/claim_line.py:395
-#: code:addons/crm_claim_rma/models/claim_line.py:399
+#: code:addons/crm_claim_rma/models/claim_line.py:314
+#: code:addons/crm_claim_rma/models/claim_line.py:318
+#: code:addons/crm_claim_rma/models/claim_line.py:401
+#: code:addons/crm_claim_rma/models/claim_line.py:405
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:120
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:222
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
@@ -287,7 +298,7 @@ msgid "Expected revenue"
 msgstr "Pričakovani prihodek"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:64
+#: code:addons/crm_claim_rma/models/claim_line.py:71
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Expired"
@@ -408,6 +419,13 @@ msgid "Last Message Date"
 msgstr "Datum zadnjega sporočila"
 
 #. module: crm_claim_rma
+#: field:claim.line,__last_update:0
+#: field:claim_make_picking.wizard,__last_update:0
+#: field:substate.substate,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
@@ -510,6 +528,11 @@ msgid "Moves created from claims"
 msgstr "Premiki nastali iz zahtevkov"
 
 #. module: crm_claim_rma
+#: field:claim.line,display_name:0
+msgid "Name"
+msgstr "Naziv"
+
+#. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "New Delivery"
 msgstr "Nova dostava"
@@ -540,7 +563,7 @@ msgid "Not Define"
 msgstr "Ne definirana"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:65
+#: code:addons/crm_claim_rma/models/claim_line.py:72
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Not Defined"
@@ -598,13 +621,13 @@ msgid "Picking List"
 msgstr "Zbirni seznam"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:399
+#: code:addons/crm_claim_rma/models/claim_line.py:405
 #, python-format
 msgid "Please set invoice first"
 msgstr "Najprej nastavite račun"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:395
+#: code:addons/crm_claim_rma/models/claim_line.py:401
 #, python-format
 msgid "Please set product first"
 msgstr "Najprej nastavite proizvod"
@@ -676,6 +699,11 @@ msgstr "Količina"
 #: help:claim.line,product_returned_quantity:0
 msgid "Quantity of product returned"
 msgstr "Vrnjena količina artikla"
+
+#. module: crm_claim_rma
+#: help:claim.line,return_value:0
+msgid "Quantity returned * Unit sold price"
+msgstr "Vrnjena količina * Cena prodajne enote"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
@@ -881,7 +909,7 @@ msgid "The move line related to the returned product"
 msgstr "Postavka premika vezana na vrnjeni proizvod"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:312
+#: code:addons/crm_claim_rma/models/claim_line.py:318
 #, python-format
 msgid "The product has no supplier configured."
 msgstr "Proizvod nima nastavljenega dobavitelja."
@@ -945,6 +973,11 @@ msgid "To set thelast state / substate change"
 msgstr "Za nastavitev zadnje spremembe stanja / pod-stanja"
 
 #. module: crm_claim_rma
+#: field:claim.line,return_value:0
+msgid "Total return"
+msgstr "Skupaj vračilo"
+
+#. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Treated"
 msgstr "Obdelano"
@@ -969,7 +1002,7 @@ msgid "Unread Messages"
 msgstr "Neprebrana sporočila"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:63
+#: code:addons/crm_claim_rma/models/claim_line.py:70
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Valid"

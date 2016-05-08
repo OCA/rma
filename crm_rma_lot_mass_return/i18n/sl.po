@@ -3,13 +3,13 @@
 # * crm_rma_lot_mass_return
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 22:57+0000\n"
-"PO-Revision-Date: 2015-12-13 06:18+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-04 03:47+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -58,6 +58,11 @@ msgid "Claim"
 msgstr "Zahtevek"
 
 #. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,name:0
+msgid "Complete Lot Name"
+msgstr "Celoten naziv lota"
+
+#. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_uid:0
 #: field:returned.lines.from.serial.wizard,create_uid:0
 msgid "Created by"
@@ -73,6 +78,12 @@ msgstr "Ustvarjeno"
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "Damaged Delivered Product"
 msgstr "Poškodovan dobavljeni proizvod"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,display_name:0
+#: field:returned.lines.from.serial.wizard,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -138,6 +149,12 @@ msgid "Invoice Lines to Select"
 msgstr "Postavke računa za izbor"
 
 #. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,__last_update:0
+#: field:returned.lines.from.serial.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_uid:0
 #: field:returned.lines.from.serial.wizard,write_uid:0
 msgid "Last Updated by"
@@ -163,6 +180,11 @@ msgstr "Izgubljen med prevozom"
 #: field:claim.line.wizard,lot_id:0
 msgid "Lot"
 msgstr "Lot"
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,message:0
+msgid "Message"
+msgstr "Sporočilo"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-24 16:07+0000\n"
-"PO-Revision-Date: 2015-11-19 19:00+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-03 15:36+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: English (http://www.transifex.com/oca/OCA-rma-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgid ""
 msgstr "A product return cannot be created for various destination locations, please choose line with a same destination location."
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/account_invoice.py:75
+#: code:addons/crm_claim_rma/models/account_invoice.py:76
 #, python-format
 msgid "A refund has already been created for this claim !"
 msgstr "A refund has already been created for this claim !"
@@ -71,7 +71,7 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:308
+#: code:addons/crm_claim_rma/models/claim_line.py:314
 #, python-format
 msgid "Cannot find any date for invoice. Must be a validated invoice."
 msgstr "Cannot find any date for invoice. Must be a validated invoice."
@@ -190,7 +190,7 @@ msgid "Created by"
 msgstr "Created by"
 
 #. module: crm_claim_rma
-#: field:claim.line,create_date:0
+#: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
@@ -202,13 +202,13 @@ msgid "Current"
 msgstr "Current"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:161
+#: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
 msgstr "Customer"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:165
+#: code:addons/crm_claim_rma/models/crm_claim.py:170
 #, python-format
 msgid "Customer Email"
 msgstr "Customer Email"
@@ -222,6 +222,11 @@ msgstr "Customer Return"
 #: selection:claim.line,claim_origin:0
 msgid "Damaged delivered product"
 msgstr "Damaged delivered product"
+
+#. module: crm_claim_rma
+#: help:claim.line,invoice_date:0
+msgid "Date of Claim Invoice"
+msgstr "Date of Claim Invoice"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
@@ -249,6 +254,12 @@ msgid "Different Item"
 msgstr "Different Item"
 
 #. module: crm_claim_rma
+#: field:claim_make_picking.wizard,display_name:0
+#: field:substate.substate,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Draft"
 msgstr "Draft"
@@ -259,10 +270,10 @@ msgid "Draft and Open Claims"
 msgstr "Draft and Open Claims"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:308
-#: code:addons/crm_claim_rma/models/claim_line.py:312
-#: code:addons/crm_claim_rma/models/claim_line.py:395
-#: code:addons/crm_claim_rma/models/claim_line.py:399
+#: code:addons/crm_claim_rma/models/claim_line.py:314
+#: code:addons/crm_claim_rma/models/claim_line.py:318
+#: code:addons/crm_claim_rma/models/claim_line.py:401
+#: code:addons/crm_claim_rma/models/claim_line.py:405
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:120
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:222
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
@@ -286,7 +297,7 @@ msgid "Expected revenue"
 msgstr "Expected revenue"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:64
+#: code:addons/crm_claim_rma/models/claim_line.py:71
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Expired"
@@ -407,6 +418,13 @@ msgid "Last Message Date"
 msgstr "Last Message Date"
 
 #. module: crm_claim_rma
+#: field:claim.line,__last_update:0
+#: field:claim_make_picking.wizard,__last_update:0
+#: field:substate.substate,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
@@ -509,6 +527,11 @@ msgid "Moves created from claims"
 msgstr "Moves created from claims"
 
 #. module: crm_claim_rma
+#: field:claim.line,display_name:0
+msgid "Name"
+msgstr "Name"
+
+#. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "New Delivery"
 msgstr "New Delivery"
@@ -539,7 +562,7 @@ msgid "Not Define"
 msgstr "Not Define"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:65
+#: code:addons/crm_claim_rma/models/claim_line.py:72
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Not Defined"
@@ -597,13 +620,13 @@ msgid "Picking List"
 msgstr "Picking List"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:399
+#: code:addons/crm_claim_rma/models/claim_line.py:405
 #, python-format
 msgid "Please set invoice first"
 msgstr "Please set invoice first"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:395
+#: code:addons/crm_claim_rma/models/claim_line.py:401
 #, python-format
 msgid "Please set product first"
 msgstr "Please set product first"
@@ -675,6 +698,11 @@ msgstr "Quantity"
 #: help:claim.line,product_returned_quantity:0
 msgid "Quantity of product returned"
 msgstr "Quantity of product returned"
+
+#. module: crm_claim_rma
+#: help:claim.line,return_value:0
+msgid "Quantity returned * Unit sold price"
+msgstr "Quantity returned * Unit sold price"
 
 #. module: crm_claim_rma
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_sale_orders
@@ -880,7 +908,7 @@ msgid "The move line related to the returned product"
 msgstr "The move line related to the returned product"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:312
+#: code:addons/crm_claim_rma/models/claim_line.py:318
 #, python-format
 msgid "The product has no supplier configured."
 msgstr "The product has no supplier configured."
@@ -944,6 +972,11 @@ msgid "To set thelast state / substate change"
 msgstr "To set thelast state / substate change"
 
 #. module: crm_claim_rma
+#: field:claim.line,return_value:0
+msgid "Total return"
+msgstr "Total return"
+
+#. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Treated"
 msgstr "Treated"
@@ -968,7 +1001,7 @@ msgid "Unread Messages"
 msgstr "Unread Messages"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/claim_line.py:63
+#: code:addons/crm_claim_rma/models/claim_line.py:70
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Valid"
