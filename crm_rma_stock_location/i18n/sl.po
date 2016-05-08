@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 22:57+0000\n"
-"PO-Revision-Date: 2015-12-14 06:36+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-04 03:48+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -66,9 +66,19 @@ msgid "Dest. Location"
 msgstr "Ciljna lokacija"
 
 #. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_uid:0
@@ -159,6 +169,8 @@ msgstr "PVB demonstracija"
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/product_product.py:42
 #: code:addons/crm_rma_stock_location/models/product_template.py:42
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
 #, python-format
 msgid "RMA Forecasted Quantity"
 msgstr "PVB napovedana količina"
@@ -171,6 +183,8 @@ msgstr "PVB proizvodi"
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/product_product.py:36
 #: code:addons/crm_rma_stock_location/models/product_template.py:36
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
 #, python-format
 msgid "RMA Quantity On Hand"
 msgstr "PVB količina pri roki"

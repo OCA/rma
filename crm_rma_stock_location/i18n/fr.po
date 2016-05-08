@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 01:39+0000\n"
-"PO-Revision-Date: 2015-12-02 21:49+0000\n"
+"POT-Creation-Date: 2016-05-06 11:34+0000\n"
+"PO-Revision-Date: 2016-05-03 15:37+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -65,8 +65,18 @@ msgid "Dest. Location"
 msgstr "Emplacement de destination"
 
 #. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
 msgid "ID"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: crm_rma_stock_location
@@ -158,6 +168,8 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/product_product.py:42
 #: code:addons/crm_rma_stock_location/models/product_template.py:42
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
 #, python-format
 msgid "RMA Forecasted Quantity"
 msgstr "Quantité RMA prévue"
@@ -170,6 +182,8 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/product_product.py:36
 #: code:addons/crm_rma_stock_location/models/product_template.py:36
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
 #, python-format
 msgid "RMA Quantity On Hand"
 msgstr "Quantité RMA en stock"
