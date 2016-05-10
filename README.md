@@ -40,6 +40,13 @@ Upgrade the standard crm_claim module to add :
 
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[crm_rma_location](crm_rma_location/) | 9.0.1.0.0 | RMA Location
+[product_warranty](product_warranty/) | 9.0.1.0.0 | Product warranty
+
 Unported addons
 ---------------
 addon | version | summary
@@ -52,6 +59,5 @@ addon | version | summary
 [crm_rma_by_shop](crm_rma_by_shop/) | 1.0 (unported) | RMA Claims by shop
 [crm_rma_lot_mass_return](crm_rma_lot_mass_return/) | 1.0 (unported) | RMA Claims Mass Return by Lot
 [crm_rma_stock_location](crm_rma_stock_location/) | 1.0 (unported) | RMA Stock Location
-[product_warranty](product_warranty/) | 8.0.1.0.0 (unported) | Product warranty
 
 [//]: # (end addons)
