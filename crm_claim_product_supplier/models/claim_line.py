@@ -25,11 +25,6 @@ class ClaimLine(models.Model):
 
     _inherit = 'claim.line'
 
-    supplier_id = \
-        fields.Many2one('res.partner', string='Supplier',
-                        compute='_compute_supplier_and_supplier_invoice',
-                        store=True,
-                        help="Supplier of good in claim")
     supplier_invoice_id = \
         fields.Many2one('account.invoice',
                         string='Supplier Invoice',
@@ -39,6 +34,41 @@ class ClaimLine(models.Model):
                              "purchase of goods sold to "
                              "customer")
 
+    supplier_id = \
+        fields.Many2one('res.partner', string='Supplier',
+                        related='supplier_invoice_id.commercial_partner_id',
+                        store=True,
+                        help="Supplier of good in claim")
+
+    @api.model
+    def _search_invoice_to_get_information(self, product):
+        """ When the product has not serial/lot number,
+        the system has not way to determine the supplier
+        and supplier invoice of product.
+
+        This method helps to search the last supplier invoice
+        to get required information.
+        @param product: A product.product browse to avoid
+        send a id integer or a browse_list.
+        This will be the product in the invoice line to be searched.
+        """
+
+        # Search one invoice with:
+        # 1. max(date_invoice)
+        # 2. state not in ('draft', 'cancel')
+        # 3. type = 'in_invoice'
+        # 4. product_id = product
+        invoice_line = self.env["account.invoice.report"].search(
+            [("product_id", "=", product.id),
+             ("state", "not in", ("draft", "cancel")),
+             ("type", "=", "in_invoice")],
+            order="date desc, id desc", limit=1)
+
+        invoice = self.env["account.invoice.line"].\
+            browse(invoice_line.id).invoice_id
+
+        return invoice
+
     @api.depends('prodlot_id', 'product_id')
     def _compute_supplier_and_supplier_invoice(self):
         for claim_line in self:
@@ -47,15 +77,6 @@ class ClaimLine(models.Model):
                 claim_line.supplier_invoice_id = claim_line.prodlot_id.\
                     supplier_invoice_line_id.invoice_id.id
             else:
-                invoice_obj = self.env["account.invoice.line"]
-                invoice_line = invoice_obj.search(
-                    [("product_id", "=", claim_line.product_id.id),
-                     ("invoice_id.type", "=", "in_invoice")])
-                if invoice_line:
-                    invoice_line_ids = invoice_line.mapped("id")
-                    last_invoice_line_id = max(invoice_line_ids)
-                    last_invoice_line = \
-                        invoice_obj.browse(last_invoice_line_id)
-                    invoice = last_invoice_line.invoice_id
-                    claim_line.supplier_id = invoice.partner_id.id
-                    claim_line.supplier_invoice_id = invoice.id
+                invoice_id = claim_line._search_invoice_to_get_information(
+                    claim_line.product_id)
+                claim_line.supplier_invoice_id = invoice_id

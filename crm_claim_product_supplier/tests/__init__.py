@@ -19,19 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'CRM Claim Product Supplier',
-    'version': '8.0.1.0.0',
-    'author': 'Vauxoo, Odoo Community Association (OCA)',
-    'website': 'http://www.vauxoo.com/',
-    'license': 'AGPL-3',
-    'category': 'Generic Modules/CRM & SRM',
-    'depends': [
-        'crm_rma_lot_mass_return',
-    ],
-    'demo': [
-        'demo/purchase_order.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
+from . import test_supplier_and_supplier_invoice
