@@ -28,7 +28,6 @@
     'category': '',
     'depends': [
         'stock',
-        'crm_claim_rma',
         'crm_claim_product_supplier',
     ],
     'data': [

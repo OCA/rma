@@ -27,7 +27,6 @@
     'license': 'AGPL-3',
     'category': 'Generic Modules/CRM & SRM',
     'depends': [
-        'crm_claim_rma',
         'crm_claim_product_supplier',
     ],
     'installable': True,

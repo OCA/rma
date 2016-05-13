@@ -37,7 +37,6 @@
         'crm_claim',
         'stock_account',
         'procurement',
-        'crm_rma_location',
     ],
     'data': [
         'wizards/claim_make_picking_from_picking_view.xml',
