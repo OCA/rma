@@ -38,8 +38,7 @@ class StockProductionLot(models.Model):
 
     @api.model
     def default_get(self, fields_list):
-        """
-        Set partner when product lot is created
+        """ Set partner when product lot is created
         @param fields_list: record values
         @return: return record
         """
