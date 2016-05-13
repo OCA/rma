@@ -19,3 +19,4 @@ msgstr ""
 #: help:claim.line,supplier_id:0
 msgid "Supplier of good in claim"
 msgstr "Proveedor de productos en el reclamo"
+
