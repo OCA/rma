@@ -139,7 +139,9 @@ class ClaimLine(models.Model):
 
     @api.model
     def get_warranty_return_partner(self):
-        return self.env['product.supplierinfo'].get_warranty_return_partner()
+        return self.env['product.supplierinfo']._columns[
+             'warranty_return_partner'
+         ].selection
 
     warranty_type = fields.Selection(
         get_warranty_return_partner, readonly=True,
