@@ -21,6 +21,7 @@
 #
 ##############################################################################
 from openerp.tests import common
+from openerp.tools.safe_eval import safe_eval as eval
 
 
 class TestPickingCreation(common.TransactionCase):
