@@ -30,8 +30,8 @@
     'depends': ['product'],
     'data': [
         'security/ir.model.access.csv',
-        'views/res_company_view.xml',
-        'views/product_warranty_view.xml',
+        'views/res_company.xml',
+        'views/product_warranty.xml',
     ],
     'demo': [
         'demo/product_warranty.xml',
