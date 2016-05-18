@@ -240,13 +240,17 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
             invoice_lines = purchase_order_id.mapped(
                 "invoice_ids.invoice_line")
 
-            self.review_that_lots_have_supplier_invoice_line(invoice_lines)
+            self.review_that_lots_have_supplier_invoice_line(
+                invoice_lines)
 
             # Call again for tests that lot with supplier invoice line
             # do not enter int ther process of assign supplier invoice
             # line
-            picking_id._set_invoice_line_to_serial_numbers(
-                purchase_order_id.mapped("invoice_ids.id"))
+            picking_id._search_serial_number_to_change_from_picking(
+                purchase_order_id.mapped("invoice_ids.id"), 'in_invoice')
+
+            picking_id._search_serial_number_to_change_from_picking(
+                purchase_order_id.mapped("invoice_ids.id"), 'out_refund')
 
             self.review_that_lots_have_supplier_invoice_line(invoice_lines)
 

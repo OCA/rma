@@ -27,24 +27,27 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
-    def action_invoice_create(self, **kwargs):
-        invoices = super(StockPicking, self).action_invoice_create(**kwargs)
-        if kwargs.get('type') == 'out_invoice':
-            prodlot_obj = self.env['stock.production.lot']
-            for picking in self:
-                for move in picking.move_lines:
-                    if move and move.quant_ids:
-                        lot = move.quant_ids[0].lot_id
-                        if lot.invoice_line_id:
-                            continue
-                        for inv_id in invoices:
-                            for inv_line in self.env['account.invoice'].\
-                                    browse(inv_id).invoice_line:
-                                lots = prodlot_obj.search([('invoice_line_id',
-                                                            '=',
-                                                            inv_line.id)])
-                                if inv_line.product_id.id == \
-                                        lot.product_id.id and \
-                                        len(lots) < inv_line.quantity:
-                                    lot.write({'invoice_line_id': inv_line.id})
-        return invoices
+    def _get_field_to_change_in_serial_record(self, invoice_type):
+        """ The serial/lot number can has one or two fields related
+        to account.invoice.line, in this module 'out_invoice' is
+        managed and 'in_invoice' (by the inherit).
+
+        :param invoice_type: Invoice type to know what will be
+        the field to change in the serial/lot number.
+
+        If invoice type is 'in_invoice', then, the
+        field to change will be 'supplier_invoice_line_id'
+
+        If invoice type is 'out_invoice', then, the field
+        to change will be 'invoice_line_id'
+
+        :return: True if the invoice_type coincides with a field
+        to change in the serial/lot number record.
+        False if the invoice_type does not coincides with a
+        field to change in the serial/lot number record
+        """
+        field_to_change = super(StockPicking, self).\
+            _get_field_to_change_in_serial_record(invoice_type)
+        if invoice_type == "out_invoice":
+            field_to_change = "invoice_line_id"
+        return field_to_change

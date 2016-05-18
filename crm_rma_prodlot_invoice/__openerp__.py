@@ -30,6 +30,7 @@
         'sale',
         'sale_stock',
         'product_unique_serial',
+        'crm_rma_prodlot_supplier',
     ],
     'data': [
         'views/stock_production_lot.xml',
