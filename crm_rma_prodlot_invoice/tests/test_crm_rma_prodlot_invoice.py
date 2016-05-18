@@ -19,15 +19,14 @@
 #
 ##############################################################################
 
-from openerp.tests.common import TransactionCase
 from datetime import date
+from openerp.tests.common import TransactionCase
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class TestCrmRmaProdLotInvoice(TransactionCase):
 
-    """
-    Test Cases
+    """ Test Cases
     """
 
     def setUp(self):
@@ -95,8 +94,7 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         return purchase_order_id
 
     def do_whole_transfer_process(self, lot_id, picking_ids):
-        """
-        Do transfer process
+        """ Do transfer process
         @param picking_ids: picking record set to be transfers
         @return Returns production lots ids for outside use/verification
         """
@@ -139,8 +137,7 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
             self.assertEqual(invoice_id.state, 'paid')
 
     def test_01_prodlot_invoice(self):
-        """
-        A Sale Order for a product which origin has a production lot number
+        """ A Sale Order for a product which origin has a production lot number
         from a incoming picking.
         """
         purchase_order_id = self.create_purchase_order()
@@ -173,8 +170,7 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         self.assertTrue(lot_id.invoice_line_id)
 
     def test_02_prodlot_invoice(self):
-        """
-        A Sale Order for a product which origin has a production lot number
+        """ A Sale Order for a product which origin has a production lot number
         from a incoming picking.
         """
         purchase_order_id = self.create_purchase_order()
@@ -203,8 +199,7 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         self.assertEquals(sale_order_id.name, lot_id.invoice_line_id.origin)
 
     def test_03_prodlot_invoice(self):
-        """
-        A Sale Order for a product which origin has a production lot number
+        """ A Sale Order for a product which origin has a production lot number
         from a incoming picking.
         """
         purchase_order_id = self.create_purchase_order()
@@ -234,3 +229,41 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
 
         # check if lot invoice line belongs to this sale order by its origin
         self.assertEquals(sale_order_id.name, lot_id.invoice_line_id.origin)
+
+    def test_04_create_invoice_of_sale_in_picking(self):
+        """ A Sale Order for a product which origin has a production lot number
+        from a incoming picking.
+        """
+        purchase_order_id = self.create_purchase_order()
+
+        lot_id = self.production_lot.create({
+            'name': 'Lot for %s' % (purchase_order_id.name),
+            'product_id': self.product_id.id,
+        })
+
+        self.do_whole_transfer_process(
+            lot_id=lot_id,
+            picking_ids=purchase_order_id.picking_ids)
+
+        sale_order_id = self.create_sale_order('picking')
+        self.do_whole_transfer_process(lot_id=lot_id,
+                                       picking_ids=sale_order_id.picking_ids)
+
+        for picking_id in sale_order_id.picking_ids:
+
+            ctx = {
+                "active_id": picking_id.id,
+                "active_ids": [picking_id.id],
+                "active_model": "stock.picking",
+            }
+            onshipping = self.env["stock.invoice.onshipping"]
+            create_invoice_wizard = onshipping.with_context(ctx).create({
+            })
+            create_invoice_wizard.open_invoice()
+
+        # check if lot_id have been set when creating invoice lines
+        self.assertTrue(lot_id.invoice_line_id)
+
+        # check if lot invoice line belongs to this sale order by its origin
+        self.assertEquals(sale_order_id.invoice_ids.invoice_line,
+                          lot_id.invoice_line_id)

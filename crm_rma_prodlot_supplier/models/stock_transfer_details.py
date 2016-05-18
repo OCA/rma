@@ -28,8 +28,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        """
-        When incoming type transfer are made and stock move have serial/lot
+        """ When incoming type transfer are made and stock move have serial/lot
         number, the supplier is assigned to the serial/lot number taken from
         picking.
         @return: do_detailed_transfer boolean results
