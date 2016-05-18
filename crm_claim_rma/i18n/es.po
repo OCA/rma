@@ -1066,3 +1066,180 @@ msgstr "Perfectas condiciones"
 msgid "Claim diagnosis"
 msgstr "Diagnóstico del reclamo"
 
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "The number of days added to the creation date of a claim, and obtain the deadline."
+msgstr "El numero de días de vencimiento de un reclamo de cliente, y con esto se establece la fecha límite."
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "The warehouse by default to create a claim.\n"
+"                                In case of the user don't have warehouse configured"
+msgstr "Almacen de la compañía que sea usado de manera predeterminada al momento de crear un reclamo de cliente.\n"
+
+#. module: crm_claim_rma
+#: field:res.company,rma_warehouse_id:0
+#: field:res.users,rma_warehouse_id:0
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+#: field:rma.config.settings,rma_warehouse_id:0
+msgid "RMA Warehouse"
+msgstr "Almacen de reclamos"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Claim Attention Priority"
+msgstr "Prioridad de atención de reclamos"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "The attention priority of a claim is caculated using invoice date:"
+msgstr "La prioridad de atención de reclamos es calculada usada la fecha de facturación:"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "invoice date <= priority maximum."
+msgstr "Fecha de Facturación <= Prioridad Máxima."
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "priority maximum < invoice date <= priority minimun."
+msgstr "Prioridad Máxima < Fecha de Facturación <= Prioridad Mínima."
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "priority minimun < invoice date."
+msgstr "Prioridad Mínima < Fecha de Facturación."
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "- High:"
+msgstr "- Alta:"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "- Normal:"
+msgstr "- Normal:"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "- Very High:"
+msgstr "- Muy alta:"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Priority Maximum"
+msgstr "Prioridad Máxima"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Priority Minimum"
+msgstr "Prioridad Mínima"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Days"
+msgstr "Días"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Technical Services"
+msgstr "Servicios Técnicos"
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Limit Days"
+msgstr "Límite de días"
+
+#. module: crm_claim_rma
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: crm_claim_rma
+#: field:res.company,limit_days:0
+#: field:rma.config.settings,limit_days:0
+msgid "Limit days"
+msgstr "Límite de días"
+
+#. module: crm_claim_rma
+#: help:res.company,limit_days:0
+#: help:rma.config.settings,limit_days:0
+msgid "Limit days for resolving a claim since its creation date."
+msgstr "Límite de días para resolver los casos de reclamos desde la fecha de su creación."
+
+#. module: crm_claim_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+msgid "Logistic"
+msgstr "Logistica de almacén"
+
+#. module: crm_claim_rma
+#: field:res.company,priority_maximum:0
+#: field:rma.config.settings,priority_maximum:0
+msgid "Priority maximum"
+msgstr "Prioridad máxima"
+
+#. module: crm_claim_rma
+#: field:res.company,priority_minimum:0
+#: field:rma.config.settings,priority_minimum:0
+msgid "Priority minimum"
+msgstr "Prioridad mínima"
+
+#. module: crm_claim_rma
+#: field:crm.claim,picking_ids:0
+#: model:ir.module.category,name:crm_claim_rma.module_category_rma
+#: view:res.company:crm_claim_rma.res_company_rma_config_form_view
+#: view:res.users:crm_claim_rma.res_users_rma_config_form_view
+msgid "RMA"
+msgstr "Reclamos"
+
+#. module: crm_claim_rma
+#: help:res.company,rma_warehouse_id:0
+#: help:rma.config.settings,rma_warehouse_id:0
+msgid "The warehouse to use by default in the claims, this field will be used for fill the warehouse field in the claims if the warehouse of user is empty, i.e, the locations of this warehouse will be used for the pickings of the claim"
+msgstr "Indica el almacén para ser usados de manera predeterminada en los reclamos, este campo sera usado para establecer el Almacén en los reclamos en caso de no estar establecido por el usuario. Las ubicaciones para el almacén establecido serán usadas en los movimientos de inventario de los reclamos."
+
+#. module: crm_claim_rma
+#: help:res.company,priority_minimum:0
+#: help:rma.config.settings,priority_minimum:0
+msgid "Priority of a claim should be:\n"
+"- High: priority maximum range < invoice date <= priority minimun range.\n"
+"- Normal: priority minimun range < invoice date"
+msgstr "La prioridad para los reclamos debería ser:\n"
+"- Alta: Rango de prioridad máxima < Fecha de Facturación <= Rango de prioridad mínima.\n"
+"- Normal: Rango de prioridad mínima < Fecha de Facturación"
+
+#. module: crm_claim_rma
+#: help:res.company,priority_maximum:0
+#: help:rma.config.settings,priority_maximum:0
+msgid "Priority of a claim should be:\n"
+"- Very High: Purchase date <= priority maximum range.\n"
+"- High: priority maximum range < invoice date <= priority minimun range"
+msgstr "La prioridad para los reclamos debería ser:\n"
+"- Muy alta: Fecha de orden de compra <= Rango de prioridad máxima.\n"
+"- Alta: Rango de prioridad máxima < Fecha de Facturación <= Rango de prioridad mínima"
+
+#. module: crm_claim_rma
+#: model:ir.ui.menu,name:crm_claim_rma.menu_document
+#: model:ir.ui.menu,name:crm_claim_rma.menu_rma_config
+msgid "Return Merchandise Authorization"
+msgstr "Reclamos"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
+#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
+msgid "Sales"
+msgstr "Ventas"
