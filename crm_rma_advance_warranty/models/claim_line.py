@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp import _, api, exceptions, models
 from datetime import datetime
+from openerp import _, api, exceptions, models
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
 
@@ -31,8 +31,7 @@ class ClaimLine(models.Model):
 
     @api.model
     def set_warranty_limit(self):
-        """
-        Calculate warranty limit
+        """ Calculate warranty limit
         """
         if not self.invoice_date:
             raise exceptions.Warning(
@@ -44,20 +43,17 @@ class ClaimLine(models.Model):
                                                DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
-                supplier = self.prodlot_id.supplier_id
-                if supplier not in self.product_id.mapped('seller_ids.name'):
+                supplier_id = self.prodlot_id.supplier_id
+                # the name field is a many2one to res.partner in
+                # product.supplierinfo
+                seller_ids = self.product_id.mapped('seller_ids.name')
+                if supplier_id not in seller_ids:
                     raise exceptions.Warning(
                         _('Error'),
                         _('The product has no supplier'
-                          ' configured for %s.' % supplier.name))
-
-                psi_obj = self.env['product.supplierinfo']
-                domain = [('name', '=', supplier.id),
-                          ('product_tmpl_id', '=',
-                           self.product_id.product_tmpl_id.id)]
-                seller = psi_obj.search(domain)
-
-                warranty_duration = seller.warranty_duration
+                          ' configured for %s.' % supplier_id.name))
+                supplier_info_id = self._get_product_supplier_info()
+                warranty_duration = supplier_info_id.warranty_duration
         else:
             warranty_duration = self.product_id.warranty
         limit = self.warranty_limit(date_inv_at_server, warranty_duration)
@@ -76,9 +72,16 @@ class ClaimLine(models.Model):
         })
 
     @api.model
+    def _get_product_supplier_info(self):
+        """ It finds the information about a supplier of specific
+        product """
+        return self.env['product.supplierinfo'].search(
+            [('name', '=', self.supplier_id.id),
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+
+    @api.model
     def set_warranty_return_address(self):
-        """
-        Set the partner to be used as return destination and
+        """ Set the partner to be used as return destination and
         the destination stock location of the line in case of Return.
 
         We can have various case here:

@@ -62,8 +62,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
         return invoice_id
 
     def create_customer_claim(self, invoice_id):
-        """
-        Create a customer claim with or without claim lines based
+        """ Create a customer claim with or without claim lines based
         on include_lines parameter
         """
         customer_id = invoice_id.partner_id
