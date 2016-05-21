@@ -104,8 +104,8 @@
 
         <!-- Make transfer of product -->
 
-        <function model="stock.transfer_details"
-            name="do_detailed_transfer" eval="[ref('transfer_purchase_wizard_rma')]"/>
+        <!-- <function model="stock.transfer_details" -->
+        <!--     name="do_detailed_transfer" eval="[ref('transfer_purchase_wizard_rma')]"/> -->
 
 
 
@@ -203,8 +203,8 @@
         </function>
 
 
-        <function model="stock.transfer_details"
-            name="do_detailed_transfer" eval="[ref('transfer_sale_wizard_rma')]"/>
+        <!-- <function model="stock.transfer_details" -->
+        <!--     name="do_detailed_transfer" eval="[ref('transfer_sale_wizard_rma')]"/> -->
 
     </data>
 </openerp>
