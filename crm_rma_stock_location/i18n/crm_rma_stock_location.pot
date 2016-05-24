@@ -165,8 +165,8 @@ msgid "RMA Demo"
 msgstr ""
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/product_product.py:42
-#, python-format
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
 msgid "RMA Forecasted Quantity"
 msgstr ""
 
@@ -176,8 +176,8 @@ msgid "RMA Products"
 msgstr ""
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/product_product.py:36
-#, python-format
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
 msgid "RMA Quantity On Hand"
 msgstr ""
 
