@@ -32,10 +32,16 @@ class ClaimLine(models.Model):
                                     string='Related claim line',
                                     help="To link to the claim line object")
 
+    @api.model
+    def _search_related_lines(self):
+        """ Search a claim line with this claim line like parent, if there is
+        a line with this claim line like parent, then, the supplier claim line
+        for this claim line was created """
+        return self.search([('claim_line_id', '=', self.id)])
+
     @api.multi
     def button_create_line_rma_vendor(self):
-        """
-        Create supplier rma product.
+        """ Create supplier rma product.
         """
         good_lines = []
         claim_obj = self.env['crm.claim']
@@ -45,15 +51,9 @@ class ClaimLine(models.Model):
         stage_new = self.env.ref('crm_claim.stage_claim1')
 
         for claim_line_parent in self:
-            # Search a claim line with this claim line
-            # like parent, if there is a line with
-            # this claim line like parent, then, the
-            # supplier claim line for this claim line
-            # was created
-            claim_line_supplier = \
-                claim_line_obj.search([('claim_line_id',
-                                        '=',
-                                        claim_line_parent.id)])
+            claim_line_supplier =\
+                claim_line_parent._search_related_lines()
+
             if claim_line_supplier:
                 raise UserError(
                     _('Error'),
