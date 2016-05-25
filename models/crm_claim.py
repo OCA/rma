@@ -27,5 +27,6 @@ class CrmClaim(models.Model):
     def copy(self, default=None):
         if default is None:
             default = {}
-        default['code'] = self.env['ir.sequence'].get('crm.claim')
+        if 'code' not in default or default['code'] == '/':
+            default['code'] = self.env['ir.sequence'].get('crm.claim')
         return super(CrmClaim, self).copy(default)
