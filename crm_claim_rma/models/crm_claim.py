@@ -314,11 +314,7 @@ class CrmClaim(models.Model):
     @api.multi
     def copy(self, default=None):
         self.ensure_one()
-
         default = default or {}
-        std_default = {
-            'code': '/'
-        }
-
-        std_default.update(default)
-        return super(CrmClaim, self).copy(default=std_default)
+        if 'code' not in default or default['code'] == '/':
+            default['code'] = self._get_sequence_number(self.claim_type.id)
+        return super(CrmClaim, self).copy(default)
