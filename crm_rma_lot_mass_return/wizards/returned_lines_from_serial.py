@@ -121,6 +121,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
             'prodlot_id': lot_id,
         })
         line_rec.set_warranty()
+        return line_rec
 
     # If "Cancel" button pressed
     @api.multi
@@ -505,6 +506,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         # It creates only those claim lines that have a valid production lot,
         # i. e. not using in others claims
         info = dict(info)
+        new_claim_lines = []
 
         if clw_ids:
             for clw_id in clw_ids:
@@ -525,10 +527,10 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 else:
                     num = 0
 
-                self.create_claim_line(self.env.context.get('active_id'),
-                                       self.env[
-                                           'claim.line']._get_subject(num),
-                                       product_id, clw_id, 1, name)
+                new_claim_lines.append(self.create_claim_line(
+                    self.env.context.get('active_id'),
+                    self.env['claim.line']._get_subject(num),
+                    product_id, clw_id, 1, name))
 
             # Clean items in wizard model
             if len(clw_ids) == 1:
@@ -540,6 +542,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
         # normal execution
         self.action_cancel()
+        return new_claim_lines
 
     @api.multi
     def change_list(self, lines):
