@@ -87,8 +87,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
     # Get partner from case is set to filter serials
     @api.model
     def _get_default_partner_id(self):
-        """
-        Obtain partner from the claim
+        """ Obtain partner from the claim
         """
         crm_claim_model = self.env['crm.claim']
         claim_id = self.env.context.get('active_id')
@@ -101,7 +100,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
     def create_claim_line(self, claim_id, claim_origin,
                           product_record, claim_line_wizard,
                           qty, name):
-        clima_line = self.env['claim.line']
         if claim_line_wizard.lot_id:
             inv_line = self.prodlot_2_invoice_line(
                 claim_line_wizard.lot_id)
@@ -109,7 +107,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         else:
             inv_line = claim_line_wizard.invoice_line_id
             lot_id = False
-        line_rec = clima_line.create({
+        line_rec = self.env['claim.line'].create({
             'claim_id': claim_id,
             'claim_origin': claim_origin,
             'product_id': product_record and product_record.id or False,
@@ -144,8 +142,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def prodlot_2_invoice_line(self, prodlot):
-        """
-        Return the last line of customer invoice
+        """ Return the last line of customer invoice
         based in serial/lot number
         """
         current_claim_type, customer_claim_type, supplier_claim_type = \
@@ -190,8 +187,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def get_metasearch_view_brw(self):
-        """
-        @return: view with metasearch field
+        """ @return: view with metasearch field
         """
         view_id = self.env.\
             ref('crm_rma_lot_mass_return.view_enter_product')
@@ -199,8 +195,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def render_metasearch_view(self):
-        """
-        Render wizard view with metasearch field
+        """ Render wizard view with metasearch field
         """
         view = self.get_metasearch_view_brw()
         if view:
@@ -369,8 +364,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id):
-        """
-        Load claim lines from partner invoices or related production lots
+        """ Load claim lines from partner invoices or related production lots
         into the current claim massively
         """
         lot_lots_ids = []
@@ -444,8 +438,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def _get_invalid_lots_set(self, claim_line_wizard_ids, add=False):
-        """
-        Return only those lots are related to claim lines
+        """ Return only those lots are related to claim lines
         """
         claim_line_wizard = self.env['claim.line.wizard']
         valid = claim_line_wizard.browse(claim_line_wizard_ids)
@@ -558,8 +551,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
     def _set_message(self):
-        """
-        Notify for missing (not added) claim lines that are in use in others
+        """ Notify for missing (not added) claim lines that are in use in others
         claims
         """
         for wizard in self:
@@ -591,3 +583,32 @@ class ReturnedLinesFromSerial(models.TransientModel):
                             " use:\n\n %s") % (claim_with_lots_msg) or ''
 
             wizard.message = msg
+
+    @api.multi
+    def button_show_help(self):
+        """ It shows help
+        """
+        view_id = self.env.ref('crm_rma_lot_mass_return.help_message_form')
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': self._name,
+            'type': 'ir.actions.act_window',
+            'view_id': view_id.id,
+            'target': 'new',
+            'context': self.env.context,
+        }
+
+    @api.multi
+    def button_get_back_to_wizard(self):
+        ctx = dict(self.env.context or {})
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': self._name,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'active_id': ctx.get('active_id'),
+            'active_ids': ctx.get('active_ids'),
+            'context': ctx,
+        }

@@ -28,8 +28,7 @@ class CrmClaim(models.Model):
 
     @api.model
     def _get_stock_moves_with_code(self, code='incoming'):
-        """
-        @code: Type of operation code.
+        """ @code: Type of operation code.
         Returns all stock_move with filtered by type of
         operation.
         """

@@ -173,3 +173,37 @@ msgstr ""
 msgid "_Validate"
 msgstr ""
 
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Insert serial lot numbers and/or invoice numbers in a new line to search products"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Search products"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Add products"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Select product listed below and then add it using the button \"Add items to the claim\""
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You are attending to:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "or"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Cancel"
+msgstr ""
