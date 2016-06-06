@@ -207,3 +207,114 @@ msgstr ""
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "Cancel"
 msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "You are able to insert lines based on the following rules:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Write the"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Serial"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "to search the product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Invoice No."
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "to search and pick one of the products in it"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "You can also add the reason of the claim, comment and the product all at same time\n"
+"                        just need to use the following format separated by '*':"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Using a serial, you must use: [Serial Lot No.]*[Reason No.]*[Quick explanation]."
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "For example: A4JD6JHS*4*The display is broken when was unboxed"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Use the following available reasons:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Not specified"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Legal retractation"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Order Cancellation"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Damaged Delivered Product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Shipping error"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Exchange request"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Lost during transport"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Perfect Conditions"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Imperfection"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Physical Damage by Client"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Physical Damage by Company"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Other"
+msgstr ""

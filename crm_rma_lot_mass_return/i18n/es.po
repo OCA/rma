@@ -131,13 +131,13 @@ msgstr "Estado"
 #: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:285
 #, python-format
 msgid "The product or invoice %s was not found"
-msgstr "El producto o factura %s no fué encontrado"
+msgstr "El producto o factura %s no fue encontrado"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizard/returned_lines_from_serial.py:112
 #, python-format
 msgid "There is no warehouse for the current user's company."
-msgstr "No existe un almacén para la compañia del usuario actual."
+msgstr "No existe un almacén para la compañía del usuario actual."
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -214,3 +214,115 @@ msgstr "o"
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "You are able to insert lines based on the following rules:"
+msgstr "Usted puede agregar lineas basándose en las siguientes normas:"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Write the"
+msgstr "Escriba el"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Serial"
+msgstr "No. Lote/Serial"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "to search the product"
+msgstr "para buscar el producto"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Invoice No."
+msgstr "No. de Factura"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "to search and pick one of the products in it"
+msgstr "para buscar y elegir uno de los productos"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "You can also add the reason of the claim, comment and the product all at same time\n"
+"                        just need to use the following format separated by '*':"
+msgstr "También puede agregar el motivo del reclamo, comentarios y el producto de una vez\n"
+"                        solo se necesita usar el siguiente formato separado por '*':"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Using a serial, you must use: [Serial Lot No.]*[Reason No.]*[Quick explanation]."
+msgstr "Usando un No. de Lote/Serial, debe usar: [No. de Lote/Serial]*[No. Motivo]*[Comentarios]."
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "For example: A4JD6JHS*4*The display is broken when was unboxed"
+msgstr "Por ejemplo: A4JD6JHS*4*La pantalla estaba rota al abrir la caja"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Use the following available reasons:"
+msgstr "Use los siguientes motivos disponibles:"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Not specified"
+msgstr "No especificado"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Legal retractation"
+msgstr "Retractación Legal"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Order Cancellation"
+msgstr "Cancelación de orden"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Damaged Delivered Product"
+msgstr "Producto enviado dañado"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Shipping error"
+msgstr "Error de envío"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Exchange request"
+msgstr "Solicitar cambio"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Lost during transport"
+msgstr "Perdido durante el transporte"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Perfect Conditions"
+msgstr "Perfectas condiciones"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Imperfection"
+msgstr "Imperfección"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Physical Damage by Client"
+msgstr "Daño físico por el cliente"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Physical Damage by Company"
+msgstr "Daño físico por la compañía"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.help_message_form
+msgid "Other"
+msgstr "Otro"
