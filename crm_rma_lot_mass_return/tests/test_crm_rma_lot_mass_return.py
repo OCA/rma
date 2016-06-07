@@ -26,8 +26,7 @@ from openerp.tests.common import TransactionCase
 
 class TestCrmRmaLotMassReturn(TransactionCase):
 
-    """
-    Test cases for CRM RMA Lot Mass Return Module
+    """ Test cases for CRM RMA Lot Mass Return Module
     """
 
     # def setUp(self):

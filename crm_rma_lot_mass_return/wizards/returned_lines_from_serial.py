@@ -211,24 +211,29 @@ class ReturnedLinesFromSerial(models.TransientModel):
                 'res_id': self.id,
             }
 
-    @api.model
-    def get_data_of_products(self, input_data):
-        data_line = []
-        for item in input_data and input_data.split('\n') or []:
-            if '*' in item:
+    @staticmethod
+    def get_data_of_products(input_data):
+        """ It parses all invoices and serial lot numbers added by the user,
+        this is received as a long string. The data is split based on
+        break lines in the first place to be able to parse each line
+        separately. After that, splitting is made using a '*' char to know if a
+        given line contains a reason and comment (optional).'
+        :param input_data: Input given by the user in the wizard
+        :return A list of tuples containing parsed lines
 
-                comput = item.split('*')
-                data_it_1 = '0'
-                data_it_2 = ''
-                if len(comput) >= 2:
-                    data_it_1 = comput[1]
-                if len(comput) >= 3:
-                    data_it_2 = comput[2]
-                if comput[0]:
-                    data_line.append((comput[0], (data_it_1, data_it_2)))
-            else:
-                if item.strip():
-                    data_line.append((item.strip(), ('0', '')))
+        """
+        data_line = []
+        input_data = (input_data or '').strip('\n ')
+        for line in input_data.split('\n'):
+            line = line.strip()
+            line_parts = line.split('*')
+            if not line or ('*' in line and not line_parts[0]):
+                continue
+
+            reason = line_parts[1] if len(line_parts) in [2, 3] else '0'
+            comment = line_parts[2] if len(line_parts) == 3 else ''
+            line = (line_parts[0], (reason.strip(), comment.strip()))
+            data_line.append(line)
         return data_line
 
     def _get_lots_from_scan_data(self, input_data):
@@ -236,114 +241,108 @@ class ReturnedLinesFromSerial(models.TransientModel):
         input_lines = self.get_data_of_products(input_data)
         invoice = self.env['account.invoice']
         lot = self.env['stock.production.lot']
+        clw = self.env['claim.line.wizard']
 
         prodlot_set_ids = set()
-        lot_set_ids = []
+        line_set_ids = []
         lots_lot_set_ids = []
 
         if not input_lines:
             return False, False, False
 
-        current_claim_type, customer_claim_type, supplier_claim_type = \
-            self._get_claim_type()
+        current_claim_type, supplier_claim_type = self._get_claim_type()[0::2]
 
-        claim_line_wizard = self.env['claim.line.wizard']
+        invoice_field = 'supplier_invoice_line_id'\
+            if supplier_claim_type == current_claim_type else\
+            'invoice_line_id'
 
         for line in input_lines:
-            # if there is no invoice/serial in it
-            if not line[0]:
-                continue
 
             number_serial = line[0].encode('utf8')
             # search invoices first
             invoice_ids = invoice.search([('number', '=', number_serial)])
             element_searched = False
+
             if invoice_ids:
+                invoice_line_ids = invoice_ids.mapped("invoice_line")
+                for inv_line in invoice_line_ids:
+                    enter = False
+                    # Search items displayed with the current invoice line
+                    current_item_ids = clw.search([
+                        ('invoice_line_id', '=', inv_line.id)])
 
-                invoice_field = 'supplier_invoice_line_id'
-                if customer_claim_type == current_claim_type:
-                    invoice_field = 'invoice_line_id'
+                    # Search serial/lot numbers with that invoice line
+                    lot_ids = lot.search([(invoice_field, '=', inv_line.id)])
 
-                for inv in invoice_ids:
-                    for inv_line in inv.invoice_line:
-                        clw = claim_line_wizard.\
-                            search([('invoice_line_id', '=', inv_line.id)])
-                        enter = False
-                        lot_ids = lot.\
-                            search([(invoice_field, '=',
-                                     inv_line.id)])
-                        if len(clw) < int(inv_line.quantity):
-                            for asd in clw:
-                                if asd not in lot_set_ids:
-                                    lot_set_ids.append(asd)
-                                    lot_ids = lot_ids - asd.lot_id
-                            num_to_create = int(inv_line.quantity) - len(clw)
-                            num = 0
-                            while num < num_to_create:
-                                clw = \
-                                    claim_line_wizard.\
-                                    create({
-                                        'product_id':
-                                        inv_line.product_id.id,
-                                        'invoice_line_id': inv_line.id,
-                                    })
-                                if lot_ids:
-                                    lot = lot_ids[0]
-                                    clw.write({'lot_id': lot.id})
-                                    lot_ids = lot_ids - lot
-                                for asd in clw:
-                                    if asd not in lot_set_ids:
-                                        lot_set_ids.append(asd)
-                                num += 1
-                            enter = True
-                        if not enter:
-                            for asd in clw:
-                                if asd not in lot_set_ids:
-                                    if lot_ids:
-                                        lot = lot_ids[0]
-                                        asd.write({'lot_id': lot.id})
-                                        lot_ids = lot_ids - lot
-                                    lot_set_ids.append(asd)
+                    # Calculate the missing items to create
+                    num_to_create = int(inv_line.quantity) - \
+                        len(current_item_ids)
+                    num = 0
+                    while num < num_to_create:
 
-                element_searched = lot_set_ids
-            else:
-                # if not, it must be a serial lot number
-                prodlot_ids = lot
-                if supplier_claim_type == current_claim_type:
-                    prodlot_ids = \
-                        lot.search([('name', '=', number_serial),
-                                    ('supplier_invoice_line_id', '!=', False)])
-                    invoice_line = prodlot_ids.supplier_invoice_line_id
-                elif customer_claim_type == current_claim_type:
-                    prodlot_ids = \
-                        lot.search([('name', '=', number_serial),
-                                    ('invoice_line_id', '!=', False)])
-                    invoice_line = prodlot_ids.invoice_line_id
-                else:
-                    prodlot_ids = \
-                        lot.search([('name', '=', number_serial), '|',
-                                    ('supplier_invoice_line_id', '!=', False),
-                                    ('invoice_line_id', '!=', False),
-                                    ])
-                    if prodlot_ids.invoice_line_id:
-                        invoice_line = prodlot_ids.invoice_line_id
-                    else:
-                        invoice_line = prodlot_ids.supplier_invoice_line_id
+                        # Displays missing product of invoice line
+                        # on the wizard
+                        lot_filtered_ids = current_item_ids.filtered(
+                            lambda r: r not in line_set_ids)
+                        lot_ids -= lot_filtered_ids.mapped('lot_id')
+
+                        line_id = clw.create({
+                            'product_id': inv_line.product_id.id,
+                            'invoice_line_id': inv_line.id,
+                        })
+                        # If in the invoice line there are products with
+                        # serial/lot numbers, displays serial/lot number
+                        if lot_ids:
+                            lot_id = lot_ids[0]
+                            lot_ids -= lot_id
+                            line_id.write({'lot_id': lot_id.id})
+
+                        if line_id not in line_set_ids:
+                            line_set_ids.append(line_id)
+                        num += 1
+
+                        enter = True
+
+                    # If there is still product that belongs to an
+                    # invoice line without serial/lot number and there is
+                    # available serial/lot numbers to be used
+                    if not enter:
+                        item_wo_lot = [el for el in current_item_ids
+                                       if el not in line_set_ids]
+                        available_lots = [l for l in lot_ids]
+                        used_lot_ids = []
+                        for item, lot_id in zip(item_wo_lot, available_lots):
+                            item.write({'lot_id': lot_id.id})
+                            used_lot_ids.append(lot_id.id)
+                            line_set_ids.append(item)
+                        lot_ids -= lot.browse(used_lot_ids)
+
+                element_searched = line_set_ids
+            else:  # it must be a serial lot number
+                prodlot_ids, invoice_line_id = \
+                    self._search_lot_by_name_based_on_type(number_serial)
+                # assign lots to wizard serial lot (as wizard items)
                 if prodlot_ids:
-                    for lot_id in prodlot_ids:
-                        clw = claim_line_wizard.\
-                            search([('lot_id', '=', lot_id.id)])
-                        if not clw:
-                            clw = \
-                                claim_line_wizard.\
-                                create({
-                                    'product_id': lot_id.product_id.id,
-                                    'lot_id': lot_id.id,
-                                    'invoice_line_id': invoice_line.id,
-                                })
-                        for asd in clw:
-                            if asd not in lot_set_ids:
-                                lot_set_ids.append(asd)
+                    lots_mapped = prodlot_ids.mapped('id')
+                    # create wizard items for those lots that haven't been
+                    # assigned yet
+                    item_ids = clw.search(
+                        [('lot_id', 'in', lots_mapped)])
+                    item_lots = item_ids.mapped('lot_id.id')
+                    lot4create = [l for l in lots_mapped if l not in item_lots]
+                    for lot_id in lot4create:
+                        lot_id = lot.browse(lot_id)
+                        clw.create({
+                            'product_id': lot_id.product_id.id,
+                            'lot_id': lot_id.id,
+                            'invoice_line_id': invoice_line_id.id,
+                        })
+
+                    # keep wizard lines if aren't already
+                    item_ids = clw.search(
+                        [('lot_id', 'in', lots_mapped)])
+                    line_set_ids.extend(
+                        [e for e in item_ids if e not in line_set_ids])
                     element_searched = True
 
                 for item in prodlot_ids:
@@ -351,16 +350,42 @@ class ReturnedLinesFromSerial(models.TransientModel):
                         and item.product_id.name.encode('utf8') or False
                     prodlot_set_ids |= {'%s+%s' % (item.id, item_name)}
 
-                for asd in lot_set_ids:
-                    if asd not in lots_lot_set_ids:
-                        lots_lot_set_ids.append(asd)
+                lots_lot_set_ids.extend(
+                    [l for l in line_set_ids if l not in lots_lot_set_ids])
 
             # if at least one line is not found, then return error
             if not element_searched:
                 return False, line[0], False
 
         # all lines were found, then return those lots
-        return lot_set_ids, prodlot_set_ids, lots_lot_set_ids
+        return line_set_ids, prodlot_set_ids, lots_lot_set_ids
+
+    @api.model
+    def _search_lot_by_name_based_on_type(self, lot_number):
+        lot = self.env['stock.production.lot']
+        claim_type, customer_type, supplier_type = self._get_claim_type()
+        prodlot_ids = False
+        inv_line_field_name = False
+        if supplier_type == claim_type:
+            prodlot_ids = \
+                lot.search([('name', '=', lot_number),
+                            ('supplier_invoice_line_id', '!=', False)])
+            inv_line_field_name = 'supplier_invoice_line_id'
+        elif customer_type == claim_type:
+            prodlot_ids = \
+                lot.search([('name', '=', lot_number),
+                            ('invoice_line_id', '!=', False)])
+            inv_line_field_name = 'invoice_line_id'
+        else:  # other type
+            prodlot_ids = \
+                lot.search([('name', '=', lot_number), '|',
+                            ('supplier_invoice_line_id', '!=', False),
+                            ('invoice_line_id', '!=', False)])
+            inv_line_field_name = 'supplier_invoice_line_id'
+            if prodlot_ids.invoice_line_id:
+                inv_line_field_name = 'invoice_line_id'
+        invoice_line_id = getattr(prodlot_ids, inv_line_field_name)
+        return prodlot_ids, invoice_line_id
 
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id):
@@ -374,7 +399,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
         elements_searched, line_found, lot_lots_ids = \
             self._get_lots_from_scan_data(input_data)
-
         if not elements_searched and not line_found:
             return {
                 'value': {
@@ -389,8 +413,10 @@ class ReturnedLinesFromSerial(models.TransientModel):
         if not elements_searched and not lot_lots_ids and line_found:
             return {
                 'warning': {
-                    'message': (_('The product or invoice %s'
-                                  ' was not found') % line_found)},
+                    'message':
+                    (_('The product or invoice %s was not found')
+                     % line_found.decode('utf8'))
+                },
             }
         else:
             lines_set_ids = elements_searched
@@ -401,7 +427,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
             current_status += name[1] + '\n'
             scaned_data += name[0] + '\n'
 
-        lines_set_ids = [asd.id for asd in lines_set_ids]
+        lines_set_ids = [wizard_item_id.id for wizard_item_id in lines_set_ids]
         return {
             'value': {
                 'option_ids': [(6, 0, lines_set_ids)],
@@ -440,53 +466,44 @@ class ReturnedLinesFromSerial(models.TransientModel):
     def _get_invalid_lots_set(self, claim_line_wizard_ids, add=False):
         """ Return only those lots are related to claim lines
         """
-        claim_line_wizard = self.env['claim.line.wizard']
-        valid = claim_line_wizard.browse(claim_line_wizard_ids)
-        invalid_lots = []
-        for clw in claim_line_wizard.browse(claim_line_wizard_ids):
-            if clw.lot_id:
-                invalid_lot = self.env['claim.line'].search([
-                    ('invoice_line_id', '=', clw.invoice_line_id.id),
-                    ('product_id', '=', clw.product_id.id),
-                    ('prodlot_id', '=', clw.lot_id.id),
-                ])
-                if not invalid_lot:
-                    valid = valid - clw
-                if invalid_lot:
-                    invalid_lots.append(clw)
-
-        for clw in valid.mapped('invoice_line_id'):
-
-            # mac1, None -> claim.line
-            invalid_lot = self.env['claim.line'].search([
-                ('invoice_line_id', '=', clw.id),
-                ('product_id', '=', clw.product_id.id),
+        clw = self.env['claim.line.wizard']
+        claim_line = self.env['claim.line']
+        valid_lot_ids = clw.browse(claim_line_wizard_ids)
+        invalid_lots_list = []
+        line_ids = clw.browse(claim_line_wizard_ids).filtered(
+            lambda r: r.lot_id)
+        for line_id in line_ids:
+            invalid_lot = claim_line.search([
+                ('invoice_line_id', '=', line_id.invoice_line_id.id),
+                ('product_id', '=', line_id.product_id.id),
+                ('prodlot_id', '=', line_id.lot_id.id),
             ])
-
-            # mac1, mac2, mac3, mac4, None -> breaked down
-            clws = self.env['claim.line.wizard'].\
-                search([('invoice_line_id', '=', clw.id),
-                        ])
-
             if invalid_lot:
-                for item in invalid_lot:
-                    if item.prodlot_id:
-                        add = clws.search([
-                            ('lot_id', '=', item.prodlot_id.id),
-                            ('id', 'in', clws.mapped('id')),
-                            ('id', 'not in', [rdy.id for rdy in invalid_lots]),
-                        ])
-                    else:
-                        add = clws.search([
-                            ('lot_id', '=', False),
-                            ('id', 'in', clws.mapped('id')),
-                            ('id', 'not in', [rdy.id for rdy in invalid_lots]),
-                        ])
-                    if add:
-                        invalid_lots.append(add[0])
+                invalid_lots_list.append(line_id)
+            else:
+                valid_lot_ids = valid_lot_ids - line_id
 
-        # mac1, None -> like claim.line.wizard
-        return invalid_lots and invalid_lots or []
+        for inv_line_id in valid_lot_ids.mapped('invoice_line_id'):
+            invalid_lot = claim_line.search([
+                ('invoice_line_id', '=', inv_line_id.id),
+                ('product_id', '=', inv_line_id.product_id.id), ])
+
+            if not invalid_lot:
+                continue
+
+            inv_line_ids = \
+                clw.search([('invoice_line_id', '=', inv_line_id.id), ])
+
+            for item_id in invalid_lot:
+                lot_id = item_id.prodlot_id.id or False
+                wizard_line_id = clw.search([
+                    ('lot_id', '=', lot_id),
+                    ('id', 'in', inv_line_ids.mapped('id')),
+                    ('id', 'not in', [il.id for il in invalid_lots_list])])
+                if wizard_line_id:
+                    invalid_lots_list.append(wizard_line_id[0])
+
+        return invalid_lots_list and invalid_lots_list or []
 
     @api.multi
     def add_claim_lines(self):
@@ -497,41 +514,37 @@ class ReturnedLinesFromSerial(models.TransientModel):
             set(self._get_invalid_lots_set(lot_ids, True))
         clw_ids = list(clw_ids)
         # It creates only those claim lines that have a valid production lot,
-        # i. e. not using in others claims
+        # i.e. not using in others claims
         info = dict(info)
         new_claim_lines = []
 
-        if clw_ids:
-            for clw_id in clw_ids:
-                product_id = clw_id.product_id
+        for clw_id in clw_ids:
+            product_id = clw_id.product_id
 
-                claim_line_info = False
-                if clw_id.lot_id.name in info:
-                    claim_line_info = info.get(clw_id.lot_id.name, False)
-                elif clw_id.invoice_line_id.invoice_id.number in info:
-                    claim_line_info = \
-                        info.get(clw_id.invoice_line_id.invoice_id.number,
-                                 False)
+            claim_line_info = False
+            if clw_id.lot_id.name in info:
+                claim_line_info = info.get(clw_id.lot_id.name, False)
+            elif clw_id.invoice_line_id.invoice_id.number in info:
+                claim_line_info = \
+                    info.get(clw_id.invoice_line_id.invoice_id.number, False)
 
-                num = claim_line_info and claim_line_info[0] or '0'
-                name = claim_line_info and claim_line_info[1] or ''
-                if num.isdigit():
-                    num = int(num)
-                else:
-                    num = 0
-
-                new_claim_lines.append(self.create_claim_line(
-                    self.env.context.get('active_id'),
-                    self.env['claim.line']._get_subject(num),
-                    product_id, clw_id, 1, name))
-
-            # Clean items in wizard model
-            if len(clw_ids) == 1:
-                ids_to_delete = "(%s)" % str(clw_ids[0].id)
+            num = claim_line_info and claim_line_info[0] or '0'
+            name = claim_line_info and claim_line_info[1] or ''
+            if num.isdigit():
+                num = int(num)
             else:
-                ids_to_delete = "%s" % str(tuple([clw.id for clw in clw_ids]))
-            self._cr.execute("DELETE FROM claim_line_wizard where id IN %s"
-                             % ids_to_delete)
+                num = 0
+
+            new_claim_lines.append(self.create_claim_line(
+                self.env.context.get('active_id'),
+                self.env['claim.line']._get_subject(num),
+                product_id, clw_id, 1, name))
+
+        if clw_ids:
+            # Clean items in wizard model
+            ids = str([clw.id for clw in clw_ids])
+            self._cr.execute("DELETE FROM claim_line_wizard where id IN ({})".
+                             format(ids[1:-1]))
 
         # normal execution
         self.action_cancel()
@@ -545,14 +558,12 @@ class ReturnedLinesFromSerial(models.TransientModel):
             }
         }
 
-    message = fields.Text(string='Message',
-                          compute='_set_message'
-                          )
+    message = fields.Text(string='Message', compute='_set_message')
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
     def _set_message(self):
-        """ Notify for missing (not added) claim lines that are in use in others
-        claims
+        """ Notify for missing (not added) claim lines that are in use in
+        others claims
         """
         for wizard in self:
             msg = ''

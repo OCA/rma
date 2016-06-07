@@ -25,8 +25,7 @@ from openerp.exceptions import ValidationError
 
 class TestConstrains(TransactionCase):
 
-    """
-    - The product in claim.line.wizard must be the same
+    """ - The product in claim.line.wizard must be the same
       that product of invoice line
     """
 
