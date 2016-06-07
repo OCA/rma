@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_substate_user,substate.substate.user,model_substate_substate,base.group_sale_salesman_all_leads,1,1,1,0
-access_claim_line_user,claim.line.user,model_claim_line,base.group_sale_salesman_all_leads,1,1,1,0
+access_substate_user_all_leads,substate.substate.user,model_substate_substate,base.group_sale_salesman_all_leads,1,1,1,0
+access_claim_line_user_all_leads,claim.line.user,model_claim_line,base.group_sale_salesman_all_leads,1,1,1,0
 access_substate_manager,substate.substate.manager,model_substate_substate,base.group_sale_manager,1,1,1,1
 access_claim_line_manager,claim.line.manager,model_claim_line,base.group_sale_manager,1,1,1,1
 access_substate_user,substate.substate.user,model_substate_substate,base.group_sale_salesman,1,1,1,0

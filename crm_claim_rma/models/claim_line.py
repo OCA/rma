@@ -1,27 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Vauxoo
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume,
-#            Osval Reyes, Yanina Aular
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Vauxoo
+# © 2013 Camptocamp
+# © 2009-2013 Akretion,
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import calendar
 import math
 from datetime import datetime
@@ -133,7 +115,9 @@ class ClaimLine(models.Model):
 
     @api.model
     def get_warranty_return_partner(self):
-        return self.env['product.supplierinfo'].get_warranty_return_partner()
+        return self.env['product.supplierinfo']._columns[
+            'warranty_return_partner'
+        ].selection
 
     warranty_type = fields.Selection(
         get_warranty_return_partner, readonly=True,
@@ -304,12 +288,14 @@ class ClaimLine(models.Model):
                 invoice_id, claim.claim_type,
                 self.product_id, claim.date)
         except InvoiceNoDate:
-            raise exceptions.Warning(
-                _('Error'), _('Cannot find any date for invoice. '
-                              'Must be a validated invoice.'))
+            raise exceptions.UserError(
+                _('Cannot find any date for invoice. '
+                  'Must be a validated invoice.')
+            )
         except ProductNoSupplier:
-            raise exceptions.Warning(
-                _('Error'), _('The product has no supplier configured.'))
+            raise exceptions.UserError(
+                _('The product has no supplier configured.')
+            )
 
         self.write(values)
         return True
@@ -326,8 +312,7 @@ class ClaimLine(models.Model):
 
     @api.returns('stock.location')
     def get_destination_location(self, product_id, warehouse_id):
-        """
-        Compute and return the destination location to take
+        """ Compute and return the destination location to take
         for a return. Always take 'Supplier' one when return type different
         from company.
         """
@@ -343,8 +328,7 @@ class ClaimLine(models.Model):
         return location_dest_id
 
     def _warranty_return_address_values(self, product, company, warehouse):
-        """
-        Return the partner to be used as return destination and
+        """ Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
         We can have various cases here:
@@ -386,33 +370,28 @@ class ClaimLine(models.Model):
 
     @api.multi
     def set_warranty(self):
-        """
-        Calculate warranty limit and address
+        """ Calculate warranty limit and address
         """
         for line_id in self:
             if not line_id.product_id:
-                raise exceptions.Warning(
-                    _('Error'), _('Please set product first'))
+                raise exceptions.UserError(_('Please set product first'))
 
             if not line_id.invoice_line_id:
-                raise exceptions.Warning(
-                    _('Error'), _('Please set invoice first'))
+                raise exceptions.UserError(_('Please set invoice first'))
 
             line_id.set_warranty_limit()
             line_id.set_warranty_return_address()
 
     @api.model
     def _get_sequence_number(self):
-        """
-        @return the value of the sequence for the number field in the
+        """ Return the value of the sequence for the number field in the
         claim.line model.
         """
-        return self.env['ir.sequence'].get('claim.line')
+        return self.env['ir.sequence'].next_by_code('claim.line')
 
     @api.model
     def create(self, vals):
-        """
-        @return write the identify number once the claim line is create.
+        """Return write the identify number once the claim line is create.
         """
         vals = vals or {}
 

@@ -1,27 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli,
-#            Osval Reyes, Yanina Aular
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eezee-It, MONK Software, Vauxoo
+# © 2013 Camptocamp
+# © 2009-2013 Akretion,
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openerp import _, api, exceptions, fields, models
 
 from .invoice_no_date import InvoiceNoDate
@@ -36,8 +18,9 @@ class CrmClaim(models.Model):
         wh_obj = self.env['stock.warehouse']
         wh = wh_obj.search([('company_id', '=', company_id)], limit=1)
         if not wh:
-            raise exceptions.Warning(
-                _('There is no warehouse for the current user\'s company.'))
+            raise exceptions.UserError(
+                _('There is no warehouse for the current user\'s company.')
+            )
         return wh
 
     def _get_picking_ids(self):
@@ -95,8 +78,7 @@ class CrmClaim(models.Model):
 
     @api.model
     def _get_claim_type_default(self):
-        claim_type = self.env['crm.claim.type'].search([])
-        return claim_type[0] if claim_type else self.env['crm.claim.type']
+        return self.env.ref('crm_claim_type.crm_claim_type_customer')
 
     claim_type = \
         fields.Many2one(default=_get_claim_type_default,
@@ -107,7 +89,6 @@ class CrmClaim(models.Model):
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
         claim_line = self.env['claim.line']
-        invoice_lines = self.invoice_id.invoice_line
         if not self.warehouse_id:
             self.warehouse_id = self._get_default_warehouse()
         claim_type = self.claim_type
@@ -135,7 +116,7 @@ class CrmClaim(models.Model):
 
         if create_lines:  # happens when the invoice is changed
             claim_lines = []
-            for invoice_line in invoice_lines:
+            for invoice_line in self.invoice_id.invoice_line_ids:
                 location_dest = claim_line.get_destination_location(
                     invoice_line.product_id, warehouse)
                 line = {
@@ -160,11 +141,19 @@ class CrmClaim(models.Model):
             self.delivery_address_id = self.invoice_id.partner_id.id
 
     @api.model
-    def message_get_reply_to(self):
-        """ Override to get the reply_to of the parent project. """
-        return [claim.section_id.message_get_reply_to()[0]
-                if claim.section_id else False
-                for claim in self.sudo()]
+    def message_get_reply_to(self, res_ids, default=None):
+        """ Override to get the reply_to of the parent project.
+        """
+        results = dict.fromkeys(res_ids, default or False)
+        if res_ids:
+            claims = self.browse(res_ids)
+            results.update({
+                claim.id: self.env['crm.team'].message_get_reply_to(
+                    [claim.team_id], default
+                )[claim.team_id] for claim in claims if claim.team_id
+            })
+
+        return results
 
     @api.multi
     def message_get_suggested_recipients(self):
@@ -172,13 +161,17 @@ class CrmClaim(models.Model):
         try:
             for claim in self:
                 if claim.partner_id:
-                    self._message_add_suggested_recipient(
-                        recipients, claim,
-                        partner=claim.partner_id, reason=_('Customer'))
+                    claim._message_add_suggested_recipient(
+                        recipients,
+                        partner=claim.partner_id,
+                        reason=_('Customer')
+                    )
                 elif claim.email_from:
-                    self._message_add_suggested_recipient(
-                        recipients, claim,
-                        email=claim.email_from, reason=_('Customer Email'))
+                    claim._message_add_suggested_recipient(
+                        recipients,
+                        email=claim.email_from,
+                        reason=_('Customer Email')
+                    )
         except exceptions.AccessError:
             # no read access rights -> just ignore suggested recipients
             # because this imply modifying followers
@@ -190,14 +183,21 @@ class CrmClaim(models.Model):
             browse(code_id).ir_sequence_id.code
         sequence = self.env['ir.sequence']
 
-        return claim_type_code and sequence.get(claim_type_code) or '/'
+        return claim_type_code and sequence.next_by_code(
+            claim_type_code
+        ) or '/'
 
     @api.model
     def create(self, values):
         values = values or {}
         if 'code' not in values or not values.get('code') \
                 or values.get('code') == '/':
-            values['code'] = self._get_sequence_number(values['claim_type'])
+
+            claim_type = values.get('claim_type')
+            if not claim_type:
+                claim_type = self._get_claim_type_default().id
+
+            values['code'] = self._get_sequence_number(claim_type)
 
         return super(CrmClaim, self).create(values)
 

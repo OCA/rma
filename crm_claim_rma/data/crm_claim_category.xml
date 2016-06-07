@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+        <record id="categ_claim10" model="crm.claim.category">
+        <field name="name">No Inventory</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim11" model="crm.claim.category">
+        <field name="name">Customer Return</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim12" model="crm.claim.category">
+        <field name="name">Buyer Cancelled</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim13" model="crm.claim.category">
+        <field name="name">General Adjustement</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim14" model="crm.claim.category">
+        <field name="name">Could Not Ship</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim15" model="crm.claim.category">
+        <field name="name">Different Item</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim16" model="crm.claim.category">
+        <field name="name">Merchandise Not Received</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim17" model="crm.claim.category">
+        <field name="name">Merchandise Not As Described</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim18" model="crm.claim.category">
+        <field name="name">Pricing Error</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim19" model="crm.claim.category">
+        <field name="name">Shipping Address Undeliverable</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim20" model="crm.claim.category">
+        <field name="name">Delivered Late by Carrier</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+
+    <record id="categ_claim21" model="crm.claim.category">
+        <field name="name">Missed Fulfilment Promise</field>
+        <field name="team_id" ref="team_after_sales_service"/>
+    </record>
+</odoo>

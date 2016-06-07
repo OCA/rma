@@ -1,26 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Eezee-It, MONK Software
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eezee-It, MONK Software
+# © 2013 Camptocamp
+# © 2009-2013 Akretion,
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import time
 
 from openerp import models, fields, exceptions, api, _
@@ -33,8 +16,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('stock.location')
     def _get_common_dest_location_from_line(self, lines):
-        """
-        If all the lines have the same destination location return that,
+        """ If all the lines have the same destination location return that,
         else return an empty recordset
         """
         dests = lines.mapped('location_dest_id')
@@ -43,8 +25,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('res.partner')
     def _get_common_partner_from_line(self, lines):
-        """
-        If all the lines have the same warranty return partner return that,
+        """ If all the lines have the same warranty return partner return that,
         else return an empty recordset
         """
         partners = lines.mapped('warranty_return_partner')
@@ -99,9 +80,9 @@ class ClaimMakePicking(models.TransientModel):
                                (move_field + '.state', '=', 'cancel')]
             lines = lines.search(domain)
             if not lines:
-                raise exceptions.Warning(
-                    _('Error'),
-                    _('A picking has already been created for this claim.'))
+                raise exceptions.UserError(
+                    _('A picking has already been created for this claim.')
+                )
         return lines
 
     delivery_warehouse_id = fields.Many2one(
@@ -142,7 +123,6 @@ class ClaimMakePicking(models.TransientModel):
             'state': 'draft',
             'date': time.strftime(DT_FORMAT),
             'partner_id': partner_id,
-            'invoice_state': "none",
             'company_id': claim.company_id.id,
             'location_id': self.claim_line_source_location_id.id,
             'location_dest_id': self.claim_line_dest_location_id.id,
@@ -190,21 +170,21 @@ class ClaimMakePicking(models.TransientModel):
             common_dest_location = self._get_common_dest_location_from_line(
                 claim_lines)
             if not common_dest_location:
-                raise exceptions.Warning(
-                    _('Error'),
+                raise exceptions.UserError(
                     _('A product return cannot be created for various '
                       'destination locations, please choose line with a '
-                      'same destination location.'))
+                      'same destination location.')
+                )
 
             claim_lines.auto_set_warranty()
             common_dest_partner = self._get_common_partner_from_line(
                 claim_lines)
             if not common_dest_partner:
-                raise exceptions.Warning(
-                    _('Error'),
+                raise exceptions.UserError(
                     _('A product return cannot be created for various '
                       'destination addresses, please choose line with a '
-                      'same address.'))
+                      'same address.')
+                )
             partner_id = common_dest_partner.id
 
         # create picking

@@ -1,27 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Eezee-It, MONK Software, Vauxoo
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
-#            Osval Reyes, Yanina Aular
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eezee-It, MONK Software, Vauxoo
+# © 2013 Camptocamp
+# © 2009-2013 Akretion,
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import _, api, exceptions, fields, models
 
@@ -33,8 +14,7 @@ class AccountInvoice(models.Model):
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
     def _refund_cleanup_lines(self, lines):
-        """
-        Override when from claim to update the quantity and link to the
+        """ Override when from claim to update the quantity and link to the
         claim line.
         """
 
@@ -71,16 +51,14 @@ class AccountInvoice(models.Model):
             # TODO use custom states to show button of this wizard or
             # not instead of raise an error
 
-            raise exceptions.Warning(
-                _('A refund has already been created for this claim !'))
+            raise exceptions.UserError(
+                _('A refund has already been created for this claim !')
+            )
         return [(0, 0, l) for l in new_lines]
 
     @api.model
-    def _prepare_refund(self, invoice, date=None, period_id=None,
-                        description=None, journal_id=None):
-        result = super(AccountInvoice, self)._prepare_refund(
-            invoice, date=date, period_id=period_id, description=description,
-            journal_id=journal_id)
+    def _prepare_refund(self, *args, **kwargs):
+        result = super(AccountInvoice, self)._prepare_refund(*args, **kwargs)
 
         if self.env.context.get('claim_id'):
             result['claim_id'] = self.env.context['claim_id']
