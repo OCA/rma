@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+from . import lot_mass_return_tests_common
 from . import test_crm_rma_lot_mass_return
 from . import test_crm_rma_lot_mass_return_2
 from . import test_constrains
