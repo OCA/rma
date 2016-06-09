@@ -7,6 +7,7 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
     barcodes at same time. In order to save locally information and trigger save
     data "ala onchange" but without lose the focus.
     */
+
     openerp.web.form.BarcodeText = openerp.web.form.FieldText.extend({
         events: {
             'keyup': function(e) {
@@ -34,6 +35,11 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
     });
 
     openerp.web.form.ChangeFocus = openerp.web.form.FieldChar.extend({
+        play_bip: function(){
+            var sound = document.getElementById("rma_alert");
+            sound.volume = 0.9;
+            sound.play();
+        },
 
         events: {
             'keyup': function(e) {
@@ -52,6 +58,7 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                 }
             },
             'change input': function(e) {
+                var self = this;
                 this.store_dom_value();
                 e.stopPropagation();
                 $('.packing_cache_button').click(function(e) {
@@ -64,8 +71,8 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                     }
                     var search = p.target.parentElement.className.search('pack_search');
                     if (p.target.name != 'scan_data' && search < 0 && p.keyCode === $.ui.keyCode.ENTER){
-                        playAlert.volume(0.9);
-                        playAlert('purr');
+                        console.log('Playing bip');
+                        self.play_bip();
                     }
                 });
                 $('textarea[name="scan_data"]').focus();
@@ -77,12 +84,17 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
 
     });
     openerp.web.FormView.include({
+        play_bip: function(){
+            var sound = document.getElementById("rma_alert");
+            sound.volume = 0.9;
+            sound.play();
+        },
         on_processed_onchange: function(result){
             try {
                 var result2 = result;
                 if (!_.isEmpty(result2.warning) && this.model == 'returned.lines.from.serial.wizard') {
-                    playAlert.volume(0.9);
-                    playAlert('purr');
+                    console.log('Playing bip');
+                    this.play_bip();
                     new openerp.web.Dialog(this, {
                         size: 'medium',
                         title: result2.warning.title,
