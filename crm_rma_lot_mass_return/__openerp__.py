@@ -38,7 +38,7 @@
     'data': [
         'wizards/returned_lines_from_serial_wizard.xml',
         'views/crm_claim.xml',
-        'templates/search_view.xml'
+        'templates/assets.xml'
     ],
     'demo': [
         'demo/stock_production_lot.xml',
