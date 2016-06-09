@@ -3,22 +3,15 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
         _lt = openerp.web._lt;
     var QWeb = openerp.web.qweb;
     /*
-    This widget is suposed to be used only in places where you need to load several
+    This widget is supposed to be used only in places where you need to load several
     barcodes at same time. In order to save locally information and trigger save
-    data "ala onchange" but without lose the focus.
+    data "ala on_change" but without lose the focus.
     */
 
     openerp.web.form.BarcodeText = openerp.web.form.FieldText.extend({
         events: {
-            'keyup': function(e) {
-                if (e.which === $.ui.keyCode.ENTER) {
-                    this.store_dom_value();
-                    e.stopPropagation();
-
-                }
-            },
             'keypress': function(e) {
-                if (e.which === $.ui.keyCode.ENTER) {
+                if (e.which == $.ui.keyCode.ENTER) {
                     this.store_dom_value();
                     e.stopPropagation();
                 }
@@ -28,8 +21,6 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                 e.stopPropagation();
                 $('textarea[name="scan_data"]').focus();
                 $('textarea[name="scan_data"]').trigger('focus');
-
-
             },
         },
     });
@@ -42,16 +33,8 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
         },
 
         events: {
-            'keyup': function(e) {
-                if (e.which === $.ui.keyCode.ENTER) {
-                    $('textarea[name="scan_data"]').focus();
-                    this.store_dom_value();
-                    e.stopPropagation();
-
-                }
-            },
             'keypress': function(e) {
-                if (e.which === 0 || e.which === $.ui.keyCode.TAB) {
+                if (e.which == $.ui.keyCode.ENTER) {
                     $('textarea[name="scan_data"]').focus();
                     this.store_dom_value();
                     e.stopPropagation();
@@ -77,8 +60,6 @@ openerp.crm_rma_lot_mass_return = function(openerp) {
                 });
                 $('textarea[name="scan_data"]').focus();
                 $('textarea[name="scan_data"]').trigger('focus');
-
-
             },
         },
 
