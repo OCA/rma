@@ -41,6 +41,7 @@
         'crm_claim_rma_code',
         'crm_rma_location',
         'product_warranty',
+        'portal_claim',
     ],
     'data': [
         'data/ir_sequence_type.xml',
