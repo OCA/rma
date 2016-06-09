@@ -237,7 +237,6 @@ class ReturnedLinesFromSerial(models.TransientModel):
         return data_line
 
     def _get_lots_from_scan_data(self, input_data):
-
         input_lines = self.get_data_of_products(input_data)
         invoice = self.env['account.invoice']
         lot = self.env['stock.production.lot']
@@ -274,33 +273,34 @@ class ReturnedLinesFromSerial(models.TransientModel):
                     # Search serial/lot numbers with that invoice line
                     lot_ids = lot.search([(invoice_field, '=', inv_line.id)])
 
-                    # Calculate the missing items to create
-                    num_to_create = int(inv_line.quantity) - \
-                        len(current_item_ids)
-                    num = 0
-                    while num < num_to_create:
-
+                    if len(current_item_ids) < int(inv_line.quantity):
                         # Displays missing product of invoice line
                         # on the wizard
                         lot_filtered_ids = current_item_ids.filtered(
                             lambda r: r not in line_set_ids)
                         lot_ids -= lot_filtered_ids.mapped('lot_id')
 
-                        line_id = clw.create({
-                            'product_id': inv_line.product_id.id,
-                            'invoice_line_id': inv_line.id,
-                        })
-                        # If in the invoice line there are products with
-                        # serial/lot numbers, displays serial/lot number
-                        if lot_ids:
-                            lot_id = lot_ids[0]
-                            lot_ids -= lot_id
-                            line_id.write({'lot_id': lot_id.id})
+                        # Calculate the missing items to create
+                        num_to_create = int(inv_line.quantity) - \
+                            len(current_item_ids)
+                        num = 0
+                        while num < num_to_create:
 
-                        if line_id not in line_set_ids:
-                            line_set_ids.append(line_id)
-                        num += 1
+                            line_id = clw.create({
+                                'product_id': inv_line.product_id.id,
+                                'invoice_line_id': inv_line.id,
+                            })
+                            # If in the invoice line there are products with
+                            # serial/lot numbers, displays serial/lot number
+                            if lot_ids:
+                                lot_id = lot_ids[0]
+                                lot_ids -= lot_id
+                                line_id.write({'lot_id': lot_id.id})
 
+                            line_set_ids.extend(
+                                [line_id] if line_id not in line_set_ids
+                                else [])
+                            num += 1
                         enter = True
 
                     # If there is still product that belongs to an
@@ -309,14 +309,12 @@ class ReturnedLinesFromSerial(models.TransientModel):
                     if not enter:
                         item_wo_lot = [el for el in current_item_ids
                                        if el not in line_set_ids]
-                        available_lots = [l for l in lot_ids]
                         used_lot_ids = []
-                        for item, lot_id in zip(item_wo_lot, available_lots):
+                        for item, lot_id in zip(item_wo_lot, lot_ids):
                             item.write({'lot_id': lot_id.id})
                             used_lot_ids.append(lot_id.id)
-                            line_set_ids.append(item)
+                        line_set_ids.extend([item for item in item_wo_lot])
                         lot_ids -= lot.browse(used_lot_ids)
-
                 element_searched = line_set_ids
             else:  # it must be a serial lot number
                 prodlot_ids, invoice_line_id = \
