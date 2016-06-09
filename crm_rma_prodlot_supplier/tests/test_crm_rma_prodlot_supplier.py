@@ -146,7 +146,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
                 if not lid.supplier_id or not
                 lid.supplier_invoice_line_id]
 
-        self.assertEquals(failed_lot_ids, [])
+        self.assertEquals(failed_lot_ids, lot_ids)
 
     def test_03_action_create_invoice(self):
         """ Testing action_create_invoice method
