@@ -32,6 +32,7 @@ class TestUserInput(TransactionCase):
     def setUp(self):
         super(TestUserInput, self).setUp()
         self.wizard = self.env['returned.lines.from.serial.wizard']
+        self.claim_id = self.env.ref('crm_claim.crm_claim_2')
 
     def test_01_user_input_cases(self):
         test_cases = [
@@ -145,3 +146,17 @@ class TestUserInput(TransactionCase):
             for item in case['asserts']:
                 self.assertEqual(
                     user_input[item['line']-1], safe_eval(item['value']))
+
+    def test_02_invoice_search_validation(self):
+        invoice_id = self.env.ref('crm_rma_lot_mass_return.so_wizard_rma_1').\
+            invoice_ids
+        self.assertEqual(len(invoice_id), 1, 'Expected only one invoice')
+        wizard_id = self.wizard.with_context({
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
+        }).create({})
+        res = wizard_id._get_lots_from_scan_data(invoice_id.display_name)
+        self.assertEqual(len(res[0]), 9, '9 items were expected')
+        res = wizard_id._get_lots_from_scan_data('SAJ/2016/007')
+        self.assertEqual(len(res[0]), 1, '1 item was expected')

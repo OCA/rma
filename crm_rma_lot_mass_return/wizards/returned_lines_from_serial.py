@@ -236,13 +236,74 @@ class ReturnedLinesFromSerial(models.TransientModel):
             data_line.append(line)
         return data_line
 
-    def _get_lots_from_scan_data(self, input_data):
+    def _search_lots_by_invoices(self, invoice_ids):
+        line_set_ids = self.env.context.get('line_set_ids', [])
+        invoice_ids = invoice_ids or self.env['account.invoice']
+        invoice_line_ids = invoice_ids.mapped("invoice_line")
+        current_claim_type, supplier_claim_type = self._get_claim_type()[0::2]
+        invoice_field = 'supplier_invoice_line_id'\
+            if supplier_claim_type == current_claim_type else\
+            'invoice_line_id'
+        for invoice_line_id in invoice_line_ids:
+            enter = False
+            # Search items displayed with the current invoice line
+            current_item_ids = self.env['claim.line.wizard'].search([
+                ('invoice_line_id', '=', invoice_line_id.id)])
 
+            # Search serial/lot numbers with that invoice line
+            lot_ids = self.env['stock.production.lot'].search(
+                [(invoice_field, '=', invoice_line_id.id)])
+
+            if len(current_item_ids) < int(invoice_line_id.quantity):
+                # Displays missing product of invoice line
+                # on the wizard
+                lot_filtered_ids = current_item_ids.filtered(
+                    lambda r: r not in line_set_ids)
+                lot_ids -= lot_filtered_ids.mapped('lot_id')
+
+                # Calculate the missing items to create
+                num_to_create = int(invoice_line_id.quantity) - \
+                    len(current_item_ids)
+                num = 0
+                while num < num_to_create:
+                    line_id = self.env['claim.line.wizard'].create({
+                        'product_id': invoice_line_id.product_id.id,
+                        'invoice_line_id': invoice_line_id.id,
+                    })
+                    # If in the invoice line there are products with
+                    # serial/lot numbers, displays serial/lot number
+                    if lot_ids:
+                        lot_id = lot_ids[0]
+                        lot_ids -= lot_id
+                        line_id.write({'lot_id': lot_id.id})
+
+                    line_set_ids.extend(
+                        [line_id] if line_id not in line_set_ids
+                        else [])
+                    num += 1
+                enter = True
+
+            # If there is still product that belongs to an
+            # invoice line without serial/lot number and there is
+            # available serial/lot numbers to be used
+            if not enter:
+                item_wo_lot = [el for el in current_item_ids
+                               if el not in line_set_ids]
+                used_lot_ids = []
+                for item, lot_id in zip(item_wo_lot, lot_ids):
+                    item.write({'lot_id': lot_id.id})
+                    used_lot_ids.append(lot_id.id)
+                line_set_ids.extend([item for item in item_wo_lot])
+                lot_ids -= self.env['stock.production.lot'].browse(
+                    used_lot_ids)
+        return line_set_ids
+
+    def _get_lots_from_scan_data(self, input_data):
         input_lines = self.get_data_of_products(input_data)
         invoice = self.env['account.invoice']
         lot = self.env['stock.production.lot']
         clw = self.env['claim.line.wizard']
-
+        ctx = dict(self.env.context or {})
         prodlot_set_ids = set()
         line_set_ids = []
         lots_lot_set_ids = []
@@ -250,74 +311,16 @@ class ReturnedLinesFromSerial(models.TransientModel):
         if not input_lines:
             return False, False, False
 
-        current_claim_type, supplier_claim_type = self._get_claim_type()[0::2]
-
-        invoice_field = 'supplier_invoice_line_id'\
-            if supplier_claim_type == current_claim_type else\
-            'invoice_line_id'
-
         for line in input_lines:
-
             number_serial = line[0].encode('utf8')
             # search invoices first
             invoice_ids = invoice.search([('number', '=', number_serial)])
             element_searched = False
 
             if invoice_ids:
-                invoice_line_ids = invoice_ids.mapped("invoice_line")
-                for inv_line in invoice_line_ids:
-                    enter = False
-                    # Search items displayed with the current invoice line
-                    current_item_ids = clw.search([
-                        ('invoice_line_id', '=', inv_line.id)])
-
-                    # Search serial/lot numbers with that invoice line
-                    lot_ids = lot.search([(invoice_field, '=', inv_line.id)])
-
-                    # Calculate the missing items to create
-                    num_to_create = int(inv_line.quantity) - \
-                        len(current_item_ids)
-                    num = 0
-                    while num < num_to_create:
-
-                        # Displays missing product of invoice line
-                        # on the wizard
-                        lot_filtered_ids = current_item_ids.filtered(
-                            lambda r: r not in line_set_ids)
-                        lot_ids -= lot_filtered_ids.mapped('lot_id')
-
-                        line_id = clw.create({
-                            'product_id': inv_line.product_id.id,
-                            'invoice_line_id': inv_line.id,
-                        })
-                        # If in the invoice line there are products with
-                        # serial/lot numbers, displays serial/lot number
-                        if lot_ids:
-                            lot_id = lot_ids[0]
-                            lot_ids -= lot_id
-                            line_id.write({'lot_id': lot_id.id})
-
-                        if line_id not in line_set_ids:
-                            line_set_ids.append(line_id)
-                        num += 1
-
-                        enter = True
-
-                    # If there is still product that belongs to an
-                    # invoice line without serial/lot number and there is
-                    # available serial/lot numbers to be used
-                    if not enter:
-                        item_wo_lot = [el for el in current_item_ids
-                                       if el not in line_set_ids]
-                        available_lots = [l for l in lot_ids]
-                        used_lot_ids = []
-                        for item, lot_id in zip(item_wo_lot, available_lots):
-                            item.write({'lot_id': lot_id.id})
-                            used_lot_ids.append(lot_id.id)
-                            line_set_ids.append(item)
-                        lot_ids -= lot.browse(used_lot_ids)
-
-                element_searched = line_set_ids
+                ctx.update({'line_set_ids': line_set_ids})
+                element_searched = self.with_context(ctx).\
+                    _search_lots_by_invoices(invoice_ids)
             else:  # it must be a serial lot number
                 prodlot_ids, invoice_line_id = \
                     self._search_lot_by_name_based_on_type(number_serial)
