@@ -76,7 +76,7 @@ class ClaimLine(models.Model):
     date = fields.Date('Claim Line Date',
                        select=True,
                        default=fields.date.today())
-    name = fields.Char('Description', default='none', required=True,
+    name = fields.Text('Description', default='none', required=True,
                        help="More precise description of the problem")
     priority = fields.Selection([('0_not_define', 'Not Define'),
                                  ('1_normal', 'Normal'),
