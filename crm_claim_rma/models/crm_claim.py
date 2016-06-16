@@ -116,7 +116,10 @@ class CrmClaim(models.Model):
 
         if create_lines:  # happens when the invoice is changed
             claim_lines = []
-            for invoice_line in self.invoice_id.invoice_line_ids:
+            invoices_lines = self.invoice_id.invoice_line_ids.filtered(
+                lambda line: line.product_id.type in ('consu', 'product')
+            )
+            for invoice_line in invoices_lines:
                 location_dest = claim_line.get_destination_location(
                     invoice_line.product_id, warehouse)
                 line = {
