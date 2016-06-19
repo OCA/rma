@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="lot_purchase_wizard_rma_item_1" model="stock.production.lot">
+            <field name="name">MAC0001</field>
+            <field name="ref">MAC0001</field>
+            <field name="product_id" ref="product.product_product_8"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_2" model="stock.production.lot">
+            <field name="name">MAC0002</field>
+            <field name="ref">MAC0002</field>
+            <field name="product_id" ref="product.product_product_8"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_3" model="stock.production.lot">
+            <field name="name">MAC0003</field>
+            <field name="ref">MAC0003</field>
+            <field name="product_id" ref="product.product_product_8"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_4" model="stock.production.lot">
+            <field name="name">MAC0004</field>
+            <field name="ref">MAC0004</field>
+            <field name="product_id" ref="product.product_product_8"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_5" model="stock.production.lot">
+            <field name="name">IPAD0001</field>
+            <field name="ref">IPAD0001</field>
+            <field name="product_id" ref="product.product_product_6"/>
+        </record>
+
+        <record id="lot_purchase_wizard_rma_item_5_twice" model="stock.production.lot">
+            <field name="name">IPAD0001</field>
+            <field name="ref">IPAD0001</field>
+            <field name="product_id" ref="product.product_product_4"/>
+        </record>
+    </data>
+</openerp>

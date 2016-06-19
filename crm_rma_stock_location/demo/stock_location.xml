@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="location_rma" model="stock.location">
+            <field name="name">RMA Demo</field>
+            <field name="usage">internal</field>
+        </record>
+
+        <record id="stock.stock_warehouse_shop0" model="stock.warehouse">
+            <field name="lot_rma_id" ref="location_rma"/>
+        </record>
+
+        <record id="location_rma_a" model="stock.location">
+            <field name="name">RMA - Box A</field>
+            <field name="location_id" ref="location_rma"/>
+            <field name="usage">internal</field>
+        </record>
+        <record id="location_rma_b" model="stock.location">
+            <field name="name">RMA - Box B</field>
+            <field name="location_id" ref="location_rma"/>
+            <field name="usage">internal</field>
+        </record>
+
+        <record id="product_socket" model="product.product">
+            <field name="name">Socket</field>
+            <field name="categ_id" ref="product.product_category_1"/>
+            <field name="standard_price">70.0</field>
+            <field name="list_price">100.0</field>
+            <field name="type">product</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+        </record>
+
+    </data>
+</openerp>
+

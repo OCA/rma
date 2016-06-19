@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="crm_rma_invoice_1_line_1" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">iMac</field>
+            <field name="price_unit">1799</field>
+            <field name="quantity">3</field>
+        </record>
+
+        <record id="crm_rma_invoice_1_line_2" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="invoice_id" ref="crm_rma_invoice_001"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">PC Assemble</field>
+            <field name="price_unit">450</field>
+            <field name="quantity">1</field>
+        </record>
+
+        <record id="crm_rma_invoice_2_line_1" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="invoice_id" ref="crm_rma_invoice_002"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">PC Assemble</field>
+            <field name="price_unit">450</field>
+            <field name="quantity">1</field>
+        </record>
+
+        <record id="crm_rma_invoice_3_line_1" model="account.invoice.line">
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="invoice_id" ref="crm_rma_invoice_003"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="name">iMac</field>
+            <field name="price_unit">1799</field>
+            <field name="quantity">3</field>
+        </record>
+    </data>
+</openerp>

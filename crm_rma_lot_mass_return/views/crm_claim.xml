@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="crm_claim_rma_form_view_meta" model="ir.ui.view">
+            <field name="name">CRM - Claim product return Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim_rma.crm_claim_rma_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Claim Description']//div[@name='serial']" position="inside">
+                    <button name="render_metasearch_view"
+                        groups="crm_claim_rma.group_rma_user"
+                        string="Add claim lines using serial or invoice number" type="object"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+     </data>
+</openerp>

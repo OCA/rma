@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  crm_claim_rma for OpenERP
+  Copyright (C) 2011 Akretion Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+<openerp>
+    <data>
+        <record id="view_claim_picking_from_picking" model="ir.ui.view">
+            <field name="name">claim_picking</field>
+            <field name="model">claim.make.picking.from.picking.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select lines to add in picking">
+                    <separator string="Locations" colspan="4"/>
+                    <field name="picking_line_source_location" nolabel="1" />
+                    <field name="picking_line_dest_location" nolabel="1" />
+                    <separator string="Select lines for picking" colspan="4"/>
+                    <field name="picking_line_ids" nolabel="1" colspan="4"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel"
+                            name="action_cancel" type="object"
+                            icon='gtk-cancel'/>
+                        <button name="action_create_picking_from_picking"
+                            string="Create picking"
+                            icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_picking_from_claim_picking"
+            model="ir.actions.act_window">
+            <field name="name">Create Incoming Shipment to Stock</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">claim.make.picking.from.picking.wizard</field>
+            <field name="src_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'picking_type': 'picking_stock'}</field>
+        </record>
+
+        <record id="action_loss_picking_from_claim_picking"
+            model="ir.actions.act_window">
+            <field name="name">Create Incoming Shipment to Breakage Loss Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">claim.make.picking.from.picking.wizard</field>
+            <field name="src_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'picking_type': 'picking_loss'}
+            </field>
+        </record>
+
+        <record id="action_used_picking_from_claim_picking"
+            model="ir.actions.act_window">
+            <field name="name">Create Incoming Shipment to Refurbish Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">claim.make.picking.from.picking.wizard</field>
+            <field name="src_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'picking_type': 'picking_refurbish'}</field>
+        </record>
+    </data>
+</openerp>

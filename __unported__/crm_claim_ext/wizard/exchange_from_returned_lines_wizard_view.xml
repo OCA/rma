@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#########################################################################
+#                                                                       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+<openerp>
+    <data>
+<!-- SELECTED RETURN LINES FOR EXCHANGE FORM VIEW -->
+		<record id="view_exchange_from_returned_lines_form" model="ir.ui.view">
+            <field name="name">exchange_from_returned_lines_wiew</field>
+            <field name="model">exchange_from_returned_lines.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Select return lines to add in picking">
+                	<separator string="Select lines for picking. DON'T FORGET TO SELECT THE REPLACEMENT PRODUCT.                                                                                                                                                      " colspan="4"/>
+					<field name="exchange_line_ids" nolabel="1" colspan="4"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_create_exchange" string="Create exchange" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record> 
+		
+<!-- SELECTED RETURN LINES FOR EXCHANGE ACTION -->
+        <record id="action_exchange_from_returned_lines" model="ir.actions.act_window">
+            <field name="name">action_exchange_from_returned_lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">exchange_from_returned_lines.wizard</field>
+            <field name="src_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <!-- field name="context">{'claim_id':claim_id}</field --> 
+        </record>
+
+<!-- TEMP EXCHANGE LINE VIEW -->
+		<record model="ir.ui.view" id="temp_exchange_line_form_view">
+    		<field name="name">Temp exchange line Form</field>
+    		<field name="model">temp.exchange.line</field>
+    		<field name="arch" type="xml">
+			<form string="Temp product exchange">
+				<separator string="Returned product" colspan="2"/>
+				<separator string="Replacement product" colspan="2"/>				
+				<field name="returned_product_id"/>
+				<field name="replacement_product_id"/>
+				<field name="returned_prodlot_id"/>
+				<field name="replacement_prodlot_id"/>				 
+				<field name="returned_product_quantity"/>
+				<field name="replacement_product_quantity"/>					
+			</form>
+        	</field>
+		</record>
+		
+        <record model="ir.ui.view" id="temp_exchange_line_tree_view">
+            <field name="name">temp_exchange_line_Tree</field>
+            <field name="model">temp.exchange.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Confirm exchange lines">
+					<field name="returned_product_id"/>
+					<field name="returned_prodlot_id"/> 
+					<field name="returned_product_quantity"/>
+					<field name="replacement_product_id"/>
+					<field name="replacement_prodlot_id"/>	
+					<field name="replacement_product_quantity"/>	
+                </tree>
+            </field>
+        </record> 
+                		
+    </data>
+</openerp>

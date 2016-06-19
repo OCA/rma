@@ -1,0 +1,57 @@
+-
+  In order to test the refund creation from a claim
+-
+  I create a customer invoice
+-
+  !record {model: account.invoice, id: account_invoice_claim_refund, view: account.invoice_form}:
+    payment_term: account.account_payment_term_advance
+    journal_id: account.sales_journal
+    partner_id: base.res_partner_3
+    name: 'Test Customer Invoice'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
+      - product_id: product.product_product_4
+        quantity: 5.0
+-
+  I confirm the invoice
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: account_invoice_claim_refund}
+-
+  I create a claim
+-
+  !record {model: crm.claim, id: claim_refund}:
+    name: 'Angry Customer'
+    claim_type: crm_claim_type.crm_claim_type_customer
+    partner_id: base.res_partner_3
+    invoice_id: account_invoice_claim_refund
+    stage_id: crm_claim.stage_claim1
+-
+  I prepare the wizard context.
+-
+  !python {model: account.invoice.refund}: |
+    claim_lines = self.pool.get('claim.line').search(cr, uid, [('claim_id','=',ref('claim_refund'))])
+    context.update({'active_model': 'crm_claim', 'active_id': ref('claim_refund'), 'claim_id': ref('claim_refund'), 'invoice_ids': [ref('account_invoice_claim_refund')]  })
+-
+  I create a refund wizard
+-
+  !record {model: account.invoice.refund, id: wizard_claim_refund}:
+    filter_refund: refund
+    description: 'claim refund'
+-
+  I launch the refund wizard
+-
+  !python {model: account.invoice.refund}: |
+    self.compute_refund(cr, uid, [ref('wizard_claim_refund')], 'refund', context=context)
+-
+  I check that a refund linked to the claim has been created.
+-
+  !python {model: account.invoice}: |
+    refund = self.search(cr, uid, [('type', '=', 'out_refund'),('claim_id', '=', ref('claim_refund'))])
+    assert refund, "The refund is created"
+    refund_line_ids = self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id','=',refund[0])])
+    assert len(refund_line_ids) == 2, "It contains 2 lines, as excepted"
+    refund_lines = self.pool.get('account.invoice.line').browse(cr, uid, refund_line_ids)
+    assert ref('product.product_product_4') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "First line is checked"
+    assert ref('product.product_product_5') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "Second line is checked"
+
