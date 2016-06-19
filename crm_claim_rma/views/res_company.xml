@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="res_company_rma_config_form_view" model="ir.ui.view">
+            <field name="name">res.company.rma.config.form.view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Overdue Payments']" position="before">
+                    <page string="RMA">
+                        <separator colspan="6" string="Claim Attention Priority"/>
+                        <group name="rma_config" colspan="6">
+                            <group col="2">
+                                <field name="priority_maximum"/>
+                                <newline/>
+                                <field name="priority_minimum"/>
+                            </group>
+                            <group col="4">
+                                <div col="4" class="oe_left">
+                                    <p class="oe_grey">The attention priority of a claim is caculated using invoice date:
+                                        <br/>
+                                        <b>- Very High:</b> invoice date &lt;= priority maximum.
+                                        <br/>
+                                        <b>- High:</b> priority maximum &lt; invoice date &lt;= priority minimun.
+                                        <br/>
+                                        <b>- Normal:</b> priority minimun &lt; invoice date.
+                                    </p>
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Limit Days">
+                                <field name="limit_days"/>
+                            </group>
+                            <group string="Logistic">
+                                <field name="rma_warehouse_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

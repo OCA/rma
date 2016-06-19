@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="crm_claim_rma.group_rma_readonly" model="res.groups">
+            <field name="menu_access" eval="[
+                (4, ref('crm_rma_stock_location.menu_stock_rma')),
+                ]"/>
+        </record>
+
+    </data>
+</openerp>

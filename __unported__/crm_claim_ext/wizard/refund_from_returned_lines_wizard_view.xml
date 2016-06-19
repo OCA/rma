@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#########################################################################
+#                                                                       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+<openerp>
+    <data>
+<!-- SELECT FORM VIEW -->
+<!--        <record id="view_refund_from_returned_lines_form" model="ir.ui.view">-->
+<!--            <field name="name">refund_from_returned_lines_wiew</field>-->
+<!--            <field name="model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="type">form</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--			<form string="Select return lines to refund">-->
+<!--				<separator string="Select lines for picking					                                                           														" colspan="4"/>-->
+<!--				<field name="refund_journal"/>-->
+<!--				<field name="return_line_ids" nolabel="1" colspan="4"/>-->
+<!--                    <group col="4" colspan="2">-->
+<!--                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>-->
+<!--                        <button name="action_create_refund" string="Create refund" icon='gtk-ok' type="object"/>-->
+<!--                    </group>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record> -->
+<!--		-->
+<!-- SELECT ACTION -->
+<!--        <record id="action_refund_from_returned_lines" model="ir.actions.act_window">-->
+<!--            <field name="name">action_refund_from_returned_lines</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="src_model">crm.claim</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field> -->
+            <!-- field name="context">{'claim_id':claim_id}</field  -->
+<!--        </record>	  -->
+<!--		-->
+
+<!--        <record id="action_claim_refund" model="ir.actions.act_window">-->
+<!--            <field name="name">New Refund</field>-->
+<!--            <field name="res_model">refund_from_returned_lines.wizard</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--           <field name="view_id" ref="account.view_account_invoice_refund"/>-->
+<!--           <field name="target">new</field>-->
+<!--        </record>-->
+
+    </data>
+</openerp>

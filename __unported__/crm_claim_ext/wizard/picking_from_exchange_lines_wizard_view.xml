@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#########################################################################
+#                                                                       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+<openerp>
+    <data>
+    
+<!-- SELECTED exchange LINES FOR PICKING OUT FORM VIEW -->
+        <record id="view_picking_out_from_exchange_lines_form" model="ir.ui.view">
+            <field name="name">picking_out_from_exchange_lines_wiew</field>
+            <field name="model">picking_out_from_exchange_lines.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Select exchange lines to add in picking">
+                	<separator string="Select lines for picking out                                                                                                                                                        " colspan="4"/>
+					<field name="exchange_line_ids" nolabel="1" colspan="4"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_create_picking" string="Create picking" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record> 
+		
+<!-- SELECTED exchange LINES FOR PICKING OUT ACTION -->
+        <record id="action_picking_out_from_exchange_lines" model="ir.actions.act_window">
+            <field name="name">action_picking_out_from_exchange_lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">picking_out_from_exchange_lines.wizard</field>
+            <field name="src_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> 
+            <!-- field name="context">{'claim_id':claim_id}</field --> 
+        </record>
+                		
+    </data>
+</openerp>

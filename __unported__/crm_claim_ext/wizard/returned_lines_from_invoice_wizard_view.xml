@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#########################################################################
+#                                                                       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+<openerp>
+    <data>
+<!-- SELECT INVOICE FORM VIEW -->
+        <record id="view_create_return_invoice_form" model="ir.ui.view">
+            <field name="name">returned_lines_from_invoice_view</field>
+            <field name="model">returned_lines_from_invoice_invoice.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select invoice">
+					<field name="invoice_id" domain="[('partner_id','=',partner_id)]"/>
+					<field name="partner_id"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_return_all" string="Return all invoice lines" icon='gtk-ok' type="object"/>
+                        <button name="action_select_lines" string="Select lines to return" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record> 
+		
+<!-- SELECT INVOICE ACTION -->
+        <record id="action_create_return_inv" model="ir.actions.act_window">
+            <field name="name">action_create_return_invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">returned_lines_from_invoice_invoice.wizard</field>
+			<field name="src_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> 
+            <field name="context">{}</field> 
+        </record>	  
+
+<!-- SELECT FORM VIEW -->
+        <record id="view_create_return_invoice_line_form" model="ir.ui.view">
+            <field name="name">returned_lines_from_invoice_line_wiew</field>
+            <field name="model">returned_lines_from_invoice_line.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select return lines to create">
+                <separator string="Select return lines to create" colspan="4"/>
+                <field name="claim_line_ids" nolabel="1" colspan="4"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_create_returns" string="Create selected returns" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record> 
+
+<!-- SELECT TEMP RETURN LINES TREE VIEW -->        
+        <record model="ir.ui.view" id="temp_claim_line_tree_view">
+            <field name="name">temp_claim_line_Tree</field>
+            <field name="model">temp.claim.line</field>
+            <field name="arch" type="xml">
+                <tree string="Confirm return lines">
+                    <field name="invoice_id"/>
+                    <field name="product_id"/> 
+                    <field name="prodlot_id"/>
+                    <field name="product_returned_quantity"/>	
+                </tree>
+            </field>
+        </record>        
+        		
+    </data>
+</openerp>

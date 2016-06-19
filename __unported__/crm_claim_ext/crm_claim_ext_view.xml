@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!--
+#########################################################################
+#                                                                       #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+#                                                                       #
+#This program is free software: you can redistribute it and/or modify   #
+#it under the terms of the GNU General Public License as published by   #
+#the Free Software Foundation, either version 3 of the License, or      #
+#(at your option) any later version.                                    #
+#                                                                       #
+#This program is distributed in the hope that it will be useful,        #
+#but WITHOUT ANY WARRANTY; without even the implied warranty of         #
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #
+#GNU General Public License for more details.                           #
+#                                                                       #
+#You should have received a copy of the GNU General Public License      #
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
+#########################################################################
+-->
+
+<openerp>
+    <data>
+        <!-- Claims    -->
+        <record model="ir.ui.view" id="crm_claim_rma_form_view">
+            <field name="name">CRM - Claim product return Form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+            <page string="Communication &amp; History" position="after">
+                <page string="Product return">
+                </page>
+            </field>
+        </record>
+
+         <record id="crm_claim_rma.picking_out_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_out_form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form" />
+            <field name="arch" type="xml">
+<!--                If we use crm_claim_rma we should not use the old return products anymore-->
+                    <xpath expr="/form/header/button[@string='Return Products']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="picking_in_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_in_form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form" />
+            <field name="arch" type="xml">
+<!--                If we use crm_claim_rma we should not use the old return products anymore-->
+                <xpath expr="/form/header/button[@string='Return Products']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Picking follow -->
+        <!-- TREE -->
+<!--
+        <record model="ir.ui.view" id="crm_picking_follow_tree_view">
+            <field name="name">CRM - Picking follow Tree</field>
+            <field name="model">picking.follow</field>
+            <field name="arch" type="xml">
+                <tree string="Picking follows">
+                    <field name="picking_id"/>
+                    <field name="related_picking_state"/>
+                    <field name="related_picking_due_date"/>
+                    <field name="related_picking_delivered_date"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+-->
+        <!-- FORM -->
+<!--
+        <record model="ir.ui.view" id="crm_picking_follow_form_view">
+            <field name="name">CRM - Picking follow Form</field>
+            <field name="model">picking.follow</field>
+            <field name="arch" type="xml">
+                <form string="Picking follow">
+                    <field name="picking_id"/>
+                    <field name="related_picking_state"/> 
+                    <field name="related_picking_due_date"/>
+                    <field name="related_picking_delivered_date"/> 
+                    <field name="name"/>    
+                </form>
+            </field>
+        </record>
+-->
+
+
+
+<!-- PRODUCT EXCHANGE -->
+    <!-- TREE -->
+<!--    <record model="ir.ui.view" id="crm_product_exchange_tree_view">-->
+<!--        <field name="name">CRM - Product exchange Tree</field>-->
+<!--        <field name="model">product.exchange</field>-->
+<!--        <field name="type">tree</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--        <tree string="Product exchanges" editable="top" >-->
+<!--            <field name="selected"/>-->
+<!--            <field name="state"/>-->
+<!--            <field name="exchange_send_date"/>-->
+<!--            <field name="returned_product"/> -->
+<!--            <field name="returned_product_serial"/>-->
+<!--            <field name="replacement_product"/>-->
+<!--            <field name="replacement_product_serial"/>-->
+<!--            <field name="returned_value"/>-->
+<!--            <field name="replacement_value"/>-->
+<!--            <field name="name"/>    -->
+<!--        </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- FORM -->
+<!--    <record model="ir.ui.view" id="crm_product_exchange_form_view">-->
+<!--        <field name="name">CRM - Product exchange Form</field>-->
+<!--        <field name="model">product.exchange</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--        <form string="Product exchange">-->
+<!--            <field name="state"/>-->
+<!--            <field name="exchange_send_date"/>-->
+<!--            <separator string="Returned product" colspan="2"/>-->
+<!--            <separator string="Replacement product" colspan="2"/>-->
+<!--            <field name="returned_product"/> -->
+<!--            <field name="replacement_product"/>-->
+<!--            <field name="returned_product_serial"/>-->
+<!--            <field name="replacement_product_serial"/> -->
+<!--            <field name="returned_product_qty"/>        -->
+<!--            <field name="replacement_product_qty"/>-->
+<!--            <field name="returned_unit_sale_price"/>-->
+<!--            <field name="replacement_unit_sale_price"/>-->
+<!--            <field name="returned_value"/>-->
+<!--            <field name="replacement_value"/>-->
+<!--            <separator string="Comment" colspan="2"/>-->
+<!--            <field name="name" colspan="4" nolabel="1"/>        -->
+<!--        </form>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--        -->
+
+ <!-- act_window
+
+            context="{'search_default_account_id':[active_id], 'search_default_unreconciled':1, 'default_account_id': active_id}"
+            src_model="account.account"/>
+
+        <act_window domain="[('reconcile_id', '=', active_id)]" id="act_account_acount_move_line_reconcile_open" 
+        name="Reconciled entries" res_model="account.move.line" src_model="account.move.reconcile"/ -->
+        
+     </data>
+</openerp>

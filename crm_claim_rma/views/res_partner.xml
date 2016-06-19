@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <!-- Address list with details to help shipping address selection -->
+    <record id="view_partner_contact_tree" model="ir.ui.view">
+      <field name="name">res.partner.contact.tree</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <tree string="Contacts">
+          <field name="name"/>
+          <field name="function" invisible="True"/>
+          <field name="street"/>
+          <field name="zip"/>
+          <field name="city"/>
+          <field name="email"/>
+          <field name="user_id" invisible="True"/>
+          <field name="is_company" invisible="True"/>
+          <field name="country_id"/>
+          <field name="parent_id" invisible="True"/>
+        </tree>
+      </field>
+    </record>
+  </data>
+</openerp>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="help_message_form" model="ir.ui.view">
+            <field name="name">returned_lines_help_message</field>
+            <field name="model">returned.lines.from.serial.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <p>You are able to insert lines based on the following rules:</p>
+                    <ul>
+                        <li>Write the <strong>Serial</strong> to search the product</li>
+                        <li>Write the <strong>Invoice No.</strong> to search and pick one of the products in it</li>
+                    </ul>
+                    <p>
+                        You can also add the reason of the claim, comment and the product all at same time
+                        just need to use the following format separated by '*':
+                    </p>
+                    <ul>
+                        <li>Using a serial, you must use: [Serial Lot No.]*[Reason No.]*[Quick explanation].</li>
+                        <li>For example: A4JD6JHS*4*The display is broken when was unboxed</li>
+                    </ul>
+                    <h3>Use the following available reasons:</h3>
+                    <ol>
+                        <li>Not specified</li>
+                        <li>Legal retractation</li>
+                        <li>Order Cancellation</li>
+                        <li>Damaged Delivered Product</li>
+                        <li>Shipping error</li>
+                        <li>Exchange request</li>
+                        <li>Lost during transport</li>
+                        <li>Perfect Conditions</li>
+                        <li>Imperfection</li>
+                        <li>Physical Damage by Client</li>
+                        <li>Physical Damage by Company</li>
+                        <li>Other</li>
+                    </ol>
+                    <footer>
+                        <button name="button_get_back_to_wizard" type="object" string="Ok" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="view_enter_product" model="ir.ui.view">
+            <field name="name">returned_lines_from_serial_wiew</field>
+            <field name="model">returned.lines.from.serial.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                   <button class="pull-right fa fa-question-circle"
+                       name="button_show_help"
+                       type="object"
+                       tooltip="Detailed help" />
+                    <group string="Search products" colspan="4">
+                        <p class="oe_grey">
+                            Insert serial lot numbers and/or invoice numbers in a new line to search products
+                        </p><newline/>
+                        <field name="scan_data"
+                               widget='barcode_text'
+                               colspan="6"
+                               on_change="onchange_load_products(scan_data, option_ids)"
+                               nolabel='1'/>
+                    </group>
+                    <group>
+                        <field name="current_status" readonly="1" widget="barcode_text"  nolabel="1" invisible="1"/>
+                        <field name="scaned_data" invisible="1"/>
+                        <field name="option_ids" invisible="1"/>
+                        <newline/>
+                        <field class="oe_text_center"
+                               name="message"
+                               readonly="1"
+                               nolabel="1"
+                               attrs="{'invisible':[('message', '=', '')]}"/>
+                    </group>
+                    <group string="Add products">
+                        <div class="oe_grey">
+                            Select product listed below and then add it using the button "Add items to the claim"
+                        </div>
+                    </group>
+                    <div class="jumbotron">
+                        <field name="lines_list_id" domain="[('id', 'in', [])]"
+                               widget="many2many_checkboxes" on_change="change_list(lines_list_id)"/>
+                    </div>
+                    <label string="You are attending to: "/>
+                    <field class="oe_right" name="partner_id" readonly="1"/>
+                    <footer>
+                        <button name="add_claim_lines"
+                            help="All the valid lines will be added to the claim"
+                            confirm="You are about to add new lines to the claim, Do you want to continue?."
+                            string="Add items to the claim" colspan="1" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

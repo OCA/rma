@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+	   <record id="section_after_sales_service" model="crm.case.section">
+            <field name="name">After Sales Service</field>
+            <field name="code">ASV</field>
+            <field name="parent_id" ref="sales_team.section_sales_department"/>
+        </record>
+    </data>
+</openerp>
