@@ -24,6 +24,10 @@
 ##############################################################################
 # From crm_claim_code
 from . import crm_claim_from_code
+# From crm_claim_type
+from . import crm_claim_from_type
+from . import crm_claim_stage_from_type
+from . import crm_claim_type_from_type
 # crm_claim_rma
 from . import account_invoice
 from . import account_invoice_line

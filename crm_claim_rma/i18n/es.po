@@ -1258,3 +1258,127 @@ msgstr "Número de reclamación"
 #: sql_constraint:crm.claim:0
 msgid "The code must be unique!"
 msgstr "¡El número debe de ser único!"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+msgid "Claim Type"
+msgstr "Tipo de reclamación"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.crm_claim_rma_act
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_claim_rma_act
+msgid "Claim Types"
+msgstr "Tipos de Reclamaciones"
+
+#. module: crm_claim_rma
+#: help:crm.claim,claim_type:0
+#: help:crm.claim.stage,claim_type:0
+msgid "Claim classification"
+msgstr "Clasificación de reclamación"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim_stage
+msgid "Claim stages"
+msgstr "Etapas de la reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+#: field:crm.claim.stage,claim_type:0
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_form
+msgid "Claim type"
+msgstr "Tipo de Reclamación"
+
+#. module: crm_claim_rma
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_tree
+msgid "Claim types"
+msgstr "Tipos de reclamaciones"
+
+#. module: crm_claim_rma
+#: field:crm.claim.stage,claim_common:0
+msgid "Common to All Claim Types"
+msgstr "Es común para todos los tipos de reclamaciones"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_customer
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: crm_claim_rma
+#: view:crm.claim.stage:crm_claim_rma.crm_stage_claim_type_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_claim_rma
+#: help:crm.claim.stage,claim_common:0
+msgid "If you check this field, this stage will be proposed by default on each claim type."
+msgstr "Si es marcada esta casilla, esta etapa será definida de manera predeterminada para cada tipo de reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,write_uid:0
+msgid "Last Updated by"
+msgstr "Actualizado por última vez por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,write_date:0
+msgid "Last Updated on"
+msgstr "Actualizado por última vez el"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_other
+msgid "Other"
+msgstr "Otro"
+
+#. module: crm_claim_rma
+#: view:crm.claim.stage:crm_claim_rma.crm_stage_claim_type_search
+msgid "Search Stages"
+msgstr "Buscar etapas"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_supplier
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: crm_claim_rma
+#: model:crm.claim.stage,name:crm_claim_rma.stage_claim10
+msgid "Accepted"
+msgstr "Aceptado"
+
+#. module: crm_claim_rma
+#: model:crm.claim.stage,name:crm_claim_rma.stage_claim11
+msgid "Done"
+msgstr "Hecho"

@@ -35,8 +35,19 @@ Features
 --------
 
 - Sequential code for claims: This module adds a sequential code for claims.
+
+- CRM Claim Types: Includes a way to classify claims adding the concept of type
+  and with this, it allows to configure claim stages depending on claim types.
+  This module includes Customer, Supplier and Other claim types as default data
+  and its own stages relation, and also makes few stages common for different
+  claim types.
+  It contains a predefined set of claim types. If you want add your own types
+  go to Sales > Configurations > Claim > Claim Types.
+
 - New field priority in claim line
+
 - Calculate priority of claim line depending of today date and claim date
+
 - Grouping by priority in claim line
 
 

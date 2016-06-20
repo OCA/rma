@@ -56,6 +56,13 @@
         # From crm_claim_code
         'data/claim_sequence_from_code.xml',
         'views/crm_claim_from_code.xml',
+        # crm_claim_type
+        'data/crm_claim_type_from_type.xml',
+        'data/crm_claim_stage_from_type.xml',
+        'security_from_type/ir.model.access.csv',
+        'views/crm_claim_from_type.xml',
+        'views/crm_claim_stage_from_type.xml',
+        'views/crm_claim_type_from_type.xml',
         # crm_claim_rma
         'data/ir_sequence_type.xml',
         'data/crm_case_section.xml',
@@ -74,6 +81,10 @@
         'security/ir.model.access.csv',
     ],
     'demo': [
+        # crm_claim_type
+        'demo/crm_claim_from_type.xml',
+        'demo/crm_claim_stage_from_type.xml',
+        # crm_claim_rma
         'demo/res_company.xml',
         'demo/account_invoice.xml',
         'demo/account_invoice_line.xml',

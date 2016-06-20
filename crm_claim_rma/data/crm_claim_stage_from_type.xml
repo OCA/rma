@@ -10,11 +10,11 @@
         </record>
 
         <record id="crm_claim.stage_claim2" model="crm.claim.stage" >
-            <field name="claim_type" ref="crm_claim_type.crm_claim_type_supplier"/>
+            <field name="claim_type" ref="crm_claim_rma.crm_claim_type_supplier"/>
         </record>
 
         <record id="crm_claim.stage_claim3" model="crm.claim.stage" >
-            <field name="claim_type" ref="crm_claim_type.crm_claim_type_supplier"/>
+            <field name="claim_type" ref="crm_claim_rma.crm_claim_type_supplier"/>
         </record>
     </data>
 </openerp>

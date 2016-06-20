@@ -277,7 +277,7 @@ class ClaimLine(models.Model):
         if isinstance(claim_type, self.env['crm.claim.type'].__class__):
             claim_type = claim_type.id
 
-        if claim_type == self.env.ref('crm_claim_type.'
+        if claim_type == self.env.ref('crm_claim_rma.'
                                       'crm_claim_type_supplier').id:
             try:
                 warranty_duration = product.seller_ids[0].warranty_duration

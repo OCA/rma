@@ -14,3 +14,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamo"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+msgid "Claim Type"
+msgstr "Tipo de reclamo"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.crm_claim_rma_act
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_claim_rma_act
+msgid "Claim Types"
+msgstr "Tipos de Reclamos"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+#: field:crm.claim.stage,claim_type:0
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_form
+msgid "Claim type"
+msgstr "Tipo de Reclamo"
+
+#. module: crm_claim_rma
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_tree
+msgid "Claim types"
+msgstr "Tipos de reclamos"
+
+#. module: crm_claim_rma
+#: help:crm.claim,claim_type:0
+#: help:crm.claim.stage,claim_type:0
+msgid "Claim classification"
+msgstr "Clasificación de reclamo"
+
+#. module: crm_claim_rma
+#: field:crm.claim.stage,claim_common:0
+msgid "Common to All Claim Types"
+msgstr "Es común para todos los tipos de reclamos"
+
+#. module: crm_claim_rma
+#: help:crm.claim.stage,claim_common:0
+msgid "If you check this field, this stage will be proposed by default on each claim type."
+msgstr "Si es marcada esta casilla, esta etapa será definida de manera predeterminada para cada tipo de reclamo"

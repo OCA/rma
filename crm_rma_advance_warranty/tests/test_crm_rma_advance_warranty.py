@@ -31,7 +31,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
         res_partner = self.env['res.partner']
         self.sale_order = self.env['sale.order']
 
-        self.claim_type = self.ref('crm_claim_type.crm_claim_type_customer')
+        self.claim_type = self.ref('crm_claim_rma.crm_claim_type_customer')
         self.supplier_id = res_partner.browse(self.ref('base.res_partner_1'))
 
     def get_customer_sale_order_and_invoice(self, set_supplier=False):

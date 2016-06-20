@@ -36,7 +36,7 @@ class LotMassReturnTestsCommon(TransactionCase):
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
                 'partner_id': self.invoice_id.partner_id.id,
                 'pick': True
@@ -51,7 +51,7 @@ class LotMassReturnTestsCommon(TransactionCase):
         self.claim_id_1 = self.env['crm.claim'].\
             create({
                 'name': 'CLAIM001',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
                 'partner_id': self.sale_order.partner_id.id,
                 'pick': True
@@ -60,7 +60,7 @@ class LotMassReturnTestsCommon(TransactionCase):
         self.claim_id_2 = self.env['crm.claim'].\
             create({
                 'name': 'CLAIM002',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
                 'partner_id': self.sale_order.partner_id.id,
                 'pick': True

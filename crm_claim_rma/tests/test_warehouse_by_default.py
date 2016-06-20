@@ -53,7 +53,7 @@ class TestWarehouseByDefault(common.TransactionCase):
         partner = self.env.ref("base.res_partner_2")
         partner_address = self.env.ref("base.res_partner_12")
         claim_type = self.env.ref(
-            "crm_claim_type.crm_claim_type_customer")
+            "crm_claim_rma.crm_claim_type_customer")
         sale_order_agrolait_demo = self.env.ref("sale.sale_order_1")
         self.assertTrue(
             sale_order_agrolait_demo.invoice_ids,

@@ -36,7 +36,7 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
         self.supplier_id_1 = res_partner.browse(self.ref('base.res_partner_1'))
         self.supplier_id_2 = res_partner.browse(self.ref('base.res_partner_3'))
         self.supplier_id_3 = res_partner.browse(self.ref('base.res_partner_4'))
-        self.claim_type = self.ref('crm_claim_type.crm_claim_type_customer')
+        self.claim_type = self.ref('crm_claim_rma.crm_claim_type_customer')
         self.customer_id = res_partner.browse(self.ref('base.res_partner_13'))
         self.product_id = self.ref(
             'product.product_product_6_product_template')

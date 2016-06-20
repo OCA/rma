@@ -66,7 +66,7 @@ class TestSupplierAndSupplierInvoice(TransactionCase):
         self.claim = self.env['crm.claim'].\
             create({
                 'name': 'TEST CLAIM',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
                 'partner_id': self.ref('base.res_partner_14'),
                 'pick': True,

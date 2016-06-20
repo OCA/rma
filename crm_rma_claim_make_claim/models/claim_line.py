@@ -47,7 +47,7 @@ class ClaimLine(models.Model):
         claim_obj = self.env['crm.claim']
         claim_line_obj = self.env['claim.line']
         claim_type_supplier = self.env.\
-            ref('crm_claim_type.crm_claim_type_supplier')
+            ref('crm_claim_rma.crm_claim_type_supplier')
         stage_new = self.env.ref('crm_claim.stage_claim1')
 
         for claim_line_parent in self:

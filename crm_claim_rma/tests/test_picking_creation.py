@@ -54,7 +54,7 @@ class TestPickingCreation(common.TransactionCase):
             {
                 'name': 'TEST CLAIM',
                 'code': '/',
-                'claim_type': self.env.ref('crm_claim_type.'
+                'claim_type': self.env.ref('crm_claim_rma.'
                                            'crm_claim_type_customer').id,
                 'delivery_address_id': self.partner_id.id,
                 'partner_id': self.env.ref('base.res_partner_2').id,

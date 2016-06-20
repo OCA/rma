@@ -33,7 +33,7 @@ class TestCopyMethod(common.TransactionCase):
         partner = self.env.ref("base.res_partner_2")
         partner_address = self.env.ref("base.res_partner_12")
         claim_type_customer = self.env.ref(
-            "crm_claim_type.crm_claim_type_customer")
+            "crm_claim_rma.crm_claim_type_customer")
         sale_order_agrolait_demo = self.env.ref("sale.sale_order_1")
         invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
         invoice_agrolait.signal_workflow("invoice_open")
@@ -56,7 +56,7 @@ class TestCopyMethod(common.TransactionCase):
 
         # Test code in supplier claim
         claim_type_supplier = self.env.ref(
-            "crm_claim_type.crm_claim_type_supplier")
+            "crm_claim_rma.crm_claim_type_supplier")
 
         claim_id = claim_obj.create(
             {

@@ -36,7 +36,7 @@ class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
                 'partner_id': self.invoice_id.partner_id.id,
                 'pick': True

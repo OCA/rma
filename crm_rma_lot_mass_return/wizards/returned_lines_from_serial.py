@@ -135,9 +135,9 @@ class ReturnedLinesFromSerial(models.TransientModel):
         claim_record = self.env['crm.claim'].browse(claim_id)
         current_claim_type = claim_record.claim_type
         customer_claim_type = \
-            self.env.ref('crm_claim_type.crm_claim_type_customer')
+            self.env.ref('crm_claim_rma.crm_claim_type_customer')
         supplier_claim_type = \
-            self.env.ref('crm_claim_type.crm_claim_type_supplier')
+            self.env.ref('crm_claim_rma.crm_claim_type_supplier')
         return current_claim_type, customer_claim_type, supplier_claim_type
 
     @api.model
