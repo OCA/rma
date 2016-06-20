@@ -1243,3 +1243,18 @@ msgstr "Reclamos"
 #: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
 msgid "Sales"
 msgstr "Ventas"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,code:0
+msgid "Claim Number"
+msgstr "Número de reclamación"
+
+#. module: crm_claim_rma
+#: sql_constraint:crm.claim:0
+msgid "The code must be unique!"
+msgstr "¡El número debe de ser único!"

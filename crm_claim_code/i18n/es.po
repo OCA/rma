@@ -15,18 +15,4 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: crm_claim_code
-#: model:ir.model,name:crm_claim_code.model_crm_claim
-msgid "Claim"
-msgstr "Reclamación"
-
-#. module: crm_claim_code
-#: field:crm.claim,code:0
-msgid "Claim Number"
-msgstr "Número de reclamación"
-
-#. module: crm_claim_code
-#: sql_constraint:crm.claim:0
-msgid "The code must be unique!"
-msgstr "¡El número debe de ser único!"
 

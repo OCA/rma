@@ -12,7 +12,7 @@ class TestCrmClaimCode(common.TransactionCase):
         super(TestCrmClaimCode, self).setUp()
         self.crm_claim_model = self.env['crm.claim']
         self.ir_sequence_model = self.env['ir.sequence']
-        self.crm_sequence = self.env.ref('crm_claim_code.sequence_claim')
+        self.crm_sequence = self.env.ref('crm_claim_rma.sequence_claim')
         self.crm_claim = self.env.ref('crm_claim.crm_claim_1')
 
     def test_old_claim_code_assign(self):

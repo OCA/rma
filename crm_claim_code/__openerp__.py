@@ -38,13 +38,11 @@
         "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
     ],
     "depends": [
-        "crm_claim",
     ],
     "data": [
-        "views/crm_claim_view.xml",
-        "data/claim_sequence.xml",
     ],
     "installable": True,
+    # There are not anything about this init_hook
     "pre_init_hook": "create_code_equal_to_id",
     "post_init_hook": "assign_old_sequences",
 }

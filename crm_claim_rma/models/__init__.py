@@ -22,6 +22,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# From crm_claim_code
+from . import crm_claim_from_code
+# crm_claim_rma
 from . import account_invoice
 from . import account_invoice_line
 from . import claim_line

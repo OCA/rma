@@ -34,6 +34,7 @@ Using this module makes the logistic flow of return this way:
 Features
 --------
 
+- Sequential code for claims: This module adds a sequential code for claims.
 - New field priority in claim line
 - Calculate priority of claim line depending of today date and claim date
 - Grouping by priority in claim line
@@ -65,6 +66,11 @@ Credits
 Contributors:
 -------------
 
+* Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Ana Juaristi <anajuarist@avanzosc.es>
+* Iker Coranti <ikercoranti@avanzosc.com>
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+* Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Emmanuel Samyn <esamyn@gmail.com>
 * Sébastien Beau <sebastien.beau@akretion.com.br>
 * Benoît Guillot <benoit.guillot@akretion.com.br>
