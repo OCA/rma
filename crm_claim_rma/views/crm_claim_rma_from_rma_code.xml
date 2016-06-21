@@ -41,7 +41,7 @@
     <record id="crm_claim_line_inherited_number" model="ir.ui.view">
         <field name="name">crm.claim.line.view.inherited.number</field>
         <field name="model">claim.line</field>
-        <field name="inherit_id" ref="crm_claim_rma.crm_claim_line_form_view"/>
+        <field name="inherit_id" ref="crm_claim_line_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="before">
                 <field name="number" required="1" class="oe_inline"/> -
@@ -52,7 +52,7 @@
     <record id="crm_claim_line_search_type_view_inherited_xml" model="ir.ui.view">
         <field name="name">crm.claim.line.search.type.view.inherited.xml</field>
         <field name="model">claim.line</field>
-        <field name="inherit_id" ref="crm_claim_rma.view_crm_claim_lines_filter"/>
+        <field name="inherit_id" ref="view_crm_claim_lines_filter"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="before">
                 <field name="number"/>
@@ -63,7 +63,7 @@
     <record id="crm_claim_line_tree_type_view_inherited_xml" model="ir.ui.view">
         <field name="name">crm.claim.line.tree.type.view.inherited.xml</field>
         <field name="model">claim.line</field>
-        <field name="inherit_id" ref="crm_claim_rma.crm_claim_line_tree_view"/>
+        <field name="inherit_id" ref="crm_claim_line_tree_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="before">
                 <field name="number"/>

@@ -7,9 +7,12 @@
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
             <field name="arch" type="xml">
-                <field name="stage_id" position="after">
+                <xpath expr="//field[@name='stage_id']" position="after">
                     <field name="section_id"/>
-                </field>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="code" />
+                </xpath>
             </field>
         </record>
         <!-- Crm claim Search view -->
@@ -21,6 +24,9 @@
                 <filter string="Stage" icon="terp-stage" domain="[]" context="{'group_by':'stage_id'}" position="before">
                     <filter string="Sales Team" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'section_id'}"/>
                 </filter>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="filter_domain">['|', ('name', 'ilike', self), ('code', 'ilike', self)]</attribute>
+                </xpath>
             </field>
         </record>
 
@@ -64,6 +70,10 @@
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="code" />
+                    <field name="claim_type" required="True" options="{'no_create': True}" context="{'create_lines': False}"/>
+                </xpath>
                 <!-- Header/workflow Buttons -->
                 <xpath expr="//field[@name='stage_id']" position="before">
                     <button name="%(action_claim_picking_in)d"
@@ -148,7 +158,7 @@
                             string="Refunds"
                             icon="fa-file-text"
                             attrs="{'invisible': ['|',('partner_id','=', False),
-                            ('claim_type','in', ['customer','other'])]}"
+                            ('claim_type','in', [%(crm_claim_rma.crm_claim_type_customer)d, %(crm_claim_rma.crm_claim_type_other)d])]}"
                             context="{'search_default_partner_id': [partner_id],
                             'group_by':'type',
                             'search_default_user_id':False}" />
@@ -158,7 +168,7 @@
                             type="action"
                             string="Returns"
                             attrs="{'invisible': ['|',('partner_id','=', False),
-                            ('claim_type','in', ['supplier','other'])]}"
+                            ('claim_type','in', [%(crm_claim_rma.crm_claim_type_supplier)d, %(crm_claim_rma.crm_claim_type_other)d])]}"
                             context="{'search_default_claim_id': active_id,
                             'search_default_user_id':False}"/>
                         </div>

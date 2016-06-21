@@ -35,8 +35,6 @@
     'license': 'AGPL-3',
     'depends': [
         'purchase',
-        'sale',
-        'stock',
         'crm_claim',
         'crm_rma_location',
         'product_warranty',
@@ -46,22 +44,19 @@
     'data': [
         # From crm_claim_code
         'data/claim_sequence_from_code.xml',
-        'views/crm_claim_from_code.xml',
         # crm_claim_type
         'data/crm_claim_type_from_type.xml',
         'data/crm_claim_stage_from_type.xml',
         'security_from_type/ir.model.access.csv',
-        'views/crm_claim_from_type.xml',
         'views/crm_claim_stage_from_type.xml',
-        'views/crm_claim_type_from_type.xml',
         # crm_claim_rma
         'data/ir_sequence_type.xml',
         'data/crm_case_section.xml',
         'data/crm_case_categ.xml',
         'views/account_invoice.xml',
         'wizards/claim_make_picking.xml',
-        'views/crm_claim.xml',
         'views/claim_line.xml',
+        'views/crm_claim.xml',
         'views/res_partner.xml',
         'views/stock_view.xml',
         'views/crm_claim_portal.xml',
@@ -69,10 +64,13 @@
         'views/res_config.xml',
         'views/res_company.xml',
         'security/ir.model.access.csv',
+        # From crm_claim_rma_code
+        'views/crm_claim_rma_from_rma_code.xml',
+        'views/crm_claim_type_from_rma_code.xml',
+        'data/ir_sequence_type_rma_code.xml',
     ],
     'demo': [
         # crm_claim_type
-        'demo/crm_claim_from_type.xml',
         'demo/crm_claim_stage_from_type.xml',
         # crm_claim_rma
         'demo/res_company.xml',
@@ -88,4 +86,7 @@
     ],
     'installable': True,
     'auto_install': False,
+    'pre_init_hook': 'create_code_equal_to_id',
+    'post_init_hook': 'assign_old_sequences',
+
 }

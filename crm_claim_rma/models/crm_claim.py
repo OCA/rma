@@ -24,7 +24,6 @@
 ##############################################################################
 from openerp import _, api, exceptions, fields, models
 
-from openerp.exceptions import Warning as UserError
 from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
 from openerp.exceptions import ValidationError
@@ -46,7 +45,9 @@ class CrmClaim(models.Model):
         """
         user = self.env.user
         sales_team = user.default_section_id
-        return sales_team.default_warehouse
+        default_warehouse = sales_team.default_warehouse
+        return default_warehouse and default_warehouse or \
+            self.env.ref("stock.warehouse0")
 
     @api.multi
     def name_get(self):
@@ -60,7 +61,6 @@ class CrmClaim(models.Model):
                                  default=lambda self:
                                  self.env['res.company']._company_default_get(
                                      'crm.claim'))
-
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
     planned_revenue = fields.Float('Expected revenue')
@@ -144,6 +144,61 @@ class CrmClaim(models.Model):
                           " you must belong to the group RMA {group}".format(
                               group=group_rma_manager.name)))
 
+    claim_type = fields.Many2one('crm.claim.type', help="Claim classification")
+
+    code = fields.Char(string='Claim Number',
+                       default="/",
+                       readonly=True,
+                       copy=False,
+                       )
+
+    _sql_constraints = [
+        ('crm_claim_unique_code', 'UNIQUE (code)',
+         'The code must be unique!'),
+    ]
+
+    stage_id = fields.Many2one('crm.claim.stage',
+                               'Stage',
+                               track_visibility='onchange',
+                               domain="[ '&','|',('section_ids', '=', "
+                               "section_id), ('case_default', '=', True), "
+                               "'|',('claim_type', '=', claim_type)"
+                               ",('claim_common', '=', True)]")
+    company_id = fields.Many2one(change_default=True,
+                                 default=lambda self:
+                                 self.env['res.company']._company_default_get(
+                                     'crm.claim'))
+
+    claim_line_ids = fields.One2many('claim.line', 'claim_id',
+                                     string='Return lines')
+    planned_revenue = fields.Float('Expected revenue')
+    real_revenue = fields.Float()
+    invoice_ids = fields.One2many('account.invoice', 'claim_id', 'Refunds',
+                                  copy=False)
+    picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA',
+                                  copy=False)
+    invoice_id = fields.Many2one('account.invoice', string='Invoice',
+                                 help='Related original Cusotmer invoice')
+    pick = fields.Boolean('Pick the product in the store')
+    delivery_address_id = fields.Many2one('res.partner',
+                                          string='Partner delivery address',
+                                          help="This address will be used to "
+                                          "deliver repaired or replacement "
+                                          "products.")
+    sequence = fields.Integer(default=lambda *args: 1)
+    rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
+    date = fields.Datetime(
+        required=True,
+        help="The creation date of claim.")
+
+    date_deadline = fields.Date(
+        compute="_compute_deadline",
+        inverse="_inverse_deadline",
+        store=True,
+        help="The deadline for that the claim will be resolved. If the "
+        "claim is not resolved before this date. Management must inform "
+        "to the RMA team to accelerate the process.")
+
     @api.constrains("date", "date_deadline")
     def _check_claim_dates(self):
         """ In case of the deadline will be changed
@@ -160,27 +215,18 @@ class CrmClaim(models.Model):
                     raise ValidationError(
                         _("Creation date must be less than deadline"))
 
-    date = fields.Datetime(
-        required=True,
-        help="The creation date of claim.")
+    # TODO when the claim_type is requited, the claim types are not created
+    # yet, then, to come here, there is a error when try install this module
+    # @api.model
+    # def _get_claim_type_default(self):
+    #     claim_type = self.env['crm.claim.type'].search([])
+    #     return claim_type[0] if claim_type else self.env['crm.claim.type']
 
-    date_deadline = fields.Date(
-        compute="_compute_deadline",
-        inverse="_inverse_deadline",
-        store=True,
-        help="The deadline for that the claim will be resolved. If the "
-        "claim is not resolved before this date. Management must inform "
-        "to the RMA team to accelerate the process.")
-
-    @api.model
-    def _get_claim_type_default(self):
-        claim_type = self.env['crm.claim.type'].search([])
-        return claim_type[0] if claim_type else self.env['crm.claim.type']
-
-    claim_type = \
-        fields.Many2one(default=_get_claim_type_default,
-                        help="Claim classification",
-                        required=True)
+    # claim_type = \
+    #     fields.Many2one(#default=_get_claim_type_default,
+    #                     help="Claim classification",
+    #                     # required=True
+    #                     )
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
@@ -266,7 +312,6 @@ class CrmClaim(models.Model):
         claim_type_code = self.env['crm.claim.type'].\
             browse(code_id).ir_sequence_id.code
         sequence = self.env['ir.sequence']
-
         return claim_type_code and sequence.get(claim_type_code) or '/'
 
     @api.model
@@ -275,7 +320,6 @@ class CrmClaim(models.Model):
         if 'code' not in values or not values.get('code') \
                 or values.get('code') == '/':
             values['code'] = self._get_sequence_number(values['claim_type'])
-
         return super(CrmClaim, self).create(values)
 
     @api.multi

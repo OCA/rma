@@ -52,14 +52,14 @@
         </record>
 
         <!-- Claims Type -->
-        <record id="crm_claim_rma.crm_claim_type_supplier" model="crm.claim.type">
+        <record id="crm_claim_type_supplier" model="crm.claim.type">
             <field name="ir_sequence_id"
                 search="[('code', '=', 'crm.claim.rma.supplier')]"
                 model="ir.sequence"
                 />
         </record>
 
-        <record id="crm_claim_rma.crm_claim_type_customer" model="crm.claim.type">
+        <record id="crm_claim_type_customer" model="crm.claim.type">
             <field name="ir_sequence_id"
                 search="[('code', '=', 'crm.claim.rma.customer')]"
                 model="ir.sequence"

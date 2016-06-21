@@ -1368,3 +1368,9 @@ msgstr "Aceptado"
 #: model:crm.claim.stage,name:crm_claim_rma.stage_claim11
 msgid "Done"
 msgstr "Hecho"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,ir_sequence_id:0
+msgid "Sequence Number"
+msgstr "Número de secuencia"
+

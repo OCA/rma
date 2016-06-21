@@ -22,21 +22,18 @@
 from openerp import fields, models
 
 
-class CrmClaim(models.Model):
-
+class CrmClaimType(models.Model):
     """
-        CRM Claim
+        CRM Claim Type
     """
-    _inherit = 'crm.claim'
+    _name = 'crm.claim.type'
 
-    claim_type = \
-        fields.Many2one('crm.claim.type',
-                        help="Claim classification")
-
-    stage_id = fields.Many2one('crm.claim.stage',
-                               'Stage',
-                               track_visibility='onchange',
-                               domain="[ '&','|',('section_ids', '=', "
-                               "section_id), ('case_default', '=', True), "
-                               "'|',('claim_type', '=', claim_type)"
-                               ",('claim_common', '=', True)]")
+    name = fields.Char(required=True, translate=True)
+    active = fields.Boolean(default=True)
+    description = fields.Text(translate=True)
+    ir_sequence_id = \
+        fields.Many2one('ir.sequence',
+                        string='Sequence Code',
+                        default=lambda self: self.env['ir.sequence'].
+                        search([('code', '=', 'crm.claim.rma.basic')])
+                        )

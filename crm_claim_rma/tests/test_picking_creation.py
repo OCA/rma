@@ -49,6 +49,11 @@ class TestPickingCreation(common.TransactionCase):
         invoice_agrolait.\
             signal_workflow('invoice_open')
 
+        main_warehouse = self.env.ref("stock.warehouse0")
+        sales_team = self.env.ref('sales_team.section_sales_department')
+        sales_team.write({"default_warehouse": main_warehouse.id})
+        self.env.user.write({'default_section_id': sales_team.id})
+
         # Create the claim with a claim line
         self.claim_id = claim.create(
             {

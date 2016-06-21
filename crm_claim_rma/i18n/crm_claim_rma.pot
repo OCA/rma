@@ -1199,3 +1199,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
+#. module: crm_claim_rma
+#: field:crm.claim.type,ir_sequence_id:0
+msgid "Sequence Number"
+msgstr ""

@@ -432,3 +432,7 @@ class ClaimLine(models.Model):
         for line_id in self:
             line_id.display_name = "%s - %s" % (
                 line_id.claim_id.code, line_id.name)
+
+    @api.multi
+    def name_get(self):
+        return [(self.id, "%s - %s" % (self.claim_id.code, self.name))]
