@@ -922,14 +922,6 @@ msgid "The warehouse by default to create a claim.\n"
 msgstr ""
 
 #. module: crm_claim_rma
-#: field:res.company,rma_warehouse_id:0
-#: field:res.users,rma_warehouse_id:0
-#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
-#: field:rma.config.settings,rma_warehouse_id:0
-msgid "RMA Warehouse"
-msgstr ""
-
-#. module: crm_claim_rma
 #: view:res.company:crm_claim_rma.res_company_rma_config_form_view
 #: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
 msgid "Claim Attention Priority"
@@ -1048,12 +1040,6 @@ msgstr "Priority minimum"
 #: view:res.company:crm_claim_rma.res_company_rma_config_form_view
 #: view:res.users:crm_claim_rma.res_users_rma_config_form_view
 msgid "RMA"
-msgstr ""
-
-#. module: crm_claim_rma
-#: help:res.company,rma_warehouse_id:0
-#: help:rma.config.settings,rma_warehouse_id:0
-msgid "The warehouse to use by default in the claims, this field will be used for fill the warehouse field in the claims if the warehouse of user is empty, i.e, the locations of this warehouse will be used for the pickings of the claim"
 msgstr ""
 
 #. module: crm_claim_rma

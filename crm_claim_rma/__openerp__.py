@@ -28,16 +28,7 @@
     'name': 'RMA Claim (Product Return Management)',
     'version': '8.0.1.1.1',
     'category': 'Generic Modules/CRM & SRM',
-    'author': "Akretion, "
-              "Camptocamp, "
-              "Eezee-it, "
-              "MONK Software, "
-              "Vauxoo, "
-              "Odoo Community Association (OCA), "
-              "OdooMRP team, "
-              "AvanzOSC, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
-              "Odoo Community Association (OCA)",
+    'author': "Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
                'http://www.eezee-it.com, http://www.wearemonk.com, '
                'http://www.vauxoo.com',
@@ -47,10 +38,10 @@
         'sale',
         'stock',
         'crm_claim',
-        'crm_claim_rma_code',
         'crm_rma_location',
         'product_warranty',
         'portal_claim',
+        'default_warehouse_from_sale_team',
     ],
     'data': [
         # From crm_claim_code
@@ -77,7 +68,6 @@
         'security/crm_claim_security.xml',
         'views/res_config.xml',
         'views/res_company.xml',
-        'views/res_users.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

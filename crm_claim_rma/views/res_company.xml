@@ -33,9 +33,6 @@
                             <group string="Limit Days">
                                 <field name="limit_days"/>
                             </group>
-                            <group string="Logistic">
-                                <field name="rma_warehouse_id"/>
-                            </group>
                         </group>
                     </page>
                 </xpath>

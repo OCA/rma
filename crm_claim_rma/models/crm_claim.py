@@ -32,52 +32,21 @@ import datetime
 
 
 class CrmClaim(models.Model):
-    _inherit = "crm.claim"
-
-    @api.model
-    def _get_claim_warehouse(self, user, company):
-        """ Get the warehouse to use for this claim.
-        If the user has warehouse. It's returns.
-        If the user has not warehouse. The warehouse of
-        company is returns.
-        If the company has not warehouse. The first
-        warehouse found that have the same company_id
-        of user is returns.
-        Else return a Warning message
-        """
-        wh_obj = self.env["stock.warehouse"]
-        company_id = self.env.user.company_id.id
-        warehouse_user = user.rma_warehouse_id
-        warehouse_company = company.rma_warehouse_id
-        warehouse = wh_obj.search(
-            [("company_id", "=", company_id)], limit=1)
-        wh = warehouse_user and warehouse_user or \
-            (warehouse_company and warehouse_company or warehouse)
-        if not wh:
-            raise UserError(
-                _("There is no warehouse for the current user's company."))
-        return wh
-
-    @api.onchange("user_id", "company_id")
-    def _onchange_default_warehouse(self):
-        """ The warehouse can be defined depending of
-        user_id or company_id, if the user_id or
-        company_id is change, then, the warehouse_id
-        should be recalculated based on the new values.
-        """
-        for crm_claim in self:
-            wh = crm_claim._get_claim_warehouse(
-                crm_claim.user_id, crm_claim.company_id)
-            crm_claim.warehouse_id = wh.id
+    # auto=True because the default.warehouse model were forcing auto=False
+    # then explicitly if you will add some fields at same time you are
+    # adding logic the inheritance to it should be in this way if not
+    # it will not create the fields in the database
+    _auto = True
+    _name = "crm.claim"
+    _inherit = ["crm.claim", "default.warehouse"]
 
     def _get_default_warehouse(self):
         """ Get a warehouse by default when a claim
         is created. The warehouse_id field is required.
         """
         user = self.env.user
-        company = user.company_id
-        wh = self._get_claim_warehouse(user, company)
-        return wh
+        sales_team = user.default_section_id
+        return sales_team.default_warehouse
 
     @api.multi
     def name_get(self):
@@ -112,9 +81,9 @@ class CrmClaim(models.Model):
                                           "products.")
     sequence = fields.Integer(default=lambda *args: 1)
     warehouse_id = fields.Many2one("stock.warehouse",
+                                   default=_get_default_warehouse,
                                    string="Warehouse",
-                                   required=True,
-                                   default=_get_default_warehouse)
+                                   required=True)
     rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
 
     @api.model
@@ -218,8 +187,6 @@ class CrmClaim(models.Model):
         context = self.env.context
         claim_line = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
-        if not self.warehouse_id:
-            self.warehouse_id = self._onchange_default_warehouse()
         claim_type = self.claim_type
         claim_date = self.date
         warehouse = self.warehouse_id

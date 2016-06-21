@@ -1078,14 +1078,6 @@ msgid "The warehouse by default to create a claim.\n"
 msgstr "Almacen de la compañía que sea usado de manera predeterminada al momento de crear un reclamo de cliente.\n"
 
 #. module: crm_claim_rma
-#: field:res.company,rma_warehouse_id:0
-#: field:res.users,rma_warehouse_id:0
-#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
-#: field:rma.config.settings,rma_warehouse_id:0
-msgid "RMA Warehouse"
-msgstr "Almacen de reclamos"
-
-#. module: crm_claim_rma
 #: view:res.company:crm_claim_rma.res_company_rma_config_form_view
 #: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
 msgid "Claim Attention Priority"
@@ -1205,12 +1197,6 @@ msgstr "Prioridad mínima"
 #: view:res.users:crm_claim_rma.res_users_rma_config_form_view
 msgid "RMA"
 msgstr "Reclamos"
-
-#. module: crm_claim_rma
-#: help:res.company,rma_warehouse_id:0
-#: help:rma.config.settings,rma_warehouse_id:0
-msgid "The warehouse to use by default in the claims, this field will be used for fill the warehouse field in the claims if the warehouse of user is empty, i.e, the locations of this warehouse will be used for the pickings of the claim"
-msgstr "Indica el almacén para ser usados de manera predeterminada en los reclamos, este campo sera usado para establecer el Almacén en los reclamos en caso de no estar establecido por el usuario. Las ubicaciones para el almacén establecido serán usadas en los movimientos de inventario de los reclamos."
 
 #. module: crm_claim_rma
 #: help:res.company,priority_minimum:0

@@ -61,14 +61,6 @@ class RMAConfigSettings(models.TransientModel):
         "- High: priority maximum range < invoice date "
         "<= priority minimun range.\n"
         "- Normal: priority minimun range < invoice date")
-    rma_warehouse_id = fields.Many2one(
-        "stock.warehouse",
-        string="RMA Warehouse",
-        help="The warehouse to use by default in the claims,"
-        " this field will be used for fill the warehouse field"
-        " in the claims if the warehouse of user is empty, i.e,"
-        " the locations of this warehouse will be used for"
-        " the pickings of the claim")
 
     @api.multi
     def get_default_rma_values(self):
@@ -81,7 +73,6 @@ class RMAConfigSettings(models.TransientModel):
         company = self.env.user.company_id
         return {
             "limit_days": company.limit_days,
-            "rma_warehouse_id": company.rma_warehouse_id.id,
             "priority_maximum": company.priority_maximum,
             "priority_minimum": company.priority_minimum,
         }
@@ -96,7 +87,6 @@ class RMAConfigSettings(models.TransientModel):
         for rma_config in self:
             company.write({
                 "limit_days": rma_config.limit_days,
-                "rma_warehouse_id": rma_config.rma_warehouse_id.id,
                 "priority_maximum": rma_config.priority_maximum,
                 "priority_minimum": rma_config.priority_minimum,
             })

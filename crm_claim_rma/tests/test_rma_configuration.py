@@ -35,17 +35,9 @@ class TestCreateSimpleClaim(TransactionCase):
     def test_rma_cofiguration(self):
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        main_warehouse = self.env.ref("stock.warehouse0")
-
-        self.warehouse = self.env['stock.warehouse']
-        test_warehouse = self.warehouse.create({
-            "name": "Test Warehouse",
-            "code": "TWH"
-        })
 
         company.write(
             {
-                "rma_warehouse_id": main_warehouse.id,
                 "limit_days": 10,
                 "priority_maximum": 7,
                 "priority_minimum": 14,
@@ -55,7 +47,6 @@ class TestCreateSimpleClaim(TransactionCase):
         # the correct data on the wizard of rma settings
         rma_config = self.env["rma.config.settings"]
         data = rma_config.get_default_rma_values()
-        self.assertEqual(data.get("rma_warehouse_id"), main_warehouse.id)
         self.assertEqual(data.get("limit_days"), 10)
         self.assertEqual(data.get("priority_maximum"), 7)
         self.assertEqual(data.get("priority_minimum"), 14)
@@ -64,7 +55,6 @@ class TestCreateSimpleClaim(TransactionCase):
         new_data = {"limit_days": 20,
                     "priority_maximum": 9,
                     "priority_minimum": 16,
-                    "rma_warehouse_id": test_warehouse.id,
                     }
         rma_config_brw = rma_config.create(new_data)
         rma_config_brw.execute()
@@ -73,7 +63,6 @@ class TestCreateSimpleClaim(TransactionCase):
         self.assertEqual(company.limit_days, 20)
         self.assertEqual(company.priority_maximum, 9)
         self.assertEqual(company.priority_minimum, 16)
-        self.assertEqual(company.rma_warehouse_id, test_warehouse)
 
         data = rma_config.get_default_rma_values()
         data.update({"priority_maximum": 18,

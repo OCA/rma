@@ -77,6 +77,15 @@ Credits
 Contributors:
 -------------
 
+* Odoo Community Association (OCA)
+* Akretion
+* Camptocamp
+* Eezee-it
+* MONK Software
+* Vauxoo
+* OdooMRP team
+* AvanzOSC
+* Serv. Tecnol. Avanzados - Pedro M. Baeza
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Ana Juaristi <anajuarist@avanzosc.es>
 * Iker Coranti <ikercoranti@avanzosc.com>

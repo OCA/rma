@@ -46,9 +46,9 @@ class TestWarehouseByDefault(common.TransactionCase):
         })
 
         user = self.env.ref("crm_claim_rma.vendor_user_rma")
+        sales_team = self.env.ref('sales_team.section_sales_department')
+        user.write({'default_section_id': sales_team.id})
         company = user.company_id
-        user.write({"rma_warehouse_id": False})
-        company.write({"rma_warehouse_id": False})
 
         partner = self.env.ref("base.res_partner_2")
         partner_address = self.env.ref("base.res_partner_12")

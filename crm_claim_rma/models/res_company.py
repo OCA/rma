@@ -62,12 +62,3 @@ class ResCompany(models.Model):
         "- High: priority maximum range < invoice date "
         "<= priority minimun range.\n"
         "- Normal: priority minimun range < invoice date")
-
-    rma_warehouse_id = fields.Many2one(
-        "stock.warehouse",
-        string="RMA Warehouse",
-        help="The warehouse to use by default in the claims,"
-        " this field will be used for fill the warehouse field"
-        " in the claims if the warehouse of user is empty, i.e,"
-        " the locations of this warehouse will be used for"
-        " the pickings of the claim")
