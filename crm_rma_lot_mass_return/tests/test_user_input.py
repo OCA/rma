@@ -158,5 +158,3 @@ class TestUserInput(TransactionCase):
         }).create({})
         res = wizard_id._get_lots_from_scan_data(invoice_id.display_name)
         self.assertEqual(len(res[0]), 9, '9 items were expected')
-        res = wizard_id._get_lots_from_scan_data('SAJ/2016/007')
-        self.assertEqual(len(res[0]), 1, '1 item was expected')

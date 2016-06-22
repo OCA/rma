@@ -28,7 +28,8 @@
     'name': 'RMA Claim (Product Return Management)',
     'version': '8.0.1.1.1',
     'category': 'Generic Modules/CRM & SRM',
-    'author': "Odoo Community Association (OCA)",
+    'author': "Vauxoo, "
+              "Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
                'http://www.eezee-it.com, http://www.wearemonk.com, '
                'http://www.vauxoo.com',
@@ -42,17 +43,13 @@
         'default_warehouse_from_sale_team',
     ],
     'data': [
-        # From crm_claim_code
-        'data/claim_sequence_from_code.xml',
-        # crm_claim_type
-        'data/crm_claim_type_from_type.xml',
-        'data/crm_claim_stage_from_type.xml',
-        'security_from_type/ir.model.access.csv',
-        'views/crm_claim_stage_from_type.xml',
-        # crm_claim_rma
         'data/ir_sequence_type.xml',
+        'data/crm_claim_type.xml',
+        'data/crm_claim_stage.xml',
         'data/crm_case_section.xml',
         'data/crm_case_categ.xml',
+        'views/crm_claim_type.xml',
+        'views/crm_claim_stage.xml',
         'views/account_invoice.xml',
         'wizards/claim_make_picking.xml',
         'views/claim_line.xml',
@@ -60,19 +57,13 @@
         'views/res_partner.xml',
         'views/stock_view.xml',
         'views/crm_claim_portal.xml',
-        'security/crm_claim_security.xml',
         'views/res_config.xml',
         'views/res_company.xml',
+        'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
-        # From crm_claim_rma_code
-        'views/crm_claim_rma_from_rma_code.xml',
-        'views/crm_claim_type_from_rma_code.xml',
-        'data/ir_sequence_type_rma_code.xml',
     ],
     'demo': [
-        # crm_claim_type
-        'demo/crm_claim_stage_from_type.xml',
-        # crm_claim_rma
+        'demo/crm_claim_stage.xml',
         'demo/res_company.xml',
         'demo/account_invoice.xml',
         'demo/account_invoice_line.xml',

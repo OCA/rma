@@ -25,7 +25,6 @@
 
 
 class InvoiceNoDate(Exception):
-    """
-    Raised when a warranty cannot be computed for a claim line
+    """ Raised when a warranty cannot be computed for a claim line
     because the invoice has no date.
     """

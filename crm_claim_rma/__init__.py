@@ -24,16 +24,14 @@
 #
 ##############################################################################
 
+from openerp import SUPERUSER_ID
 from . import models
 from . import wizards
-from openerp import SUPERUSER_ID
 
 
 def create_code_equal_to_id(cr):
-    cr.execute('ALTER TABLE crm_claim '
-               'ADD COLUMN code character varying;')
-    cr.execute('UPDATE crm_claim '
-               'SET code = id;')
+    cr.execute('ALTER TABLE crm_claim ADD COLUMN code character varying;')
+    cr.execute('UPDATE crm_claim SET code = id;')
 
 
 def assign_old_sequences(cr, registry):
@@ -41,7 +39,6 @@ def assign_old_sequences(cr, registry):
     sequence_obj = registry['ir.sequence']
     claim_ids = claim_obj.search(cr, SUPERUSER_ID, [], order="id")
     for claim_id in claim_ids:
-        cr.execute('UPDATE crm_claim '
-                   'SET code = \'%s\' '
-                   'WHERE id = %d;' %
-                   (sequence_obj.get(cr, SUPERUSER_ID, 'crm.claim'), claim_id))
+        cr.execute('UPDATE crm_claim SET code = %s WHERE id = %s;',
+                   (sequence_obj.get(cr, SUPERUSER_ID, 'crm.claim.rma.basic'),
+                    claim_id))

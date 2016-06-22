@@ -32,11 +32,10 @@ class StockMove(models.Model):
 
     @api.model
     def create(self, vals):
-        """
-        In case of a wrong picking out, We need to create a new stock_move in a
-        picking already open.
-        To avoid having to confirm the stock_move, we override the create and
-        confirm it at the creation only for this case.
+        """ In case of a wrong picking out, We need to create a new stock_move
+        in a picking already open. To avoid having to confirm the stock_move,
+        we override the create and confirm it at the creation only for this
+        case.
         """
         move = super(StockMove, self).create(vals)
         if vals.get('picking_id'):

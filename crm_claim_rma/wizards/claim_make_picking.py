@@ -33,8 +33,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('stock.location')
     def _get_common_dest_location_from_line(self, lines):
-        """
-        If all the lines have the same destination location return that,
+        """ If all the lines have the same destination location return that,
         else return an empty recordset
         """
         dests = lines.mapped('location_dest_id')
@@ -43,8 +42,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('res.partner')
     def _get_common_partner_from_line(self, lines):
-        """
-        If all the lines have the same warranty return partner return that,
+        """ If all the lines have the same warranty return partner return that,
         else return an empty recordset
         """
         partners = lines.mapped('warranty_return_partner')
@@ -69,7 +67,7 @@ class ClaimMakePicking(models.TransientModel):
         return self.env['stock.location']
 
     def _default_claim_line_dest_location_id(self):
-        """Return the location_id to use as destination.
+        """ Return the location_id to use as destination.
 
         If it's an outoing shipment: take the customer stock property
         If it's an incoming shipment take the location_dest_id common to all

@@ -25,7 +25,6 @@ from openerp.tools.safe_eval import safe_eval
 
 
 class TestPickingCreation(common.TransactionCase):
-
     """ Test the correct pickings are created by the wizard. """
 
     def setUp(self):
@@ -71,7 +70,6 @@ class TestPickingCreation(common.TransactionCase):
 
     def test_00_new_product_return(self):
         """Test wizard creates a correct picking for product return
-
         """
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
@@ -93,7 +91,6 @@ class TestPickingCreation(common.TransactionCase):
 
     def test_01_new_delivery(self):
         """Test wizard creates a correct picking for a new delivery
-
         """
 
         wizardchangeproductqty = self.env['stock.change.product.qty']
@@ -125,7 +122,6 @@ class TestPickingCreation(common.TransactionCase):
 
     def test_02_new_product_return(self):
         """Test wizard creates a correct picking for product return
-
         """
         company = self.env.ref('base.main_company')
         warehouse_obj = self.env['stock.warehouse']
@@ -194,8 +190,7 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(safe_eval(res['context'])['type'], 'out_refund')
 
     def test_04_display_name(self):
-        """
-        It tests that display_name for each line has a message for it
+        """ It tests that display_name for each line has a message for it
         """
         claim_line_ids = self.env['crm.claim'].browse(
             self.ref('crm_claim.crm_claim_6'))[0].claim_line_ids

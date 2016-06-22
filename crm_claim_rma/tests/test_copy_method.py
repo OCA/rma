@@ -57,7 +57,6 @@ class TestCopyMethod(common.TransactionCase):
         # Test code in supplier claim
         claim_type_supplier = self.env.ref(
             "crm_claim_rma.crm_claim_type_supplier")
-
         claim_id = claim_obj.create(
             {
                 "name": "TEST CLAIM",

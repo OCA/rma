@@ -59,24 +59,26 @@ class ClaimLine(models.Model):
                     ('physical_damage_company',
                      'Physical Damage by Company'),
                     ('other', 'Other')]
-    WARRANT_COMMENT = [
-        ('valid', _("Valid")),
-        ('expired', _("Expired")),
-        ('not_define', _("Not Defined"))]
+    WARRANT_COMMENT = [('valid', _("Valid")),
+                       ('expired', _("Expired")),
+                       ('not_define', _("Not Defined"))]
 
-    number = fields.Char(
-        readonly=True,
-        default='/',
-        help='Claim Line Identification Number')
-    company_id = fields.Many2one(
-        'res.company', string='Company', readonly=False,
-        change_default=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'claim.line'))
+    number = fields.Char(readonly=True,
+                         default='/',
+                         help='Claim Line Identification Number')
+    company_id = fields.Many2one('res.company',
+                                 string='Company',
+                                 readonly=False,
+                                 change_default=True,
+                                 default=lambda self:
+                                 self.env['res.company'].
+                                 _company_default_get('claim.line'))
     date = fields.Date('Claim Line Date',
                        select=True,
                        default=fields.date.today())
-    name = fields.Text('Description', default='none', required=True,
+    name = fields.Text('Description',
+                       default='none',
+                       required=True,
                        help="More precise description of the problem")
     priority = fields.Selection([('0_not_define', 'Not Define'),
                                  ('1_normal', 'Normal'),
@@ -86,21 +88,23 @@ class ClaimLine(models.Model):
                                 store=True,
                                 compute='_compute_priority',
                                 help="Priority attention of claim line")
-    claim_diagnosis = fields.\
-        Selection([('damaged', 'Product Damaged'),
-                   ('repaired', 'Product Repaired'),
-                   ('good', 'Product in good condition'),
-                   ('hidden', 'Product with hidden physical damage'),
-                   ],
-                  help="To describe the line product diagnosis")
+    claim_diagnosis = fields.Selection([('damaged', 'Product Damaged'),
+                                        ('repaired', 'Product Repaired'),
+                                        ('good', 'Product in good condition'),
+                                        ('hidden',
+                                         'Product with hidden physical '
+                                         'damage')],
+                                       help="To describe the line product "
+                                       "diagnosis")
     claim_origin = fields.Selection(SUBJECT_LIST, 'Subject',
                                     required=True, help="To describe the "
                                     "line product problem")
     product_id = fields.Many2one('product.product', string='Product',
                                  help="Returned product")
-    product_returned_quantity = \
-        fields.Float('Quantity', digits=(12, 2),
-                     help="Quantity of product returned")
+    product_returned_quantity = fields.Float('Quantity',
+                                             digits=(12, 2),
+                                             help="Quantity of product "
+                                             "returned")
     unit_sale_price = fields.Float(digits=(12, 2),
                                    help="Unit sale price of the product. "
                                    "Auto filled if retrun done "
@@ -115,20 +119,22 @@ class ClaimLine(models.Model):
                                 help="Quantity returned * Unit sold price",)
     prodlot_id = fields.Many2one('stock.production.lot',
                                  string='Serial/Lot number',
-                                 help="The serial/lot of "
-                                      "the returned product")
+                                 help="The serial/lot of the returned product")
     applicable_guarantee = fields.Selection([('us', 'Company'),
                                              ('supplier', 'Supplier'),
                                              ('brand', 'Brand manufacturer')],
                                             'Warranty type')
-    guarantee_limit = fields.Date('Warranty limit', readonly=True,
+    guarantee_limit = fields.Date('Warranty limit',
+                                  readonly=True,
                                   help="The warranty limit is "
                                        "computed as: invoice date + warranty "
                                        "defined on selected product.")
     warning = fields.Selection(WARRANT_COMMENT,
-                               'Warranty', readonly=True,
+                               'Warranty',
+                               readonly=True,
                                help="If warranty has expired")
-    display_name = fields.Char('Name', compute='_get_display_name')
+    display_name = fields.Char('Name',
+                               compute='_get_display_name')
     date_deadline = fields.Date(related="claim_id.date_deadline")
 
     @api.model
@@ -143,11 +149,12 @@ class ClaimLine(models.Model):
         "manufacturer. Does not necessarily mean that the warranty "
         "to be applied is the one of the return partner (ie: can be "
         "returned to the company and be under the brand warranty")
-    warranty_return_partner = \
-        fields.Many2one('res.partner', string='Warranty Address',
-                        help="Where the customer has to "
-                        "send back the product(s)")
-    claim_id = fields.Many2one('crm.claim', string='Related claim',
+    warranty_return_partner = fields.Many2one('res.partner',
+                                              string='Warranty Address',
+                                              help="Where the customer has to "
+                                              "send back the product(s)")
+    claim_id = fields.Many2one('crm.claim',
+                               string='Related claim',
                                ondelete='cascade',
                                help="To link to the case.claim object")
     state = fields.Selection([('draft', 'Draft'), ('refused', 'Refused'),
@@ -165,7 +172,8 @@ class ClaimLine(models.Model):
                                        "Example 2: state = to treate; "
                                        "substate could be to refund, to "
                                        "exchange, to repair,...")
-    last_state_change = fields.Date(string='Last change', help="To set the"
+    last_state_change = fields.Date(string='Last change',
+                                    help="To set the"
                                     "last state / substate change")
     invoice_line_id = fields.Many2one('account.invoice.line',
                                       string='Invoice Line',
@@ -331,8 +339,7 @@ class ClaimLine(models.Model):
 
     @api.returns('stock.location')
     def get_destination_location(self, product_id, warehouse_id):
-        """
-        Compute and return the destination location to take
+        """ Compute and return the destination location to take
         for a return. Always take 'Supplier' one when return type different
         from company.
         """
@@ -348,8 +355,7 @@ class ClaimLine(models.Model):
         return location_dest_id
 
     def _warranty_return_address_values(self, product, company, warehouse):
-        """
-        Return the partner to be used as return destination and
+        """ Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
         We can have various cases here:
@@ -391,8 +397,7 @@ class ClaimLine(models.Model):
 
     @api.multi
     def set_warranty(self):
-        """
-        Calculate warranty limit and address
+        """ Calculate warranty limit and address
         """
         for line_id in self:
             if not line_id.product_id:
@@ -408,22 +413,18 @@ class ClaimLine(models.Model):
 
     @api.model
     def _get_sequence_number(self):
-        """
-        @return the value of the sequence for the number field in the
+        """ @return the value of the sequence for the number field in the
         claim.line model.
         """
         return self.env['ir.sequence'].get('claim.line')
 
     @api.model
     def create(self, vals):
-        """
-        @return write the identify number once the claim line is create.
+        """ @return write the identify number once the claim line is create.
         """
         vals = vals or {}
-
         if ('number' not in vals) or (vals.get('number', False) == '/'):
             vals['number'] = self._get_sequence_number()
-
         res = super(ClaimLine, self).create(vals)
         return res
 

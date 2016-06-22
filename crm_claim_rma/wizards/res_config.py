@@ -64,8 +64,7 @@ class RMAConfigSettings(models.TransientModel):
 
     @api.multi
     def get_default_rma_values(self):
-        """
-        Get the current company rma configuration and
+        """ Get the current company rma configuration and
         show into the config
         wizard.
         @return dictionary with the values to display.
@@ -79,8 +78,7 @@ class RMAConfigSettings(models.TransientModel):
 
     @api.multi
     def set_rma_config(self):
-        """
-        Write the rma configuratin in the wizard into the company model.
+        """ Write the rma configuratin in the wizard into the company model.
         @return True
         """
         company = self.env.user.company_id

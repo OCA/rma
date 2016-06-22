@@ -26,7 +26,6 @@
 
 
 class ProductNoSupplier(Exception):
-    """
-    Raised when a warranty cannot be computed for a claim line
+    """ Raised when a warranty cannot be computed for a claim line
     because the product has no supplier.
     """

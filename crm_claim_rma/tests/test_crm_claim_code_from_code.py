@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
@@ -36,11 +36,11 @@ class TestCrmClaimCode(common.TransactionCase):
         self.assertRegexpMatches(crm_claim_copy.code, code)
 
     def _get_next_code(self, crm_sequence):
-        d = self.ir_sequence_model._interpolation_dict()
+        interpolation_dict = self.ir_sequence_model._interpolation_dict()
         prefix = self.ir_sequence_model._interpolate(
-            crm_sequence.prefix, d)
+            crm_sequence.prefix, interpolation_dict)
         suffix = self.ir_sequence_model._interpolate(
-            crm_sequence.suffix, d)
+            crm_sequence.suffix, interpolation_dict)
         code = (prefix + ('%%0%sd' % crm_sequence.padding %
                           crm_sequence.number_next_actual) + suffix)
         return code
