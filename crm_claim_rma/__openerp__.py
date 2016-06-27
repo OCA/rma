@@ -55,10 +55,16 @@
         'views/claim_line.xml',
         'views/crm_claim.xml',
         'views/res_partner.xml',
-        'views/stock_view.xml',
+        'views/stock_move.xml',
         'views/crm_claim_portal.xml',
         'views/res_config.xml',
         'views/res_company.xml',
+        # from crm_rma_stock_location
+        'wizards/claim_make_picking_from_picking_view.xml',
+        'views/product_product.xml',
+        'views/product_template.xml',
+        'views/stock_picking.xml',
+        'views/stock_warehouse.xml',
         'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
     ],
@@ -71,6 +77,9 @@
         'demo/res_users.xml',
         'demo/crm_claim.xml',
         'demo/claim_line.xml',
+        # from crm_rma_stock_location
+        'demo/stock_location.xml',
+        'demo/stock_inventory.xml',
     ],
     'test': [
         'test/test_invoice_refund.yml'
@@ -78,6 +87,6 @@
     'installable': True,
     'auto_install': False,
     'pre_init_hook': 'create_code_equal_to_id',
-    'post_init_hook': 'assign_old_sequences',
+    'post_init_hook': 'assign_old_sequences_and_create_locations_rma',
 
 }

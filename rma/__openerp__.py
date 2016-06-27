@@ -31,7 +31,7 @@
         "crm_rma_prodlot_invoice",
         "crm_rma_prodlot_supplier",
         "crm_rma_lot_mass_return",
-        "crm_rma_stock_location",
+        "crm_claim_rma",
         "crm_claim_product_supplier",
         "crm_rma_claim_make_claim",
         "crm_rma_advance_warranty",

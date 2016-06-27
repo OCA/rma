@@ -34,3 +34,6 @@ from . import product_no_supplier
 from . import stock_move
 from . import stock_picking
 from . import substate_substate
+from . import product_product
+from . import product_template
+from . import stock_warehouse

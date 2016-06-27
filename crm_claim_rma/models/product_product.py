@@ -66,8 +66,7 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _rma_product_available(self):
-        """
-        Finds the incoming and outgoing quantity of product for the RMA
+        """ Finds the incoming and outgoing quantity of product for the RMA
         locations.
         """
         context = self.env.context

@@ -25,3 +25,4 @@
 from . import claim_make_picking
 from . import account_invoice_refund
 from . import res_config
+from . import claim_make_picking_from_picking

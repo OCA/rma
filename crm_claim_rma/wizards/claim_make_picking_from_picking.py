@@ -45,8 +45,7 @@ class ClaimMakePickingFromPicking(models.TransientModel):
 
     @api.model
     def _get_source_loc(self):
-        """
-        Get default source location
+        """ Get default source location
         """
         warehouse_id = self._get_default_warehouse()
         picking_obj = self.env['stock.picking']
@@ -59,8 +58,7 @@ class ClaimMakePickingFromPicking(models.TransientModel):
 
     @api.model
     def _get_dest_loc(self):
-        """
-        Get default destination location
+        """ Get default destination location
         """
         warehouse_id = self._get_default_warehouse()
         loc_id = self.env['stock.location']
@@ -99,8 +97,7 @@ class ClaimMakePickingFromPicking(models.TransientModel):
 
     @api.multi
     def action_create_picking_from_picking(self):
-        """
-        If "Create" button pressed
+        """ If "Create" button pressed
         """
         picking_obj = self.env['stock.picking']
         move_obj = self.env['stock.move']

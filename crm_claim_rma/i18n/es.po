@@ -1374,3 +1374,223 @@ msgstr "Hecho"
 msgid "Sequence Number"
 msgstr "Número de secuencia"
 
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_loss_picking_from_claim_picking
+msgid "Create Incoming Shipment to Breakage Loss Location"
+msgstr "Crear un envío de entrada hacia la ubicación de pérdida de productos dañados"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_used_picking_from_claim_picking
+msgid "Create Incoming Shipment to Refurbish Location"
+msgstr "Crear un envío de entrada hacia la ubicación de productos restaurados"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_stock_picking_from_claim_picking
+msgid "Create Incoming Shipment to Stock"
+msgstr "Crear un envío de entrada a Existencias"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_loss
+msgid "Create a Product Loss"
+msgstr "Registrar una pérdida de producto"
+
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Create picking"
+msgstr "Crear un albarán"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking_from_picking.py:89
+#: field:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
+msgid "Dest. Location"
+msgstr "Ubicación destino"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,id:0
+msgid "ID"
+msgstr ""
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Actualizado el"
+
+#. module: crm_claim_rma
+#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+msgid "Source location where the returned products are"
+msgstr "Ubicación origen de los productos devueltos"
+
+#. module: crm_claim_rma
+#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+msgid "Target location to send returned products"
+msgstr "Ubicación destino de los productos devueltos"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/stock_warehouse.py:62
+#, python-format
+msgid "Loss"
+msgstr "Pérdida"
+
+#. module: crm_claim_rma
+#: field:stock.warehouse,loss_loc_id:0
+msgid "Loss Location"
+msgstr "Ubicación de Pérdida"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view_loss
+msgid "New Product Loss"
+msgstr "Nueva Pérdida de Producto"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,picking_line_ids:0
+msgid "Picking lines"
+msgstr "Líneas de albarán"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_product_template
+msgid "Product Template"
+msgstr "Producto Plantilla"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_product_tree_view
+msgid "Product Variants"
+msgstr "Variantes del Producto"
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to Loss"
+msgstr "Producto a Pérdida"
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to refurbish stock"
+msgstr "Producto a Existencias de restaurados"
+
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to stock"
+msgstr "Producto a Existencias"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma_a
+msgid "RMA - Box A"
+msgstr "RMA - Caja A"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma_b
+msgid "RMA - Box B"
+msgstr "RMA - Caja B"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_search_view
+msgid "RMA Available Products"
+msgstr "Productos disponibles en RMA"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma
+msgid "RMA Demo"
+msgstr "Demostración RMA"
+
+#. module: crm_claim_rma
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
+msgid "RMA Forecasted Quantity"
+msgstr "Pronóstico de Cantidades en RMA"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_search_view
+msgid "RMA Products"
+msgstr "Productos en RMA"
+
+#. module: crm_claim_rma
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
+msgid "RMA Quantity On Hand"
+msgstr "Cantidades Disponibles en RMA"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/stock_warehouse.py:56
+#, python-format
+msgid "Refurbish"
+msgstr "Restaurar"
+
+#. module: crm_claim_rma
+#: field:stock.warehouse,lot_refurbish_id:0
+msgid "Refurbish Location"
+msgstr "Ubicación de Restaurados"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Select lines for picking"
+msgstr "Seleccionar lineas para albarán"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Select lines to add in picking"
+msgstr "Seleccionar lineas a agregar en albarán"
+
+#. module: crm_claim_rma
+#: model:product.template,name:crm_claim_rma.product_socket_product_template
+msgid "Socket"
+msgstr "Sócate"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking_from_picking.py:85
+#: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
+msgid "Source Location"
+msgstr "Ubicación origen"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.rma_product_variant_action
+#: model:ir.ui.menu,name:crm_claim_rma.menu_stock_rma
+msgid "RMA Stock"
+msgstr "Existencias en RMA"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
+msgid "Wizard to create pickings from claim lines"
+msgstr "Asistente para create albaranes desde lineas de reclamo"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_from_picking_wizard
+msgid "Wizard to create pickings from picking lines"
+msgstr "Asistente para create albaranes desde lineas de albaranes"

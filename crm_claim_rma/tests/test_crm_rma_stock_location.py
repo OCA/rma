@@ -35,7 +35,7 @@ class TestCrmRmaStockLocation(TransactionCase):
         self.lot_rma_id = self.warehouse_id.lot_rma_id
         self.product_uom_id = self.ref('product.product_uom_unit')
         self.product_socket_id = self.env['product.product'].browse(
-            self.ref('crm_rma_stock_location.product_socket'))
+            self.ref('crm_claim_rma.product_socket'))
 
     def test_01_test(self):
         inventory_id = self.inventory.create({

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!-- CLAIM VIEWS -->
         <record model="ir.ui.view" id="crm_case_claims_tree_view">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">crm.claim</field>
@@ -15,7 +14,7 @@
                 </xpath>
             </field>
         </record>
-        <!-- Crm claim Search view -->
+
         <record id="view_crm_case_claims_filter" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">crm.claim</field>
@@ -30,7 +29,6 @@
             </field>
         </record>
 
-    <!-- Right side link to orders -->
     <act_window
         id="act_crm_claim_rma_sale_orders"
         name="Quotations and Sales"
@@ -91,7 +89,7 @@
                         </div>
                         <h1><small><field name="name"/></small></h1>
                     </div>
-                    <!-- Smart buttons -->
+
                     <div class="oe_right oe_button_box" name="buttons">
                           <button class="oe_inline oe_stat_button"
                             name="%(act_crm_claim_rma_sale_orders)d" type="action"
@@ -192,6 +190,13 @@
                         type="action" target="new"
                         context="{'warehouse_id': warehouse_id,
                             'partner_id': partner_id}"/>
+
+                    <button name="%(action_claim_picking_loss)d"
+                                    string="New Product Loss"
+                                    groups="crm_claim_rma.group_rma_user"
+                                    type="action" target="new"
+                                    context="{'warehouse_id': warehouse_id,
+                                        'partner_id': partner_id}"/>
 
                     <button name="%(account.action_account_invoice_refund)d"
                         class="oe_inline"

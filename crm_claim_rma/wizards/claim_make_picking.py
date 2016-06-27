@@ -54,6 +54,11 @@ class ClaimMakePicking(models.TransientModel):
         picking_type = self.env.context.get('picking_type')
         partner_id = self.env.context.get('partner_id')
         warehouse_id = self.env.context.get('warehouse_id')
+        claim_id = self.env.context.get('active_id')
+        claim_record = self.env['crm.claim'].browse(claim_id)
+
+        if picking_type == 'in':
+            return claim_record.partner_id.property_stock_customer
 
         if picking_type == 'out' and warehouse_id:
             return self.env['stock.warehouse'].browse(
@@ -67,28 +72,31 @@ class ClaimMakePicking(models.TransientModel):
         return self.env['stock.location']
 
     def _default_claim_line_dest_location_id(self):
-        """ Return the location_id to use as destination.
+        """Return the location_id to use as destination.
 
-        If it's an outoing shipment: take the customer stock property
+        If it's an outgoing shipment: take the customer stock property
         If it's an incoming shipment take the location_dest_id common to all
         lines, or if different, return None.
         """
         picking_type = self.env.context.get('picking_type')
-        partner_id = self.env.context.get('partner_id')
+        claim_id = self.env.context.get('active_id')
+        claim_record = self.env['crm.claim'].browse(claim_id)
 
         if isinstance(picking_type, int):
             picking_obj = self.env['stock.picking.type']
             return picking_obj.browse(picking_type)\
                 .default_location_dest_id
 
-        if picking_type == 'out' and partner_id:
-            return self.env['res.partner'].browse(
-                partner_id).property_stock_customer
-
-        if picking_type == 'in' and partner_id:
-            # Add the case of return to supplier !
-            lines = self._default_claim_line_ids()
-            return self._get_common_dest_location_from_line(lines)
+        if picking_type == 'out':
+            return claim_record.partner_id.property_stock_customer
+        elif picking_type == 'in':
+            return claim_record.warehouse_id.rma_in_type_id.\
+                default_location_dest_id
+        elif picking_type == 'int':
+            return claim_record.warehouse_id.rma_int_type_id.\
+                default_location_dest_id
+        elif picking_type == 'loss':
+            return claim_record.warehouse_id.loss_loc_id
 
         # return empty recordset, see https://github.com/odoo/odoo/issues/4384
         return self.env['stock.location']

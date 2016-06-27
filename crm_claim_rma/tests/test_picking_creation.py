@@ -86,7 +86,7 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(picking.location_id, self.customer_location_id,
                           "Incorrect source location")
         self.assertEquals(picking.location_dest_id,
-                          self.warehouse_id.lot_stock_id,
+                          self.warehouse_id.lot_rma_id,
                           "Incorrect destination location")
 
     def test_01_new_delivery(self):

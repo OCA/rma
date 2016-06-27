@@ -50,10 +50,28 @@ Features
 
 - Grouping by priority in claim line
 
+- Stock location: Allow the user to know how much for a product is available 
+  'On Hand' and how much is virtually (expected to be) available for 
+  RMA locations. Adding for the different product views 
+  (Tree, Form and Kanban) information about it. 
+  
+  Both quantities are computed and include its children locations. 
+  
+  It is useful to use it as a quick snapshot for RMA from product perspective. 
+  
+  It also adds the following location on warehouses :
 
-For further information, please visit:
+  * Loss
+  * Refurbished 
+    
+  Several wizards on incoming deliveries that allow you to move your 
+  goods easily in those new locations from a done reception.
 
-* https://www.odoo.com/forum/help-1
+  Using this module make the logistic flow of return a bit more complex:
+
+  * Returning product goes into RMA location with a incoming shipment
+  * From the incoming shipment, forward them to another places (stock, loss, refurbish)
+
 
 Known issues / Roadmap
 ======================
@@ -61,6 +79,8 @@ Known issues / Roadmap
 * Currently, the warranty duration used is the one configured on the
   products today, not the one which was configured when the product
   has been sold.
+
+* Optimization is possible when searching virtual quantities in the search function
 
 Bug Tracker
 ===========
