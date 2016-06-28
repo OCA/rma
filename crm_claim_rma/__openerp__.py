@@ -41,6 +41,9 @@
         'product_warranty',
         'portal_claim',
         'default_warehouse_from_sale_team',
+        # from crm_claim_rma
+        'crm_rma_prodlot_invoice',
+        'crm_rma_prodlot_supplier',
     ],
     'data': [
         'data/ir_sequence_type.xml',
@@ -67,6 +70,8 @@
         'views/stock_warehouse.xml',
         'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
+        'wizards/returned_lines_from_serial_from_lot_mass.xml',
+        'views/crm_claim_from_lot_mass.xml',
     ],
     'demo': [
         'demo/crm_claim_stage.xml',
@@ -80,6 +85,11 @@
         # from crm_rma_stock_location
         'demo/stock_location.xml',
         'demo/stock_inventory.xml',
+        # from lot_mass_return
+        'demo/stock_production_lot_from_lot_mass.xml',
+        'demo/purchase_order_from_lot_mass.xml',
+        'demo/sale_order_from_lot_mass.xml',
+        'demo/transfer_details_from_lot_mass.xml',
     ],
     'test': [
         'test/test_invoice_refund.yml'

@@ -54,16 +54,16 @@ Features
   'On Hand' and how much is virtually (expected to be) available for 
   RMA locations. Adding for the different product views 
   (Tree, Form and Kanban) information about it. 
-  
+
   Both quantities are computed and include its children locations. 
-  
+
   It is useful to use it as a quick snapshot for RMA from product perspective. 
-  
+
   It also adds the following location on warehouses :
 
   * Loss
   * Refurbished 
-    
+
   Several wizards on incoming deliveries that allow you to move your 
   goods easily in those new locations from a done reception.
 
@@ -72,6 +72,27 @@ Features
   * Returning product goes into RMA location with a incoming shipment
   * From the incoming shipment, forward them to another places (stock, loss, refurbish)
 
+- RMA Claim Mass Return by Lot: This module adds possibility to return a 
+  whole lot of product from an invoice and create a incoming shipment for 
+  them based on serial/lot for a product or invoice number.
+
+Usage
+=====
+
+To use this module, you need to:
+
+* Go into Sales > After-Sale services > Claims
+
+* A button named "Mass return from serial/lot or invoice" will appear in the
+  form view when creating or editing an existing claim.
+
+* Enter into the wizard and introduce serial/lot for an invoiced product or
+  invoice number and press enter.
+
+* A list of selectable items it will show below or next to the input box
+  depending upon is introduced either invoice number or serial/lot number
+  respectively. When finish adding, click on Validate button and then Ok
+  to exit of wizard and continue editing the claim.
 
 Known issues / Roadmap
 ======================

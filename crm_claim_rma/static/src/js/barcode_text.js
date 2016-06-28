@@ -1,4 +1,4 @@
-openerp.crm_rma_lot_mass_return = function(openerp) {
+openerp.crm_claim_rma = function(openerp) {
     var _t = openerp.web._t,
         _lt = openerp.web._lt;
     var QWeb = openerp.web.qweb;

@@ -322,3 +322,33 @@ class CrmClaim(models.Model):
         if 'code' not in default or default['code'] == '/':
             default['code'] = self._get_sequence_number(self.claim_type.id)
         return super(CrmClaim, self).copy(default)
+
+    @api.model
+    def _get_stock_moves_with_code(self, code='incoming'):
+        """ @code: Type of operation code.
+        Returns all stock_move with filtered by type of
+        operation.
+        """
+        stockmove = self.env['stock.move']
+        receipts = self.env['stock.picking.type']
+
+        spt_receipts = receipts.search([('code',
+                                         '=',
+                                         code)])
+        spt_receipts = [spt.id for spt in spt_receipts]
+        sm_receipts = stockmove.search([('picking_type_id',
+                                         'in',
+                                         spt_receipts)])
+        return sm_receipts
+
+    @api.multi
+    def render_metasearch_view(self):
+        context = self._context.copy()
+        context.update({
+            'active_model': self._name,
+            'active_ids': self.ids,
+            'active_id': self.id or False,
+        })
+        wizard = self.env['returned.lines.from.serial.wizard'].\
+            with_context(context).create({})
+        return wizard.render_metasearch_view()

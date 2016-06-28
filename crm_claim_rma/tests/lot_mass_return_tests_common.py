@@ -42,11 +42,11 @@ class LotMassReturnTestsCommon(TransactionCase):
                 'pick': True
             })
 
-        self.sale_order = self.env.ref('crm_rma_lot_mass_return.'
+        self.sale_order = self.env.ref('crm_claim_rma.'
                                        'so_wizard_rma_1')
-        self.lot_ids_mac0001 = self.env.ref('crm_rma_lot_mass_return.'
+        self.lot_ids_mac0001 = self.env.ref('crm_claim_rma.'
                                             'lot_purchase_wizard_rma_item_1')
-        self.lot_ids_mac0003 = self.env.ref('crm_rma_lot_mass_return.'
+        self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
                                             'lot_purchase_wizard_rma_item_3')
         self.claim_id_1 = self.env['crm.claim'].\
             create({
@@ -66,10 +66,10 @@ class LotMassReturnTestsCommon(TransactionCase):
                 'pick': True
             })
         self.transfer_po_01 = self.env.ref(
-            'crm_rma_lot_mass_return.transfer_purchase_wizard_rma')
+            'crm_claim_rma.transfer_purchase_wizard_rma')
 
         self.transfer_so_01 = self.env.ref(
-            'crm_rma_lot_mass_return.transfer_sale_wizard_rma')
+            'crm_claim_rma.transfer_sale_wizard_rma')
 
     def create_sale_order(self, order_policy='manual'):
         sale_order_id = self.env['sale.order'].create({

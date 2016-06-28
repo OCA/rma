@@ -151,7 +151,7 @@
                 </xpath>
                 <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
                     <div name="serial">
-                        <!-- Place for mass return button from crm_rma_lot_mass_return -->
+                        <!-- Place for mass return button from crm_claim_rma -->
                     </div>
                     <separator colspan="2" string="Product Returns"/>
                     <field name="claim_line_ids" nolabel="1">

@@ -190,7 +190,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         """ @return: view with metasearch field
         """
         view_id = self.env.\
-            ref('crm_rma_lot_mass_return.view_enter_product')
+            ref('crm_claim_rma.view_enter_product')
         return view_id
 
     @api.multi
@@ -602,7 +602,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
     def button_show_help(self):
         """ It shows help
         """
-        view_id = self.env.ref('crm_rma_lot_mass_return.help_message_form')
+        view_id = self.env.ref('crm_claim_rma.help_message_form')
         return {
             'view_type': 'form',
             'view_mode': 'form',
