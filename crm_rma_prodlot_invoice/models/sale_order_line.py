@@ -57,7 +57,7 @@ class SaleOrderLine(models.Model):
         invoice_line_obj = self.env["account.invoice.line"]
         stock_move_obj = self.env["stock.move"]
         invoice_lines_rec = invoice_line_obj.browse(invoice_lines)
-        picking_obj = self.env["stock.picking"]
+        transfer_obj = self.env["stock.transfer_details"]
 
         for order_line in self:
             procurements = order_line.procurement_ids
@@ -73,6 +73,6 @@ class SaleOrderLine(models.Model):
             # Get the serial/lot number related with moves
             lot_ids = move_ids.mapped("quant_ids.lot_id")
             # Save invoice lines in the serial/lot numbers
-            picking_obj._set_invoice_line_to_serial_numbers(
+            transfer_obj._set_invoice_line_to_serial_numbers(
                 lot_ids, invoice_lines_rec, 'invoice_line_id')
         return True

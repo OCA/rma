@@ -24,3 +24,8 @@ msgstr "Pedidos de venta"
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
+
+#. module: crm_rma_prodlot_invoice
+#: help:stock.production.lot,supplier_id:0
+msgid "Supplier of good in claim"
+msgstr "Proveedor del producto en el reclamo"

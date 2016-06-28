@@ -7,10 +7,19 @@
 CRM Claim Prodlot Invoice
 =========================
 
-When an invoice is created from sale order, invoice line information
-is kept into production lot.
+- When an invoice is created from sale order, invoice line information
+  is kept into production lot.
+  Also, helps to display invoice line information when an production lot is
+  displayed
 
-Also, helps to display invoice line information when an production lot is displayed
+- CRM RMA Product Lot Supplier: 
+  It allows to know the real supplier for a specific product having beforehand
+  its serial/lot number simplifying obtaining it. For example, when
+  creating/editing a claim for a laptop that it may have two o more suppliers,
+  using this module (taking advantage of lot number) let you know which
+  supplier has provided which specific product related to the claim, or use
+  time frame given by supplier or its address based on stored information about
+  supplier without any aditional steps.
 
 Installation
 ============
@@ -32,6 +41,13 @@ related information about procurement and picking
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/145/8.0
 
+When a warehouse transfer is made, the supplier field for the product lot is
+automatically filled.
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/145/8.0
+
 For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
@@ -40,6 +56,8 @@ Known issues / Roadmap
 ======================
 
 * No issues are known
+* The functionalities contained in this module only applies for Invoice
+  Control: Based on generated draft invoices and Based on incoming shipments
 
 Bug Tracker
 ===========

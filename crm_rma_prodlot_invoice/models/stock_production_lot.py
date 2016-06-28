@@ -26,6 +26,16 @@ class StockProductionLot(models.Model):
 
     _inherit = 'stock.production.lot'
 
+    supplier_id = fields.Many2one('res.partner', string='Supplier',
+                                  help="Supplier of good in claim")
+
+    supplier_invoice_line_id = \
+        fields.Many2one('account.invoice.line',
+                        string='Supplier Invoice Line',
+                        help="Supplier invoice with the "
+                             "purchase of goods sold to "
+                             "customer")
+
     invoice_line_id = fields.Many2one('account.invoice.line',
                                       string='Customer Invoice Line',
                                       help="Invoice Line Of "

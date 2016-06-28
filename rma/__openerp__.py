@@ -29,7 +29,6 @@
     "depends": [
         "crm_rma_location",
         "crm_rma_prodlot_invoice",
-        "crm_rma_prodlot_supplier",
         "crm_claim_rma",
         "crm_claim_product_supplier",
         "crm_rma_claim_make_claim",
