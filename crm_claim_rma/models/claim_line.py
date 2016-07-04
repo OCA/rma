@@ -65,7 +65,7 @@ class ClaimLine(models.Model):
                                  ('2_high', 'High'),
                                  ('3_very_high', 'Very High')],
                                 'Priority', default='0_not_define',
-                                compute='_set_priority',
+                                compute='_compute_priority',
                                 store=True,
                                 readonly=False,
                                 help="Priority attention of claim line")
@@ -198,7 +198,7 @@ class ClaimLine(models.Model):
         return super(ClaimLine, self).copy(default=std_default)
 
     @api.depends('invoice_date', 'date')
-    def _set_priority(self):
+    def _compute_priority(self):
         """
         To determine the priority of claim line
         """
