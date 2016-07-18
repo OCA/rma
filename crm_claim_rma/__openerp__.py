@@ -43,6 +43,7 @@
         'default_warehouse_from_sale_team',
         # from crm_claim_rma
         'crm_rma_prodlot_invoice',
+        'stock_unfuck',
     ],
     'data': [
         'data/ir_sequence_type.xml',
