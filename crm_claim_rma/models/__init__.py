@@ -22,6 +22,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+from . import invoice_no_date
+from . import product_no_supplier
 from . import crm_claim_stage
 from . import crm_claim_type
 from . import account_invoice

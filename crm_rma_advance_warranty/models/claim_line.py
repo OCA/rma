@@ -75,9 +75,17 @@ class ClaimLine(models.Model):
     def _get_product_supplier_info(self):
         """ It finds the information about a supplier of specific
         product """
-        return self.env['product.supplierinfo'].search(
+
+        supplier_info = self.env['product.supplierinfo'].search(
             [('name', '=', self.supplier_id.id),
-             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
+             ('active_supplier', '=', True)])
+        if len(supplier_info) > 1:
+            raise exceptions.Warning(
+                _('Error'),
+                _('There are more than one supplier activated for the product'
+                    ' %s.') % self.product_id.product_tmpl_id.name)
+        return supplier_info
 
     @api.model
     def set_warranty_return_address(self):

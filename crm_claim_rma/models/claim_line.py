@@ -252,7 +252,6 @@ class ClaimLine(models.Model):
     @staticmethod
     def warranty_limit(start, warranty_duration):
         """ Take a duration in float, return the duration in relativedelta
-
         ``relative_delta(months=...)`` only accepts integers.
         We have to extract the decimal part, and then, extend the delta with
         days.
@@ -270,71 +269,77 @@ class ClaimLine(models.Model):
         days = int(days_month * decimal_part)
         return start + relativedelta(months=months, days=days)
 
-    def _warranty_limit_values(self, invoice, claim_type, product, claim_date):
+    def _get_warranty_limit_values(self, invoice, claim_type, product,
+                                   claim_date):
+        """Calculate the warranty of claim line product depending of
+        invoice date.
+        """
         if not (invoice and claim_type and product and claim_date):
             return {'guarantee_limit': False, 'warning': False}
 
+        # If the invoice has invoice date, the warranty of
+        # damaged product can be calculated
         invoice_date = invoice.date_invoice
         if not invoice_date:
             raise InvoiceNoDate
 
+        # First, the warranty is set like not_define
         warning = 'not_define'
+
+        # The invoice date is converted to DATE FORMAT
         invoice_date = datetime.strptime(invoice_date,
                                          DEFAULT_SERVER_DATE_FORMAT)
 
-        if isinstance(claim_type, self.env['crm.claim.type'].__class__):
-            claim_type = claim_type.id
-
-        if claim_type == self.env.ref('crm_claim_rma.'
-                                      'crm_claim_type_supplier').id:
-            try:
-                warranty_duration = product.seller_ids[0].warranty_duration
-            except IndexError:
+        warranty_duration = False
+        # If claim is supplier type, then, search the warranty specified for
+        # the supplier in the suppliers configured for the damaged product.
+        supplier_claim_type = self.env.ref('crm_claim_rma.'
+                                           'crm_claim_type_supplier')
+        if claim_type == supplier_claim_type:
+            for seller in product.seller_ids:
+                # Search the supplier in the suppliers of the damaged product
+                if seller.name == invoice.partner_id:
+                    warranty_duration = seller.warranty_duration
+                    break
+            # if the supplier's warranty is not configured in the product
+            if not warranty_duration:
                 raise ProductNoSupplier
         else:
+            # If the claim is not supplier type, then, take the basic warranty
+            # configured in the product
             warranty_duration = product.warranty
 
-        limit = self.warranty_limit(invoice_date, warranty_duration)
-        if warranty_duration > 0:
-            claim_date = datetime.strptime(claim_date,
-                                           DEFAULT_SERVER_DATETIME_FORMAT)
-            if limit < claim_date:
-                warning = 'expired'
-            else:
-                warning = 'valid'
+        # Get the limit_date
+        limit_date = self.warranty_limit(invoice_date, warranty_duration)
+        claim_date = datetime.strptime(claim_date,
+                                       DEFAULT_SERVER_DATETIME_FORMAT)
 
-        return {'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
-                'warning': warning}
+        # If warranty_duration is zero, then, the warranty is not defined.
+
+        # If the limit_date is less than of claim date, then,
+        # the warranty is expired
+        if warranty_duration > 0 and limit_date < claim_date:
+            warning = 'expired'
+
+        # If the limit_date is major than of claim date, then,
+        # the warranty is valid
+        if warranty_duration > 0 and limit_date >= claim_date:
+            warning = 'valid'
+
+        # if the conditions above are not met, then, the warranty
+        # is not defined
+        limit_date = limit_date.strftime(DEFAULT_SERVER_DATE_FORMAT)
+        return {'guarantee_limit': limit_date, 'warning': warning}
 
     def set_warranty_limit(self):
         self.ensure_one()
 
         claim = self.claim_id
-        invoice_id = self.invoice_line_id and self.invoice_line_id.invoice_id \
-            or claim.invoice_id
-        try:
-            values = self._warranty_limit_values(
-                invoice_id, claim.claim_type,
-                self.product_id, claim.date)
-        except InvoiceNoDate:
-            raise exceptions.Warning(
-                _('Error'), _('Cannot find any date for invoice. '
-                              'Must be a validated invoice.'))
-        except ProductNoSupplier:
-            raise exceptions.Warning(
-                _('Error'), _('The product has no supplier configured.'))
-
+        invoice_id = self.invoice_line_id.invoice_id
+        values = self._get_warranty_limit_values(
+            invoice_id, claim.claim_type,
+            self.product_id, claim.date)
         self.write(values)
-        return True
-
-    @api.model
-    def auto_set_warranty(self):
-        """ Set warranty automatically
-        if the user has not himself pressed on 'Calculate warranty state'
-        button, it sets warranty for him"""
-        for line in self:
-            if not line.warning:
-                line.set_warranty()
         return True
 
     @api.returns('stock.location')
@@ -410,6 +415,7 @@ class ClaimLine(models.Model):
 
             line_id.set_warranty_limit()
             line_id.set_warranty_return_address()
+        return True
 
     @api.model
     def _get_sequence_number(self):

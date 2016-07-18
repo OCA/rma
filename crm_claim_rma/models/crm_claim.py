@@ -235,7 +235,7 @@ class CrmClaim(models.Model):
         def warranty_values(invoice, product):
             values = {}
             try:
-                warranty = claim_line._warranty_limit_values(
+                warranty = claim_line._get_warranty_limit_values(
                     invoice, claim_type, product, claim_date)
             except (InvoiceNoDate, ProductNoSupplier):
                 # we don't mind at this point if the warranty can't be

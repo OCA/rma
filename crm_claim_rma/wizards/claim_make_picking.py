@@ -230,7 +230,7 @@ class ClaimMakePicking(models.TransientModel):
                       'destination locations, please choose line with a '
                       'same destination location.'))
 
-            claim_lines.auto_set_warranty()
+            claim_lines.set_warranty()
             common_dest_partner = self._get_common_partner_from_line(
                 claim_lines)
             if not common_dest_partner:
