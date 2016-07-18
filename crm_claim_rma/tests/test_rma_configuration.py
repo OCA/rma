@@ -126,6 +126,11 @@ class TestCreateSimpleClaim(TransactionCase):
         with self.assertRaisesRegexp(ValidationError, error):
             claim_id.write({"date_deadline": "2016-12-01"})
 
+        user_rma = self.env.ref("crm_claim_rma.vendor_user_rma")
+        error = "In order to set a manual deadline date.*"
+        with self.assertRaisesRegexp(ValidationError, error):
+            claim_id.sudo(user_rma).write({"date_deadline": "2016-12-22"})
+
         # Test 4
         error = "Creation date must be less than deadline"
         with self.assertRaisesRegexp(ValidationError, error):

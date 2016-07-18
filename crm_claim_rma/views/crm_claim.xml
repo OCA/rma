@@ -70,7 +70,7 @@
                 <xpath expr="//sheet/group[2]" position="replace">
                     <group colspan="4" col="4"  groups="base.group_user">
                         <field name="warehouse_id" />
-                        <field name="claim_type" required="1" readonly="1"
+                        <field name="claim_type" required="1"
                             options="{'no_create': True}"
                             context="{'create_lines': False}"/>
                         <field name="date"/>

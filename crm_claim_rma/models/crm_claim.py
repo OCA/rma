@@ -145,9 +145,7 @@ class CrmClaim(models.Model):
         Then, the limit_days must be one day.
         """
         limit_days = self.env.user.company_id.limit_days
-        if not limit_days:
-            limit_days = 1
-        return limit_days
+        return limit_days and limit_days or 1
 
     @api.depends("date")
     def _compute_deadline(self):
