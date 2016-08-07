@@ -144,8 +144,7 @@ class CrmClaim(models.Model):
         """ If the limit_days parameter is not set.
         Then, the limit_days must be one day.
         """
-        limit_days = self.env.user.company_id.limit_days
-        return limit_days and limit_days or 1
+        return self.env.user.company_id.limit_days or 1
 
     @api.depends("date")
     def _compute_deadline(self):
@@ -154,12 +153,11 @@ class CrmClaim(models.Model):
         can be edited manually by the rma manager
         """
         limit_days = self._get_limit_days()
-        for crm_claim in self:
-            if crm_claim.date:
-                deadline = fields.datetime.strptime(
-                    crm_claim.date, "%Y-%m-%d %H:%M:%S") + \
-                    datetime.timedelta(days=limit_days)
-                crm_claim.date_deadline = deadline
+        for claim_id in self.filtered(lambda r: r.date):
+            deadline = fields.datetime.strptime(
+                claim_id.date, "%Y-%m-%d %H:%M:%S") + \
+                datetime.timedelta(days=limit_days)
+            claim_id.date_deadline = deadline
 
     @api.multi
     def _inverse_deadline(self):
@@ -170,30 +168,29 @@ class CrmClaim(models.Model):
         the user should be rma manager to allow the change in the deadline.
         If the user is not rma manager, a validation message is shown
         """
-        for crm_claim in self:
-            limit_days = self._get_limit_days()
+        rma_manager_group_id = self.env.ref("crm_claim_rma.group_rma_manager")
+        for claim_id in self:
+            limit_days = claim_id._get_limit_days()
             # for calculating the difference of days
             # the deadline should be: deadline + hours of claim.
             # and the result of subtract (deadline - date) is entire
             # because the deadline is Date type
             # and date is Datetime type
-            date_deadline = crm_claim.date_deadline + ' ' + \
-                crm_claim.date.split()[1]
-
-            date = crm_claim.date
+            date_deadline = claim_id.date_deadline + ' ' + \
+                claim_id.date.split()[1]
 
             diff = fields.datetime.strptime(
                 date_deadline, "%Y-%m-%d %H:%M:%S") - \
-                fields.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+                fields.datetime.strptime(claim_id.date, "%Y-%m-%d %H:%M:%S")
 
-            if diff.days != limit_days:
-                group_rma_manager = self.env.ref(
-                    "crm_claim_rma.group_rma_manager")
-                if self.env.user not in group_rma_manager.users:
-                    raise ValidationError(
-                        _("In order to set a manual deadline date"
-                          " you must belong to the group RMA {group}".format(
-                              group=group_rma_manager.name)))
+            if diff.days == limit_days:
+                continue
+
+            if self.env.user not in rma_manager_group_id.users:
+                raise ValidationError(
+                    _("In order to set a manual deadline date "
+                      "you must belong to the group RMA {group}".format(
+                          group=rma_manager_group_id.name)))
 
     date_deadline = fields.Date(compute="_compute_deadline",
                                 inverse="_inverse_deadline",
@@ -209,15 +206,13 @@ class CrmClaim(models.Model):
         manually by the rma manager, then, the deadline
         should be major than the date of claim
         """
-        for crm_claim in self:
-            if crm_claim.date and crm_claim.date_deadline:
-                date = fields.datetime.strptime(
-                    crm_claim.date, "%Y-%m-%d %H:%M:%S")
-                date_deadline = fields.datetime.strptime(
-                    crm_claim.date_deadline, "%Y-%m-%d")
-                if date_deadline < date:
-                    raise ValidationError(
-                        _("Creation date must be less than deadline"))
+        for claim_id in self.filtered(lambda r: r.date and r.date_deadline):
+            date = fields.datetime.strptime(claim_id.date, "%Y-%m-%d %H:%M:%S")
+            date_deadline = fields.datetime.strptime(
+                claim_id.date_deadline, "%Y-%m-%d")
+            if date_deadline < date:
+                raise ValidationError(
+                    _("Creation date must be less than deadline"))
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
@@ -321,32 +316,14 @@ class CrmClaim(models.Model):
             default['code'] = self._get_sequence_number(self.claim_type.id)
         return super(CrmClaim, self).copy(default)
 
-    @api.model
-    def _get_stock_moves_with_code(self, code='incoming'):
-        """ @code: Type of operation code.
-        Returns all stock_move with filtered by type of
-        operation.
-        """
-        stockmove = self.env['stock.move']
-        receipts = self.env['stock.picking.type']
-
-        spt_receipts = receipts.search([('code',
-                                         '=',
-                                         code)])
-        spt_receipts = [spt.id for spt in spt_receipts]
-        sm_receipts = stockmove.search([('picking_type_id',
-                                         'in',
-                                         spt_receipts)])
-        return sm_receipts
-
     @api.multi
     def render_metasearch_view(self):
-        context = self._context.copy()
+        context = self.env.context.copy()
         context.update({
             'active_model': self._name,
             'active_ids': self.ids,
             'active_id': self.id or False,
         })
-        wizard = self.env['returned.lines.from.serial.wizard'].\
+        wizard_id = self.env['returned.lines.from.serial.wizard'].\
             with_context(context).create({})
-        return wizard.render_metasearch_view()
+        return wizard_id.render_metasearch_view()

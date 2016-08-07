@@ -55,9 +55,6 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         purchase_order_id.action_invoice_create()
         purchase_order_id.action_picking_create()
         self.assertEquals(purchase_order_id.state, 'confirmed')
-        self.assertEquals(1, len(self.picking.
-                                 search([('origin', '=',
-                                          purchase_order_id.name)])))
         self.picking_ids = purchase_order_id.picking_ids
         return purchase_order_id
 

@@ -44,15 +44,13 @@ class ClaimLine(models.Model):
         """ Create supplier rma product.
         """
         good_lines = []
-        claim_obj = self.env['crm.claim']
-        claim_line_obj = self.env['claim.line']
-        claim_type_supplier = self.env.\
-            ref('crm_claim_rma.crm_claim_type_supplier')
+        claim = self.env['crm.claim']
+        claim_line = self.env['claim.line']
+        supplier_type = self.env.ref('crm_claim_rma.crm_claim_type_supplier')
         stage_new = self.env.ref('crm_claim.stage_claim1')
 
         for claim_line_parent in self:
-            claim_line_supplier =\
-                claim_line_parent._search_related_lines()
+            claim_line_supplier = claim_line_parent._search_related_lines()
 
             if claim_line_supplier:
                 raise UserError(
@@ -63,12 +61,10 @@ class ClaimLine(models.Model):
             # the new supplier claim line to that supplier claim
             # and to can acumulate multiples lines in a supplier
             # claim and to send to same supplier in a one travel.
-            claim_supplier = claim_obj.search([('claim_type', '=',
-                                                claim_type_supplier.id),
-                                               ('stage_id', '=', stage_new.id),
-                                               ('partner_id', '=',
-                                                claim_line_parent.
-                                                supplier_id.id)])
+            claim_supplier = claim.search([
+                ('claim_type', '=', supplier_type.id),
+                ('stage_id', '=', stage_new.id),
+                ('partner_id', '=', claim_line_parent.supplier_id.id)])
             if not claim_supplier:
                 today_datetime = datetime.datetime.now()
                 today = datetime.datetime.strftime(
@@ -78,10 +74,10 @@ class ClaimLine(models.Model):
                         days=self.env.user.company_id.limit_days)
                 deadline = datetime.datetime.strftime(
                     deadline_datetime, "%Y-%m-%d")
-                claim_supplier = claim_obj.create({
+                claim_supplier = claim.create({
                     'name': 'Supplier Claim',
                     'code': '/',
-                    'claim_type': claim_type_supplier.id,
+                    'claim_type': supplier_type.id,
                     'partner_id': claim_line_parent.supplier_id.id,
                     'categ_id': claim_line_parent.claim_id.categ_id.id,
                     'warehouse_id': claim_line_parent.claim_id.warehouse_id.id,
@@ -95,8 +91,8 @@ class ClaimLine(models.Model):
                 })
             elif len(claim_supplier) > 1:
                 # search the supplier claim with less lines
-                claims = [(claim, len(claim.claim_line_ids))
-                          for claim in claim_supplier]
+                claims = [(claim_id, len(claim_id.claim_line_ids))
+                          for claim_id in claim_supplier]
                 claims = dict(claims)
                 claim_supplier = min(claims, key=claims.get)
 
@@ -108,37 +104,32 @@ class ClaimLine(models.Model):
             invoice_line_for_claim_line = claim_line_parent.prodlot_id.\
                 supplier_invoice_line_id
             if not invoice_line_for_claim_line:
-                for line in claim_line_parent.\
-                        supplier_invoice_id.invoice_line:
+                for line in claim_line_parent.supplier_invoice_id.invoice_line:
                     if line.product_id == claim_line_parent.product_id:
                         invoice_line_for_claim_line = line
                         break
 
-            claim_line_supplier_new = \
-                claim_line_obj.create({
-                    'name': claim_line_parent.name,
-                    'claim_id': claim_supplier and claim_supplier.id or False,
-                    'claim_type': claim_type_supplier.id,
-                    'claim_line_id': claim_line_parent.id,
-                    'number': '/',
-                    'product_id': claim_line_parent.product_id.id,
-                    'invoice_line_id': invoice_line_for_claim_line.id,
-                    'claim_origin': claim_line_parent.claim_origin,
-                    'prodlot_id': claim_line_parent.prodlot_id.id,
-                    'priority': claim_line_parent.priority,
-                    'product_returned_quantity':
-                    claim_line_parent.product_returned_quantity,
-                })
+            claim_line_supplier_new = claim_line.create({
+                'name': claim_line_parent.name,
+                'claim_id': claim_supplier and claim_supplier.id or False,
+                'claim_type': supplier_type.id,
+                'claim_line_id': claim_line_parent.id,
+                'number': '/',
+                'product_id': claim_line_parent.product_id.id,
+                'invoice_line_id': invoice_line_for_claim_line.id,
+                'claim_origin': claim_line_parent.claim_origin,
+                'prodlot_id': claim_line_parent.prodlot_id.id,
+                'priority': claim_line_parent.priority,
+                'product_returned_quantity':
+                claim_line_parent.product_returned_quantity,
+            })
             good_lines += [claim_line_supplier_new.id]
 
-            if not good_lines:
-                raise UserError(
-                    _('Error'),
-                    _('The Supplier Claim Was Not Created.'))
+        if not good_lines:
+            raise UserError(_('Error'),
+                            _('The Supplier Claim Was Not Created.'))
 
-            good_lines = list(set(good_lines))
-
-        return good_lines
+        return list(set(good_lines))
 
     @api.multi
     def button_rma_vendor_render_view(self):
@@ -148,8 +139,7 @@ class ClaimLine(models.Model):
         """
         good_lines = self.button_create_line_rma_vendor()
         if good_lines:
-            result = self.env.ref('crm_claim_rma.'
-                                  'act_crm_case_claim_lines')
+            result = self.env.ref('crm_claim_rma.act_crm_case_claim_lines')
             result = result.read()
             result[0]['domain'] = "[('id','in'," + str(good_lines) + ")]"
             return result[0]

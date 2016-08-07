@@ -28,8 +28,26 @@ class TestCopyMethod(common.TransactionCase):
         super(TestCopyMethod, self).setUp()
         self.warehouse = self.env['stock.warehouse']
 
-    def test_copy_method(self):
+    def test_01_claim_line_copy(self):
+        """ Copy a claim line and validate fields values
+            move_in_id -> False
+            move_out_id -> False
+            refund_line_id -> False
+        """
+        line_ids = self.env.ref('crm_claim.crm_claim_6').claim_line_ids
+        line_id = line_ids[1]
+        line_copied_id = line_id.copy()
 
+        # If you need more fields to be expected as false, insert them below
+        fields = ['move_in_id',
+                  'move_out_id',
+                  'refund_line_id']
+        fields_without_value = [getattr(line_copied_id, fd) for fd in fields]
+        self.assertFalse(
+            any(fields_without_value),
+            'One or more fields in %s has value not expected' % str(fields))
+
+    def test_02_claim_document_copy(self):
         partner = self.env.ref("base.res_partner_2")
         partner_address = self.env.ref("base.res_partner_12")
         claim_type_customer = self.env.ref(

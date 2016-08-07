@@ -30,9 +30,8 @@ class CrmClaimType(models.Model):
     name = fields.Char(required=True, translate=True)
     active = fields.Boolean(default=True)
     description = fields.Text(translate=True)
-    ir_sequence_id = fields.Many2one('ir.sequence',
-                                     string='Sequence Code',
-                                     default=lambda self:
-                                     self.env['ir.sequence'].
-                                     search([('code', '=',
-                                              'crm.claim.rma.basic')]))
+    ir_sequence_id = fields.Many2one(
+        'ir.sequence',
+        string='Sequence Code',
+        default=lambda self:
+        self.env['ir.sequence'].search([('code', '=', 'crm.claim.rma.basic')]))

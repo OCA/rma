@@ -107,7 +107,7 @@ class ClaimLine(models.Model):
                                              "returned")
     unit_sale_price = fields.Float(digits=(12, 2),
                                    help="Unit sale price of the product. "
-                                   "Auto filled if retrun done "
+                                   "Auto filled if return done "
                                    "by invoice selection. Be careful "
                                    "and check the automatic "
                                    "value as don't take into account "
@@ -134,7 +134,7 @@ class ClaimLine(models.Model):
                                readonly=True,
                                help="If warranty has expired")
     display_name = fields.Char('Name',
-                               compute='_get_display_name')
+                               compute='_compute_display_name')
     date_deadline = fields.Date(related="claim_id.date_deadline")
 
     @api.model
@@ -236,7 +236,7 @@ class ClaimLine(models.Model):
                                              DEFAULT_SERVER_DATE_FORMAT)
                 if days.days <= priority_max:
                     line_id.priority = "3_very_high"
-                elif priority_max < days.days and days.days <= priority_min:
+                elif priority_max < days.days <= priority_min:
                     line_id.priority = "2_high"
                 elif days.days > priority_min:
                     line_id.priority = "1_normal"
@@ -244,10 +244,12 @@ class ClaimLine(models.Model):
                 line_id.priority = "0_not_define"
 
     def _get_subject(self, num):
-        if num > 0 and num <= len(self.SUBJECT_LIST):
-            return self.SUBJECT_LIST[num - 1][0]
-        else:
-            return self.SUBJECT_LIST[0][0]
+        """ Based on a subject number given, it returns the proper subject
+        value only if the number is between the limits, in counter case is the
+        first value of SUBJECT_LIST will be returned
+        """
+        subject_index = num - 1 if 0 < num <= len(self.SUBJECT_LIST) else 0
+        return self.SUBJECT_LIST[subject_index][0]
 
     @staticmethod
     def warranty_limit(start, warranty_duration):
@@ -283,7 +285,7 @@ class ClaimLine(models.Model):
         if not invoice_date:
             raise InvoiceNoDate
 
-        # First, the warranty is set like not_define
+        # First, the warranty is set as not defined
         warning = 'not_define'
 
         # The invoice date is converted to DATE FORMAT
@@ -293,15 +295,12 @@ class ClaimLine(models.Model):
         warranty_duration = False
         # If claim is supplier type, then, search the warranty specified for
         # the supplier in the suppliers configured for the damaged product.
-        supplier_claim_type = self.env.ref('crm_claim_rma.'
-                                           'crm_claim_type_supplier')
-        if claim_type == supplier_claim_type:
-            for seller in product.seller_ids:
-                # Search the supplier in the suppliers of the damaged product
-                if seller.name == invoice.partner_id:
-                    warranty_duration = seller.warranty_duration
-                    break
-            # if the supplier's warranty is not configured in the product
+        supplier_type = self.env.ref('crm_claim_rma.crm_claim_type_supplier')
+
+        if claim_type == supplier_type:
+            seller_id = product.seller_ids.filtered(
+                lambda r: r.name == invoice.partner_id)
+            warranty_duration = seller_id.warranty_duration
             if not warranty_duration:
                 raise ProductNoSupplier
         else:
@@ -314,17 +313,9 @@ class ClaimLine(models.Model):
         claim_date = datetime.strptime(claim_date,
                                        DEFAULT_SERVER_DATETIME_FORMAT)
 
-        # If warranty_duration is zero, then, the warranty is not defined.
-
-        # If the limit_date is less than of claim date, then,
-        # the warranty is expired
-        if warranty_duration > 0 and limit_date < claim_date:
-            warning = 'expired'
-
-        # If the limit_date is major than of claim date, then,
-        # the warranty is valid
-        if warranty_duration > 0 and limit_date >= claim_date:
-            warning = 'valid'
+        # Warranty is valid only when claim date is lesser than limit date,
+        # in counter case the warranty is expired
+        warning = 'valid' if claim_date <= limit_date else 'expired'
 
         # if the conditions above are not met, then, the warranty
         # is not defined
@@ -334,11 +325,10 @@ class ClaimLine(models.Model):
     def set_warranty_limit(self):
         self.ensure_one()
 
-        claim = self.claim_id
+        claim_id = self.claim_id
         invoice_id = self.invoice_line_id.invoice_id
         values = self._get_warranty_limit_values(
-            invoice_id, claim.claim_type,
-            self.product_id, claim.date)
+            invoice_id, claim_id.claim_type, self.product_id, claim_id.date)
         self.write(values)
         return True
 
@@ -350,12 +340,11 @@ class ClaimLine(models.Model):
         """
         location_dest_id = warehouse_id.lot_stock_id
 
-        if product_id.seller_ids:
-            seller = product_id.seller_ids[0]
-            if seller.warranty_return_partner != 'company' \
-                    and seller.name and \
-                    seller.name.property_stock_supplier:
-                location_dest_id = seller.name.property_stock_supplier
+        seller_id = product_id.seller_ids and product_id.seller_ids[0]
+        if seller_id and seller_id.warranty_return_partner != 'company' \
+                and seller_id.name \
+                and seller_id.name.property_stock_supplier:
+            location_dest_id = seller_id.name.property_stock_supplier
 
         return location_dest_id
 
@@ -374,29 +363,28 @@ class ClaimLine(models.Model):
                 'warranty_type': False,
                 'location_dest_id': False
             }
-        sellers = product.seller_ids
-        if sellers:
-            seller = sellers[0]
-            return_address_id = seller.warranty_return_address.id
-            return_type = seller.warranty_return_partner
+        seller_ids = product.seller_ids
+        if seller_ids:
+            seller_id = seller_ids[0]
+            return_address_id = seller_id.warranty_return_address
+            return_type = seller_id.warranty_return_partner
         else:
             # when no supplier is configured, returns to the company
-            return_address = (company.crm_return_address_id or
-                              company.partner_id)
-            return_address_id = return_address.id
+            return_address_id = (company.crm_return_address_id or
+                                 company.partner_id)
             return_type = 'company'
         location_dest = self.get_destination_location(product, warehouse)
         return {
-            'warranty_return_partner': return_address_id,
+            'warranty_return_partner': return_address_id.id,
             'warranty_type': return_type,
             'location_dest_id': location_dest.id
         }
 
     def set_warranty_return_address(self):
         self.ensure_one()
-        claim = self.claim_id
+        claim_id = self.claim_id
         values = self._warranty_return_address_values(
-            self.product_id, claim.company_id, claim.warehouse_id)
+            self.product_id, claim_id.company_id, claim_id.warehouse_id)
         self.write(values)
         return True
 
@@ -435,7 +423,7 @@ class ClaimLine(models.Model):
         return res
 
     @api.multi
-    def _get_display_name(self):
+    def _compute_display_name(self):
         for line_id in self:
             line_id.display_name = "%s - %s" % (
                 line_id.claim_id.code, line_id.name)

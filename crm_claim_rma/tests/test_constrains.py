@@ -20,7 +20,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import ValidationError
+from openerp.exceptions import ValidationError, Warning
 
 
 class TestConstrains(TransactionCase):
@@ -32,8 +32,9 @@ class TestConstrains(TransactionCase):
     def setUp(self):
         super(TestConstrains, self).setUp()
         self.claim_line_wizard = self.env['claim.line.wizard']
+        self.claim_id = self.env.ref('crm_claim.crm_claim_3')
 
-    def test_product_constrain(self):
+    def test_01_product_constrain(self):
 
         msg = "The product of the invoice .* is not same that product .*"
         with self.assertRaisesRegexp(ValidationError, msg):
@@ -44,4 +45,42 @@ class TestConstrains(TransactionCase):
                     'invoice_line_id':
                     self.env.ref('account.demo_invoice_0_'
                                  'line_rpanrearpanelshe0').id,
-                })
+               })
+
+    def try_set_warranty(self, vals):
+        """
+        """
+        line_id = self.claim_id.claim_line_ids[0]
+        field_id = getattr(line_id, vals['field_name'])
+        line_id.write({vals['field_name']: False})
+        with self.assertRaisesRegexp(Warning, vals['error_msg']):
+            line_id.set_warranty()
+        line_id.write({vals['field_name']: field_id.id})
+        line_id.set_warranty()
+
+    def test_02_missing_product(self):
+        """ An error should be thrown when  computing warranty and there is no
+        product set in a claim line
+        """
+        self.try_set_warranty({
+            'field_name': 'product_id',
+            'error_msg': 'Please set product first'
+        })
+
+    def test_03_missing_invoice_line(self):
+        """ An error should be thrown when computing warranty and there is no
+        invoice line set in a claim line
+        """
+        self.try_set_warranty({
+            'field_name': 'invoice_line_id',
+            'error_msg': 'Please set invoice first'
+        })
+
+    def test_04_limit_days_zero(self):
+        """ An exception should be raised when limit_days reaches a value of
+        zero (or less) when is set
+        """
+        company_ids = self.env['res.company'].search([])
+        error_msg = 'Limit days must be greater than zero'
+        with self.assertRaisesRegexp(ValidationError, error_msg):
+            company_ids.write({'limit_days': 0})

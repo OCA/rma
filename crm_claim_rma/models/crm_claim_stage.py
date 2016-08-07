@@ -23,21 +23,15 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from openerp import fields, models
 
 
 class CrmClaimStage(models.Model):
 
     _inherit = 'crm.claim.stage'
 
-    @api.model
-    def _get_claim_type(self):
-        return self.env['crm.claim']._get_claim_type()
-
-    claim_type = \
-        fields.Many2one('crm.claim.type',
-                        selection=_get_claim_type,
-                        help="Claim classification")
+    claim_type = fields.Many2one('crm.claim.type',
+                                 help="Claim classification")
 
     claim_common = fields.Boolean(string='Common to All Claim Types',
                                   help="If you check this field,"

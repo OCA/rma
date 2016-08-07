@@ -211,3 +211,26 @@ class TestCrmRmaLotMassReturn2(LotMassReturnTestsCommon):
         self.assertEqual(len(lines_list_id), 1)
         wizard_id.add_claim_lines()
         self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
+
+    def test_05_help_buttons(self):
+        """ A help button is shown in wizard to let the user meets how the
+        claim's wizard works, this test validates:
+            - The button displays and takes the user to new window with
+            the information
+            - Takes the user back to the wizard
+        """
+        claim_id = self.claim_id_2
+        wizard_id = self.metasearch_wizard.with_context({
+            'active_model': claim_id._name,
+            'active_id': claim_id.id,
+            'active_ids': claim_id.ids,
+        }).create({})
+        button_show_help = wizard_id.button_show_help()
+        help_view_id = self.ref('crm_claim_rma.help_message_form')
+        context = button_show_help.get('context', {})
+        self.assertEqual(button_show_help.get('view_id', -1), help_view_id)
+        self.assertEqual(context.get('active_ids', []), claim_id.ids)
+
+        button_back2wizard = wizard_id.button_get_back_to_wizard()
+        context = button_back2wizard.get('context', {})
+        self.assertEqual(context.get('active_ids', []), claim_id.ids)

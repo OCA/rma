@@ -21,6 +21,7 @@
 
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
+from openerp.exceptions import Warning
 
 
 class TestPickingFromPicking(TransactionCase):
@@ -62,22 +63,30 @@ class TestPickingFromPicking(TransactionCase):
         self.loss_loc = self.main_warehouse_id.loss_loc_id
         self.loc_refurbish = self.main_warehouse_id.lot_refurbish_id
 
-    def test_01_get_dest_loc(self):
-
-        # Create Picking from Customers to RMA
-        # with button New Products Return
-
-        wiz_context = {
-            'active_id': self.claim_id.id,
-            'warehouse_id': self.claim_id.warehouse_id.id,
-            'partner_id': self.claim_id.partner_id.id,
-            'picking_type': self.claim_id.warehouse_id.rma_in_type_id.id,
-        }
-        wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
-
+    def create_picking_wizard(self, claim_id):
+        """ Create a picking based on claim
+        """
+        wizard_id = self.wizardmakepicking.with_context({
+            'active_id': claim_id.id,
+            'warehouse_id': claim_id.warehouse_id.id,
+            'partner_id': claim_id.partner_id.id,
+            'picking_type': claim_id.warehouse_id.rma_in_type_id.id,
+        }).create({})
         res = wizard_id.action_create_picking()
 
+        return wizard_id, res
+
+    def test_01_get_dest_loc(self):
+        """ Create picking from customers to rma location with button
+        new products return
+        """
+        wizard_id, res = self.create_picking_wizard(self.claim_id)
         stock_picking_id = res.get('res_id')
+
+        # It's not allowed to create product return twice
+        error_msg = ".*A picking has already been created for this claim.*"
+        with self.assertRaisesRegexp(Warning, error_msg):
+            self.create_picking_wizard(self.claim_id)
 
         # Create Picking 'Product to stock'
         context = {

@@ -39,25 +39,22 @@ class SaleOrder(models.Model):
         """
         return self.set_lot_invoice_line(self, 'action_ship_create')
 
-    def set_lot_invoice_line(self, record_set, method=False):
+    def set_lot_invoice_line(self, order_ids, method=False):
         res = getattr(super(SaleOrder, self), method)() if method else False
-        for order_id in record_set:
+        lot = self.env['stock.production.lot']
+        for order_id in order_ids:
             move_ids = order_id.mapped('picking_ids.move_lines')
-            invoice_lines = order_id.mapped('invoice_ids.invoice_line')
+            invoice_line_ids = order_id.mapped('invoice_ids.invoice_line')
 
-            if not invoice_lines or not move_ids:
+            if not invoice_line_ids or not move_ids:
                 continue
 
-            for inv_line in invoice_lines:
-                qty_lots_with_inv_line = len(self.env['stock.production.lot'].
-                                             search([('invoice_line_id', '=',
-                                                      inv_line.id)]))
-                for move_id in move_ids:
-                    lots = move_id.mapped('quant_ids.lot_id')
-                    for lot in lots:
-                        if not lot.invoice_line_id and \
-                                inv_line.product_id.id == \
-                                lot.product_id.id and \
-                                qty_lots_with_inv_line < inv_line.quantity:
-                            lot.write({'invoice_line_id': inv_line.id})
+            invoice_line_ids = invoice_line_ids.filtered(
+                lambda r: r.quantity > lot._get_related_count(r))
+
+            for line_id in invoice_line_ids:
+                lot_ids = move_ids.mapped('quant_ids.lot_id').filtered(
+                    lambda r: not r.invoice_line_id and
+                    r.product_id == line_id.product_id)
+                lot_ids.write({'invoice_line_id': line_id.id})
         return res

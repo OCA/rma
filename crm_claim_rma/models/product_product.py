@@ -30,13 +30,13 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     rma_qty_available = fields.Float(
-        compute='_rma_product_available',
+        compute='_compute_rma_product_available',
         digits_compute=dp.get_precision('Product Unit of Measure'),
         search='_search_rma_product_quantity',
         string='RMA Quantity On Hand')
 
     rma_virtual_available = fields.Float(
-        compute='_rma_product_available',
+        compute='_compute_rma_product_available',
         digits_compute=dp.get_precision('Product Unit of Measure'),
         search='_search_rma_product_quantity',
         string='RMA Forecasted Quantity')
@@ -44,28 +44,27 @@ class ProductProduct(models.Model):
     def _search_rma_product_quantity(self, operator, value):
         res = []
         # to prevent sql injections
-        assert operator in ('<', '>', '=', '!=',
-                            '<=', '>='), 'Invalid domain operator'
+        assert operator in ('<', '>', '=', '!=', '<=', '>='),\
+            'Invalid domain operator'
         assert isinstance(value, (float, int)), 'Invalid domain right operand'
 
         if operator == '=':
             operator = '=='
 
         ids = []
-        product_ids = self.search([])
-        if product_ids:
-            for element in product_ids:
-                localdict = {'virtual': element.rma_virtual_available,
-                             'qty': element.rma_qty_available,
-                             'value': value}
-                if safe_eval('qty %s value or virtual %s value' %
-                             (operator, operator), localdict):
-                    ids.append(element.id)
-            res.append(('id', 'in', ids))
+        product_ids = self.search([]) or []
+        for element in product_ids:
+            localdict = {'virtual': element.rma_virtual_available,
+                         'qty': element.rma_qty_available,
+                         'value': value}
+            if safe_eval('qty %s value or virtual %s value' %
+                         (operator, operator), localdict):
+                ids.append(element.id)
+        res.append(('id', 'in', ids))
         return res
 
     @api.multi
-    def _rma_product_available(self):
+    def _compute_rma_product_available(self):
         """ Finds the incoming and outgoing quantity of product for the RMA
         locations.
         """
@@ -77,15 +76,10 @@ class ProductProduct(models.Model):
             if warehouse_id and warehouse_id.lot_rma_id:
                 location_ids.add(warehouse_id.lot_rma_id.id)
             else:
-                warehouse_ids = self.env['stock.warehouse'].search([])
-                if not warehouse_ids:
-                    return
-                for warehouse_id in warehouse_ids:
-                    if warehouse_id.lot_rma_id:
-                        location_ids.add(warehouse_id.lot_rma_id.id)
+                wh_ids = self.env['stock.warehouse'].search([])
+                for warehouse_id in wh_ids.filtered(lambda r: r.lot_rma_id):
+                    location_ids.add(warehouse_id.lot_rma_id.id)
 
-            if not location_ids:
-                return
             ctx['location'] = list(location_ids)
 
             domain_products = [('product_id', 'in', [product.id])]

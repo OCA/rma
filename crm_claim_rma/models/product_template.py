@@ -29,20 +29,18 @@ class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
-    rma_qty_available = fields.Float(compute='_rma_template_available',
-                                     digits_compute=dp.
-                                     get_precision('Product Unit '
-                                                   'of Measure'),
-                                     string='RMA Quantity On Hand')
+    rma_qty_available = fields.Float(
+        compute='_compute_rma_template_available',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        string='RMA Quantity On Hand')
 
-    rma_virtual_available = fields.Float(compute='_rma_template_available',
-                                         digits_compute=dp.
-                                         get_precision('Product Unit'
-                                                       ' of Measure'),
-                                         string='RMA Forecasted Quantity')
+    rma_virtual_available = fields.Float(
+        compute='_compute_rma_template_available',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        string='RMA Forecasted Quantity')
 
     @api.multi
-    def _rma_template_available(self):
+    def _compute_rma_template_available(self):
         for product in self:
             product.rma_qty_available = sum(
                 [p.rma_qty_available for p in product.product_variant_ids])

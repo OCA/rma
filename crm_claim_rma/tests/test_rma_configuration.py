@@ -150,11 +150,10 @@ class TestCreateSimpleClaim(TransactionCase):
 
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        company.write(
-            {
-                "priority_maximum": 1,
-                "priority_minimum": 7,
-            })
+        company.write({
+            "priority_maximum": 1,
+            "priority_minimum": 7,
+        })
 
         crm_claim = self.env.ref("crm_claim.crm_claim_6")
         claim_line_1 = crm_claim.claim_line_ids[0]

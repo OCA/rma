@@ -30,10 +30,8 @@ class ClaimLine(models.Model):
                         string='Supplier Invoice',
                         compute='_compute_supplier_and_supplier_invoice',
                         store=True,
-                        help="Supplier invoice with the "
-                             "purchase of goods sold to "
-                             "customer")
-
+                        help="Supplier invoice with the purchase of goods "
+                        "sold to customer")
     supplier_id = \
         fields.Many2one('res.partner', string='Supplier',
                         related='supplier_invoice_id.commercial_partner_id',
@@ -77,6 +75,5 @@ class ClaimLine(models.Model):
                 claim_line.supplier_invoice_id = claim_line.prodlot_id.\
                     supplier_invoice_line_id.invoice_id.id
             else:
-                invoice_id = claim_line._search_invoice_to_get_information(
-                    claim_line.product_id)
-                claim_line.supplier_invoice_id = invoice_id
+                claim_line.supplier_invoice_id = claim_line.\
+                    _search_invoice_to_get_information(claim_line.product_id)

@@ -33,6 +33,5 @@ class SubstateSubstate(models.Model):
     _description = "substate that precise a given state"
 
     name = fields.Char('Sub state', required=True)
-    substate_descr = fields.Text('Description',
-                                 help="To give more "
-                                 "information about the sub state")
+    substate_descr = fields.Text(
+        'Description', help="To give more information about the sub state")

@@ -37,9 +37,11 @@ class StockMove(models.Model):
         we override the create and confirm it at the creation only for this
         case.
         """
-        move = super(StockMove, self).create(vals)
-        if vals.get('picking_id'):
-            picking = self.env['stock.picking'].browse(vals['picking_id'])
-            if picking.claim_id and picking.picking_type_id.code == 'incoming':
-                move.write({'state': 'confirmed'})
-        return move
+        move_id = super(StockMove, self).create(vals)
+        picking_id = vals.get('picking_id', False)
+        if picking_id:
+            picking_id = self.env['stock.picking'].browse(picking_id)
+            if picking_id.claim_id \
+                    and picking_id.picking_type_id.code == 'incoming':
+                move_id.write({'state': 'confirmed'})
+        return move_id

@@ -19,11 +19,16 @@
 #
 ##############################################################################
 
+from . import test_constrains
 from . import test_picking_creation
 from . import test_rma_configuration
 from . import test_warehouse_by_default
 from . import test_copy_method
 from . import test_crm_claim_code_from_code
-# from crm_rma_stock_location
 from . import test_crm_rma_stock_location
 from . import test_make_picking_from_picking
+from . import test_supplier_claims
+from . import test_crm_rma_lot_mass_return
+from . import test_crm_rma_lot_mass_return_2
+from . import test_user_input
+from . import test_mail_messages

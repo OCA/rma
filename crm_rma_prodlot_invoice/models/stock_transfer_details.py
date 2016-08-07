@@ -27,36 +27,34 @@ class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
     @api.multi
-    def _set_invoice_line_to_serial_numbers(self, lot_ids, invoice_lines_rec,
+    def _set_invoice_line_to_serial_numbers(self, lot_ids, invoice_line_ids,
                                             field_to_change):
 
-        prodlot_obj = self.env['stock.production.lot']
-        for lot in lot_ids:
+        for lot_id in lot_ids:
             # If serial/lot number has invoice line
             # ignoring the process down and continue
             # with the next serial/lot number in the
             # cycle
-            string_to_get_field = "lot.%s" % field_to_change
-            invoice_line_in_serial = \
-                safe_eval(string_to_get_field, {"lot": lot})
+            field_expr = "lot_id.%s" % field_to_change
+            invoice_line_in_serial = safe_eval(field_expr, {"lot_id": lot_id})
             if invoice_line_in_serial:
                 continue
-            for inv_line in invoice_lines_rec:
+            for line_id in invoice_line_ids:
                 # Search serial/lot numbers with the invoice line
                 # for take into consideration the quantity of
                 # lots with the invoice line and compared to
                 # the quantity of products in the invoice line
-                lots_with_inv_line = prodlot_obj.search(
-                    [(field_to_change, '=', inv_line.id)])
+                lot_ids_count = self.env['stock.production.lot'].\
+                    _get_related_count(line_id, field_to_change)
                 # If The product in the serial/lot number is the same
                 # that current invoice line and the quantity of
                 # serial/lot number with that invoice line is minor
                 # that the quantity of product in the invoice line
                 # save the invoice line on th serial/lot number.
                 # RMA is just for product with UoM = units
-                if inv_line.product_id == lot.product_id and \
-                        len(lots_with_inv_line) < inv_line.quantity:
-                    lot.write({field_to_change: inv_line.id})
+                if line_id.product_id == lot_id.product_id and \
+                        line_id.quantity > lot_ids_count:
+                    lot_id.write({field_to_change: line_id.id})
         return True
 
     @api.multi

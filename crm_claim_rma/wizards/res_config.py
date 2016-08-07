@@ -31,23 +31,22 @@ class RMAConfigSettings(models.TransientModel):
 
     @api.constrains("priority_maximum", "priority_maximum")
     def _check_priority_config(self):
-        for company in self:
-            priority_maximum = company.priority_maximum
-            priority_minimum = company.priority_minimum
-            if priority_minimum <= 0 or priority_maximum <= 0:
+        for company_id in self:
+            priority_max = company_id.priority_maximum
+            priority_min = company_id.priority_minimum
+            if priority_min <= 0 or priority_max <= 0:
                 raise ValidationError(
                     _("Priority maximum and priority_minimum must "
                       "be greater than zero"))
-            if priority_maximum >= priority_minimum:
+            if priority_max >= priority_min:
                 raise ValidationError(
                     _("Priority maximum must be less than priority_minimum"))
 
     @api.constrains("limit_days")
     def _check_limit_days_config(self):
-        for company in self:
-            if company.limit_days <= 0:
-                raise ValidationError(
-                    _("Limit days must be greater than zero"))
+        company_ids = self.filtered(lambda r: r.limit_days <= 0)
+        if company_ids:
+            raise ValidationError(_("Limit days must be greater than zero"))
 
     limit_days = fields.Integer(
         help="Limit days for resolving a claim since its creation date.")
@@ -69,11 +68,11 @@ class RMAConfigSettings(models.TransientModel):
         wizard.
         @return dictionary with the values to display.
         """
-        company = self.env.user.company_id
+        company_id = self.env.user.company_id
         return {
-            "limit_days": company.limit_days,
-            "priority_maximum": company.priority_maximum,
-            "priority_minimum": company.priority_minimum,
+            "limit_days": company_id.limit_days,
+            "priority_maximum": company_id.priority_maximum,
+            "priority_minimum": company_id.priority_minimum,
         }
 
     @api.multi
@@ -81,9 +80,9 @@ class RMAConfigSettings(models.TransientModel):
         """ Write the rma configuratin in the wizard into the company model.
         @return True
         """
-        company = self.env.user.company_id
+        company_id = self.env.user.company_id
         for rma_config in self:
-            company.write({
+            company_id.write({
                 "limit_days": rma_config.limit_days,
                 "priority_maximum": rma_config.priority_maximum,
                 "priority_minimum": rma_config.priority_minimum,

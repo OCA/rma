@@ -34,8 +34,8 @@ class StockPicking(models.Model):
         return invoices
 
     @api.multi
-    def _search_serial_number_to_change_from_picking(self,
-                                                     invoices, invoice_type):
+    def _search_serial_number_to_change_from_picking(self, invoice_ids,
+                                                     invoice_type):
         """ A picking was generated from purchase order, because,
         the invoicing mode is that the invoice will be created
         in the picking.
@@ -66,20 +66,18 @@ class StockPicking(models.Model):
         field to change in the serial/lot number record
         """
 
-        transfer_obj = self.env["stock.transfer_details"]
+        transfer = self.env["stock.transfer_details"]
         field_to_change = \
             self._get_field_to_change_in_serial_record(invoice_type)
 
         if not field_to_change:
             return False
 
-        invoice_obj = self.env['account.invoice']
-        invoices_rec = invoice_obj.browse(invoices)
-        invoice_lines_rec = invoices_rec.mapped("invoice_line")
-        for picking in self:
-            lot_ids = picking.mapped("move_lines.quant_ids.lot_id")
-            transfer_obj._set_invoice_line_to_serial_numbers(
-                lot_ids, invoice_lines_rec, field_to_change)
+        invoice_line_ids = self.env['account.invoice.line'].\
+            search([('invoice_id', 'in', invoice_ids)])
+        for lot_id in self.mapped("move_lines.quant_ids.lot_id"):
+            transfer._set_invoice_line_to_serial_numbers(
+                lot_id, invoice_line_ids, field_to_change)
         return True
 
     @api.multi
@@ -102,9 +100,8 @@ class StockPicking(models.Model):
         False if the invoice_type does not coincides with a
         field to change in the serial/lot number record
         """
-        field_to_change = False
-        if invoice_type == "in_invoice":
-            field_to_change = "supplier_invoice_line_id"
-        if invoice_type == "out_invoice":
-            field_to_change = "invoice_line_id"
-        return field_to_change
+        vals = {
+            'in_invoice': 'supplier_invoice_line_id',
+            'out_invoice': 'invoice_line_id',
+        }
+        return vals.get(invoice_type, False)
