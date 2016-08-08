@@ -37,8 +37,6 @@ class TestPickingCreation(LotMassReturnTestsCommon):
 
         self.product_id = self.env.ref('product.product_product_4')
 
-        self.partner_id = self.env.ref('base.res_partner_12')
-
         self.customer_location_id = self.env.ref(
             'stock.stock_location_customers')
 
@@ -60,8 +58,8 @@ class TestPickingCreation(LotMassReturnTestsCommon):
             'code': '/',
             'claim_type': self.env.ref('crm_claim_rma.'
                                        'crm_claim_type_customer').id,
-            'delivery_address_id': self.partner_id.id,
-            'partner_id': self.env.ref('base.res_partner_2').id,
+            'delivery_address_id': self.rma_customer_id.id,
+            'partner_id': self.rma_customer_id.id,
             'invoice_id': invoice_agrolait.id,
         })
         self.claim_id.with_context({'create_lines': True}).\
@@ -73,7 +71,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
         """
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': 'in',
             'product_return': True,
@@ -106,7 +104,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
 
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': 'out',
         }).create({})
@@ -131,7 +129,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
                                    '=', company.id)])[0]
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': warehouse_rec.in_type_id.id,
         }).create({})
@@ -146,23 +144,6 @@ class TestPickingCreation(LotMassReturnTestsCommon):
         self.assertEquals(picking.location_dest_id,
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
-
-    def create_invoice(self):
-        sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
-            'client_order_ref': 'TEST_SO',
-            'order_policy': 'manual',
-            'order_line': [(0, 0, {
-                'product_id': self.ref('product.product_product_8'),
-                'product_uom_qty': 2
-            })]
-        })
-        sale_order_id.action_button_confirm()
-        sale_order_id.action_invoice_create()
-        self.assertTrue(sale_order_id.invoice_ids)
-        invoice_id = sale_order_id.invoice_ids
-        invoice_id.signal_workflow('invoice_open')
-        return invoice_id
 
     def test_03_invoice_refund(self):
         claim_id = self.env['crm.claim'].browse(
@@ -222,7 +203,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
         claim_id = self.env.ref('crm_claim.crm_claim_6')
         line_id = claim_id.claim_line_ids[0]
         sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
+            'partner_id': self.rma_customer_id.id,
             'client_order_ref': 'TEST_SO',
             'order_policy': 'manual',
             'order_line': [(0, 0, {
@@ -255,8 +236,8 @@ class TestPickingCreation(LotMassReturnTestsCommon):
             'code': '/',
             'claim_type': self.env.ref('crm_claim_rma.'
                                        'crm_claim_type_customer').id,
-            'delivery_address_id': self.partner_id.id,
-            'partner_id': self.env.ref('base.res_partner_2').id,
+            'pick': True,
+            'partner_id': invoice_id.partner_id.id,
             'invoice_id': invoice_id.id,
         })
         claim_id.with_context({'create_lines': True}).\
