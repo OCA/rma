@@ -20,10 +20,10 @@
 #
 ##############################################################################
 from openerp.exceptions import Warning as UserError
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
+class TestCrmRmaLotMassReturn(ClaimTestsCommon):
 
     """ Test cases for CRM RMA Lot Mass Return Module
     """

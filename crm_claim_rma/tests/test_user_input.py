@@ -20,10 +20,10 @@
 ##############################################################################
 
 from openerp.tools.safe_eval import safe_eval
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestUserInput(LotMassReturnTestsCommon):
+class TestUserInput(ClaimTestsCommon):
 
     """ This test file challenges wizard behavior when filtering invoices and
     serial lot numbers introduced by the user

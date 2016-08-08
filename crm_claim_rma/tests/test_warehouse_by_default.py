@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestWarehouseByDefault(LotMassReturnTestsCommon):
+class TestWarehouseByDefault(ClaimTestsCommon):
 
     def setUp(self):
         super(TestWarehouseByDefault, self).setUp()

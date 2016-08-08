@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestCopyMethod(LotMassReturnTestsCommon):
+class TestCopyMethod(ClaimTestsCommon):
 
     def setUp(self):
         super(TestCopyMethod, self).setUp()

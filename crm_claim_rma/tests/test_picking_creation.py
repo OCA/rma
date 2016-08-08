@@ -22,10 +22,10 @@
 ##############################################################################
 from openerp.tools.safe_eval import safe_eval
 from openerp.exceptions import Warning as UserError
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestPickingCreation(LotMassReturnTestsCommon):
+class TestPickingCreation(ClaimTestsCommon):
     """ Test the correct pickings are created by the wizard. """
 
     def setUp(self):

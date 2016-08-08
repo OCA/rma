@@ -22,13 +22,13 @@ from datetime import date
 from openerp.tests.common import TransactionCase
 
 
-class LotMassReturnTestsCommon(TransactionCase):
+class ClaimTestsCommon(TransactionCase):
 
     """ Common data in use for unit testing
     """
 
     def setUp(self):
-        super(LotMassReturnTestsCommon, self).setUp()
+        super(ClaimTestsCommon, self).setUp()
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
 
         self.payment_acct_id = self.env.ref("account.cash")

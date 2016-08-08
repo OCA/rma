@@ -24,10 +24,10 @@
 
 import datetime
 from openerp.exceptions import ValidationError
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestCreateSimpleClaim(LotMassReturnTestsCommon):
+class TestCreateSimpleClaim(ClaimTestsCommon):
 
     def setUp(self):
         super(TestCreateSimpleClaim, self).setUp()
