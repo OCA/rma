@@ -51,12 +51,12 @@ class TestWarehouseByDefault(ClaimTestsCommon):
 
         claim_type = self.env.ref(
             "crm_claim_rma.crm_claim_type_customer")
-        sale_order_agrolait_demo = self.env.ref("sale.sale_order_1")
-        self.assertTrue(
-            sale_order_agrolait_demo.invoice_ids,
-            "The Order Sale of Agrolait not have Invoice")
-        invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
-        invoice_agrolait.signal_workflow("invoice_open")
+        sale_id = self.create_sale_order(self.rma_customer_id)
+        sale_id.signal_workflow('manual_invoice')
+        self.assertTrue(sale_id.invoice_ids,
+                        "The Order Sale of Agrolait not have Invoice")
+        invoice_id = sale_id.invoice_ids[0]
+        invoice_id.signal_workflow("invoice_open")
 
         # Create the claim with a claim line
         data = {
@@ -65,7 +65,7 @@ class TestWarehouseByDefault(ClaimTestsCommon):
             "claim_type": claim_type.id,
             "delivery_address_id": self.rma_customer_id.id,
             "partner_id": self.rma_customer_id.id,
-            "invoice_id": invoice_agrolait.id,
+            "invoice_id": invoice_id.id,
             "user_id": user.id
         }
         claim_obj = self.env["crm.claim"]

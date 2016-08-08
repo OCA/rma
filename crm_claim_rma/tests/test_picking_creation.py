@@ -40,12 +40,12 @@ class TestPickingCreation(ClaimTestsCommon):
         self.customer_location_id = self.env.ref(
             'stock.stock_location_customers')
 
-        sale_order_agrolait_demo = self.env.ref('sale.sale_order_1')
-        self.assertTrue(sale_order_agrolait_demo.invoice_ids,
+        sale_id = self.create_sale_order(self.rma_customer_id)
+        sale_id.signal_workflow('manual_invoice')
+        self.assertTrue(sale_id.invoice_ids,
                         "The Order Sale of Agrolait not have Invoice")
-        invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
-        invoice_agrolait.\
-            signal_workflow('invoice_open')
+        invoice_id = sale_id.invoice_ids[0]
+        invoice_id.signal_workflow("invoice_open")
 
         main_warehouse = self.env.ref("stock.warehouse0")
         sales_team = self.env.ref('sales_team.section_sales_department')
@@ -60,7 +60,7 @@ class TestPickingCreation(ClaimTestsCommon):
                                        'crm_claim_type_customer').id,
             'delivery_address_id': self.rma_customer_id.id,
             'partner_id': self.rma_customer_id.id,
-            'invoice_id': invoice_agrolait.id,
+            'invoice_id': invoice_id.id,
         })
         self.claim_id.with_context({'create_lines': True}).\
             _onchange_invoice_warehouse_type_date()

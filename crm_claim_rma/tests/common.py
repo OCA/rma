@@ -43,7 +43,10 @@ class ClaimTestsCommon(TransactionCase):
             'street': 'East Western Avenue',
             'city': 'Florida',
             'zip': 51012,
-            'country_id': self.ref('base.us')
+            'country_id': self.ref('base.us'),
+            # dear future me: the following field doesn't exist yet,
+            # but it does when running from client repository
+            'credit_limit': 100000000,
         })
         self.invoice_id, self.lot_ids = self.create_sale_invoice()
 
@@ -133,7 +136,6 @@ class ClaimTestsCommon(TransactionCase):
         })
 
         sale_order_id.action_button_confirm()
-
         return sale_order_id
 
     def sale_validate_invoice(self, sale):
