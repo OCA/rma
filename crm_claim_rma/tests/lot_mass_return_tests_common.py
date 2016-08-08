@@ -30,17 +30,6 @@ class LotMassReturnTestsCommon(TransactionCase):
     def setUp(self):
         super(LotMassReturnTestsCommon, self).setUp()
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
-        self.partner_id = self.env['res.partner'].browse(
-            self.ref('base.res_partner_2'))
-        self.invoice_id, self.lot_ids = self.create_sale_invoice()
-        self.claim_id = self.env['crm.claim'].\
-            create({
-                'name': 'Test',
-                'claim_type': self.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer'),
-                'partner_id': self.invoice_id.partner_id.id,
-                'pick': True
-            })
 
         self.payment_acct_id = self.env.ref("account.cash")
         self.journal_id = self.env.ref("account.bank_journal")
@@ -56,6 +45,7 @@ class LotMassReturnTestsCommon(TransactionCase):
             'zip': 51012,
             'country_id': self.ref('base.us')
         })
+        self.invoice_id, self.lot_ids = self.create_sale_invoice()
 
         order_vals = {
             'name': 'SOWIZARDCLAIM001',
@@ -87,6 +77,14 @@ class LotMassReturnTestsCommon(TransactionCase):
                                             'lot_purchase_wizard_rma_item_1')
         self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
                                             'lot_purchase_wizard_rma_item_3')
+        self.claim_id = self.env['crm.claim'].\
+            create({
+                'name': 'Test',
+                'claim_type': self.ref('crm_claim_rma.'
+                                       'crm_claim_type_customer'),
+                'partner_id': self.sale_order.partner_id.id,
+                'pick': True
+            })
         self.claim_id_1 = self.env['crm.claim'].\
             create({
                 'name': 'CLAIM001',
@@ -121,9 +119,9 @@ class LotMassReturnTestsCommon(TransactionCase):
         self.transfer_so_01 = self.assign_sale_as_unique_and_transfer(
             self.sale_order, self.rma_lot_ids)
 
-    def create_sale_order(self, order_policy='manual'):
+    def create_sale_order(self, partner_id, order_policy='manual'):
         sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.partner_id.id,
+            'partner_id': partner_id.id,
             'note': 'Sale Order Test',
             'order_policy': order_policy,
             'payment_term': self.ref('account.account_payment_term'),
@@ -182,7 +180,7 @@ class LotMassReturnTestsCommon(TransactionCase):
         return invoice_id
 
     def create_sale_invoice(self):
-        sale_order_id = self.create_sale_order('manual')
+        sale_order_id = self.create_sale_order(self.rma_customer_id, 'manual')
 
         lot_ids = []
         for picking_id in sale_order_id.picking_ids:
