@@ -20,7 +20,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import ValidationError, Warning
+from openerp.exceptions import ValidationError, Warning as UserError
 
 
 class TestConstrains(TransactionCase):
@@ -48,12 +48,10 @@ class TestConstrains(TransactionCase):
                })
 
     def try_set_warranty(self, vals):
-        """
-        """
         line_id = self.claim_id.claim_line_ids[0]
         field_id = getattr(line_id, vals['field_name'])
         line_id.write({vals['field_name']: False})
-        with self.assertRaisesRegexp(Warning, vals['error_msg']):
+        with self.assertRaisesRegexp(UserError, vals['error_msg']):
             line_id.set_warranty()
         line_id.write({vals['field_name']: field_id.id})
         line_id.set_warranty()

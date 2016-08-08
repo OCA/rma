@@ -20,9 +20,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 from openerp.tools.safe_eval import safe_eval
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
+from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 
 
 class TestPickingCreation(LotMassReturnTestsCommon):
@@ -173,7 +173,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
 
         # Try refunding again, an exception is expected to be raised
         error_msg = 'A refund has already been created for this claim !'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             refund_id.invoice_refund()
 
     def test_04_display_name(self):
@@ -215,7 +215,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
         sale_order_id.action_invoice_create()
         invoice_id = sale_order_id.invoice_ids[0]
         error_msg = 'Cannot find any date for invoice. Must be validated.'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             line_id._get_warranty_limit_values(
                 invoice_id, claim_id.claim_type, line_id.product_id,
                 claim_id.date)
@@ -295,7 +295,7 @@ class TestPickingCreation(LotMassReturnTestsCommon):
             'product_return': True,
         }).create({})
         error_msg = '.*return cannot be created.*various.*locations.*'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.action_create_picking()
 
         # Write different addresses for claim lines in order to trigger
@@ -318,5 +318,5 @@ class TestPickingCreation(LotMassReturnTestsCommon):
         line_ids[1].product_id.seller_ids.write({
             'warranty_return_partner': 'supplier',
         })
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.action_create_picking()

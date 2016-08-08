@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 from openerp.tools.safe_eval import safe_eval
+from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 
 
 class TestUserInput(LotMassReturnTestsCommon):

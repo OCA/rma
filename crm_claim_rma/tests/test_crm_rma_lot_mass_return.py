@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.exceptions import Warning as UserError
 from .lot_mass_return_tests_common import LotMassReturnTestsCommon
-from openerp.exceptions import Warning
 
 
 class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
@@ -136,7 +136,7 @@ class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
         wizard_id.lines_list_id = [(6, 0, lines_list_id)]
 
         wizard_id._set_message()
-        with self.assertRaisesRegexp(Warning, '.*'):
+        with self.assertRaisesRegexp(UserError, '.*'):
             wizard_id.add_claim_lines()
         self.assertEqual(len(claim_id.claim_line_ids), 1)
 

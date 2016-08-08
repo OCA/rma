@@ -23,8 +23,8 @@
 ###############################################################################
 
 import datetime
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 from openerp.exceptions import ValidationError
+from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 
 
 class TestCreateSimpleClaim(LotMassReturnTestsCommon):
