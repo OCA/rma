@@ -20,12 +20,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tests import common
+from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 from openerp.tools.safe_eval import safe_eval
 from openerp.exceptions import Warning
 
 
-class TestPickingCreation(common.TransactionCase):
+class TestPickingCreation(LotMassReturnTestsCommon):
     """ Test the correct pickings are created by the wizard. """
 
     def setUp(self):
@@ -270,7 +270,7 @@ class TestPickingCreation(common.TransactionCase):
                          'set to false')
 
     def test_08_product_return_with_multiple_adresses(self):
-        sale_id = self.env.ref('crm_claim_rma.so_wizard_rma_1')
+        sale_id = self.sale_order
         customer_type = self.env.ref('crm_claim_rma.crm_claim_type_customer')
 
         claim_id = self.env['crm.claim'].create({

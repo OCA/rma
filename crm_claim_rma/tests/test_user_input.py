@@ -19,11 +19,11 @@
 #
 ##############################################################################
 
+from .lot_mass_return_tests_common import LotMassReturnTestsCommon
 from openerp.tools.safe_eval import safe_eval
-from openerp.tests.common import TransactionCase
 
 
-class TestUserInput(TransactionCase):
+class TestUserInput(LotMassReturnTestsCommon):
 
     """ This test file challenges wizard behavior when filtering invoices and
     serial lot numbers introduced by the user
@@ -148,8 +148,7 @@ class TestUserInput(TransactionCase):
                     user_input[item['line']-1], safe_eval(item['value']))
 
     def test_02_invoice_search_validation(self):
-        invoice_id = self.env.ref('crm_claim_rma.so_wizard_rma_1').\
-            invoice_ids
+        invoice_id = self.sale_order.invoice_ids
         self.assertEqual(len(invoice_id), 1, 'Expected only one invoice')
         wizard_id = self.wizard.with_context({
             'active_model': self.claim_id._name,

@@ -86,7 +86,6 @@
         # from lot_mass_return
         'demo/stock_production_lot_from_lot_mass.xml',
         'demo/purchase_order_from_lot_mass.xml',
-        'demo/sale_order_from_lot_mass.xml',
         'demo/transfer_details_from_lot_mass.xml',
     ],
     'test': [
