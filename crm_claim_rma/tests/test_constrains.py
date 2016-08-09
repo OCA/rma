@@ -38,14 +38,11 @@ class TestConstrains(TransactionCase):
 
         msg = "The product of the invoice .* is not same that product .*"
         with self.assertRaisesRegexp(ValidationError, msg):
-            self.claim_line_wizard.\
-                create({
-                    'product_id': self.env.ref('product.'
-                                               'product_product_8').id,
-                    'invoice_line_id':
-                    self.env.ref('account.demo_invoice_0_'
-                                 'line_rpanrearpanelshe0').id,
-               })
+            self.claim_line_wizard.create({
+                'product_id': self.env.ref('product.product_product_8').id,
+                'invoice_line_id': self.env.ref('account.demo_invoice_0_'
+                                                'line_rpanrearpanelshe0').id,
+            })
 
     def try_set_warranty(self, vals):
         line_id = self.claim_id.claim_line_ids[0]
