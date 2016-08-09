@@ -272,10 +272,12 @@ class ClaimTestsCommon(TransactionCase):
             'picking_id': self.env['stock.picking'].search([
                 ('origin', '=', sale_order.name)]).id,
         })
+
+        # keep in a list the product_ids based on their quantities
         product_2b_assigned = []
         for line_id in sale_order.order_line:
-            for i in range(1, int(line_id.product_uom_qty) + 1):
-                product_2b_assigned.append(line_id.product_id.id)
+            product_2b_assigned.extend(
+                [line_id.product_id.id] * int(line_id.product_uom_qty))
 
         for product_id in product_2b_assigned:
             lot_id = lot_ids.get(product_id, False)
