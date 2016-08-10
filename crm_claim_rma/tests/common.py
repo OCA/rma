@@ -80,31 +80,14 @@ class ClaimTestsCommon(TransactionCase):
                                             'lot_purchase_wizard_rma_item_1')
         self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
                                             'lot_purchase_wizard_rma_item_3')
-        self.claim_id = self.env['crm.claim'].\
-            create({
-                'name': 'Test',
-                'claim_type': self.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer'),
-                'partner_id': self.sale_order.partner_id.id,
-                'pick': True
-            })
-        self.claim_id_1 = self.env['crm.claim'].\
-            create({
-                'name': 'CLAIM001',
-                'claim_type': self.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer'),
-                'partner_id': self.sale_order.partner_id.id,
-                'pick': True
-            })
-
-        self.claim_id_2 = self.env['crm.claim'].\
-            create({
-                'name': 'CLAIM002',
-                'claim_type': self.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer'),
-                'partner_id': self.sale_order.partner_id.id,
-                'pick': True
-            })
+        self.customer_type = self.env.ref(
+            'crm_claim_rma.crm_claim_type_customer')
+        self.supplier_type = self.env.ref(
+            'crm_claim_rma.crm_claim_type_supplier')
+        self.customer_id = self.sale_order.partner_id
+        self.claim_id = self.create_claim(self.customer_type,
+                                          self.rma_customer_id,
+                                          name='Test Claim 001')
         self.transfer_po_01 = self.env.ref(
             'crm_claim_rma.transfer_purchase_wizard_rma')
 
@@ -121,6 +104,16 @@ class ClaimTestsCommon(TransactionCase):
         }
         self.transfer_so_01 = self.assign_sale_as_unique_and_transfer(
             self.sale_order, self.rma_lot_ids)
+
+    def create_claim(self, claim_type, partner_id, address_id=False,
+                     name='Test'):
+        return self.env['crm.claim'].create({
+            'name': name,
+            'partner_id': partner_id.id,
+            'claim_type': claim_type.id,
+            'delivery_address_id': address_id and address_id.id,
+            'pick': not address_id
+        })
 
     def create_sale_order(self, partner_id, order_policy='manual'):
         sale_order_id = self.env['sale.order'].create({

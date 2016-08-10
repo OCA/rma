@@ -35,9 +35,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.transfer_po_01.do_detailed_transfer()
         self.transfer_so_01.do_detailed_transfer()
         wizard_id = self.metasearch_wizard.with_context({
-            'active_model': self.claim_id_1._name,
-            'active_id': self.claim_id_1.id,
-            'active_ids': [self.claim_id_1.id]
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
         }).create({})
 
         # Get ids for invoice lines
@@ -72,15 +72,15 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         wizard_id.add_claim_lines()
 
         # 2 Macs
-        self.assertEqual(len(self.claim_id_1.claim_line_ids), 2)
+        self.assertEqual(len(self.claim_id.claim_line_ids), 2)
 
     def test_02_load_products(self):
         self.transfer_po_01.do_detailed_transfer()
         self.transfer_so_01.do_detailed_transfer()
         wizard_id = self.metasearch_wizard.with_context({
-            'active_model': self.claim_id_2._name,
-            'active_id': self.claim_id_2.id,
-            'active_ids': [self.claim_id_2.id]
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
         }).create({})
 
         line_str = self.sale_order.invoice_ids[0].number + '*5*A description\n'
@@ -114,7 +114,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.assertEqual(len(lines_list_id), int(qty))
         wizard_id.add_claim_lines()
         # 2 Macs
-        self.assertEqual(len(self.claim_id_2.claim_line_ids), 5)
+        self.assertEqual(len(self.claim_id.claim_line_ids), 5)
 
     def test_03_claim_line_creation_and_error_message(self):
         """ Challenge the wizard when a claim line is created, to set
@@ -131,9 +131,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         scanned_data = lot_name + '*' + \
             str(subject_index) + '*A short description to test\n'
         wizard_id = self.metasearch_wizard.with_context({
-            'active_model': self.claim_id_2._name,
-            'active_id': self.claim_id_2.id,
-            'active_ids': [self.claim_id_2.id]
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
         }).create({})
         wizard_id.scan_data = scanned_data
 
@@ -150,9 +150,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.assertEqual(len(lines_list_id), 1)
 
         wizard_id.add_claim_lines()
-        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
+        self.assertEqual(len(self.claim_id.claim_line_ids), 1)
 
-        line_id = self.claim_id_2.claim_line_ids
+        line_id = self.claim_id.claim_line_ids
         self.assertEqual(
             subject_list[subject_index - 1][0], line_id.claim_origin)
         self.assertEqual(scanned_data, line_id.prodlot_id.name + '*' +
@@ -160,9 +160,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
         # create again the wizard
         wizard_id = self.metasearch_wizard.with_context({
-            'active_model': self.claim_id_2._name,
-            'active_id': self.claim_id_2.id,
-            'active_ids': [self.claim_id_2.id]
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
         }).create({})
         wizard_id.scan_data = scanned_data
 
@@ -180,7 +180,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
         wizard_id._set_message()
         wizard_id.add_claim_lines()
-        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
+        self.assertEqual(len(self.claim_id.claim_line_ids), 1)
 
         # if the message exists, then it's being displayed
         regex = re.compile(".*" + lot_name + ".*")
@@ -190,9 +190,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.transfer_po_01.do_detailed_transfer()
         self.transfer_so_01.do_detailed_transfer()
         wizard_id = self.metasearch_wizard.with_context({
-            'active_model': self.claim_id_2._name,
-            'active_id': self.claim_id_2.id,
-            'active_ids': [self.claim_id_2.id]
+            'active_model': self.claim_id._name,
+            'active_id': self.claim_id.id,
+            'active_ids': [self.claim_id.id]
         }).create({})
 
         wizard_id.scaned_data = self.env['stock.production.lot'].search(
@@ -209,7 +209,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         wizard_id.lines_list_id = [(6, 0, option_ids)]
         self.assertEqual(len(lines_list_id), 1)
         wizard_id.add_claim_lines()
-        self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
+        self.assertEqual(len(self.claim_id.claim_line_ids), 1)
 
     def test_05_help_buttons(self):
         """ A help button is shown in wizard to let the user meets how the
@@ -218,7 +218,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
             the information
             - Takes the user back to the wizard
         """
-        claim_id = self.claim_id_2
+        claim_id = self.claim_id
         wizard_id = self.metasearch_wizard.with_context({
             'active_model': claim_id._name,
             'active_id': claim_id.id,
