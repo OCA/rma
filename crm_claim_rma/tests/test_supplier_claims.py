@@ -20,7 +20,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
 class TestSupplierClaims(TransactionCase):
@@ -55,8 +55,6 @@ class TestSupplierClaims(TransactionCase):
         return wizard_id
 
     def test_02_product_without_supplier(self):
-        """
-        """
         self.invoice_id.signal_workflow('invoice_open')
         wizard_id = self.create_wizard_for_claim()
         product_with_seller_ids = self.claim_id\
@@ -71,7 +69,7 @@ class TestSupplierClaims(TransactionCase):
             psi_id.write({'warranty_duration': 0})
         wizard_id._set_message()
         error_msg = 'The product has no supplier configured.'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.add_claim_lines()
 
         # Clean lines added to claim
@@ -82,5 +80,5 @@ class TestSupplierClaims(TransactionCase):
         for product_id in product_with_seller_ids:
             product_id.seller_ids.unlink()
         wizard_id._set_message()
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.add_claim_lines()

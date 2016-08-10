@@ -20,12 +20,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tests import common
 from openerp.tools.safe_eval import safe_eval
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
+from .common import ClaimTestsCommon
 
 
-class TestPickingCreation(common.TransactionCase):
+class TestPickingCreation(ClaimTestsCommon):
     """ Test the correct pickings are created by the wizard. """
 
     def setUp(self):
@@ -37,17 +37,15 @@ class TestPickingCreation(common.TransactionCase):
 
         self.product_id = self.env.ref('product.product_product_4')
 
-        self.partner_id = self.env.ref('base.res_partner_12')
-
         self.customer_location_id = self.env.ref(
             'stock.stock_location_customers')
 
-        sale_order_agrolait_demo = self.env.ref('sale.sale_order_1')
-        self.assertTrue(sale_order_agrolait_demo.invoice_ids,
+        sale_id = self.create_sale_order(self.rma_customer_id)
+        sale_id.signal_workflow('manual_invoice')
+        self.assertTrue(sale_id.invoice_ids,
                         "The Order Sale of Agrolait not have Invoice")
-        invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
-        invoice_agrolait.\
-            signal_workflow('invoice_open')
+        invoice_id = sale_id.invoice_ids[0]
+        invoice_id.signal_workflow("invoice_open")
 
         main_warehouse = self.env.ref("stock.warehouse0")
         sales_team = self.env.ref('sales_team.section_sales_department')
@@ -60,9 +58,9 @@ class TestPickingCreation(common.TransactionCase):
             'code': '/',
             'claim_type': self.env.ref('crm_claim_rma.'
                                        'crm_claim_type_customer').id,
-            'delivery_address_id': self.partner_id.id,
-            'partner_id': self.env.ref('base.res_partner_2').id,
-            'invoice_id': invoice_agrolait.id,
+            'delivery_address_id': self.rma_customer_id.id,
+            'partner_id': self.rma_customer_id.id,
+            'invoice_id': invoice_id.id,
         })
         self.claim_id.with_context({'create_lines': True}).\
             _onchange_invoice_warehouse_type_date()
@@ -73,7 +71,7 @@ class TestPickingCreation(common.TransactionCase):
         """
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': 'in',
             'product_return': True,
@@ -106,7 +104,7 @@ class TestPickingCreation(common.TransactionCase):
 
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': 'out',
         }).create({})
@@ -131,7 +129,7 @@ class TestPickingCreation(common.TransactionCase):
                                    '=', company.id)])[0]
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
-            'partner_id': self.partner_id.id,
+            'partner_id': self.rma_customer_id.id,
             'warehouse_id': self.warehouse_id.id,
             'picking_type': warehouse_rec.in_type_id.id,
         }).create({})
@@ -146,23 +144,6 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(picking.location_dest_id,
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
-
-    def create_invoice(self):
-        sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
-            'client_order_ref': 'TEST_SO',
-            'order_policy': 'manual',
-            'order_line': [(0, 0, {
-                'product_id': self.ref('product.product_product_8'),
-                'product_uom_qty': 2
-            })]
-        })
-        sale_order_id.action_button_confirm()
-        sale_order_id.action_invoice_create()
-        self.assertTrue(sale_order_id.invoice_ids)
-        invoice_id = sale_order_id.invoice_ids
-        invoice_id.signal_workflow('invoice_open')
-        return invoice_id
 
     def test_03_invoice_refund(self):
         claim_id = self.env['crm.claim'].browse(
@@ -192,7 +173,7 @@ class TestPickingCreation(common.TransactionCase):
 
         # Try refunding again, an exception is expected to be raised
         error_msg = 'A refund has already been created for this claim !'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             refund_id.invoice_refund()
 
     def test_04_display_name(self):
@@ -222,7 +203,7 @@ class TestPickingCreation(common.TransactionCase):
         claim_id = self.env.ref('crm_claim.crm_claim_6')
         line_id = claim_id.claim_line_ids[0]
         sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
+            'partner_id': self.rma_customer_id.id,
             'client_order_ref': 'TEST_SO',
             'order_policy': 'manual',
             'order_line': [(0, 0, {
@@ -234,7 +215,7 @@ class TestPickingCreation(common.TransactionCase):
         sale_order_id.action_invoice_create()
         invoice_id = sale_order_id.invoice_ids[0]
         error_msg = 'Cannot find any date for invoice. Must be validated.'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             line_id._get_warranty_limit_values(
                 invoice_id, claim_id.claim_type, line_id.product_id,
                 claim_id.date)
@@ -255,8 +236,8 @@ class TestPickingCreation(common.TransactionCase):
             'code': '/',
             'claim_type': self.env.ref('crm_claim_rma.'
                                        'crm_claim_type_customer').id,
-            'delivery_address_id': self.partner_id.id,
-            'partner_id': self.env.ref('base.res_partner_2').id,
+            'pick': True,
+            'partner_id': invoice_id.partner_id.id,
             'invoice_id': invoice_id.id,
         })
         claim_id.with_context({'create_lines': True}).\
@@ -270,7 +251,7 @@ class TestPickingCreation(common.TransactionCase):
                          'set to false')
 
     def test_08_product_return_with_multiple_adresses(self):
-        sale_id = self.env.ref('crm_claim_rma.so_wizard_rma_1')
+        sale_id = self.sale_order
         customer_type = self.env.ref('crm_claim_rma.crm_claim_type_customer')
 
         claim_id = self.env['crm.claim'].create({
@@ -314,7 +295,7 @@ class TestPickingCreation(common.TransactionCase):
             'product_return': True,
         }).create({})
         error_msg = '.*return cannot be created.*various.*locations.*'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.action_create_picking()
 
         # Write different addresses for claim lines in order to trigger
@@ -337,5 +318,5 @@ class TestPickingCreation(common.TransactionCase):
         line_ids[1].product_id.seller_ids.write({
             'warranty_return_partner': 'supplier',
         })
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.action_create_picking()

@@ -23,11 +23,11 @@
 ###############################################################################
 
 import datetime
-from openerp.tests.common import TransactionCase
 from openerp.exceptions import ValidationError
+from .common import ClaimTestsCommon
 
 
-class TestCreateSimpleClaim(TransactionCase):
+class TestCreateSimpleClaim(ClaimTestsCommon):
 
     def setUp(self):
         super(TestCreateSimpleClaim, self).setUp()
@@ -108,7 +108,7 @@ class TestCreateSimpleClaim(TransactionCase):
                 "name": "TEST SIMPLE CLAIM",
                 "claim_type": self.ref("crm_claim_rma."
                                        "crm_claim_type_customer"),
-                "partner_id": self.ref("base.res_partner_16"),
+                "partner_id": self.rma_customer_id.id,
                 "pick": True,
                 "user_id": user.id,
                 "date": "2016-12-01 00:00:00",

@@ -20,10 +20,10 @@
 #
 ##############################################################################
 import re
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
+from .common import ClaimTestsCommon
 
 
-class TestCrmRmaLotMassReturn2(LotMassReturnTestsCommon):
+class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
     """ Test cases for CRM RMA Lot Mass Return Module
     """
@@ -101,7 +101,6 @@ class TestCrmRmaLotMassReturn2(LotMassReturnTestsCommon):
         toner0002 = toner0001[1]
         toner0001 = toner0001[0]
         ink0001 = cl_wizard.search([('product_id.name', '=', 'Ink Cartridge')])
-
         wizard_id.lines_list_id = [(6, 0, [mac0001.id, mac0003.id,
                                            toner0001.id, toner0002.id,
                                            ink0001.id])]

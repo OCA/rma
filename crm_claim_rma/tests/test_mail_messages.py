@@ -31,7 +31,8 @@ class TestMailMessages(TransactionCase):
     def validate_suggested_recipients(self, recipients, claim_id, reason_str):
         recipients = recipients.items()[0]
         self.assertEqual(recipients[0], claim_id.id)
-        id, name_mail, reason = recipients[1][0]
+        rid, name_mail, reason = recipients[1][0]
+        self.assertTrue(rid)
         self.assertEqual(name_mail, 'OpenElec Applications<openelecapplication'
                          's@yourcompany.example.com>')
         self.assertEqual(reason, reason_str)

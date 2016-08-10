@@ -21,7 +21,7 @@
 
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
 class TestPickingFromPicking(TransactionCase):
@@ -82,10 +82,10 @@ class TestPickingFromPicking(TransactionCase):
         """
         wizard_id, res = self.create_picking_wizard(self.claim_id)
         stock_picking_id = res.get('res_id')
-
+        self.assertTrue(wizard_id)
         # It's not allowed to create product return twice
         error_msg = ".*A picking has already been created for this claim.*"
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             self.create_picking_wizard(self.claim_id)
 
         # Create Picking 'Product to stock'

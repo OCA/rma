@@ -19,11 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from .lot_mass_return_tests_common import LotMassReturnTestsCommon
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
+from .common import ClaimTestsCommon
 
 
-class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
+class TestCrmRmaLotMassReturn(ClaimTestsCommon):
 
     """ Test cases for CRM RMA Lot Mass Return Module
     """
@@ -31,15 +31,13 @@ class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
     def setUp(self):
         super(TestCrmRmaLotMassReturn, self).setUp()
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
-        self.partner_id = self.env['res.partner'].browse(
-            self.ref('base.res_partner_2'))
         self.invoice_id, self.lot_ids = self.create_sale_invoice()
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
                 'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
-                'partner_id': self.invoice_id.partner_id.id,
+                'partner_id': self.rma_customer_id.id,
                 'pick': True
             })
 
@@ -138,7 +136,7 @@ class TestCrmRmaLotMassReturn(LotMassReturnTestsCommon):
         wizard_id.lines_list_id = [(6, 0, lines_list_id)]
 
         wizard_id._set_message()
-        with self.assertRaisesRegexp(Warning, '.*'):
+        with self.assertRaisesRegexp(UserError, '.*'):
             wizard_id.add_claim_lines()
         self.assertEqual(len(claim_id.claim_line_ids), 1)
 

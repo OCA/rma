@@ -22,32 +22,72 @@ from datetime import date
 from openerp.tests.common import TransactionCase
 
 
-class LotMassReturnTestsCommon(TransactionCase):
+class ClaimTestsCommon(TransactionCase):
 
     """ Common data in use for unit testing
     """
 
     def setUp(self):
-        super(LotMassReturnTestsCommon, self).setUp()
+        super(ClaimTestsCommon, self).setUp()
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
-        self.partner_id = self.env['res.partner'].browse(
-            self.ref('base.res_partner_2'))
+
+        self.payment_acct_id = self.env.ref("account.cash")
+        self.journal_id = self.env.ref("account.bank_journal")
+        self.period_id = self.env.ref('account.period_10')
+        self.rma_customer_id = self.env['res.partner'].create({
+            'name': 'Larry Ellison',
+            'company_id': self.ref('base.main_company'),
+            'customer': True,
+            'email': 'lellison@yourcompany.example.com',
+            'phone': '+8860241622023',
+            'street': 'East Western Avenue',
+            'city': 'Florida',
+            'zip': 51012,
+            'country_id': self.ref('base.us'),
+            # dear future me: the following field doesn't exist yet,
+            # but it does when running from client repository
+            'credit_limit': 100000000,
+        })
         self.invoice_id, self.lot_ids = self.create_sale_invoice()
+
+        order_vals = {
+            'name': 'SOWIZARDCLAIM001',
+            'partner_id': self.rma_customer_id.id,
+        }
+
+        product_vals = [{
+            'product_id': self.ref('product.product_product_38'),
+            'qty': 1,
+            'price': 65.0,
+        }, {
+            'product_id': self.ref('product.product_product_39'),
+            'qty': 2,
+            'price': 66.0,
+        }, {
+            'product_id': self.ref('product.product_product_6'),
+            'qty': 1,
+            'price': 800.0,
+        }, {
+            'product_id': self.ref('product.product_product_8'),
+            'qty': 5,
+            'price': 1299.0,
+        }]
+
+        self.sale_order = self.create_and_process_sale(order_vals,
+                                                       product_vals)
+
+        self.lot_ids_mac0001 = self.env.ref('crm_claim_rma.'
+                                            'lot_purchase_wizard_rma_item_1')
+        self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
+                                            'lot_purchase_wizard_rma_item_3')
         self.claim_id = self.env['crm.claim'].\
             create({
                 'name': 'Test',
                 'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
-                'partner_id': self.invoice_id.partner_id.id,
+                'partner_id': self.sale_order.partner_id.id,
                 'pick': True
             })
-
-        self.sale_order = self.env.ref('crm_claim_rma.'
-                                       'so_wizard_rma_1')
-        self.lot_ids_mac0001 = self.env.ref('crm_claim_rma.'
-                                            'lot_purchase_wizard_rma_item_1')
-        self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
-                                            'lot_purchase_wizard_rma_item_3')
         self.claim_id_1 = self.env['crm.claim'].\
             create({
                 'name': 'CLAIM001',
@@ -68,12 +108,23 @@ class LotMassReturnTestsCommon(TransactionCase):
         self.transfer_po_01 = self.env.ref(
             'crm_claim_rma.transfer_purchase_wizard_rma')
 
-        self.transfer_so_01 = self.env.ref(
-            'crm_claim_rma.transfer_sale_wizard_rma')
+        self.rma_lot_ids = {
+            self.ref('product.product_product_6'): [
+                self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_5')
+            ],
+            self.ref('product.product_product_8'): [
+                self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_1'),
+                self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_2'),
+                self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_3'),
+                self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_4'),
+            ]
+        }
+        self.transfer_so_01 = self.assign_sale_as_unique_and_transfer(
+            self.sale_order, self.rma_lot_ids)
 
-    def create_sale_order(self, order_policy='manual'):
+    def create_sale_order(self, partner_id, order_policy='manual'):
         sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.partner_id.id,
+            'partner_id': partner_id.id,
             'note': 'Sale Order Test',
             'order_policy': order_policy,
             'payment_term': self.ref('account.account_payment_term'),
@@ -85,7 +136,6 @@ class LotMassReturnTestsCommon(TransactionCase):
         })
 
         sale_order_id.action_button_confirm()
-
         return sale_order_id
 
     def sale_validate_invoice(self, sale):
@@ -132,7 +182,7 @@ class LotMassReturnTestsCommon(TransactionCase):
         return invoice_id
 
     def create_sale_invoice(self):
-        sale_order_id = self.create_sale_order('manual')
+        sale_order_id = self.create_sale_order(self.rma_customer_id, 'manual')
 
         lot_ids = []
         for picking_id in sale_order_id.picking_ids:
@@ -179,3 +229,65 @@ class LotMassReturnTestsCommon(TransactionCase):
         invoice_id = self.sale_validate_invoice(sale_order_id)
 
         return invoice_id, lot_ids
+
+    def create_and_process_sale(self, order_vals, product_vals):
+        order_id = self.env['sale.order'].create({
+            'name': order_vals.get('name'),
+            'date_order': '2015-05-08 18:17:05',
+            'partner_id': order_vals.get('partner_id'),
+            'currency_id': self.ref('base.EUR'),
+            'pricelist_id': self.ref('product.list0')
+        })
+
+        index = 1
+        for product in product_vals:
+            self.env['sale.order.line'].create({
+                'name': '%s line %s' % (order_id.name, str(index)),
+                'order_id': order_id.id,
+                'product_id': product.get('product_id'),
+                'product_uom_qty': product.get('qty'),
+                'price_unit': product.get('price'),
+            })
+            index += 1
+
+        order_id.signal_workflow('order_confirm')
+        order_id.signal_workflow('manual_invoice')
+        invoice_id = order_id.invoice_ids[0]
+        invoice_id.signal_workflow('invoice_open')
+        picking_id = order_id.picking_ids[0]
+        picking_id.action_assign()
+
+        invoice_id.pay_and_reconcile(
+            invoice_id.amount_total,
+            self.payment_acct_id.id, self.period_id.id, self.journal_id.id,
+            self.payment_acct_id.id, self.period_id.id, self.journal_id.id,
+            name="Payment for Invoice")
+
+        return order_id
+
+    def assign_sale_as_unique_and_transfer(self, sale_order, lot_ids=False):
+        source_location_id = self.ref('stock.stock_location_stock')
+        target_location_id = self.ref('stock.stock_location_customers')
+        wizard_id = self.env['stock.transfer_details'].create({
+            'picking_id': self.env['stock.picking'].search([
+                ('origin', '=', sale_order.name)]).id,
+        })
+
+        # keep in a list the product_ids based on their quantities
+        product_2b_assigned = []
+        for line_id in sale_order.order_line:
+            product_2b_assigned.extend(
+                [line_id.product_id.id] * int(line_id.product_uom_qty))
+
+        for product_id in product_2b_assigned:
+            lot_id = lot_ids.get(product_id, False)
+            self.env['stock.transfer_details_items'].create({
+                'transfer_id': wizard_id.id,
+                'quantity': 1,
+                'product_id': product_id,
+                'product_uom_id': self.ref('product.product_uom_unit'),
+                'sourceloc_id': source_location_id,
+                'destinationloc_id': target_location_id,
+                'lot_id': lot_id and lot_id.pop(0)
+            })
+        return wizard_id

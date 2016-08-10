@@ -20,7 +20,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 from datetime import date
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -169,7 +169,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
 
         # Expect an exception based on draft invoice
         error_msg = '.*Cannot find any date for invoice.*'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             claim_id.claim_line_ids.set_warranty()
 
         # Validate invoice
@@ -186,7 +186,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
                 'prodlot_id': lot_id.id
             })
         error_msg = '.*The product has no supplier configured.*'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             claim_id.claim_line_ids.set_warranty()
 
     def write_product_supplier(self, product_id, supplier_id, duration=0,
@@ -224,7 +224,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
 
         # verify that error raised
         error_msg = '.*There are more than one supplier activated.*'
-        with self.assertRaisesRegexp(Warning, error_msg):
+        with self.assertRaisesRegexp(UserError, error_msg):
             line_id._get_product_supplier_info()
 
     def test_04_warranty_calculation(self):

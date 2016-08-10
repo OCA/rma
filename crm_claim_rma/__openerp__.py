@@ -74,9 +74,9 @@
     'demo': [
         'demo/crm_claim_stage.xml',
         'demo/res_company.xml',
+        'demo/res_partner.xml',
         'demo/account_invoice.xml',
         'demo/account_invoice_line.xml',
-        'demo/res_partner.xml',
         'demo/res_users.xml',
         'demo/crm_claim.xml',
         'demo/claim_line.xml',
@@ -86,7 +86,6 @@
         # from lot_mass_return
         'demo/stock_production_lot_from_lot_mass.xml',
         'demo/purchase_order_from_lot_mass.xml',
-        'demo/sale_order_from_lot_mass.xml',
         'demo/transfer_details_from_lot_mass.xml',
     ],
     'test': [
