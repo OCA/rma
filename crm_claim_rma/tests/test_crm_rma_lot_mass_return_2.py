@@ -53,18 +53,17 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
         wizard_id.option_ids = option_ids
 
-        items_to_select = self.env['claim.line.wizard'].browse(lines_list_id)
+        wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
 
-        mac0001 = items_to_select.search([('lot_id.name', '=', 'MAC0001')])
-        mac0002 = items_to_select.search([('lot_id.name', '=', 'MAC0002')])
-        wizard_id.lines_list_id = [(6, 0, [mac0001.id, mac0002.id])]
+        line_ids = wizard_line_ids.filtered(
+            lambda r: r.lot_id.name in ['MAC0001', 'MAC0002'])
+        wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
 
         # 1 Ink Cartridge, 2 Toner Cartridge, 1 iPad, 5 iMac
         self.assertEqual(len(lines_list_id), 9)
 
-        qty = 0
-        for inv_line in self.sale_order.invoice_ids[0].invoice_line:
-            qty += inv_line.quantity
+        qty = sum(self.sale_order.invoice_ids[0].
+                  invoice_line.mapped('quantity'))
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id), int(qty))
 
@@ -92,24 +91,19 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
             line_str, [(6, 0, [])])['value']['option_ids'][0][2]
 
         wizard_id.option_ids = option_ids
-        cl_wizard = self.env['claim.line.wizard'].browse(lines_list_id)
+        wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
 
-        mac0001 = cl_wizard.search([('lot_id.name', '=', 'MAC0001')])
-        mac0003 = cl_wizard.search([('lot_id.name', '=', 'MAC0003')])
-        toner0001 = cl_wizard.search([('product_id.name',
-                                       '=', 'Toner Cartridge')])
-        toner0002 = toner0001[1]
-        toner0001 = toner0001[0]
-        ink0001 = cl_wizard.search([('product_id.name', '=', 'Ink Cartridge')])
-        wizard_id.lines_list_id = [(6, 0, [mac0001.id, mac0003.id,
-                                           toner0001.id, toner0002.id,
-                                           ink0001.id])]
+        line_ids = wizard_line_ids.filtered(
+            lambda r: r.lot_id.name in ['MAC0001', 'MAC0003'] or
+            r.product_id.name in ['Toner Cartridge', 'Ink Cartridge'])
+        wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
+
         # 1 Ink Cartridge, 2 Toner Cartridge, 1 iPad, 5 iMac
         self.assertEqual(len(lines_list_id), 9)
 
-        qty = 0
-        for inv_line in self.sale_order.invoice_ids[0].invoice_line:
-            qty += inv_line.quantity
+        qty = sum(self.sale_order.invoice_ids[0].
+                  invoice_line.mapped('quantity'))
+
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id), int(qty))
         wizard_id.add_claim_lines()
@@ -144,9 +138,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         wizard_id.option_id = wizard_id.onchange_load_products(
             scanned_data, [(6, 0, [])])['value']['option_ids'][0][2]
 
-        items_to_select = self.env['claim.line.wizard'].browse(lines_list_id)
-        mac0001 = items_to_select.search([('lot_id.name', '=', lot_name)])
-        wizard_id.lines_list_id = [(6, 0, [mac0001.id])]
+        wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
+        line_ids = wizard_line_ids.filtered(lambda r: r.lot_id.name == lot_name)
+        wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
         self.assertEqual(len(lines_list_id), 1)
 
         wizard_id.add_claim_lines()
@@ -173,9 +167,9 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         wizard_id.option_id = wizard_id.onchange_load_products(
             scanned_data, [(6, 0, [])])['value']['option_ids'][0][2]
 
-        cl_wizard = self.env['claim.line.wizard'].browse(lines_list_id)
-        clw_id = cl_wizard.search([('lot_id.name', '=', lot_name)])
-        wizard_id.lines_list_id = [(6, 0, [clw_id.id])]
+        wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
+        line_ids = wizard_line_ids.filtered(lambda r: r.lot_id.name == lot_name)
+        wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
         self.assertEqual(len(lines_list_id), 1)
 
         wizard_id._set_message()

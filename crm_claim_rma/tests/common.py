@@ -50,6 +50,7 @@ class ClaimTestsCommon(TransactionCase):
         })
         self.invoice_id, self.lot_ids = self.create_sale_invoice()
 
+        # data for new sale order with custom lines
         order_vals = {
             'name': 'SOWIZARDCLAIM001',
             'partner_id': self.rma_customer_id.id,
@@ -80,17 +81,19 @@ class ClaimTestsCommon(TransactionCase):
                                             'lot_purchase_wizard_rma_item_1')
         self.lot_ids_mac0003 = self.env.ref('crm_claim_rma.'
                                             'lot_purchase_wizard_rma_item_3')
+        self.other_type = self.env.ref(
+            'crm_claim_rma.crm_claim_type_other')
         self.customer_type = self.env.ref(
             'crm_claim_rma.crm_claim_type_customer')
         self.supplier_type = self.env.ref(
             'crm_claim_rma.crm_claim_type_supplier')
-        self.customer_id = self.sale_order.partner_id
         self.claim_id = self.create_claim(self.customer_type,
                                           self.rma_customer_id,
                                           name='Test Claim 001')
         self.transfer_po_01 = self.env.ref(
             'crm_claim_rma.transfer_purchase_wizard_rma')
 
+        # Data relation for every product there is a N-lots available
         self.rma_lot_ids = {
             self.ref('product.product_product_6'): [
                 self.ref('crm_claim_rma.lot_purchase_wizard_rma_item_5')
@@ -106,11 +109,12 @@ class ClaimTestsCommon(TransactionCase):
             self.sale_order, self.rma_lot_ids)
 
     def create_claim(self, claim_type, partner_id, address_id=False,
-                     name='Test'):
+                     name='Test', invoice_id=False):
         return self.env['crm.claim'].create({
             'name': name,
-            'partner_id': partner_id.id,
             'claim_type': claim_type.id,
+            'partner_id': partner_id.id,
+            'invoice_id': invoice_id and invoice_id.id,
             'delivery_address_id': address_id and address_id.id,
             'pick': not address_id
         })
@@ -122,8 +126,8 @@ class ClaimTestsCommon(TransactionCase):
             'order_policy': order_policy,
             'payment_term': self.ref('account.account_payment_term'),
             'order_line': [(0, 0, {
-                    'name': 'Test',
-                    'product_id': self.ref('product.product_product_8'),
+                'name': 'Test',
+                'product_id': self.ref('product.product_product_8'),
                 'product_uom_qty': 2
             })]
         })

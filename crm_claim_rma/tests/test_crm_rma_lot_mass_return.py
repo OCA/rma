@@ -32,14 +32,6 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         super(TestCrmRmaLotMassReturn, self).setUp()
         self.metasearch_wizard = self.env['returned.lines.from.serial.wizard']
         self.invoice_id, self.lot_ids = self.create_sale_invoice()
-        self.claim_id = self.env['crm.claim'].\
-            create({
-                'name': 'Test',
-                'claim_type': self.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer'),
-                'partner_id': self.rma_customer_id.id,
-                'pick': True
-            })
 
     def test_01_render_metasearch_view(self):
         res = self.claim_id.render_metasearch_view()
@@ -112,13 +104,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
             'lot_id': lot_id.id,
         })
         wizard_id.do_detailed_transfer()
-
-        claim_id = self.env['crm.claim'].create({
-            'name': 'Test',
-            'claim_type': self.ref('crm_claim_rma.crm_claim_type_supplier'),
-            'partner_id': invoice_id.partner_id.id,
-            'pick': True
-        })
+        claim_id = self.create_claim(self.supplier_type, invoice_id.partner_id)
 
         wizard_id = self.metasearch_wizard.with_context({
             'active_model': claim_id._name,
@@ -146,12 +132,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         sale_id = self.env.ref('crm_claim_rma.po_wizard_rma_1')
         invoice_id = sale_id.invoice_ids
 
-        claim_id = self.env['crm.claim'].create({
-            'name': 'Test',
-            'claim_type': self.ref('crm_claim_rma.crm_claim_type_other'),
-            'partner_id': invoice_id.partner_id.id,
-            'pick': True
-        })
+        claim_id = self.create_claim(self.other_type, invoice_id.partner_id)
 
         wizard_id = self.metasearch_wizard.with_context({
             'active_model': claim_id._name,

@@ -31,14 +31,13 @@ class TestConstrains(TransactionCase):
 
     def setUp(self):
         super(TestConstrains, self).setUp()
-        self.claim_line_wizard = self.env['claim.line.wizard']
         self.claim_id = self.env.ref('crm_claim.crm_claim_3')
 
     def test_01_product_constrain(self):
 
         msg = "The product of the invoice .* is not same that product .*"
         with self.assertRaisesRegexp(ValidationError, msg):
-            self.claim_line_wizard.create({
+            self.env['claim.line.wizard'].create({
                 'product_id': self.env.ref('product.product_product_8').id,
                 'invoice_line_id': self.env.ref('account.demo_invoice_0_'
                                                 'line_rpanrearpanelshe0').id,
@@ -54,7 +53,7 @@ class TestConstrains(TransactionCase):
         line_id.set_warranty()
 
     def test_02_missing_product(self):
-        """ An error should be thrown when  computing warranty and there is no
+        """ An error should be thrown when computing warranty and there is no
         product set in a claim line
         """
         self.try_set_warranty({
