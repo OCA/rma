@@ -36,12 +36,11 @@ class TestCreateSimpleClaim(ClaimTestsCommon):
         # Main Company Configuration
         company = self.env.ref("base.main_company")
 
-        company.write(
-            {
-                "limit_days": 10,
-                "priority_maximum": 7,
-                "priority_minimum": 14,
-            })
+        company.write({
+            "limit_days": 10,
+            "priority_maximum": 7,
+            "priority_minimum": 14,
+        })
 
         # check the data of the company will be
         # the correct data on the wizard of rma settings
@@ -52,10 +51,11 @@ class TestCreateSimpleClaim(ClaimTestsCommon):
         self.assertEqual(data.get("priority_minimum"), 14)
 
         # set the data on the rma settings wizard
-        new_data = {"limit_days": 20,
-                    "priority_maximum": 9,
-                    "priority_minimum": 16,
-                    }
+        new_data = {
+            "limit_days": 20,
+            "priority_maximum": 9,
+            "priority_minimum": 16,
+        }
         rma_config_brw = rma_config.create(new_data)
         rma_config_brw.execute()
 
@@ -65,17 +65,19 @@ class TestCreateSimpleClaim(ClaimTestsCommon):
         self.assertEqual(company.priority_minimum, 16)
 
         data = rma_config.get_default_rma_values()
-        data.update({"priority_maximum": 18,
-                     "priority_minimum": 16,
-                     })
+        data.update({
+            "priority_maximum": 18,
+            "priority_minimum": 16,
+        })
         error = ("Priority maximum must be less than priority_minimum")
         with self.assertRaisesRegexp(ValidationError, error):
             rma_config_brw = rma_config.create(data)
 
         data = rma_config.get_default_rma_values()
-        data.update({"priority_maximum": 0,
-                     "priority_minimum": 16,
-                     })
+        data.update({
+            "priority_maximum": 0,
+            "priority_minimum": 16,
+        })
         error = ("Priority maximum and priority_minimum must "
                  "be greater than zero")
         with self.assertRaisesRegexp(ValidationError, error):
@@ -83,18 +85,16 @@ class TestCreateSimpleClaim(ClaimTestsCommon):
 
         error = "Limit days must be greater than zero"
         with self.assertRaisesRegexp(ValidationError, error):
-            company.write(
-                {
-                    "limit_days": 0,
-                })
+            company.write({
+                "limit_days": 0,
+            })
 
     def test_limit_days(self):
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        company.write(
-            {
-                "limit_days": 10,
-            })
+        company.write({
+            "limit_days": 10,
+        })
 
         # User Administrator
         user = self.env.ref("base.user_root")
@@ -103,16 +103,14 @@ class TestCreateSimpleClaim(ClaimTestsCommon):
         user.write({"company_id": company.id})
 
         # Create claim
-        claim_id = self.env["crm.claim"].\
-            create({
-                "name": "TEST SIMPLE CLAIM",
-                "claim_type": self.ref("crm_claim_rma."
-                                       "crm_claim_type_customer"),
-                "partner_id": self.rma_customer_id.id,
-                "pick": True,
-                "user_id": user.id,
-                "date": "2016-12-01 00:00:00",
-            })
+        claim_id = self.env["crm.claim"].create({
+            "name": "TEST SIMPLE CLAIM",
+            "claim_type": self.customer_type.id,
+            "partner_id": self.rma_customer_id.id,
+            "pick": True,
+            "user_id": user.id,
+            "date": "2016-12-01 00:00:00",
+        })
 
         # Test 1
         self.assertEqual(claim_id.date_deadline, "2016-12-11")

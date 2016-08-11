@@ -53,15 +53,12 @@ class TestPickingCreation(ClaimTestsCommon):
         self.env.user.write({'default_section_id': sales_team.id})
 
         # Create the claim with a claim line
-        self.claim_id = self.claim.create({
-            'name': 'TEST CLAIM',
-            'code': '/',
-            'claim_type': self.env.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer').id,
-            'delivery_address_id': self.rma_customer_id.id,
-            'partner_id': self.rma_customer_id.id,
-            'invoice_id': invoice_id.id,
-        })
+        self.claim_id = self.create_claim(self.customer_type,
+                                          self.rma_customer_id,
+                                          address_id=self.rma_customer_id,
+                                          invoice_id=invoice_id,
+                                          name='Claim for Picking Creation')
+
         self.claim_id.with_context({'create_lines': True}).\
             _onchange_invoice_warehouse_type_date()
         self.warehouse_id = self.claim_id.warehouse_id
@@ -146,10 +143,8 @@ class TestPickingCreation(ClaimTestsCommon):
                           "Incorrect destination location")
 
     def test_03_invoice_refund(self):
-        claim_id = self.env['crm.claim'].browse(
-            self.ref('crm_claim.crm_claim_6'))
-        invoice_id = self.env['account.invoice'].browse(
-            self.ref('account.invoice_5'))
+        claim_id = self.env.ref('crm_claim.crm_claim_6')
+        invoice_id = self.env.ref('account.invoice_5')
         claim_id.write({
             'invoice_id': invoice_id.id
         })
@@ -231,15 +226,10 @@ class TestPickingCreation(ClaimTestsCommon):
         """
         invoice_id = self.env.ref('crm_claim_rma.crm_rma_invoice_003')
         invoice_id.write({'date_invoice': False})
-        claim_id = self.claim.create({
-            'name': 'TEST CLAIM 2',
-            'code': '/',
-            'claim_type': self.env.ref('crm_claim_rma.'
-                                       'crm_claim_type_customer').id,
-            'pick': True,
-            'partner_id': invoice_id.partner_id.id,
-            'invoice_id': invoice_id.id,
-        })
+        claim_id = self.create_claim(self.customer_type,
+                                     invoice_id.partner_id,
+                                     invoice_id=invoice_id,
+                                     name='Claim for Picking Creation #2')
         claim_id.with_context({'create_lines': True}).\
             _onchange_invoice_warehouse_type_date()
 
@@ -251,6 +241,8 @@ class TestPickingCreation(ClaimTestsCommon):
                          'set to false')
 
     def test_08_product_return_with_multiple_adresses(self):
+        """
+        """
         sale_id = self.sale_order
         customer_type = self.env.ref('crm_claim_rma.crm_claim_type_customer')
 
@@ -275,7 +267,7 @@ class TestPickingCreation(ClaimTestsCommon):
         line_ids = claim_id.claim_line_ids
         claim_id.write({'stage_id': self.ref('crm_claim.stage_claim5')})
 
-        # Write different addresses for claim lines in order to trigger
+        # Write different stock locations for claim lines in order to trigger
         # and exception when trying to create the picking
         multiple_locations = [{
             'location_dest_id': self.ref('stock.stock_location_stock'),
