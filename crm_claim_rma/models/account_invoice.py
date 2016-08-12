@@ -1,42 +1,23 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Eezee-It, MONK Software
-#    Copyright 2013 Camptocamp
-#    Copyright 2009-2013 Akretion,
-#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
-#            Benoît Guillot, Joel Grand-Guillaume, Leonardo Donelli
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eezee-It, MONK Software, Vauxoo
+# © 2013 Camptocamp
+# © 2009-2013 Akretion,
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api, exceptions
-from openerp.tools.translate import _
+from openerp import _, api, exceptions, fields, models
 
 
 class AccountInvoice(models.Model):
+
     _inherit = "account.invoice"
 
     claim_id = fields.Many2one('crm.claim', string='Claim')
 
-    @api.model
     def _refund_cleanup_lines(self, lines):
-        """
-        Override when from claim to update the quantity and link to the
+        """ Override when from claim to update the quantity and link to the
         claim line.
         """
+
         # check if is an invoice_line and we are from a claim
         if not (self.env.context.get('claim_line_ids') and lines and
                 lines[0]._name == 'account.invoice.line'):
@@ -59,44 +40,27 @@ class AccountInvoice(models.Model):
                     elif column_type not in ('many2many', 'one2many'):
                         clean_line[field_name] = inv_line[field_name]
                     elif field_name == 'invoice_line_tax_id':
+
                         tax_ids = inv_line[field_name].ids
                         clean_line[field_name] = [(6, 0, tax_ids)]
                 clean_line['quantity'] = claim_line.product_returned_quantity
                 clean_line['claim_line_id'] = [claim_line.id]
+
                 new_lines.append(clean_line)
         if not new_lines:
             # TODO use custom states to show button of this wizard or
             # not instead of raise an error
-            raise exceptions.Warning(
-                _('A refund has already been created for this claim !'))
+
+            raise exceptions.UserError(
+                _('A refund has already been created for this claim !')
+            )
         return [(0, 0, l) for l in new_lines]
 
     @api.model
-    def _prepare_refund(self, invoice, date=None, period_id=None,
-                        description=None, journal_id=None):
-        result = super(AccountInvoice, self)._prepare_refund(
-            invoice, date=date, period_id=period_id, description=description,
-            journal_id=journal_id)
+    def _prepare_refund(self, *args, **kwargs):
+        result = super(AccountInvoice, self)._prepare_refund(*args, **kwargs)
 
         if self.env.context.get('claim_id'):
             result['claim_id'] = self.env.context['claim_id']
 
         return result
-
-
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
-
-    @api.model
-    @api.returns('self', lambda value: value.id)
-    def create(self, vals):
-        claim_line_id = vals.get('claim_line_id')
-        if claim_line_id:
-            del vals['claim_line_id']
-
-        line = super(AccountInvoiceLine, self).create(vals)
-        if claim_line_id:
-            claim_line = self.env['claim.line'].browse(claim_line_id)
-            claim_line.refund_line_id = line.id
-
-        return line

@@ -1,25 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Yannick Vaucher
-#            Yanina Aular
-#    Copyright 2015 Vauxoo
-#    Copyright 2014 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Vauxoo
+# © 2014 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openerp.tests import common
 
 
@@ -31,21 +14,41 @@ class TestPickingCreation(common.TransactionCase):
         super(TestPickingCreation, self).setUp()
 
         self.wizard_make_picking = self.env['claim_make_picking.wizard']
+        self.stockpicking = self.env['stock.picking']
         claim = self.env['crm.claim']
 
         self.product_id = self.env.ref('product.product_product_4')
-
         self.partner_id = self.env.ref('base.res_partner_12')
 
         self.customer_location_id = self.env.ref(
-            'stock.stock_location_customers')
+            'stock.stock_location_customers'
+        )
 
-        sale_order_agrolait_demo = self.env.ref('sale.sale_order_1')
-        self.assertTrue(sale_order_agrolait_demo.invoice_ids,
-                        "The Order Sale of Agrolait not have Invoice")
-        invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
-        invoice_agrolait.\
-            signal_workflow('invoice_open')
+        uom_unit = self.env.ref('product.product_uom_unit')
+        self.sale_order = self.env['sale.order'].create({
+            'state': 'done',
+            'partner_id':  self.env.ref('base.res_partner_2').id,
+            'partner_invoice_id':  self.env.ref('base.res_partner_2').id,
+            'partner_shipping_id':  self.env.ref('base.res_partner_2').id,
+            'pricelist_id':  self.env.ref('product.list0').id,
+            'order_line': [
+                (0, False, {
+                    'name': product.name,
+                    'product_id': product.id,
+                    'product_uom_qty': qty,
+                    'qty_delivered': qty,
+                    'product_uom': uom_unit.id,
+                    'price_unit': product.list_price
+
+                }) for product, qty in [
+                    (self.env.ref('product.product_product_25'), 3),
+                    (self.env.ref('product.product_product_30'), 5),
+                    (self.env.ref('product.product_product_33'), 2),
+                ]
+            ]
+        })
+        invoice_id = self.sale_order.action_invoice_create()[0]
+        self.invoice = self.env['account.invoice'].browse(invoice_id)
 
         # Create the claim with a claim line
         self.claim_id = claim.create(
@@ -56,7 +59,7 @@ class TestPickingCreation(common.TransactionCase):
                                            'crm_claim_type_customer').id,
                 'delivery_address_id': self.partner_id.id,
                 'partner_id': self.env.ref('base.res_partner_2').id,
-                'invoice_id': invoice_agrolait.id,
+                'invoice_id': invoice_id,
             })
         self.claim_id.with_context({'create_lines': True}).\
             _onchange_invoice_warehouse_type_date()
@@ -85,9 +88,10 @@ class TestPickingCreation(common.TransactionCase):
                           "Incorrect destination location")
 
     def test_01_new_delivery(self):
-        """Test wizard creates a correct picking for a new delivery
-
+        """Test wizard creates and runs a procurement for a new delivery
         """
+
+        group_model = self.env['procurement.group']
 
         wizardchangeproductqty = self.env['stock.change.product.qty']
         wizard_chg_qty = wizardchangeproductqty.with_context({
@@ -99,6 +103,9 @@ class TestPickingCreation(common.TransactionCase):
 
         wizard_chg_qty.change_product_qty()
 
+        self.assertEqual(0, group_model.search_count([
+            ('claim_id', '=', self.claim_id.id)
+        ]))
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
@@ -107,29 +114,36 @@ class TestPickingCreation(common.TransactionCase):
         }).create({})
         wizard.action_create_picking()
 
+        procurement_group = group_model.search([
+            ('claim_id', '=', self.claim_id.id)
+        ])
+        self.assertEqual(1, len(procurement_group))
+
         self.assertEquals(len(self.claim_id.picking_ids), 1,
                           "Incorrect number of pickings created")
-        picking = self.claim_id.picking_ids[0]
 
-        self.assertEquals(picking.location_id, self.warehouse_id.lot_stock_id,
+        # Should have 1 procurement by product:
+        # One on Customer location and one on output
+        self.assertEqual(3, len(procurement_group.procurement_ids))
+
+        # And 2 pickings
+        self.assertEqual(1, len(self.claim_id.picking_ids))
+
+        self.assertEquals(self.warehouse_id.lot_stock_id,
+                          self.claim_id.picking_ids.location_id,
                           "Incorrect source location")
-        self.assertEquals(picking.location_dest_id, self.customer_location_id,
+        self.assertEquals(self.customer_location_id,
+                          self.claim_id.picking_ids.location_dest_id,
                           "Incorrect destination location")
 
     def test_02_new_product_return(self):
         """Test wizard creates a correct picking for product return
-
         """
-        company = self.env.ref('base.main_company')
-        warehouse_obj = self.env['stock.warehouse']
-        warehouse_rec = \
-            warehouse_obj.search([('company_id',
-                                   '=', company.id)])[0]
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
-            'picking_type': warehouse_rec.in_type_id.id,
+            'picking_type': 'in',
         }).create({})
         wizard.action_create_picking()
 
@@ -143,13 +157,54 @@ class TestPickingCreation(common.TransactionCase):
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
 
-    def test_copy(self):
-        new_claim = self.claim_id.copy()
-        self.assertNotEqual(new_claim.code, self.claim_id.code)
+    def test_03_invoice_refund(self):
+        claim_id = self.env['crm.claim'].browse(
+            self.ref('crm_claim.crm_claim_6')
+        )
+        self.invoice.confirm_paid()
+        claim_id.write({
+            'invoice_id': self.invoice.id
+        })
+        claim_id.with_context({'create_lines': True}).\
+            _onchange_invoice_warehouse_type_date()
 
-    def test_mail_thread_recipient(self):
-        recipients = self.claim_id.message_get_suggested_recipients()
-        recipients = recipients[self.claim_id.id]
-        recipient_ids = [r[0] for r in recipients]
-        self.assertEqual(recipient_ids,
-                         [self.claim_id.partner_id.id])
+        invoice_refund_wizard_id = self.env['account.invoice.refund'].\
+            with_context({
+                # Test that invoice_ids is correctly passed as active_ids
+                'invoice_ids': [claim_id.invoice_id.id],
+                'claim_line_ids':
+                [[4, cl.id, False] for cl in claim_id.claim_line_ids],
+                'description': "Testing Invoice Refund for Claim",
+            }).create({})
+
+        self.assertEqual(
+            "Testing Invoice Refund for Claim",
+            invoice_refund_wizard_id.description
+        )
+
+        res = invoice_refund_wizard_id.invoice_refund()
+
+        self.assertTrue(res)
+        self.assertEquals(res['res_model'], 'account.invoice')
+        self.assertEqual(2, len(res['domain']))
+
+        # Second leaf is ('id', 'in', [created_invoice_id])
+        self.assertEqual(('id', 'in'), res['domain'][1][:2])
+        self.assertEqual(1, len(res['domain'][1][2]))
+
+        refund_invoice = self.env['account.invoice'].browse(
+            res['domain'][1][2]
+        )
+        self.assertEqual('out_refund', refund_invoice.type)
+
+    def test_04_display_name(self):
+        """
+        It tests that display_name for each line has a message for it
+        """
+        claim_line_ids = self.env['crm.claim'].browse(
+            self.ref('crm_claim.crm_claim_6')
+        )[0].claim_line_ids
+
+        all_values = sum([bool(line_id.display_name)
+                          for line_id in claim_line_ids])
+        self.assertEquals(len(claim_line_ids), all_values)
