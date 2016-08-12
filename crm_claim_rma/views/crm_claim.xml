@@ -114,16 +114,16 @@
             </xpath>
 
             <!-- Smart buttons -->
-            <xpath expr="//field[@name='name']/parent::group" position="after">
-                <div class="oe_right oe_button_box" name="buttons">
-                    <button class="oe_inline oe_stat_button"
+            <xpath expr="//field[@name='name']/parent::group" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button"
                             name="%(act_crm_claim_rma_sale_orders)d"
                             type="action"
                             icon="fa-strikethrough"
                             string="Sales"
                             attrs="{'invisible': ['|',('partner_id','=', False)]}"
                             context="{'search_default_partner_id': [partner_id], 'search_default_user_id':False}"/>
-                    <button class="oe_inline oe_stat_button"
+                    <button class="oe_stat_button"
                             name="%(act_crm_claim_rma_purchase_orders)d"
                             type="action"
                             icon="fa-shopping-cart"
@@ -132,7 +132,7 @@
                             context="{'search_default_partner_id': [partner_id],
                             'search_default_user_id':False}"/>
 
-                    <button class="oe_inline oe_stat_button"
+                    <button class="oe_stat_button"
                             name="%(act_crm_claim_rma_invoice)d"
                             type="action"
                             string="Invoices"
@@ -140,7 +140,7 @@
                             attrs="{'invisible': ['|',('partner_id','=', False)]}"
                             context="{'search_default_partner_id': [partner_id], 'group_by':'type', 'search_default_user_id':False}"/>
 
-                    <button class="oe_inline oe_stat_button"
+                    <button class="oe_stat_button"
                             name="%(act_crm_claim_rma_refunds)d"
                             type="action"
                             string="Refunds"
@@ -148,7 +148,7 @@
                             attrs="{'invisible': ['|',('partner_id','=', False), ('claim_type','in', ['customer','other'])]}"
                             context="{'search_default_partner_id': [partner_id], 'group_by':'type', 'search_default_user_id':False}"/>
 
-                    <button class="oe_inline oe_stat_button"
+                    <button class="oe_stat_button"
                             icon="fa-reply"
                             name="%(act_crm_claim_rma_picking_in)d"
                             type="action"
