@@ -525,6 +525,14 @@ class ReturnedLinesFromSerial(models.TransientModel):
         self.action_cancel()
         return new_claim_lines
 
+    @api.multi
+    def change_list(self, lines):
+        return {
+            'value': {
+                'lines_list_id': lines,
+            }
+        }
+
     message = fields.Text(string='Message', compute='_set_message')
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
