@@ -70,6 +70,7 @@
         'security/ir.model.access.csv',
         'wizards/returned_lines_from_serial_from_lot_mass.xml',
         'views/crm_claim_from_lot_mass.xml',
+        'templates/assets.xml',
     ],
     'demo': [
         'demo/crm_claim_stage.xml',
