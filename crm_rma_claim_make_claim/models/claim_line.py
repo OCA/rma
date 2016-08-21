@@ -47,7 +47,8 @@ class ClaimLine(models.Model):
         claim = self.env['crm.claim']
         claim_line = self.env['claim.line']
         supplier_type = self.env.ref('crm_claim_rma.crm_claim_type_supplier')
-        stage_new = self.env.ref('crm_claim.stage_claim1')
+        stage_new_id = claim.with_context(
+            {"default_claim_type": supplier_type.id})._get_default_stage_id()
 
         for claim_line_parent in self:
             claim_line_supplier = claim_line_parent._search_related_lines()
@@ -63,7 +64,7 @@ class ClaimLine(models.Model):
             # claim and to send to same supplier in a one travel.
             claim_supplier = claim.search([
                 ('claim_type', '=', supplier_type.id),
-                ('stage_id', '=', stage_new.id),
+                ('stage_id', '=', stage_new_id),
                 ('partner_id', '=', claim_line_parent.supplier_id.id)])
             if not claim_supplier:
                 today_datetime = datetime.datetime.now()
