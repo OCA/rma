@@ -89,6 +89,7 @@ class ClaimLine(models.Model):
                     'company_id': self.env.user.company_id.id,
                     'date': today,
                     'date_deadline': deadline,
+                    'stage_id': stage_new_id,
                 })
             elif len(claim_supplier) > 1:
                 # search the supplier claim with less lines
