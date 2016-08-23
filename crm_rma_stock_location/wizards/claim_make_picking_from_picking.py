@@ -1,27 +1,12 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Vauxoo
-#    Copyright (C) 2009-2012  Akretion
-#    Author: Emmanuel Samyn, Benoît GUILLOT <benoit.guillot@akretion.com>,
-#            Osval Reyes
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Vauxoo
+# © 2009-2012  Akretion
+# Author: Emmanuel Samyn, Benoît GUILLOT <benoit.guillot@akretion.com>,
+#         Osval Reyes
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, models, fields, api
+
+from openerp import models, fields, api
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import workflow
 import time
@@ -82,16 +67,19 @@ class ClaimMakePickingFromPicking(models.TransientModel):
         return loc_id
 
     picking_line_source_location = fields.Many2one(
-        'stock.location', _('Source Location'),
-        help=_("Source location where the returned products are"),
-        required=True, default=_get_source_loc)
+        'stock.location', 'Source Location',
+        help="Source location where the returned products are",
+        required=True, default=_get_source_loc
+    )
     picking_line_dest_location = fields.Many2one(
-        'stock.location', _('Dest. Location'),
-        help=_("Target location to send returned products"),
-        required=True, default=_get_dest_loc)
+        'stock.location', 'Dest. Location',
+        help="Target location to send returned products",
+        required=True, default=_get_dest_loc
+    )
     picking_line_ids = fields.Many2many(
         'stock.move', 'claim_picking_line_picking', 'claim_picking_id',
-        'picking_line_id', 'Picking lines', default=_get_picking_lines)
+        'picking_line_id', 'Picking lines', default=_get_picking_lines
+    )
 
     @api.multi
     def action_cancel(self):
@@ -124,7 +112,6 @@ class ClaimMakePickingFromPicking(models.TransientModel):
             'state': 'draft',
             'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
             'partner_id': prev_picking.partner_id.id,
-            'invoice_state': "none",
             'company_id': prev_picking.company_id.id,
             'location_id': self.picking_line_source_location.id,
             'location_dest_id': self.picking_line_dest_location.id,
@@ -152,7 +139,6 @@ class ClaimMakePickingFromPicking(models.TransientModel):
                 'location_id': self.picking_line_source_location.id,
                 'location_dest_id': self.picking_line_dest_location.id,
                 'note': note,
-                'invoice_state': 'none',
             })
             wizard_picking_line.write(
                 {'move_dest_id': move_id.id})

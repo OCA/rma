@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Yanina Aular
-#    Copyright 2015 Vauxoo
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Vauxoo
+# Author: Yanina Aular
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.tests.common import TransactionCase
 
@@ -71,7 +55,7 @@ class TestPickingFromPicking(TransactionCase):
             'active_id': self.claim_id.id,
             'warehouse_id': self.claim_id.warehouse_id.id,
             'partner_id': self.claim_id.partner_id.id,
-            'picking_type': self.claim_id.warehouse_id.rma_in_type_id.id,
+            'picking_type': 'in',
         }
         wizard_id = self.wizardmakepicking.with_context(wiz_context).create({})
 
@@ -133,9 +117,10 @@ class TestPickingFromPicking(TransactionCase):
         }
         wizard_id = self.wizardmakepicking.with_context(new_context).create({})
 
-        default_location_dest_id = eval(
-            'self.claim_id.warehouse_id.'
-            'rma_%s_type_id.default_location_dest_id' % picking_type_str)
+        default_location_dest_id = getattr(
+            self.claim_id.warehouse_id,
+            'rma_%s_type_id' % picking_type_str
+        ).default_location_dest_id
         self.assertEquals(
             wizard_id.claim_line_dest_location_id, default_location_dest_id)
 
@@ -153,7 +138,7 @@ class TestPickingFromPicking(TransactionCase):
         }
         wizard_id = self.wizardmakepicking.with_context(new_context).create({})
 
-        default_location_dest_id = eval(
-            'self.claim_id.warehouse_id.loss_loc_id')
+        default_location_dest_id = self.claim_id.warehouse_id.loss_loc_id
         self.assertEquals(
-            wizard_id.claim_line_dest_location_id, default_location_dest_id)
+            wizard_id.claim_line_dest_location_id, default_location_dest_id
+        )

@@ -50,7 +50,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/8.0/145
+   :target: https://runbot.odoo-community.org/runbot/145/9.0
 
 For further information, please visit:
 
@@ -64,14 +64,18 @@ Known issues / Roadmap
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/rma/issues/new?body=module:%20crm_rma_stock_location%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
-
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/rma/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smashing it by providing a detailed and welcomed feedback.
 
 Credits
 =======
+
+Images
+------
+
+* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
 ------------
@@ -79,6 +83,7 @@ Contributors
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Yanina Aular <yanina.aular@vauxoo.com>
 * Osval Reyes <osval@vauxoo.com>
+* Cyril Gaudin <cyril.gaudin@camptocamp.com>
 
 Maintainer
 ----------
@@ -93,4 +98,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.

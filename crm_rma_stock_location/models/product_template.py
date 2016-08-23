@@ -1,50 +1,41 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright 2015 Vauxoo
-#    Copyright 2014 Camptocamp SA
-#    Author: Guewen Baconnier,
-#            Osval Reyes
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Vauxoo
+# © 2014 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, fields, models
+
+from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
 
 
 class ProductTemplate(models.Model):
-
     _inherit = 'product.template'
 
-    rma_qty_available = fields.Float(compute='_rma_template_available',
-                                     digits_compute=dp.
-                                     get_precision('Product Unit '
-                                                   'of Measure'),
-                                     string=_('RMA Quantity On Hand'))
+    rma_qty_available = fields.Float(
+        compute='_compute_rma_template_quantities',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        string='RMA Quantity On Hand'
+    )
+    rma_virtual_available = fields.Float(
+        compute='_compute_rma_template_quantities',
+        digits_compute=dp.get_precision('Product Unit of Measure'),
+        string='RMA Forecasted Quantity'
+    )
 
-    rma_virtual_available = fields.Float(compute='_rma_template_available',
-                                         digits_compute=dp.
-                                         get_precision('Product Unit'
-                                                       ' of Measure'),
-                                         string=_('RMA Forecasted Quantity'))
+    @api.depends('product_variant_ids.rma_qty_available',
+                 'product_variant_ids.rma_virtual_available')
+    def _compute_rma_template_quantities(self):
+        """ Compute rma_qty_available and rma_virtual_available
+        with sum of variants quantities.
+        """
 
-    @api.multi
-    def _rma_template_available(self):
-        for product in self:
-            product.rma_qty_available = sum(
-                product.mapped('product_variant_ids.rma_virtual_available'))
-            product.rma_virtual_available = sum(
-                product.mapped('product_variant_ids.rma_virtual_available'))
+        for template in self:
+            qantities = template.product_variant_ids.read(
+                ['rma_qty_available', 'rma_virtual_available']
+            )
+            template.rma_qty_available = sum(
+                qty['rma_qty_available'] for qty in qantities
+            )
+            template.rma_virtual_available = sum(
+                qty['rma_virtual_available'] for qty in qantities
+            )
