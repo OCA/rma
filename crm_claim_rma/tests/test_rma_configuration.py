@@ -23,11 +23,11 @@
 ###############################################################################
 
 import datetime
-from openerp.tests.common import TransactionCase
 from openerp.exceptions import ValidationError
+from .common import ClaimTestsCommon
 
 
-class TestCreateSimpleClaim(TransactionCase):
+class TestCreateSimpleClaim(ClaimTestsCommon):
 
     def setUp(self):
         super(TestCreateSimpleClaim, self).setUp()
@@ -35,37 +35,27 @@ class TestCreateSimpleClaim(TransactionCase):
     def test_rma_cofiguration(self):
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        main_warehouse = self.env.ref("stock.warehouse0")
 
-        self.warehouse = self.env['stock.warehouse']
-        test_warehouse = self.warehouse.create({
-            "name": "Test Warehouse",
-            "code": "TWH"
+        company.write({
+            "limit_days": 10,
+            "priority_maximum": 7,
+            "priority_minimum": 14,
         })
-
-        company.write(
-            {
-                "rma_warehouse_id": main_warehouse.id,
-                "limit_days": 10,
-                "priority_maximum": 7,
-                "priority_minimum": 14,
-            })
 
         # check the data of the company will be
         # the correct data on the wizard of rma settings
         rma_config = self.env["rma.config.settings"]
         data = rma_config.get_default_rma_values()
-        self.assertEqual(data.get("rma_warehouse_id"), main_warehouse.id)
         self.assertEqual(data.get("limit_days"), 10)
         self.assertEqual(data.get("priority_maximum"), 7)
         self.assertEqual(data.get("priority_minimum"), 14)
 
         # set the data on the rma settings wizard
-        new_data = {"limit_days": 20,
-                    "priority_maximum": 9,
-                    "priority_minimum": 16,
-                    "rma_warehouse_id": test_warehouse.id,
-                    }
+        new_data = {
+            "limit_days": 20,
+            "priority_maximum": 9,
+            "priority_minimum": 16,
+        }
         rma_config_brw = rma_config.create(new_data)
         rma_config_brw.execute()
 
@@ -73,20 +63,21 @@ class TestCreateSimpleClaim(TransactionCase):
         self.assertEqual(company.limit_days, 20)
         self.assertEqual(company.priority_maximum, 9)
         self.assertEqual(company.priority_minimum, 16)
-        self.assertEqual(company.rma_warehouse_id, test_warehouse)
 
         data = rma_config.get_default_rma_values()
-        data.update({"priority_maximum": 18,
-                     "priority_minimum": 16,
-                     })
+        data.update({
+            "priority_maximum": 18,
+            "priority_minimum": 16,
+        })
         error = ("Priority maximum must be less than priority_minimum")
         with self.assertRaisesRegexp(ValidationError, error):
             rma_config_brw = rma_config.create(data)
 
         data = rma_config.get_default_rma_values()
-        data.update({"priority_maximum": 0,
-                     "priority_minimum": 16,
-                     })
+        data.update({
+            "priority_maximum": 0,
+            "priority_minimum": 16,
+        })
         error = ("Priority maximum and priority_minimum must "
                  "be greater than zero")
         with self.assertRaisesRegexp(ValidationError, error):
@@ -94,18 +85,16 @@ class TestCreateSimpleClaim(TransactionCase):
 
         error = "Limit days must be greater than zero"
         with self.assertRaisesRegexp(ValidationError, error):
-            company.write(
-                {
-                    "limit_days": 0,
-                })
+            company.write({
+                "limit_days": 0,
+            })
 
     def test_limit_days(self):
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        company.write(
-            {
-                "limit_days": 10,
-            })
+        company.write({
+            "limit_days": 10,
+        })
 
         # User Administrator
         user = self.env.ref("base.user_root")
@@ -114,16 +103,14 @@ class TestCreateSimpleClaim(TransactionCase):
         user.write({"company_id": company.id})
 
         # Create claim
-        claim_id = self.env["crm.claim"].\
-            create({
-                "name": "TEST SIMPLE CLAIM",
-                "claim_type": self.ref("crm_claim_type."
-                                       "crm_claim_type_customer"),
-                "partner_id": self.ref("base.res_partner_16"),
-                "pick": True,
-                "user_id": user.id,
-                "date": "2016-12-01 00:00:00",
-            })
+        claim_id = self.env["crm.claim"].create({
+            "name": "TEST SIMPLE CLAIM",
+            "claim_type": self.customer_type.id,
+            "partner_id": self.rma_customer_id.id,
+            "pick": True,
+            "user_id": user.id,
+            "date": "2016-12-01 00:00:00",
+        })
 
         # Test 1
         self.assertEqual(claim_id.date_deadline, "2016-12-11")
@@ -136,6 +123,11 @@ class TestCreateSimpleClaim(TransactionCase):
         error = "Creation date must be less than deadline"
         with self.assertRaisesRegexp(ValidationError, error):
             claim_id.write({"date_deadline": "2016-12-01"})
+
+        user_rma = self.env.ref("crm_claim_rma.vendor_user_rma")
+        error = "In order to set a manual deadline date.*"
+        with self.assertRaisesRegexp(ValidationError, error):
+            claim_id.sudo(user_rma).write({"date_deadline": "2016-12-22"})
 
         # Test 4
         error = "Creation date must be less than deadline"
@@ -156,11 +148,10 @@ class TestCreateSimpleClaim(TransactionCase):
 
         # Main Company Configuration
         company = self.env.ref("base.main_company")
-        company.write(
-            {
-                "priority_maximum": 1,
-                "priority_minimum": 7,
-            })
+        company.write({
+            "priority_maximum": 1,
+            "priority_minimum": 7,
+        })
 
         crm_claim = self.env.ref("crm_claim.crm_claim_6")
         claim_line_1 = crm_claim.claim_line_ids[0]

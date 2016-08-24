@@ -28,7 +28,7 @@
     'name': 'RMA Claim (Product Return Management)',
     'version': '8.0.1.1.1',
     'category': 'Generic Modules/CRM & SRM',
-    'author': "Akretion, Camptocamp, Eezee-it, MONK Software, Vauxoo, "
+    'author': "Vauxoo, "
               "Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
                'http://www.eezee-it.com, http://www.wearemonk.com, '
@@ -36,42 +36,65 @@
     'license': 'AGPL-3',
     'depends': [
         'purchase',
-        'sale',
-        'stock',
-        'crm_claim_rma_code',
+        'crm_claim',
         'crm_rma_location',
         'product_warranty',
         'portal_claim',
+        'default_warehouse_from_sale_team',
+        'stock_unfuck',
     ],
     'data': [
         'data/ir_sequence_type.xml',
+        'data/crm_claim_type.xml',
+        'data/crm_claim_stage.xml',
         'data/crm_case_section.xml',
         'data/crm_case_categ.xml',
+        'views/crm_claim_type.xml',
+        'views/crm_claim_stage.xml',
         'views/account_invoice.xml',
         'wizards/claim_make_picking.xml',
+        'views/claim_line.xml',
         'views/crm_claim.xml',
-        "views/claim_line.xml",
         'views/res_partner.xml',
-        'views/stock_view.xml',
+        'views/stock_move.xml',
         'views/crm_claim_portal.xml',
-        'security/crm_claim_security.xml',
         'views/res_config.xml',
         'views/res_company.xml',
-        'views/res_users.xml',
+        # from crm_rma_stock_location
+        'wizards/claim_make_picking_from_picking_view.xml',
+        'views/product_product.xml',
+        'views/product_template.xml',
+        'views/stock_picking.xml',
+        'views/stock_warehouse.xml',
+        'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
+        'wizards/returned_lines_from_serial_from_lot_mass.xml',
+        'views/crm_claim_from_lot_mass.xml',
+        'templates/assets.xml',
     ],
     'demo': [
+        'demo/crm_claim_stage.xml',
         'demo/res_company.xml',
+        'demo/res_partner.xml',
         'demo/account_invoice.xml',
         'demo/account_invoice_line.xml',
-        'demo/res_partner.xml',
         'demo/res_users.xml',
         'demo/crm_claim.xml',
         'demo/claim_line.xml',
+        # from crm_rma_stock_location
+        'demo/stock_location.xml',
+        'demo/stock_inventory.xml',
+        # from lot_mass_return
+        'demo/stock_production_lot_from_lot_mass.xml',
+        'demo/purchase_order_from_lot_mass.xml',
+        'demo/transfer_details_from_lot_mass.xml',
     ],
     'test': [
         'test/test_invoice_refund.yml'
     ],
     'installable': True,
     'auto_install': False,
+    'pre_init_hook': 'create_code_equal_to_id',
+    'post_init_hook': 'assign_old_sequences_and_create_locations_rma',
+
 }

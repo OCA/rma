@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp import api, models
+from openerp.tools.safe_eval import safe_eval
 
 
 class StockTransferDetails(models.TransientModel):
@@ -26,15 +27,35 @@ class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
     @api.multi
-    def do_detailed_transfer(self):
-        """ When incoming type transfer are made and stock move have serial/lot
-        number, the supplier is assigned to the serial/lot number taken from
-        picking.
-        @return: do_detailed_transfer boolean results
-        """
-        res = super(StockTransferDetails, self).do_detailed_transfer()
-        self._search_serial_number_to_change_from_transfer()
-        return res
+    def _set_invoice_line_to_serial_numbers(self, lot_ids, invoice_line_ids,
+                                            field_to_change):
+
+        for lot_id in lot_ids:
+            # If serial/lot number has invoice line
+            # ignoring the process down and continue
+            # with the next serial/lot number in the
+            # cycle
+            field_expr = "lot_id.%s" % field_to_change
+            invoice_line_in_serial = safe_eval(field_expr, {"lot_id": lot_id})
+            if invoice_line_in_serial:
+                continue
+            for line_id in invoice_line_ids:
+                # Search serial/lot numbers with the invoice line
+                # for take into consideration the quantity of
+                # lots with the invoice line and compared to
+                # the quantity of products in the invoice line
+                lot_ids_count = self.env['stock.production.lot'].\
+                    _get_related_count(line_id, field_to_change)
+                # If The product in the serial/lot number is the same
+                # that current invoice line and the quantity of
+                # serial/lot number with that invoice line is minor
+                # that the quantity of product in the invoice line
+                # save the invoice line on th serial/lot number.
+                # RMA is just for product with UoM = units
+                if line_id.product_id == lot_id.product_id and \
+                        line_id.quantity > lot_ids_count:
+                    lot_id.write({field_to_change: line_id.id})
+        return True
 
     @api.multi
     def _search_serial_number_to_change_from_transfer(self):
@@ -67,6 +88,45 @@ class StockTransferDetails(models.TransientModel):
             # Get the serial/lot number related with moves
             lot_ids = move_ids.mapped("quant_ids.lot_id")
             # Save invoice lines in the serial/lot numbers
-            picking._set_invoice_line_to_serial_numbers(
+            transfer._set_invoice_line_to_serial_numbers(
                 lot_ids, invoice_lines_rec, 'invoice_line_id')
         return True
+
+    @api.multi
+    def do_detailed_transfer(self):
+        """ When incoming type transfer are made and stock move have
+        serial/lot number, the supplier is assigned to the serial/lot
+        number taken from picking.
+        @return: do_detailed_transfer boolean results
+        """
+        res = super(StockTransferDetails, self).do_detailed_transfer()
+        self._search_serial_number_to_change_from_transfer()
+
+        if self.picking_id.picking_type_id.code != 'incoming':
+            return res
+
+        # Save supplier_invoice_line_id in the lot numbers
+        items_packs_ids = self.item_ids + self.packop_ids
+        lot_ids = items_packs_ids.mapped("lot_id")
+
+        for lot_id in lot_ids:
+            if not lot_id.supplier_id:
+                lot_id.write({
+                    'supplier_id': self.picking_id.partner_id.id
+                })
+
+            move_lines = self.picking_id.move_lines.filtered(
+                lambda move: move.product_id == lot_id.product_id)
+
+            # Save invoice lines in the serial/lot numbers
+            invoice_lines_rec = move_lines.mapped(
+                'purchase_line_id.invoice_lines')
+            # If there are not invoice and move_ids, continue
+            # with next transfer
+            if not invoice_lines_rec and not move_lines:
+                continue
+            # Get the serial/lot number related with moves
+            lot_ids = move_lines.mapped("quant_ids.lot_id")
+            self._set_invoice_line_to_serial_numbers(
+                lot_ids, invoice_lines_rec, 'supplier_invoice_line_id')
+        return res

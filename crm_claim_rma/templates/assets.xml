@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="search_product assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/crm_claim_rma/static/src/js/barcode_text.js"></script>
+            </xpath>
+        </template>
+        <template id="layout" name="layout sound" inherit_id="web.layout">
+            <xpath expr="//body" position="inside">
+                <audio id="rma_alert">
+                    <!-- TODO: maybe a module for this is right.
+                     -->
+                    <source src="/crm_claim_rma/static/src/sound/bip.ogg" type="audio/ogg"></source>
+                    <source src="/crm_claim_rma/static/src/sound/bip.m4a" type="audio/m4a"></source>
+                    Your browser does not support the audio element.
+                </audio>
+            </xpath>
+        </template>
+    </data>
+</openerp>

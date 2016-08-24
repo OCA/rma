@@ -24,5 +24,29 @@
 #
 ##############################################################################
 
+from openerp import SUPERUSER_ID
 from . import models
 from . import wizards
+
+
+def create_code_equal_to_id(cr):
+    cr.execute('ALTER TABLE crm_claim ADD COLUMN code character varying;')
+    cr.execute('UPDATE crm_claim SET code = id;')
+
+
+def assign_old_sequences_and_create_locations_rma(cr, registry):
+    # Assign old sequence
+    claim_obj = registry['crm.claim']
+    sequence_obj = registry['ir.sequence']
+    claim_ids = claim_obj.search(cr, SUPERUSER_ID, [], order="id")
+    for claim_id in claim_ids:
+        cr.execute('UPDATE crm_claim SET code = %s WHERE id = %s;',
+                   (sequence_obj.get(cr, SUPERUSER_ID, 'crm.claim.rma.basic'),
+                    claim_id))
+
+    # Create locations rma
+    stock_wh = registry['stock.warehouse']
+    for wh_id in stock_wh.browse(cr, SUPERUSER_ID,
+                                 stock_wh.search(cr, SUPERUSER_ID, [])):
+        vals = stock_wh.create_locations_rma(cr, SUPERUSER_ID, wh_id)
+        stock_wh.write(cr, SUPERUSER_ID, wh_id.id, vals)

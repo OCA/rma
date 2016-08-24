@@ -33,5 +33,4 @@ class ResCompany(models.Model):
         'res.partner',
         string='Return address',
         help="Default address where the customers has to send back the "
-             "returned product. If empty, the address is the "
-             "company address")
+             "returned product. If empty, the address is the company address")

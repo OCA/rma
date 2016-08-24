@@ -24,3 +24,23 @@ msgstr "Órdenes de venta"
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de orden de venta"
+
+#. module: crm_rma_prodlot_invoice
+#: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/No. de Serie"
+
+#. module: crm_rma_prodlot_invoice
+#: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Asistente de albarán"
+
+#. module: crm_rma_prodlot_invoice
+#: field:stock.production.lot,supplier_id:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: crm_rma_prodlot_invoice
+#: help:stock.production.lot,supplier_id:0
+msgid "Supplier of good in claim"
+msgstr "Proveedor del producto en la reclamación"

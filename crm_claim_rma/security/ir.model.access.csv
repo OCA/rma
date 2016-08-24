@@ -1,4 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_claim_type_technical,crm.claim.type.technical,model_crm_claim_type,base.group_no_one,1,1,1,1
+access_crm_claim_type_manager,crm.claim.type.manager,model_crm_claim_type,base.group_sale_manager,1,0,0,0
+access_crm_claim_type_user,crm.claim.type.user,model_crm_claim_type,base.group_sale_salesman,1,0,0,0
 access_claim_line_portal,claim.line.portal,model_claim_line,base.group_portal,1,0,0,0
 access_crm_claim_portal_rma,crm.claim portal,model_crm_claim,base.group_portal,1,0,0,0
 crm_claim.access_crm_claim_manager,crm.claim.manager,model_crm_claim,base.group_sale_manager,1,0,0,0
@@ -10,7 +13,7 @@ access_substate_readonly,substate.substate.readonly,model_substate_substate,grou
 access_claim_line_readonly,claim.line.readonly,model_claim_line,group_rma_readonly,1,0,0,0
 access_crm_claim_readonly_rma,crm.claim readonly,model_crm_claim,group_rma_readonly,1,0,0,0
 access_crm_claim_stage_readonly,crm.claim.stage.readonly,crm_claim.model_crm_claim_stage,group_rma_readonly,1,0,0,0
-access_crm_claim_type_rma_readonly,crm.claim.type readonly,crm_claim_type.model_crm_claim_type,group_rma_readonly,1,0,0,0
+access_crm_claim_type_rma_readonly,crm.claim.type readonly,crm_claim_rma.model_crm_claim_type,group_rma_readonly,1,0,0,0
 access_rma_account_payment_term_readonly_rma,account.payment.term readonly,account.model_account_payment_term,group_rma_readonly,1,0,0,0
 access_rma_account_analytic_account_readonly_rma,account.analytic.account readonly,analytic.model_account_analytic_account,group_rma_readonly,1,0,0,0
 access_rma_ir_property_readonly_rma,ir.property readonly,base.model_ir_property,group_rma_readonly,1,0,0,0

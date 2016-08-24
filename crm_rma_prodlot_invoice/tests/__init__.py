@@ -19,4 +19,5 @@
 #
 ##############################################################################
 
+from . import test_crm_rma_prodlot_supplier
 from . import test_crm_rma_prodlot_invoice

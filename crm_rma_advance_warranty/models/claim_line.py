@@ -34,13 +34,13 @@ class ClaimLine(models.Model):
         """ Calculate warranty limit
         """
         if not self.invoice_date:
-            raise exceptions.Warning(
-                _('Error'),
-                _('Cannot find any date for invoice. '
-                  'Must be a validated invoice.'))
+            raise exceptions.Warning(_('Error'),
+                                     _('Cannot find any date for invoice. '
+                                       'Must be a validated invoice.'))
+        warranty_duration = 0
         warning = 'not_define'
-        date_inv_at_server = datetime.strptime(self.invoice_date,
-                                               DEFAULT_SERVER_DATE_FORMAT)
+        invoice_date = datetime.strptime(self.invoice_date,
+                                         DEFAULT_SERVER_DATE_FORMAT)
         if self.warranty_type == 'supplier':
             if self.prodlot_id:
                 supplier_id = self.prodlot_id.supplier_id
@@ -56,18 +56,15 @@ class ClaimLine(models.Model):
                 warranty_duration = supplier_info_id.warranty_duration
         else:
             warranty_duration = self.product_id.warranty
-        limit = self.warranty_limit(date_inv_at_server, warranty_duration)
-        # If waranty period was defined
+        limit_date = self.warranty_limit(invoice_date, warranty_duration)
+        # If warranty period was defined
         if warranty_duration > 0:
             claim_date = datetime.strptime(self.claim_id.date,
                                            DEFAULT_SERVER_DATETIME_FORMAT)
-            if limit < claim_date:
-                warning = 'expired'
-            else:
-                warning = 'valid'
+            warning = 'valid' if claim_date <= limit_date else 'expired'
 
         self.write({
-            'guarantee_limit': limit.strftime(DEFAULT_SERVER_DATE_FORMAT),
+            'guarantee_limit': limit_date.strftime(DEFAULT_SERVER_DATE_FORMAT),
             'warning': warning
         })
 
@@ -75,9 +72,17 @@ class ClaimLine(models.Model):
     def _get_product_supplier_info(self):
         """ It finds the information about a supplier of specific
         product """
-        return self.env['product.supplierinfo'].search(
+
+        supplier_info = self.env['product.supplierinfo'].search(
             [('name', '=', self.supplier_id.id),
-             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id)])
+             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
+             ('active_supplier', '=', True)])
+        if len(supplier_info) > 1:
+            raise exceptions.Warning(
+                _('Error'),
+                _('There are more than one supplier activated for the product'
+                  ' %s.') % self.product_id.product_tmpl_id.name)
+        return supplier_info
 
     @api.model
     def set_warranty_return_address(self):
@@ -99,10 +104,8 @@ class ClaimLine(models.Model):
                       ('product_tmpl_id', '=',
                        self.product_id.product_tmpl_id.id)]
             supplier = psi_obj.search(domain)
-            return_address_id = \
-                supplier.warranty_return_address.id
-            return_type = \
-                supplier.warranty_return_partner
+            return_address_id = supplier.warranty_return_address.id
+            return_type = supplier.warranty_return_partner
         else:
             # when no supplier is configured, returns to the company
             company = self.claim_id.company_id

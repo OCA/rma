@@ -27,12 +27,13 @@
     'category': 'RMA',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
+        'purchase',
         'sale_stock',
         'product_unique_serial',
-        'crm_rma_prodlot_supplier',
+        'crm_claim',
     ],
     'data': [
+        'views/stock_transfer_details.xml',
         'views/stock_production_lot.xml',
     ],
     'installable': True,

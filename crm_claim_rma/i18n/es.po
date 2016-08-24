@@ -1078,14 +1078,6 @@ msgid "The warehouse by default to create a claim.\n"
 msgstr "Almacen de la compañía que sea usado de manera predeterminada al momento de crear un reclamo de cliente.\n"
 
 #. module: crm_claim_rma
-#: field:res.company,rma_warehouse_id:0
-#: field:res.users,rma_warehouse_id:0
-#: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
-#: field:rma.config.settings,rma_warehouse_id:0
-msgid "RMA Warehouse"
-msgstr "Almacen de reclamos"
-
-#. module: crm_claim_rma
 #: view:res.company:crm_claim_rma.res_company_rma_config_form_view
 #: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
 msgid "Claim Attention Priority"
@@ -1207,12 +1199,6 @@ msgid "RMA"
 msgstr "Reclamos"
 
 #. module: crm_claim_rma
-#: help:res.company,rma_warehouse_id:0
-#: help:rma.config.settings,rma_warehouse_id:0
-msgid "The warehouse to use by default in the claims, this field will be used for fill the warehouse field in the claims if the warehouse of user is empty, i.e, the locations of this warehouse will be used for the pickings of the claim"
-msgstr "Indica el almacén para ser usados de manera predeterminada en los reclamos, este campo sera usado para establecer el Almacén en los reclamos en caso de no estar establecido por el usuario. Las ubicaciones para el almacén establecido serán usadas en los movimientos de inventario de los reclamos."
-
-#. module: crm_claim_rma
 #: help:res.company,priority_minimum:0
 #: help:rma.config.settings,priority_minimum:0
 msgid "Priority of a claim should be:\n"
@@ -1243,3 +1229,680 @@ msgstr "Reclamos"
 #: view:rma.config.settings:crm_claim_rma.rma_config_settings_view_form
 msgid "Sales"
 msgstr "Ventas"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,code:0
+msgid "Claim Number"
+msgstr "Número de reclamación"
+
+#. module: crm_claim_rma
+#: sql_constraint:crm.claim:0
+msgid "The code must be unique!"
+msgstr "¡El número debe de ser único!"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+msgid "Claim Type"
+msgstr "Tipo de reclamación"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.crm_claim_rma_act
+#: model:ir.ui.menu,name:crm_claim_rma.menu_crm_claim_rma_act
+msgid "Claim Types"
+msgstr "Tipos de Reclamaciones"
+
+#. module: crm_claim_rma
+#: help:crm.claim,claim_type:0
+#: help:crm.claim.stage,claim_type:0
+msgid "Claim classification"
+msgstr "Clasificación de reclamación"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim_stage
+msgid "Claim stages"
+msgstr "Etapas de la reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim,claim_type:0
+#: field:crm.claim.stage,claim_type:0
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_form
+msgid "Claim type"
+msgstr "Tipo de Reclamación"
+
+#. module: crm_claim_rma
+#: view:crm.claim.type:crm_claim_rma.crm_claim_rma_tree
+msgid "Claim types"
+msgstr "Tipos de reclamaciones"
+
+#. module: crm_claim_rma
+#: field:crm.claim.stage,claim_common:0
+msgid "Common to All Claim Types"
+msgstr "Es común para todos los tipos de reclamaciones"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_customer
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: crm_claim_rma
+#: view:crm.claim.stage:crm_claim_rma.crm_stage_claim_type_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_claim_rma
+#: help:crm.claim.stage,claim_common:0
+msgid "If you check this field, this stage will be proposed by default on each claim type."
+msgstr "Si es marcada esta casilla, esta etapa será definida de manera predeterminada para cada tipo de reclamación"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,write_uid:0
+msgid "Last Updated by"
+msgstr "Actualizado por última vez por"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,write_date:0
+msgid "Last Updated on"
+msgstr "Actualizado por última vez el"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_other
+msgid "Other"
+msgstr "Otro"
+
+#. module: crm_claim_rma
+#: view:crm.claim.stage:crm_claim_rma.crm_stage_claim_type_search
+msgid "Search Stages"
+msgstr "Buscar etapas"
+
+#. module: crm_claim_rma
+#: model:crm.claim.type,name:crm_claim_rma.crm_claim_rma_supplier
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: crm_claim_rma
+#: model:crm.claim.stage,name:crm_claim_rma.stage_claim10
+msgid "Accepted"
+msgstr "Aceptado"
+
+#. module: crm_claim_rma
+#: model:crm.claim.stage,name:crm_claim_rma.stage_claim11
+msgid "Done"
+msgstr "Hecho"
+
+#. module: crm_claim_rma
+#: field:crm.claim.type,ir_sequence_id:0
+msgid "Sequence Number"
+msgstr "Número de secuencia"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_loss_picking_from_claim_picking
+msgid "Create Incoming Shipment to Breakage Loss Location"
+msgstr "Crear un envío de entrada hacia la ubicación de pérdida de productos dañados"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_used_picking_from_claim_picking
+msgid "Create Incoming Shipment to Refurbish Location"
+msgstr "Crear un envío de entrada hacia la ubicación de productos restaurados"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_stock_picking_from_claim_picking
+msgid "Create Incoming Shipment to Stock"
+msgstr "Crear un envío de entrada a Existencias"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.action_claim_picking_loss
+msgid "Create a Product Loss"
+msgstr "Registrar una pérdida de producto"
+
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Create picking"
+msgstr "Crear un albarán"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking_from_picking.py:89
+#: field:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
+msgid "Dest. Location"
+msgstr "Ubicación destino"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,id:0
+msgid "ID"
+msgstr ""
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Actualizado el"
+
+#. module: crm_claim_rma
+#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+msgid "Source location where the returned products are"
+msgstr "Ubicación origen de los productos devueltos"
+
+#. module: crm_claim_rma
+#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+msgid "Target location to send returned products"
+msgstr "Ubicación destino de los productos devueltos"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/stock_warehouse.py:62
+#, python-format
+msgid "Loss"
+msgstr "Pérdida"
+
+#. module: crm_claim_rma
+#: field:stock.warehouse,loss_loc_id:0
+msgid "Loss Location"
+msgstr "Ubicación de Pérdida"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view_loss
+msgid "New Product Loss"
+msgstr "Nueva Pérdida de Producto"
+
+#. module: crm_claim_rma
+#: field:claim.make.picking.from.picking.wizard,picking_line_ids:0
+msgid "Picking lines"
+msgstr "Líneas de albarán"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_product_template
+msgid "Product Template"
+msgstr "Producto Plantilla"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_product_tree_view
+msgid "Product Variants"
+msgstr "Variantes del Producto"
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to Loss"
+msgstr "Producto a Pérdida"
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to refurbish stock"
+msgstr "Producto a Existencias de restaurados"
+
+
+#. module: crm_claim_rma
+#: view:stock.picking:crm_claim_rma.picking_in_form
+msgid "Product to stock"
+msgstr "Producto a Existencias"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma_a
+msgid "RMA - Box A"
+msgstr "RMA - Caja A"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma_b
+msgid "RMA - Box B"
+msgstr "RMA - Caja B"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_search_view
+msgid "RMA Available Products"
+msgstr "Productos disponibles en RMA"
+
+#. module: crm_claim_rma
+#: model:stock.location,name:crm_claim_rma.location_rma
+msgid "RMA Demo"
+msgstr "Demostración RMA"
+
+#. module: crm_claim_rma
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
+msgid "RMA Forecasted Quantity"
+msgstr "Pronóstico de Cantidades en RMA"
+
+#. module: crm_claim_rma
+#: view:product.product:crm_claim_rma.rma_product_search_view
+msgid "RMA Products"
+msgstr "Productos en RMA"
+
+#. module: crm_claim_rma
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
+msgid "RMA Quantity On Hand"
+msgstr "Cantidades Disponibles en RMA"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/stock_warehouse.py:56
+#, python-format
+msgid "Refurbish"
+msgstr "Restaurar"
+
+#. module: crm_claim_rma
+#: field:stock.warehouse,lot_refurbish_id:0
+msgid "Refurbish Location"
+msgstr "Ubicación de Restaurados"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Select lines for picking"
+msgstr "Seleccionar lineas para albarán"
+
+#. module: crm_claim_rma
+#: view:claim.make.picking.from.picking.wizard:crm_claim_rma.view_claim_picking_from_picking
+msgid "Select lines to add in picking"
+msgstr "Seleccionar lineas a agregar en albarán"
+
+#. module: crm_claim_rma
+#: model:product.template,name:crm_claim_rma.product_socket_product_template
+msgid "Socket"
+msgstr "Sócate"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/claim_make_picking_from_picking.py:85
+#: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
+msgid "Source Location"
+msgstr "Ubicación origen"
+
+#. module: crm_claim_rma
+#: model:ir.actions.act_window,name:crm_claim_rma.rma_product_variant_action
+#: model:ir.ui.menu,name:crm_claim_rma.menu_stock_rma
+msgid "RMA Stock"
+msgstr "Existencias en RMA"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_wizard
+msgid "Wizard to create pickings from claim lines"
+msgstr "Asistente para create albaranes desde lineas de reclamo"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_claim_make_picking_from_picking_wizard
+msgid "Wizard to create pickings from picking lines"
+msgstr "Asistente para create albaranes desde lineas de albaranes"
+
+#. module: crm_claim_rma
+#. openerp-web
+#: code:addons/crm_claim_rma/static/src/js/barcode_text.js:89
+#, python-format
+msgid "-->"
+msgstr "-->"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_crm_claim
+msgid "Claim"
+msgstr "Reclamo"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/returned_lines_from_serial.py:111
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: crm_claim_rma
+#: help:returned.lines.from.serial.wizard,scan_data:0
+msgid "Field used to load and show the products"
+msgstr "Campo usado para cargar y ver los productos"
+
+#. module: crm_claim_rma
+#: help:returned.lines.from.serial.wizard,lines_id:0
+msgid "Field used to load the ids of invoice lines in invoices writed"
+msgstr "Campo usado para cargar los ids de las líneas de factura en facturas editadas"
+
+#. module: crm_claim_rma
+#: help:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Field used to load the ids of products loaded"
+msgstr "Campo usado para cargar los ids de los productos cargados"
+
+#. module: crm_claim_rma
+#: help:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Field used to show the current status of the invoice lines loaded"
+msgstr "Campo usado para visualizar el estado actual de las línea de factura cargadas"
+
+#. module: crm_claim_rma
+#: help:returned.lines.from.serial.wizard,current_status:0
+msgid "Field used to show the current status of the product loaded(Name and quantity)"
+msgstr "Campo usado para visualizar el estado actual de los productos cargados (Nombre y cantidad)"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Invoice Lines selected"
+msgstr "Líneas de factura seleccionadas"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,lines_id:0
+msgid "Invoice Lines to Select"
+msgstr "Líneas de factura a seleccionar"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización hecha por"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización hecha en"
+
+#. module: crm_claim_rma
+#: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view_meta
+msgid "Add claim lines using serial or invoice number"
+msgstr "Agregar devoluciones usando número de serial o de factura"
+
+#. module: crm_claim_rma
+#. openerp-web
+#: code:addons/crm_claim_rma/static/src/js/barcode_text.js:90
+#, python-format
+msgid "Ok"
+msgstr "Ok"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,partner_id:0
+msgid "Partner"
+msgstr "Socio"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,scan_data:0
+#: field:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Products"
+msgstr "Productos"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizard/returned_lines_from_serial.py:213
+#, python-format
+msgid "Search Product"
+msgstr "Buscar producto"
+
+#. module: crm_claim_rma
+#: field:returned.lines.from.serial.wizard,current_status:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizard/returned_lines_from_serial.py:285
+#, python-format
+msgid "The product or invoice %s was not found"
+msgstr "El producto o factura %s no fue encontrado"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizard/returned_lines_from_serial.py:112
+#, python-format
+msgid "There is no warehouse for the current user's company."
+msgstr "No existe un almacén para la compañía del usuario actual."
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Validate the actual picking, it will execute all the validations and the inventory will be affected"
+msgstr "Validar el albarán actual, ejecutará todas las validaciones y el inventario será afectado"
+
+#. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_returned_lines_from_serial_wizard
+msgid "Wizard to create product return lines from serial numbers"
+msgstr "Wizard para crear líneas de devolución de productos usando el número de serie o lote"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Write the Invoice Number to search the products in lines"
+msgstr "Escribir el número de factura para buscar los productos en las líneas"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Write the Serial/Lot Number to search the product"
+msgstr "Escribir el número de serie o lote para buscar el producto"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "You are about to add new lines to the claim, Do you want to continue?."
+msgstr "Se agregarán nuevas líneas a la reclamación, ¿Desea continuar?."
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "You should use this windows on this way."
+msgstr "Deberías usar ésta ventana."
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Add items to the claim"
+msgstr "Añadir productos"
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/wizards/returned_lines_from_serial.py:585
+#, python-format
+msgid "The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n\n %s"
+msgstr "los siguientes números de seriales no pueden ser agregados, porque todos ellos (listados abajo) están actualmente en uso:\n\n %s"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Insert serial lot numbers and/or invoice numbers in a new line to search products"
+msgstr "Para buscar productos inserte en nuevas lineas números de seriales y facturas"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Search products"
+msgstr "Buscar productos"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Add products"
+msgstr "Agregar productos"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Select product listed below and then add it using the button \"Add items to the claim\""
+msgstr "Seleccione los productos que aparecerán listados abajo y luego presione \"Añadir productos\""
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "You are attending to:"
+msgstr "Usted esta atendiendo a:"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "or"
+msgstr "o"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.view_enter_product
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "You are able to insert lines based on the following rules:"
+msgstr "Usted puede agregar lineas basándose en las siguientes normas:"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Write the"
+msgstr "Escriba el"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Serial"
+msgstr "No. Lote/Serial"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "to search the product"
+msgstr "para buscar el producto"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Invoice No."
+msgstr "No. de Factura"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "to search and pick one of the products in it"
+msgstr "para buscar y elegir uno de los productos"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "You can also add the reason of the claim, comment and the product all at same time\n"
+"                        just need to use the following format separated by '*':"
+msgstr "También puede agregar el motivo del reclamo, comentarios y el producto de una vez\n"
+"                        solo se necesita usar el siguiente formato separado por '*':"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Using a serial, you must use: [Serial Lot No.]*[Reason No.]*[Quick explanation]."
+msgstr "Usando un No. de Lote/Serial, debe usar: [No. de Lote/Serial]*[No. Motivo]*[Comentarios]."
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "For example: A4JD6JHS*4*The display is broken when was unboxed"
+msgstr "Por ejemplo: A4JD6JHS*4*La pantalla estaba rota al abrir la caja"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Use the following available reasons:"
+msgstr "Use los siguientes motivos disponibles:"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Not specified"
+msgstr "No especificado"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Legal retractation"
+msgstr "Retractación Legal"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Order Cancellation"
+msgstr "Cancelación de orden"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Damaged Delivered Product"
+msgstr "Producto enviado dañado"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Shipping error"
+msgstr "Error de envío"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Exchange request"
+msgstr "Solicitar cambio"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Lost during transport"
+msgstr "Perdido durante el transporte"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Perfect Conditions"
+msgstr "Perfectas condiciones"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Imperfection"
+msgstr "Imperfección"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Physical Damage by Client"
+msgstr "Daño físico por el cliente"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Physical Damage by Company"
+msgstr "Daño físico por la compañía"
+
+#. module: crm_claim_rma
+#: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
+msgid "Other"
+msgstr "Otro"

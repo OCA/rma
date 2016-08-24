@@ -31,9 +31,7 @@ class CrmClaim(models.Model):
                                  'claim_parent',
                                  'claim_child',
                                  string="Related Claims",
-                                 help=" - For a Vendor Claim means"
-                                 " the RMA-C that generates the"
-                                 " current RMA-V.\n"
-                                 " - For a Customer Claim means"
-                                 " the RMA-V generated to"
-                                 " fulfill the current RMA-C.")
+                                 help=" - For a Vendor Claim means the RMA-C "
+                                 "that generates the current RMA-V.\n"
+                                 " - For a Customer Claim means the RMA-V "
+                                 "generated to fulfill the current RMA-C.")

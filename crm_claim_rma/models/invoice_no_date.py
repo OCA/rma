@@ -23,9 +23,14 @@
 #
 ##############################################################################
 
+from openerp import _
+from openerp.exceptions import Warning as UserError
 
-class InvoiceNoDate(Exception):
-    """
-    Raised when a warranty cannot be computed for a claim line
+
+class InvoiceNoDate(UserError):
+    """Raised when a warranty cannot be computed for a claim line
     because the invoice has no date.
     """
+    def __init__(self):
+        super(InvoiceNoDate, self).__init__(
+            _("Cannot find any date for invoice. Must be validated."))

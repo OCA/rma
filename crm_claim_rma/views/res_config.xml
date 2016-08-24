@@ -23,16 +23,6 @@
                                 <label string="Days" />
                             </div>
                         </div>
-                        <label for="id" string="RMA Warehouse"/>
-                        <div>
-                            <p> The warehouse by default to create a claim.
-                                In case of the user don't have warehouse configured
-                            </p>
-                            <div>
-                                <b>RMA Warehouse </b>
-                                <field name="rma_warehouse_id" class="oe_inline"/>
-                            </div>
-                        </div>
                     </group>
                     <separator string="Purchase"/>
                     <group name="rma_purchase">

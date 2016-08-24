@@ -25,8 +25,14 @@
 ##############################################################################
 
 
-class ProductNoSupplier(Exception):
-    """
-    Raised when a warranty cannot be computed for a claim line
+from openerp import _
+from openerp.exceptions import Warning as UserError
+
+
+class ProductNoSupplier(UserError):
+    """Raised when a warranty cannot be computed for a claim line
     because the product has no supplier.
     """
+    def __init__(self):
+        super(ProductNoSupplier, self).__init__(
+            _("The product has no supplier configured."))

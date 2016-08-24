@@ -34,14 +34,65 @@ Using this module makes the logistic flow of return this way:
 Features
 --------
 
+- Sequential code for claims: This module adds a sequential code for claims.
+
+- CRM Claim Types: Includes a way to classify claims adding the concept of type
+  and with this, it allows to configure claim stages depending on claim types.
+  This module includes Customer, Supplier and Other claim types as default data
+  and its own stages relation, and also makes few stages common for different
+  claim types.
+  It contains a predefined set of claim types. If you want add your own types
+  go to Sales > Configurations > Claim > Claim Types.
+
 - New field priority in claim line
+
 - Calculate priority of claim line depending of today date and claim date
+
 - Grouping by priority in claim line
 
+- Stock location: Allow the user to know how much for a product is available 
+  'On Hand' and how much is virtually (expected to be) available for 
+  RMA locations. Adding for the different product views 
+  (Tree, Form and Kanban) information about it. 
 
-For further information, please visit:
+  Both quantities are computed and include its children locations. 
 
-* https://www.odoo.com/forum/help-1
+  It is useful to use it as a quick snapshot for RMA from product perspective. 
+
+  It also adds the following location on warehouses :
+
+  * Loss
+  * Refurbished 
+
+  Several wizards on incoming deliveries that allow you to move your 
+  goods easily in those new locations from a done reception.
+
+  Using this module make the logistic flow of return a bit more complex:
+
+  * Returning product goes into RMA location with a incoming shipment
+  * From the incoming shipment, forward them to another places (stock, loss, refurbish)
+
+- RMA Claim Mass Return by Lot: This module adds possibility to return a 
+  whole lot of product from an invoice and create a incoming shipment for 
+  them based on serial/lot for a product or invoice number.
+
+Usage
+=====
+
+To use this module, you need to:
+
+* Go into Sales > After-Sale services > Claims
+
+* A button named "Mass return from serial/lot or invoice" will appear in the
+  form view when creating or editing an existing claim.
+
+* Enter into the wizard and introduce serial/lot for an invoiced product or
+  invoice number and press enter.
+
+* A list of selectable items it will show below or next to the input box
+  depending upon is introduced either invoice number or serial/lot number
+  respectively. When finish adding, click on Validate button and then Ok
+  to exit of wizard and continue editing the claim.
 
 Known issues / Roadmap
 ======================
@@ -49,6 +100,8 @@ Known issues / Roadmap
 * Currently, the warranty duration used is the one configured on the
   products today, not the one which was configured when the product
   has been sold.
+
+* Optimization is possible when searching virtual quantities in the search function
 
 Bug Tracker
 ===========
@@ -65,6 +118,20 @@ Credits
 Contributors:
 -------------
 
+* Odoo Community Association (OCA)
+* Akretion
+* Camptocamp
+* Eezee-it
+* MONK Software
+* Vauxoo
+* OdooMRP team
+* AvanzOSC
+* Serv. Tecnol. Avanzados - Pedro M. Baeza
+* Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Ana Juaristi <anajuarist@avanzosc.es>
+* Iker Coranti <ikercoranti@avanzosc.com>
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+* Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Emmanuel Samyn <esamyn@gmail.com>
 * Sébastien Beau <sebastien.beau@akretion.com.br>
 * Benoît Guillot <benoit.guillot@akretion.com.br>

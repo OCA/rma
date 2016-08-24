@@ -54,25 +54,18 @@ class SaleOrderLine(models.Model):
 
         :return: True
         """
-        invoice_line_obj = self.env["account.invoice.line"]
-        stock_move_obj = self.env["stock.move"]
-        invoice_lines_rec = invoice_line_obj.browse(invoice_lines)
-        picking_obj = self.env["stock.picking"]
-
-        for order_line in self:
-            procurements = order_line.procurement_ids
-            # If there are not procurements, continue
-            # with next sale order line
-            if not procurements:
-                continue
-            # Search stock moves related with the
-            # procurements
-            procurement_ids = procurements.mapped("id")
-            move_ids = stock_move_obj.search(
-                [('procurement_id', 'in', procurement_ids)])
+        move = self.env["stock.move"]
+        invoice_line_ids = self.env['account.invoice.line'].browse(
+            invoice_lines)
+        transfer = self.env["stock.transfer_details"]
+        # Use only those lines with procurements
+        line_ids = self.filtered(lambda r: r.procurement_ids)
+        for line_id in line_ids:
+            procurement_ids = line_id.mapped('procurement_ids.id')
+            move_ids = move.search([('procurement_id', 'in', procurement_ids)])
             # Get the serial/lot number related with moves
             lot_ids = move_ids.mapped("quant_ids.lot_id")
             # Save invoice lines in the serial/lot numbers
-            picking_obj._set_invoice_line_to_serial_numbers(
-                lot_ids, invoice_lines_rec, 'invoice_line_id')
+            transfer._set_invoice_line_to_serial_numbers(
+                lot_ids, invoice_line_ids, 'invoice_line_id')
         return True

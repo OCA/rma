@@ -114,6 +114,7 @@
                     </div>
                     <separator string="Problem" colspan="4"/>
                     <group col="6" colspan="4">
+                        <field name="number" required="1" class="oe_inline"/> -
                         <field name="name" colspan="6"/>
                         <field name="product_id" readonly="1" colspan="6"/>
                         <field name="prodlot_id" colspan="6"/>

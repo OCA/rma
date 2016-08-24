@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="picking_in_form" model="ir.ui.view">
+            <field name="name">crm_claim_rma.picking_in_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_type']" position="after">
+                    <field name="claim_id" />
+                </xpath>
+                <xpath expr="//field[@name='state']" position="before">
+                        <button name="%(action_stock_picking_from_claim_picking)d"
+                                groups="crm_claim_rma.group_rma_user"
+                                string="Product to stock" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                        <button name="%(action_loss_picking_from_claim_picking)d"
+                                groups="crm_claim_rma.group_rma_user"
+                                string="Product to Loss" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                        <button name="%(action_used_picking_from_claim_picking)d"
+                                groups="crm_claim_rma.group_rma_user"
+                                string="Product to refurbish stock" type="action"
+                                attrs="{'invisible':['|',
+                                                    ('state','&lt;&gt;','done'),
+                                                    ('claim_id', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_internal_search_claim_id" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search[@string='Picking Lists']">
+                    <field name="claim_id" help="Moves created from claims"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
