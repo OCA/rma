@@ -197,8 +197,9 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
 
             for move_id in picking_id.move_lines:
                 move_id.write({"invoice_state": "2binvoiced"})
-
-                for _ in xrange(0, int(move_id.product_qty)):
+                ii = 0
+                while ii < int(move_id.product_qty):
+                    ii += 1
                     wizard_item_id = self.wizard_item.create({
                         'transfer_id': wizard_id.id,
                         'product_id': move_id.product_id.id,
