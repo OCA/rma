@@ -110,13 +110,10 @@ class TestPickingFromPicking(TransactionCase):
         picking_lines = claim_wizard.picking_line_ids
         claim_lines = self.claim_id.claim_line_ids
 
-        for num in xrange(0, len(picking_lines)):
-            band = False
-            for num2 in xrange(0, len(claim_lines)):
-                if claim_lines[num].product_id.id == \
-                        picking_lines[num2].product_id.id:
-                    band = True
-            self.assertEquals(True, band)
+        claim_line_product_ids = claim_lines.mapped('product_id.id')
+        picking_product_in_claim_line_ids = picking_lines.filtered(
+            lambda r: r.product_id.id in claim_line_product_ids)
+        self.assertEquals(picking_product_in_claim_line_ids, picking_lines)
 
         claim_wizard.with_context(context).action_create_picking_from_picking()
 
