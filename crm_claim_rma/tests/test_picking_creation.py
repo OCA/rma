@@ -241,7 +241,8 @@ class TestPickingCreation(ClaimTestsCommon):
                          'set to false')
 
     def test_08_product_return_with_multiple_adresses(self):
-        """
+        """ Validate that a claim with multiple addresses in their lines
+        cannot be made
         """
         sale_id = self.sale_order
         customer_type = self.env.ref('crm_claim_rma.crm_claim_type_customer')
