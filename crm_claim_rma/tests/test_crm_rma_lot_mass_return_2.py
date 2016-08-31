@@ -139,7 +139,8 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
             scanned_data, [(6, 0, [])])['value']['option_ids'][0][2]
 
         wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
-        line_ids = wizard_line_ids.filtered(lambda r: r.lot_id.name == lot_name)
+        line_ids = wizard_line_ids.filtered(
+            lambda r: r.lot_id.name == lot_name)
         wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
         self.assertEqual(len(lines_list_id), 1)
 
@@ -168,7 +169,8 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
             scanned_data, [(6, 0, [])])['value']['option_ids'][0][2]
 
         wizard_line_ids = self.env['claim.line.wizard'].browse(lines_list_id)
-        line_ids = wizard_line_ids.filtered(lambda r: r.lot_id.name == lot_name)
+        line_ids = wizard_line_ids.filtered(
+            lambda r: r.lot_id.name == lot_name)
         wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
         self.assertEqual(len(lines_list_id), 1)
 
