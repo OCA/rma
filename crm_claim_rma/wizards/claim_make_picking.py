@@ -157,7 +157,7 @@ class ClaimMakePicking(models.TransientModel):
             picking_type = warehouse_rec.in_type_id
             write_field = 'move_in_id'
         else:
-            picking_type = warehouse_rec.int_type_id
+            picking_type = warehouse_rec.out_type_id
             write_field = 'move_out_id'
 
         partner_id = claim.delivery_address_id.id
