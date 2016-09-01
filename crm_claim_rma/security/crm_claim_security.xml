@@ -15,6 +15,7 @@
                     ref('base.menu_aftersale'),
                     ref('crm_claim.menu_crm_case_claims'),
                     ref('crm_claim_rma.menu_crm_case_claims_claim_lines'),
+                    ref('crm_claim_rma.menu_stock_rma'),
                     ])]"/>
         </record>
 

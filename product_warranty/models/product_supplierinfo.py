@@ -32,23 +32,20 @@ class ProductSupplierInfo(models.Model):
     def get_warranty_return_partner(self):
         result = [('company', 'Company'),
                   ('supplier', 'Supplier'),
-                  ('other', 'Other'),
-                  ]
+                  ('other', 'Other')]
         return result
 
     @api.model
     def _get_default_instructions(self):
         """ Get selected lines to add to exchange """
-        instruction_ids = self.env['return.instruction']\
-            .search([('is_default', '=', True)], limit=1)
-        return instruction_ids
+        return self.env['return.instruction'].search(
+            [('is_default', '=', True)], limit=1)
 
     @api.one
     @api.depends('warranty_return_partner')
     def _compute_warranty_return_address(self):
         """ Method to return the partner delivery address or if none,
         the default address
-
         dedicated_delivery_address stand for the case a new type of
         address more particularly dedicated to return delivery would be
         implemented.
@@ -59,14 +56,14 @@ class ProductSupplierInfo(models.Model):
         if return_partner:
             if return_partner == 'supplier':
                 partner_id = self.name.id
+
             elif return_partner == 'company':
                 if self.company_id.crm_return_address_id:
-                    partner_id = self.company_id.\
-                        crm_return_address_id.id
+                    partner_id = self.company_id.crm_return_address_id.id
+
             elif return_partner == 'other':
                 if self.warranty_return_other_address:
-                    partner_id = self.\
-                        warranty_return_other_address.id
+                    partner_id = self.warranty_return_other_address.id
         self.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(

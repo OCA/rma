@@ -27,6 +27,20 @@ class TestSupplierAndSupplierInvoice(TransactionCase):
     def setUp(self):
         super(TestSupplierAndSupplierInvoice, self).setUp()
 
+        self.customer_id = self.env['res.partner'].create({
+            'name': 'Larry Ellison',
+            'company_id': self.ref('base.main_company'),
+            'customer': True,
+            'email': 'lellison@yourcompany.example.com',
+            'phone': '+8860241622023',
+            'street': 'East Western Avenue',
+            'city': 'Florida',
+            'zip': 51012,
+            'country_id': self.ref('base.us'),
+            # dear future me: the following field doesn't exist yet,
+            # but it does when running from client repository
+            'credit_limit': 100000000,
+        })
         # Validate last purchase invoice
         self.purchase = self.env.ref(
             "crm_claim_product_supplier.purchase_order_supplier_1")
@@ -34,7 +48,7 @@ class TestSupplierAndSupplierInvoice(TransactionCase):
 
         # Create sale.order
         sale_order = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
+            'partner_id': self.customer_id.id,
             'client_order_ref': 'TEST_SO_1',
             'order_policy': 'manual',
             'order_line': [(0, 0, {
@@ -66,9 +80,9 @@ class TestSupplierAndSupplierInvoice(TransactionCase):
         self.claim = self.env['crm.claim'].\
             create({
                 'name': 'TEST CLAIM',
-                'claim_type': self.ref('crm_claim_type.'
+                'claim_type': self.ref('crm_claim_rma.'
                                        'crm_claim_type_customer'),
-                'partner_id': self.ref('base.res_partner_14'),
+                'partner_id': self.customer_id.id,
                 'pick': True,
                 'user_id': self.env.user.id,
                 'company_id': self.env.user.company_id.id,

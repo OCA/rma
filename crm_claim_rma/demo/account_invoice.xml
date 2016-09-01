@@ -8,7 +8,7 @@
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
             <field name="account_id" ref="account.a_recv"/>
-            <field name="partner_id" ref="base.res_partner_9"/>
+            <field name="partner_id" ref="crm_claim_rma.res_partner_demo_rma_1"/>
             <field name="date_invoice" eval="(DateTime.today() - timedelta(days=22)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -19,7 +19,7 @@
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
             <field name="account_id" ref="account.a_recv"/>
-            <field name="partner_id" ref="base.res_partner_9"/>
+            <field name="partner_id" ref="crm_claim_rma.res_partner_demo_rma_1"/>
             <field name="date_invoice" eval="(DateTime.today() - timedelta(days=2)).strftime('%Y-%m-%d')"/>
         </record>
 
@@ -30,7 +30,7 @@
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
             <field name="account_id" ref="account.a_recv"/>
-            <field name="partner_id" ref="base.res_partner_9"/>
+            <field name="partner_id" ref="crm_claim_rma.res_partner_demo_rma_1"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
         </record>
     </data>

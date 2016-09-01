@@ -30,21 +30,20 @@ class ResCompany(models.Model):
 
     @api.constrains("limit_days")
     def _check_limit_days_config(self):
-        for company in self:
-            if company.limit_days <= 0:
-                raise ValidationError(
-                    _("Limit days must be greater than zero"))
+        # Future me: Should validate over current company only?
+        company_ids = self.filtered(lambda r: r.limit_days <= 0)
+        if company_ids:
+            raise ValidationError(_("Limit days must be greater than zero"))
 
     @api.constrains("priority_maximum", "priority_maximum")
     def _check_priority_config(self):
-        for company in self:
-            priority_maximum = company.priority_maximum
-            priority_minimum = company.priority_minimum
-            if priority_minimum <= 0 or priority_maximum <= 0:
-                raise ValidationError(
-                    _("Priority maximum and priority_minimum must "
-                      "be greater than zero"))
-            if priority_maximum >= priority_minimum:
+        for company_id in self:
+            priority_max = company_id.priority_maximum
+            priority_min = company_id.priority_minimum
+            if priority_min <= 0 or priority_max <= 0:
+                raise ValidationError(_("Priority maximum and priority_minimum"
+                                        " must be greater than zero"))
+            if priority_max >= priority_min:
                 raise ValidationError(
                     _("Priority maximum must be less than priority_minimum"))
 
@@ -62,12 +61,3 @@ class ResCompany(models.Model):
         "- High: priority maximum range < invoice date "
         "<= priority minimun range.\n"
         "- Normal: priority minimun range < invoice date")
-
-    rma_warehouse_id = fields.Many2one(
-        "stock.warehouse",
-        string="RMA Warehouse",
-        help="The warehouse to use by default in the claims,"
-        " this field will be used for fill the warehouse field"
-        " in the claims if the warehouse of user is empty, i.e,"
-        " the locations of this warehouse will be used for"
-        " the pickings of the claim")

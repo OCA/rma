@@ -10,30 +10,35 @@
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
             <field name="date" eval="time.strftime('%Y-%m-01 10:45:36')"/>
             <field name="date_deadline" eval="time.strftime('%Y-%m-22')"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_2" model="crm.claim">
             <field name="date" eval="time.strftime('%Y-%m-01 10:45:36')"/>
             <field name="date_deadline" eval="time.strftime('%Y-%m-22')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_3" model="crm.claim">
             <field name="invoice_id" ref="crm_rma_invoice_003"/>
             <field name="date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_4" model="crm.claim">
             <field name="date" eval="time.strftime('%Y-%m-01 10:45:36')"/>
             <field name="date_deadline" eval="time.strftime('%Y-%m-22')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_5" model="crm.claim">
             <field name="date" eval="time.strftime('%Y-%m-01 10:45:36')"/>
             <field name="date_deadline" eval="time.strftime('%Y-%m-22')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_6" model="crm.claim">
@@ -41,6 +46,7 @@
             <field name="delivery_address_id" ref="base.res_partner_9"/>
             <field name="date" eval="(DateTime.today() - timedelta(days=22)).strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <record id="crm_claim.crm_claim_7" model="crm.claim">
@@ -48,6 +54,7 @@
             <field name="email_from">demo.portal@yourcompany.example.com</field>
             <field name="date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
+            <field name="claim_type" ref="crm_claim_type_customer"/>
         </record>
 
         <!-- date_deadline is compute field that depends of date,

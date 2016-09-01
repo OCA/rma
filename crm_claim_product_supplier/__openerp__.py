@@ -27,7 +27,7 @@
     'license': 'AGPL-3',
     'category': 'Generic Modules/CRM & SRM',
     'depends': [
-        'crm_rma_lot_mass_return',
+        'crm_claim_rma',
     ],
     'demo': [
         'demo/purchase_order.xml',

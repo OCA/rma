@@ -24,60 +24,29 @@
 ##############################################################################
 from openerp import _, api, exceptions, fields, models
 
-from openerp.exceptions import Warning as UserError
-from .invoice_no_date import InvoiceNoDate
-from .product_no_supplier import ProductNoSupplier
 from openerp.exceptions import ValidationError
+from ..exceptions import InvoiceNoDate, ProductNoSupplier
 import datetime
 
 
 class CrmClaim(models.Model):
-    _inherit = "crm.claim"
-
-    @api.model
-    def _get_claim_warehouse(self, user, company):
-        """ Get the warehouse to use for this claim.
-        If the user has warehouse. It's returns.
-        If the user has not warehouse. The warehouse of
-        company is returns.
-        If the company has not warehouse. The first
-        warehouse found that have the same company_id
-        of user is returns.
-        Else return a Warning message
-        """
-        wh_obj = self.env["stock.warehouse"]
-        company_id = self.env.user.company_id.id
-        warehouse_user = user.rma_warehouse_id
-        warehouse_company = company.rma_warehouse_id
-        warehouse = wh_obj.search(
-            [("company_id", "=", company_id)], limit=1)
-        wh = warehouse_user and warehouse_user or \
-            (warehouse_company and warehouse_company or warehouse)
-        if not wh:
-            raise UserError(
-                _("There is no warehouse for the current user's company."))
-        return wh
-
-    @api.onchange("user_id", "company_id")
-    def _onchange_default_warehouse(self):
-        """ The warehouse can be defined depending of
-        user_id or company_id, if the user_id or
-        company_id is change, then, the warehouse_id
-        should be recalculated based on the new values.
-        """
-        for crm_claim in self:
-            wh = crm_claim._get_claim_warehouse(
-                crm_claim.user_id, crm_claim.company_id)
-            crm_claim.warehouse_id = wh.id
+    # auto=True because the default.warehouse model were forcing auto=False
+    # then explicitly if you will add some fields at same time you are
+    # adding logic the inheritance to it should be in this way if not
+    # it will not create the fields in the database
+    _auto = True
+    _name = "crm.claim"
+    _inherit = ["crm.claim", "default.warehouse"]
 
     def _get_default_warehouse(self):
         """ Get a warehouse by default when a claim
         is created. The warehouse_id field is required.
         """
         user = self.env.user
-        company = user.company_id
-        wh = self._get_claim_warehouse(user, company)
-        return wh
+        sales_team = user.default_section_id
+        default_warehouse = sales_team.default_warehouse
+        return default_warehouse and default_warehouse or \
+            self.env.ref("stock.warehouse0")
 
     @api.multi
     def name_get(self):
@@ -91,18 +60,22 @@ class CrmClaim(models.Model):
                                  default=lambda self:
                                  self.env['res.company']._company_default_get(
                                      'crm.claim'))
-
     claim_line_ids = fields.One2many('claim.line', 'claim_id',
                                      string='Return lines')
     planned_revenue = fields.Float('Expected revenue')
     planned_cost = fields.Float('Expected cost')
     real_revenue = fields.Float()
     real_cost = fields.Float()
-    invoice_ids = fields.One2many('account.invoice', 'claim_id', 'Refunds',
+    invoice_ids = fields.One2many('account.invoice',
+                                  'claim_id',
+                                  'Refunds',
                                   copy=False)
-    picking_ids = fields.One2many('stock.picking', 'claim_id', 'RMA',
+    picking_ids = fields.One2many('stock.picking',
+                                  'claim_id',
+                                  'RMA',
                                   copy=False)
-    invoice_id = fields.Many2one('account.invoice', string='Invoice',
+    invoice_id = fields.Many2one('account.invoice',
+                                 string='Invoice',
                                  help='Related original Cusotmer invoice')
     pick = fields.Boolean('Pick the product in the store')
     delivery_address_id = fields.Many2one('res.partner',
@@ -112,20 +85,65 @@ class CrmClaim(models.Model):
                                           "products.")
     sequence = fields.Integer(default=lambda *args: 1)
     warehouse_id = fields.Many2one("stock.warehouse",
+                                   default=_get_default_warehouse,
                                    string="Warehouse",
-                                   required=True,
-                                   default=_get_default_warehouse)
-    rma_number = fields.Char(size=128, help='RMA Number provided by supplier')
+                                   required=True)
+    rma_number = fields.Char(size=128,
+                             help='RMA Number provided by supplier')
+    claim_type = fields.Many2one('crm.claim.type',
+                                 help="Claim classification")
+    code = fields.Char(string='Claim Number',
+                       default="/",
+                       readonly=True,
+                       copy=False)
+    _sql_constraints = [
+        ('crm_claim_unique_code', 'UNIQUE (code)',
+         'The code must be unique!'),
+    ]
+    stage_id = fields.Many2one('crm.claim.stage',
+                               'Stage',
+                               track_visibility='onchange',
+                               domain="[ '&','|',('section_ids', '=', "
+                               "section_id), ('case_default', '=', True), "
+                               "'|',('claim_type', '=', claim_type)"
+                               ",('claim_common', '=', True)]")
+    company_id = fields.Many2one(change_default=True,
+                                 default=lambda self:
+                                 self.env['res.company']._company_default_get(
+                                     'crm.claim'))
+    claim_line_ids = fields.One2many('claim.line', 'claim_id',
+                                     string='Return lines')
+    planned_revenue = fields.Float('Expected revenue')
+    real_revenue = fields.Float()
+    invoice_ids = fields.One2many('account.invoice',
+                                  'claim_id',
+                                  'Refunds',
+                                  copy=False)
+    picking_ids = fields.One2many('stock.picking',
+                                  'claim_id',
+                                  'RMA',
+                                  copy=False)
+    invoice_id = fields.Many2one('account.invoice',
+                                 string='Invoice',
+                                 help='Related original Cusotmer invoice')
+    pick = fields.Boolean('Pick the product in the store')
+    delivery_address_id = fields.Many2one('res.partner',
+                                          string='Partner delivery address',
+                                          help="This address will be used to "
+                                          "deliver repaired or replacement "
+                                          "products.")
+    sequence = fields.Integer(default=lambda *args: 1)
+    rma_number = fields.Char(size=128,
+                             help='RMA Number provided by supplier')
+    date = fields.Datetime(required=True,
+                           help="The creation date of claim.")
 
     @api.model
     def _get_limit_days(self):
         """ If the limit_days parameter is not set.
         Then, the limit_days must be one day.
         """
-        limit_days = self.env.user.company_id.limit_days
-        if not limit_days:
-            limit_days = 1
-        return limit_days
+        return self.env.user.company_id.limit_days or 1
 
     @api.depends("date")
     def _compute_deadline(self):
@@ -134,12 +152,11 @@ class CrmClaim(models.Model):
         can be edited manually by the rma manager
         """
         limit_days = self._get_limit_days()
-        for crm_claim in self:
-            if crm_claim.date:
-                deadline = fields.datetime.strptime(
-                    crm_claim.date, "%Y-%m-%d %H:%M:%S") + \
-                    datetime.timedelta(days=limit_days)
-                crm_claim.date_deadline = deadline
+        for claim_id in self.filtered(lambda r: r.date):
+            deadline = fields.datetime.strptime(
+                claim_id.date, "%Y-%m-%d %H:%M:%S") + \
+                datetime.timedelta(days=limit_days)
+            claim_id.date_deadline = deadline
 
     @api.multi
     def _inverse_deadline(self):
@@ -150,30 +167,37 @@ class CrmClaim(models.Model):
         the user should be rma manager to allow the change in the deadline.
         If the user is not rma manager, a validation message is shown
         """
-        for crm_claim in self:
-            limit_days = self._get_limit_days()
+        rma_manager_group_id = self.env.ref("crm_claim_rma.group_rma_manager")
+        for claim_id in self:
+            limit_days = claim_id._get_limit_days()
             # for calculating the difference of days
             # the deadline should be: deadline + hours of claim.
             # and the result of subtract (deadline - date) is entire
             # because the deadline is Date type
             # and date is Datetime type
-            date_deadline = crm_claim.date_deadline + ' ' + \
-                crm_claim.date.split()[1]
-
-            date = crm_claim.date
+            date_deadline = claim_id.date_deadline + ' ' + \
+                claim_id.date.split()[1]
 
             diff = fields.datetime.strptime(
                 date_deadline, "%Y-%m-%d %H:%M:%S") - \
-                fields.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+                fields.datetime.strptime(claim_id.date, "%Y-%m-%d %H:%M:%S")
 
-            if diff.days != limit_days:
-                group_rma_manager = self.env.ref(
-                    "crm_claim_rma.group_rma_manager")
-                if self.env.user not in group_rma_manager.users:
-                    raise ValidationError(
-                        _("In order to set a manual deadline date"
-                          " you must belong to the group RMA {group}".format(
-                              group=group_rma_manager.name)))
+            if diff.days == limit_days:
+                continue
+
+            if self.env.user not in rma_manager_group_id.users:
+                raise ValidationError(
+                    _("In order to set a manual deadline date "
+                      "you must belong to the group RMA {group}".format(
+                          group=rma_manager_group_id.name)))
+
+    date_deadline = fields.Date(compute="_compute_deadline",
+                                inverse="_inverse_deadline",
+                                store=True,
+                                help="The deadline for that the claim will "
+                                "be resolved. If the claim is not resolved "
+                                "before this date. Management must inform "
+                                "to the RMA team to accelerate the process.")
 
     @api.constrains("date", "date_deadline")
     def _check_claim_dates(self):
@@ -181,45 +205,19 @@ class CrmClaim(models.Model):
         manually by the rma manager, then, the deadline
         should be major than the date of claim
         """
-        for crm_claim in self:
-            if crm_claim.date and crm_claim.date_deadline:
-                date = fields.datetime.strptime(
-                    crm_claim.date, "%Y-%m-%d %H:%M:%S")
-                date_deadline = fields.datetime.strptime(
-                    crm_claim.date_deadline, "%Y-%m-%d")
-                if date_deadline < date:
-                    raise ValidationError(
-                        _("Creation date must be less than deadline"))
-
-    date = fields.Datetime(
-        required=True,
-        help="The creation date of claim.")
-
-    date_deadline = fields.Date(
-        compute="_compute_deadline",
-        inverse="_inverse_deadline",
-        store=True,
-        help="The deadline for that the claim will be resolved. If the "
-        "claim is not resolved before this date. Management must inform "
-        "to the RMA team to accelerate the process.")
-
-    @api.model
-    def _get_claim_type_default(self):
-        claim_type = self.env['crm.claim.type'].search([])
-        return claim_type[0] if claim_type else self.env['crm.claim.type']
-
-    claim_type = \
-        fields.Many2one(default=_get_claim_type_default,
-                        help="Claim classification",
-                        required=True)
+        for claim_id in self.filtered(lambda r: r.date and r.date_deadline):
+            date = fields.datetime.strptime(claim_id.date, "%Y-%m-%d %H:%M:%S")
+            date_deadline = fields.datetime.strptime(
+                claim_id.date_deadline, "%Y-%m-%d")
+            if date_deadline < date:
+                raise ValidationError(
+                    _("Creation date must be less than deadline"))
 
     @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
         claim_line = self.env['claim.line']
         invoice_lines = self.invoice_id.invoice_line
-        if not self.warehouse_id:
-            self.warehouse_id = self._onchange_default_warehouse()
         claim_type = self.claim_type
         claim_date = self.date
         warehouse = self.warehouse_id
@@ -229,7 +227,7 @@ class CrmClaim(models.Model):
         def warranty_values(invoice, product):
             values = {}
             try:
-                warranty = claim_line._warranty_limit_values(
+                warranty = claim_line._get_warranty_limit_values(
                     invoice, claim_type, product, claim_date)
             except (InvoiceNoDate, ProductNoSupplier):
                 # we don't mind at this point if the warranty can't be
@@ -299,7 +297,6 @@ class CrmClaim(models.Model):
         claim_type_code = self.env['crm.claim.type'].\
             browse(code_id).ir_sequence_id.code
         sequence = self.env['ir.sequence']
-
         return claim_type_code and sequence.get(claim_type_code) or '/'
 
     @api.model
@@ -308,7 +305,6 @@ class CrmClaim(models.Model):
         if 'code' not in values or not values.get('code') \
                 or values.get('code') == '/':
             values['code'] = self._get_sequence_number(values['claim_type'])
-
         return super(CrmClaim, self).create(values)
 
     @api.multi
@@ -318,3 +314,15 @@ class CrmClaim(models.Model):
         if 'code' not in default or default['code'] == '/':
             default['code'] = self._get_sequence_number(self.claim_type.id)
         return super(CrmClaim, self).copy(default)
+
+    @api.multi
+    def render_metasearch_view(self):
+        context = self.env.context.copy()
+        context.update({
+            'active_model': self._name,
+            'active_ids': self.ids,
+            'active_id': self.id or False,
+        })
+        wizard_id = self.env['returned.lines.from.serial.wizard'].\
+            with_context(context).create({})
+        return wizard_id.render_metasearch_view()

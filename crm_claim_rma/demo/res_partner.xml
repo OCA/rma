@@ -24,5 +24,22 @@
             <field name="country_id" ref="base.be"/>
         </record>
 
+        <record id="readonly_partner_rma" model="res.partner">
+            <field name="name">RMA Readonly</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">vendor@yourcompany.example.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 2</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+
+        <record id="res_partner_demo_rma_1" model="res.partner">
+            <field name="name"> Richard Brooks</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="True"/>
+            <field name="credit_limit">10000000</field>
+        </record>
     </data>
 </openerp>

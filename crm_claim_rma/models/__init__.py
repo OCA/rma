@@ -22,14 +22,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+from . import crm_claim_stage
+from . import crm_claim_type
 from . import account_invoice
 from . import account_invoice_line
 from . import claim_line
-from . import res_users
 from . import res_company
 from . import crm_claim
-from . import invoice_no_date
-from . import product_no_supplier
 from . import stock_move
 from . import stock_picking
 from . import substate_substate
+from . import product_product
+from . import product_template
+from . import stock_warehouse

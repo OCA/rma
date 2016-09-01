@@ -19,54 +19,50 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from .common import ClaimTestsCommon
 
 
-class TestCopyMethod(common.TransactionCase):
+class TestCopyMethod(ClaimTestsCommon):
 
     def setUp(self):
         super(TestCopyMethod, self).setUp()
         self.warehouse = self.env['stock.warehouse']
 
-    def test_copy_method(self):
+    def test_01_claim_line_copy(self):
+        """ Copy a claim line and validate fields values
+            move_in_id -> False
+            move_out_id -> False
+            refund_line_id -> False
+        """
+        line_ids = self.env.ref('crm_claim.crm_claim_6').claim_line_ids
+        line_id = line_ids[1]
+        line_copied_id = line_id.copy()
 
-        partner = self.env.ref("base.res_partner_2")
-        partner_address = self.env.ref("base.res_partner_12")
-        claim_type_customer = self.env.ref(
-            "crm_claim_type.crm_claim_type_customer")
-        sale_order_agrolait_demo = self.env.ref("sale.sale_order_1")
-        invoice_agrolait = sale_order_agrolait_demo.invoice_ids[0]
-        invoice_agrolait.signal_workflow("invoice_open")
+        # If you need more fields to be expected as false, insert them below
+        fields = ['move_in_id',
+                  'move_out_id',
+                  'refund_line_id']
+        fields_without_value = [getattr(line_copied_id, fd) for fd in fields]
+        self.assertFalse(
+            any(fields_without_value),
+            'One or more fields in %s has value not expected' % str(fields))
 
-        # Create the claim with a claim line
-        claim_obj = self.env["crm.claim"]
-        # Test code in customer claim
-        claim_id = claim_obj.create(
-            {
-                "name": "TEST CLAIM",
-                "code": "/",
-                "claim_type": claim_type_customer.id,
-                "delivery_address_id": partner_address.id,
-                "partner_id": partner.id,
-                "invoice_id": invoice_agrolait.id,
-                "user_id": self.env.user.id
-            })
+    def test_02_claim_document_copy(self):
+        sale_id = self.create_sale_order(self.rma_customer_id)
+        sale_id.signal_workflow('manual_invoice')
+        invoice_id = sale_id.invoice_ids[0]
+        invoice_id.signal_workflow("invoice_open")
+
+        # Create the customer claim
+        claim_id = self.create_claim(self.customer_type, self.rma_customer_id,
+                                     address_id=self.rma_customer_id,
+                                     invoice_id=invoice_id)
         customer_copy = claim_id.copy()
         self.assertTrue("RMA-C" in customer_copy.code)
 
-        # Test code in supplier claim
-        claim_type_supplier = self.env.ref(
-            "crm_claim_type.crm_claim_type_supplier")
-
-        claim_id = claim_obj.create(
-            {
-                "name": "TEST CLAIM",
-                "code": "/",
-                "claim_type": claim_type_supplier.id,
-                "delivery_address_id": partner_address.id,
-                "partner_id": partner.id,
-                "invoice_id": invoice_agrolait.id,
-                "user_id": self.env.user.id
-            })
+        # Create the supplier claim
+        claim_id = self.create_claim(self.supplier_type, self.rma_customer_id,
+                                     address_id=self.rma_customer_id,
+                                     invoice_id=invoice_id)
         supplier_copy = claim_id.copy()
         self.assertTrue("RMA-V" in supplier_copy.code)

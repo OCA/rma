@@ -35,15 +35,13 @@ class StockWarehouse(models.Model):
                                       'RMA Internal Type')
 
     def compute_next_color(self):
-        """
-        Choose the next available color for
+        """ Choose the next available color for
         the picking types of this warehouse
         """
         available_colors = [c % 9 for c in range(3, 12)]
-        all_used_colors = self.env['stock.picking.type'].\
-            search_read([('warehouse_id', '!=', False),
-                         ('color', '!=', False)],
-                        ['color'], order='color')
+        all_used_colors = self.env['stock.picking.type'].search_read(
+            [('warehouse_id', '!=', False), ('color', '!=', False)],
+            ['color'], order='color')
         for col in all_used_colors:
             if col['color'] in available_colors:
                 available_colors.remove(col['color'])
@@ -52,7 +50,7 @@ class StockWarehouse(models.Model):
 
     def create_sequence(self, warehouse_id, name, prefix, padding):
         return self.env['ir.sequence'].sudo().\
-            create(values={
+            create({
                 'name': warehouse_id.name + name,
                 'prefix': warehouse_id.code + prefix,
                 'padding': padding,
@@ -61,8 +59,7 @@ class StockWarehouse(models.Model):
 
     @api.model
     def create_sequences_picking_types(self, warehouse):
-        """
-        Takes care of create picking types for internal,
+        """ Takes care of create picking types for internal,
         incoming and outgoing RMA
         """
         picking_type = self.env['stock.picking.type']
@@ -137,17 +134,15 @@ class StockWarehouse(models.Model):
                 'color': color})
 
         # write picking types on WH
-        vals = {
+        return {
             'rma_in_type_id': in_type_id.id,
             'rma_out_type_id': out_type_id.id,
             'rma_int_type_id': int_type_id.id,
         }
-        return vals
 
     @api.model
     def create_locations_rma(self, warehouse_id):
-        """
-        Create a RMA location for RMA movements that takes place when internal,
+        """ Create a RMA location for RMA movements that takes place when internal,
         outgoing or incoming pickings are made from/to this location
         """
         vals = {}
@@ -172,8 +167,7 @@ class StockWarehouse(models.Model):
 
     @api.model
     def create(self, vals):
-        """
-        Create Locations and picking types for warehouse
+        """ Create Locations and picking types for warehouse
         """
         warehouse_id = super(StockWarehouse, self).create(vals=vals)
         new_vals = self.create_locations_rma(warehouse_id)

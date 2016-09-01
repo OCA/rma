@@ -19,25 +19,35 @@
 #
 ##############################################################################
 
-from openerp import _, api, fields, models
+from openerp import api, fields, models
 
 
 class StockProductionLot(models.Model):
 
     _inherit = 'stock.production.lot'
 
+    supplier_id = fields.Many2one('res.partner', string='Supplier',
+                                  help="Supplier of good in claim")
+
+    supplier_invoice_line_id = \
+        fields.Many2one('account.invoice.line',
+                        string='Supplier Invoice Line',
+                        help="Supplier invoice with the "
+                             "purchase of goods sold to "
+                             "customer")
+
     invoice_line_id = fields.Many2one('account.invoice.line',
                                       string='Customer Invoice Line',
                                       help="Invoice Line Of "
                                       "Product to Customer Invoice")
 
-    lot_complete_name = fields.Char(compute="_get_lot_complete_name",
-                                    string="Complete Lot Name")
-
-    @api.depends('invoice_line_id', 'name')
-    def _get_lot_complete_name(self):
-        name = _("%s - Lot Number: %s - %s") % \
-            (self.invoice_line_id.invoice_id.number,
-             self.name or _('No lot number'),
-             self.invoice_line_id.name)
-        return name
+    @api.model
+    def _get_related_count(self, field_id, field_name='invoice_line_id'):
+        """ Get how many serial/lot number are related to a given field name,
+        by default it will search with invoice_line_ids
+        :field_id: it's the record itself to be searched by.
+        :field_name: field name to search the serial/lot is related with, as
+        default value is 'invoice_line_id' (is used most of the time)
+        """
+        return field_id and len(self.env['stock.production.lot'].search(
+            [(field_name, '=', field_id.id)])) or 0

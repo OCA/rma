@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!-- CLAIM VIEWS -->
         <record model="ir.ui.view" id="crm_case_claims_tree_view">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
             <field name="arch" type="xml">
-                <field name="stage_id" position="after">
+                <xpath expr="//field[@name='stage_id']" position="after">
                     <field name="section_id"/>
-                </field>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="code" />
+                </xpath>
             </field>
         </record>
-        <!-- Crm claim Search view -->
+
         <record id="view_crm_case_claims_filter" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">crm.claim</field>
@@ -21,11 +23,12 @@
                 <filter string="Stage" icon="terp-stage" domain="[]" context="{'group_by':'stage_id'}" position="before">
                     <filter string="Sales Team" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'section_id'}"/>
                 </filter>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="filter_domain">['|', ('name', 'ilike', self), ('code', 'ilike', self)]</attribute>
+                </xpath>
             </field>
         </record>
 
-
-    <!-- Right side link to orders -->
     <act_window
         id="act_crm_claim_rma_sale_orders"
         name="Quotations and Sales"
@@ -64,57 +67,29 @@
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="arch" type="xml">
-                <!-- Header/workflow Buttons -->
-                <xpath expr="//field[@name='stage_id']" position="before">
-                    <button name="%(action_claim_picking_in)d"
-                        string="New Products Return"
-                        class="oe_inline"
-                        groups="crm_claim_rma.group_rma_user"
-                        type="action" target="new"
-                        context="{'warehouse_id': warehouse_id,
-                            'partner_id': partner_id}"/>
-
-                    <button name="%(action_claim_picking_out)d"
-                        class="oe_inline"
-                        string="New Delivery"
-                        groups="crm_claim_rma.group_rma_user"
-                        type="action" target="new"
-                        context="{'warehouse_id': warehouse_id,
-                            'partner_id': partner_id}"/>
-
-                    <button name="%(account.action_account_invoice_refund)d"
-                        class="oe_inline"
-                        type='action'
-                        string='New Refund'
-                        groups="crm_claim_rma.group_rma_user"
-                        context="{
-                            'invoice_ids': [invoice_id],
-                            'claim_line_ids': claim_line_ids,
-                            'description': name,
-                            'claim_id': id,
-                            }"/>
-                </xpath>
                 <xpath expr="//sheet/group[2]" position="replace">
                     <group colspan="4" col="4"  groups="base.group_user">
                         <field name="warehouse_id" />
+                        <field name="claim_type" required="1"
+                            options="{'no_create': True}"
+                            context="{'create_lines': False}"/>
                         <field name="date"/>
                         <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_sale_salesman_all_leads']}"/>
                         <field name="priority" widget="priority"/>
                         <field name="date_deadline" required="1"/>
+                        <field name="rma_number"/>
                         <field name="section_id" groups="base.group_multi_salesteams"/>
                     </group>
                 </xpath>
-                <xpath expr="//field[@name='partner_id']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='partner_phone']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='email_from']" position="attributes">
-                    <attribute name="required">1</attribute>
-                </xpath>
-                <!-- Smart buttons -->
-                <xpath expr="//sheet[@string='Claims']/group[1]" position="after">
+                <xpath expr="//sheet[@string='Claims']/group[1]" position="replace">
+                    <div class="oe_title oe_left">
+                        <h1><field name="code"/></h1>
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1><small><field name="name"/></small></h1>
+                    </div>
+
                     <div class="oe_right oe_button_box" name="buttons">
                           <button class="oe_inline oe_stat_button"
                             name="%(act_crm_claim_rma_sale_orders)d" type="action"
@@ -148,7 +123,7 @@
                             string="Refunds"
                             icon="fa-file-text"
                             attrs="{'invisible': ['|',('partner_id','=', False),
-                            ('claim_type','in', ['customer','other'])]}"
+                            ('claim_type','in', [%(crm_claim_rma.crm_claim_type_customer)d, %(crm_claim_rma.crm_claim_type_other)d])]}"
                             context="{'search_default_partner_id': [partner_id],
                             'group_by':'type',
                             'search_default_user_id':False}" />
@@ -158,22 +133,12 @@
                             type="action"
                             string="Returns"
                             attrs="{'invisible': ['|',('partner_id','=', False),
-                            ('claim_type','in', ['supplier','other'])]}"
+                            ('claim_type','in', [%(crm_claim_rma.crm_claim_type_supplier)d, %(crm_claim_rma.crm_claim_type_other)d])]}"
                             context="{'search_default_claim_id': active_id,
                             'search_default_user_id':False}"/>
                         </div>
                 </xpath>
-                <xpath expr="//sheet[@string='Claims']/group[1]" position="replace">
-                    <div class="oe_title oe_left">
-                        <h1><field name="code"/></h1>
-                        <div class="oe_edit_only">
-                            <label for="name"/>
-                        </div>
-                        <h1><small><field name="name"/></small></h1>
-                    </div>
-                </xpath>
-                <xpath expr="//page[@string='Claim Description']//group[1]"
-                    position="inside">
+                <xpath expr="//page[@string='Claim Description']//group[1]" position="inside">
                     <field name="pick" string="Pick the product in the store"/>
                     <field name="delivery_address_id"
                         string="Partner delivery address"
@@ -184,13 +149,12 @@
                             'search_default_parent_id': partner_id}"/>
                     <field name="invoice_id" domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]" context="{'create_lines': True}"/>
                 </xpath>
-                <xpath expr="//page[@string='Claim Description']//group[1]"
-                    position="after">
+                <xpath expr="//page[@string='Claim Description']//group[1]" position="after">
                     <div name="serial">
-                        <!-- Place for mass return button from crm_rma_lot_mass_return -->
+                        <!-- Place for mass return button from crm_claim_rma -->
                     </div>
                     <separator colspan="2" string="Product Returns"/>
-                    <field name="claim_line_ids">
+                    <field name="claim_line_ids" nolabel="1">
                         <tree string="Returned lines" create="false">
                             <field name="claim_id" invisible="1"/>
                             <field name="state"/>
@@ -209,10 +173,52 @@
                         </tree>
                     </field>
                 </xpath>
-                <!-- Remove domain and widget attributes -->
-                <field name="categ_id" widget="selection" position="replace">
-                    <field name="categ_id"/>
-                </field>
+                <!-- Header/workflow Buttons -->
+                <xpath expr="//field[@name='stage_id']" position="before">
+                    <button name="%(action_claim_picking_in)d"
+                        string="New Products Return"
+                        class="oe_inline"
+                        groups="crm_claim_rma.group_rma_user"
+                        type="action" target="new"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                    <button name="%(action_claim_picking_out)d"
+                        class="oe_inline"
+                        string="New Delivery"
+                        groups="crm_claim_rma.group_rma_user"
+                        type="action" target="new"
+                        context="{'warehouse_id': warehouse_id,
+                            'partner_id': partner_id}"/>
+
+                    <button name="%(action_claim_picking_loss)d"
+                                    string="New Product Loss"
+                                    groups="crm_claim_rma.group_rma_user"
+                                    type="action" target="new"
+                                    context="{'warehouse_id': warehouse_id,
+                                        'partner_id': partner_id}"/>
+
+                    <button name="%(account.action_account_invoice_refund)d"
+                        class="oe_inline"
+                        type='action'
+                        string='New Refund'
+                        groups="crm_claim_rma.group_rma_user"
+                        context="{
+                            'invoice_ids': [invoice_id],
+                            'claim_line_ids': claim_line_ids,
+                            'description': name,
+                            'claim_id': id,
+                            }"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_phone']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
                 <!-- New tabs for products return and generated documents -->
                 <page string="Follow Up" position="before">
                     <page string="Generated Documents">
@@ -244,20 +250,6 @@
             action="act_crm_claim_substates"
             sequence="2"/>
 
-        <!-- Update account invoice !-->
-        <record id="crm_claim_rma_form" model="ir.ui.view">
-            <field name="name">CRM Claim RMA</field>
-            <field name="model">crm.claim</field>
-            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
-            <field name="arch" type="xml">
-                <data>
-                    <xpath expr="//field[@name='date_deadline']" position="after">
-                        <field name="rma_number"/>
-                    </xpath>
-                </data>
-            </field>
-        </record>
-
         <record id="search_crm_claim_rma_number" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
             <field name="model">crm.claim</field>
@@ -276,16 +268,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="rma_number"/>
-                </xpath>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="crm_case_claims_form_view">
-            <field name="name">CRM - Claims Form</field>
-            <field name="model">crm.claim</field>
-            <field name="inherit_id" ref="crm_claim_type.crm_case_claims_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='claim_type']" position="attributes">
-                    <attribute name="context">{'create_lines': False}</attribute>
                 </xpath>
             </field>
         </record>
