@@ -69,9 +69,18 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
         wizard_id._set_message()
         wizard_id.add_claim_lines()
-
         # 2 Macs
         self.assertEqual(len(self.claim_id.claim_line_ids), 2)
+
+        line_ids = self.claim_id.claim_line_ids
+        self.assertEqual(
+            set(line_ids.name_get()),
+            set([(
+                line_ids[0].id, "%s - %s" %
+                (self.claim_id.code, line_ids[0].product_id.name)),
+                (line_ids[1].id, "%s - %s" %
+                 (self.claim_id.code, line_ids[1].product_id.name))
+            ]))
 
     def test_02_load_products(self):
         self.transfer_po_01.do_detailed_transfer()
@@ -206,6 +215,13 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.assertEqual(len(lines_list_id), 1)
         wizard_id.add_claim_lines()
         self.assertEqual(len(self.claim_id.claim_line_ids), 1)
+        line_ids = self.claim_id.claim_line_ids
+        self.assertEqual(
+            set(line_ids.name_get()),
+            set([(
+                line_ids[0].id, "%s - %s" %
+                (self.claim_id.code, line_ids[0].product_id.name)),
+            ]))
 
     def test_05_help_buttons(self):
         """ A help button is shown in wizard to let the user meets how the
