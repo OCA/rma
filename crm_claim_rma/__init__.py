@@ -27,6 +27,7 @@
 from openerp import SUPERUSER_ID
 from . import models
 from . import wizards
+from . import exceptions
 
 
 def create_code_equal_to_id(cr):

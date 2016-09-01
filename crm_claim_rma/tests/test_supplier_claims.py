@@ -68,7 +68,7 @@ class TestSupplierClaims(TransactionCase):
                 lambda r: r.name == wizard_id.partner_id)
             psi_id.write({'warranty_duration': 0})
         wizard_id._set_message()
-        error_msg = 'The product has no supplier configured.'
+        error_msg = 'Supplier warranty period for one or more.*'
         with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.add_claim_lines()
 

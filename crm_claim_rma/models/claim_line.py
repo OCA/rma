@@ -32,8 +32,8 @@ from openerp import _, api, exceptions, fields, models
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
                            DEFAULT_SERVER_DATETIME_FORMAT)
 
-from .invoice_no_date import InvoiceNoDate
-from .product_no_supplier import ProductNoSupplier
+from ..exceptions import (InvoiceNoDate, ProductNoSupplier,
+                          ProductWithoutSupplierWarranty)
 
 
 class ClaimLine(models.Model):
@@ -300,9 +300,11 @@ class ClaimLine(models.Model):
         if claim_type == supplier_type:
             seller_id = product.seller_ids.filtered(
                 lambda r: r.name == invoice.partner_id)
+            if not seller_id:
+                raise ProductNoSupplier
             warranty_duration = seller_id.warranty_duration
             if not warranty_duration:
-                raise ProductNoSupplier
+                raise ProductWithoutSupplierWarranty
         else:
             # If the claim is not supplier type, then, take the basic warranty
             # configured in the product

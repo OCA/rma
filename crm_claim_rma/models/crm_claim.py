@@ -25,8 +25,7 @@
 from openerp import _, api, exceptions, fields, models
 
 from openerp.exceptions import ValidationError
-from .invoice_no_date import InvoiceNoDate
-from .product_no_supplier import ProductNoSupplier
+from ..exceptions import InvoiceNoDate, ProductNoSupplier
 import datetime
 
 
