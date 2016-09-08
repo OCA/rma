@@ -85,7 +85,21 @@ class CrmClaim(models.Model):
                         help="Claim classification",
                         required=True)
 
-    @api.onchange('invoice_id', 'warehouse_id', 'claim_type', 'date')
+    @api.onchange('invoice_id')
+    def _onchange_invoice(self):
+        # Since no parameters or context can be passed from the view,
+        # this method exists only to call the onchange below with
+        # a specific context (to recreate claim lines).
+        # This does require to re-assign self.invoice_id in the new object
+        claim_with_ctx = self.with_context(
+            create_lines=True
+        )
+        claim_with_ctx.invoice_id = self.invoice_id
+        claim_with_ctx._onchange_invoice_warehouse_type_date()
+        values = claim_with_ctx._convert_to_write(claim_with_ctx._cache)
+        self.update(values)
+
+    @api.onchange('warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
         claim_line = self.env['claim.line']

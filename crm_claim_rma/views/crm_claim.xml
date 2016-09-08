@@ -278,14 +278,4 @@
             </xpath>
         </field>
     </record>
-    <record model="ir.ui.view" id="crm_case_claims_form_view">
-        <field name="name">CRM - Claims Form</field>
-        <field name="model">crm.claim</field>
-        <field name="inherit_id" ref="crm_claim_type.crm_case_claims_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='claim_type']" position="attributes">
-                <attribute name="context">{'create_lines': False}</attribute>
-            </xpath>
-        </field>
-    </record>
 </odoo>
