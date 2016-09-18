@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-24 16:07+0000\n"
-"PO-Revision-Date: 2015-11-19 22:20+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-08-15 22:09+0000\n"
+"PO-Revision-Date: 2016-09-16 21:46+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,21 +57,32 @@ msgid "Claim"
 msgstr "Réclamation"
 
 #. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,name:0
+msgid "Complete Lot Name"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_uid:0
 #: field:returned.lines.from.serial.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_date:0
 #: field:returned.lines.from.serial.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Date"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "Damaged Delivered Product"
 msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,display_name:0
+#: field:returned.lines.from.serial.wizard,display_name:0
+msgid "Display Name"
+msgstr "Nom à afficher"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -118,7 +129,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -137,16 +148,22 @@ msgid "Invoice Lines to Select"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,__last_update:0
+#: field:returned.lines.from.serial.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_uid:0
 #: field:returned.lines.from.serial.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_date:0
 #: field:returned.lines.from.serial.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -162,6 +179,11 @@ msgstr "Perte pendant le transport"
 #: field:claim.line.wizard,lot_id:0
 msgid "Lot"
 msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,message:0
+msgid "Message"
+msgstr "Message"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -188,7 +210,7 @@ msgstr "Autre"
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "Partenaire"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
