@@ -62,4 +62,6 @@ access_rma_account_move_line_user,account.move.line user,account.model_account_m
 access_rma_sale_order_user,sale.order user,sale.model_sale_order,group_rma_user,1,0,0,0
 access_rma_sale_order_line_user,sale.order.line user,sale.model_sale_order_line,group_rma_user,1,0,0,0
 access_rma_account_move_user,account.move user,account.model_account_move,group_rma_user,1,0,0,0
+access_rma_stock_pack_operation_user_rma,stock.pack.operation user,stock.model_stock_pack_operation,group_rma_user,1,1,1,1
+access_rma_stock_move_operation_link_user_rma,stock.move.operation.link user,stock.model_stock_move_operation_link,group_rma_user,1,1,1,0
 access_crm_claim_rma_manager,crm.claim.rma manager,model_crm_claim,group_rma_manager,1,1,1,1
