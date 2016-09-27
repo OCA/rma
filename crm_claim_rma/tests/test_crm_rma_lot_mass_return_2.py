@@ -28,9 +28,6 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
     """ Test cases for CRM RMA Lot Mass Return Module
     """
 
-    def setUp(self):
-        super(TestCrmRmaLotMassReturn2, self).setUp()
-
     def test_01_load_products(self):
         self.transfer_po_01.do_detailed_transfer()
         self.transfer_so_01.do_detailed_transfer()
@@ -67,7 +64,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id), int(qty))
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         wizard_id.add_claim_lines()
         # 2 Macs
         self.assertEqual(len(self.claim_id.claim_line_ids), 2)
@@ -183,7 +180,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         wizard_id.lines_list_id = [(6, 0, line_ids.ids)]
         self.assertEqual(len(lines_list_id), 1)
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         wizard_id.add_claim_lines()
         self.assertEqual(len(self.claim_id.claim_line_ids), 1)
 

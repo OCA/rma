@@ -140,9 +140,9 @@ class TestUserInput(ClaimTestsCommon):
             user_input = self.wizard.get_data_of_products(user_input)
             self.assertEqual(
                 len(user_input), case['lines_no'],
-                "Case # {} is expecting {} lines when the following user input"
-                " gets parsed:\n{}".format(case['case'], case['lines_no'],
-                                           case['content']))
+                "Case # %s is expecting %s lines when the following user input"
+                " gets parsed:\n%s" % (case['case'], case['lines_no'],
+                                       case['content']))
             for item in case['asserts']:
                 self.assertEqual(
                     user_input[item['line']-1], safe_eval(item['value']))

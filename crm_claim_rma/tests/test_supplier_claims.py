@@ -67,7 +67,7 @@ class TestSupplierClaims(TransactionCase):
             psi_id = product_id.seller_ids.filtered(
                 lambda r: r.name == wizard_id.partner_id)
             psi_id.write({'warranty_duration': 0})
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         error_msg = 'Supplier warranty period for one or more.*'
         with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.add_claim_lines()
@@ -79,6 +79,6 @@ class TestSupplierClaims(TransactionCase):
         # exception to be raised
         for product_id in product_with_seller_ids:
             product_id.seller_ids.unlink()
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         with self.assertRaisesRegexp(UserError, error_msg):
             wizard_id.add_claim_lines()

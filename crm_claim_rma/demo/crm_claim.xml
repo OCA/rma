@@ -25,6 +25,7 @@
             <field name="date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
             <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="date_deadline" eval="(DateTime.today() + timedelta(days=21)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="crm_claim.crm_claim_4" model="crm.claim">
@@ -47,6 +48,7 @@
             <field name="date" eval="(DateTime.today() - timedelta(days=22)).strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
             <field name="claim_type" ref="crm_claim_type_customer"/>
+            <field name="date_deadline" eval="(DateTime.today() - timedelta(days=4)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="crm_claim.crm_claim_7" model="crm.claim">
@@ -55,24 +57,7 @@
             <field name="date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="user_id" ref="crm_claim_rma.vendor_user_rma"/>
             <field name="claim_type" ref="crm_claim_type_customer"/>
-        </record>
-
-        <!-- date_deadline is compute field that depends of date,
-            then, date_deadline field is assigned after of assigned
-            date field above and to keep the value assigned below.
-            -->
-
-        <record id="crm_claim.crm_claim_3" model="crm.claim">
             <field name="date_deadline" eval="(DateTime.today() + timedelta(days=21)).strftime('%Y-%m-%d')"/>
         </record>
-
-        <record id="crm_claim.crm_claim_7" model="crm.claim">
-            <field name="date_deadline" eval="(DateTime.today() + timedelta(days=21)).strftime('%Y-%m-%d')"/>
-        </record>
-
-        <record id="crm_claim.crm_claim_6" model="crm.claim">
-            <field name="date_deadline" eval="(DateTime.today() - timedelta(days=4)).strftime('%Y-%m-%d')"/>
-        </record>
-
     </data>
 </openerp>

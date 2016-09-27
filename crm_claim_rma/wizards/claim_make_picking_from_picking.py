@@ -21,10 +21,10 @@
 #
 ##############################################################################
 
+import time
 from openerp import api, fields, models
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import workflow
-import time
 
 
 class ClaimMakePickingFromPicking(models.TransientModel):

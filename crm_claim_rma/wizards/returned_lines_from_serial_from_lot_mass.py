@@ -46,8 +46,8 @@ class ClaimLineWizard(models.TransientModel):
     def _check_product_id(self):
         for line_id in self:
             if line_id.product_id != line_id.invoice_line_id.product_id:
-                raise ValidationError("The product of the invoice %s is not "
-                                      "same that product %s" %
+                raise ValidationError(_("The product of the invoice %s is not "
+                                      "same that product %s") %
                                       (line_id.invoice_line_id.product_id.name,
                                        line_id.product_id.name))
 
@@ -517,9 +517,9 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
         if clw_ids:
             # Clean items in wizard model
-            ids = str([clw.id for clw in clw_ids])
-            self._cr.execute("DELETE FROM claim_line_wizard where id IN ({})".
-                             format(ids[1:-1]))
+            ids = tuple([clw.id for clw in clw_ids])
+            self.env.cr.execute("DELETE FROM claim_line_wizard "
+                                "WHERE id IN %s", (ids,))
 
         # normal execution
         self.action_cancel()
@@ -533,10 +533,10 @@ class ReturnedLinesFromSerial(models.TransientModel):
             }
         }
 
-    message = fields.Text(string='Message', compute='_set_message')
+    message = fields.Text(string='Message', compute='_compute_set_message')
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
-    def _set_message(self):
+    def _compute_set_message(self):
         """ Notify for missing (not added) claim lines that are in use in
         others claims
         """

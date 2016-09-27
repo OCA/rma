@@ -22,11 +22,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import datetime
 from openerp import _, api, exceptions, fields, models
-
 from openerp.exceptions import ValidationError
 from ..exceptions import InvoiceNoDate, ProductNoSupplier
-import datetime
 
 
 class CrmClaim(models.Model):
@@ -188,8 +187,8 @@ class CrmClaim(models.Model):
             if self.env.user not in rma_manager_group_id.users:
                 raise ValidationError(
                     _("In order to set a manual deadline date "
-                      "you must belong to the group RMA {group}".format(
-                          group=rma_manager_group_id.name)))
+                      "you must belong to the group RMA %s" %
+                      rma_manager_group_id.name))
 
     date_deadline = fields.Date(compute="_compute_deadline",
                                 inverse="_inverse_deadline",

@@ -140,8 +140,7 @@ class ClaimMakePicking(models.TransientModel):
         string='Claim lines', default=_default_claim_line_ids)
 
     def _get_picking_name(self):
-        return 'RMA picking {}'.format(
-            self.env.context.get('picking_type', 'in'))
+        return 'RMA picking %s' % self.env.context.get('picking_type', 'in')
 
     def _get_picking_note(self):
         return self._get_picking_name()

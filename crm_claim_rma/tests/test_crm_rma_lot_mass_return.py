@@ -66,7 +66,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         self.assertEqual(len(lines_list_id),
                          int(self.invoice_id.invoice_line.quantity))
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
 
         wizard_id.add_claim_lines()
 
@@ -121,7 +121,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         wizard_id.option_ids = lines_list_id
         wizard_id.lines_list_id = [(6, 0, lines_list_id)]
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         with self.assertRaisesRegexp(UserError, '.*'):
             wizard_id.add_claim_lines()
         self.assertEqual(len(claim_id.claim_line_ids), 1)

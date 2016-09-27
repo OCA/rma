@@ -11,7 +11,7 @@ openerp.crm_claim_rma = function(openerp) {
     openerp.web.form.BarcodeText = openerp.web.form.FieldText.extend({
         events: {
             'keypress': function(e) {
-                if (e.which == $.ui.keyCode.ENTER) {
+                if (e.which === $.ui.keyCode.ENTER) {
                     this.store_dom_value();
                     e.stopPropagation();
                 }
@@ -34,7 +34,7 @@ openerp.crm_claim_rma = function(openerp) {
 
         events: {
             'keypress': function(e) {
-                if (e.which == $.ui.keyCode.ENTER) {
+                if (e.which === $.ui.keyCode.ENTER) {
                     $('textarea[name="scan_data"]').focus();
                     this.store_dom_value();
                     e.stopPropagation();
@@ -53,8 +53,7 @@ openerp.crm_claim_rma = function(openerp) {
 
                     }
                     var search = p.target.parentElement.className.search('pack_search');
-                    if (p.target.name != 'scan_data' && search < 0 && p.keyCode === $.ui.keyCode.ENTER){
-                        console.log('Playing bip');
+                    if (p.target.name !== 'scan_data' && search < 0 && p.keyCode === $.ui.keyCode.ENTER){
                         self.play_bip();
                     }
                 });
@@ -73,15 +72,16 @@ openerp.crm_claim_rma = function(openerp) {
         on_processed_onchange: function(result){
             try {
                 var result2 = result;
-                if (!_.isEmpty(result2.warning) && this.model == 'returned.lines.from.serial.wizard') {
-                    console.log('Playing bip');
+                if (!_.isEmpty(result2.warning) && this.model === 'returned.lines.from.serial.wizard') {
                     this.play_bip();
                     new openerp.web.Dialog(this, {
                         size: 'medium',
                         title: result2.warning.title,
                         buttons: [{
                             text: _t("-->"),
-                            click: function() {}
+                            click: function() {
+                                return;
+                            }
                         }, {
                             text: _t("Ok"),
                             click: function() {
@@ -95,7 +95,6 @@ openerp.crm_claim_rma = function(openerp) {
                     this._super.apply(this, arguments);
                 }
             } catch (e) {
-                console.error(e);
                 openerp.webclient.crashmanager.show_message(e);
                 return $.Deferred().reject();
             }
