@@ -533,7 +533,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
             }
         }
 
-    message = fields.Text(string='Message', compute='_compute_set_message')
+    message = fields.Text(compute='_compute_set_message')
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
     def _compute_set_message(self):

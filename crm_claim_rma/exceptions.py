@@ -33,7 +33,7 @@ class ProductNoSupplier(UserError):
     """Raised when a warranty cannot be computed for a claim line
     because the product has no supplier.
     """
-    def __init__(self):  # pylint: disable=W0235
+    def __init__(self):
         super(ProductNoSupplier, self).__init__(
             _("The product has no supplier configured."))
 
@@ -42,6 +42,6 @@ class InvoiceNoDate(UserError):
     """Raised when a warranty cannot be computed for a claim line
     because the invoice has no date.
     """
-    def __init__(self):  # pylint: disable=W0235
+    def __init__(self):
         super(InvoiceNoDate, self).__init__(
             _("Cannot find any date for invoice. Must be validated."))
