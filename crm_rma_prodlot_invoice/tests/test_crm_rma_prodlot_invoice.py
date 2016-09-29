@@ -263,5 +263,5 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
         self.assertTrue(lot_id.invoice_line_id)
 
         # check if lot invoice line belongs to this sale order by its origin
-        self.assertEquals(sale_order_id.invoice_ids.invoice_line,
-                          lot_id.invoice_line_id)
+        self.assertTrue(lot_id.invoice_line_id in
+                        sale_order_id.invoice_ids.mapped('invoice_line'))
