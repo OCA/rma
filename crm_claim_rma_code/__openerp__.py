@@ -17,5 +17,5 @@
         'data/ir_sequence_type.xml',
         'views/crm_claim_type.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
