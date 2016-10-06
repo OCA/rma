@@ -38,7 +38,7 @@
         'demo/res_company.xml',
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
     'active': False,
     'images': ['images/product_warranty.png'],
 }
