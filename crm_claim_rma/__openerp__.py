@@ -39,6 +39,6 @@
     'test': [
         'test/test_invoice_refund.yml'
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
