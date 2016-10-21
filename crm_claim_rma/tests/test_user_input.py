@@ -25,7 +25,7 @@ from .common import ClaimTestsCommon
 
 class TestUserInput(ClaimTestsCommon):
 
-    """ This test file challenges wizard behavior when filtering invoices and
+    """This test file challenges wizard behavior when filtering invoices and
     serial lot numbers introduced by the user
     """
 

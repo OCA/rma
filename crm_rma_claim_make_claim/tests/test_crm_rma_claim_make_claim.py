@@ -44,8 +44,7 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
         self.sale_order_line_ids = self.sale_order_id.order_line
 
     def create_customer_claim(self):
-        """
-        Create a customer claim with or without claim lines based
+        """Create a customer claim with or without claim lines based
         on include_lines parameter
         """
 

@@ -72,7 +72,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def _get_default_partner_id(self):
-        """ Obtain partner from the claim
+        """Obtain partner from the claim
         """
         claim_id = self.env.context.get('active_id')
         partner_id = self.env['crm.claim'].browse(claim_id).partner_id
@@ -118,7 +118,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def prodlot_2_invoice_line(self, lot_id):
-        """ Return the last line of customer invoice
+        """Return the last line of customer invoice
         based in serial/lot number
         """
         current_type, customer_type, supplier_type = self._get_claim_type()
@@ -157,7 +157,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def get_metasearch_view_brw(self):
-        """ @return: view with metasearch field
+        """@return: view with metasearch field
         """
         view_id = self.env.\
             ref('crm_claim_rma.view_enter_product')
@@ -165,7 +165,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def render_metasearch_view(self):
-        """ Render wizard view with metasearch field
+        """Render wizard view with metasearch field
         """
         view = self.get_metasearch_view_brw()
         if view:
@@ -183,7 +183,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @staticmethod
     def get_data_of_products(input_data):
-        """ It parses all invoices and serial lot numbers added by the user,
+        """It parses all invoices and serial lot numbers added by the user,
         this is received as a long string. The data is split based on
         break lines in the first place to be able to parse each line
         separately. After that, splitting is made using a '*' char to know if a
@@ -269,7 +269,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
         return line_set_ids
 
     def _get_lots_from_scan_data(self, input_data):
-        """ Given a raw input data from the wizard, this method will find
+        """Given a raw input data from the wizard, this method will find
         all invoices and serial/lot records related
 
         :input_data: input entered by the user right in the wizard
@@ -340,7 +340,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def _search_lot_by_name_based_on_type(self, lot_number):
-        """ Search a product serial/lot number on its name and returns
+        """Search a product serial/lot number on its name and returns
         the invoice line based on claim type
         :lot_number: serial/lot number assigned when it was created
         :returns: record for serial/lot number and related invoice line record
@@ -373,7 +373,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def onchange_load_products(self, input_data, lines_list_id):
-        """ Load claim lines from partner invoices or related production lots
+        """Load claim lines from partner invoices or related production lots
         into the current claim massively
         """
         lot_lots_ids = []
@@ -442,7 +442,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.model
     def _get_invalid_lots_set(self, claim_line_wizard_ids, add=False):
-        """ Return only those lots are related to claim lines
+        """Return only those lots are related to claim lines
         """
         clw = self.env['claim.line.wizard']
         claim_line = self.env['claim.line']
@@ -537,7 +537,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
     def _compute_set_message(self):
-        """ Notify for missing (not added) claim lines that are in use in
+        """Notify for missing (not added) claim lines that are in use in
         others claims
         """
         for wizard in self:
@@ -572,7 +572,7 @@ class ReturnedLinesFromSerial(models.TransientModel):
 
     @api.multi
     def button_show_help(self):
-        """ It shows help
+        """It shows help
         """
         view_id = self.env.ref('crm_claim_rma.help_message_form')
         return {

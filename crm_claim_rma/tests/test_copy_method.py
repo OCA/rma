@@ -29,7 +29,7 @@ class TestCopyMethod(ClaimTestsCommon):
         self.warehouse = self.env['stock.warehouse']
 
     def test_01_claim_line_copy(self):
-        """ Copy a claim line and validate fields values
+        """Copy a claim line and validate fields values
             move_in_id -> False
             move_out_id -> False
             refund_line_id -> False

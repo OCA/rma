@@ -24,7 +24,7 @@ from openerp.tests.common import TransactionCase
 
 class ClaimTestsCommon(TransactionCase):
 
-    """ Common data in use for unit testing
+    """Common data in use for unit testing
     """
 
     def setUp(self):

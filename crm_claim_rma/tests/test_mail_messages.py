@@ -38,14 +38,14 @@ class TestMailMessages(TransactionCase):
         self.assertEqual(reason, reason_str)
 
     def test_01_suggested_recipients(self):
-        """ Validate suggested recipients to reply on
+        """Validate suggested recipients to reply on
         """
         recipients = self.claim_id.message_get_suggested_recipients()
         self.validate_suggested_recipients(recipients, self.claim_id,
                                            'Customer')
 
     def test_02_suggested_recipients_without_partner(self):
-        """ Validate suggested mail recipients based on claim but not having
+        """Validate suggested mail recipients based on claim but not having
         the partner set (Partner isn't required in model, but View does)
         """
         self.claim_id.write({'partner_id': False})

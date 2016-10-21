@@ -25,7 +25,7 @@ from .common import ClaimTestsCommon
 
 class TestCrmRmaLotMassReturn(ClaimTestsCommon):
 
-    """ Test cases for CRM RMA Lot Mass Return Module
+    """Test cases for CRM RMA Lot Mass Return Module
     """
 
     def setUp(self):
@@ -77,7 +77,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         self.assertEqual(len(self.claim_id.claim_line_ids), int(qty))
 
     def test_03_supplier_claim_product_addition(self):
-        """ Add a product to supplier claim based on a lot name related to an
+        """Add a product to supplier claim based on a lot name related to an
         invoice line id
         """
         lot_name = 'iMac-A1090'
@@ -127,7 +127,7 @@ class TestCrmRmaLotMassReturn(ClaimTestsCommon):
         self.assertEqual(len(claim_id.claim_line_ids), 1)
 
     def test_04_error_messages(self):
-        """ Test error messages when user input doesn't match with any record
+        """Test error messages when user input doesn't match with any record
         """
         sale_id = self.env.ref('crm_claim_rma.po_wizard_rma_1')
         invoice_id = sale_id.invoice_ids

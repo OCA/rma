@@ -40,7 +40,7 @@ class ClaimLine(models.Model):
 
     @api.model
     def _search_invoice_to_get_information(self, product):
-        """ When the product has not serial/lot number,
+        """When the product has not serial/lot number,
         the system has not way to determine the supplier
         and supplier invoice of product.
 

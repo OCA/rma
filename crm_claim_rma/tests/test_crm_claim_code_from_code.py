@@ -12,14 +12,14 @@ class TestCrmClaimCode(ClaimTestsCommon):
         self.ir_sequence_model = self.env['ir.sequence']
 
     def test_old_claim_code_assign(self):
-        """ Make sure that a code have been taken
+        """Make sure that a code have been taken
         """
         claim_ids = self.env['crm.claim'].search([])
         for claim_id in claim_ids:
             self.assertNotEqual(claim_id.code, '/')
 
     def test_new_claim_code_assign(self):
-        """ Test the assigned code is the following next based on sequence
+        """Test the assigned code is the following next based on sequence
         """
         code = self._get_next_code(self.customer_type.ir_sequence_id)
         claim_id = self.env['crm.claim'].create({

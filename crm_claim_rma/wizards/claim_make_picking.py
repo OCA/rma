@@ -33,7 +33,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('stock.location')
     def _get_common_dest_location_from_line(self, lines):
-        """ If all the lines have the same destination location return that,
+        """If all the lines have the same destination location return that,
         else return an empty recordset
         """
         location = self.env['stock.location']
@@ -42,7 +42,7 @@ class ClaimMakePicking(models.TransientModel):
 
     @api.returns('res.partner')
     def _get_common_partner_from_line(self, lines):
-        """ If all the lines have the same warranty return partner return that,
+        """If all the lines have the same warranty return partner return that,
         else return an empty recordset
         """
         partner = self.env['res.partner']

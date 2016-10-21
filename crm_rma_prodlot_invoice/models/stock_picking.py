@@ -36,7 +36,7 @@ class StockPicking(models.Model):
     @api.multi
     def _search_serial_number_to_change_from_picking(self, invoice_ids,
                                                      invoice_type):
-        """ A picking was generated from purchase order, because,
+        """A picking was generated from purchase order, because,
         the invoicing mode is that the invoice will be created
         in the picking.
 
@@ -82,7 +82,7 @@ class StockPicking(models.Model):
 
     @api.multi
     def _get_field_to_change_in_serial_record(self, invoice_type):
-        """ The serial/lot number can has one or two fields related
+        """The serial/lot number can has one or two fields related
         to account.invoice.line, in this module 'out_invoice' is
         managed and 'in_invoice' (by the inherit).
 

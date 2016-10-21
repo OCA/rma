@@ -25,7 +25,7 @@ from .common import ClaimTestsCommon
 
 class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
 
-    """ Test cases for CRM RMA Lot Mass Return Module
+    """Test cases for CRM RMA Lot Mass Return Module
     """
 
     def test_01_load_products(self):
@@ -117,7 +117,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
         self.assertEqual(len(self.claim_id.claim_line_ids), 5)
 
     def test_03_claim_line_creation_and_error_message(self):
-        """ Challenge the wizard when a claim line is created, to set
+        """Challenge the wizard when a claim line is created, to set
         claim_origin and the name correctly in a claim line itself, and also
         it tests the message displayed to the user when is introduced an
         Serial/Lot numbers that already is part of another claim.
@@ -221,7 +221,7 @@ class TestCrmRmaLotMassReturn2(ClaimTestsCommon):
             ]))
 
     def test_05_help_buttons(self):
-        """ A help button is shown in wizard to let the user meets how the
+        """A help button is shown in wizard to let the user meets how the
         claim's wizard works, this test validates:
             - The button displays and takes the user to new window with
             the information

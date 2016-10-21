@@ -59,7 +59,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def _search_serial_number_to_change_from_transfer(self):
-        """ A transfer is made from picking order.
+        """A transfer is made from picking order.
 
         When a transfer is made from a picking order.
         Then, the invoice lines of invoice related with sale order
@@ -94,7 +94,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        """ When incoming type transfer are made and stock move have
+        """When incoming type transfer are made and stock move have
         serial/lot number, the supplier is assigned to the serial/lot
         number taken from picking.
         @return: do_detailed_transfer boolean results

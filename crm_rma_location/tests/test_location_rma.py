@@ -29,8 +29,7 @@ class TestLocationRma(TransactionCase):
         self.warehouse = self.env['stock.warehouse']
 
     def test_01_create_warehouse(self):
-        """
-        Check if picking types were created
+        """Check if picking types were created
         """
 
         warehouse_id = self.warehouse.create({

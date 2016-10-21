@@ -59,7 +59,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         return purchase_order_id
 
     def test_01_do_detail_transfer(self):
-        """ Testing do_detailed_transfer method
+        """Testing do_detailed_transfer method
         """
         lot_ids = []
         for picking_id in self.picking_ids:
@@ -99,7 +99,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         self.assertEquals(failed_lot_ids, [])
 
     def test_02_default_get(self):
-        """ Test default_get method
+        """Test default_get method
         """
 
         failed_lot_ids = lot_ids = []
@@ -146,7 +146,7 @@ class TestCrmRmaProdLotSupplier(TransactionCase):
         self.assertEquals(failed_lot_ids, lot_ids)
 
     def test_03_action_create_invoice(self):
-        """ Testing action_create_invoice method
+        """Testing action_create_invoice method
         """
 
         ipad = self.env.ref('product.product_product_6')

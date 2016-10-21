@@ -37,34 +37,36 @@ class ProductSupplierInfo(models.Model):
 
     @api.model
     def _get_default_instructions(self):
-        """ Get selected lines to add to exchange """
+        """Get selected lines to add to exchange """
         return self.env['return.instruction'].search(
             [('is_default', '=', True)], limit=1)
 
-    @api.one
+    @api.multi
     @api.depends('warranty_return_partner')
     def _compute_warranty_return_address(self):
-        """ Method to return the partner delivery address or if none,
+        """Method to return the partner delivery address or if none,
         the default address
         dedicated_delivery_address stand for the case a new type of
         address more particularly dedicated to return delivery would be
         implemented.
-
         """
-        return_partner = self.warranty_return_partner
-        partner_id = self.company_id.partner_id.id
-        if return_partner:
-            if return_partner == 'supplier':
-                partner_id = self.name.id
+        for supplier_id in self:
+            return_partner = supplier_id.warranty_return_partner
+            partner_id = supplier_id.company_id.partner_id.id
+            if return_partner:
+                if return_partner == 'supplier':
+                    partner_id = supplier_id.name.id
 
-            elif return_partner == 'company':
-                if self.company_id.crm_return_address_id:
-                    partner_id = self.company_id.crm_return_address_id.id
+                elif return_partner == 'company':
+                    if supplier_id.company_id.crm_return_address_id:
+                        partner_id = \
+                            supplier_id.company_id.crm_return_address_id.id
 
-            elif return_partner == 'other':
-                if self.warranty_return_other_address:
-                    partner_id = self.warranty_return_other_address.id
-        self.warranty_return_address = partner_id
+                elif return_partner == 'other':
+                    if supplier_id.warranty_return_other_address:
+                        partner_id = \
+                            supplier_id.warranty_return_other_address.id
+            supplier_id.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(
         'Period',

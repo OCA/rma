@@ -38,7 +38,7 @@ class CrmClaim(models.Model):
     _inherit = ["crm.claim", "default.warehouse"]
 
     def _get_default_warehouse(self):
-        """ Get a warehouse by default when a claim
+        """Get a warehouse by default when a claim
         is created. The warehouse_id field is required.
         """
         user = self.env.user
@@ -139,14 +139,14 @@ class CrmClaim(models.Model):
 
     @api.model
     def _get_limit_days(self):
-        """ If the limit_days parameter is not set.
+        """If the limit_days parameter is not set.
         Then, the limit_days must be one day.
         """
         return self.env.user.company_id.limit_days or 1
 
     @api.depends("date")
     def _compute_deadline(self):
-        """ Compute the deadline with respect to date of claim.
+        """Compute the deadline with respect to date of claim.
         The deadline should be data of claim plus limit_days or
         can be edited manually by the rma manager
         """
@@ -159,7 +159,7 @@ class CrmClaim(models.Model):
 
     @api.multi
     def _inverse_deadline(self):
-        """ When the deadline is changed manually. Two things can happend:
+        """When the deadline is changed manually. Two things can happend:
         1. The deadline is the same that date plus limit_days.
         In this case nothing happens.
         2. If the deadline is different from the date plus limit_days, then
@@ -200,7 +200,7 @@ class CrmClaim(models.Model):
 
     @api.constrains("date", "date_deadline")
     def _check_claim_dates(self):
-        """ In case of the deadline will be changed
+        """In case of the deadline will be changed
         manually by the rma manager, then, the deadline
         should be major than the date of claim
         """
@@ -268,7 +268,7 @@ class CrmClaim(models.Model):
 
     @api.model
     def message_get_reply_to(self):
-        """ Override to get the reply_to of the parent project. """
+        """Override to get the reply_to of the parent project. """
         return [claim.section_id.message_get_reply_to()[0]
                 if claim.section_id else False
                 for claim in self.sudo()]

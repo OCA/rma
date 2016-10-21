@@ -29,7 +29,7 @@ class TestWarehouseByDefault(ClaimTestsCommon):
         self.warehouse = self.env['stock.warehouse']
 
     def test_warehouse_by_default(self):
-        """ Check that the warehouse by default is correct
+        """Check that the warehouse by default is correct
         """
 
         main_warehouse = self.env.ref("stock.warehouse0")

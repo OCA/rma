@@ -34,7 +34,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _search_serial_number_to_change_from_sale(self, invoice_lines):
-        """ A customer invoice is generated from sale order.
+        """A customer invoice is generated from sale order.
 
         When a customer invoice is created from a sale order.
         Then, the invoice lines of invoice must be saved in

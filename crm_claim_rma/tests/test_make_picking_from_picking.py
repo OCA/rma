@@ -54,7 +54,7 @@ class TestPickingFromPicking(TransactionCase):
         return claim_id
 
     def get_default_locations(self):
-        """ Return locations for RMA, Loss and Refurbish
+        """Return locations for RMA, Loss and Refurbish
         """
         self.main_warehouse_id = self.stock_warehouse.browse(
             self.ref("stock.warehouse0"))
@@ -64,7 +64,7 @@ class TestPickingFromPicking(TransactionCase):
         self.loc_refurbish = self.main_warehouse_id.lot_refurbish_id
 
     def create_picking_wizard(self, claim_id):
-        """ Create a picking based on claim
+        """Create a picking based on claim
         """
         wizard_id = self.wizardmakepicking.with_context({
             'active_id': claim_id.id,
@@ -77,7 +77,7 @@ class TestPickingFromPicking(TransactionCase):
         return wizard_id, res
 
     def test_01_get_dest_loc(self):
-        """ Create picking from customers to rma location with button
+        """Create picking from customers to rma location with button
         new products return
         """
         wizard_id, res = self.create_picking_wizard(self.claim_id)

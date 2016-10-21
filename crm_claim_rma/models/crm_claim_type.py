@@ -23,7 +23,7 @@ from openerp import fields, models
 
 
 class CrmClaimType(models.Model):
-    """ CRM Claim Type
+    """CRM Claim Type
     """
     _name = 'crm.claim.type'
 

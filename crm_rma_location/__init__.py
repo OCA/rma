@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from . import models
 from openerp import SUPERUSER_ID
+from . import models
 
 
 def post_init_hook(cr, registry):

@@ -222,7 +222,7 @@ class ClaimLine(models.Model):
 
     @api.depends("claim_id.date", "invoice_line_id.invoice_id.date_invoice")
     def _compute_priority(self):
-        """ To determine the priority of claim line
+        """To determine the priority of claim line
         """
 
         priority_max = self.env.user.company_id.priority_maximum
@@ -243,7 +243,7 @@ class ClaimLine(models.Model):
                 line_id.priority = "0_not_define"
 
     def _get_subject(self, num):
-        """ Based on a subject number given, it returns the proper subject
+        """Based on a subject number given, it returns the proper subject
         value only if the number is between the limits, in counter case is the
         first value of SUBJECT_LIST will be returned
         """
@@ -252,7 +252,7 @@ class ClaimLine(models.Model):
 
     @staticmethod
     def warranty_limit(start, warranty_duration):
-        """ Take a duration in float, return the duration in relativedelta
+        """Take a duration in float, return the duration in relativedelta
         ``relative_delta(months=...)`` only accepts integers.
         We have to extract the decimal part, and then, extend the delta with
         days.
@@ -337,7 +337,7 @@ class ClaimLine(models.Model):
 
     @api.returns('stock.location')
     def get_destination_location(self, product_id, warehouse_id):
-        """ Compute and return the destination location to take
+        """Compute and return the destination location to take
         for a return. Always take 'Supplier' one when return type different
         from company.
         """
@@ -352,7 +352,7 @@ class ClaimLine(models.Model):
         return location_dest_id
 
     def _warranty_return_address_values(self, product, company, warehouse):
-        """ Return the partner to be used as return destination and
+        """Return the partner to be used as return destination and
         the destination stock location of the line in case of return.
 
         We can have various cases here:
@@ -393,7 +393,7 @@ class ClaimLine(models.Model):
 
     @api.multi
     def set_warranty(self):
-        """ Calculate warranty limit and address
+        """Calculate warranty limit and address
         """
         for line_id in self:
             if not line_id.product_id:
@@ -410,14 +410,14 @@ class ClaimLine(models.Model):
 
     @api.model
     def _get_sequence_number(self):
-        """ @return the value of the sequence for the number field in the
+        """@return the value of the sequence for the number field in the
         claim.line model.
         """
         return self.env['ir.sequence'].get('claim.line')
 
     @api.model
     def create(self, vals):
-        """ @return write the identify number once the claim line is create.
+        """@return write the identify number once the claim line is create.
         """
         vals = vals or {}
         if ('number' not in vals) or (vals.get('number', False) == '/'):

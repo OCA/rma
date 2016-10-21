@@ -31,8 +31,7 @@ class TestProductWarranty(TransactionCase):
         self.create_product_supplierinfo()
 
     def create_product_supplierinfo(self):
-        """
-        Create a record of product.supplier for next tests
+        """Create a record of product.supplier for next tests
         """
 
         product_tmpl_id = self.env.ref('product.product_product_3')
@@ -50,8 +49,7 @@ class TestProductWarranty(TransactionCase):
             self.supplierinfo.create(supplierinfo_data)
 
     def test_default_instruction(self):
-        """
-        Test for return.instruction record with
+        """Test for return.instruction record with
         default field in True. If is assigned
         correctly when one record of
         product.supplierinfo is created
@@ -64,8 +62,7 @@ class TestProductWarranty(TransactionCase):
                           return_instructions_id.id)
 
     def test_warranty_return_address(self):
-        """
-        Test warranty_return_address field is calculate correctly depends of
+        """Test warranty_return_address field is calculate correctly depends of
         warranty_return_partner
         """
         self.create_product_supplierinfo()

@@ -26,7 +26,7 @@ from .common import ClaimTestsCommon
 
 
 class TestPickingCreation(ClaimTestsCommon):
-    """ Test the correct pickings are created by the wizard. """
+    """Test the correct pickings are created by the wizard. """
 
     def setUp(self):
         super(TestPickingCreation, self).setUp()
@@ -172,7 +172,7 @@ class TestPickingCreation(ClaimTestsCommon):
             refund_id.invoice_refund()
 
     def test_04_display_name(self):
-        """ It tests that display_name for each line has a message for it
+        """It tests that display_name for each line has a message for it
         """
         claim_line_ids = self.env['crm.claim'].browse(
             self.ref('crm_claim.crm_claim_6'))[0].claim_line_ids
@@ -182,7 +182,7 @@ class TestPickingCreation(ClaimTestsCommon):
         self.assertEquals(len(claim_line_ids), all_values)
 
     def test_05_validate_return_value(self):
-        """ Check computed field got the expected values
+        """Check computed field got the expected values
         """
         claim_id = self.env.ref('crm_claim.crm_claim_6')
         expected_vals = [cl.unit_sale_price * cl.product_returned_quantity
@@ -192,7 +192,7 @@ class TestPickingCreation(ClaimTestsCommon):
                          "claim lines aren't the correct ones")
 
     def test_06_invoice_without_date(self):
-        """ Validate that invoice has date, for warranty purposes
+        """Validate that invoice has date, for warranty purposes
         """
 
         claim_id = self.env.ref('crm_claim.crm_claim_6')
@@ -221,7 +221,7 @@ class TestPickingCreation(ClaimTestsCommon):
                         res.get('warning', False))
 
     def test_07_without_invoice_date(self):
-        """ Warranty limit and Warning must be set to false from claim
+        """Warranty limit and Warning must be set to false from claim
         document if invoice date if not set
         """
         invoice_id = self.env.ref('crm_claim_rma.crm_rma_invoice_003')
@@ -241,7 +241,7 @@ class TestPickingCreation(ClaimTestsCommon):
                          'set to false')
 
     def test_08_product_return_with_multiple_adresses(self):
-        """ Validate that a claim with multiple addresses in their lines
+        """Validate that a claim with multiple addresses in their lines
         cannot be made
         """
         sale_id = self.sale_order

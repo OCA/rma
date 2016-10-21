@@ -27,14 +27,14 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_done(self):
-        """ Set stock moves to invoice lines that matches with
+        """Set stock moves to invoice lines that matches with
         product and product quantity when sale order is done
         """
         return self.set_lot_invoice_line(self, 'action_done')
 
     @api.multi
     def action_ship_create(self):
-        """ Set stock moves to invoice lines that matches with
+        """Set stock moves to invoice lines that matches with
         product and product quantity when delivery is created
         """
         return self.set_lot_invoice_line(self, 'action_ship_create')

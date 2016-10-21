@@ -31,7 +31,7 @@ class ClaimLine(models.Model):
 
     @api.model
     def set_warranty_limit(self):
-        """ Calculate warranty limit
+        """Calculate warranty limit
         """
         if not self.invoice_date:
             raise exceptions.Warning(_('Error'),
@@ -70,7 +70,7 @@ class ClaimLine(models.Model):
 
     @api.model
     def _get_product_supplier_info(self):
-        """ It finds the information about a supplier of specific
+        """It finds the information about a supplier of specific
         product """
 
         supplier_info = self.env['product.supplierinfo'].search(
@@ -86,7 +86,7 @@ class ClaimLine(models.Model):
 
     @api.model
     def set_warranty_return_address(self):
-        """ Set the partner to be used as return destination and
+        """Set the partner to be used as return destination and
         the destination stock location of the line in case of Return.
 
         We can have various case here:

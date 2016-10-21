@@ -19,9 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from datetime import date
 from openerp.tests.common import TransactionCase
 from openerp.exceptions import Warning as UserError
-from datetime import date
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
@@ -110,7 +110,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
         return sale_order_id.invoice_ids[0]
 
     def create_customer_claim(self, invoice_id):
-        """ Create a customer claim with or without claim lines based
+        """Create a customer claim with or without claim lines based
         on include_lines parameter
         """
         customer_id = invoice_id.partner_id
@@ -157,7 +157,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
                             line_id.set_warranty_limit)
 
     def test_02_invoice_without_date(self):
-        """ Invoices used for claim lines requires to be open (validated)
+        """Invoices used for claim lines requires to be open (validated)
         in order to compute warranty based on its invoice date and also
         the warranty limits based on supplier registered within the serial/lot,
         in counter case an error will be thrown
@@ -191,7 +191,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
 
     def write_product_supplier(self, product_id, supplier_id, duration=0,
                                rewrite=True):
-        """ Write or rewrite supplier info if needed
+        """Write or rewrite supplier info if needed
         """
         seller_id = product_id.seller_ids.filtered(
             lambda r: r.name == supplier_id)
@@ -209,7 +209,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
             })
 
     def test_03_more_than_one_active_supplier(self):
-        """ When one product have more than one record for its suppliers, an
+        """When one product have more than one record for its suppliers, an
         error should be raised
         """
         invoice_id = self.create_sale_order_and_invoice(
@@ -228,7 +228,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
             line_id._get_product_supplier_info()
 
     def test_04_warranty_calculation(self):
-        """ Set warranty valid based on days in product's supplier warranty
+        """Set warranty valid based on days in product's supplier warranty
         """
         # purchase a product
         purchase_order_id = self.create_purchase_order(self.supplier_id,
@@ -262,7 +262,7 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
         self.assertEqual(line_id.warning, 'valid')
 
     def test_05_warranty_calculation(self):
-        """ Set warranty valid based on days in product's warranty
+        """Set warranty valid based on days in product's warranty
         """
         invoice_id = self.create_sale_order_and_invoice(
             self.customer_id, 'prepaid', self.product_id)

@@ -16,31 +16,31 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:60
+#: code:addons/crm_rma_location/models/stock_warehouse.py:70
 #, python-format
 msgid " Sequence in"
-msgstr "Secuencia de entrada"
+msgstr " Secuencia de entrada"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:72
+#: code:addons/crm_rma_location/models/stock_warehouse.py:80
 #, python-format
 msgid " Sequence internal"
-msgstr "Secuencia interna"
+msgstr " Secuencia interna"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:66
+#: code:addons/crm_rma_location/models/stock_warehouse.py:75
 #, python-format
 msgid " Sequence out"
-msgstr "Secuencia de salida"
+msgstr " Secuencia de salida"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:166
+#: code:addons/crm_rma_location/models/stock_warehouse.py:156
 #, python-format
 msgid "RMA"
 msgstr "RMA"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:120
+#: code:addons/crm_rma_location/models/stock_warehouse.py:112
 #, python-format
 msgid "RMA Delivery Orders"
 msgstr "Órdenes de envío de RMA"
@@ -48,13 +48,13 @@ msgstr "Órdenes de envío de RMA"
 #. module: crm_rma_location
 #: field:stock.warehouse,rma_in_type_id:0
 msgid "RMA In Type"
-msgstr "Entradas en RMA"
+msgstr "Entradas de RMA"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:134
+#: code:addons/crm_rma_location/models/stock_warehouse.py:126
 #, python-format
 msgid "RMA Internal Transfers"
-msgstr "Transferencias internas en RMA"
+msgstr "Transferencias internas de RMA"
 
 #. module: crm_rma_location
 #: field:stock.warehouse,rma_int_type_id:0
@@ -64,7 +64,7 @@ msgstr "Internos en RMA"
 #. module: crm_rma_location
 #: field:stock.warehouse,lot_rma_id:0
 msgid "RMA Location"
-msgstr "Locación de RMA"
+msgstr "Ubicación de RMA"
 
 #. module: crm_rma_location
 #: field:stock.warehouse,rma_out_type_id:0
@@ -72,7 +72,7 @@ msgid "RMA Out Type"
 msgstr "Salidas en RMA"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/stock.py:108
+#: code:addons/crm_rma_location/models/stock_warehouse.py:100
 #, python-format
 msgid "RMA Receipts"
 msgstr "Recepciones de RMA"

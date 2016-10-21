@@ -25,7 +25,7 @@ from openerp.exceptions import ValidationError, Warning as UserError
 
 class TestConstrains(TransactionCase):
 
-    """ - The product in claim.line.wizard must be the same
+    """- The product in claim.line.wizard must be the same
       that product of invoice line
     """
 
@@ -53,7 +53,7 @@ class TestConstrains(TransactionCase):
         line_id.set_warranty()
 
     def test_02_missing_product(self):
-        """ An error should be thrown when computing warranty and there is no
+        """An error should be thrown when computing warranty and there is no
         product set in a claim line
         """
         self.try_set_warranty({
@@ -62,7 +62,7 @@ class TestConstrains(TransactionCase):
         })
 
     def test_03_missing_invoice_line(self):
-        """ An error should be thrown when computing warranty and there is no
+        """An error should be thrown when computing warranty and there is no
         invoice line set in a claim line
         """
         self.try_set_warranty({
@@ -71,7 +71,7 @@ class TestConstrains(TransactionCase):
         })
 
     def test_04_limit_days_zero(self):
-        """ An exception should be raised when limit_days reaches a value of
+        """An exception should be raised when limit_days reaches a value of
         zero (or less) when is set
         """
         company_ids = self.env['res.company'].search([])

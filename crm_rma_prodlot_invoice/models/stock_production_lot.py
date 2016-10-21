@@ -43,7 +43,7 @@ class StockProductionLot(models.Model):
 
     @api.model
     def _get_related_count(self, field_id, field_name='invoice_line_id'):
-        """ Get how many serial/lot number are related to a given field name,
+        """Get how many serial/lot number are related to a given field name,
         by default it will search with invoice_line_ids
         :field_id: it's the record itself to be searched by.
         :field_name: field name to search the serial/lot is related with, as

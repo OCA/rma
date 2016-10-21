@@ -34,14 +34,14 @@ class ClaimLine(models.Model):
 
     @api.model
     def _search_related_lines(self):
-        """ Search a claim line with this claim line like parent, if there is
+        """Search a claim line with this claim line like parent, if there is
         a line with this claim line like parent, then, the supplier claim line
         for this claim line was created """
         return self.search([('claim_line_id', '=', self.id)])
 
     @api.multi
     def button_create_line_rma_vendor(self):
-        """ Create supplier rma product.
+        """Create supplier rma product.
         """
         good_lines = []
         claim = self.env['crm.claim']
@@ -135,8 +135,7 @@ class ClaimLine(models.Model):
 
     @api.multi
     def button_rma_vendor_render_view(self):
-        """
-        Create supplier rma and visualize a tree view
+        """Create supplier rma and visualize a tree view
         with new supplier claim products
         """
         good_lines = self.button_create_line_rma_vendor()

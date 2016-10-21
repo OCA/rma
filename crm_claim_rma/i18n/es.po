@@ -645,7 +645,7 @@ msgstr "Acción"
 #: view:claim.line:0
 #: view:crm.claim:0
 msgid "Claims"
-msgstr "Reclamaciones"
+msgstr "Reclamos"
 
 #. module: crm_claim_rma
 #: view:claim.line:0
@@ -1253,7 +1253,7 @@ msgstr "Activo"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_crm_claim
 msgid "Claim"
-msgstr "Reclamación"
+msgstr "Reclamo"
 
 #. module: crm_claim_rma
 #: field:crm.claim,claim_type:0
@@ -1906,3 +1906,33 @@ msgstr "Daño físico por la compañía"
 #: view:returned.lines.from.serial.wizard:crm_claim_rma.help_message_form
 msgid "Other"
 msgstr "Otro"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Very High"
+msgstr "Muy alta"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "High"
+msgstr "Alta"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: crm_claim_rma
+#: selection:claim.line,priority:0
+msgid "Not Define"
+msgstr "No definida"
+
+#. module: crm_claim_rma
+#: field:claim.line,date_deadline:0
+msgid "Deadline"
+msgstr "Fecha límite"
+
+#. module: crm_claim_rma
+#: help:claim.line,date_deadline:0
+msgid "The deadline for that the claim will be resolved. If the claim is not resolved before this date. Management must inform to the RMA team to accelerate the process."
+msgstr "Es la fecha límite para resolver el reclamo. Si el reclamo no es resuelto para la fecha indicada la gerencia debe notificar al equipo de reclamos para que acelere el proceso."
