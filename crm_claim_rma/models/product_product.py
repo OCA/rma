@@ -41,6 +41,11 @@ class ProductProduct(models.Model):
         search='_search_rma_product_quantity',
         string='RMA Forecasted Quantity')
 
+    @api.model
+    def _get_products_for_rma(self):
+        product_ids = self.search([]) or []
+        return product_ids
+
     def _search_rma_product_quantity(self, operator, value):
         res = []
         # to prevent sql injections
@@ -52,7 +57,7 @@ class ProductProduct(models.Model):
             operator = '=='
 
         ids = []
-        product_ids = self.search([]) or []
+        product_ids = self._get_products_for_rma()
         for element in product_ids:
             localdict = {'virtual': element.rma_virtual_available,
                          'qty': element.rma_qty_available,
@@ -72,7 +77,8 @@ class ProductProduct(models.Model):
         warehouse_id = context.get('warehouse_id')
         ctx = context.copy()
         location_ids = set()
-        for product in self:
+        product_ids = self._get_products_for_rma()
+        for product in product_ids:
             if warehouse_id and warehouse_id.lot_rma_id:
                 location_ids.add(warehouse_id.lot_rma_id.id)
             else:
