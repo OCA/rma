@@ -1936,3 +1936,9 @@ msgstr "Fecha límite"
 #: help:claim.line,date_deadline:0
 msgid "The deadline for that the claim will be resolved. If the claim is not resolved before this date. Management must inform to the RMA team to accelerate the process."
 msgstr "Es la fecha límite para resolver el reclamo. Si el reclamo no es resuelto para la fecha indicada la gerencia debe notificar al equipo de reclamos para que acelere el proceso."
+
+#. module: crm_claim_rma
+#: code:addons/crm_claim_rma/models/claim_line.py:261
+#, python-format
+msgid "You must belong to the group '%s' in order to be allowed to set priority level"
+msgstr "Debe pertenecer al grupo '%s' para pueda editar la prioridad del producto"

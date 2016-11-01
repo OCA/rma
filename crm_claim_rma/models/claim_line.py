@@ -24,7 +24,7 @@
 ##############################################################################
 import calendar
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from dateutil.relativedelta import relativedelta
 
@@ -86,6 +86,7 @@ class ClaimLine(models.Model):
                                 'Priority',
                                 store=True,
                                 compute='_compute_priority',
+                                inverse='_inverse_priority',
                                 help="Priority attention of claim line")
     claim_diagnosis = fields.Selection([('damaged', 'Product Damaged'),
                                         ('repaired', 'Product Repaired'),
@@ -135,6 +136,7 @@ class ClaimLine(models.Model):
     display_name = fields.Char('Name',
                                compute='_compute_display_name')
     date_deadline = fields.Date(related="claim_id.date_deadline")
+    priority_date = fields.Date(compute='_compute_priority_date')
 
     @api.model
     def get_warranty_return_partner(self):
@@ -220,27 +222,76 @@ class ClaimLine(models.Model):
         std_default.update(default)
         return super(ClaimLine, self).copy(default=std_default)
 
-    @api.depends("claim_id.date", "invoice_line_id.invoice_id.date_invoice")
-    def _compute_priority(self):
-        """To determine the priority of claim line
-        """
-
+    @api.model
+    def _get_priority_level(self):
         priority_max = self.env.user.company_id.priority_maximum
         priority_min = self.env.user.company_id.priority_minimum
 
+        priority = "0_not_define"
+        if self.invoice_date:
+            days = fields.datetime.strptime(self.date, "%Y-%m-%d") - \
+                fields.datetime.strptime(self.invoice_date,
+                                         DEFAULT_SERVER_DATE_FORMAT)
+            if days.days <= priority_max:
+                priority = "3_very_high"
+            elif priority_max < days.days <= priority_min:
+                priority = "2_high"
+            elif days.days > priority_min:
+                priority = "1_normal"
+        return priority
+
+    @api.depends("priority_date", "invoice_line_id.invoice_id.date_invoice")
+    def _compute_priority(self):
+        """To determine the priority of claim line
+        """
         for line_id in self:
-            if line_id.invoice_date:
-                days = fields.datetime.strptime(line_id.date, "%Y-%m-%d") - \
-                    fields.datetime.strptime(line_id.invoice_date,
-                                             DEFAULT_SERVER_DATE_FORMAT)
-                if days.days <= priority_max:
-                    line_id.priority = "3_very_high"
-                elif priority_max < days.days <= priority_min:
-                    line_id.priority = "2_high"
-                elif days.days > priority_min:
-                    line_id.priority = "1_normal"
-            else:
-                line_id.priority = "0_not_define"
+            line_id.priority = line_id._get_priority_level()
+
+    @api.multi
+    def _compute_priority_date(self):
+        for line_id in self:
+            line_id.priority_date = line_id.claim_id.date
+
+    @api.multi
+    def _inverse_priority(self):
+        """To determine the priority of claim line
+        """
+        support_group_id = self.env.ref('crm_claim_rma.group_rma_user')
+        support_user_ids = support_group_id.users
+
+        # Internal claims are created by warehouse users and they are not
+        # allowed to edit supplier claims, but create supplier claims
+        # can be created from internal ones, so if a user is validating
+        # an internal claims this calculation should be applied.
+        from_internal_claim = self.env.context.get(
+            'validate_internal_claim', False)
+
+        if not from_internal_claim and self.env.user not in support_user_ids:
+            raise exceptions.ValidationError(
+                _("You must belong to the group '%s' in order to be "
+                  "allowed to set priority level") % support_group_id.name
+            )
+        # Having priority level and invoice date an aproximation of
+        # claim date can be computed
+        priority_max = self.env.user.company_id.priority_maximum
+        priority_min = self.env.user.company_id.priority_minimum
+        for line_id in self:
+            invoice_date = line_id.invoice_line_id.invoice_id.date_invoice
+
+            # functionally this is not possible, but tested for
+            # default values
+            if not invoice_date:
+                continue
+
+            days = priority_min + 1
+            if line_id.priority == "3_very_high":
+                days = priority_max
+            elif line_id.priority == "2_high":
+                days = (priority_max + priority_min) * .5
+
+            line_id.priority_date = fields.datetime.strptime(
+                invoice_date,
+                DEFAULT_SERVER_DATE_FORMAT) + timedelta(days=days)
 
     def _get_subject(self, num):
         """Based on a subject number given, it returns the proper subject
