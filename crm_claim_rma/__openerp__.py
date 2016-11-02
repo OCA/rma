@@ -63,7 +63,6 @@
         # from crm_rma_stock_location
         'wizards/claim_make_picking_from_picking_view.xml',
         'views/product_product.xml',
-        'views/product_template.xml',
         'views/stock_picking.xml',
         'views/stock_warehouse.xml',
         'security/crm_claim_security.xml',
