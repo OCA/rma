@@ -247,11 +247,13 @@ class TestCrmRmaAdvanceWarranty(TransactionCase):
 
         # create a customer claim
         line_id = self.create_customer_claim(invoice_id).claim_line_ids[0]
+        self.product_id.write({"warranty": 0})
         line_id.set_warranty()
 
         # validate is warranty is expired
         self.assertEqual(line_id.warning, 'not_define')
 
+        self.product_id.write({"warranty": 5})
         self.write_product_supplier(self.product_id, self.supplier_id, 1)
         line_id.write({
             'warranty_type': 'supplier',
