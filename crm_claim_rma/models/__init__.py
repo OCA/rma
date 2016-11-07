@@ -35,4 +35,3 @@ from . import stock_picking
 from . import substate_substate
 from . import product_product
 from . import product_template
-from . import stock_warehouse

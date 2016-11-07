@@ -64,7 +64,6 @@
         'wizards/claim_make_picking_from_picking_view.xml',
         'views/product_product.xml',
         'views/stock_picking.xml',
-        'views/stock_warehouse.xml',
         'security/crm_claim_security.xml',
         'security/ir.model.access.csv',
         'wizards/returned_lines_from_serial_from_lot_mass.xml',

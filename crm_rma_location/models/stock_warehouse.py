@@ -2,6 +2,8 @@
 ##############################################################################
 #
 #    Copyright 2013 Camptocamp
+#    Author: Emmanuel Samyn, Raphaël Valyi, Sébastien Beau,
+#            Joel Grand-Guillaume
 #    Copyright 2015 Vauxoo
 #    Author: Yanina Aular
 #            Osval Reyes
@@ -29,10 +31,16 @@ class StockWarehouse(models.Model):
     _inherit = "stock.warehouse"
 
     lot_rma_id = fields.Many2one('stock.location', 'RMA Location')
+    loss_loc_id = fields.Many2one('stock.location', 'Loss Location')
+    lot_refurbish_id = fields.Many2one('stock.location',
+                                       'Refurbished Location')
     rma_out_type_id = fields.Many2one('stock.picking.type', 'RMA Out Type')
     rma_in_type_id = fields.Many2one('stock.picking.type', 'RMA In Type')
     rma_int_type_id = fields.Many2one('stock.picking.type',
                                       'RMA Internal Type')
+    rma_destruction_type_id = fields.Many2one('stock.picking.type',
+                                              help='Picking type for products '
+                                              'that will be destroyed')
 
     def compute_next_color(self):
         """Choose the next available color for
@@ -80,7 +88,13 @@ class StockWarehouse(models.Model):
                 warehouse, _(' Sequence internal'), '/RMA/INT/', 5
             )
 
-        wh_stock_loc = warehouse.lot_rma_id
+        if not warehouse.rma_destruction_type_id:
+            destruction_seq_id = self.create_sequence(
+                warehouse, _(' Sequence destruction'), '/DEST/', 5
+            )
+
+        loc_rma = warehouse.lot_rma_id
+        loc_loss = warehouse.loss_loc_id
 
         # fetch customer and supplier locations, for references
         customer_loc, supplier_loc = self._get_partner_locations()
@@ -102,7 +116,7 @@ class StockWarehouse(models.Model):
                 'code': 'incoming',
                 'sequence_id': in_seq_id.id,
                 'default_location_src_id': customer_loc.id,
-                'default_location_dest_id': wh_stock_loc.id,
+                'default_location_dest_id': loc_rma.id,
                 'sequence': max_sequence + 4,
                 'color': color})
 
@@ -114,7 +128,7 @@ class StockWarehouse(models.Model):
                 'code': 'outgoing',
                 'sequence_id': out_seq_id.id,
                 'return_picking_type_id': in_type_id.id,
-                'default_location_src_id': wh_stock_loc.id,
+                'default_location_src_id': loc_rma.id,
                 'default_location_dest_id': supplier_loc.id,
                 'sequence': max_sequence + 1,
                 'color': color})
@@ -127,10 +141,22 @@ class StockWarehouse(models.Model):
                 'warehouse_id': warehouse.id,
                 'code': 'internal',
                 'sequence_id': int_seq_id.id,
-                'default_location_src_id': wh_stock_loc.id,
-                'default_location_dest_id': wh_stock_loc.id,
+                'default_location_src_id': loc_rma.id,
+                'default_location_dest_id': loc_rma.id,
                 'active': True,
                 'sequence': max_sequence + 2,
+                'color': color})
+
+        destruction_type_id = warehouse.rma_destruction_type_id
+        if not destruction_type_id:
+            destruction_type_id = picking_type.create(vals={
+                'name': _('Destruction of products'),
+                'warehouse_id': warehouse.id,
+                'code': 'incoming',
+                'sequence_id': destruction_seq_id.id,
+                'default_location_src_id': loc_rma.id,
+                'default_location_dest_id': loc_loss.id,
+                'sequence': max_sequence + 3,
                 'color': color})
 
         # write picking types on WH
@@ -138,6 +164,7 @@ class StockWarehouse(models.Model):
             'rma_in_type_id': in_type_id.id,
             'rma_out_type_id': out_type_id.id,
             'rma_int_type_id': int_type_id.id,
+            'rma_destruction_type_id': destruction_type_id.id,
         }
 
     @api.model
@@ -162,6 +189,24 @@ class StockWarehouse(models.Model):
             location_id = location_obj.with_context(context_with_inactive).\
                 create(loc_vals)
             vals['lot_rma_id'] = location_id.id
+
+        if not warehouse_id.loss_loc_id:
+            loc_vals.update({
+                'name': _('Loss'),
+                'usage': 'internal'
+            })
+            location_id = location_obj.with_context(context_with_inactive).\
+                create(loc_vals)
+            vals['loss_loc_id'] = location_id.id
+
+        if not warehouse_id.lot_refurbish_id:
+            loc_vals.update({
+                'name': _('Refurbish'),
+                'usage': 'internal'
+            })
+            location_id = location_obj.with_context(context_with_inactive).\
+                create(loc_vals)
+            vals['lot_refurbish_id'] = location_id.id
 
         return vals
 

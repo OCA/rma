@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='wh_output_stock_loc_id']" position="after">
                     <field name="lot_rma_id"/>
+                    <field name="loss_loc_id"/>
+                    <field name="lot_refurbish_id"/>
                 </xpath>
                 <xpath expr="//field[@name='out_type_id']" position="after">
                     <field name="rma_in_type_id"/>
