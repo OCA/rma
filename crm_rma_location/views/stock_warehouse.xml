@@ -15,6 +15,7 @@
                     <field name="rma_in_type_id"/>
                     <field name="rma_int_type_id"/>
                     <field name="rma_out_type_id"/>
+                    <field name="rma_destruction_type_id"/>
                 </xpath>
             </field>
         </record>
