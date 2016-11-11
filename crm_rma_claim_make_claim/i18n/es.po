@@ -72,3 +72,14 @@ msgstr "El reclamo de cliente tiene un reclamo a proveedor creado."
 msgid "To link to the claim line object"
 msgstr "Relacionar a la línea de reclamo"
 
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:130
+#, python-format
+msgid "Product added to supplier claim"
+msgstr "Producto añadido a un reclamo a proveedor"
+
+#. module: crm_rma_claim_make_claim
+#: code:addons/crm_rma_claim_make_claim/models/claim_line.py:133
+#, python-format
+msgid "The product %s (%s) has been included in a supplier claim as the line %s"
+msgstr "El producto %s (%s) ha sido incluido en un reclamo a proveedor como la línea %s"

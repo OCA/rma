@@ -127,6 +127,13 @@ class ClaimLine(models.Model):
             })
             good_lines += [claim_line_supplier_new.id]
 
+            subject = _("Product added to supplier claim")
+            body = _("The product %s (%s) has been included in a supplier "
+                     "claim as the line %s" %
+                     (claim_line_parent.product_id.name,
+                      claim_line_parent.number,
+                      claim_line_supplier_new.number))
+            claim_line_parent.message_post(body=body, subject=subject)
         if not good_lines:
             raise UserError(_('Error'),
                             _('The Supplier Claim Was Not Created.'))
