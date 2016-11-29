@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_claim_product_supplier
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-10-11 11:10+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Greek (Greece) (http://www.transifex.com/oca/OCA-rma-8-0/language/el_GR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: el_GR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: crm_claim_product_supplier
+#: field:claim.line,supplier_invoice_id:0
+msgid "Invoice Reference"
+msgstr ""
+
+#. module: crm_claim_product_supplier
+#: model:ir.model,name:crm_claim_product_supplier.model_claim_line
+msgid "List of product to return"
+msgstr ""
+
+#. module: crm_claim_product_supplier
+#: field:claim.line,supplier_id:0
+msgid "Supplier"
+msgstr "Προμηθευτής"
+
+#. module: crm_claim_product_supplier
+#: help:claim.line,supplier_id:0
+msgid "Supplier of good in claim"
+msgstr ""

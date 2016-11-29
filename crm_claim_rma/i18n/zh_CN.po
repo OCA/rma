@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-04 09:43+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/oca/OCA-rma-8-0/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314
@@ -231,7 +231,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "发布到记录上的最后消息的日期"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim20
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "说明"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -312,7 +312,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "关注者"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
@@ -355,7 +355,7 @@ msgstr "ID"
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "查看是否有需要留意的新信息。"
 
 #. module: crm_claim_rma
 #: help:claim.line,warning:0
@@ -415,14 +415,14 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "最后消息日期"
 
 #. module: crm_claim_rma
 #: field:claim.line,__last_update:0
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "最后修改时间"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
@@ -489,12 +489,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "消息"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "消息和通信历史"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -838,7 +838,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:crm.claim,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "序号"
 
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
@@ -998,7 +998,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_unread:0 field:stock.move,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "未读消息"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:70
@@ -1061,7 +1061,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_substate_substate

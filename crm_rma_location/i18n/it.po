@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_location
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2015-11-03 17:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:73
+#, python-format
+msgid " Sequence in"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:83
+#, python-format
+msgid " Sequence internal"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:78
+#, python-format
+msgid " Sequence out"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:161
+#, python-format
+msgid "RMA"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:115
+#, python-format
+msgid "RMA Delivery Orders"
+msgstr ""
+
+#. module: crm_rma_location
+#: field:stock.warehouse,rma_in_type_id:0
+msgid "RMA In Type"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:129
+#, python-format
+msgid "RMA Internal Transfers"
+msgstr ""
+
+#. module: crm_rma_location
+#: field:stock.warehouse,rma_int_type_id:0
+msgid "RMA Internal Type"
+msgstr ""
+
+#. module: crm_rma_location
+#: field:stock.warehouse,lot_rma_id:0
+msgid "RMA Location"
+msgstr ""
+
+#. module: crm_rma_location
+#: field:stock.warehouse,rma_out_type_id:0
+msgid "RMA Out Type"
+msgstr ""
+
+#. module: crm_rma_location
+#: code:addons/crm_rma_location/models/stock_warehouse.py:103
+#, python-format
+msgid "RMA Receipts"
+msgstr ""
+
+#. module: crm_rma_location
+#: model:ir.model,name:crm_rma_location.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Magazzino"

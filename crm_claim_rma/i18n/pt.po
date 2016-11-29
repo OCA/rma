@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-09 12:27+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/oca/OCA-rma-8-0/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -422,7 +422,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Modificado a última vez por"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -586,7 +586,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Outro"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -1061,7 +1061,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_substate_substate

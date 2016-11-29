@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-09-25 14:00+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:57+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/oca/OCA-rma-8-0/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: model:ir.model,name:crm_claim_rma.model_crm_claim
 #: field:stock.picking,claim_id:0
 msgid "Claim"
-msgstr ""
+msgstr "Жалба"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_form_view
@@ -111,7 +111,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,claim_type:0
 msgid "Claim classification"
-msgstr ""
+msgstr "Класификация на Жалбите"
 
 #. module: crm_claim_rma
 #: field:claim.line,claim_diagnosis:0
@@ -205,7 +205,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Клиент"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:170
@@ -231,7 +231,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Дата на последното съобщение, публикувано на записа."
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim20
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Име за Показване"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -312,7 +312,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Последователи"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
@@ -355,7 +355,7 @@ msgstr "ID"
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Ако е отбелязано, новите съобщения ще изискват внимание."
 
 #. module: crm_claim_rma
 #: help:claim.line,warning:0
@@ -415,7 +415,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Дата на последното съобщение"
 
 #. module: crm_claim_rma
 #: field:claim.line,__last_update:0
@@ -489,12 +489,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Съобщения"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "История на събщенията и комуникациите"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -586,7 +586,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Друго"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -838,7 +838,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:crm.claim,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Последователност"
 
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
@@ -895,7 +895,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr ""
+msgstr "Доставчик"
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0
@@ -998,7 +998,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_unread:0 field:stock.move,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Непрочетени съобщения"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:70

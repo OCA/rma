@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-05 06:37+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-rma-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr ""
 #: field:claim.line.wizard,invoice_line_id:0
 #: help:claim.line.wizard,invoice_line_id:0
 msgid "Invoice Line"
-msgstr ""
+msgstr "Stavka računa"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,option_ids:0

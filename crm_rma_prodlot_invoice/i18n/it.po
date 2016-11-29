@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
+"POT-Creation-Date: 2016-10-27 11:46+0000\n"
 "PO-Revision-Date: 2015-11-03 17:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/)\n"
@@ -41,7 +41,7 @@ msgstr ""
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lotto/Numero di serie"
 
 #. module: crm_rma_prodlot_invoice
 #: code:addons/crm_rma_prodlot_invoice/models/stock_production_lot.py:41
@@ -52,7 +52,7 @@ msgstr ""
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista Picking"
 
 #. module: crm_rma_prodlot_invoice
 #: model:ir.model,name:crm_rma_prodlot_invoice.model_stock_transfer_details

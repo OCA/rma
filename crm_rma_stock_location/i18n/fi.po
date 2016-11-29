@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-15 12:45+0000\n"
+"POT-Creation-Date: 2016-10-27 11:46+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-rma-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #. module: crm_rma_stock_location
 #: model:ir.actions.act_window,name:crm_rma_stock_location.action_loss_picking_from_claim_picking
@@ -92,7 +92,7 @@ msgstr "Viimeksi päivitetty"
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Locations"
-msgstr ""
+msgstr "Paikat"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/models/stock_warehouse.py:65
@@ -123,7 +123,7 @@ msgstr "Tuote"
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Tuotteen malli"
 
 #. module: crm_rma_stock_location
 #: view:product.product:crm_rma_stock_location.rma_product_product_tree_view
@@ -225,7 +225,7 @@ msgstr ""
 #: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
 #, python-format
 msgid "Source Location"
-msgstr ""
+msgstr "Lähtöpaikka"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:86

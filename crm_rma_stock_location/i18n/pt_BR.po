@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-04 09:43+0000\n"
+"POT-Creation-Date: 2016-10-27 11:46+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -118,7 +118,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_template

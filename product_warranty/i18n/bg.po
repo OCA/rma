@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-09-25 14:00+0000\n"
+"POT-Creation-Date: 2016-10-27 11:46+0000\n"
+"PO-Revision-Date: 2016-11-25 14:57+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/oca/OCA-rma-8-0/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Име за Показване"
 
 #. module: product_warranty
 #: field:return.instruction,id:0
@@ -142,7 +142,7 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,name:0
 msgid "Title"
-msgstr ""
+msgstr "Заглавие"
 
 #. module: product_warranty
 #: help:product.supplierinfo,warranty_duration:0

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-16 21:46+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -241,7 +241,7 @@ msgstr ""
 #: field:returned.lines.from.serial.wizard,scan_data:0
 #: field:returned.lines.from.serial.wizard,scaned_data:0
 msgid "Products"
-msgstr ""
+msgstr "Articles"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,lines_list_id:0
@@ -267,7 +267,7 @@ msgstr "Erreur d'expédition"
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,current_status:0
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590

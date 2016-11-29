@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-04 09:43+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:57+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -178,7 +178,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,lot_id:0
 msgid "Lot"
-msgstr ""
+msgstr "Lotto"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,message:0
@@ -241,7 +241,7 @@ msgstr ""
 #: field:returned.lines.from.serial.wizard,scan_data:0
 #: field:returned.lines.from.serial.wizard,scaned_data:0
 msgid "Products"
-msgstr ""
+msgstr "Prodotti"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,lines_list_id:0
@@ -267,7 +267,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,current_status:0
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
@@ -329,4 +329,4 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "or"
-msgstr ""
+msgstr "o"

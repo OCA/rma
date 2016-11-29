@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-04 09:43+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -389,7 +389,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -531,7 +531,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -642,7 +642,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioridade"
 
 #. module: crm_claim_rma
 #: help:claim.line,priority:0
@@ -658,7 +658,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
@@ -872,7 +872,7 @@ msgstr "Estágio"
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
@@ -897,7 +897,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr ""
+msgstr "Fornecedor"
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0
@@ -1063,7 +1063,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_substate_substate

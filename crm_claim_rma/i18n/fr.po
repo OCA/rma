@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-17 19:03+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Date du dernier message publié sur cet enregistrement"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim20
@@ -301,7 +301,7 @@ msgstr "Revenu attendu"
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Expired"
-msgstr ""
+msgstr "Expiré"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -312,7 +312,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
@@ -344,7 +344,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Contient le résumé de la discussion (nombre de messages, ...). Ce résumé est au format HTML pour permettre son utilisation dans la vue kanban."
 
 #. module: crm_claim_rma
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
@@ -355,7 +355,7 @@ msgstr "ID"
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si coché, les nouveaux messages seront portés à votre attention."
 
 #. module: crm_claim_rma
 #: help:claim.line,warning:0
@@ -410,12 +410,12 @@ msgstr ""
 #: field:claim.line,message_is_follower:0
 #: field:stock.move,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Est un abonné"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Date du dernier message"
 
 #. module: crm_claim_rma
 #: field:claim.line,__last_update:0
@@ -489,12 +489,12 @@ msgstr "Marchandise non reçue"
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Historique des messages et communications"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -576,7 +576,7 @@ msgstr "Non spécifié"
 #. module: crm_claim_rma
 #: field:claim.line,number:0
 msgid "Number"
-msgstr ""
+msgstr "Numéro"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
@@ -890,7 +890,7 @@ msgstr "Sous-état"
 #. module: crm_claim_rma
 #: field:claim.line,message_summary:0 field:stock.move,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
@@ -998,14 +998,14 @@ msgstr "Prix de vente unitaire du produit. Remplis automatiquement si le retour 
 #. module: crm_claim_rma
 #: field:claim.line,message_unread:0 field:stock.move,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Messages non-lus"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:70
 #: selection:claim.line,warning:0
 #, python-format
 msgid "Valid"
-msgstr ""
+msgstr "Valide"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0

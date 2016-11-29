@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-09 12:26+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-22 16:30+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/oca/OCA-rma-8-0/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314
@@ -205,7 +205,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Πελάτης"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:170
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -387,7 +387,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Τιμολόγιο"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -749,7 +749,7 @@ msgstr ""
 #: field:crm.claim,invoice_ids:0
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_refunds
 msgid "Refunds"
-msgstr ""
+msgstr "Επιστροφές χρημάτων"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -895,7 +895,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr ""
+msgstr "Προμηθευτής"
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0

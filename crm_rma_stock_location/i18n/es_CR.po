@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-09 12:26+0000\n"
+"POT-Creation-Date: 2016-10-27 11:46+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Costa Rica) (http://www.transifex.com/oca/OCA-rma-8-0/language/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
@@ -72,7 +72,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,__last_update:0

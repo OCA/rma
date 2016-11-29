@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-05 06:36+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-29 09:33+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-rma-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Poduzeće"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -231,7 +231,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Datum zadnjeg zapisa"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim20
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -312,7 +312,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Pratitelji"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
@@ -355,7 +355,7 @@ msgstr "ID"
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Ako je odabrano, nove poruke zahtijevaju Vašu pažnju."
 
 #. module: crm_claim_rma
 #: help:claim.line,warning:0
@@ -370,7 +370,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "In Progress"
-msgstr ""
+msgstr "U tijeku"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -387,18 +387,18 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Račun"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Stavka računa"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
 msgid "Invoice Refund"
-msgstr ""
+msgstr "Storno računa"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -415,7 +415,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Datum zadnje poruke"
 
 #. module: crm_claim_rma
 #: field:claim.line,__last_update:0
@@ -489,12 +489,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Poruke"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Poruke i povijest"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -576,7 +576,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,number:0
 msgid "Number"
-msgstr ""
+msgstr "Broj"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
@@ -838,7 +838,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:crm.claim,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Sekvenca"
 
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
@@ -870,7 +870,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,state:0
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
@@ -998,7 +998,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_unread:0 field:stock.move,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Nepročitane poruke"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:70

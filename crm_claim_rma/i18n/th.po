@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 22:09+0000\n"
-"PO-Revision-Date: 2016-09-09 12:25+0000\n"
+"POT-Creation-Date: 2016-10-27 11:45+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Thai (http://www.transifex.com/oca/OCA-rma-8-0/language/th/)\n"
 "MIME-Version: 1.0\n"
@@ -187,14 +187,14 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "สร้างโดย"
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "สร้างเมื่อ"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -231,7 +231,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: help:claim.line,message_last_post:0 help:stock.move,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "วันที่ข้อความล่าสุดโพสต์ในระเบียน"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim20
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "รายละเอียด"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "ชื่อที่ใช้แสดง"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -312,7 +312,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "ผู้ติดตาม"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
@@ -350,12 +350,12 @@ msgstr ""
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
 #: field:substate.substate,id:0
 msgid "ID"
-msgstr ""
+msgstr "รหัส"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "ถ้าเลือก ข้อความใหม่จะต้องการความสนใจจากคุณ"
 
 #. module: crm_claim_rma
 #: help:claim.line,warning:0
@@ -415,26 +415,26 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "วันที่ข้อความล่าสุด"
 
 #. module: crm_claim_rma
 #: field:claim.line,__last_update:0
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "แก้ไขครั้งสุดท้ายเมื่อ"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "อัพเดทครั้งสุดท้ายโดย"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "อัพเดทครั้งสุดท้ายเมื่อ"
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0
@@ -489,12 +489,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "ข้อความ"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "ข้อความและประวัติการติดต่อ"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "ชื่อ"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -838,7 +838,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:crm.claim,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "กำหนดเลขที่เอกสาร"
 
 #. module: crm_claim_rma
 #: field:claim.line,prodlot_id:0
@@ -998,7 +998,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_unread:0 field:stock.move,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "ข้อความที่ยังไม่ได้อ่าน"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:70
@@ -1061,7 +1061,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "or"
-msgstr ""
+msgstr "หรือ"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_substate_substate
