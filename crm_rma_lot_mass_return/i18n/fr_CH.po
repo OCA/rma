@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:57+0000\n"
+"POT-Creation-Date: 2016-11-29 16:25+0000\n"
+"PO-Revision-Date: 2016-12-01 10:26+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-rma-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr ""
 #: field:claim.line.wizard,display_name:0
 #: field:returned.lines.from.serial.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -140,7 +140,7 @@ msgstr ""
 #: field:claim.line.wizard,invoice_line_id:0
 #: help:claim.line.wizard,invoice_line_id:0
 msgid "Invoice Line"
-msgstr ""
+msgstr "Ligne de facture"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,option_ids:0
@@ -151,7 +151,7 @@ msgstr ""
 #: field:claim.line.wizard,__last_update:0
 #: field:returned.lines.from.serial.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_uid:0
@@ -210,7 +210,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "Partenaire"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -230,7 +230,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: crm_rma_lot_mass_return
 #: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
