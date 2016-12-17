@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"POT-Creation-Date: 2016-12-03 04:18+0000\n"
+"PO-Revision-Date: 2016-12-15 10:12+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -205,7 +205,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:170
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -387,18 +387,18 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Linha da Fatura"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
 msgid "Invoice Refund"
-msgstr ""
+msgstr "Nota de Crédito"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -576,7 +576,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,number:0
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
@@ -749,7 +749,7 @@ msgstr ""
 #: field:crm.claim,invoice_ids:0
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_refunds
 msgid "Refunds"
-msgstr ""
+msgstr "Notas de crédito"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -895,7 +895,7 @@ msgstr "Resumo"
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr ""
+msgstr "Fornecedor"
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0
