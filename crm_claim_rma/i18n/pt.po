@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-03 04:18+0000\n"
-"PO-Revision-Date: 2016-12-12 11:41+0000\n"
+"PO-Revision-Date: 2016-12-22 14:05+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/oca/OCA-rma-8-0/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -656,7 +656,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
@@ -692,7 +692,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,product_returned_quantity:0
 msgid "Quantity"
-msgstr ""
+msgstr "Quantidade"
 
 #. module: crm_claim_rma
 #: help:claim.line,product_returned_quantity:0
