@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-22 16:25+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-rma-8-0/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -65,13 +65,13 @@ msgstr ""
 #: field:claim.line.wizard,create_uid:0
 #: field:returned.lines.from.serial.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Создано"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_date:0
 #: field:returned.lines.from.serial.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Создан"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -129,7 +129,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -157,13 +157,13 @@ msgstr ""
 #: field:claim.line.wizard,write_uid:0
 #: field:returned.lines.from.serial.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_date:0
 #: field:returned.lines.from.serial.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -210,7 +210,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "Контрагент"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product

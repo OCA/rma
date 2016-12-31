@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-06 11:34+0000\n"
-"PO-Revision-Date: 2016-05-03 15:37+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/oca/OCA-rma-8-0/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -26,17 +26,17 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Companii"
 
 #. module: product_warranty
 #: field:return.instruction,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: product_warranty
 #: field:return.instruction,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat la"
 
 #. module: product_warranty
 #: view:res.company:product_warranty.company_form
@@ -53,7 +53,7 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nume Afişat"
 
 #. module: product_warranty
 #: field:return.instruction,id:0
@@ -99,17 +99,17 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima actualizare în"
 
 #. module: product_warranty
 #: field:return.instruction,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare făcută de"
 
 #. module: product_warranty
 #: field:return.instruction,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: product_warranty
 #: field:product.supplierinfo,warranty_duration:0

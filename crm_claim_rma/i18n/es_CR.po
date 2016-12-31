@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Costa Rica) (http://www.transifex.com/oca/OCA-rma-8-0/language/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
@@ -387,7 +387,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Factura"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -428,13 +428,13 @@ msgstr ""
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización en"
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0

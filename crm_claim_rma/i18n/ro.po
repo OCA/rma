@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/oca/OCA-rma-8-0/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -187,14 +187,14 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat la"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nume Afişat"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -387,7 +387,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Factura"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -422,19 +422,19 @@ msgstr ""
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima actualizare în"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare făcută de"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0

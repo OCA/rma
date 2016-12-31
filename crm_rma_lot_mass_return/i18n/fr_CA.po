@@ -1,0 +1,332 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_lot_mass_return
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:25+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-rma-8-0/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
+#, python-format
+msgid "(ID: %s) - %s - %s"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:72
+#, python-format
+msgid "(ID: %s) - %s - %s - %s"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:90
+#, python-format
+msgid "-->"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "Add claim lines using serial or invoice number"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Add items to the claim"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "All the valid lines will be added to the claim"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_crm_claim
+msgid "Claim"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,name:0
+msgid "Complete Lot Name"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_uid:0
+#: field:returned.lines.from.serial.wizard,create_uid:0
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,create_date:0
+#: field:returned.lines.from.serial.wizard,create_date:0
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Damaged Delivered Product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,display_name:0
+#: field:returned.lines.from.serial.wizard,display_name:0
+msgid "Display Name"
+msgstr "Afficher le nom"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Example: A4JD6JHS*4*The display is break"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Exchange request"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scan_data:0
+msgid "Field used to load and show the products"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,option_ids:0
+msgid "Field used to load the ids of invoice lines in invoices writed"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Field used to load the ids of products loaded"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Field used to show the current status of the lots loaded"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:returned.lines.from.serial.wizard,current_status:0
+msgid ""
+"Field used to show the current status of the product loaded(Name and "
+"quantity)"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
+msgid "ID"
+msgstr "Identifiant"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Imperfection"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,invoice_line_id:0
+#: help:claim.line.wizard,invoice_line_id:0
+msgid "Invoice Line"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,option_ids:0
+msgid "Invoice Lines to Select"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,__last_update:0
+#: field:returned.lines.from.serial.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_uid:0
+#: field:returned.lines.from.serial.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,write_date:0
+#: field:returned.lines.from.serial.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Legal retractation"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Lost during transport"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,lot_id:0
+msgid "Lot"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,message:0
+msgid "Message"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Not specified"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#. openerp-web
+#: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:93
+#, python-format
+msgid "Ok"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Order Cancellation"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Other"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,partner_id:0
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Perfect Conditions"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Client"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Physical Damage by Company"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:claim.line.wizard,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
+msgid "Product to claim"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,scan_data:0
+#: field:returned.lines.from.serial.wizard,scaned_data:0
+msgid "Products"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,lines_list_id:0
+msgid "Products selected"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:210
+#, python-format
+msgid "Search Product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Serial/Lot Number*reason number*Description here"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Shipping error"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: field:returned.lines.from.serial.wizard,current_status:0
+msgid "Status"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#, python-format
+msgid ""
+"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"\n"
+" %s"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid ""
+"The format for writing the reason for the claim and\n"
+"                            the description is:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:399
+#, python-format
+msgid "The product or invoice %s was not found"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "The reasons for the claim can be"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
+msgid "True"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
+msgid "Wizard to create product return lines"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Invoice Number to search the products in lines"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "Write the Serial/Lot Number to search the product"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You are about to add new lines to the claim, Do you want to continue?."
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "You should use this windows on this way."
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
+msgid "or"
+msgstr ""

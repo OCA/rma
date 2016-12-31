@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 04:18+0000\n"
-"PO-Revision-Date: 2016-12-23 08:32+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 16:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -404,7 +404,7 @@ msgstr "Avoir"
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice
 msgid "Invoices"
-msgstr ""
+msgstr "Factures"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_is_follower:0

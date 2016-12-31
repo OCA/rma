@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-10-14 10:32+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:20+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (France) (http://www.transifex.com/oca/OCA-rma-8-0/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314

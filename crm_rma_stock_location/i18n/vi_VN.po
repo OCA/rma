@@ -1,0 +1,257 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * crm_rma_stock_location
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: rma (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:24+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/oca/OCA-rma-8-0/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: crm_rma_stock_location
+#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+msgid "Cancel"
+msgstr "Hủy"
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.action_loss_picking_from_claim_picking
+msgid "Create Incoming Shipment to Breakage Loss Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.action_used_picking_from_claim_picking
+msgid "Create Incoming Shipment to Refurbish Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.action_stock_picking_from_claim_picking
+msgid "Create Incoming Shipment to Stock"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.action_claim_picking_loss
+msgid "Create a Product Loss"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+msgid "Create picking"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,create_uid:0
+msgid "Created by"
+msgstr "Tạo bởi"
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,create_date:0
+msgid "Created on"
+msgstr "Tạo vào"
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
+#: field:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
+msgid "Dest. Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: crm_rma_stock_location
+#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+msgid "Locations"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:65
+#, python-format
+msgid "Loss"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:stock.warehouse,loss_loc_id:0
+msgid "Loss Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:crm.claim:crm_rma_stock_location.crm_claim_rma_form_view_loss
+msgid "New Product Loss"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:claim.make.picking.from.picking.wizard,picking_line_ids:0
+msgid "Picking lines"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:product.product:crm_rma_stock_location.rma_product_product_tree_view
+msgid "Product Variants"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:stock.picking:crm_rma_stock_location.picking_in_form
+msgid "Product to Loss"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:stock.picking:crm_rma_stock_location.picking_in_form
+msgid "Product to refurbish stock"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:stock.picking:crm_rma_stock_location.picking_in_form
+msgid "Product to stock"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma_a
+msgid "RMA - Box A"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma_b
+msgid "RMA - Box B"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:product.product:crm_rma_stock_location.rma_product_search_view
+msgid "RMA Available Products"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:stock.location,name:crm_rma_stock_location.location_rma
+msgid "RMA Demo"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/product_product.py:42
+#: code:addons/crm_rma_stock_location/models/product_template.py:42
+#: field:product.product,rma_virtual_available:0
+#: field:product.template,rma_virtual_available:0
+#, python-format
+msgid "RMA Forecasted Quantity"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:product.product:crm_rma_stock_location.rma_product_search_view
+msgid "RMA Products"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/product_product.py:36
+#: code:addons/crm_rma_stock_location/models/product_template.py:36
+#: field:product.product,rma_qty_available:0
+#: field:product.template,rma_qty_available:0
+#, python-format
+msgid "RMA Quantity On Hand"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.actions.act_window,name:crm_rma_stock_location.rma_product_variant_action
+#: model:ir.ui.menu,name:crm_rma_stock_location.menu_stock_rma
+msgid "RMA Stock"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:56
+#, python-format
+msgid "Refurbish"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: field:stock.warehouse,lot_refurbish_id:0
+msgid "Refurbish Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+msgid "Select lines for picking"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+msgid "Select lines to add in picking"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:product.template,name:crm_rma_stock_location.product_socket_product_template
+msgid "Socket"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:85
+#: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
+msgid "Source Location"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:86
+#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
+#, python-format
+msgid "Source location where the returned products are"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:90
+#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
+#, python-format
+msgid "Target location to send returned products"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_claim_make_picking_wizard
+msgid "Wizard to create pickings from claim lines"
+msgstr ""
+
+#. module: crm_rma_stock_location
+#: model:ir.model,name:crm_rma_stock_location.model_claim_make_picking_from_picking_wizard
+msgid "Wizard to create pickings from picking lines"
+msgstr ""

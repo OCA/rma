@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-22 12:24+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-rma-8-0/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314
@@ -187,14 +187,14 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Afficher le nom"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -350,7 +350,7 @@ msgstr ""
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
 #: field:substate.substate,id:0
 msgid "ID"
-msgstr ""
+msgstr "Identifiant"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
@@ -387,7 +387,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Facture"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -428,13 +428,13 @@ msgstr ""
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0

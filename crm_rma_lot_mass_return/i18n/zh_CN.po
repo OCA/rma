@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/oca/OCA-rma-8-0/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "业务伙伴"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product

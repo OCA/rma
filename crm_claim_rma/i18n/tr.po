@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 04:18+0000\n"
-"PO-Revision-Date: 2016-12-23 08:32+0000\n"
+"POT-Creation-Date: 2016-12-24 04:45+0000\n"
+"PO-Revision-Date: 2016-12-30 21:47+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-rma-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Şirket"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -161,7 +161,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:res.partner:crm_claim_rma.view_partner_contact_tree
 msgid "Contacts"
-msgstr ""
+msgstr "Kişiler"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -205,7 +205,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Müşteri"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:170
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Görünen İsim"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -344,7 +344,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Sohbet özetini tutar (kaç mesa vs) Bu özet kanban görünümleri gibi yerlerde kullanılmak için doğrudan HTML formatındadır. "
 
 #. module: crm_claim_rma
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
@@ -387,7 +387,7 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
@@ -422,7 +422,7 @@ msgstr "Son mesaj tarihi"
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son değişiklik"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
@@ -494,7 +494,7 @@ msgstr "Mesajlar"
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mesaj ve iletişim geçmişi"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim21
@@ -586,7 +586,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Diğer"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
