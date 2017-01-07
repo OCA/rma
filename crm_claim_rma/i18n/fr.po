@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 04:45+0000\n"
-"PO-Revision-Date: 2016-12-27 16:50+0000\n"
+"POT-Creation-Date: 2016-12-31 07:27+0000\n"
+"PO-Revision-Date: 2017-01-06 06:30+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -863,7 +863,7 @@ msgstr "Emplacement source"
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
 msgid "Stage"
-msgstr ""
+msgstr "Étape"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_form_view

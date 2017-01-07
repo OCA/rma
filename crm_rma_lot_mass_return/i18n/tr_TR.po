@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-31 07:27+0000\n"
-"PO-Revision-Date: 2017-01-06 08:26+0000\n"
+"PO-Revision-Date: 2017-01-04 14:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-rma-8-0/language/tr/)\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/oca/OCA-rma-8-0/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
@@ -71,7 +71,7 @@ msgstr "Oluşturan"
 #: field:claim.line.wizard,create_date:0
 #: field:returned.lines.from.serial.wizard,create_date:0
 msgid "Created on"
-msgstr "Oluşturuldu"
+msgstr "Oluşturulma tarihi"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -82,7 +82,7 @@ msgstr ""
 #: field:claim.line.wizard,display_name:0
 #: field:returned.lines.from.serial.wizard,display_name:0
 msgid "Display Name"
-msgstr "Görünen İsim"
+msgstr "Görünen ad"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -129,7 +129,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
 msgid "ID"
-msgstr "ID"
+msgstr "Kimlik"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -140,7 +140,7 @@ msgstr ""
 #: field:claim.line.wizard,invoice_line_id:0
 #: help:claim.line.wizard,invoice_line_id:0
 msgid "Invoice Line"
-msgstr "Fatura kalemi"
+msgstr "Fatura hizası"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,option_ids:0
@@ -151,19 +151,19 @@ msgstr ""
 #: field:claim.line.wizard,__last_update:0
 #: field:returned.lines.from.serial.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr "Son değişiklik"
+msgstr "En son güncelleme tarihi"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_uid:0
 #: field:returned.lines.from.serial.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr "Son güncelleyen"
+msgstr "En son güncelleyen "
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_date:0
 #: field:returned.lines.from.serial.wizard,write_date:0
 msgid "Last Updated on"
-msgstr "Son güncelleme"
+msgstr "En son güncelleme tarihi"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -205,12 +205,12 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "Other"
-msgstr "Diğer"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr "İş Ortağı"
+msgstr "Ortak"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -230,7 +230,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Ürün"
 
 #. module: crm_rma_lot_mass_return
 #: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
@@ -241,7 +241,7 @@ msgstr ""
 #: field:returned.lines.from.serial.wizard,scan_data:0
 #: field:returned.lines.from.serial.wizard,scaned_data:0
 msgid "Products"
-msgstr ""
+msgstr "Ürünler"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,lines_list_id:0
@@ -267,7 +267,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,current_status:0
 msgid "Status"
-msgstr ""
+msgstr "Durum"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
@@ -299,7 +299,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
 msgid "True"
-msgstr ""
+msgstr "Doğru"
 
 #. module: crm_rma_lot_mass_return
 #: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
@@ -329,4 +329,4 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "or"
-msgstr "ya da"
+msgstr "ya da "
