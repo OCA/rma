@@ -6,8 +6,8 @@
 
 import time
 
-from openerp import models, fields, exceptions, api, _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
+from odoo import models, fields, exceptions, api, _
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 
 
 class ClaimMakePicking(models.TransientModel):
