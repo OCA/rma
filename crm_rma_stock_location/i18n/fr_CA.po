@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-07 05:48+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"PO-Revision-Date: 2017-01-11 15:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-rma-8-0/language/tr/)\n"
+"Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-rma-8-0/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: tr\n"
+"Language: fr_CA\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Cancel"
-msgstr "Vazgeç"
+msgstr "Annuler"
 
 #. module: crm_rma_stock_location
 #: model:ir.actions.act_window,name:crm_rma_stock_location.action_loss_picking_from_claim_picking
@@ -50,12 +50,12 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_uid:0
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr "Créé par"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_date:0
 msgid "Created on"
-msgstr "Oluşturuldu"
+msgstr "Créé le"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
@@ -67,27 +67,27 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,display_name:0
 msgid "Display Name"
-msgstr "Görünen İsim"
+msgstr "Afficher le nom"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
 msgid "ID"
-msgstr "ID"
+msgstr "Identifiant"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr "Son değişiklik"
+msgstr ""
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr "Son güncelleyen"
+msgstr "Dernière mise à jour par"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_date:0
 msgid "Last Updated on"
-msgstr "Son güncelleme"
+msgstr "Dernière mise à jour le"
 
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
@@ -118,7 +118,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_product
 msgid "Product"
-msgstr "Ürün"
+msgstr ""
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_template

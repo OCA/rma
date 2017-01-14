@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 07:27+0000\n"
-"PO-Revision-Date: 2017-01-06 08:26+0000\n"
+"POT-Creation-Date: 2017-01-07 05:48+0000\n"
+"PO-Revision-Date: 2017-01-13 09:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-rma-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -398,7 +398,7 @@ msgstr "Fatura kalemi"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
 msgid "Invoice Refund"
-msgstr ""
+msgstr "Fatura İadesi"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -617,7 +617,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Toplama Listesi"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:405
@@ -656,7 +656,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Ürün"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
@@ -875,7 +875,7 @@ msgstr "Durum"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Stok Taşı"
 
 #. module: crm_claim_rma
 #: field:claim.line,substate_id:0 field:substate.substate,name:0
