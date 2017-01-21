@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 05:48+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"POT-Creation-Date: 2017-01-14 06:26+0000\n"
+"PO-Revision-Date: 2017-01-17 19:17+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-rma-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -393,7 +393,7 @@ msgstr "Factura"
 #: field:claim.line,invoice_line_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Línia factura"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -656,7 +656,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Producte"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
@@ -692,7 +692,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,product_returned_quantity:0
 msgid "Quantity"
-msgstr ""
+msgstr "Quantitat"
 
 #. module: crm_claim_rma
 #: help:claim.line,product_returned_quantity:0
@@ -875,7 +875,7 @@ msgstr "Estat"
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Moure l'estoc"
 
 #. module: crm_claim_rma
 #: field:claim.line,substate_id:0 field:substate.substate,name:0

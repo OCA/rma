@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 04:45+0000\n"
-"PO-Revision-Date: 2016-12-27 08:26+0000\n"
+"POT-Creation-Date: 2017-01-14 06:26+0000\n"
+"PO-Revision-Date: 2017-01-19 20:16+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/oca/OCA-rma-8-0/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: model:ir.model,name:crm_claim_rma.model_crm_claim
 #: field:stock.picking,claim_id:0
 msgid "Claim"
-msgstr ""
+msgstr "Reklamation"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_form_view
@@ -106,7 +106,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,claim_origin:0
 msgid "Claim Subject"
-msgstr ""
+msgstr "Reklamationsämne"
 
 #. module: crm_claim_rma
 #: help:claim.line,claim_type:0
@@ -140,12 +140,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_form_view
 msgid "Claims"
-msgstr ""
+msgstr "Reklamationer"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Företag"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -199,7 +199,7 @@ msgstr "Skapad den"
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Current"
-msgstr ""
+msgstr "Aktuell."
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
@@ -267,7 +267,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Draft and Open Claims"
-msgstr ""
+msgstr "Utkast och Oreglerade Reklamationer"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314
@@ -306,7 +306,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 msgid "Follow Up"
-msgstr ""
+msgstr "Följ Upp"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_follower_ids:0
@@ -327,7 +327,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Group By..."
-msgstr ""
+msgstr "Gruppera efter..."
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -337,7 +337,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "High"
-msgstr ""
+msgstr "Hög"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_summary:0 help:stock.move,message_summary:0
@@ -554,7 +554,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
@@ -640,7 +640,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 #. module: crm_claim_rma
 #: help:claim.line,priority:0
@@ -809,12 +809,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
 msgid "Sales Team"
-msgstr ""
+msgstr "Försäljningsteam"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Search Claims"
-msgstr ""
+msgstr "Sök Reklamationer"
 
 #. module: crm_claim_rma
 #: help:claim.line,substate_id:0
@@ -863,7 +863,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
 msgid "Stage"
-msgstr ""
+msgstr "Steg"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_form_view

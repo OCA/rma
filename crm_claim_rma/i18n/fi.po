@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 05:48+0000\n"
-"PO-Revision-Date: 2017-01-13 09:29+0000\n"
+"POT-Creation-Date: 2017-01-14 06:26+0000\n"
+"PO-Revision-Date: 2017-01-17 12:12+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-rma-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0 field:claim.line,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Yritys"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.crm_claim_line_tree_view
@@ -279,7 +279,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
@@ -337,7 +337,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "High"
-msgstr ""
+msgstr "Korkea"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_summary:0 help:stock.move,message_summary:0
@@ -554,7 +554,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normaali"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
@@ -640,7 +640,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteetti"
 
 #. module: crm_claim_rma
 #: help:claim.line,priority:0

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 04:45+0000\n"
-"PO-Revision-Date: 2016-12-27 08:21+0000\n"
+"POT-Creation-Date: 2017-01-14 06:26+0000\n"
+"PO-Revision-Date: 2017-01-19 20:17+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/oca/OCA-rma-8-0/language/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: model:ir.model,name:crm_rma_lot_mass_return.model_crm_claim
 msgid "Claim"
-msgstr ""
+msgstr "Reklamasjon"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,name:0
