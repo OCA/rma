@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 05:48+0000\n"
-"PO-Revision-Date: 2017-01-11 15:39+0000\n"
+"POT-Creation-Date: 2017-01-21 05:59+0000\n"
+"PO-Revision-Date: 2017-02-17 15:35+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr ""
 #: field:claim.line.wizard,invoice_line_id:0
 #: help:claim.line.wizard,invoice_line_id:0
 msgid "Invoice Line"
-msgstr ""
+msgstr "LInha da fatura"
 
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,option_ids:0
