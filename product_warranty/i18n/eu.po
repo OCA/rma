@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:46+0000\n"
-"PO-Revision-Date: 2016-10-11 09:52+0000\n"
+"POT-Creation-Date: 2017-02-18 06:07+0000\n"
+"PO-Revision-Date: 2017-02-23 15:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Basque (http://www.transifex.com/oca/OCA-rma-8-0/language/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Enpresak"
 
 #. module: product_warranty
 #: field:return.instruction,create_uid:0

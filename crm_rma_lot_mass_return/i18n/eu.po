@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-10-11 09:51+0000\n"
+"POT-Creation-Date: 2017-02-18 06:07+0000\n"
+"PO-Revision-Date: 2017-02-23 15:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Basque (http://www.transifex.com/oca/OCA-rma-8-0/language/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,7 @@ msgstr ""
 #: code:addons/crm_rma_lot_mass_return/static/src/js/barcode_text.js:93
 #, python-format
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -210,7 +210,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "Kidea"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -230,7 +230,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Produktua"
 
 #. module: crm_rma_lot_mass_return
 #: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
@@ -299,7 +299,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
 msgid "True"
-msgstr ""
+msgstr "True"
 
 #. module: crm_rma_lot_mass_return
 #: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
