@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 04:18+0000\n"
-"PO-Revision-Date: 2016-12-15 10:12+0000\n"
+"POT-Creation-Date: 2017-02-25 05:59+0000\n"
+"PO-Revision-Date: 2017-03-02 09:14+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -279,7 +279,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
