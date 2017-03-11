@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 06:26+0000\n"
-"PO-Revision-Date: 2017-01-19 20:16+0000\n"
+"POT-Creation-Date: 2017-03-04 06:09+0000\n"
+"PO-Revision-Date: 2017-03-10 13:16+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/oca/OCA-rma-8-0/language/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -1010,7 +1010,7 @@ msgstr "Gyldig"
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "Very High"
-msgstr ""
+msgstr "Veldig høy"
 
 #. module: crm_claim_rma
 #: field:crm.claim,warehouse_id:0

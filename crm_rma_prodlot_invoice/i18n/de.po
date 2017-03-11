@@ -3,13 +3,13 @@
 # * crm_rma_prodlot_invoice
 # 
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-19 12:26+0000\n"
-"PO-Revision-Date: 2016-01-18 10:19+0000\n"
+"POT-Creation-Date: 2017-03-04 06:10+0000\n"
+"PO-Revision-Date: 2017-03-05 10:11+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-rma-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,11 @@ msgstr ""
 #, python-format
 msgid "%s - Lot Number: %s - %s"
 msgstr "%s - Los Nummer: %s - %s"
+
+#. module: crm_rma_prodlot_invoice
+#: field:stock.production.lot,lot_complete_name:0
+msgid "Complete Lot Name"
+msgstr "Vollständige Losbezeichnung"
 
 #. module: crm_rma_prodlot_invoice
 #: field:stock.production.lot,invoice_line_id:0

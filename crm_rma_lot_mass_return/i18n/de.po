@@ -3,14 +3,14 @@
 # * crm_rma_lot_mass_return
 # 
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 05:22+0000\n"
-"PO-Revision-Date: 2016-10-04 09:43+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2017-03-04 06:09+0000\n"
+"PO-Revision-Date: 2017-03-10 13:16+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-rma-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +60,7 @@ msgstr "Reklamation"
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,name:0
 msgid "Complete Lot Name"
-msgstr ""
+msgstr "Vollständige Losbezeichnung"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_uid:0
@@ -184,7 +184,7 @@ msgstr "Los"
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,message:0
 msgid "Message"
-msgstr ""
+msgstr "Meldung"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
