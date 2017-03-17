@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="location_rma" model="stock.location">
+        <field name="name">WH RMA</field>
+        <field name="usage">internal</field>
+    </record>
+
+    <record id="location_rma_shop0" model="stock.location">
+        <field name="name">WH RMA</field>
+        <field name="usage">internal</field>
+    </record>
+
+    <record id="picking_type_rma_cust_out" model="stock.picking.type">
+        <field name="name">RMA Customer OUT</field>
+        <field name="sequence_id" ref="rma_seq"/>
+        <field name="default_location_src_id" ref="rma.location_rma"/>
+        <field name="default_location_dest_id"
+               ref="stock.stock_location_customers"/>
+        <field name="warehouse_id" eval="False"/>
+        <field name="code">outgoing</field>
+    </record>
+
+    <record id="picking_type_rma_cust_in" model="stock.picking.type">
+        <field name="name">RMA Customer IN</field>
+        <field name="sequence_id" ref="rma_seq"/>
+        <field name="default_location_src_id" ref="stock.stock_location_customers"/>
+        <field name="default_location_dest_id"
+               ref="rma.location_rma"/>
+        <field name="warehouse_id" eval="False"/>
+        <field name="code">incoming</field>
+    </record>
+
+    <record id="picking_type_rma_sup_out" model="stock.picking.type">
+        <field name="name">RMA Supplier OUT</field>
+        <field name="sequence_id" ref="rma_supplier_seq"/>
+        <field name="default_location_src_id" ref="rma.location_rma"/>
+        <field name="default_location_dest_id"
+               ref="stock.stock_location_suppliers"/>
+        <field name="warehouse_id" eval="False"/>
+        <field name="code">outgoing</field>
+    </record>
+
+    <record id="picking_type_rma_sup_in" model="stock.picking.type">
+        <field name="name">RMA Supplier IN</field>
+        <field name="sequence_id" ref="rma_seq"/>
+        <field name="default_location_src_id" ref="stock.stock_location_suppliers"/>
+        <field name="default_location_dest_id"
+               ref="rma.location_rma"/>
+        <field name="warehouse_id" eval="False"/>
+        <field name="code">incoming</field>
+    </record>
+
+    <record id="stock.stock_warehouse_shop0" model="stock.warehouse">
+        <field name="lot_rma_id" ref="location_rma_shop0"/>
+        <field name="rma_cust_out_type_id" ref="picking_type_rma_cust_out"/>
+        <field name="rma_cust_in_type_id" ref="picking_type_rma_cust_in"/>
+        <field name="rma_sup_out_type_id" ref="picking_type_rma_sup_out"/>
+        <field name="rma_sup_in_type_id" ref="picking_type_rma_sup_in"/>
+    </record>
+
+    <record id="stock.warehouse0" model="stock.warehouse">
+        <field name="lot_rma_id" ref="location_rma"/>
+        <field name="rma_cust_out_type_id" ref="picking_type_rma_cust_out"/>
+        <field name="rma_cust_in_type_id" ref="picking_type_rma_cust_in"/>
+        <field name="rma_sup_out_type_id" ref="picking_type_rma_sup_out"/>
+        <field name="rma_sup_in_type_id" ref="picking_type_rma_sup_in"/>
+    </record>
+
+</odoo>
