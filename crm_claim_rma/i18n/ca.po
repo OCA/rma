@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 06:26+0000\n"
-"PO-Revision-Date: 2017-01-17 19:17+0000\n"
+"POT-Creation-Date: 2017-03-11 06:28+0000\n"
+"PO-Revision-Date: 2017-03-14 18:29+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-rma-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -327,7 +327,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupat per..."
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -404,7 +404,7 @@ msgstr ""
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
 #: model:ir.actions.act_window,name:crm_claim_rma.act_crm_claim_rma_invoice
 msgid "Invoices"
-msgstr ""
+msgstr "Factures"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_is_follower:0
