@@ -41,6 +41,7 @@ Upgrade the standard crm_claim module to add :
 
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
