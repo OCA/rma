@@ -40,6 +40,7 @@ Upgrade the standard crm_claim module to add :
 
 
 [//]: # (addons)
+
 Unported addons
 ---------------
 addon | version | summary
