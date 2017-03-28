@@ -59,6 +59,7 @@ addon | version | summary
 [product_warranty](product_warranty/) | 8.0.1.0.0 | Product warranty
 [rma](rma/) | 8.0.1.0.0 | App RMA
 
+
 Unported addons
 ---------------
 addon | version | summary
