@@ -21,3 +21,9 @@ class StockWarehouse(models.Model):
                                           'RMA Customer in Type')
     rma_sup_in_type_id = fields.Many2one('stock.picking.type',
                                          'RMA Supplier in Type')
+
+
+class StockLocationRoute(models.Model):
+    _inherit = "stock.location.route"
+
+    rma_selectable = fields.Boolean(string="Selectable on RMA Lines")

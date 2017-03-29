@@ -33,9 +33,11 @@ To configure this module, you need to:
    address" if needed.
 #. Go to Inventory > Settings > Configuration > Warehouse management >
    Warehouses and add a default RMA location and RMA picking type for customers
-   and suppliers RMA picking type. It's very important to select the type of
-   operation supplier if we are moving in the company and customer if we are
-   moving out of the company.
+   and suppliers RMA picking type. In case the warehouse is configured to
+   use routes, you need to create at least one route per rma type with at
+   least two push rules (one for inbound another for outbound) it's very
+   important to select the typeof operation supplier if we are moving in the
+   company and customer if we are moving out of the company.
 
 Usage
 =====
@@ -48,8 +50,8 @@ Create an RMA:
 #. Request approval and approve.
 #. Click on RMA Lines button.
 #. Click on more and select an option: "Receive products", "Create Delivery
-   Order, Create Refund"
-#. Go back to the RMA. Set the RMA to done if not further action is required
+   Order, Create Refund".
+#. Go back to the RMA. Set the RMA to done if not further action is required.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

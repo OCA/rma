@@ -107,7 +107,7 @@ class RmaRefund(models.TransientModel):
         rma_line_ids = self.env['rma.order.line'].browse(
             self.env.context['active_ids'])
         for line in rma_line_ids:
-            if line.operation != 'refund':
+            if line.operation_id.type != 'refund':
                 raise exceptions.Warning(
                     _('The operation is not refund for at least one line'))
             if line.state != 'approved':
@@ -119,7 +119,7 @@ class RmaRefund(models.TransientModel):
             new_invoice.type in ['out_refund', 'out_invoice']) \
             else 'action_invoice_tree2'
         result = self.env.ref('account.%s' % action).read()[0]
-        invoice_domain = result['domain']
+        invoice_domain = eval(result['domain'])
         invoice_domain.append(('id', '=', new_invoice.id))
         result['domain'] = invoice_domain
         return result

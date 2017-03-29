@@ -18,6 +18,8 @@ class AccountInvoice(models.Model):
         for invl in self.invoice_line_ids:
             for rmal in invl.rma_line_ids:
                 rma_list.append(rmal.rma_id.id)
+            for rfdl in invl.rma_line_refund_ids:
+                rma_list.append(rfdl.rma_id.id)
         self.rma_count = len(list(set(rma_list)))
 
     rma_count = fields.Integer(compute=_compute_rma_count,
@@ -32,6 +34,8 @@ class AccountInvoice(models.Model):
         for invl in self.invoice_line_ids:
             for rmal in invl.rma_line_ids:
                 rma_list.append(rmal.rma_id.id)
+            for rfdl in invl.rma_line_refund_ids:
+                rma_list.append(rfdl.rma_id.id)
         self.rma_count = len(list(set(rma_list)))
         # choose the view_mode accordingly
         if len(rma_list) != 1:

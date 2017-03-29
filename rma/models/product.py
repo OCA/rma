@@ -11,8 +11,5 @@ from openerp import fields, models
 class ProductCategory(models.Model):
     _inherit = 'product.category'
 
-    rma_operation = fields.Selection([('refund', 'Refund'),
-                                      ('repair', 'Receive and repair'),
-                                      ('replace', 'Replace')],
-                                     string="Default RMA Operation",
-                                     default='replace')
+    rma_operation_id = fields.Many2one(
+        comodel_name="rma.operation", string="RMA Operation")

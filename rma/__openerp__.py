@@ -16,6 +16,8 @@
               "Odoo Community Association (OCA)",
     'website': 'http://www.github.com/OCA/rma',
     'depends': ['account', 'stock', 'mail'],
+    'demo': ['demo/stock.xml',
+             'demo/rma.xml'],
     'data': ['security/rma.xml',
              'security/ir.model.access.csv',
              'views/rma_view.xml',
@@ -25,8 +27,7 @@
              'views/product_view.xml',
              'wizards/rma_make_picking.xml',
              'wizards/rma_refund.xml',
-             'wizards/stock_config_settings.xml',
-             'data/stock.xml'],
+             'wizards/stock_config_settings.xml'],
     'installable': True,
     'auto_install': False,
 }

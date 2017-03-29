@@ -3,4 +3,6 @@ access_rma_user,rma.order.user,model_rma_order,group_rma_user,1,1,1,1
 access_rma_manager,rma.order.manager,model_rma_order,group_rma_manager,1,1,1,1
 access_rma_line_user,rma.order.line.user,model_rma_order_line,group_rma_user,1,1,1,1
 access_rma_line_manager,rma.order.line,model_rma_order_line,group_rma_manager,1,1,1,1
+access_rma_operation_user,access_rma_operation,model_rma_operation,group_rma_user,1,1,1,1
+access_rma_operation_manager,access_rma_operation,model_rma_operation,group_rma_manager,1,1,1,1
 access_stock_config_settings,access_stock_config_settings,model_stock_config_settings,stock.group_stock_manager,1,1,1,1

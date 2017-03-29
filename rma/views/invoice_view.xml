@@ -53,7 +53,7 @@
                         <page string="RMA Lines">
                             <field name="rma_line_ids"/>
                         </page>
-                        <page string="Refunded Rma Lines">
+                        <page string="Refunded RMA Lines">
                             <field name="rma_line_refund_ids"/>
                         </page>
                     </notebook>

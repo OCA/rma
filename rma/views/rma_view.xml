@@ -31,7 +31,7 @@
                     <field name="state"/>
                     <field name="product_id"/>
                     <field name="name"/>
-                    <field name="operation"/>
+                    <field name="operation_id"/>
                     <field name="uom_id" groups="product.group_uom"/>
                     <field name="product_qty"/>
                     <field name="qty_to_receive"/>
@@ -43,8 +43,6 @@
                     <field name="qty_delivered"/>
                     <field name="qty_refunded"/>
                     <field name="price_unit"/>
-                    <!--<field name="refund_status"/>-->
-                    <!--<field name="ship_status"/>-->
                 </tree>
             </field>
         </record>
@@ -74,13 +72,13 @@
                     </div>
                     <group>
                         <group col="4" string="RMA">
-                            <field name="rma_id"/>
-                            <field name="state"/>
-                            <field name="requested_by"/>
-                            <field name="assigned_to"/>
-                            <field name="product_id"/>
-                            <field name="price_unit"/>
-                            <field name="operation"/>
+                            <field name="rma_id" readonly="1"/>
+                            <field name="state" readonly="1"/>
+                            <field name="requested_by" readonly="1"/>
+                            <field name="assigned_to" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="price_unit" readonly="1"/>
+                            <field name="operation_id" readonly="1"/>
                             <field name="invoice_line_id" invisible="True"/>
                             <field name="uom_id" groups="product.group_uom" readonly="1"/>
                             <field name="product_qty"/>
@@ -132,6 +130,23 @@
                     <field name="reference"/>
                     <field name="partner_id" groups="base.group_user"
                            string="Supplier"/>
+                    <field name="requested_by" groups="base.group_user"/>
+                    <field name="assigned_to" groups="base.group_user"/>
+                    <field name="date_rma"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_rma_dropship_tree" model="ir.ui.view">
+            <field name="name">rma.order.tree</field>
+            <field name="model">rma.order</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'"
+                      decoration-muted="state== 'done'" string="RMA">
+                    <field name="state"/>
+                    <field name="reference"/>
+                    <field name="partner_id" groups="base.group_user" string="Customer"/>
                     <field name="requested_by" groups="base.group_user"/>
                     <field name="assigned_to" groups="base.group_user"/>
                     <field name="date_rma"/>
@@ -231,6 +246,7 @@
                                    groups='rma.group_rma_delivery_invoice_address'/>
                             <field name="warehouse_id"/>
                             <field name="date_rma"/>
+                            <field name="type" invisible="1"/>
                         </group>
                     </group>
                     <notebook colspan="4">
@@ -245,7 +261,7 @@
                                     <field name="origin"/>
                                     <field name="product_id"/>
                                     <field name="name"/>
-                                    <field name="operation"/>
+                                    <field name="operation_id"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
                                     <field name="qty_to_receive"/>
@@ -368,6 +384,7 @@
                                    groups='rma.group_rma_delivery_invoice_address'/>
                             <field name="warehouse_id"/>
                             <field name="date_rma"/>
+                            <field name="type" invisible="1"/>
                         </group>
                     </group>
                     <notebook colspan="4">
@@ -382,7 +399,7 @@
                                     <field name="origin"/>
                                     <field name="product_id"/>
                                     <field name="name"/>
-                                    <field name="operation"/>
+                                    <field name="operation_id"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
                                     <field name="qty_to_receive"/>
@@ -393,6 +410,144 @@
                                     <field name="qty_outgoing"/>
                                     <field name="qty_delivered"/>
                                     <field name="qty_refunded"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <group>
+                                    <field name="comment"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_rma_dropship_form" model="ir.ui.view">
+            <field name="name">rma.order.form</field>
+            <field name="model">rma.order</field>
+            <field name="arch" type="xml">
+                <form string="RMA">
+                <field name="state" invisible="True"/>
+                <header>
+                    <button name="action_rma_to_approve" type="object"
+                            string="Request Approval"
+                            attrs="{'invisible':[('state', '!=', 'draft')]}"
+                            class="oe_highlight" groups="rma.group_rma_user"/>
+                    <button name="action_rma_draft" type="object"
+                            string="Back to Draft"
+                            attrs="{'invisible':[('state', 'not in', ('to_approve', 'done'))]}" class="oe_highlight"
+                            groups="rma.group_rma_user"/>
+                    <button name="action_rma_approve" type="object"
+                            string="Approve"
+                            attrs="{'invisible':[('state', '!=', 'to_approve')]}" class="oe_highlight" groups="rma.group_rma_manager"/>
+                    <button name="action_rma_done" type="object"
+                            string="Done"
+                            attrs="{'invisible':[('state', '!=', 'approved')]}"
+                            groups="rma.group_rma_manager"/>
+                    <field name="state" widget="statusbar" nolabel="1"/>
+                </header>
+                <sheet string="RMA">
+                    <div class="oe_button_box">
+                        <button type="object"  name="action_view_in_shipments"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                groups="stock.group_stock_user">
+                            <field name="in_shipment_count" widget="statinfo"
+                                   string="Shipped in"/>
+                        </button>
+                        <button type="object"  name="action_view_out_shipments"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                groups="stock.group_stock_user">
+                            <field name="out_shipment_count" widget="statinfo"
+                                   string="Shipped out"/>
+                        </button>
+                        <button type="object"  name="action_view_invoice_refund"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                groups="account.group_account_user">
+                            <field name="invoice_refund_count" widget="statinfo"
+                                   string="Refunds"/>
+                        </button>
+                        <button type="object"  name="action_view_invoice"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                groups="account.group_account_user">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+                        <button type="object"  name="action_view_lines"
+                                class="oe_stat_button"
+                                icon="fa-list"
+                                groups="rma.group_rma_user">
+                            <field name="line_count" widget="statinfo"
+                                   string="RMA Lines"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="partner_id"
+                               domain="[('customer','=',True)]"
+                               string="Customer"/>
+                        <field name="add_invoice_id"
+                               domain="[('type','=','out_invoice'),'|',('commercial_partner_id','=',partner_id),
+                               ('partner_id','=',partner_id)]"
+                               attrs="{'invisible':[('state','not in',['draft','to_approve'])]}"/>
+                    </group>
+                    <group>
+                        <group col="4">
+                            <field name="assigned_to"
+                                   groups="base.group_user"
+                                   context="{'default_groups_ref': ['rma.rma_user']}"/>
+                            <field name="reference"/>
+                            <field name="requested_by"
+                                   groups="base.group_user"
+                                   context="{'default_groups_ref': ['rma.rma_user']}"/>
+                            <field name="delivery_address_id"
+                                   groups='rma.group_rma_delivery_invoice_address'/>
+                            <field name="invoice_address_id"
+                                   groups='rma.group_rma_delivery_invoice_address'/>
+                            <field name="warehouse_id"/>
+                            <field name="date_rma"/>
+                            <field name="type" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="RMA Lines">
+                            <field name="rma_line_ids">
+                                <tree string="RMA Lines" editable="bottom">
+                                    <field name="invoice_line_id" invisible="True"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="state" invisible="True"/>
+                                    <field name="refund_line_id"
+                                           invisible="True"/>
+                                    <field name="origin"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="operation_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="uom_id" groups="product.group_uom"/>
+                                    <field name="qty_to_receive"/>
+                                    <field name="qty_incoming"/>
+                                    <field name="qty_to_deliver"/>
+                                    <field name="qty_to_refund"/>
+                                    <field name="qty_received"/>
+                                    <field name="qty_outgoing"/>
+                                    <field name="qty_delivered"/>
+                                    <field name="qty_refunded"/>
+                                    <field name="price_unit"/>
                                 </tree>
                             </field>
                         </page>
@@ -454,12 +609,54 @@
             </field>
         </record>
 
+        <record id="rma_operation_tree" model="ir.ui.view">
+            <field name="name">rma.operation.tree</field>
+            <field name="model">rma.operation</field>
+            <field name="arch" type="xml">
+                <tree string="RMA Operations">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="route_customer"/>
+                    <field name="route_supplier"/>
+                    <field name="route_dropship"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rma_operation_form" model="ir.ui.view">
+            <field name="name">rma.operation.form</field>
+            <field name="model">rma.operation</field>
+            <field name="arch" type="xml">
+                <form string="RMA Operations">
+                    <group colspan="4" col="2">
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="route_customer"/>
+                        <field name="route_supplier"/>
+                        <field name="route_dropship"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_rma_operation" model="ir.actions.act_window">
+            <field name="name">Operations</field>
+            <field name="res_model">rma.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="rma_operation_tree"/>
+        </record>
+
         <record id="action_rma_customer" model="ir.actions.act_window">
             <field name="name">Customer RMA</field>
             <field name="res_model">rma.order</field>
             <field name="view_type">form</field>
             <field name="domain">[('type','=', 'customer')]</field>
-            <field name="context">{"search_default_requested_by":uid}</field>
+            <field name="context">{"search_default_requested_by":uid,
+                'customer':1}</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_rma_tree"/>
         </record>
@@ -472,6 +669,17 @@
             <field name="context">{"search_default_requested_by":uid, 'supplier':1}</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_rma_supplier_tree"/>
+        </record>
+
+        <record id="action_rma_dropship" model="ir.actions.act_window">
+            <field name="name">Dropship RMA</field>
+            <field name="res_model">rma.order</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('type','=', 'dropship')]</field>
+            <field name="context">{"search_default_requested_by":uid,
+                'dropship':1}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_rma_dropship_tree"/>
         </record>
 
         <record id="action_rma_customer_lines" model="ir.actions.act_window">
@@ -496,6 +704,17 @@
             <field name="view_id" ref="view_rma_line_tree"/>
         </record>
 
+        <record id="action_rma_dropship_lines" model="ir.actions.act_window">
+            <field name="name">RMA Dropship Lines</field>
+            <field name="res_model">rma.order.line</field>
+            <field name="domain">[('state','in', ['approved', 'done']),
+                ('type','=', 'dropship')]</field>
+            <field name="context">{"search_default_requested_by":uid}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_rma_line_tree"/>
+        </record>
+
         <record id="action_rma_supplier_tree"
                 model="ir.actions.act_window.view">
             <field eval="1" name="sequence"/>
@@ -509,6 +728,21 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_rma_supplier_form"/>
             <field name="act_window_id" ref="action_rma_supplier"/>
+        </record>
+
+        <record id="action_rma_dropship_tree"
+                model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_rma_dropship"/>
+        </record>
+
+        <record id="action_rma_dropship_form"
+                model="ir.actions.act_window.view">
+            <field eval="4" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_rma_dropship_form"/>
+            <field name="act_window_id" ref="action_rma_dropship"/>
         </record>
 
         <menuitem id="menu_rma"
@@ -531,8 +765,15 @@
             action="action_rma_supplier"/>
 
         <menuitem
-            id="menu_rma_line_customer"
+            id="menu_rma_act_dropship"
             sequence="30"
+            parent="menu_rma"
+            groups="rma.group_rma_user"
+            action="action_rma_dropship"/>
+
+        <menuitem
+            id="menu_rma_line_customer"
+            sequence="40"
             parent="menu_rma"
             groups="rma.group_rma_user"
             action="action_rma_customer_lines"
@@ -540,11 +781,32 @@
 
         <menuitem
             id="menu_rma_line_supplier"
-            sequence="30"
+            sequence="50"
             parent="menu_rma"
             groups="rma.group_rma_user"
             action="action_rma_supplier_lines"
             />
+
+        <menuitem
+            id="menu_rma_line_dropship"
+            sequence="60"
+            parent="menu_rma"
+            groups="rma.group_rma_user"
+            action="action_rma_dropship_lines"
+            />
+
+        <menuitem id="menu_rma_config"
+            name="RMA"
+            groups="rma.group_rma_user"
+            sequence="30"
+            parent="stock.menu_stock_config_settings"/>
+
+        <menuitem id="menu_rma_operation"
+            name="Operations"
+            groups="rma.group_rma_user"
+            sequence="35"
+            parent="rma.menu_rma_config"
+            action="action_rma_operation"/>
 
     </data>
 </odoo>
