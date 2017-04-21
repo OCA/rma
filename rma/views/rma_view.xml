@@ -32,6 +32,7 @@
                     <field name="product_id"/>
                     <field name="name"/>
                     <field name="operation_id"/>
+                    <field name="warranty_state"/>
                     <field name="uom_id" groups="product.group_uom"/>
                     <field name="product_qty"/>
                     <field name="qty_to_receive"/>
@@ -82,6 +83,8 @@
                             <field name="invoice_line_id" invisible="True"/>
                             <field name="uom_id" groups="product.group_uom" readonly="1"/>
                             <field name="product_qty"/>
+                            <field name="warranty_state"/>
+                            <field name="limit"/>
                         </group>
                     </group>
                     <group>
@@ -261,6 +264,8 @@
                                     <field name="origin"/>
                                     <field name="product_id"/>
                                     <field name="name"/>
+                                    <field name="warranty_state"/>
+                                    <field name="limit"/>
                                     <field name="operation_id"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
@@ -399,6 +404,8 @@
                                     <field name="origin"/>
                                     <field name="product_id"/>
                                     <field name="name"/>
+                                    <field name="warranty_state"/>
+                                    <field name="limit"/>
                                     <field name="operation_id"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
@@ -536,6 +543,8 @@
                                     <field name="origin"/>
                                     <field name="product_id"/>
                                     <field name="name"/>
+                                    <field name="warranty_state"/>
+                                    <field name="limit"/>
                                     <field name="operation_id"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
@@ -686,7 +695,8 @@
             <field name="name">RMA Customer Lines</field>
             <field name="res_model">rma.order.line</field>
             <field name="domain">[('state','in', ['approved', 'done']),
-                ('type','=', 'customer')]</field>
+                ('type','=', 'customer'), ('warranty_state','!=', 'expired')
+                ]</field>
             <field name="context">{"search_default_requested_by":uid}</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -697,7 +707,7 @@
             <field name="name">RMA Supplier Lines</field>
             <field name="res_model">rma.order.line</field>
             <field name="domain">[('state','in', ['approved', 'done']),
-                ('type','=', 'supplier')]</field>
+                ('type','=', 'supplier'), ('warranty_state','!=', 'expired')]</field>
             <field name="context">{"search_default_requested_by":uid}</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -708,7 +718,7 @@
             <field name="name">RMA Dropship Lines</field>
             <field name="res_model">rma.order.line</field>
             <field name="domain">[('state','in', ['approved', 'done']),
-                ('type','=', 'dropship')]</field>
+                ('type','=', 'dropship'), ('warranty_state','!=', 'expired')]</field>
             <field name="context">{"search_default_requested_by":uid}</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>

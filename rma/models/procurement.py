@@ -16,10 +16,15 @@ class ProcurementOrder(models.Model):
     @api.model
     def _run_move_create(self, procurement):
         res = super(ProcurementOrder, self)._run_move_create(procurement)
-        if procurement.rma_line_id and \
-                procurement.rma_line_id.rma_id.delivery_address_id:
-            res['partner_id'] = \
-                procurement.rma_line_id.rma_id.delivery_address_id.id
+        if procurement.rma_line_id:
+            line = procurement.rma_line_id
+            if line.rma_id.delivery_address_id:
+                res['partner_dest_id'] = line.rma_id.delivery_address_id.id
+            else:
+                seller = line.product_id.seller_ids.filtered(
+                    lambda p: p.name == line.invoice_id.partner_id)
+                partner = seller.warranty_return_address
+                res['partner_dest_id'] = partner.id
             res['rma_id'] = procurement.rma_line_id.id
         return res
 

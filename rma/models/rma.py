@@ -7,6 +7,11 @@
 from openerp import _, api, fields, models
 from openerp.addons import decimal_precision as dp
 from openerp.exceptions import UserError
+from dateutil.relativedelta import relativedelta
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+import math
+from datetime import datetime
+import calendar
 
 
 class RmaOrder(models.Model):
@@ -46,7 +51,6 @@ class RmaOrder(models.Model):
         'draft': [('readonly', False)]})
     delivery_address_id = fields.Many2one(
         'res.partner', readonly=True,
-        required=True,
         states={'draft': [('readonly', False)]},
         string='Partner delivery address',
         help="This address will be used to "
@@ -128,7 +132,8 @@ class RmaOrder(models.Model):
 
     @api.one
     def _compute_line_count(self):
-        self.line_count = len(self.rma_line_ids)
+        self.line_count = len(self.rma_line_ids.filtered(
+            lambda p: p.warranty_state != 'expired'))
 
     invoice_refund_count = fields.Integer(
         compute=_compute_invoice_refund_count,
@@ -307,7 +312,8 @@ class RmaOrder(models.Model):
         """
         action = self.env.ref('rma.action_rma_customer_lines')
         result = action.read()[0]
-        lines = self.rma_line_ids
+        lines = self.rma_line_ids.filtered(
+            lambda p: p.warranty_state != 'expired')
 
         # choose the view_mode accordingly
         if len(lines) != 1:
@@ -441,6 +447,33 @@ class RmaOrderLine(models.Model):
             else:
                 return False
 
+    @api.one
+    @api.depends('invoice_line_id')
+    def _compute_warranty(self):
+        limit = False
+        state = "undefined"
+        line = self.invoice_line_id
+        invoice_date = line.invoice_id.date_invoice
+        if self.type == 'supplier':
+            seller = line.product_id.seller_ids.filtered(
+                lambda p: p.name == line.invoice_id.partner_id)
+            warranty = seller.warranty_duration or False
+        else:
+            warranty = line.product_id.warranty
+
+        if warranty and invoice_date:
+            limit = datetime.strptime(
+                invoice_date, DEFAULT_SERVER_DATE_FORMAT) + relativedelta(
+                months=int(warranty))
+        if limit and warranty > 0:
+            if limit < datetime.now():
+                state = 'expired'
+            else:
+                state = 'valid'
+        if limit:
+            self.limit = datetime.strftime(limit, DEFAULT_SERVER_DATE_FORMAT)
+        self.warranty_state = state
+
     move_count = fields.Integer(compute=_compute_move_count,
                                 string='# of Moves', copy=False, default=0)
     name = fields.Text(string='Description', required=True)
@@ -489,6 +522,12 @@ class RmaOrderLine(models.Model):
     type = fields.Selection(related='rma_id.type')
     route_id = fields.Many2one('stock.location.route', string='Route',
                                domain=[('rma_selectable', '=', True)])
+    limit = fields.Date('Warranty Expiry Date', compute=_compute_warranty)
+    warranty_state = fields.Selection([('valid', _("Valid")),
+                                       ('expired', _("Expired")),
+                                       ('undefined', _("Undefined"))],
+                                      string='Warranty',
+                                      compute=_compute_warranty)
     product_qty = fields.Float(
         string='Ordered Qty', copy=False,
         digits=dp.get_precision('Product Unit of Measure'),
