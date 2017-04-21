@@ -4,7 +4,8 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     #
+# Copyright (C) 2009-2011  Akretion, Emmanuel Samyn                     # 
+# © 2017 Techspawn Solutions                                            #                  
 #                                                                       #
 # This program is free software: you can redistribute it and/or modify  #
 # it under the terms of the GNU General Public License as published by  #
@@ -25,11 +26,12 @@
     'version': '9.0.1.0.0',
     'category': 'Generic Modules/Product',
     'author': "Akretion,Odoo Community Association (OCA),Vauxoo",
+              "Techspawn Solutions"
     'website': 'http://akretion.com',
     'license': 'AGPL-3',
     'depends': ['product'],
     'data': [
-        'security/ir.model.access.csv',
+        #'security/ir.model.access.csv',
         'views/res_company.xml',
         'views/product_warranty.xml',
     ],
@@ -38,7 +40,7 @@
         'demo/res_company.xml',
     ],
     'test': [],
-    'installable': False,
+    'installable': True,
     'active': False,
     'images': ['images/product_warranty.png'],
 }

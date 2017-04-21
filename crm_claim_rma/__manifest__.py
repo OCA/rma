@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# © 2017 Techspawn Solutions
 # © 2015 Vauxoo
 # © 2015 Eezee-It
 # © 2009-2013 Akretion
@@ -10,6 +11,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'author': "Akretion, Camptocamp, Eezee-it, MONK Software, Vauxoo, "
               "Odoo Community Association (OCA)",
+              "Techspawn Solutions"
     'website': 'http://www.akretion.com, http://www.camptocamp.com, '
                'http://www.eezee-it.com, http://www.wearemonk.com, '
                'http://www.vauxoo.com',
@@ -33,12 +35,12 @@
         "views/claim_line.xml",
         'views/res_partner.xml',
         'views/stock_view.xml',
-        'security/ir.model.access.csv',
+        #'security/ir.model.access.csv',
     ],
     'demo': [],
     'test': [
         'test/test_invoice_refund.yml'
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
