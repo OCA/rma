@@ -11,35 +11,42 @@
     </record>
 
     <record id="seq_picking_type_rma_cust_out" model="ir.sequence">
-        <field name="name">RMA CUSTOMER OUT</field>
+        <field name="name">DOC</field>
         <field name="prefix">RCO</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
 
     <record id="seq_picking_type_rma_cust_in" model="ir.sequence">
-        <field name="name">RMA CUSTOMER IN</field>
+        <field name="name">INC</field>
         <field name="prefix">RCI</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
 
     <record id="seq_picking_type_rma_sup_out" model="ir.sequence">
-        <field name="name">RMA SUPPLIER OUT</field>
+        <field name="name">DOS</field>
         <field name="prefix">RSO</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
 
     <record id="seq_picking_type_rma_sup_in" model="ir.sequence">
-        <field name="name">RMA SUPPLIER IN</field>
+        <field name="name">INS</field>
         <field name="prefix">RSI</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
 
+    <record id="seq_picking_type_rma_dropship" model="ir.sequence">
+        <field name="name">DSS</field>
+        <field name="prefix">DSS</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
     <record id="picking_type_rma_cust_out" model="stock.picking.type">
-        <field name="name">RMA Customer OUT</field>
+        <field name="name">RMA → Customer</field>
         <field name="sequence_id" ref="seq_picking_type_rma_cust_out"/>
         <field name="default_location_src_id" ref="rma.location_rma"/>
         <field name="default_location_dest_id"
@@ -49,7 +56,7 @@
     </record>
 
     <record id="picking_type_rma_cust_in" model="stock.picking.type">
-        <field name="name">RMA Customer IN</field>
+        <field name="name">Customer → RMA</field>
         <field name="sequence_id" ref="seq_picking_type_rma_cust_in"/>
         <field name="default_location_src_id" ref="stock.stock_location_customers"/>
         <field name="default_location_dest_id"
@@ -59,7 +66,7 @@
     </record>
 
     <record id="picking_type_rma_sup_out" model="stock.picking.type">
-        <field name="name">RMA Supplier OUT</field>
+        <field name="name">RMA -> Supplier</field>
         <field name="sequence_id" ref="seq_picking_type_rma_sup_out"/>
         <field name="default_location_src_id" ref="rma.location_rma"/>
         <field name="default_location_dest_id"
@@ -69,7 +76,7 @@
     </record>
 
     <record id="picking_type_rma_sup_in" model="stock.picking.type">
-        <field name="name">RMA Supplier IN</field>
+        <field name="name">Supplier -> RMA</field>
         <field name="sequence_id" ref="seq_picking_type_rma_sup_in"/>
         <field name="default_location_src_id" ref="stock.stock_location_suppliers"/>
         <field name="default_location_dest_id"
@@ -79,8 +86,8 @@
     </record>
 
     <record id="picking_type_rma_dropship_return" model="stock.picking.type">
-        <field name="name">RMA Dropship Return</field>
-        <field name="sequence_id" ref="rma_seq"/>
+        <field name="name">Customer -> Supplier</field>
+        <field name="sequence_id" ref="seq_picking_type_rma_dropship"/>
         <field name="default_location_src_id"
                ref="stock.stock_location_customers"/>
         <field name="default_location_dest_id"
@@ -90,8 +97,8 @@
     </record>
 
     <record id="picking_type_rma_dropship" model="stock.picking.type">
-        <field name="name">RMA Dropship</field>
-        <field name="sequence_id" ref="rma_seq"/>
+        <field name="name">Supplier -> Customer</field>
+        <field name="sequence_id" ref="seq_picking_type_rma_dropship"/>
         <field name="default_location_src_id"
                ref="stock.stock_location_suppliers"/>
         <field name="default_location_dest_id"

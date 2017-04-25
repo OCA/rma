@@ -37,8 +37,11 @@ class RmaMakePicking(models.TransientModel):
                   'type': line.type,
                   'company_id': line.company_id.id,
                   'operation_id': line.operation_id.id,
+                  'invoice_line_id': line.invoice_line_id.id,
+                  'partner_address_id': line.partner_address_id.id,
                   'qty_to_receive': line.qty_to_receive,
                   'route_id': route,
+                  'is_dropship': line.is_dropship,
                   'qty_to_deliver': line.qty_to_deliver,
                   'line_id': line.id,
                   'wiz_id': self.env.context['active_id']}
@@ -83,30 +86,53 @@ class RmaMakePicking(models.TransientModel):
         return group_data
 
     @api.model
-    def _get_procurement_data(self, line, group, qty, picking_type):
-        if picking_type == 'incoming':
-            if line.type == 'dropship':
-                location = self.env.ref('stock.stock_location_suppliers')
-            else:
-                location = line.rma_id.warehouse_id.lot_rma_id
+    def _get_address(self, line, picking_type):
+        if line.is_dropship and picking_type == 'outgoing':
+            delivery_address = line.partner_address_id.id
         else:
-            if line.type == 'dropship':
-                location = self.env.ref('stock.stock_location_customers')
+            if line.rma_id.delivery_address_id:
+                delivery_address = line.rma_id.delivery_address_id.id
             else:
-                if line.type == 'customer':
+                seller = line.product_id.seller_ids.filtered(
+                    lambda p: p.name == \
+                              line.invoice_line_id.invoice_id.partner_id)
+                partner = seller.warranty_return_address
+                delivery_address = partner.id
+        return delivery_address
+
+    @api.model
+    def _get_procurement_data(self, line, group, qty, picking_type):
+        # incoming means returning products
+        if picking_type == 'incoming':
+            if line.type == 'customer':
+                if line.is_dropship:
                     location = self.env.ref('stock.stock_location_customers')
                 else:
-                    location = self.env.ref('stock.stock_location_suppliers')
+                    location = line.rma_id.warehouse_id.lot_rma_id
+            else:
+                location = self.env.ref('stock.stock_location_customers')
+
+        else:
+            # delivery order
+            if line.type == 'customer':
+                location = self.env.ref('stock.stock_location_supplier')
+            else:
+                if line.is_dropship:
+                    location = self.env.ref('stock.stock_location_supplier')
+                else:
+                    location = line.rma_id.warehouse_id.lot_rma_id
         warehouse = line.rma_id.warehouse_id
+        delivery_address = self._get_address(line, picking_type)
 
         procurement_data = {
-            'name': line.rma_id.name,
+            'name': line.operation_id.name,
             'group_id': group.id,
             'origin': line.rma_id.name,
             'warehouse_id': warehouse.id,
             'date_planned': time.strftime(DT_FORMAT),
             'product_id': line.product_id.id,
             'product_qty': qty,
+            'partner_dest_id': delivery_address,
             'product_uom': line.product_id.product_tmpl_id.uom_id.id,
             'location_id': location.id,
             'rma_line_id': line.line_id.id,
@@ -187,15 +213,24 @@ class RmaMakePickingItem(models.TransientModel):
     operation_id = fields.Many2one(comodel_name="rma.operation")
     route_id = fields.Many2one(
         'stock.location.route', string='Route')
+    partner_address_id = fields.Many2one(
+        'res.partner', readonly=True,
+        string='Partner Address',
+        help="This address of the supplier in case of Customer RMA operation "
+             "dropship. The address of the customer in case of Supplier RMA "
+             "operation dropship")
     product_qty = fields.Float(
         string='Quantity Ordered', copy=False,
         digits=dp.get_precision('Product Unit of Measure'),
         readonly=True)
     qty_to_receive = fields.Float(
-        string='Quantity To Receive',
+        string='Quantity To Return',
         digits=dp.get_precision('Product Unit of Measure'))
     qty_to_deliver = fields.Float(
         string='Quantity To Deliver',
         digits=dp.get_precision('Product Unit of Measure'))
     uom_id = fields.Many2one('product.uom', string='Unit of Measure',
                              readonly=True)
+    invoice_line_id = fields.Many2one('account.invoice.line',
+                                      string='Invoice Line')
+    is_dropship = fields.Boolean(string="Dropship")

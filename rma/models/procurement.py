@@ -18,14 +18,10 @@ class ProcurementOrder(models.Model):
         res = super(ProcurementOrder, self)._run_move_create(procurement)
         if procurement.rma_line_id:
             line = procurement.rma_line_id
-            if line.rma_id.delivery_address_id:
-                res['partner_dest_id'] = line.rma_id.delivery_address_id.id
-            else:
-                seller = line.product_id.seller_ids.filtered(
-                    lambda p: p.name == line.invoice_id.partner_id)
-                partner = seller.warranty_return_address
-                res['partner_dest_id'] = partner.id
-            res['rma_id'] = procurement.rma_line_id.id
+            if line.partner_address_id:
+                res['partner_id'] = line.partner_address_id.id
+            elif line.invoice_line_id.invoice_id.partner_id:
+                res['partner_id'] = line.invoice_id.partner_id.id
         return res
 
 

@@ -29,18 +29,15 @@ class RmaOrder(models.Model):
     def _get_default_type(self):
         if 'supplier' in self.env.context:
             return "supplier"
-        elif 'customer' in self.env.context:
-            return "customer"
         else:
-            return "dropship"
+            return "customer"
 
     name = fields.Char(string='Reference/Description', index=True,
                        readonly=True,
                        states={'progress': [('readonly', False)]},
                        copy=False)
     type = fields.Selection(
-        [('customer', 'Customer'), ('supplier', 'Supplier'),
-         ('dropship', 'Dropship')],
+        [('customer', 'Customer'), ('supplier', 'Supplier')],
         string="Type", required=True, default=_get_default_type, readonly=True)
     reference = fields.Char(string='Reference',
                             help="The partner reference of this RMA order.",
@@ -131,6 +128,11 @@ class RmaOrder(models.Model):
         self.out_shipment_count = len(list(set(picking_list)))
 
     @api.one
+    def _compute_supplier_line_count(self):
+        self.supplier_line_count = len(
+            self.env['rma.order.line'].search([('origin', '=', self.name)]))
+
+    @api.one
     def _compute_line_count(self):
         self.line_count = len(self.rma_line_ids.filtered(
             lambda p: p.warranty_state != 'expired'))
@@ -150,6 +152,9 @@ class RmaOrder(models.Model):
     line_count = fields.Integer(compute=_compute_line_count,
                                 string='# of Outgoing Shipments',
                                 copy=False)
+    supplier_line_count = fields.Integer(compute=_compute_supplier_line_count,
+                                         string='# of Outgoing Shipments',
+                                         copy=False)
 
     def _prepare_rma_line_from_inv_line(self, line):
         data = {
@@ -292,10 +297,51 @@ class RmaOrder(models.Model):
             rec.state = 'draft'
         return True
 
+    @api.model
+    def _create_supplier_rma(self, origin_rma, lines):
+        partners = lines.mapped('partner_address_id')
+        for partner in partners:
+            existing_rmas = self.env['rma.order'].search(
+                [('partner_id', '=', partner.id),
+                 ('state', '=', 'draft'),
+                 ('type', '=', 'supplier')])
+            if not len(existing_rmas):
+                rma_values = {'partner_id': partner.id,
+                              'delivery_address_id': partner.id,
+                              'invoice_address_id': partner.id,
+                              'type': 'supplier',
+                              'assigned_to': origin_rma.assigned_to.id,
+                              'requested_by': origin_rma.requested_by.id,
+                              'date_rma': origin_rma.date_rma,
+                              'warehouse_id': origin_rma.warehouse_id.id}
+                rma_id = self.env['rma.order'].create(rma_values)
+            else:
+                rma_id = existing_rmas[0]
+            for line in lines.filtered(
+                    lambda p: p.partner_address_id == partner):
+                line_values = {'origin': origin_rma.name,
+                               'name': line.name,
+                               'partner_address_id':
+                                   origin_rma.delivery_address_id.id,
+                               'invoice_line_id': line.supplier_inv_line_id.id,
+                               'product_id': line.product_id.id,
+                               'operation_id': line.operation_id.id,
+                               'product_qty': line.product_qty,
+                               'parent_rma_line': line.id,
+                               'rma_id': rma_id.id}
+                self.env['rma.order.line'].create(line_values)
+        return True
+
     @api.multi
     def action_rma_approve(self):
+        # pass the supplier address in case this is a customer RMA
         for rec in self:
             rec.state = 'approved'
+            # Only customer RMA can create supplier RMA
+            if rec.type == 'customer':
+                lines = rec.rma_line_ids.filtered(lambda p: p.is_dropship)
+                if lines:
+                    self._create_supplier_rma(rec, lines)
 
     @api.multi
     def action_rma_done(self):
@@ -305,16 +351,27 @@ class RmaOrder(models.Model):
 
     @api.multi
     def action_view_lines(self):
-        """
-        This function returns an action that display existing vendor refund
-        bills of given purchase order id.
-        When only one found, show the vendor bill immediately.
-        """
         action = self.env.ref('rma.action_rma_customer_lines')
         result = action.read()[0]
         lines = self.rma_line_ids.filtered(
             lambda p: p.warranty_state != 'expired')
 
+        # choose the view_mode accordingly
+        if len(lines) != 1:
+            result['domain'] = "[('id', 'in', " + \
+                               str(lines.ids) + ")]"
+        elif len(lines) == 1:
+            res = self.env.ref('rma.view_rma_line_form', False)
+            result['views'] = [(res and res.id or False, 'form')]
+            result['res_id'] = lines.id
+        return result
+
+    @api.multi
+    def action_view_supplier_lines(self):
+        action = self.env.ref('rma.action_rma_supplier_lines')
+        result = action.read()[0]
+
+        lines = self.env['rma.order.line'].search([('origin', '=', self.name)])
         # choose the view_mode accordingly
         if len(lines) != 1:
             result['domain'] = "[('id', 'in', " + \
@@ -344,7 +401,9 @@ class RmaOrderLine(models.Model):
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_to_receive(self):
         qty = 0.0
-        if self.operation_id.type in ('repair', 'replace') or \
+        if self.type == "customer" and self.operation_id.is_dropship:
+            self.qty_to_receive = qty
+        elif self.operation_id.type in ('repair', 'replace') or \
                 self.type == "customer":
             for move in self.move_ids:
                 if move.state == 'done' and (
@@ -358,7 +417,9 @@ class RmaOrderLine(models.Model):
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_to_deliver(self):
         qty = 0.0
-        if self.operation_id.type in ('repair', 'replace') or \
+        if self.type == "supplier" and self.operation_id.is_dropship:
+            self.qty_to_deliver = qty
+        elif self.operation_id.type in ('repair', 'replace') or \
                 self.type == "supplier":
             for move in self.move_ids:
                 if move.state == 'done' and \
@@ -408,13 +469,12 @@ class RmaOrderLine(models.Model):
         self.qty_refunded = qty
 
     @api.one
-    @api.depends('invoice_line_id', 'state', 'operation_id', 'type')
+    @api.depends('invoice_line_id', 'state', 'operation_id', 'type',
+                 'refund_line_id')
     def _compute_qty_to_refund(self):
         qty = 0.0
         if self.operation_id.type == 'refund':
-            if self.invoice_line_id:
-                if self.invoice_line_id.invoice_id.state != 'cancel':
-                    qty += self.product_qty
+            qty = self.product_qty
             if self.refund_line_id:
                 if self.refund_line_id.invoice_id.state != 'cancel':
                     qty -= self.refund_line_id.quantity
@@ -489,6 +549,9 @@ class RmaOrderLine(models.Model):
                                       string='Invoice Line',
                                       ondelete='restrict',
                                       index=True)
+    supplier_inv_line_id = fields.Many2one('account.invoice.line',
+                                      string='Related invoice',
+                                      ondelete='restrict')
     refund_line_id = fields.Many2one('account.invoice.line',
                                      string='Refund Line',
                                      ondelete='restrict',
@@ -528,6 +591,17 @@ class RmaOrderLine(models.Model):
                                        ('undefined', _("Undefined"))],
                                       string='Warranty',
                                       compute=_compute_warranty)
+    is_dropship = fields.Boolean(related="operation_id.is_dropship")
+    parent_rma_line = fields.Many2one(
+        'rma.order.line', string='Parent RMA line', ondelete='cascade')
+    # rma_ids = fields.One2many('rma.order.line', 'parent_rma')
+    partner_address_id = fields.Many2one(
+        'res.partner', readonly=True,
+        states={'draft': [('readonly', False)]},
+        string='Partner Address',
+        help="This address of the supplier in case of Customer RMA operation "
+             "dropship. The address of the customer in case of Supplier RMA "
+             "operation dropship")
     product_qty = fields.Float(
         string='Ordered Qty', copy=False,
         digits=dp.get_precision('Product Unit of Measure'),
@@ -651,8 +725,6 @@ class RmaOperation(models.Model):
     route_supplier = fields.Many2one(
         'stock.location.route', string='Route RMA Supplier',
         domain=[('rma_selectable', '=', True)])
-    route_dropship = fields.Many2one(
-        'stock.location.route', string='Route RMA Dropship',
-        domain=[('rma_selectable', '=', True)])
+    is_dropship = fields.Boolean('Dropship')
     rma_line_ids = fields.One2many('rma.order.line', 'operation_id',
                                    'RMA lines')
