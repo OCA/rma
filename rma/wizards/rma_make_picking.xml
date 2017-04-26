@@ -18,7 +18,7 @@
                 </field>
                 <footer>
                     <button
-                            string="Ship in"
+                            string="Create Incoming Shipment"
                             name="action_create_picking" type="object"
                             class="oe_highlight"/>
                     or
@@ -57,7 +57,7 @@
     </record>
 
     <record id="action_rma_picking_in" model="ir.actions.act_window">
-        <field name="name">Ship in</field>
+        <field name="name">Create Incoming Shipment</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">rma_make_picking.wizard</field>
         <field name="src_model">rma.order.line</field>
@@ -70,7 +70,7 @@
     </record>
 
     <record id="action_rma_picking_out" model="ir.actions.act_window">
-        <field name="name">Ship out</field>
+        <field name="name">Create Delivery Order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">rma_make_picking.wizard</field>
         <field name="src_model">rma.order.line</field>
@@ -84,7 +84,7 @@
 
     <record model="ir.values" id="values_action_rma_picking_in">
         <field name="model_id" ref="model_rma_order_line"/>
-        <field name="name">Ship in</field>
+        <field name="name">Create Incoming Shipment</field>
         <field name="key2">client_action_multi</field>
         <field name="value" eval="'ir.actions.act_window,' + str(ref('action_rma_picking_in'))" />
         <field name="key">action</field>

@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="product.product_category_form_view" />
             <field name="arch" type="xml">
                 <field name="type" position="after">
-                    <field name="rma_operation_id" groups="rma.group_rma_user"/>
+                    <field name="rma_operation_id" groups="rma.group_rma_customer_user,group_rma_supplier_user"/>
                 </field>
             </field>
         </record>

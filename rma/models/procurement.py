@@ -18,6 +18,7 @@ class ProcurementOrder(models.Model):
         res = super(ProcurementOrder, self)._run_move_create(procurement)
         if procurement.rma_line_id:
             line = procurement.rma_line_id
+            res['rma_id'] = line.id
             if line.partner_address_id:
                 res['partner_id'] = line.partner_address_id.id
             elif line.invoice_line_id.invoice_id.partner_id:

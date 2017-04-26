@@ -103,12 +103,19 @@ class RmaOrder(models.Model):
 
     @api.one
     def _compute_in_shipment_count(self):
-        picking_list = []
+        picking_ids = []
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
         for line in self.rma_line_ids:
-            for move in line.move_ids:
-                if move.picking_id.picking_type_id.code == 'incoming':
-                    picking_list.append(move.picking_id.id)
-        self.in_shipment_count = len(list(set(picking_list)))
+            if line.type == 'customer':
+                for move in line.move_ids:
+                    if move.picking_id.location_id == customers:
+                        picking_ids.append(move.picking_id.id)
+            else:
+                for move in line.move_ids:
+                    if move.picking_id.location_id == suppliers:
+                        picking_ids.append(move.picking_id.id)
+        self.in_shipment_count = len(list(set(picking_ids)))
 
     @api.one
     def _compute_invoice_count(self):
@@ -119,18 +126,26 @@ class RmaOrder(models.Model):
 
     @api.one
     def _compute_out_shipment_count(self):
-        picking_list = []
+        picking_ids = []
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
         for line in self.rma_line_ids:
-            for move in line.move_ids:
-                if move.picking_id.picking_type_id.code == 'outgoing':
-                    if move.picking_id:
-                        picking_list.append(move.picking_id.id)
-        self.out_shipment_count = len(list(set(picking_list)))
+            if line.type == 'customer':
+                for move in line.move_ids:
+                    if move.picking_id.location_id != customers:
+                        picking_ids.append(move.picking_id.id)
+            else:
+                for move in line.move_ids:
+                    if move.picking_id.location_id != suppliers:
+                        picking_ids.append(move.picking_id.id)
+        self.out_shipment_count = len(list(set(picking_ids)))
 
     @api.one
     def _compute_supplier_line_count(self):
-        self.supplier_line_count = len(
-            self.env['rma.order.line'].search([('origin', '=', self.name)]))
+        lines = self.rma_line_ids.filtered(
+            lambda r: r.related_rma_line)
+        related_lines = [line.related_rma_line for line in lines]
+        self.supplier_line_count = len(related_lines)
 
     @api.one
     def _compute_line_count(self):
@@ -170,11 +185,6 @@ class RmaOrder(models.Model):
             'rma_id': self._origin.id
         }
         return data
-
-    @api.model
-    def _prepare_supplier_rma(self):
-        values = self.copy()
-        return values
 
     @api.onchange('add_invoice_id')
     def on_change_invoice(self):
@@ -250,10 +260,17 @@ class RmaOrder(models.Model):
         action = self.env.ref('stock.action_picking_tree_all')
         result = action.read()[0]
         picking_ids = []
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
         for line in self.rma_line_ids:
-            for move in line.move_ids:
-                if move.picking_id.picking_type_id.code == 'incoming':
-                    picking_ids.append(move.picking_id.id)
+            if line.type == 'customer':
+                for move in line.move_ids:
+                    if move.picking_id.location_id == customers:
+                        picking_ids.append(move.picking_id.id)
+            else:
+                for move in line.move_ids:
+                    if move.picking_id.location_id == suppliers:
+                        picking_ids.append(move.picking_id.id)
         shipments = list(set(picking_ids))
         # choose the view_mode accordingly
         if len(shipments) != 1:
@@ -270,10 +287,17 @@ class RmaOrder(models.Model):
         action = self.env.ref('stock.action_picking_tree_all')
         result = action.read()[0]
         picking_ids = []
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
         for line in self.rma_line_ids:
-            for move in line.move_ids:
-                if move.picking_id.picking_type_id.code == 'outgoing':
-                    picking_ids.append(move.picking_id.id)
+            if line.type == 'customer':
+                for move in line.move_ids:
+                    if move.picking_id.location_id != customers:
+                        picking_ids.append(move.picking_id.id)
+            else:
+                for move in line.move_ids:
+                    if move.picking_id.location_id != suppliers:
+                        picking_ids.append(move.picking_id.id)
         shipments = list(set(picking_ids))
         # choose the view_mode accordingly
         if len(shipments) != 1:
@@ -323,13 +347,13 @@ class RmaOrder(models.Model):
                                'name': line.name,
                                'partner_address_id':
                                    origin_rma.delivery_address_id.id,
-                               'invoice_line_id': line.supplier_inv_line_id.id,
                                'product_id': line.product_id.id,
+                               'related_rma_line': line.id,
                                'operation_id': line.operation_id.id,
                                'product_qty': line.product_qty,
-                               'parent_rma_line': line.id,
                                'rma_id': rma_id.id}
-                self.env['rma.order.line'].create(line_values)
+                new_line = self.env['rma.order.line'].create(line_values)
+                line.write({'related_rma_line': new_line.id})
         return True
 
     @api.multi
@@ -370,16 +394,17 @@ class RmaOrder(models.Model):
     def action_view_supplier_lines(self):
         action = self.env.ref('rma.action_rma_supplier_lines')
         result = action.read()[0]
-
-        lines = self.env['rma.order.line'].search([('origin', '=', self.name)])
+        lines = self.rma_line_ids.filtered(
+            lambda r: r.related_rma_line)
+        related_lines = [line.related_rma_line.id for line in lines]
         # choose the view_mode accordingly
         if len(lines) != 1:
             result['domain'] = "[('id', 'in', " + \
-                               str(lines.ids) + ")]"
+                               str(related_lines) + ")]"
         elif len(lines) == 1:
             res = self.env.ref('rma.view_rma_line_form', False)
             result['views'] = [(res and res.id or False, 'form')]
-            result['res_id'] = lines.id
+            result['res_id'] = related_lines[0]
         return result
 
 
@@ -391,24 +416,33 @@ class RmaOrderLine(models.Model):
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_incoming(self):
         qty = 0.0
-        for move in self.move_ids:
-            if move.state not in ('done', 'cancel') and (
-                    move.picking_id.picking_type_id.code == 'incoming'):
-                qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        for move in self.move_ids.filtered(
+                        lambda m: m.state not in ('done', 'cancel')):
+            if self.type == 'customer':
+                if move.location_id == customers:
+                    qty += move.product_qty
+            else:
+                if move.location_id == suppliers:
+                    qty += move.product_qty
         self.qty_incoming = qty
 
     @api.one
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_to_receive(self):
         qty = 0.0
-        if self.type == "customer" and self.operation_id.is_dropship:
-            self.qty_to_receive = qty
-        elif self.operation_id.type in ('repair', 'replace') or \
-                self.type == "customer":
-            for move in self.move_ids:
-                if move.state == 'done' and (
-                        move.picking_id.picking_type_id.code == 'incoming'):
-                    qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        if self.operation_id.type in ('repair', 'replace'):
+            for move in self.move_ids.filtered(
+                    lambda m: m.state == 'done'):
+                if self.type == 'customer':
+                    if move.location_id == customers:
+                        qty += move.product_qty
+                else:
+                    if move.location_id == suppliers:
+                        qty += move.product_qty
             self.qty_to_receive = self.product_qty - qty
         else:
             self.qty_to_receive = qty
@@ -417,14 +451,19 @@ class RmaOrderLine(models.Model):
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_to_deliver(self):
         qty = 0.0
-        if self.type == "supplier" and self.operation_id.is_dropship:
-            self.qty_to_deliver = qty
-        elif self.operation_id.type in ('repair', 'replace') or \
-                self.type == "supplier":
-            for move in self.move_ids:
-                if move.state == 'done' and \
-                        move.picking_id.picking_type_id.code == 'outgoing':
-                    qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        if self.operation_id.is_dropship:
+            self.qty_to_deliver = - self.qty_delivered
+        elif self.operation_id.type in ('repair', 'replace'):
+            for move in self.move_ids.filtered(
+                    lambda m: m.state == 'done'):
+                if self.type == 'customer':
+                    if move.location_id != customers:
+                        qty += move.product_qty
+                else:
+                    if move.location_id != suppliers:
+                        qty += move.product_qty
             self.qty_to_deliver = self.product_qty - qty
         else:
             self.qty_to_deliver = qty
@@ -433,30 +472,48 @@ class RmaOrderLine(models.Model):
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_received(self):
         qty = 0.0
-        for move in self.move_ids:
-            if move.state == 'done'and move.picking_id.picking_type_id.code \
-                    == 'incoming':
-                qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        for move in self.move_ids.filtered(
+                        lambda m: m.state == 'done'):
+            if self.type == 'customer':
+                if move.location_id == customers:
+                    qty += move.product_qty
+            else:
+                if move.location_id == suppliers:
+                    qty += move.product_qty
         self.qty_received = qty
 
     @api.one
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_outgoing(self):
         qty = 0.0
-        for move in self.move_ids:
-            if move.state not in ('done', 'cancel') and (
-                    move.picking_id.picking_type_id.code == 'outgoing'):
-                qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        for move in self.move_ids.filtered(
+                lambda m: m.state not in ('done', 'cancel')):
+            if self.type == 'customer':
+                if move.location_id != customers:
+                    qty += move.product_qty
+            else:
+                if move.location_id != suppliers:
+                    qty += move.product_qty
         self.qty_outgoing = qty
 
     @api.one
     @api.depends('move_ids.state', 'state', 'operation_id', 'type')
     def _compute_qty_delivered(self):
         qty = 0.0
-        for move in self.move_ids:
-            if move.state == 'done' and (
-                    move.picking_id.picking_type_id.code == 'outgoing'):
-                qty += move.product_qty
+        suppliers = self.env.ref('stock.stock_location_suppliers')
+        customers = self.env.ref('stock.stock_location_customers')
+        for move in self.move_ids.filtered(
+                lambda m: m.state == 'done'):
+            if self.type == 'customer':
+                if move.location_id != customers:
+                    qty += move.product_qty
+            else:
+                if move.location_id != suppliers:
+                    qty += move.product_qty
         self.qty_delivered = qty
 
     @api.one
@@ -549,9 +606,6 @@ class RmaOrderLine(models.Model):
                                       string='Invoice Line',
                                       ondelete='restrict',
                                       index=True)
-    supplier_inv_line_id = fields.Many2one('account.invoice.line',
-                                      string='Related invoice',
-                                      ondelete='restrict')
     refund_line_id = fields.Many2one('account.invoice.line',
                                      string='Refund Line',
                                      ondelete='restrict',
@@ -592,7 +646,7 @@ class RmaOrderLine(models.Model):
                                       string='Warranty',
                                       compute=_compute_warranty)
     is_dropship = fields.Boolean(related="operation_id.is_dropship")
-    parent_rma_line = fields.Many2one(
+    related_rma_line = fields.Many2one(
         'rma.order.line', string='Parent RMA line', ondelete='cascade')
     # rma_ids = fields.One2many('rma.order.line', 'parent_rma')
     partner_address_id = fields.Many2one(

@@ -104,7 +104,7 @@
         <field name="default_location_dest_id"
                ref="stock.stock_location_customers"/>
         <field name="warehouse_id" eval="False"/>
-        <field name="code">outgoing</field>
+        <field name="code">incoming</field>
     </record>
 
     <record id="stock.stock_warehouse_shop0" model="stock.warehouse">

@@ -155,11 +155,11 @@
                     <button name="action_rma_to_approve" type="object"
                             string="Request Approval"
                             attrs="{'invisible':[('state', '!=', 'draft')]}"
-                            class="oe_highlight" groups="rma.group_rma_user"/>
+                            class="oe_highlight" groups="rma.group_rma_customer_user"/>
                     <button name="action_rma_draft" type="object"
                             string="Back to Draft"
                             attrs="{'invisible':[('state', 'not in', ('to_approve', 'done'))]}" class="oe_highlight"
-                            groups="rma.group_rma_user"/>
+                            groups="rma.group_rma_customer_user,group_rma_supplier_user"/>
                     <button name="action_rma_approve" type="object"
                             string="Approve"
                             attrs="{'invisible':[('state', '!=', 'to_approve')]}" class="oe_highlight" groups="rma.group_rma_manager"/>
@@ -176,14 +176,14 @@
                                 icon="fa-truck"
                                 groups="stock.group_stock_user">
                             <field name="in_shipment_count" widget="statinfo"
-                                   string="Shipped in"/>
+                                   string="Shipments"/>
                         </button>
                         <button type="object"  name="action_view_out_shipments"
                                 class="oe_stat_button"
                                 icon="fa-truck"
                                 groups="stock.group_stock_user">
                             <field name="out_shipment_count" widget="statinfo"
-                                   string="Shipped out"/>
+                                   string="Deliveries"/>
                         </button>
                         <button type="object"  name="action_view_invoice_refund"
                                 class="oe_stat_button"
@@ -202,16 +202,16 @@
                         <button type="object"  name="action_view_lines"
                                 class="oe_stat_button"
                                 icon="fa-list"
-                                groups="rma.group_rma_user">
+                                groups="rma.group_rma_customer_user">
                             <field name="line_count" widget="statinfo"
                                    string="RMA Lines"/>
                         </button>
                         <button type="object" name="action_view_supplier_lines"
                                 class="oe_stat_button"
                                 icon="fa-list"
-                                groups="rma.group_rma_user">
+                                groups="rma.group_rma_supplier_user">
                             <field name="supplier_line_count" widget="statinfo"
-                                   string="Supplier RMA Lines"/>
+                                   string="Rel. RMA Lines"/>
                         </button>
                     </div>
                     <div class="oe_title">
@@ -262,11 +262,6 @@
                                     <field name="limit"/>
                                     <field name="operation_id"/>
                                     <field name="partner_address_id"/>
-                                    <field name="supplier_inv_line_id"
-                                           domain="[('product_id','=',product_id), ('invoice_id.type','=','in_invoice'),
-                                            '|',('invoice_id.commercial_partner_id','=',partner_address_id),
-                                            ('invoice_id.partner_id','=', partner_address_id)]"
-                                            options="{'no_create': True}"/>
                                     <field name="product_qty"/>
                                     <field name="uom_id" groups="product.group_uom"/>
                                     <field name="qty_to_receive"/>
@@ -308,11 +303,12 @@
                     <button name="action_rma_to_approve" type="object"
                             string="Request Approval"
                             attrs="{'invisible':[('state', '!=', 'draft')]}"
-                            class="oe_highlight" groups="rma.group_rma_user"/>
+                            class="oe_highlight"
+                            groups="rma.group_rma_supplier_user"/>
                     <button name="action_rma_draft" type="object"
                             string="Back to Draft"
                             attrs="{'invisible':[('state', 'not in', ('to_approve', 'done'))]}" class="oe_highlight"
-                            groups="rma.group_rma_user"/>
+                            groups="rma.group_rma_supplier_user"/>
                     <button name="action_rma_approve" type="object"
                             string="Approve"
                             attrs="{'invisible':[('state', '!=', 'to_approve')]}" class="oe_highlight" groups="rma.group_rma_manager"/>
@@ -329,14 +325,14 @@
                                 icon="fa-truck"
                                 groups="stock.group_stock_user">
                             <field name="in_shipment_count" widget="statinfo"
-                                   string="Shipped in"/>
+                                   string="Shipments"/>
                         </button>
                         <button type="object"  name="action_view_out_shipments"
                                 class="oe_stat_button"
                                 icon="fa-truck"
                                 groups="stock.group_stock_user">
                             <field name="out_shipment_count" widget="statinfo"
-                                   string="Shipped out"/>
+                                   string="Deliveries"/>
                         </button>
                         <button type="object"  name="action_view_invoice_refund"
                                 class="oe_stat_button"
@@ -355,7 +351,7 @@
                         <button type="object"  name="action_view_lines"
                                 class="oe_stat_button"
                                 icon="fa-list"
-                                groups="rma.group_rma_user">
+                                groups="rma.group_rma_supplier_user">
                             <field name="line_count" widget="statinfo"
                                    string="RMA Lines"/>
                         </button>
@@ -582,7 +578,7 @@
 
         <menuitem id="menu_rma"
             name="RMA"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_customer_user,rma.group_rma_supplier_user"
             sequence="30"
             parent="stock.menu_stock_root"/>
 
@@ -590,20 +586,20 @@
             id="menu_rma_act_customer"
             sequence="10"
             parent="menu_rma"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_customer_user"
             action="action_rma_customer"/>
         <menuitem
             id="menu_rma_act_supplier"
             sequence="20"
             parent="menu_rma"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_supplier_user"
             action="action_rma_supplier"/>
 
         <menuitem
             id="menu_rma_line_customer"
             sequence="40"
             parent="menu_rma"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_customer_user"
             action="action_rma_customer_lines"
             />
 
@@ -611,19 +607,19 @@
             id="menu_rma_line_supplier"
             sequence="50"
             parent="menu_rma"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_supplier_user"
             action="action_rma_supplier_lines"
             />
 
         <menuitem id="menu_rma_config"
             name="RMA"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_manager"
             sequence="30"
             parent="stock.menu_stock_config_settings"/>
 
         <menuitem id="menu_rma_operation"
             name="Operations"
-            groups="rma.group_rma_user"
+            groups="rma.group_rma_manager"
             sequence="35"
             parent="rma.menu_rma_config"
             action="action_rma_operation"/>
