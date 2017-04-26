@@ -226,7 +226,9 @@
                         <field name="add_invoice_id"
                                domain="[('type','=','out_invoice'),'|',('commercial_partner_id','=',partner_id),
                                ('partner_id','=',partner_id), (('state','not in',['draft','cancel']))]"
-                               attrs="{'invisible':[('state','not in',['draft','to_approve'])]}"/>
+			       attrs="{'invisible':[('state','not in',['draft','to_approve'])]}"
+			       context="{'form_view_ref':'account.invoice_form'}"
+			       />
                     </group>
                     <group>
                         <group col="4">
