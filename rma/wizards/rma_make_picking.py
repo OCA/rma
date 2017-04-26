@@ -94,8 +94,8 @@ class RmaMakePicking(models.TransientModel):
                 delivery_address = line.rma_id.delivery_address_id.id
             else:
                 seller = line.product_id.seller_ids.filtered(
-                    lambda p: p.name == \
-                              line.invoice_line_id.invoice_id.partner_id)
+                    lambda p: p.name == line.invoice_line_id.invoice_id.
+                        partner_id)
                 partner = seller.warranty_return_address
                 delivery_address = partner.id
         return delivery_address
@@ -110,7 +110,10 @@ class RmaMakePicking(models.TransientModel):
                 else:
                     location = line.rma_id.warehouse_id.lot_rma_id
             else:
-                location = line.rma_id.warehouse_id.lot_rma_id
+                if line.is_dropship:
+                    location = self.env.ref('stock.stock_location_customers')
+                else:
+                    location = line.rma_id.warehouse_id.lot_rma_id
 
         else:
             # delivery order
@@ -167,14 +170,14 @@ class RmaMakePicking(models.TransientModel):
                 raise exceptions.Warning(
                     _('RMA %s is not approved') %
                     line.rma_id.name)
-            if line.operation_id.type not in ('replace', 'repair') and \
-                    picking_type == 'outgoing' and line.type == 'customer':
+            if line.operation_id.shipment_type == 'no' and picking_type == \
+                    'incoming':
                 raise exceptions.Warning(
-                    _('Only refunds allowed for at least one line'))
-            if line.operation_id.type not in ('replace', 'repair') and \
-                    picking_type == 'incoming' and line.type == 'supplier':
+                    _('No shipments needed for this operation'))
+            if line.operation_id.delivery_type == 'no' and picking_type == \
+                    'outgoing':
                 raise exceptions.Warning(
-                    _('Only refunds allowed for at least one line'))
+                    _('No deliveries needed for this operation'))
             procurement = self._create_procurement(line, picking_type)
             procurement_list.append(procurement)
         procurements = self.env['procurement.order'].browse(procurement_list)

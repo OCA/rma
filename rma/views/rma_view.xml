@@ -70,7 +70,8 @@
                         <button type="object"  name="action_view_refund"
                                 class="oe_stat_button"
                                 icon="fa-pencil-square-o"
-                                string="Refund">
+                                string="Refund"
+                                groups="account.group_account_user">
                         </button>
                     </div>
                     <group>
@@ -80,10 +81,12 @@
                             <field name="state" readonly="1"/>
                             <field name="requested_by" readonly="1"/>
                             <field name="assigned_to" readonly="1"/>
-                            <field name="product_id" readonly="1"/>
+                            <field name="product_id"/>
                             <field name="price_unit" readonly="1"/>
-                            <field name="operation_id" readonly="1"/>
-                            <field name="partner_address_id" readonly="1"/>
+                            <field name="operation_id"/>
+                            <field name="is_dropship" invisible="True"/>
+                            <field name="partner_address_id"
+                                   attrs="{'required':[('is_dropship', '=', True)]}"/>
                             <field name="invoice_line_id" invisible="True"/>
                             <field name="uom_id" groups="product.group_uom" readonly="1"/>
                             <field name="product_qty"/>
@@ -101,7 +104,6 @@
                             <field name="qty_outgoing"/>
                             <field name="qty_delivered"/>
                             <field name="qty_refunded"/>
-                            <field name="price_unit"/>
                         </group>
                     </group>
                     <label for="name"/>
@@ -227,7 +229,7 @@
                                domain="[('type','=','out_invoice'),'|',('commercial_partner_id','=',partner_id),
                                ('partner_id','=',partner_id), (('state','not in',['draft','cancel']))]"
 			       attrs="{'invisible':[('state','not in',['draft','to_approve'])]}"
-			       context="{'form_view_ref':'account.invoice_form'}"
+			       context="{'form_view_ref':'account.invoice_form','partner_id': partner_id}"
 			       />
                     </group>
                     <group>
@@ -251,7 +253,7 @@
                     <notebook colspan="4">
                         <page string="RMA Lines">
                             <field name="rma_line_ids">
-                                <tree string="RMA Lines" editable="bottom">
+                                <tree string="RMA Lines">
                                     <field name="invoice_line_id" invisible="True"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="state" invisible="True"/>
@@ -393,7 +395,7 @@
                     <notebook colspan="4">
                         <page string="RMA Lines">
                             <field name="rma_line_ids">
-                                <tree string="RMA Lines" editable="bottom">
+                                <tree string="RMA Lines">
                                     <field name="invoice_line_id" invisible="True"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="state" invisible="True"/>
@@ -484,7 +486,9 @@
                 <tree string="RMA Operations">
                     <field name="code"/>
                     <field name="name"/>
-                    <field name="type"/>
+                    <field name="refund_type"/>
+                    <field name="shipment_type"/>
+                    <field name="delivery_type"/>
                     <field name="route_customer"/>
                     <field name="route_supplier"/>
                     <field name="is_dropship"/>
@@ -500,7 +504,9 @@
                     <group colspan="4" col="2">
                         <field name="code"/>
                         <field name="name"/>
-                        <field name="type"/>
+                        <field name="refund_type"/>
+                        <field name="shipment_type"/>
+                        <field name="delivery_type"/>
                         <field name="route_customer"/>
                         <field name="route_supplier"/>
                         <field name="is_dropship"/>
