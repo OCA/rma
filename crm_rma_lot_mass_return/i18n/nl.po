@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 06:09+0000\n"
-"PO-Revision-Date: 2017-03-06 09:10+0000\n"
+"POT-Creation-Date: 2017-03-28 07:08+0000\n"
+"PO-Revision-Date: 2017-04-25 17:36+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-rma-8-0/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -267,7 +267,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,current_status:0
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
@@ -299,7 +299,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
 msgid "True"
-msgstr ""
+msgstr "Waar"
 
 #. module: crm_rma_lot_mass_return
 #: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
