@@ -29,7 +29,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'author': 'Vauxoo,Akretion,Odoo Community Association (OCA)',
     'license': 'AGPL-3',
-    'website': 'http://www.vauxoo.com, http://www.akretion.com',
+    'website': 'https://odoo-community.org',
     'depends': [
         'crm_claim_rma',
         'crm_rma_prodlot_invoice',
