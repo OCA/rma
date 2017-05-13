@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 05:48+0000\n"
-"PO-Revision-Date: 2017-01-13 09:29+0000\n"
+"POT-Creation-Date: 2017-05-03 07:57+0000\n"
+"PO-Revision-Date: 2017-05-11 14:14+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-rma-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr "Erä"
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,message:0
 msgid "Message"
-msgstr ""
+msgstr "Viesti"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
