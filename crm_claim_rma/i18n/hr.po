@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-03 07:57+0000\n"
-"PO-Revision-Date: 2017-05-11 14:12+0000\n"
+"POT-Creation-Date: 2017-05-13 06:36+0000\n"
+"PO-Revision-Date: 2017-05-19 14:16+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-rma-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -586,7 +586,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Drugo"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -640,7 +640,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 #. module: crm_claim_rma
 #: help:claim.line,priority:0
