@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">rma.move.form</field>
+            <field name="model">stock.move</field>
+             <field name="inherit_id" ref="stock.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="rma_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_move_manual_quants_picking_form_view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form" />
+            <field name="arch" type="xml">
+                <field name="string_availability_info" position="after">
+                    <field name="rma_id" groups="rma.rma_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_location_route_form_view_inherit_rma_stock" model="ir.ui.view">
+            <field name="name">stock.location.route.form</field>
+            <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+            <field name="model">stock.location.route</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='warehouse_ids']" position="after">
+                    <br/><field name="rma_selectable" string="RMA Order Lines"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="procurement_form_view" model="ir.ui.view">
+            <field name="name">procurement.order.form.stock.inherit</field>
+            <field name="model">procurement.order</field>
+            <field name="inherit_id"
+                   ref="stock.view_procurement_form_stock_inherit"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="attributes">
+                    <attribute name="domain">[('usage', '!=', 'view')]</attribute>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
