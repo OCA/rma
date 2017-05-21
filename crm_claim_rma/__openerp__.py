@@ -10,9 +10,7 @@
     'category': 'Generic Modules/CRM & SRM',
     'author': "Akretion, Camptocamp, Eezee-it, MONK Software, Vauxoo, "
               "Odoo Community Association (OCA)",
-    'website': 'http://www.akretion.com, http://www.camptocamp.com, '
-               'http://www.eezee-it.com, http://www.wearemonk.com, '
-               'http://www.vauxoo.com',
+    'website': 'https://odoo-community.org',
     'license': 'AGPL-3',
     'depends': [
         'purchase',
