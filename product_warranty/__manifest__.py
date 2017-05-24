@@ -22,12 +22,12 @@
 
 {
     'name': 'Product warranty',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Generic Modules/Product',
     'author': "Akretion,Odoo Community Association (OCA),Vauxoo",
     'website': 'http://akretion.com',
     'license': 'AGPL-3',
-    'depends': ['product'],
+    'depends': ['product', 'sale'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_company.xml',
@@ -38,7 +38,7 @@
         'demo/res_company.xml',
     ],
     'test': [],
-    'installable': False,
+    'installable': True,
     'active': False,
     'images': ['images/product_warranty.png'],
 }
