@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data noupdate="1">
 
         <record id="return_instruction_1" model="return.instruction">
@@ -61,4 +61,4 @@ Select the product you want to return and the reason for the return. You will ne
         </record>
 
     </data>
-</openerp>
+</odoo>
