@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Claims Type -->
+        <record id="crm_claim_type_customer" model="crm.claim.type">
+            <field name="name">Customer</field>
+            <field name="ir_sequence_id"
+                search="[('code', '=', 'crm.claim.rma.customer')]"
+                model="ir.sequence"
+                />
+            <field name="active">1</field>
+        </record>
+
+        <record id="crm_claim_type_supplier" model="crm.claim.type">
+            <field name="name">Supplier</field>
+            <field name="active">1</field>
+            <field name="ir_sequence_id"
+                search="[('code', '=', 'crm.claim.rma.supplier')]"
+                model="ir.sequence"
+                />
+        </record>
+
+        <record id="crm_claim_type_other" model="crm.claim.type">
+            <field name="name">Other</field>
+            <field name="active">1</field>
+             <field name="ir_sequence_id"
+                search="[('code', '=', 'crm.claim.rma.basic')]"
+                model="ir.sequence"
+                />
+        </record>
+    </data>
+</openerp>

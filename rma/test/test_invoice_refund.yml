@@ -1,0 +1,47 @@
+-
+  In order to test the refund creation from a claim
+-
+  I create a customer invoice
+-
+  !record {model: account.invoice, id: account_invoice_claim_refund}:
+    payment_term_id: account.account_payment_term_advance
+    partner_id: base.res_partner_3
+    name: 'Test Customer Invoice'
+    invoice_line_ids:
+      - product_id: product.product_product_1
+        quantity: 10.0
+      - product_id: product.product_product_10
+        quantity: 5.0
+-
+  I confirm the invoice
+-
+  !python {model: account.invoice, id: account_invoice_claim_refund} : |
+    self.env['account.invoice'].browse(ref('account_invoice_claim_refund')).action_invoice_open()
+-
+  I create a claim
+-
+  !record {model: crm.claim, id: claim_refund}:
+    name: 'Angry Customer'
+    claim_type: rma.crm_claim_type_customer
+    partner_id: base.res_partner_3
+    invoice_id: account_invoice_claim_refund
+    stage_id: rma.stage_claim1
+-
+  I prepare the wizard context.
+-
+  !python {model: account.invoice.refund}: |
+    claim_lines = self.env['claim.line'].search([('claim_id','=',ref('claim_refund'))])
+    context.update({'active_model': 'crm_claim', 'active_id': ref('claim_refund'), 'claim_id': ref('claim_refund'), 'invoice_ids': [ref('account_invoice_claim_refund')]  })
+    wiz_refund = self.env['account.invoice.refund'].with_context(context).create({})
+    wiz_refund.compute_refund('refund')
+-
+  I check that a refund linked to the claim has been created.
+-
+  !python {model: account.invoice}: |
+    refund = self.search([('type', '=', 'out_refund'),('claim_id', '=', ref('claim_refund'))])
+    assert refund, "The refund is created"
+    refund_line_ids = [x.id for x in refund.invoice_line_ids]
+    assert len(refund_line_ids) == 2, "It contains 2 lines, as excepted"
+    refund_lines = self.env['account.invoice.line'].browse(refund_line_ids)
+    assert ref('product.product_product_10') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "First line is checked"
+    assert ref('product.product_product_1') in [refund_lines[0].product_id.id, refund_lines[1].product_id.id], "Second line is checked"

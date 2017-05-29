@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <!-- Right side link to orders -->
+    <act_window
+            id="act_crm_claim_rma_sale_orders"
+            name="Quotations and Sales"
+            res_model="sale.order"
+            src_model="crm.claim"/>
+
+    <act_window
+            id="act_crm_claim_rma_purchase_orders"
+            name="Purchases"
+            res_model="purchase.order"
+            src_model="crm.claim"/>
+
+    <act_window
+            domain="[('type', 'in', ('in_invoice', 'out_invoice'))]"
+            id="act_crm_claim_rma_invoice"
+            name="Invoices"
+            res_model="account.invoice"
+            src_model="crm.claim"/>
+
+    <act_window
+            id="act_crm_claim_rma_refunds"
+            name="Refunds"
+            res_model="account.invoice"
+            src_model="crm.claim"
+            domain="[('type', 'in', ('in_refund', 'out_refund'))]"/>
+
+    <act_window
+            id="act_crm_claim_rma_picking_in"
+            name="Incoming Shipment and Returns"
+            res_model="stock.picking"
+            src_model="crm.claim"/>
+
+
+    <!-- substates action -->
+    <record id="act_crm_claim_substates" model="ir.actions.act_window">
+        <field name="name">Claim line substates</field>
+        <field name="res_model">substate.substate</field>
+        <field name="view_type">form</field>
+    </record>
+
+
+</odoo>
