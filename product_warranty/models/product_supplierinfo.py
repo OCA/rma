@@ -12,6 +12,14 @@ class ProductSupplierInfo(models.Model):
     _inherit = "product.supplierinfo"
 
     @api.model
+    def get_warranty_return_partner(self):
+        result = [('company', 'Company'),
+                  ('supplier', 'Supplier'),
+                  ('other', 'Other'),
+                  ]
+        return result
+
+    @api.model
     def _get_default_instructions(self):
         """ Get selected lines to add to exchange """
         instruction_ids = self.env['return.instruction']\
