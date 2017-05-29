@@ -4,7 +4,7 @@
 
 {
     'name': 'RMA Location',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': "Vauxoo, Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'http://www.camptocamp.com,http://www.vauxoo.com',
@@ -17,6 +17,6 @@
         'views/stock_warehouse.xml',
     ],
     'post_init_hook': 'post_init_hook',
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }

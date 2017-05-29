@@ -4,12 +4,20 @@
 # © 2009-2011  Akretion, Emmanuel Samyn, Benoît Guillot
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class ProductSupplierInfo(models.Model):
 
     _inherit = "product.supplierinfo"
+
+    @api.model
+    def get_warranty_return_partner(self):
+        result = [('company', 'Company'),
+                  ('supplier', 'Supplier'),
+                  ('other', 'Other'),
+                  ]
+        return result
 
     @api.model
     def _get_default_instructions(self):
