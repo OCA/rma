@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:45+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2017-06-17 07:05+0000\n"
+"PO-Revision-Date: 2017-06-27 01:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -299,7 +299,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
 msgid "True"
-msgstr ""
+msgstr "Verdadero"
 
 #. module: crm_rma_lot_mass_return
 #: model:ir.model,name:crm_rma_lot_mass_return.model_returned_lines_from_serial_wizard
