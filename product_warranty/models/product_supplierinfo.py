@@ -21,7 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 ##########################################################################
 
-from openerp import api, fields, models
+from openerp import api, fields, models, _
 
 
 class ProductSupplierInfo(models.Model):
@@ -30,9 +30,9 @@ class ProductSupplierInfo(models.Model):
 
     @api.model
     def get_warranty_return_partner(self):
-        result = [('company', 'Company'),
-                  ('supplier', 'Supplier'),
-                  ('other', 'Other'),
+        result = [('company', _('Company')),
+                  ('supplier', _('Supplier')),
+                  ('other', _('Other')),
                   ]
         return result
 
