@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 07:08+0000\n"
-"PO-Revision-Date: 2017-03-24 09:00+0000\n"
+"POT-Creation-Date: 2017-07-12 13:59+0000\n"
+"PO-Revision-Date: 2017-07-12 14:09+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-rma-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,12 @@ msgstr ""
 #: model:ir.model,name:product_warranty.model_res_company
 msgid "Companies"
 msgstr "Empreses"
+
+#. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:33
+#, python-format
+msgid "Company"
+msgstr "Empresa"
 
 #. module: product_warranty
 #: field:return.instruction,create_uid:0
@@ -111,6 +117,12 @@ msgid "Last Updated on"
 msgstr "Darrera Actualització el"
 
 #. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:35
+#, python-format
+msgid "Other"
+msgstr "Altres"
+
+#. module: product_warranty
 #: field:product.supplierinfo,warranty_duration:0
 msgid "Period"
 msgstr ""
@@ -138,6 +150,12 @@ msgstr ""
 #: field:product.supplierinfo,warranty_return_partner:0
 msgid "Return type"
 msgstr ""
+
+#. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:34
+#, python-format
+msgid "Supplier"
+msgstr "Proveïdor "
 
 #. module: product_warranty
 #: field:return.instruction,name:0
