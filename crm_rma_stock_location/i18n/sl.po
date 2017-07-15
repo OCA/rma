@@ -3,15 +3,15 @@
 # * crm_rma_stock_location
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: rma (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-06 11:34+0000\n"
-"PO-Revision-Date: 2016-05-04 03:48+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
+"POT-Creation-Date: 2017-07-12 14:11+0000\n"
+"PO-Revision-Date: 2017-07-12 14:11+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: crm_rma_stock_location
-#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Cancel"
 msgstr "Preklic"
 
@@ -44,75 +44,73 @@ msgid "Create a Product Loss"
 msgstr "Ustvari izgubo proizvoda"
 
 #. module: crm_rma_stock_location
-#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Create picking"
 msgstr "Ustvari zbirnik"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,create_uid:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_create_uid
 msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,create_date:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_create_date
 msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
-#: field:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
-#, python-format
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_picking_line_dest_location
 msgid "Dest. Location"
 msgstr "Ciljna lokacija"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,display_name:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,id:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_id
 msgid "ID"
 msgstr "ID"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,__last_update:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard___last_update
 msgid "Last Modified on"
 msgstr "Zadnjič spremenjeno"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,write_uid:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_write_uid
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,write_date:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_write_date
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: crm_rma_stock_location
-#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Locations"
 msgstr "Lokacije"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:65
+#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:41
 #, python-format
 msgid "Loss"
 msgstr "Izguba"
 
 #. module: crm_rma_stock_location
-#: field:stock.warehouse,loss_loc_id:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_stock_warehouse_loss_loc_id
 msgid "Loss Location"
 msgstr "Lokacija izgub"
 
 #. module: crm_rma_stock_location
-#: view:crm.claim:crm_rma_stock_location.crm_claim_rma_form_view_loss
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.crm_claim_rma_form_view_loss
 msgid "New Product Loss"
 msgstr "Nova izguba proizvoda"
 
 #. module: crm_rma_stock_location
-#: field:claim.make.picking.from.picking.wizard,picking_line_ids:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_picking_line_ids
 msgid "Picking lines"
 msgstr "Postavke zbirnika"
 
@@ -127,24 +125,29 @@ msgid "Product Template"
 msgstr "Predloga proizvoda"
 
 #. module: crm_rma_stock_location
-#: view:product.product:crm_rma_stock_location.rma_product_product_tree_view
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.rma_product_product_tree_view
 msgid "Product Variants"
 msgstr "Različice proizvoda"
 
 #. module: crm_rma_stock_location
-#: view:stock.picking:crm_rma_stock_location.picking_in_form
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.picking_in_form
 msgid "Product to Loss"
 msgstr "Proizvod med izgube"
 
 #. module: crm_rma_stock_location
-#: view:stock.picking:crm_rma_stock_location.picking_in_form
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.picking_in_form
 msgid "Product to refurbish stock"
 msgstr "Proizvod med prenovljene zaloge"
 
 #. module: crm_rma_stock_location
-#: view:stock.picking:crm_rma_stock_location.picking_in_form
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.picking_in_form
 msgid "Product to stock"
 msgstr "Proizvod v zaloge"
+
+#. module: crm_rma_stock_location
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.product_template_form_view_rma
+msgid "RMA"
+msgstr "Pooblastilo vračila blaga - PVB"
 
 #. module: crm_rma_stock_location
 #: model:stock.location,name:crm_rma_stock_location.location_rma_a
@@ -157,7 +160,7 @@ msgid "RMA - Box B"
 msgstr "PVB - zaboj B"
 
 #. module: crm_rma_stock_location
-#: view:product.product:crm_rma_stock_location.rma_product_search_view
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.rma_product_search_view
 msgid "RMA Available Products"
 msgstr "PVB proizvodi na voljo"
 
@@ -167,25 +170,19 @@ msgid "RMA Demo"
 msgstr "PVB demonstracija"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/product_product.py:42
-#: code:addons/crm_rma_stock_location/models/product_template.py:42
-#: field:product.product,rma_virtual_available:0
-#: field:product.template,rma_virtual_available:0
-#, python-format
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_product_product_rma_virtual_available
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_product_template_rma_virtual_available
 msgid "RMA Forecasted Quantity"
 msgstr "PVB napovedana količina"
 
 #. module: crm_rma_stock_location
-#: view:product.product:crm_rma_stock_location.rma_product_search_view
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.rma_product_search_view
 msgid "RMA Products"
 msgstr "PVB proizvodi"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/product_product.py:36
-#: code:addons/crm_rma_stock_location/models/product_template.py:36
-#: field:product.product,rma_qty_available:0
-#: field:product.template,rma_qty_available:0
-#, python-format
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_product_product_rma_qty_available
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_product_template_rma_qty_available
 msgid "RMA Quantity On Hand"
 msgstr "PVB količina pri roki"
 
@@ -196,49 +193,44 @@ msgid "RMA Stock"
 msgstr "PVB zaloge"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:56
+#: code:addons/crm_rma_stock_location/models/stock_warehouse.py:29
 #, python-format
 msgid "Refurbish"
 msgstr "Prenavljanje"
 
 #. module: crm_rma_stock_location
-#: field:stock.warehouse,lot_refurbish_id:0
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_stock_warehouse_lot_refurbish_id
 msgid "Refurbish Location"
 msgstr "Lokacija prenavljanja"
 
 #. module: crm_rma_stock_location
-#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Select lines for picking"
 msgstr "Izberite postavke za zbirnik"
 
 #. module: crm_rma_stock_location
-#: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking
+#: model:ir.ui.view,arch_db:crm_rma_stock_location.view_claim_picking_from_picking
 msgid "Select lines to add in picking"
 msgstr "Izberi postavke, ki se dodajo v zbirnik"
 
 #. module: crm_rma_stock_location
+#: model:product.product,name:crm_rma_stock_location.product_socket
 #: model:product.template,name:crm_rma_stock_location.product_socket_product_template
 msgid "Socket"
 msgstr "Vtičnica"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:85
-#: field:claim.make.picking.from.picking.wizard,picking_line_source_location:0
-#, python-format
+#: model:ir.model.fields,field_description:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_picking_line_source_location
 msgid "Source Location"
 msgstr "Izvorna lokacija"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:86
-#: help:claim.make.picking.from.picking.wizard,picking_line_source_location:0
-#, python-format
+#: model:ir.model.fields,help:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_picking_line_source_location
 msgid "Source location where the returned products are"
 msgstr "Izvorna lokacija, kjer so vrnjeni proizvodi"
 
 #. module: crm_rma_stock_location
-#: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:90
-#: help:claim.make.picking.from.picking.wizard,picking_line_dest_location:0
-#, python-format
+#: model:ir.model.fields,help:crm_rma_stock_location.field_claim_make_picking_from_picking_wizard_picking_line_dest_location
 msgid "Target location to send returned products"
 msgstr "Ciljna lokacija, kamor se pošilja vrnjene proizvode"
 

@@ -11,12 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-07-12 14:11+0000\n"
 "PO-Revision-Date: 2017-07-12 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_active_supplier
@@ -31,17 +31,17 @@ msgstr ""
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
 msgid "Company"
-msgstr "Compañia"
+msgstr "Družba"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr "Ustvaril"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Ustvarjeno"
 
 #. module: product_warranty
 #: model:ir.ui.view,arch_db:product_warranty.company_form
@@ -58,7 +58,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazni naziv"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_id
@@ -104,22 +104,22 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_write_uid
 msgid "Last Updated by"
-msgstr "Actualizado por"
+msgstr "Zadnji posodobil"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_write_date
 msgid "Last Updated on"
-msgstr "Actualizado el"
+msgstr "Zadnjič posodobljeno"
 
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
 msgid "Other"
-msgstr "Otro"
+msgstr "Drugo"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_duration
@@ -153,7 +153,7 @@ msgstr ""
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
 msgid "Supplier"
-msgstr "Proveedor"
+msgstr "Dobavitelj"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_name

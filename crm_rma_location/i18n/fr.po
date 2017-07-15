@@ -3,14 +3,15 @@
 # * crm_rma_location
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: rma (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-24 16:07+0000\n"
-"PO-Revision-Date: 2015-11-03 17:05+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-rma-8-0/language/fr/)\n"
+"POT-Creation-Date: 2017-07-12 14:11+0000\n"
+"PO-Revision-Date: 2017-07-12 14:11+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -18,63 +19,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:73
+#: code:addons/crm_rma_location/models/stock_warehouse.py:57
 #, python-format
 msgid " Sequence in"
 msgstr ""
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:83
+#: code:addons/crm_rma_location/models/stock_warehouse.py:67
 #, python-format
 msgid " Sequence internal"
 msgstr ""
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:78
+#: code:addons/crm_rma_location/models/stock_warehouse.py:62
 #, python-format
 msgid " Sequence out"
 msgstr ""
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:161
+#: code:addons/crm_rma_location/models/stock_warehouse.py:144
 #, python-format
 msgid "RMA"
 msgstr "RMA"
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:115
+#: code:addons/crm_rma_location/models/stock_warehouse.py:100
 #, python-format
 msgid "RMA Delivery Orders"
 msgstr ""
 
 #. module: crm_rma_location
-#: field:stock.warehouse,rma_in_type_id:0
+#: model:ir.model.fields,field_description:crm_rma_location.field_stock_warehouse_rma_in_type_id
 msgid "RMA In Type"
 msgstr ""
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:129
+#: code:addons/crm_rma_location/models/stock_warehouse.py:114
 #, python-format
 msgid "RMA Internal Transfers"
 msgstr ""
 
 #. module: crm_rma_location
-#: field:stock.warehouse,rma_int_type_id:0
+#: model:ir.model.fields,field_description:crm_rma_location.field_stock_warehouse_rma_int_type_id
 msgid "RMA Internal Type"
 msgstr ""
 
 #. module: crm_rma_location
-#: field:stock.warehouse,lot_rma_id:0
+#: model:ir.model.fields,field_description:crm_rma_location.field_stock_warehouse_lot_rma_id
 msgid "RMA Location"
 msgstr ""
 
 #. module: crm_rma_location
-#: field:stock.warehouse,rma_out_type_id:0
+#: model:ir.model.fields,field_description:crm_rma_location.field_stock_warehouse_rma_out_type_id
 msgid "RMA Out Type"
 msgstr ""
 
 #. module: crm_rma_location
-#: code:addons/crm_rma_location/models/stock_warehouse.py:103
+#: code:addons/crm_rma_location/models/stock_warehouse.py:88
 #, python-format
 msgid "RMA Receipts"
 msgstr ""
