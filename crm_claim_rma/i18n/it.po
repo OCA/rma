@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-21 05:59+0000\n"
-"PO-Revision-Date: 2017-02-17 15:46+0000\n"
+"POT-Creation-Date: 2017-07-15 07:35+0000\n"
+"PO-Revision-Date: 2017-07-25 11:38+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -586,7 +586,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Altro"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -895,7 +895,7 @@ msgstr "Periodo Iva"
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr ""
+msgstr "Fornitore"
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0

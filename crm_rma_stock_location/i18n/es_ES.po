@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-21 05:59+0000\n"
-"PO-Revision-Date: 2017-02-16 15:55+0000\n"
+"POT-Creation-Date: 2017-07-15 07:36+0000\n"
+"PO-Revision-Date: 2017-07-24 07:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/oca/OCA-rma-8-0/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -244,7 +244,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Almacén"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_claim_make_picking_wizard
