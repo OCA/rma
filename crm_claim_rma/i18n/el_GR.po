@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 07:07+0000\n"
-"PO-Revision-Date: 2017-04-25 10:39+0000\n"
+"POT-Creation-Date: 2017-07-29 07:38+0000\n"
+"PO-Revision-Date: 2017-08-11 11:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/oca/OCA-rma-8-0/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Ονομασία"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view

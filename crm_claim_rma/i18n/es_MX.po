@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 07:07+0000\n"
-"PO-Revision-Date: 2017-04-25 10:40+0000\n"
+"POT-Creation-Date: 2017-07-29 07:38+0000\n"
+"PO-Revision-Date: 2017-08-11 11:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/oca/OCA-rma-8-0/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -870,7 +870,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
