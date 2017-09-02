@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-17 07:06+0000\n"
-"PO-Revision-Date: 2017-06-30 08:53+0000\n"
+"POT-Creation-Date: 2017-08-19 08:22+0000\n"
+"PO-Revision-Date: 2017-08-29 08:01+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-rma-8-0/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -28,14 +28,20 @@ msgid "Companies"
 msgstr ""
 
 #. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:33
+#, python-format
+msgid "Company"
+msgstr ""
+
+#. module: product_warranty
 #: field:return.instruction,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: product_warranty
 #: field:return.instruction,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: product_warranty
 #: view:res.company:product_warranty.company_form
@@ -103,11 +109,17 @@ msgstr "Laatst gewijzigd op"
 #. module: product_warranty
 #: field:return.instruction,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: product_warranty
 #: field:return.instruction,write_date:0
 msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:35
+#, python-format
+msgid "Other"
 msgstr ""
 
 #. module: product_warranty
@@ -138,6 +150,12 @@ msgstr ""
 #: field:product.supplierinfo,warranty_return_partner:0
 msgid "Return type"
 msgstr ""
+
+#. module: product_warranty
+#: code:addons/product_warranty/models/product_supplierinfo.py:34
+#, python-format
+msgid "Supplier"
+msgstr "Leverancier"
 
 #. module: product_warranty
 #: field:return.instruction,name:0

@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-19 08:21+0000\n"
-"PO-Revision-Date: 2017-08-29 08:01+0000\n"
+"PO-Revision-Date: 2017-08-21 07:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-rma-8-0/language/nl_NL/)\n"
+"Language-Team: Danish (Denmark) (http://www.transifex.com/oca/OCA-rma-8-0/language/da_DK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl_NL\n"
+"Language: da_DK\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_claim_rma
@@ -68,7 +68,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: view:claim_make_picking.wizard:crm_claim_rma.view_claim_picking
 msgid "Cancel"
-msgstr "Verwijderen"
+msgstr ""
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/claim_line.py:314
@@ -187,14 +187,14 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr "Aangemaakt door"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
-msgstr "Aangemaakt op"
+msgstr ""
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -205,7 +205,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/crm_claim.py:166
 #, python-format
 msgid "Customer"
-msgstr "Klant"
+msgstr ""
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/models/crm_claim.py:170
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr "Omschrijving"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr ""
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -350,7 +350,7 @@ msgstr ""
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
 #: field:substate.substate,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: crm_claim_rma
 #: help:claim.line,message_unread:0 help:stock.move,message_unread:0
@@ -387,13 +387,13 @@ msgstr ""
 #: field:crm.claim,invoice_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice
 msgid "Invoice"
-msgstr "Factuur"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim.line,invoice_line_id:0
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_line
 msgid "Invoice Line"
-msgstr "Factuurregel"
+msgstr ""
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_account_invoice_refund
@@ -422,19 +422,19 @@ msgstr ""
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr "Laatst gewijzigd op"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr "Laatst bijgewerkt door"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr "Laatst bijgewerkt op"
+msgstr ""
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0
@@ -656,7 +656,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
-msgstr "Product"
+msgstr ""
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_diagnosis:0
@@ -890,12 +890,12 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_summary:0 field:stock.move,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Oversigt"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
 msgid "Supplier"
-msgstr "Leverancier"
+msgstr ""
 
 #. module: crm_claim_rma
 #: help:claim.line,invoice_line_id:0
