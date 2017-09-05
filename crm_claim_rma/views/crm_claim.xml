@@ -200,6 +200,7 @@
                             <field name="warranty_type"/>
                             <button name="set_warranty" string="Compute Warranty"
                                 type="object" icon="gtk-justify-fill"/>
+                            <field name="product_returned_quantity"/>
                             <field name="claim_origin"/>
                             <field name="claim_diagnosis"/>
                         </tree>
