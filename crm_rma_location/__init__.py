@@ -4,8 +4,8 @@
 
 from . import models
 
-from openerp import SUPERUSER_ID
-from openerp.api import Environment
+from odoo import SUPERUSER_ID
+from odoo.api import Environment
 
 
 def post_init_hook(cr, registry):
