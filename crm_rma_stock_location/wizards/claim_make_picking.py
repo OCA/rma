@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class ClaimMakePicking(models.TransientModel):
@@ -61,3 +61,11 @@ class ClaimMakePicking(models.TransientModel):
 
     claim_line_dest_location_id = fields.Many2one(
         default=_default_claim_line_dest_location_id)
+
+    @api.model
+    def _get_picking_type_and_field(self):
+        picking_type, write_field = super(
+            ClaimMakePicking, self)._get_picking_type_and_field()
+        if self.env.context.get('picking_type', '') == 'loss':
+            write_field = 'move_loss_id'
+        return picking_type, write_field

@@ -44,6 +44,7 @@
         'wizards/claim_make_picking_view.xml',
         'views/product_product.xml',
         'views/product_template.xml',
+        'views/claim_line.xml',
         'views/crm_claim.xml',
         'views/stock_picking.xml',
         'views/stock_warehouse.xml',

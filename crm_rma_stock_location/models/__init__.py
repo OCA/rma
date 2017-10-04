@@ -24,6 +24,7 @@
 #
 ##############################################################################
 
+from . import claim_line
 from . import product_product
 from . import product_template
 from . import stock_warehouse
