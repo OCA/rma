@@ -180,11 +180,10 @@ class ClaimMakePicking(models.TransientModel):
             'note': self._get_picking_note(),
         }
 
-    @api.multi
-    def action_create_picking(self):
-
-        context = self._context
-        picking_type = self.env.context.get('picking_type')
+    @api.model
+    def _get_picking_type_and_field(self):
+        context = self.env.context
+        picking_type = context.get('picking_type')
         if isinstance(picking_type, int):
             picking_obj = self.env['stock.picking.type']
             picking_type_rec = picking_obj.browse(picking_type)
@@ -206,7 +205,11 @@ class ClaimMakePicking(models.TransientModel):
         else:
             picking_type = warehouse_rec.int_type_id
             write_field = 'move_out_id'
+        return picking_type, write_field
 
+    @api.multi
+    def action_create_picking(self):
+        picking_type, write_field = self._get_picking_type_and_field()
         claim = self.env['crm.claim'].browse(self.env.context['active_id'])
         partner_id = claim.delivery_address_id.id
         claim_lines = self.claim_line_ids
