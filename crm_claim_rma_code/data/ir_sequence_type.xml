@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo noupdate="1">
+
     <!-- Claims Sequence n° -->
     <record id="seq_claim_supplier" model="ir.sequence">
         <field name="name">CRM Claim Supplier</field>
@@ -44,4 +45,5 @@
             model="ir.sequence"
             />
     </record>
+
 </odoo>
