@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <record id="crm_claim_type_form_sequence" model="ir.ui.view">
         <field name="name">crm.claim.type.form</field>
         <field name="model">crm.claim.type</field>
@@ -10,6 +11,7 @@
             </xpath>
         </field>
     </record>
+
     <record id="crm_claim_type_tree_sequence" model="ir.ui.view">
         <field name="name">crm.claim.type.tree</field>
         <field name="model">crm.claim.type</field>
@@ -20,4 +22,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>
