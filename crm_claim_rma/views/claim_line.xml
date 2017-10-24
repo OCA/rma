@@ -166,7 +166,7 @@
     <menuitem
             name="Claim lines"
             id="menu_crm_case_claims_claim_lines"
-            parent="crm_claim.base_menu_aftersale"
+            parent="crm_claim.menu_aftersale"
             action="act_crm_case_claim_lines"
             sequence="2"/>
 </odoo>
