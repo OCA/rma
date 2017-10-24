@@ -112,7 +112,7 @@ class ClaimLine(models.Model):
     warning = fields.Selection(WARRANT_COMMENT,
                                'Warranty', readonly=True,
                                help="If warranty has expired")
-    display_name = fields.Char('Name', compute='_get_display_name')
+    display_name = fields.Char('Name', compute='_compute_display_name')
 
     @api.model
     def get_warranty_return_partner(self):
@@ -403,7 +403,7 @@ class ClaimLine(models.Model):
         return res
 
     @api.multi
-    def _get_display_name(self):
+    def _compute_display_name(self):
         for line_id in self:
             line_id.display_name = "%s - %s" % (
                 line_id.claim_id.code, line_id.name)
