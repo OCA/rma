@@ -13,7 +13,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, exceptions, fields, models
 from odoo.tools import (DEFAULT_SERVER_DATE_FORMAT,
-                           DEFAULT_SERVER_DATETIME_FORMAT)
+                        DEFAULT_SERVER_DATETIME_FORMAT)
 
 from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
@@ -66,7 +66,7 @@ class ClaimLine(models.Model):
                                  ('2_high', 'High'),
                                  ('3_very_high', 'Very High')],
                                 'Priority', default='0_not_define',
-                                #compute='_compute_priority',
+                                # compute='_compute_priority',
                                 store=True,
                                 readonly=False,
                                 help="Priority attention of claim line")
@@ -117,7 +117,6 @@ class ClaimLine(models.Model):
     @api.model
     def get_warranty_return_partner(self):
         return self.env['product.supplierinfo'].warranty_return_partner
-        
 
     warranty_type = fields.Selection(
         get_warranty_return_partner,
@@ -127,13 +126,15 @@ class ClaimLine(models.Model):
         "manufacturer. Does not necessarily mean that the warranty "
         "to be applied is the one of the return partner (ie: can be "
         "returned to the company and be under the brand warranty")
-    warranty_return_partner = fields.Many2one('res.partner', string='Warranty Address',
-                        help="Where the customer has to "
-                        "send back the product(s)")
+    warranty_return_partner = fields.Many2one('res.partner',
+                                              string='Warranty Address',
+                                              help="Where the customer has to "
+                                                   "send back the product(s)")
     claim_id = fields.Many2one('crm.claim', string='Related claim',
                                ondelete='cascade',
                                help="To link to the case.claim object")
-    state = fields.Selection([('draft', 'Draft'), ('refused', 'Refused'),
+    state = fields.Selection([('draft', 'Draft'),
+                              ('refused', 'Refused'),
                               ('confirmed', 'Confirmed, waiting for product'),
                               ('in_to_control', 'Received, to control'),
                               ('in_to_treate', 'Controlled, to treate'),

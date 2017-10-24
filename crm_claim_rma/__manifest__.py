@@ -35,7 +35,7 @@
         "views/claim_line.xml",
         'views/res_partner.xml',
         'views/stock_view.xml',
-        #'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
     ],
     'demo': [],
     'test': [
