@@ -6,8 +6,8 @@
     'name': 'CRM Claim RMA Code',
     'version': '10.0.1.0.0',
     'category': 'Generic Modules/CRM & SRM',
-    'author': 'Vauxoo,Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/rma/tree/10.0/crm_claim_rma_code',
+    'author': 'Vauxoo, Odoo Community Association (OCA)',
+    'website': 'http://www.vauxoo.com',
     'license': 'AGPL-3',
     'depends': [
         'crm_claim_type',
