@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 04:45+0000\n"
-"PO-Revision-Date: 2016-12-27 08:26+0000\n"
+"POT-Creation-Date: 2017-09-02 12:33+0000\n"
+"PO-Revision-Date: 2017-10-16 18:32+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/oca/OCA-rma-8-0/language/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -118,7 +118,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_product_template
@@ -244,7 +244,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Sklad"
 
 #. module: crm_rma_stock_location
 #: model:ir.model,name:crm_rma_stock_location.model_claim_make_picking_wizard
