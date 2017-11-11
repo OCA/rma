@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 06:09+0000\n"
-"PO-Revision-Date: 2017-03-10 13:16+0000\n"
+"POT-Creation-Date: 2017-10-28 09:40+0000\n"
+"PO-Revision-Date: 2017-11-03 12:16+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/oca/OCA-rma-8-0/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -262,7 +262,7 @@ msgstr "Nama Tampilan"
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Draf"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -344,7 +344,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Memegang ringkasan Chatter (jumlah pesan, ...). Ringkasan ini langsung dalam format html agar bisa dimasukkan dalam pandangan kanban."
 
 #. module: crm_claim_rma
 #: field:claim.line,id:0 field:claim_make_picking.wizard,id:0
@@ -410,7 +410,7 @@ msgstr ""
 #: field:claim.line,message_is_follower:0
 #: field:stock.move,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Ini Adalah Pengikut"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
@@ -576,7 +576,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,number:0
 msgid "Number"
-msgstr ""
+msgstr "Nomer"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
@@ -870,7 +870,7 @@ msgstr ""
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,state:0
 msgid "State"
-msgstr ""
+msgstr "Bagian"
 
 #. module: crm_claim_rma
 #: model:ir.model,name:crm_claim_rma.model_stock_move
@@ -890,7 +890,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_summary:0 field:stock.move,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Ringkasan"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
