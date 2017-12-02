@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 06:09+0000\n"
-"PO-Revision-Date: 2017-03-10 13:16+0000\n"
+"POT-Creation-Date: 2017-10-28 09:40+0000\n"
+"PO-Revision-Date: 2017-11-30 00:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-rma-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr "Assunto da Solicitação"
 #. module: crm_claim_rma
 #: help:claim.line,claim_type:0
 msgid "Claim classification"
-msgstr ""
+msgstr "Classificação de Reclamação"
 
 #. module: crm_claim_rma
 #: field:claim.line,claim_diagnosis:0
@@ -588,7 +588,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
 msgid "Other"
-msgstr ""
+msgstr "Outro"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
