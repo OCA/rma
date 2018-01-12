@@ -45,6 +45,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[crm_claim_rma_code](crm_claim_rma_code/) | 10.0.1.0.0 | CRM Claim RMA Code
 [crm_rma_location](crm_rma_location/) | 10.0.1.0.0 | RMA Location
 [product_warranty](product_warranty/) | 10.0.1.0.0 | Product warranty
 
@@ -56,7 +57,6 @@ addon | version | summary
 [crm_claim_categ_as_name](crm_claim_categ_as_name/) | 1.0 (unported) | crm_claim_categ_as_name
 [crm_claim_ext](crm_claim_ext/) | 1.0 (unported) | CRM claim extension
 [crm_claim_rma](crm_claim_rma/) | 9.0.1.0.0 (unported) | RMA Claim (Product Return Management)
-[crm_claim_rma_code](crm_claim_rma_code/) | 9.0.1.0.0 (unported) | CRM Claim RMA Code
 [crm_rma_advance_location](crm_rma_advance_location/) | 1.0 (unported) | RMA Claims Advance Location
 [crm_rma_by_shop](crm_rma_by_shop/) | 1.0 (unported) | RMA Claims by shop
 [crm_rma_lot_mass_return](crm_rma_lot_mass_return/) | 1.0 (unported) | RMA Claims Mass Return by Lot
