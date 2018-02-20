@@ -19,7 +19,7 @@ Configuration
 To configure this module, you need to:
 
 #. Go to Settings > Sequence & Identifiers and then add/edit sequences and sequences codes to use.
-#. Then go to Sales > Configuration > Claim > Claim Types and set the sequence codes for the claim types.
+#. Then go to CRM > Configuration > Claim > Claim Types and set the sequence codes for the claim types.
 
 Usage
 =====
@@ -28,7 +28,7 @@ To use this module, you need to create new claims based on the configuration set
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/145/9.0
+   :target: https://runbot.odoo-community.org/runbot/145/11.0
 
 
 For further information, please visit:
@@ -51,6 +51,7 @@ Contributors
 * Yanina Aular <yani@vauxoo.com>
 * Osval Reyes <osval@vauxoo.com>
 * Bhavesh Odedra <bodedra@ursainfosystems.com>
+* Martin Wilderoth <martin.wilderoth@linserv.se>
 
 Maintainer
 ----------
