@@ -21,13 +21,13 @@ No extra configuration is added to this module
 Usage
 =====
 
-* Go to Warehouses > Configuration > Warehouses and create a new one
-* Then go to Warehouse > Configuration > Types of Operation, and confirm that it
+* Go to Inventory > Configuration > Warehouses and create a new one
+* Then go to Inventory > Configuration > Operation types, and confirm that it
   have been created the three mentioned picking types.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/145/9.0
+   :target: https://runbot.odoo-community.org/runbot/145/11.0
 
 For further information, please visit:
 
@@ -53,6 +53,7 @@ Contributors
 
 * Osval Reyes <osval@vauxoo.com>
 * Yanina Aular <yanina.aular@vauxoo.com>
+* Pragya Chhabra <pragya.chhabra@linserv.se>
 
 Maintainer
 ----------
