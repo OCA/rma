@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:46+0000\n"
-"PO-Revision-Date: 2016-11-22 16:25+0000\n"
+"POT-Creation-Date: 2017-12-02 09:46+0000\n"
+"PO-Revision-Date: 2018-02-02 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-rma-8-0/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -50,12 +50,12 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: crm_rma_stock_location
 #: code:addons/crm_rma_stock_location/wizards/claim_make_picking_from_picking.py:89
@@ -67,7 +67,7 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,id:0
@@ -77,17 +77,17 @@ msgstr ""
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: crm_rma_stock_location
 #: field:claim.make.picking.from.picking.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: crm_rma_stock_location
 #: view:claim.make.picking.from.picking.wizard:crm_rma_stock_location.view_claim_picking_from_picking

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 13:59+0000\n"
-"PO-Revision-Date: 2017-07-12 14:09+0000\n"
+"POT-Creation-Date: 2017-12-02 09:46+0000\n"
+"PO-Revision-Date: 2018-02-02 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-rma-8-0/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -36,12 +36,12 @@ msgstr "Companyia"
 #. module: product_warranty
 #: field:return.instruction,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: product_warranty
 #: field:return.instruction,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: product_warranty
 #: view:res.company:product_warranty.company_form
@@ -58,7 +58,7 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: product_warranty
 #: field:return.instruction,id:0
@@ -104,17 +104,17 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: product_warranty
 #: field:return.instruction,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: product_warranty
 #: field:return.instruction,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: product_warranty
 #: code:addons/product_warranty/models/product_supplierinfo.py:35

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 07:07+0000\n"
-"PO-Revision-Date: 2017-04-25 10:41+0000\n"
+"POT-Creation-Date: 2017-12-02 09:46+0000\n"
+"PO-Revision-Date: 2018-02-02 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-rma-8-0/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -187,14 +187,14 @@ msgstr ""
 #: field:claim.line,create_uid:0 field:claim_make_picking.wizard,create_uid:0
 #: field:substate.substate,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: crm_claim_rma
 #: field:claim.line,create_date:0 field:claim.line,invoice_date:0
 #: field:claim_make_picking.wizard,create_date:0
 #: field:substate.substate,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
@@ -241,7 +241,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,name:0 field:substate.substate,substate_descr:0
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #. module: crm_claim_rma
 #: field:claim_make_picking.wizard,claim_line_dest_location_id:0
@@ -257,7 +257,7 @@ msgstr ""
 #: field:claim_make_picking.wizard,display_name:0
 #: field:substate.substate,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: crm_claim_rma
 #: selection:claim.line,state:0
@@ -422,19 +422,19 @@ msgstr ""
 #: field:claim_make_picking.wizard,__last_update:0
 #: field:substate.substate,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_uid:0 field:claim_make_picking.wizard,write_uid:0
 #: field:substate.substate,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: crm_claim_rma
 #: field:claim.line,write_date:0 field:claim_make_picking.wizard,write_date:0
 #: field:substate.substate,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: crm_claim_rma
 #: field:claim.line,last_state_change:0
@@ -529,7 +529,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,display_name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.crm_claim_rma_form_view
@@ -554,7 +554,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: crm_claim_rma
 #: selection:claim.line,priority:0
