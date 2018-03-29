@@ -83,6 +83,7 @@
                     <button name="%(account.action_account_invoice_refund)d"
                         class="oe_inline"
                         type='action' string='New Refund'
+                        attrs="{'invisible': [('invoice_id', '=', False)]}"
                         context="{
                             'invoice_ids': [invoice_id],
                             'claim_line_ids': claim_line_ids,
