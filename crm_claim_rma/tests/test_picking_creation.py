@@ -41,9 +41,9 @@ class TestPickingCreation(common.TransactionCase):
                     'price_unit': product.list_price
 
                 }) for product, qty in [
+                    (self.env.ref('product.product_product_24'), 5),
                     (self.env.ref('product.product_product_25'), 3),
-                    (self.env.ref('product.product_product_30'), 5),
-                    (self.env.ref('product.product_product_33'), 2),
+                    (self.env.ref('product.product_product_27'), 2),
                 ]
             ]
         })
@@ -161,7 +161,8 @@ class TestPickingCreation(common.TransactionCase):
         claim_id = self.env['crm.claim'].browse(
             self.ref('crm_claim.crm_claim_6')
         )
-        self.invoice.confirm_paid()
+        self.invoice.action_invoice_open()
+        self.invoice.action_invoice_paid()
         claim_id.write({
             'invoice_id': self.invoice.id
         })

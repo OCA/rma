@@ -15,7 +15,8 @@
 -
   I confirm the invoice
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: account_invoice_claim_refund}
+  !python {model: account.invoice, id: account_invoice_claim_refund}: |
+    self.action_invoice_open()
 -
   I create a claim
 -
