@@ -75,9 +75,9 @@ class ClaimMakePicking(models.TransientModel):
         domain = [('claim_id', '=', self.env.context['active_id'])]
         lines = self.env['claim.line'].search(domain)
         if lines:
-            lines = lines.filtered(
-                lambda l: getattr(getattr(l, move_field), 'state') == 'cancel'
-                          or not getattr(l, move_field))
+            lines = lines.filtered(lambda l: getattr(getattr(l, move_field),
+                                                     'state') == 'cancel' or
+                                   not getattr(l, move_field))
             if not lines:
                 raise exceptions.UserError(
                     _('A picking has already been created for this claim.')
