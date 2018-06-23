@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_claim_rma
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-07-12 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Romanian (https://www.transifex.com/oca/teams/23907/ro/)\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ro\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:84
@@ -28,16 +29,16 @@ msgstr ""
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:184
 #, python-format
 msgid ""
-"A product return cannot be created for various destination addresses, please"
-" choose line with a same address."
+"A product return cannot be created for various destination addresses, please "
+"choose line with a same address."
 msgstr ""
 
 #. module: crm_claim_rma
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:174
 #, python-format
 msgid ""
-"A product return cannot be created for various destination locations, please"
-" choose line with a same destination location."
+"A product return cannot be created for various destination locations, please "
+"choose line with a same destination location."
 msgstr ""
 
 #. module: crm_claim_rma
@@ -1091,8 +1092,8 @@ msgid ""
 "Who is in charge of the warranty return treatment towards the end customer. "
 "Company will use the current company delivery or default address and so on "
 "for supplier and brand manufacturer. Does not necessarily mean that the "
-"warranty to be applied is the one of the return partner (ie: can be returned"
-" to the company and be under the brand warranty"
+"warranty to be applied is the one of the return partner (ie: can be returned "
+"to the company and be under the brand warranty"
 msgstr ""
 
 #. module: crm_claim_rma
