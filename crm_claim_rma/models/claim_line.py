@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# © 2017 Techspawn Solutions
 # © 2015 Vauxoo
 # © 2013 Camptocamp
 # © 2009-2013 Akretion,
@@ -10,9 +11,9 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from openerp import _, api, exceptions, fields, models
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
-                           DEFAULT_SERVER_DATETIME_FORMAT)
+from odoo import _, api, exceptions, fields, models
+from odoo.tools import (DEFAULT_SERVER_DATE_FORMAT,
+                        DEFAULT_SERVER_DATETIME_FORMAT)
 
 from .invoice_no_date import InvoiceNoDate
 from .product_no_supplier import ProductNoSupplier
@@ -58,14 +59,14 @@ class ClaimLine(models.Model):
     date = fields.Date('Claim Line Date',
                        select=True,
                        default=fields.date.today())
-    name = fields.Char('Description', default='none', required=True,
+    name = fields.Char('Description', default='none', required=False,
                        help="More precise description of the problem")
     priority = fields.Selection([('0_not_define', 'Not Define'),
                                  ('1_normal', 'Normal'),
                                  ('2_high', 'High'),
                                  ('3_very_high', 'Very High')],
                                 'Priority', default='0_not_define',
-                                compute='_compute_priority',
+                                # compute='_compute_priority',
                                 store=True,
                                 readonly=False,
                                 help="Priority attention of claim line")
@@ -77,7 +78,7 @@ class ClaimLine(models.Model):
                    ],
                   help="To describe the line product diagnosis")
     claim_origin = fields.Selection(SUBJECT_LIST, 'Claim Subject',
-                                    required=True, help="To describe the "
+                                    required=False, help="To describe the "
                                     "line product problem")
     product_id = fields.Many2one('product.product', string='Product',
                                  help="Returned product")
@@ -111,30 +112,29 @@ class ClaimLine(models.Model):
     warning = fields.Selection(WARRANT_COMMENT,
                                'Warranty', readonly=True,
                                help="If warranty has expired")
-    display_name = fields.Char('Name', compute='_get_display_name')
+    display_name = fields.Char('Name', compute='_compute_display_name')
 
     @api.model
     def get_warranty_return_partner(self):
-        return self.env['product.supplierinfo']._columns[
-            'warranty_return_partner'
-        ].selection
+        return self.env['product.supplierinfo'].warranty_return_partner
 
     warranty_type = fields.Selection(
-        get_warranty_return_partner, readonly=True,
+        get_warranty_return_partner,
         help="Who is in charge of the warranty return treatment towards "
         "the end customer. Company will use the current company "
         "delivery or default address and so on for supplier and brand "
         "manufacturer. Does not necessarily mean that the warranty "
         "to be applied is the one of the return partner (ie: can be "
         "returned to the company and be under the brand warranty")
-    warranty_return_partner = \
-        fields.Many2one('res.partner', string='Warranty Address',
-                        help="Where the customer has to "
-                        "send back the product(s)")
+    warranty_return_partner = fields.Many2one('res.partner',
+                                              string='Warranty Address',
+                                              help="Where the customer has to "
+                                                   "send back the product(s)")
     claim_id = fields.Many2one('crm.claim', string='Related claim',
                                ondelete='cascade',
                                help="To link to the case.claim object")
-    state = fields.Selection([('draft', 'Draft'), ('refused', 'Refused'),
+    state = fields.Selection([('draft', 'Draft'),
+                              ('refused', 'Refused'),
                               ('confirmed', 'Confirmed, waiting for product'),
                               ('in_to_control', 'Received, to control'),
                               ('in_to_treate', 'Controlled, to treate'),
@@ -278,6 +278,7 @@ class ClaimLine(models.Model):
                 'warning': warning}
 
     def set_warranty_limit(self):
+
         self.ensure_one()
 
         claim = self.claim_id
@@ -402,7 +403,7 @@ class ClaimLine(models.Model):
         return res
 
     @api.multi
-    def _get_display_name(self):
+    def _compute_display_name(self):
         for line_id in self:
             line_id.display_name = "%s - %s" % (
                 line_id.claim_id.code, line_id.name)
