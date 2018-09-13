@@ -63,6 +63,7 @@
             <field name="name">CRM - Claim product return Form</field>
             <field name="model">crm.claim</field>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="priority">99</field>
             <field name="arch" type="xml">
                 <!-- Header/workflow Buttons -->
                 <xpath expr="//field[@name='stage_id']" position="before">

@@ -183,7 +183,7 @@ class TestCrmRmaProdLotInvoice(TransactionCase):
             'name': 'Lot for %s' % (purchase_order_id.name),
             'product_id': self.product_id.id,
         })
-        lot_id._get_lot_complete_name()
+        lot_id._compute_get_lot_complete_name()
 
         self.do_whole_transfer_process(
             lot_id=lot_id,

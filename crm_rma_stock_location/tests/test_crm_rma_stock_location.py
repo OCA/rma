@@ -23,6 +23,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestCrmRmaStockLocation(TransactionCase):
+    post_install = True
 
     def setUp(self):
         super(TestCrmRmaStockLocation, self).setUp()

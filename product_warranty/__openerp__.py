@@ -39,6 +39,5 @@
     ],
     'test': [],
     'installable': True,
-    'active': False,
     'images': ['images/product_warranty.png'],
 }
