@@ -45,6 +45,7 @@ class TestProductWarranty(TransactionCase):
                                  min_qty=4,
                                  delay=5,
                                  warranty_return_partner='supplier',
+                                 warranty_return_other_address=partner_id.id,
                                  product_tmpl_id=product_tmpl_id.id,)
         self.supplierinfo_brw = \
             self.supplierinfo.create(supplierinfo_data)
@@ -78,3 +79,8 @@ class TestProductWarranty(TransactionCase):
         self.assertEquals(self.supplierinfo_brw.warranty_return_address.id,
                           self.supplierinfo_brw.company_id.
                           crm_return_address_id.id)
+
+        self.supplierinfo_brw.write({'warranty_return_partner': 'other'})
+        self.assertEquals(
+            self.supplierinfo_brw.warranty_return_address.id,
+            self.supplierinfo_brw.warranty_return_other_address.id)

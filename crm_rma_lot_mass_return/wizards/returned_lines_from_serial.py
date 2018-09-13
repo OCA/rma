@@ -39,7 +39,7 @@ class ClaimLineWizard(models.TransientModel):
                                       required=True,
                                       string="Invoice Line",
                                       help="Invoice Line")
-    name = fields.Char(compute="_get_complete_name",
+    name = fields.Char(compute="_compute_get_complete_name",
                        string="Complete Lot Name",)
 
     @api.constrains('product_id', 'invoice_line_id')
@@ -47,14 +47,14 @@ class ClaimLineWizard(models.TransientModel):
         for record in self:
             if record.product_id != \
                     record.invoice_line_id.product_id:
-                raise ValidationError("The product of the"
-                                      " invoice %s is not same"
-                                      " that product %s" %
+                raise ValidationError(_("The product of the"
+                                        " invoice %s is not same"
+                                        " that product %s" %
                                       (record.invoice_line_id.product_id.name,
-                                       record.product_id.name))
+                                       record.product_id.name)))
 
     @api.depends('invoice_line_id', 'lot_id', 'product_id')
-    def _get_complete_name(self):
+    def _compute_get_complete_name(self):
         for wizard in self:
             invoice_number = wizard.invoice_line_id.invoice_id.number
             product_name = wizard.product_id.name
@@ -534,14 +534,10 @@ class ReturnedLinesFromSerial(models.TransientModel):
                                        self.env[
                                            'claim.line']._get_subject(num),
                                        product_id, clw_id, 1, name)
-
-            # Clean items in wizard model
-            if len(clw_ids) == 1:
-                ids_to_delete = "(%s)" % str(clw_ids[0].id)
-            else:
-                ids_to_delete = "%s" % str(tuple([clw.id for clw in clw_ids]))
-            self._cr.execute("DELETE FROM claim_line_wizard where id IN %s"
-                             % ids_to_delete)
+            ids_to_delete = tuple([clw.id for clw in clw_ids])
+            self._cr.execute(
+                "DELETE FROM claim_line_wizard where id IN %s",
+                (ids_to_delete, ))
 
         # normal execution
         self.action_cancel()
@@ -555,11 +551,11 @@ class ReturnedLinesFromSerial(models.TransientModel):
         }
 
     message = fields.Text(string='Message',
-                          compute='_set_message'
+                          compute='_compute_set_message'
                           )
 
     @api.depends('current_status', 'lines_list_id', 'scan_data')
-    def _set_message(self):
+    def _compute_set_message(self):
         """
         Notify for missing (not added) claim lines that are in use in others
         claims

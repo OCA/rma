@@ -43,26 +43,25 @@ class ProductSupplierInfo(models.Model):
             .search([('is_default', '=', True)], limit=1)
         return instruction_ids
 
-    @api.one
+    @api.multi
     @api.depends('warranty_return_partner')
     def _compute_warranty_return_address(self):
         """ Method to return the partner delivery address or if none, the
         default address
         """
-        return_partner = self.warranty_return_partner
-        partner_id = self.company_id.partner_id.id
-        if return_partner:
-            if return_partner == 'supplier':
-                partner_id = self.name.id
-            elif return_partner == 'company':
-                if self.company_id.crm_return_address_id:
-                    partner_id = self.company_id.\
-                        crm_return_address_id.id
-            elif return_partner == 'other':
-                if self.warranty_return_other_address:
-                    partner_id = self.\
-                        warranty_return_other_address.id
-        self.warranty_return_address = partner_id
+        for rec in self:
+            return_partner = rec.warranty_return_partner
+            partner_id = rec.company_id.partner_id.id
+            if return_partner:
+                if return_partner == 'supplier':
+                    partner_id = rec.name.id
+                elif return_partner == 'company':
+                    if rec.company_id.crm_return_address_id:
+                        partner_id = rec.company_id.crm_return_address_id.id
+                elif return_partner == 'other':
+                    if rec.warranty_return_other_address:
+                        partner_id = rec.warranty_return_other_address.id
+            rec.warranty_return_address = partner_id
 
     warranty_duration = fields.Float(
         'Period',

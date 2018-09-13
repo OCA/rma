@@ -92,7 +92,7 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         # Validate it has exactly as much records as the taken invoice has
         self.assertEqual(len(lines_list_id), int(qty))
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         wizard_id.add_claim_lines()
 
         # 2 Macs
@@ -200,7 +200,7 @@ class TestCrmRmaLotMassReturn2(TransactionCase):
         wizard_id.lines_list_id = [(6, 0, [clw_id.id])]
         self.assertEqual(len(lines_list_id), 1)
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
         wizard_id.add_claim_lines()
         self.assertEqual(len(self.claim_id_2.claim_line_ids), 1)
 

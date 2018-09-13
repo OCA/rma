@@ -95,7 +95,7 @@ class TestCrmRmaLotMassReturn(TransactionCase):
         self.assertEqual(len(lines_list_id),
                          int(self.invoice_id.invoice_line.quantity))
 
-        wizard_id._set_message()
+        wizard_id._compute_set_message()
 
         wizard_id.add_claim_lines()
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-	    <record id="categ_claim10" model="crm.case.categ">
+        <record id="categ_claim10" model="crm.case.categ">
             <field name="name">No Inventory</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
         </record>
 
-	    <record id="categ_claim11" model="crm.case.categ">
+        <record id="categ_claim11" model="crm.case.categ">
             <field name="name">Customer Return</field>
             <field name="section_id" ref="section_after_sales_service"/>
             <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
