@@ -112,6 +112,19 @@ class ClaimLine(models.Model):
                                'Warranty', readonly=True,
                                help="If warranty has expired")
     display_name = fields.Char('Name', compute='_get_display_name')
+    package_id = fields.Many2one(
+        string="Package",
+        related="quant_id.package_id",
+        readonly=True,
+    )
+    quant_id = fields.Many2one(
+        string="Quant",
+        comodel_name="stock.quant",
+    )
+    origin_move = fields.Many2one(
+        string="Move",
+        comodel_name="stock.move",
+    )
 
     @api.model
     def get_warranty_return_partner(self):

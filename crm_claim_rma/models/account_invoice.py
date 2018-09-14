@@ -6,6 +6,9 @@
 
 from openerp import _, api, exceptions, fields, models
 
+from .invoice_no_date import InvoiceNoDate
+from .product_no_supplier import ProductNoSupplier
+
 
 class AccountInvoice(models.Model):
 
@@ -64,3 +67,26 @@ class AccountInvoice(models.Model):
             result['claim_id'] = self.env.context['claim_id']
 
         return result
+
+    def warranty_values(self, product, claim):
+        self.ensure_one()
+        claim_line = self.env['claim.line']
+        claim_type = claim.claim_type
+        claim_date = claim.date
+        warehouse = claim.warehouse_id
+        company = claim.company_id
+        values = {}
+        try:
+            warranty = claim_line._warranty_limit_values(
+                self, claim_type, product, claim_date)
+        except (InvoiceNoDate, ProductNoSupplier):
+            # we don't mind at this point if the warranty can't be
+            # computed and we don't want to block the user
+            values.update({'guarantee_limit': False, 'warning': False})
+        else:
+            values.update(warranty)
+
+        warranty_address = claim_line._warranty_return_address_values(
+            product, company, warehouse)
+        values.update(warranty_address)
+        return values

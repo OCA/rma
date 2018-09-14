@@ -197,6 +197,9 @@
                         <field name="claim_id" invisible="1"/>
                         <field name="state"/>
                         <field name="product_id"/>
+                        <field name="quant_id" invisible="1" />
+                        <field name="origin_move" invisible="1" />
+                        <field name="package_id"/>
                         <field name="name"/>
                         <field name="prodlot_id"/>
                         <field name="invoice_line_id" invisible="True"/>
