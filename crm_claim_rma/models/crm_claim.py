@@ -6,9 +6,6 @@
 
 from openerp import _, api, exceptions, fields, models
 
-from .invoice_no_date import InvoiceNoDate
-from .product_no_supplier import ProductNoSupplier
-
 
 class CrmClaim(models.Model):
     _inherit = 'crm.claim'
@@ -102,60 +99,106 @@ class CrmClaim(models.Model):
     @api.onchange('warehouse_id', 'claim_type', 'date')
     def _onchange_invoice_warehouse_type_date(self):
         context = self.env.context
-        claim_line = self.env['claim.line']
         if not self.warehouse_id:
             self.warehouse_id = self._get_default_warehouse()
-        claim_type = self.claim_type
-        claim_date = self.date
-        warehouse = self.warehouse_id
-        company = self.company_id
         create_lines = context.get('create_lines')
 
-        def warranty_values(invoice, product):
-            values = {}
-            try:
-                warranty = claim_line._warranty_limit_values(
-                    invoice, claim_type, product, claim_date)
-            except (InvoiceNoDate, ProductNoSupplier):
-                # we don't mind at this point if the warranty can't be
-                # computed and we don't want to block the user
-                values.update({'guarantee_limit': False, 'warning': False})
-            else:
-                values.update(warranty)
-
-            warranty_address = claim_line._warranty_return_address_values(
-                product, company, warehouse)
-            values.update(warranty_address)
-            return values
-
         if create_lines:  # happens when the invoice is changed
-            claim_lines = []
-            invoices_lines = self.invoice_id.invoice_line_ids.filtered(
-                lambda line: line.product_id.type in ('consu', 'product')
-            )
-            for invoice_line in invoices_lines:
-                location_dest = claim_line.get_destination_location(
-                    invoice_line.product_id, warehouse)
+            self._create_claim_lines()
+
+        if self.invoice_id:
+            self.delivery_address_id = self.invoice_id.partner_id.id
+
+    @api.model
+    def __check_packages_enabled(self):
+        group = self.env.ref(
+            "stock.group_tracking_lot",
+            raise_if_not_found=False,
+        )
+        employee_group = self.env.ref("base.group_user")
+        # if package managing is not activated or group deleted
+        if (not group or
+                group.id not in employee_group.implied_ids.ids or
+                not group.users):
+            return False
+        return True
+
+    def _create_claim_lines(self):
+        self.ensure_one()
+        claim_lines = []
+        # here we should check if packages are enabled
+        if self.__check_packages_enabled():
+            # create claim lines from invoice lines with packages
+            claim_lines.extend(self.__create_lines_from_invoice_packages())
+        else:
+            # create claim lines from invoice lines
+            claim_lines.extend(self.__create_lines_from_invoice())
+
+        value = self._convert_to_cache(
+            {'claim_line_ids': claim_lines}, validate=False)
+        self.update(value)
+
+    def __create_lines_from_invoice(self):
+        claim_line = self.env['claim.line']
+        warehouse = self.warehouse_id
+        invoices_lines = self.invoice_id.invoice_line_ids.filtered(
+            lambda line: line.product_id.type in ('consu', 'product')
+        )
+        lines = []
+        for invoice_line in invoices_lines:
+            location_dest = claim_line.get_destination_location(
+                invoice_line.product_id, warehouse)
+            line = {
+                'name': invoice_line.name,
+                'claim_origin': "none",
+                'invoice_line_id': invoice_line.id,
+                'product_id': invoice_line.product_id.id,
+                'product_returned_quantity': invoice_line.quantity,
+                'unit_sale_price': invoice_line.price_unit,
+                'location_dest_id': location_dest.id,
+                'state': 'draft',
+            }
+            line.update(invoice_line.invoice_id.warranty_values(
+                invoice_line.product_id,
+                self,
+            ))
+            lines.append((0, 0, line))
+        return lines
+
+    def __create_lines_from_invoice_packages(self):
+        claim_line = self.env['claim.line']
+        warehouse = self.warehouse_id
+        invoices_lines = self.invoice_id.invoice_line_ids.filtered(
+            lambda line: line.product_id.type in ('consu', 'product')
+        )
+        lines = []
+        for invoice_line in invoices_lines:
+            location_dest = claim_line.get_destination_location(
+                invoice_line.product_id, warehouse)
+            sale_line = invoice_line.sale_line_ids[0]
+            # here should be only one move
+            move = sale_line.procurement_ids[0].move_ids.filtered(
+                lambda x: x.product_id == sale_line.product_id,
+            )[0]
+            for quant in move.quant_ids:
                 line = {
                     'name': invoice_line.name,
                     'claim_origin': "none",
                     'invoice_line_id': invoice_line.id,
                     'product_id': invoice_line.product_id.id,
-                    'product_returned_quantity': invoice_line.quantity,
+                    'product_returned_quantity': quant.qty,
                     'unit_sale_price': invoice_line.price_unit,
                     'location_dest_id': location_dest.id,
                     'state': 'draft',
+                    'quant_id': quant.id,
+                    'origin_move': move.id,
                 }
-                line.update(warranty_values(invoice_line.invoice_id,
-                                            invoice_line.product_id))
-                claim_lines.append((0, 0, line))
-
-            value = self._convert_to_cache(
-                {'claim_line_ids': claim_lines}, validate=False)
-            self.update(value)
-
-        if self.invoice_id:
-            self.delivery_address_id = self.invoice_id.partner_id.id
+                line.update(invoice_line.invoice_id.warranty_values(
+                    invoice_line.product_id,
+                    self,
+                ))
+                lines.append((0, 0, line))
+        return lines
 
     @api.model
     def message_get_reply_to(self, res_ids, default=None):

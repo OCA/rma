@@ -73,8 +73,7 @@ class ClaimMakePicking(models.TransientModel):
         picking_type = self.env.context.get('picking_type')
         move_field = 'move_in_id' if picking_type == 'in' else 'move_out_id'
         domain = [('claim_id', '=', self.env.context['active_id'])]
-        lines = self.env['claim.line'].\
-            search(domain)
+        lines = self.env['claim.line'].search(domain)
         if lines:
             domain = domain + ['|', (move_field, '=', False),
                                (move_field + '.state', '=', 'cancel')]
@@ -147,6 +146,7 @@ class ClaimMakePicking(models.TransientModel):
             'location_id': self.claim_line_source_location_id.id,
             'location_dest_id': self.claim_line_dest_location_id.id,
             'note': self._get_picking_note(),
+            'origin_returned_move_id': line.origin_move.id,
         }
 
     def _create_picking(self, claim, picking_type):

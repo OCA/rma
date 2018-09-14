@@ -70,6 +70,9 @@
                 <field name="claim_id" invisible="1"/>
                 <field name="number"/>
                 <field name="state"/>
+                <field name="quant_id" invisible="1" />
+                <field name="origin_move" invisible="1" />
+                <field name="package_id"/>
                 <field name="substate_id"/>
                 <field name="product_id"/>
                 <field name="name"/>
