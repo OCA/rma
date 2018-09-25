@@ -109,7 +109,6 @@ class CrmClaim(models.Model):
         if self.invoice_id:
             self.delivery_address_id = self.invoice_id.partner_id.id
 
-    @api.model
     def __check_packages_enabled(self):
         group = self.env.ref(
             "stock.group_tracking_lot",
