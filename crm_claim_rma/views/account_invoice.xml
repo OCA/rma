@@ -8,14 +8,11 @@
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
-            <field name='origin' position="after"/>
-
-            <xpath expr="//button[@name='action_invoice_cancel']"
-                   position="replace">
-                <field name="claim_id"
-                       attrs="{'invisible':[('type','!=','out_refund')]}"/>
-            </xpath>
-
+            <data>
+                <xpath expr="//page[@name='other_info']//field[@name='origin']" position="after">
+                    <field name="claim_id" attrs="{'invisible':[('type','!=','out_refund')]}"/>
+                </xpath>
+            </data>
         </field>
     </record>
 
