@@ -38,9 +38,9 @@
         'security/ir.model.access.csv',
     ],
     'demo': [],
-    'test': [
-        'test/test_invoice_refund.yml'
-    ],
+    # 'test': [
+    #     'test/test_invoice_refund.yml'
+    # ],
     'installable': True,
     'auto_install': False,
 }

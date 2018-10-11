@@ -162,7 +162,7 @@ class TestPickingCreation(common.TransactionCase):
             self.ref('crm_claim.crm_claim_6')
         )
         self.invoice.action_invoice_open()
-        self.invoice.action_invoice_paid()
+        # self.invoice.action_invoice_paid()
         claim_id.write({
             'invoice_id': self.invoice.id
         })

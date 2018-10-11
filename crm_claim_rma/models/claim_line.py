@@ -25,7 +25,7 @@ class ClaimLine(models.Model):
 
     _inherit = 'mail.thread'
     _description = "List of product to return"
-    _rec_name = "display_name"
+    # _rec_name = "display_name"
 
     SUBJECT_LIST = [('none', 'Not specified'),
                     ('legal', 'Legal retractation'),
@@ -47,6 +47,11 @@ class ClaimLine(models.Model):
         ('expired', _("Expired")),
         ('not_define', _("Not Defined"))]
 
+    @api.model
+    def get_warranty_return_partner(self):
+        return self.env['product.supplierinfo'].fields_get(
+            'warranty_return_partner')['warranty_return_partner']['selection']
+
     number = fields.Char(
         readonly=True,
         default='/',
@@ -57,7 +62,7 @@ class ClaimLine(models.Model):
         default=lambda self: self.env['res.company']._company_default_get(
             'claim.line'))
     date = fields.Date('Claim Line Date',
-                       select=True,
+                       index=True,
                        default=fields.date.today())
     name = fields.Char('Description', default='none', required=False,
                        help="More precise description of the problem")
@@ -113,11 +118,6 @@ class ClaimLine(models.Model):
                                'Warranty', readonly=True,
                                help="If warranty has expired")
     display_name = fields.Char('Name', compute='_compute_display_name')
-
-    @api.model
-    def get_warranty_return_partner(self):
-        return self.env['product.supplierinfo'].fields_get(
-            'warranty_return_partner')['warranty_return_partner']['selection']
 
     warranty_type = fields.Selection(
         get_warranty_return_partner,
@@ -404,6 +404,7 @@ class ClaimLine(models.Model):
         return res
 
     @api.multi
+    @api.depends('claim_id.code', 'name')
     def _compute_display_name(self):
         for line_id in self:
             line_id.display_name = "%s - %s" % (
