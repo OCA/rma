@@ -174,12 +174,19 @@ class CrmClaim(models.Model):
         for invoice_line in invoices_lines:
             location_dest = claim_line.get_destination_location(
                 invoice_line.product_id, warehouse)
+            if not invoice_line.sale_line_ids:
+                continue
             sale_line = invoice_line.sale_line_ids[0]
             # here should be only one move
-            move = sale_line.procurement_ids[0].move_ids.filtered(
+            if not sale_line.procurement_ids:
+                continue
+            moves = sale_line.procurement_ids[0].move_ids.filtered(
                 lambda x: x.product_id == sale_line.product_id,
-            )[0]
-            for quant in move.quant_ids:
+            )
+            if not moves:
+                continue
+            moves = moves[0]
+            for quant in moves.quant_ids:
                 line = {
                     'name': invoice_line.name,
                     'claim_origin': "none",
@@ -190,7 +197,7 @@ class CrmClaim(models.Model):
                     'location_dest_id': location_dest.id,
                     'state': 'draft',
                     'quant_id': quant.id,
-                    'origin_move': move.id,
+                    'origin_move': moves.id,
                 }
                 line.update(invoice_line.invoice_id.warranty_values(
                     invoice_line.product_id,
