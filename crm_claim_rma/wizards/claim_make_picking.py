@@ -224,12 +224,8 @@ class ClaimMakePicking(models.TransientModel):
 
         :type claim: crm_claim
         """
-        group = self.env['procurement.group'].create({
-            'name': claim.code,
-            'claim_id': claim.id,
-            'move_type': 'direct',
-        })
-
+        group = self.env['procurement.group'].create(
+            self._prepare_procurement_group_data(claim))
         for line in self.claim_line_ids:
             procurement = self.env['procurement.order'].create(
                 self._prepare_procurement_data(claim, line, group))
@@ -238,6 +234,13 @@ class ClaimMakePicking(models.TransientModel):
                               raise_if_not_found=False).read()[0]
         action['context'] = {'active_id': group.id}
         return action
+
+    def _prepare_procurement_group_data(self, claim):
+        return {
+            'name': claim.code,
+            'claim_id': claim.id,
+            'move_type': 'direct',
+        }
 
     def _prepare_procurement_data(self, claim, line, group):
         return {
