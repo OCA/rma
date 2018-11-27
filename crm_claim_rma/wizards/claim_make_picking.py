@@ -231,23 +231,27 @@ class ClaimMakePicking(models.TransientModel):
         })
 
         for line in self.claim_line_ids:
-            procurement = self.env['procurement.order'].create({
-                'name': line.product_id.name_template,
-                'group_id': group.id,
-                'origin': claim.code,
-                'warehouse_id': self.delivery_warehouse_id.id,
-                'date_planned': time.strftime(DT_FORMAT),
-                'product_id': line.product_id.id,
-                'product_qty': line.product_returned_quantity,
-                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
-                'location_id': self.claim_line_dest_location_id.id,
-                'company_id': claim.company_id.id,
-            })
+            procurement = self.env['procurement.order'].create(
+                self._prepare_procurement_data(claim, line, group))
             procurement.run()
         action = self.env.ref('procurement.do_view_procurements',
                               raise_if_not_found=False).read()[0]
         action['context'] = {'active_id': group.id}
         return action
+
+    def _prepare_procurement_data(self, claim, line, group):
+        return {
+            'name': line.product_id.name_template,
+            'group_id': group.id,
+            'origin': claim.code,
+            'warehouse_id': self.delivery_warehouse_id.id,
+            'date_planned': time.strftime(DT_FORMAT),
+            'product_id': line.product_id.id,
+            'product_qty': line.product_returned_quantity,
+            'product_uom': line.product_id.product_tmpl_id.uom_id.id,
+            'location_id': self.claim_line_dest_location_id.id,
+            'company_id': claim.company_id.id,
+        }
 
     @api.multi
     def action_create_picking(self):
