@@ -244,6 +244,10 @@ class ClaimMakePicking(models.TransientModel):
                 'company_id': claim.company_id.id,
             })
             procurement.run()
+        action = self.env.ref('procurement.do_view_procurements',
+                              raise_if_not_found=False).read()[0]
+        action['context'] = {'active_id': group.id}
+        return action
 
     @api.multi
     def action_create_picking(self):
