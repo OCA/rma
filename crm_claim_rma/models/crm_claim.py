@@ -147,6 +147,16 @@ class CrmClaim(models.Model):
         for invoice_line in invoices_lines:
             location_dest = claim_line.get_destination_location(
                 invoice_line.product_id, warehouse)
+            line = self._prepare_claim_line_from_invoice_line(
+                invoice_line,
+                location_dest
+            )
+            lines.append((0, 0, line))
+        return lines
+
+    def _prepare_claim_line_from_invoice_line(self, invoice_line,
+                                              location_dest):
+
             line = {
                 'name': invoice_line.name,
                 'claim_origin': "none",
@@ -161,8 +171,8 @@ class CrmClaim(models.Model):
                 invoice_line.product_id,
                 self,
             ))
-            lines.append((0, 0, line))
-        return lines
+
+            return line
 
     def __create_lines_from_invoice_packages(self):
         claim_line = self.env['claim.line']
@@ -186,23 +196,30 @@ class CrmClaim(models.Model):
             if not moves:
                 continue
             moves = moves[0]
-            for quant in moves.quant_ids:
-                line = {
-                    'name': invoice_line.name,
-                    'claim_origin': "none",
-                    'invoice_line_id': invoice_line.id,
-                    'product_id': invoice_line.product_id.id,
-                    'product_returned_quantity': quant.qty,
-                    'unit_sale_price': invoice_line.price_unit,
-                    'location_dest_id': location_dest.id,
-                    'state': 'draft',
-                    'quant_id': quant.id,
-                    'origin_move': moves.id,
-                }
-                line.update(invoice_line.invoice_id.warranty_values(
-                    invoice_line.product_id,
-                    self,
-                ))
+            if moves.quant_ids:
+                for quant in moves.quant_ids:
+                    line = {
+                        'name': invoice_line.name,
+                        'claim_origin': "none",
+                        'invoice_line_id': invoice_line.id,
+                        'product_id': invoice_line.product_id.id,
+                        'product_returned_quantity': quant.qty,
+                        'unit_sale_price': invoice_line.price_unit,
+                        'location_dest_id': location_dest.id,
+                        'state': 'draft',
+                        'quant_id': quant.id,
+                        'origin_move': moves.id,
+                    }
+                    line.update(invoice_line.invoice_id.warranty_values(
+                        invoice_line.product_id,
+                        self,
+                    ))
+                    lines.append((0, 0, line))
+            else:
+                line = self._prepare_claim_line_from_invoice_line(
+                    invoice_line,
+                    location_dest
+                )
                 lines.append((0, 0, line))
         return lines
 
