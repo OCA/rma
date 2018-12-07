@@ -183,7 +183,7 @@
                        context="{'tree_view_ref': 'crm_claim_rma.view_partner_contact_tree',
                             'search_default_parent_id': partner_id}"/>
                 <field name="invoice_id"
-                       domain="['|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id)]"
+                       domain="['&amp;', '|',('commercial_partner_id','=',partner_id),('partner_id','=',partner_id),('state', 'not in', ['cancel'])]"
                        context="{'create_lines': True}"/>
             </field>
 
