@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2016 Cyril Gaudin (Camptocamp)
 # © 2015 Vauxoo, Yanina Aular
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
