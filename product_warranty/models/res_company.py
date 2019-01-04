@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2016 Joel Grand-Guillaume, Cyril Gaudin (Camptocamp)
 # © 2009-2013 Akretion, Emmanuel Samyn, Raphaël Valyi, Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -7,7 +6,6 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-
     _inherit = "res.company"
 
     crm_return_address_id = fields.Many2one(
