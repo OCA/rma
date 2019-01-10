@@ -69,3 +69,24 @@ class ClaimMakePicking(models.TransientModel):
         if self.env.context.get('picking_type', '') == 'loss':
             write_field = 'move_loss_id'
         return picking_type, write_field
+
+    @api.returns('claim.line')
+    def _default_claim_line_ids(self):
+        if self.env.context.get('picking_type') == 'loss':
+            move_field = 'move_loss_id'
+            domain = [('claim_id', '=', self.env.context['active_id'])]
+            lines = self.env['claim.line'].\
+                search(domain)
+            if lines:
+                domain = domain + ['|', (move_field, '=', False),
+                                   (move_field + '.state', '=', 'cancel')]
+                lines = lines.search(domain)
+                if not lines:
+                    raise exceptions.Warning(
+                        _('Error'),
+                        _('A picking has already been created for this claim.'))
+        else:
+            lines = super(ClaimMakePicking, self)._default_claim_line_ids()
+        return lines
+
+    claim_line_ids = fields.Many2many(default=_default_claim_line_ids)
