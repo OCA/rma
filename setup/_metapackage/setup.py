@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-product_warranty',
+        'odoo11-addon-stock_production_lot_warranty',
     ],
     classifiers=[
         'Programming Language :: Python',
