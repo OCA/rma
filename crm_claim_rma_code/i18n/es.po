@@ -7,22 +7,22 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-17 19:13+0000\n"
-"PO-Revision-Date: 2015-07-17 19:13+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2019-02-11 12:50+0000\n"
+"Last-Translator: Marta Vázquez Rodríguez <vazrodmar@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: crm_claim_rma_code
 #: model:ir.model.fields,field_description:crm_claim_rma_code.field_crm_claim_type_ir_sequence_id
-#, fuzzy
 msgid "Sequence Code"
-msgstr "Número de secuencia"
+msgstr "Código Secuencia"
 
 #. module: crm_claim_rma_code
 #: model:ir.model,name:crm_claim_rma_code.model_crm_claim_type
 msgid "crm.claim.type"
-msgstr ""
+msgstr "'crm.claim.type'"
