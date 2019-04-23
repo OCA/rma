@@ -8,3 +8,4 @@
 * Yanina Aular <yanina.aular@vauxoo.com>
 * Cyril Gaudin <cyril.gaudin@camptocamp.com>
 * Bima Jati Wijaya <bimajatiwijaya@gmail.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
