@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <page name="sales" position="inside">
                 <group>
-                    <group id="warranty-left">
-                        <label for="warranty"/>
+                    <group string="Warranty" id="warranty-left">
+                        <label name="warranty" for="warranty"/>
                         <div>
                             <field name="warranty" class="oe_inline"/>
                             <field name="warranty_type" class="oe_inline"/>
