@@ -25,7 +25,6 @@ class ClaimLine(models.Model):
 
     _inherit = 'mail.thread'
     _description = "List of product to return"
-    # _rec_name = "display_name"
 
     SUBJECT_LIST = [('none', 'Not specified'),
                     ('legal', 'Legal retractation'),
@@ -71,7 +70,6 @@ class ClaimLine(models.Model):
                                  ('2_high', 'High'),
                                  ('3_very_high', 'Very High')],
                                 'Priority', default='0_not_define',
-                                # compute='_compute_priority',
                                 store=True,
                                 readonly=False,
                                 help="Priority attention of claim line")
