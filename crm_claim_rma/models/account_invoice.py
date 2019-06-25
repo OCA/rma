@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
+# © 2017 Techspawn Solutions
 # © 2015 Eezee-It, MONK Software, Vauxoo
 # © 2013 Camptocamp
 # © 2009-2013 Akretion,
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models
 
 
 class AccountInvoice(models.Model):
-
     _inherit = "account.invoice"
 
     claim_id = fields.Many2one('crm.claim', string='Claim')
@@ -33,14 +33,13 @@ class AccountInvoice(models.Model):
                 # For each lines replace quantity and add claim_line_id
                 inv_line = claim_line.invoice_line_id
                 clean_line = {}
-                for field_name, field in inv_line._all_columns.iteritems():
-                    column_type = field.column._type
-                    if column_type == 'many2one':
+                for field_name, field in inv_line._fields.iteritems():
+                    if isinstance(field, fields.Many2one):
                         clean_line[field_name] = inv_line[field_name].id
-                    elif column_type not in ('many2many', 'one2many'):
+                    elif not isinstance(field, (fields.Many2many,
+                                                fields.One2many)):
                         clean_line[field_name] = inv_line[field_name]
                     elif field_name == 'invoice_line_tax_id':
-
                         tax_ids = inv_line[field_name].ids
                         clean_line[field_name] = [(6, 0, tax_ids)]
                 clean_line['quantity'] = claim_line.product_returned_quantity

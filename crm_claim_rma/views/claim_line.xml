@@ -110,7 +110,8 @@
                     <separator string="Problem" colspan="4"/>
                     <group col="6" colspan="4">
                         <field name="name" colspan="6"/>
-                        <field name="product_id" readonly="1" colspan="6"/>
+                        <!-- Read-only view deleted -->
+                        <field name="product_id" colspan="6"/>
                         <field name="prodlot_id" colspan="6"/>
                         <field name="claim_origin" colspan="6"/>
                         <field name="claim_diagnosis" colspan="6"/>
@@ -119,60 +120,32 @@
                         <field name="unit_sale_price"/>
                         <field name="return_value"/>
                     </group>
-                    <group>
+                        <group>
                         <group string="Warranty">
-                            <field name="guarantee_limit" readonly="1"/>
-                            <field name="warning" readonly="1"/>
-                            <field name="warranty_type" readonly="1"/>
+                            <field name="guarantee_limit"/>
+                            <field name="warning"/>
+                            <!-- <field name="warranty_type"/> -->
                             <field name="warranty_return_partner"/>
                         </group>
                         <group string="Linked Document">
                             <field name="claim_id" readonly="1"/>
-                            <field name="invoice_line_id" readonly="1"/>
+                            <field name="invoice_line_id" />
                             <field name="refund_line_id" readonly="1"/>
                             <field name="move_in_id" readonly="1"/>
                             <field name="move_out_id" readonly="1"/>
-                        </group>
-                    </group>
+                        </group> 
                     <separator string="State" colspan="4"/>
                     <group col="6" colspan="4">
                         <field name="substate_id" widget='selection'/>
                         <field name="last_state_change"/>
                     </group>
+                </group>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
-        </field>
-    </record>
-
-    <!--
-        A second slightly modified form view to be used for the claim_line_ids
-        field in the crm.claim form view. Defining it here instead of directly
-        inside the field allows us to write only the changes and reference it
-    -->
-    <record id="crm_claim_line_view_form_embedded" model="ir.ui.view">
-        <field name="name">Claim line form view to be used inside claim tree</field>
-        <field name="mode">primary</field>
-        <field name="model">claim.line</field>
-        <field name="priority" eval="30"/>
-        <field name="inherit_id" ref="crm_claim_line_form_view"/>
-        <field name="arch" type="xml">
-            <field name="claim_id" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </field>
-            <field name="product_id" position="attributes">
-                <attribute name="context">{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id':
-                    parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': parent.date}
-                </attribute>
-            </field>
-            <field name="invoice_line_id" position="attributes">
-                <attribute name="context">{'claim_id': parent.id, 'company_id': parent.company_id, 'warehouse_id':
-                    parent.warehouse_id, 'claim_type': parent.claim_type, 'claim_date': parent.date}
-                </attribute>
-            </field>
         </field>
     </record>
 
@@ -193,7 +166,7 @@
     <menuitem
             name="Claim lines"
             id="menu_crm_case_claims_claim_lines"
-            parent="base.menu_aftersale"
+            parent="crm_claim.menu_aftersale"
             action="act_crm_case_claim_lines"
             sequence="2"/>
 </odoo>

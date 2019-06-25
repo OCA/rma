@@ -6,8 +6,8 @@
 
 import time
 
-from openerp import models, fields, exceptions, api, _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
+from odoo import models, fields, exceptions, api, _
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 
 
 class ClaimMakePicking(models.TransientModel):
@@ -73,12 +73,11 @@ class ClaimMakePicking(models.TransientModel):
         picking_type = self.env.context.get('picking_type')
         move_field = 'move_in_id' if picking_type == 'in' else 'move_out_id'
         domain = [('claim_id', '=', self.env.context['active_id'])]
-        lines = self.env['claim.line'].\
-            search(domain)
+        lines = self.env['claim.line'].search(domain)
         if lines:
-            domain = domain + ['|', (move_field, '=', False),
-                               (move_field + '.state', '=', 'cancel')]
-            lines = lines.search(domain)
+            lines = lines.filtered(lambda l: getattr(getattr(l, move_field),
+                                                     'state') == 'cancel' or
+                                   not getattr(l, move_field))
             if not lines:
                 raise exceptions.UserError(
                     _('A picking has already been created for this claim.')
@@ -132,7 +131,7 @@ class ClaimMakePicking(models.TransientModel):
 
     def _get_picking_line_data(self, claim, picking, line):
         return {
-            'name': line.product_id.name_template,
+            'name': line.product_id.name,
             'priority': '0',
             'date': time.strftime(DT_FORMAT),
             'date_expected': time.strftime(DT_FORMAT),
@@ -232,7 +231,7 @@ class ClaimMakePicking(models.TransientModel):
 
         for line in self.claim_line_ids:
             procurement = self.env['procurement.order'].create({
-                'name': line.product_id.name_template,
+                'name': line.product_id.name,
                 'group_id': group.id,
                 'origin': claim.code,
                 'warehouse_id': self.delivery_warehouse_id.id,

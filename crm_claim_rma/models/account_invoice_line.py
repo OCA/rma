@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+# © 2017 Techspawn Solutions
 # © 2015 Vauxoo
 # © 2013 Camptocamp
 # © 2009-2013 Akretion,
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, models
+from odoo import api, models
 
 
 class AccountInvoiceLine(models.Model):
