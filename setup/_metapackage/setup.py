@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-rma Odoo addons",
     version=version,
     install_requires=[
+        'odoo10-addon-crm_claim_rma',
         'odoo10-addon-crm_claim_rma_code',
         'odoo10-addon-crm_rma_location',
         'odoo10-addon-product_warranty',
