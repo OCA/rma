@@ -12,9 +12,7 @@
     'author': "Akretion, Camptocamp, Eezee-it, MONK Software, Vauxoo, "
               "Techspawn Solutions, "
               "Odoo Community Association (OCA)",
-    'website': 'http://www.akretion.com, http://www.camptocamp.com, '
-               'http://www.eezee-it.com, http://www.wearemonk.com, '
-               'http://www.vauxoo.com',
+    'website': 'https://github.com/OCA/rma',
     'license': 'AGPL-3',
     'depends': [
         'purchase',
