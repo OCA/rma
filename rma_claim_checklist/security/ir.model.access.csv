@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_rma_claim_checklist,access_rma_claim_checklist,model_rma_claim_checklist,base.group_sale_salesman,1,1,1,1
+access_rma_claim_checklist_question,access_rma_claim_checklist_question,model_rma_claim_checklist_question,base.group_sale_salesman,1,1,1,1
+access_rma_claim_checklist_answer,access_rma_claim_checklist_answer,model_rma_claim_checklist_answer,base.group_sale_salesman,1,1,1,1

@@ -1,0 +1,33 @@
+<openerp>
+    <data>
+
+        <record id="crm_claim_line_checklist" model="ir.ui.view">
+            <field name="name">crm_claim_checklists</field>
+            <field name="model">claim.line</field>
+            <field
+                name="inherit_id"
+                ref="crm_claim_rma.crm_claim_line_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group[last()]" position="after">
+                    <field name="show_questions" invisible="True" />
+                    <group
+                        name="questions"
+                        string="Questions"
+                        attrs="{'invisible': [('show_questions', '=', False)]}">
+                        <field
+                            name="question_ids"
+                            nolabel="1">
+                            <tree>
+                                <field name="name" />
+                                <field name="type" invisible="True" />
+                                <field name="answer_display" string="Answer" />
+                                <field name="hint" />
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

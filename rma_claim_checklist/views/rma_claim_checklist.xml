@@ -1,0 +1,57 @@
+<openerp>
+    <data>
+
+        <record id="rma_claim_checklist_form" model="ir.ui.view">
+            <field name="name">rma.claim.checklist.form</field>
+            <field name="model">rma.claim.checklist</field>
+            <field name="arch" type="xml">
+                <form string="Checklist">
+                    <header></header>
+                    <sheet string="Checklist">
+                        <group>
+                            <field
+                                name="claim_state"
+                                required="True"
+                                options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="product_category_id" />
+                        </group>
+                        <field name="question_ids"
+                            string="Questions"
+                            required="True">
+                            <tree editable="bottom">
+                                <field name="name" required="True" />
+                                <field name="type" required="True" />
+                                <field name="hint" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="rma_claim_checklist_tree" model="ir.ui.view">
+            <field name="name">rma.claim.checklist.tree</field>
+            <field name="model">rma.claim.checklist</field>
+            <field name="arch" type="xml">
+                <tree string="Checklists">
+                    <field name="product_id" />
+                    <field name="product_category_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rma_claim_checklist">
+            <field name="name">Checklist</field>
+            <field name="res_model">rma.claim.checklist</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="rma_claim_checklist_tree" />
+        </record>
+
+        <menuitem id="menu_claim_stage_view" name="Checklists"
+            action="action_rma_claim_checklist" parent="base.menu_aftersale" />
+    </data>
+</openerp>

@@ -1,0 +1,25 @@
+<openerp>
+    <data>
+
+        <record id="crm_claim_checklist_question" model="ir.ui.view">
+            <field name="name">crm_claim_checklist_question</field>
+            <field name="model">rma.claim.checklist.question</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="type" invisible="1" />
+                    <field name="answer_text"
+                        attrs="{'invisible': [('type', '!=', 'free_text')]}" />
+                    <field name="answer_char"
+                        attrs="{'invisible': [('type', '!=', 'textbox')]}" />
+                    <field name="answer_float"
+                        attrs="{'invisible': [('type', '!=', 'numerical_box')]}" />
+                    <field name="answer_datetime"
+                        attrs="{'invisible': [('type', '!=', 'datetime')]}" />
+                    <field name="answer_selection"
+                        attrs="{'invisible': [('type', '!=', 'simple_choice')]}" />
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>
