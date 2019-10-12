@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/OCA/rma.svg?branch=13.0)](https://travis-ci.org/OCA/rma)
 [![Coverage Status](https://coveralls.io/repos/OCA/rma/badge.png?branch=13.0)](https://coveralls.io/r/OCA/rma?branch=13.0)
 
-RMA (Return Merchandise Authorization) 
+RMA (Return Merchandise Authorization)
 =======================================
 
 Management of Return Merchandise Authorization (RMA) in Odoo : product return, warranty control, product exchange, product refund,...
@@ -37,6 +37,3 @@ Upgrade the standard crm_claim module to add :
 * product refund
 * product exchange
 * access to related customer data (orders, invoices, refunds, picking in/out)
-
-
-
