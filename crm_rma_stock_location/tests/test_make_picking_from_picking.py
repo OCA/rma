@@ -20,6 +20,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
+from openerp.tools import safe_eval
 
 
 class TestPickingFromPicking(TransactionCase):
@@ -133,7 +134,7 @@ class TestPickingFromPicking(TransactionCase):
         }
         wizard_id = self.wizardmakepicking.with_context(new_context).create({})
 
-        default_location_dest_id = eval(
+        default_location_dest_id = safe_eval(
             'self.claim_id.warehouse_id.'
             'rma_%s_type_id.default_location_dest_id' % picking_type_str)
         self.assertEquals(
@@ -153,7 +154,8 @@ class TestPickingFromPicking(TransactionCase):
         }
         wizard_id = self.wizardmakepicking.with_context(new_context).create({})
 
-        default_location_dest_id = eval(
-            'self.claim_id.warehouse_id.loss_loc_id')
+        default_location_dest_id = safe_eval(
+            'self.claim_id.warehouse_id.loss_loc_id',
+            {'self': self})
         self.assertEquals(
             wizard_id.claim_line_dest_location_id, default_location_dest_id)
