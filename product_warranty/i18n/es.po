@@ -7,26 +7,25 @@ msgstr ""
 "Project-Id-Version: product_warranty.es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-21 15:06+0000\n"
-"PO-Revision-Date: 2019-01-28 12:30+0100\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"PO-Revision-Date: 2019-12-19 19:05+0000\n"
+"Last-Translator: Galoperd <jvcsan@gmail.com>\n"
 "Language-Team: Domatix Technologies\n"
-"Language: es_ES\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2014-05-24 06:50+0000\n"
-"X-Generator: Launchpad (build 17017)\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_active_supplier
-#, fuzzy
 msgid "Active Supplier"
-msgstr "Proveedor activo"
+msgstr "Proveedor Activo"
 
 #. module: product_warranty
 #: model:ir.ui.view,arch_db:product_warranty.company_form
-#, fuzzy
 msgid "CRM Product Return Address"
 msgstr "Dirección de devolución del producto"
 
@@ -37,7 +36,6 @@ msgstr "Compañías"
 
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
-#, fuzzy
 msgid "Company"
 msgstr "Compañías"
 
@@ -54,7 +52,7 @@ msgstr "Creado en"
 #. module: product_warranty
 #: selection:product.template,warranty_type:0
 msgid "Day(s)"
-msgstr ""
+msgstr "Día(s)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_res_company_crm_return_address_id
@@ -69,7 +67,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_id
@@ -83,11 +81,10 @@ msgid ""
 "careful to have only one default"
 msgstr ""
 "Si es por defecto, se usará para establecer el valor por defecto en la "
-"información del proveedor. Tenga cuidado de tener sólo un por defecto."
+"información del proveedor. Tenga cuidado de tener sólo uno por defecto"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_product_supplierinfo
-#, fuzzy
 msgid "Information about a product vendor"
 msgstr "Información sobre un proveedor de producto"
 
@@ -113,33 +110,32 @@ msgstr "Por defecto"
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo_active_supplier
 msgid "Is this supplier still active, only for information"
-msgstr "Indica si el proveedor todavía está activo. Sólo para información."
+msgstr "Indica si el proveedor todavía está activos, sólo para información"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction___last_update
-#, fuzzy
 msgid "Last Modified on"
-msgstr "Last Updated on"
+msgstr "Ultima Modificación en"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_write_uid
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Ultima Actualización por"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_write_date
 msgid "Last Updated on"
-msgstr "Last Updated on"
+msgstr "Ultima Actualización en"
 
 #. module: product_warranty
 #: selection:product.template,warranty_type:0
 msgid "Month(s)"
-msgstr ""
+msgstr "Mes(es)"
 
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo_warranty_duration
@@ -149,7 +145,7 @@ msgstr "Periodo"
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Plantilla Producto"
 
 #. module: product_warranty
 #: model:ir.actions.act_window,name:product_warranty.product_return_instructions_action
@@ -177,9 +173,8 @@ msgstr "Tipo de devolución"
 
 #. module: product_warranty
 #: selection:product.supplierinfo,warranty_return_partner:0
-#, fuzzy
 msgid "Supplier"
-msgstr "Proveedor activo"
+msgstr "Proveedor"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction_name
@@ -189,15 +184,14 @@ msgstr "Título"
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_template_warranty
-#, fuzzy
 msgid "Warranty Duration"
-msgstr "Información de garantía"
+msgstr "Duración de garantía"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product_warranty_type
 #: model:ir.model.fields,field_description:product_warranty.field_product_template_warranty_type
 msgid "Warranty Type"
-msgstr ""
+msgstr "Tipo de Garantía"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo_warranty_duration
@@ -218,7 +212,7 @@ msgstr "Información de garantía"
 #. module: product_warranty
 #: selection:product.template,warranty_type:0
 msgid "Week(s)"
-msgstr ""
+msgstr "Semana(s)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo_warranty_return_other_address
@@ -231,15 +225,13 @@ msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo_warranty_return_address
-#, fuzzy
 msgid ""
 "Where the goods should be returned  (computed field based on other infos.)"
 msgstr ""
-"Dónde se devolverán los bienes (campo calculado basado en otra información)."
+"Dónde se devolverán los bienes (campo calculado basado en otra información.)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo_warranty_return_partner
-#, fuzzy
 msgid ""
 "Who is in charge of the warranty return treatment toward the end customer. "
 "Company will use the current compagny  delivery or default address and so on "
@@ -257,7 +249,7 @@ msgstr ""
 #. module: product_warranty
 #: selection:product.template,warranty_type:0
 msgid "Year(s)"
-msgstr ""
+msgstr "Año(s)"
 
 #~ msgid ""
 #~ "Who is in charge of the warranty return treatment toward the end "
