@@ -20,6 +20,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
+from odoo.tools.safe_eval import safe_eval
 
 
 class TestCrmRmaClaimMakeClaim(TransactionCase):
@@ -73,5 +74,5 @@ class TestCrmRmaClaimMakeClaim(TransactionCase):
     def test_01_claim_make_claim(self):
         claim_id = self.create_customer_claim()
         res = claim_id.claim_line_ids.button_create_line_rma_vendor()
-        lines_added = eval(res[0]['domain'])[0][2]
+        lines_added = safe_eval(res[0]['domain'])[0][2]
         self.assertEquals(len(claim_id.claim_line_ids), len(lines_added))
