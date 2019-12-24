@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_rma_prodlot_invoice
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,17 +10,23 @@ msgstr ""
 "POT-Creation-Date: 2015-11-24 16:07+0000\n"
 "PO-Revision-Date: 2015-11-03 17:06+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_rma_prodlot_invoice
 #: code:addons/crm_rma_prodlot_invoice/models/stock_production_lot.py:39
 #, python-format
 msgid "%s - Lot Number: %s - %s"
+msgstr ""
+
+#. module: crm_rma_prodlot_invoice
+#: field:stock.production.lot,lot_complete_name:0
+msgid "Complete Lot Name"
 msgstr ""
 
 #. module: crm_rma_prodlot_invoice
