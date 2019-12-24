@@ -19,8 +19,8 @@ msgstr ""
 #: help:crm.claim,claim_ids:0
 msgid " - For a Vendor Claim means the RMA-C that generate the current RMA-V.\n"
 " - For a Custtomer Claim means the RMA-V generated to fullfill the current RMA-C."
-msgstr " - Para un reclamo a proveedor corresponde a los reclamos a cliente relacionados con él.\n
- - Para un reclamo a cliente, corresponde a los reclamos a proveedor que fueron generados a partir de él."
+msgstr " - Para un reclamo a proveedor corresponde a los reclamos a cliente relacionados con él.\n"
+" - Para un reclamo a cliente, corresponde a los reclamos a proveedor que fueron generados a partir de él."
 
 #. module: crm_rma_claim_make_claim
 #: model:ir.model,name:crm_rma_claim_make_claim.model_crm_claim
