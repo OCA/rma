@@ -21,7 +21,7 @@
 ##############################################################################
 {
     'name': 'CRM RMA Claim Make Claim',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'author': 'Vauxoo, Odoo Community Association (OCA)',
     'website': 'http://www.vauxoo.com/',
     'license': 'AGPL-3',
