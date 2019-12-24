@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * crm_rma_lot_mass_return
+#	* crm_rma_lot_mass_return
 #
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: rma (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-28 09:40+0000\n"
-"PO-Revision-Date: 2017-11-23 23:25+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Indonesian (http://www.transifex.com/oca/OCA-rma-8-0/language/"
-"id/)\n"
-"Language: id\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: \n"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
@@ -66,13 +61,13 @@ msgstr ""
 #: field:claim.line.wizard,create_uid:0
 #: field:returned.lines.from.serial.wizard,create_uid:0
 msgid "Created by"
-msgstr "Dibuat oleh"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,create_date:0
 #: field:returned.lines.from.serial.wizard,create_date:0
 msgid "Created on"
-msgstr "Dibuat pada"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -83,7 +78,7 @@ msgstr ""
 #: field:claim.line.wizard,display_name:0
 #: field:returned.lines.from.serial.wizard,display_name:0
 msgid "Display Name"
-msgstr "Nama Tampilan"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -122,15 +117,14 @@ msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: help:returned.lines.from.serial.wizard,current_status:0
-msgid ""
-"Field used to show the current status of the product loaded(Name and "
-"quantity)"
+msgid "Field used to show the current status of the product loaded(Name and quantity)"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
+#: field:claim.line.wizard,id:0
+#: field:returned.lines.from.serial.wizard,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -152,19 +146,19 @@ msgstr ""
 #: field:claim.line.wizard,__last_update:0
 #: field:returned.lines.from.serial.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr "Terakhir Dimodifikasi pada"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_uid:0
 #: field:returned.lines.from.serial.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr "Diperbaharui oleh"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,write_date:0
 #: field:returned.lines.from.serial.wizard,write_date:0
 msgid "Last Updated on"
-msgstr "Diperbaharui pada"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -211,7 +205,7 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: field:returned.lines.from.serial.wizard,partner_id:0
 msgid "Partner"
-msgstr "Mitra"
+msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -234,7 +228,8 @@ msgid "Product"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: help:claim.line.wizard,lot_id:0 help:claim.line.wizard,product_id:0
+#: help:claim.line.wizard,lot_id:0
+#: help:claim.line.wizard,product_id:0
 msgid "Product to claim"
 msgstr ""
 
@@ -273,17 +268,14 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:586
 #, python-format
-msgid ""
-"The following Serial/Lot numbers won't be added, because all of them (listed "
-"below) are currently in use:\n"
+msgid "The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
 "\n"
 " %s"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
-msgid ""
-"The format for writing the reason for the claim and\n"
+msgid "The format for writing the reason for the claim and\n"
 "                            the description is:"
 msgstr ""
 
@@ -337,4 +329,5 @@ msgstr ""
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid "or"
-msgstr "atau"
+msgstr ""
+

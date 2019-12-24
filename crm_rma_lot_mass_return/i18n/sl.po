@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_rma_lot_mass_return
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
@@ -11,12 +11,14 @@ msgstr ""
 "POT-Creation-Date: 2016-05-06 11:34+0000\n"
 "PO-Revision-Date: 2016-05-04 03:47+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-rma-8-0/language/"
+"sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
@@ -40,7 +42,8 @@ msgstr "-->"
 #. module: crm_rma_lot_mass_return
 #: view:crm.claim:crm_rma_lot_mass_return.crm_claim_rma_form_view_meta
 msgid "Add claim lines using serial or invoice number"
-msgstr "Dodajanje postavk zahtevka z uporabo serijske številke ali številke računa"
+msgstr ""
+"Dodajanje postavk zahtevka z uporabo serijske številke ali številke računa"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -125,7 +128,9 @@ msgstr "Polje, ki se uporablja za prikaz trenutnega statusa naloženih lotov"
 msgid ""
 "Field used to show the current status of the product loaded(Name and "
 "quantity)"
-msgstr "Polje, ki se uporablja za prikaz trenutnega statusa naloženega proizvoda (naziv in količina)"
+msgstr ""
+"Polje, ki se uporablja za prikaz trenutnega statusa naloženega proizvoda "
+"(naziv in količina)"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
@@ -271,20 +276,33 @@ msgid "Status"
 msgstr "Status"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:586
 #, python-format
 msgid ""
-"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"The following Serial/Lot numbers won't be added, because all of them (listed "
+"below) are currently in use:\n"
 "\n"
 " %s"
-msgstr "Sledeče serijske številke/številke lotov ne bodo dodane, ker so vse (spodaj naštete) trenutno v uporabi:\n\n %s"
+msgstr ""
+"Sledeče serijske številke/številke lotov ne bodo dodane, ker so vse (spodaj "
+"naštete) trenutno v uporabi:\n"
+"\n"
+" %s"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
 msgid ""
 "The format for writing the reason for the claim and\n"
 "                            the description is:"
-msgstr "Format zapisa razloga za zahtevek in\n                            opis je:"
+msgstr ""
+"Format zapisa razloga za zahtevek in\n"
+"                            opis je:"
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:53
+#, fuzzy, python-format
+msgid "The product of the invoice %s is not same that product %s"
+msgstr "Proizvod ali račun %s ni najden"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:399

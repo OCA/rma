@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_rma_lot_mass_return
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2017-06-17 07:05+0000\n"
 "PO-Revision-Date: 2017-06-27 01:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-rma-8-0/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_rma_lot_mass_return
@@ -107,7 +108,8 @@ msgstr "Campo usado para cargar y ver los productos"
 #. module: crm_rma_lot_mass_return
 #: help:returned.lines.from.serial.wizard,option_ids:0
 msgid "Field used to load the ids of invoice lines in invoices writed"
-msgstr "Campo usado para cargar los ids de las líneas de factura en facturas editadas"
+msgstr ""
+"Campo usado para cargar los ids de las líneas de factura en facturas editadas"
 
 #. module: crm_rma_lot_mass_return
 #: help:returned.lines.from.serial.wizard,scaned_data:0
@@ -124,7 +126,9 @@ msgstr ""
 msgid ""
 "Field used to show the current status of the product loaded(Name and "
 "quantity)"
-msgstr "Campo usado para visualizar el estado actual de los productos cargados (Nombre y cantidad)"
+msgstr ""
+"Campo usado para visualizar el estado actual de los productos cargados "
+"(Nombre y cantidad)"
 
 #. module: crm_rma_lot_mass_return
 #: field:claim.line.wizard,id:0 field:returned.lines.from.serial.wizard,id:0
@@ -270,13 +274,18 @@ msgid "Status"
 msgstr "Estado"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:586
 #, python-format
 msgid ""
-"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"The following Serial/Lot numbers won't be added, because all of them (listed "
+"below) are currently in use:\n"
 "\n"
 " %s"
-msgstr "los siguientes números de seriales no pueden ser agregados, porque todos ellos (listados abajo) están actualmente en uso:\n\n %s"
+msgstr ""
+"los siguientes números de seriales no pueden ser agregados, porque todos "
+"ellos (listados abajo) están actualmente en uso:\n"
+"\n"
+" %s"
 
 #. module: crm_rma_lot_mass_return
 #: view:returned.lines.from.serial.wizard:crm_rma_lot_mass_return.view_enter_product
@@ -284,6 +293,12 @@ msgid ""
 "The format for writing the reason for the claim and\n"
 "                            the description is:"
 msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:53
+#, fuzzy, python-format
+msgid "The product of the invoice %s is not same that product %s"
+msgstr "El producto o factura %s no fué encontrado"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:399

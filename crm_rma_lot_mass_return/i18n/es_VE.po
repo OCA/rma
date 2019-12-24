@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_rma_lot_mass_return
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-24 04:45+0000\n"
 "PO-Revision-Date: 2016-12-27 08:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (Venezuela) (http://www.transifex.com/oca/OCA-rma-8-0/language/es_VE/)\n"
+"Language-Team: Spanish (Venezuela) (http://www.transifex.com/oca/OCA-rma-8-0/"
+"language/es_VE/)\n"
+"Language: es_VE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es_VE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_rma_lot_mass_return
@@ -270,10 +271,11 @@ msgid "Status"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:586
 #, python-format
 msgid ""
-"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"The following Serial/Lot numbers won't be added, because all of them (listed "
+"below) are currently in use:\n"
 "\n"
 " %s"
 msgstr ""
@@ -283,6 +285,12 @@ msgstr ""
 msgid ""
 "The format for writing the reason for the claim and\n"
 "                            the description is:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:53
+#, python-format
+msgid "The product of the invoice %s is not same that product %s"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return

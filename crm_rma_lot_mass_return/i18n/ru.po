@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * crm_rma_lot_mass_return
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,12 +10,15 @@ msgstr ""
 "POT-Creation-Date: 2017-05-03 07:57+0000\n"
 "PO-Revision-Date: 2017-05-11 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Russian (http://www.transifex.com/oca/OCA-rma-8-0/language/ru/)\n"
+"Language-Team: Russian (http://www.transifex.com/oca/OCA-rma-8-0/language/"
+"ru/)\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ru\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: crm_rma_lot_mass_return
 #: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:67
@@ -270,10 +273,11 @@ msgid "Status"
 msgstr "Статус"
 
 #. module: crm_rma_lot_mass_return
-#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:590
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:586
 #, python-format
 msgid ""
-"The following Serial/Lot numbers won't be added, because all of them (listed below) are currently in use:\n"
+"The following Serial/Lot numbers won't be added, because all of them (listed "
+"below) are currently in use:\n"
 "\n"
 " %s"
 msgstr ""
@@ -283,6 +287,12 @@ msgstr ""
 msgid ""
 "The format for writing the reason for the claim and\n"
 "                            the description is:"
+msgstr ""
+
+#. module: crm_rma_lot_mass_return
+#: code:addons/crm_rma_lot_mass_return/wizards/returned_lines_from_serial.py:53
+#, python-format
+msgid "The product of the invoice %s is not same that product %s"
 msgstr ""
 
 #. module: crm_rma_lot_mass_return
