@@ -1,0 +1,1 @@
+This module adds a warehouse's stock location for RMA movements in the warehouse and 3 picking types for RMA operations, these picking types are one for Incoming Picking, another for Internal and the third for Outgoing picking. Creating it also document sequences for each of them.

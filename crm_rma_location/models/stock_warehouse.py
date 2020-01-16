@@ -1,6 +1,7 @@
-# © 2013 Camptocamp
-# © 2015 Osval Reyes, Yanina Aular, Vauxoo
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2013 Camptocamp SA
+# Copyright 2015 Osval Reyes, Yanina Aular, Vauxoo
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+
 
 from odoo import _, api, fields, models
 
@@ -83,7 +84,7 @@ class StockWarehouse(models.Model):
 
             in_type_id = warehouse.rma_in_type_id
             if not in_type_id:
-                in_type_id = picking_type_model.create(vals={
+                in_type_id = picking_type_model.create({
                     'name': _('RMA Receipts'),
                     'warehouse_id': warehouse.id,
                     'code': 'incoming',
@@ -95,7 +96,7 @@ class StockWarehouse(models.Model):
 
             out_type_id = warehouse.rma_out_type_id
             if not out_type_id:
-                out_type_id = picking_type_model.create(vals={
+                out_type_id = picking_type_model.create({
                     'name': _('RMA Delivery Orders'),
                     'warehouse_id': warehouse.id,
                     'code': 'outgoing',
@@ -109,7 +110,7 @@ class StockWarehouse(models.Model):
 
             int_type_id = warehouse.rma_int_type_id
             if not int_type_id:
-                int_type_id = picking_type_model.create(vals={
+                int_type_id = picking_type_model.create({
                     'name': _('RMA Internal Transfers'),
                     'warehouse_id': warehouse.id,
                     'code': 'internal',
@@ -153,7 +154,7 @@ class StockWarehouse(models.Model):
         """
         Create Locations and picking types for warehouse
         """
-        warehouse = super(StockWarehouse, self).create(vals=vals)
+        warehouse = super().create(vals)
         warehouse.create_locations_rma()
         warehouse.create_sequences_picking_types()
         return warehouse

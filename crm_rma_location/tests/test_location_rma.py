@@ -1,4 +1,4 @@
-# © 2015 Osval Reyes, Vauxoo
+# Copyright 2015 Osval Reyes, Vauxoo
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class TestLocationRma(TransactionCase):
 
     def setUp(self):
-        super(TestLocationRma, self).setUp()
+        super().setUp()
         self.warehouse = self.env['stock.warehouse']
 
     def test_01_create_warehouse(self):

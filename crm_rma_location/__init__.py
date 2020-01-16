@@ -1,4 +1,4 @@
-# © 2015 Yanina Aular, Vauxoo
+# Copyright 2015 Yanina Aular, Vauxoo
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from . import models
