@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <report
+            id="report_rma_action"
+            string="RMA Report"
+            model="rma"
+            report_type="qweb-pdf"
+            file="rma.report_rma"
+            name="rma.report_rma"
+            print_report_name="object._get_report_base_filename()"
+        />
+    </data>
+</odoo>
