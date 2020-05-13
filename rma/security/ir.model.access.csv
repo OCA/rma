@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rma_team_user_own,rma.team.user.own,model_rma_team,rma_group_user_own,1,0,0,0
+access_rma_team_manager,rma.team.manager,model_rma_team,rma_group_manager,1,1,1,1
+access_rma_portal,rma.portal,model_rma,base.group_portal,1,0,0,0
+access_rma_user_own,rma.user.own,model_rma,rma_group_user_own,1,1,1,0
+access_rma_manager,rma.manager,model_rma,rma_group_manager,1,1,1,1
+access_rma_operation_user_own,rma.operation.user.own,model_rma_operation,rma_group_user_own,1,0,0,0
+access_rma_operation_manager,rma.operation.manager,model_rma_operation,rma_group_manager,1,1,1,1
