@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-21 05:13+0000\n"
-"PO-Revision-Date: 2020-06-21 05:13+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -480,7 +478,7 @@ msgid "Draft RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1082
+#: code:addons/rma/models/rma.py:1070
 #, python-format
 msgid "E-mail subject: %s\n"
 "\n"
@@ -569,7 +567,7 @@ msgid "If the active field is set to false, it will allow you to hide the RMA Te
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1086
+#: code:addons/rma/models/rma.py:1074
 #, python-format
 msgid "Incoming e-mail"
 msgstr ""
@@ -673,7 +671,7 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:31
 #: code:addons/rma/models/rma.py:490
-#: code:addons/rma/models/rma.py:1085
+#: code:addons/rma/models/rma.py:1073
 #, python-format
 msgid "New"
 msgstr ""
@@ -1082,13 +1080,13 @@ msgid "Replaced"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:992
+#: code:addons/rma/models/rma.py:989
 #, python-format
 msgid "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a>) has been created."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1007
+#: code:addons/rma/models/rma.py:1000
 #, python-format
 msgid "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not create a new move, but one of the previously created moves was updated with this data."
 msgstr ""
