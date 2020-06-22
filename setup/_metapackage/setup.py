@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-product_warranty',
+        'odoo12-addon-rma',
         'odoo12-addon-stock_production_lot_warranty',
     ],
     classifiers=[
