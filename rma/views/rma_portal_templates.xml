@@ -122,8 +122,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt32">
+                        <div class="row mt32" id="product_information">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div t-if="rma.picking_id" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Origin delivery</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="rma.picking_id"/>
+                                    </div>
+                                </div>
                                 <div t-if="rma.product_id" class="row mb-2 mb-sm-1">
                                     <div class="col-12 col-sm-4">
                                         <strong>Product</strong>

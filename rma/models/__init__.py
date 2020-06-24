@@ -2,6 +2,7 @@
 
 from . import account_invoice
 from . import rma
+from . import rma_operation
 from . import rma_team
 from . import res_company
 from . import res_partner

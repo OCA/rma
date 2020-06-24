@@ -24,13 +24,16 @@ class PortalRma(CustomerPortal):
         return self._get_page_view_values(
             rma, access_token, values, 'my_rmas_history', False, **kwargs)
 
+    def _get_filter_domain(self, kw):
+        return []
+
     @http.route(['/my/rmas', '/my/rmas/page/<int:page>'],
                 type='http', auth="user", website=True)
     def portal_my_rmas(self, page=1, date_begin=None, date_end=None,
                        sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         rma_obj = request.env['rma']
-        domain = []
+        domain = self._get_filter_domain(kw)
         searchbar_sortings = {
             'date': {'label': _('Date'), 'order': 'date desc'},
             'name': {'label': _('Name'), 'order': 'name desc'},
