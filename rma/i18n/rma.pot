@@ -152,6 +152,11 @@ msgid "<strong>Origin delivery:</strong>"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Origin delivery</strong>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Origin:</strong>"
 msgstr ""
@@ -373,6 +378,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_operation__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_uid
 msgid "Created by"
@@ -381,6 +387,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_operation__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_date
 msgid "Created on"
@@ -397,7 +404,7 @@ msgid "Customer Portal URL"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:35
+#: code:addons/rma/controllers/main.py:38
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -460,6 +467,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_operation__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
 msgid "Display Name"
@@ -478,7 +486,7 @@ msgid "Draft RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1070
+#: code:addons/rma/models/rma.py:1076
 #, python-format
 msgid "E-mail subject: %s\n"
 "\n"
@@ -533,6 +541,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__id
+#: model:ir.model.fields,field_description:rma.field_rma_operation__id
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
 msgid "ID"
@@ -567,7 +576,7 @@ msgid "If the active field is set to false, it will allow you to hide the RMA Te
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1074
+#: code:addons/rma/models/rma.py:1080
 #, python-format
 msgid "Incoming e-mail"
 msgstr ""
@@ -596,6 +605,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_operation____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_team____last_update
 msgid "Last Modified on"
@@ -604,6 +614,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_operation__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_uid
 msgid "Last Updated by"
@@ -612,6 +623,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_operation__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_date
 msgid "Last Updated on"
@@ -661,8 +673,9 @@ msgid "Messages"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:36
+#: code:addons/rma/controllers/main.py:39
 #: model:ir.model.fields,field_description:rma.field_rma__name
+#: model:ir.model.fields,field_description:rma.field_rma_operation__name
 #: model:ir.model.fields,field_description:rma.field_rma_team__name
 #, python-format
 msgid "Name"
@@ -670,8 +683,8 @@ msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31
-#: code:addons/rma/models/rma.py:490
-#: code:addons/rma/models/rma.py:1073
+#: code:addons/rma/models/rma.py:496
+#: code:addons/rma/models/rma.py:1079
 #, python-format
 msgid "New"
 msgstr ""
@@ -697,13 +710,13 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:751
+#: code:addons/rma/models/rma.py:757
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:734
+#: code:addons/rma/models/rma.py:740
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr ""
@@ -867,7 +880,7 @@ msgid "Quantity to extract"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:784
+#: code:addons/rma/models/rma.py:790
 #, python-format
 msgid "Quantity to extract cannot be greater than remaining delivery quantity (%s %s)"
 msgstr ""
@@ -987,6 +1000,11 @@ msgid "RMA related products can be stored in this warehouse."
 msgstr ""
 
 #. module: rma
+#: model:ir.model,name:rma.model_rma_operation
+msgid "RMA requested operation"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_id
 msgid "RMA return"
 msgstr ""
@@ -1031,9 +1049,10 @@ msgid "Reference of the document that generated this RMA."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:673
+#: code:addons/rma/models/rma.py:679
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+#: model:rma.operation,name:rma.rma_operation_refund
 #, python-format
 msgid "Refund"
 msgstr ""
@@ -1064,8 +1083,14 @@ msgid "Remaining delivered qty to done"
 msgstr ""
 
 #. module: rma
+#: model:rma.operation,name:rma.rma_operation_return
+msgid "Repair"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: selection:rma.delivery.wizard,type:0
+#: model:rma.operation,name:rma.rma_operation_replace
 msgid "Replace"
 msgstr ""
 
@@ -1080,13 +1105,13 @@ msgid "Replaced"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:989
+#: code:addons/rma/models/rma.py:995
 #, python-format
 msgid "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a>) has been created."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1000
+#: code:addons/rma/models/rma.py:1006
 #, python-format
 msgid "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not create a new move, but one of the previously created moves was updated with this data."
 msgstr ""
@@ -1097,7 +1122,12 @@ msgid "Reporting"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:715
+#: model:ir.model.fields,field_description:rma.field_rma__operation_id
+msgid "Requested operation"
+msgstr ""
+
+#. module: rma
+#: code:addons/rma/models/rma.py:721
 #, python-format
 msgid "Required field(s):%s"
 msgstr ""
@@ -1126,7 +1156,7 @@ msgid "Return to customer"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:950
+#: code:addons/rma/models/rma.py:956
 #, python-format
 msgid "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a> has been created."
 msgstr ""
@@ -1205,7 +1235,7 @@ msgid "Split RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:868
+#: code:addons/rma/models/rma.py:874
 #, python-format
 msgid "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been created."
 msgstr ""
@@ -1217,7 +1247,7 @@ msgid "State"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:37
+#: code:addons/rma/controllers/main.py:40
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
 msgid "Status"
@@ -1253,6 +1283,11 @@ msgid "Team Members"
 msgstr ""
 
 #. module: rma
+#: sql_constraint:rma.operation:0
+msgid "That operation name already exists !"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
 msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
 msgstr ""
@@ -1274,7 +1309,7 @@ msgid "The quantity done for the product '%s' must be equal to its initial deman
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:772
+#: code:addons/rma/models/rma.py:778
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr ""
@@ -1286,19 +1321,19 @@ msgid "There is at least one invoice lines whose quantity is less than the quant
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:761
+#: code:addons/rma/models/rma.py:767
 #, python-format
 msgid "This RMA cannot be split."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:748
+#: code:addons/rma/models/rma.py:754
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:731
+#: code:addons/rma/models/rma.py:737
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr ""
@@ -1422,7 +1457,7 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:508
+#: code:addons/rma/models/rma.py:514
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
 msgstr ""
