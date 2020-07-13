@@ -18,6 +18,7 @@
         "views/report_rma.xml",
         "report/report.xml",
         "data/mail_data.xml",
+        "data/rma_operation_data.xml",
         "security/rma_security.xml",
         "security/ir.model.access.csv",
         "wizard/stock_picking_return_views.xml",

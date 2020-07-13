@@ -156,6 +156,10 @@ class Rma(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
+    operation_id = fields.Many2one(
+        comodel_name='rma.operation',
+        string='Requested operation',
+    )
     state = fields.Selection(
         [
             ("draft", "Draft"),
@@ -440,20 +444,22 @@ class Rma(models.Model):
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
+        self.picking_id = False
+        partner_invoice_id = False
         if self.partner_id:
             address = self.partner_id.address_get(['invoice'])
-            self.partner_invoice_id = address.get('invoice', False)
-        else:
-            self.partner_invoice_id = False
+            partner_invoice_id = address.get('invoice', False)
+        self.partner_invoice_id = partner_invoice_id
 
     @api.onchange("picking_id")
     def _onchange_picking_id(self):
+        location = False
         if self.picking_id:
-            if not self.location_id:
-                warehouse = self.picking_id.picking_type_id.warehouse_id
-                self.location_id = warehouse.rma_loc_id.id
-        else:
-            self.move_id = self.product_id = self.location_id = False
+            warehouse = self.picking_id.picking_type_id.warehouse_id
+            location = warehouse.rma_loc_id.id
+        self.location_id = location
+        self.move_id = False
+        self.product_id = False
 
     @api.onchange("move_id")
     def _onchange_move_id(self):
