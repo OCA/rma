@@ -30,6 +30,10 @@ class TestRmaSale(SavepointCase):
             line_form.product_uom_qty = 5
         cls.sale_order = order_form.save()
         cls.sale_order.action_confirm()
+        # Maybe other modules create additional lines in the create
+        # method in sale.order model, so let's find the correct line.
+        cls.order_line = cls.sale_order.order_line.filtered(
+            lambda r: r.product_id == cls.product_1)
         cls.order_out_picking = cls.sale_order.picking_ids
         cls.order_out_picking.move_lines.quantity_done = 5
         cls.order_out_picking.button_validate()
@@ -55,8 +59,8 @@ class TestRmaSale(SavepointCase):
         self.assertEqual(rma.picking_id, self.order_out_picking)
         self.assertEqual(rma.move_id, self.order_out_picking.move_lines)
         self.assertEqual(rma.product_id, self.product_1)
-        self.assertEqual(rma.product_uom_qty, order.order_line.product_uom_qty)
-        self.assertEqual(rma.product_uom, order.order_line.product_uom)
+        self.assertEqual(rma.product_uom_qty, self.order_line.product_uom_qty)
+        self.assertEqual(rma.product_uom, self.order_line.product_uom)
         self.assertEqual(rma.state, 'confirmed')
         self.assertEqual(
             rma.reception_move_id.origin_returned_move_id,
