@@ -89,8 +89,23 @@ An RMA can also be created from a return of a delivery order:
    Every RMA will be in confirmed state and they will
    be linked to the returning operation generated previously.
 
-**Note: An RMA can also be created from an incoming email (See configuration
-section).**
+There are Optional RMA Teams that can be used for:
+
+  - Organize RMAs in sections.
+  - Subscribe users to notifications.
+  - Create RMAs from incoming mail to special aliases (See configuration
+    section).
+
+To create an RMA Team (RMA Responsible user level required):
+
+  #. Go to *RMA > Configuration > RMA Teams*
+  #. Create a new team and assign a name, a responsible and members.
+  #. Subscribe users to notifications, that can be of these subtypes:
+
+     - RMA draft. When a new RMA is created.
+     - Notes, Debates, Activities. As in standard Odoo.
+  #. In the list view, use the cross handle to sort RMA Teams. The top team
+     will be the default one if no team is set.
 
 Known issues / Roadmap
 ======================
