@@ -29,9 +29,6 @@ class SaleOrderRmaWizard(models.TransientModel):
         default=lambda r: r.order_id.warehouse_id.rma_loc_id.id,
     )
 
-    def create_rma_from_portal(self):
-        self.ensure_one()
-
     def create_rma(self, from_portal=None):
         self.ensure_one()
         lines = self.line_ids.filtered(lambda r: r.quantity > 0.0)
