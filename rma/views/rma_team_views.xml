@@ -2,6 +2,17 @@
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
+    <record id="rma_team_view_tree" model="ir.ui.view">
+        <field name="model">rma.team</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="user_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
     <record id="rma_team_view_form" model="ir.ui.view">
         <field name="name">rma.team.view.form</field>
         <field name="model">rma.team</field>
