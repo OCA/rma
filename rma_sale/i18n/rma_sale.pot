@@ -14,19 +14,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:35
+#: code:addons/rma_sale/controllers/sale_portal.py:36
 #, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:48
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:45
 #, python-format
 msgid " has been created."
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:50
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:47
 #, python-format
 msgid " have been created."
 msgstr ""
