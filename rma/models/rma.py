@@ -55,7 +55,6 @@ class Rma(models.Model):
         comodel_name="res.users",
         string="Responsible",
         track_visibility="always",
-        default=lambda self: self.env.user,
         states={
             'locked': [('readonly', True)],
             'cancelled': [('readonly', True)],
@@ -499,6 +498,9 @@ class Rma(models.Model):
                 ir_sequence = ir_sequence.with_context(
                     force_company=vals['company_id'])
             vals['name'] = ir_sequence.next_by_code('rma')
+        # Assign a default team_id which will be the first in the sequence
+        if "team_id" not in vals:
+            vals["team_id"] = self.env["rma.team"].search([], limit=1).id
         return super().create(vals)
 
     def copy(self, default=None):
@@ -599,7 +601,10 @@ class Rma(models.Model):
         """Invoked when 'Replace' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_replaced()
-        action = self.env.ref("rma.rma_delivery_wizard_action").read()[0]
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action = self.env.ref("rma.rma_delivery_wizard_action").with_context(
+            active_id=self.id).read()[0]
         action['name'] = 'Replace product(s)'
         action['context'] = dict(self.env.context)
         action['context'].update(
@@ -615,7 +620,10 @@ class Rma(models.Model):
         """
         self.ensure_one()
         self._ensure_can_be_returned()
-        action = self.env.ref("rma.rma_delivery_wizard_action").read()[0]
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action = self.env.ref("rma.rma_delivery_wizard_action").with_context(
+            active_id=self.id).read()[0]
         action['context'] = dict(self.env.context)
         action['context'].update(
             active_id=self.id,
@@ -628,9 +636,12 @@ class Rma(models.Model):
         """Invoked when 'Split' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_split()
-        action = self.env.ref("rma.rma_split_wizard_action").read()[0]
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action = self.env.ref("rma.rma_split_wizard_action").with_context(
+            active_id=self.id).read()[0]
         action['context'] = dict(self.env.context)
-        action['context'].update(active_ids=self.ids)
+        action['context'].update(active_id=self.id, active_ids=self.ids)
         return action
 
     def action_cancel(self):
@@ -663,7 +674,10 @@ class Rma(models.Model):
     def action_view_receipt(self):
         """Invoked when 'Receipt' smart button in rma form view is clicked."""
         self.ensure_one()
-        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action = self.env.ref('stock.action_picking_tree_all').with_context(
+            active_id=self.id).read()[0]
         action.update(
             res_id=self.reception_move_id.picking_id.id,
             view_mode="form",
@@ -687,7 +701,8 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        action = self.env.ref('stock.action_picking_tree_all').with_context(
+            active_id=self.id).read()[0]
         picking = self.delivery_move_ids.mapped('picking_id')
         if len(picking) > 1:
             action['domain'] = [('id', 'in', picking.ids)]
