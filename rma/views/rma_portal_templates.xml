@@ -50,7 +50,8 @@
                             </a>
                         </td>
                         <td class="d-none d-md-table-cell"><span t-field="rma.date"/></td>
-                        <td><span t-field="rma.product_id.name"/></td>
+                        <!-- Portal users don't have access to unpublished products -->
+                        <td><span t-esc="rma.sudo().product_id.display_name"/></td>
                         <td class='text-right'><span t-field="rma.product_uom_qty"/></td>
                         <td class="d-none d-md-table-cell tx_status">
                             <span class="badge badge-pill badge-secondary"><span t-field="rma.state"/></span>
@@ -132,12 +133,14 @@
                                         <span t-field="rma.picking_id"/>
                                     </div>
                                 </div>
-                                <div t-if="rma.product_id" class="row mb-2 mb-sm-1">
+                                <!-- We need to prevent access errors if the product is
+                                     unpublished-->
+                                <div t-if="rma.sudo().product_id" class="row mb-2 mb-sm-1">
                                     <div class="col-12 col-sm-4">
                                         <strong>Product</strong>
                                     </div>
                                     <div class="col-12 col-sm-8">
-                                        <span t-field="rma.product_id"/>
+                                        <span t-esc="rma.sudo().product_id.display_name"/>
                                     </div>
                                 </div>
                                 <div t-if="rma.product_uom_qty" class="row mb-2 mb-sm-1">
@@ -262,6 +265,9 @@
                 <h2>Communication</h2>
                 <t t-call="portal.message_thread">
                     <t t-set="object" t-value="rma"/>
+                    <t t-set="token" t-value="rma.access_token"/>
+                    <t t-set="pid" t-value="pid"/>
+                    <t t-set="hash" t-value="hash"/>
                 </t>
             </div>
         </t>
