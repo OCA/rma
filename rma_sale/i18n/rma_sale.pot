@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:35
+#: code:addons/rma_sale/controllers/sale_portal.py:36
 #, python-format
 msgid " (Portal)"
 msgstr ""
