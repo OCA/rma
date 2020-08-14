@@ -25,12 +25,13 @@ class CustomerPortal(CustomerPortal):
             mapped_vals.setdefault(row, {}).update({field_name: value})
         line_vals = [(0, 0, vals) for vals in mapped_vals.values()]
         # Create wizard an generate rmas
-        location_id = order_obj.browse(order_id).warehouse_id.rma_loc_id.id
+        order = order_obj.browse(order_id).sudo()
+        location_id = order.warehouse_id.rma_loc_id.id
         wizard = wizard_obj.with_context(active_id=order_id).create({
             'line_ids': line_vals,
             'location_id': location_id
         })
-        rma = wizard.create_rma(from_portal=True)
+        rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(' (Portal)')
         if len(rma) == 0:
