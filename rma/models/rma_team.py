@@ -8,8 +8,9 @@ class RmaTeam(models.Model):
     _name = "rma.team"
     _inherit = ['mail.alias.mixin', 'mail.thread']
     _description = "RMA Team"
-    _order = "name"
+    _order = "sequence, name"
 
+    sequence = fields.Integer()
     name = fields.Char(
         required=True,
         translate=True,
