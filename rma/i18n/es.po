@@ -202,7 +202,6 @@ msgstr "<strong>Orden de Entrega:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #, fuzzy
-#| msgid "<strong>Origin delivery:</strong>"
 msgid "<strong>Origin delivery</strong>"
 msgstr "<strong>Orden de Entrega:</strong>"
 
@@ -1222,7 +1221,6 @@ msgstr "Informes"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
 #, fuzzy
-#| msgid "Type of Operation"
 msgid "Requested operation"
 msgstr "Tipo de operación"
 
