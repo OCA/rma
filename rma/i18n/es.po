@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-21 05:13+0000\n"
-"PO-Revision-Date: 2020-06-21 01:16-0400\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2020-08-18 13:59+0000\n"
+"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: rma
 #: model:mail.template,report_name:rma.mail_template_rma_notification
@@ -324,7 +324,7 @@ msgstr "Modelo con seudónimo"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Are you sure you want to cancel this RMA"
-msgstr ""
+msgstr "¿Está seguro de querer cancelar este RMA?"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_attachment_count
@@ -1086,7 +1086,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model,name:rma.model_rma_operation
 msgid "RMA requested operation"
-msgstr ""
+msgstr "Operación de RMA solicitada"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_id
@@ -1168,7 +1168,7 @@ msgstr "Ctd. entregada restante por realizar"
 #. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
-msgstr ""
+msgstr "Reparar"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1220,9 +1220,8 @@ msgstr "Informes"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
-#, fuzzy
 msgid "Requested operation"
-msgstr "Tipo de operación"
+msgstr "Operación solicitada"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:736
@@ -1301,7 +1300,7 @@ msgstr "Enviado"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:48
@@ -1355,7 +1354,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma__state
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "State"
-msgstr "Provincia"
+msgstr "Estado"
 
 #. module: rma
 #: code:addons/rma/controllers/main.py:40
@@ -1401,7 +1400,7 @@ msgstr "Miembros del equipo"
 #. module: rma
 #: sql_constraint:rma.operation:0
 msgid "That operation name already exists !"
-msgstr ""
+msgstr "¡El nombre de operación ya existe!"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
