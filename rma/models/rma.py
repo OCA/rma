@@ -55,7 +55,6 @@ class Rma(models.Model):
         comodel_name="res.users",
         string="Responsible",
         track_visibility="always",
-        default=lambda self: self.env.user,
         states={
             'locked': [('readonly', True)],
             'cancelled': [('readonly', True)],
@@ -499,6 +498,9 @@ class Rma(models.Model):
                 ir_sequence = ir_sequence.with_context(
                     force_company=vals['company_id'])
             vals['name'] = ir_sequence.next_by_code('rma')
+        # Assign a default team_id which will be the first in the sequence
+        if "team_id" not in vals:
+            vals["team_id"] = self.env["rma.team"].search([], limit=1).id
         return super().create(vals)
 
     def copy(self, default=None):
