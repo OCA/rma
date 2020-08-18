@@ -23,13 +23,13 @@ msgid " (Portal)"
 msgstr " (Portal)"
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:48
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:45
 #, python-format
 msgid " has been created."
 msgstr " foi criado(a)."
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:50
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:47
 #, python-format
 msgid " have been created."
 msgstr " foi criado(a)."
