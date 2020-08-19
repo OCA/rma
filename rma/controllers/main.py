@@ -102,13 +102,13 @@ class PortalRma(CustomerPortal):
         values = self._rma_get_page_view_values(rma_sudo, access_token, **kw)
         return request.render("rma.portal_rma_page", values)
 
-    @http.route(['/my/rma/picking/pdf/<int:picking_id>'],
+    @http.route(['/my/rma/picking/pdf/<int:rma_id>/<int:picking_id>'],
                 type='http', auth="public", website=True)
-    def portal_my_rma_picking_report(self, picking_id, access_token=None,
-                                     **kw):
+    def portal_my_rma_picking_report(self, rma_id, picking_id,
+                                     access_token=None, **kw):
         try:
-            picking_sudo = self._stock_picking_check_access(
-                picking_id, access_token=access_token)
+            picking_sudo = self._picking_check_access(
+                rma_id, picking_id, access_token=access_token)
         except exceptions.AccessError:
             return request.redirect('/my')
         report_sudo = request.env.ref('stock.action_report_delivery').sudo()
@@ -119,14 +119,14 @@ class PortalRma(CustomerPortal):
         ]
         return request.make_response(pdf, headers=pdfhttpheaders)
 
-    def _stock_picking_check_access(self, picking_id, access_token=None):
+    def _picking_check_access(self, rma_id, picking_id, access_token=None):
+        rma = request.env['rma'].browse([rma_id])
         picking = request.env['stock.picking'].browse([picking_id])
         picking_sudo = picking.sudo()
         try:
             picking.check_access_rights('read')
             picking.check_access_rule('read')
         except exceptions.AccessError:
-            if not access_token or not consteq(
-                    picking_sudo.sale_id.access_token, access_token):
+            if not access_token or not consteq(rma.access_token, access_token):
                 raise
         return picking_sudo

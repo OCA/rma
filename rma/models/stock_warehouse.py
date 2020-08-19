@@ -62,7 +62,7 @@ class StockWarehouse(models.Model):
             sequence_data = warehouse._get_sequence_values()
             warehouse.rma_in_type_id.sequence_id.write(
                 sequence_data['rma_in_type_id'])
-            warehouse.rma_in_type_id.sequence_id.write(
+            warehouse.rma_out_type_id.sequence_id.write(
                 sequence_data['rma_out_type_id'])
 
     def _get_picking_type_create_values(self, max_sequence):

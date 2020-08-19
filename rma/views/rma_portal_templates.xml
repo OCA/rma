@@ -191,7 +191,7 @@
                     <section t-if="rma.reception_move_id" id="reception_section" style="page-break-inside: auto;" class="mt32">
                         <strong class="d-block mb-1">Reception</strong>
                         <t t-set="picking" t-value="rma.reception_move_id.picking_id"/>
-                        <t t-set="report_url" t-value="'/my/rma/picking/pdf/%s?%s' % (picking.id, keep_query())"/>
+                        <t t-set="report_url" t-value="'/my/rma/picking/pdf/%s/%s?%s' % (rma.id, picking.id, keep_query())"/>
                         <a class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3" t-att-href="report_url">
                             <div>
                                 <i class="fa fa-truck mr-1" role="img" aria-label="Download" title="Download"/>
@@ -230,7 +230,7 @@
                         <strong class="d-block mb-1">Delivery</strong>
                         <ul class="list-group mb-4">
                             <t t-foreach="rma.delivery_move_ids.mapped('picking_id')" t-as="picking">
-                                <t t-set="report_url" t-value="'/my/rma/picking/pdf/%s?%s' % (picking.id, keep_query())"/>
+                                <t t-set="report_url" t-value="'/my/rma/picking/pdf/%s/%s?%s' % (rma.id, picking.id, keep_query())"/>
                                 <a class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3" t-att-href="report_url">
                                     <div>
                                         <i class="fa fa-truck mr-1" role="img" aria-label="Download" title="Download"/>

@@ -5,7 +5,7 @@
         <field name="name">Draft RMA</field>
         <field name="res_model">rma</field>
         <field name="default" eval="False"/>
-        <field name="description">New RMA in draft state</field>
+        <field name="description">RMA in draft state</field>
     </record>
     <!-- rma_team-related subtypes for messaging / Chatter -->
     <record id="mt_rma_team_rma_draft" model="mail.message.subtype">

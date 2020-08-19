@@ -486,7 +486,7 @@ msgid "Draft RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1091
+#: code:addons/rma/models/rma.py:1097
 #, python-format
 msgid "E-mail subject: %s\n"
 "\n"
@@ -576,7 +576,7 @@ msgid "If the active field is set to false, it will allow you to hide the RMA Te
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1095
+#: code:addons/rma/models/rma.py:1101
 #, python-format
 msgid "Incoming e-mail"
 msgstr ""
@@ -684,14 +684,9 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:31
 #: code:addons/rma/models/rma.py:495
-#: code:addons/rma/models/rma.py:1094
+#: code:addons/rma/models/rma.py:1100
 #, python-format
 msgid "New"
-msgstr ""
-
-#. module: rma
-#: model:mail.message.subtype,description:rma.mt_rma_draft
-msgid "New RMA in draft state"
 msgstr ""
 
 #. module: rma
@@ -987,6 +982,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_count
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
+msgstr ""
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_draft
+msgid "RMA in draft state"
 msgstr ""
 
 #. module: rma
@@ -1468,7 +1468,7 @@ msgid "You cannot delete RMAs that are not in draft state"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/wizard/stock_picking_return.py:56
+#: code:addons/rma/wizard/stock_picking_return.py:55
 #, python-format
 msgid "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will be created"
 msgstr ""
