@@ -308,6 +308,11 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: rma_sale
+#: model:ir.model,name:rma_sale.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento"
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
 msgid "Unit of Measure"
 msgstr "Unidad de medida"
@@ -336,6 +341,3 @@ msgstr "Solo puedes crear RMAs desde una orden de venta confirmada o hecha."
 #~| msgid "Delivery"
 #~ msgid "Is Sale Delivery"
 #~ msgstr "Es entrega de orden de venta"
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimiento"
