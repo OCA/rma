@@ -1080,6 +1080,12 @@ class Rma(models.Model):
         }
 
     # Mail business methods
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if 'state' in init_values and self.state == 'draft':
+            return 'rma.mt_rma_draft'
+        return super()._track_subtype(init_values)
+
     def message_new(self, msg_dict, custom_values=None):
         """Extract the needed values from an incoming rma emails data-set
         to be used to create an RMA.
