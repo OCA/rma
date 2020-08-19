@@ -1355,7 +1355,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma__state
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "State"
-msgstr "Provincia"
+msgstr "Estado"
 
 #. module: rma
 #: code:addons/rma/controllers/main.py:40
