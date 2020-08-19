@@ -51,33 +51,14 @@ class ReturnPicking(models.TransientModel):
             # picking and change the default picking type to rma picking type
             self_with_context = self.with_context(set_rma_picking_type=True)
             res = super(ReturnPicking, self_with_context).create_returns()
-            partner = self.picking_id.partner_id
-            if not partner:
+            if not self.picking_id.partner_id:
                 raise ValidationError(_(
                     "You must specify the 'Customer' in the "
                     "'Stock Picking' from which RMAs will be created"))
-            picking = self.picking_id
             returned_picking = self.env['stock.picking'].browse(res['res_id'])
-            if hasattr(picking, 'sale_id') and picking.sale_id:
-                partner_invoice_id = picking.sale_id.partner_invoice_id.id
-            else:
-                partner_invoice_id = partner.address_get(
-                    ['invoice']).get('invoice', False),
-            for move in returned_picking.move_lines:
-                self.env['rma'].create({
-                    'partner_id': partner.id,
-                    'partner_invoice_id': partner_invoice_id,
-                    'origin': picking.name,
-                    'picking_id': picking.id,
-                    'move_id': move.origin_returned_move_id.id,
-                    'product_id': move.origin_returned_move_id.product_id.id,
-                    'product_uom_qty': move.product_uom_qty,
-                    'product_uom': move.product_uom.id,
-                    'reception_move_id': move.id,
-                    'company_id': move.company_id.id,
-                    'location_id': move.location_dest_id.id,
-                    'state': 'confirmed',
-                })
+            vals_list = [move._prepare_return_rma_vals(self.picking_id)
+                         for move in returned_picking.move_lines]
+            self.env['rma'].create(vals_list)
             return res
         else:
             return super().create_returns()
