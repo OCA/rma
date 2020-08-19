@@ -535,7 +535,7 @@ msgid "Draft RMA"
 msgstr "Rascunho do RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1091
+#: code:addons/rma/models/rma.py:1097
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -638,7 +638,7 @@ msgstr ""
 "sem removê-lo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1095
+#: code:addons/rma/models/rma.py:1101
 #, python-format
 msgid "Incoming e-mail"
 msgstr "E-mail recebido"
@@ -745,15 +745,10 @@ msgstr "Nome"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:495
-#: code:addons/rma/models/rma.py:1094
+#: code:addons/rma/models/rma.py:1100
 #, python-format
 msgid "New"
 msgstr "Novo(a)"
-
-#. module: rma
-#: model:mail.message.subtype,description:rma.mt_rma_draft
-msgid "New RMA in draft state"
-msgstr "Novo Rascunho de RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_date_deadline
@@ -1070,6 +1065,11 @@ msgstr "Equipe de RMA da qual o usuário é membro."
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Contagem de RMA"
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_draft
+msgid "RMA in draft state"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1602,7 +1602,7 @@ msgid "You cannot delete RMAs that are not in draft state"
 msgstr "Você não pode apagar RMAs que não estejam na situação \"Rascunho\""
 
 #. module: rma
-#: code:addons/rma/wizard/stock_picking_return.py:56
+#: code:addons/rma/wizard/stock_picking_return.py:55
 #, python-format
 msgid ""
 "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
@@ -1630,3 +1630,6 @@ msgid ""
 msgstr ""
 "o usuário terá acesso à configuração RMA, bem como aos relatórios "
 "estatísticos."
+
+#~ msgid "New RMA in draft state"
+#~ msgstr "Novo Rascunho de RMA"
