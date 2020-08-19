@@ -88,6 +88,32 @@ class StockMove(models.Model):
         res['rma_id'] = self.rma_id.id
         return res
 
+    def _prepare_return_rma_vals(self, original_picking):
+        """ hook method for preparing an RMA from the 'return picking wizard'.
+        """
+        self.ensure_one()
+        partner = original_picking.partner_id
+        if hasattr(original_picking, 'sale_id') and original_picking.sale_id:
+            partner_invoice_id = original_picking.sale_id.partner_invoice_id.id
+        else:
+            partner_invoice_id = partner.address_get(
+                ['invoice']).get('invoice', False),
+        return {
+            'user_id': self.env.user.id,
+            'partner_id': partner.id,
+            'partner_invoice_id': partner_invoice_id,
+            'origin': original_picking.name,
+            'picking_id': original_picking.id,
+            'move_id': self.origin_returned_move_id.id,
+            'product_id': self.origin_returned_move_id.product_id.id,
+            'product_uom_qty': self.product_uom_qty,
+            'product_uom': self.product_uom.id,
+            'reception_move_id': self.id,
+            'company_id': self.company_id.id,
+            'location_id': self.location_dest_id.id,
+            'state': 'confirmed',
+        }
+
 
 class StockRule(models.Model):
     _inherit = 'stock.rule'
