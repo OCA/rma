@@ -34,6 +34,9 @@ class CustomerPortal(CustomerPortal):
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(' (Portal)')
+        # Add the user as follower of the created RMAs so they can
+        # later view them.
+        rma.message_subscribe([request.env.user.partner_id.id])
         if len(rma) == 0:
             route = order_sudo.get_portal_url()
         else:
