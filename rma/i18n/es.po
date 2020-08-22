@@ -1080,7 +1080,8 @@ msgstr "RMAs que originaron esta orden"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_stock_warehouse__rma
 msgid "RMA related products can be stored in this warehouse."
-msgstr "Productos relacionados con el RMA pueden ser guardados en este almacén."
+msgstr ""
+"Productos relacionados con el RMA pueden ser guardados en este almacén."
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_operation
@@ -1418,8 +1419,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos\""
-", si lo que quiere es obtener los correos para <trabajos@example.odoo.com>"
+"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos"
+"\", si lo que quiere es obtener los correos para <trabajos@example.odoo.com>"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
@@ -1436,7 +1437,7 @@ msgstr ""
 "dirección."
 
 #. module: rma
-#: code:addons/rma/models/stock_move.py:60
+#: code:addons/rma/models/stock_move.py:64
 #, python-format
 msgid ""
 "The quantity done for the product '%s' must be equal to its initial demand "

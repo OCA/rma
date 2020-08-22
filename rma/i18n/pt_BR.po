@@ -1434,7 +1434,7 @@ msgstr ""
 "nenhum usuário do sistema for encontrado para esse endereço."
 
 #. module: rma
-#: code:addons/rma/models/stock_move.py:60
+#: code:addons/rma/models/stock_move.py:64
 #, python-format
 msgid ""
 "The quantity done for the product '%s' must be equal to its initial demand "

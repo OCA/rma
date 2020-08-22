@@ -14,7 +14,7 @@ class Company(models.Model):
         return company
 
     def create_rma_index(self):
-        self.env['ir.sequence'].sudo().create({
+        return self.env['ir.sequence'].sudo().create({
             'name': _('RMA Code'),
             'prefix': 'RMA',
             'code': 'rma',
