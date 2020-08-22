@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-21 05:13+0000\n"
-"PO-Revision-Date: 2020-08-18 13:59+0000\n"
-"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
+"PO-Revision-Date: 2020-08-22 13:59+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -20,12 +20,12 @@ msgstr ""
 #. module: rma
 #: model:mail.template,report_name:rma.mail_template_rma_notification
 msgid "${(object.name or '')}"
-msgstr ""
+msgstr "${(object.name or '')}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
-msgstr ""
+msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:44
@@ -201,9 +201,8 @@ msgstr "<strong>Orden de Entrega:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-#, fuzzy
 msgid "<strong>Origin delivery</strong>"
-msgstr "<strong>Orden de Entrega:</strong>"
+msgstr "<strong>Entrega origen</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -335,7 +334,7 @@ msgstr "Conteo de archivos adjuntos"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Avatar"
-msgstr ""
+msgstr "Avatar"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_locked
@@ -601,7 +600,7 @@ msgstr "Agrupar por"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
@@ -616,7 +615,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_rma__message_unread
 #: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked new messages require your attention."
-msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction
@@ -782,7 +781,7 @@ msgstr "Ninguno de los RMAs seleccionados puede realizar una devolución."
 #. module: rma
 #: selection:rma,priority:0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: rma
 #: selection:rma,priority:0
@@ -967,7 +966,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
 msgid "Quantity to extract to a new RMA."
-msgstr "Cantidad a extraer en nuevo RMA"
+msgstr "Cantidad a extraer en nuevo RMA."
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_action
@@ -980,13 +979,13 @@ msgstr "Cantidad a extraer en nuevo RMA"
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
 #: model_terms:ir.ui.view,arch_db:rma.view_picking_form
 msgid "RMA"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "RMA #"
-msgstr ""
+msgstr "RMA nº"
 
 #. module: rma
 #: code:addons/rma/models/res_company.py:18
@@ -1071,7 +1070,7 @@ msgstr "Cantidad de RMAs"
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
-msgstr ""
+msgstr "RMA en estado borrador"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1081,7 +1080,7 @@ msgstr "RMAs que originaron esta orden"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_stock_warehouse__rma
 msgid "RMA related products can be stored in this warehouse."
-msgstr ""
+msgstr "Productos relacionados con el RMA pueden ser guardados en este almacén."
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_operation
@@ -1104,7 +1103,7 @@ msgstr "Equipo de RMA"
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_ids
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_ids
 msgid "RMAs"
-msgstr ""
+msgstr "RMAs"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1153,7 +1152,7 @@ msgstr "Línea de factura rectificativa"
 #. module: rma
 #: selection:rma,state:0
 msgid "Refunded"
-msgstr "reembolsado"
+msgstr "Reembolsado"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -1419,9 +1418,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos"
-"\",  si lo que quiere es obtener los correos para <trabajos@example.odoo."
-"com>."
+"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos\""
+", si lo que quiere es obtener los correos para <trabajos@example.odoo.com>"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
@@ -1603,7 +1601,7 @@ msgstr "Historial de comunicaciones del sitio web"
 #: code:addons/rma/models/rma.py:516
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
-msgstr "No puede "
+msgstr "No puede eliminar RMAs que no estén en estado borrador"
 
 #. module: rma
 #: code:addons/rma/wizard/stock_picking_return.py:55
@@ -1613,7 +1611,7 @@ msgid ""
 "be created"
 msgstr ""
 "Debe seleccionar el 'Cliente' en la 'Orden de Entrega' desde la cual los "
-"RMAs serán creados."
+"RMAs serán creados"
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_all
@@ -1625,7 +1623,7 @@ msgstr ""
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_own
 msgid "the user will have access to his own data in the RMA application."
-msgstr "El usuario tendrá acceso solo a sus propios RMAs"
+msgstr "el usuario tendrá acceso solo a sus propios RMAs."
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_manager
