@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 04:40+0000\n"
-"PO-Revision-Date: 2020-07-01 00:41-0400\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2020-08-22 13:59+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: rma_sale
 #: code:addons/rma_sale/controllers/sale_portal.py:36
@@ -161,7 +161,7 @@ msgstr "Crear RMA"
 #. module: rma_sale
 #: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
 msgid "Create RMAs"
-msgstr "Crear RMA"
+msgstr "Crear RMAs"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
@@ -310,7 +310,7 @@ msgstr "Línea de pedido de venta"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento"
+msgstr "Movimiento de existencias"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
