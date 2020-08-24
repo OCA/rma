@@ -30,8 +30,10 @@ class StockMove(models.Model):
     )
 
     def unlink(self):
-        rma_receiver = self.mapped('rma_receiver_ids')
-        rma = self.mapped('rma_id')
+        # A stock user could have no RMA permissions, so the ids wouldn't
+        # be accessible due to record rules.
+        rma_receiver = self.sudo().mapped('rma_receiver_ids')
+        rma = self.sudo().mapped('rma_id')
         res = super().unlink()
         rma_receiver.write({'state': 'draft'})
         rma.update_received_state()
@@ -40,7 +42,9 @@ class StockMove(models.Model):
 
     def _action_cancel(self):
         res = super()._action_cancel()
-        cancelled_moves = self.filtered(lambda r: r.state == 'cancel')
+        # A stock user could have no RMA permissions, so the ids wouldn't
+        # be accessible due to record rules.
+        cancelled_moves = self.filtered(lambda r: r.state == 'cancel').sudo()
         cancelled_moves.mapped('rma_receiver_ids').write({'state': 'draft'})
         cancelled_moves.mapped('rma_id').update_received_state()
         cancelled_moves.mapped('rma_id').update_replaced_state()
@@ -53,7 +57,7 @@ class StockMove(models.Model):
         """
         for move in self.filtered(
                 lambda r: r.state not in ('done', 'cancel')):
-            rma_receiver = move.rma_receiver_ids
+            rma_receiver = move.rma_receiver_ids.sudo()
             if (rma_receiver
                     and move.quantity_done != rma_receiver.product_uom_qty):
                 raise ValidationError(
@@ -63,12 +67,13 @@ class StockMove(models.Model):
                     % (move.product_id.name, move.rma_receiver_ids.name)
                 )
         res = super()._action_done()
-        move_done = self.filtered(lambda r: r.state == 'done')
-        # set RMAs as received
-        to_be_received = move_done.mapped('rma_receiver_ids').filtered(
+        move_done = self.filtered(lambda r: r.state == 'done').sudo()
+        # Set RMAs as received. We sudo so we can grant the operation even
+        # if the stock user has no RMA permissions.
+        to_be_received = move_done.sudo().mapped('rma_receiver_ids').filtered(
             lambda r: r.state == 'confirmed')
         to_be_received.write({'state': 'received'})
-        # set RMAs as delivered
+        # Set RMAs as delivered
         move_done.mapped('rma_id').update_replaced_state()
         move_done.mapped('rma_id').update_returned_state()
         return res
@@ -85,7 +90,7 @@ class StockMove(models.Model):
         RMA link id.
         """
         res = super()._prepare_move_split_vals(qty)
-        res['rma_id'] = self.rma_id.id
+        res['rma_id'] = self.sudo().rma_id.id
         return res
 
     def _prepare_return_rma_vals(self, original_picking):
