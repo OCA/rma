@@ -15,14 +15,16 @@ class AccountInvoice(models.Model):
         """
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        if self.mapped('invoice_line_ids').filtered(
+        if self.sudo().mapped('invoice_line_ids').filtered(
                 lambda r: (r.rma_id and float_compare(
                     r.quantity, r.rma_id.product_uom_qty, precision) < 0)):
             raise ValidationError(
                 _("There is at least one invoice lines whose quantity is "
                   "less than the quantity specified in its linked RMA."))
         res = super().action_invoice_open()
-        self.mapped('invoice_line_ids.rma_id').write({'state': 'refunded'})
+        self.sudo().mapped('invoice_line_ids.rma_id').write(
+            {'state': 'refunded'}
+        )
         return res
 
 
