@@ -1308,7 +1308,7 @@ msgid "The owner of records created upon receiving emails on this alias. If this
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/stock_move.py:60
+#: code:addons/rma/models/stock_move.py:64
 #, python-format
 msgid "The quantity done for the product '%s' must be equal to its initial demand because the stock move is linked to an RMA (%s)."
 msgstr ""
