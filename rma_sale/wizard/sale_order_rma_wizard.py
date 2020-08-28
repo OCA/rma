@@ -32,9 +32,6 @@ class SaleOrderRmaWizard(models.TransientModel):
     def create_rma(self, from_portal=None):
         self.ensure_one()
         lines = self.line_ids.filtered(lambda r: r.quantity > 0.0)
-        if from_portal:
-            rma_product = self.order_id.rma_ids.mapped('product_id')
-            lines = lines.filtered(lambda r: r.product_id not in rma_product)
         val_list = [line._prepare_rma_values() for line in lines]
         rma = self.env['rma'].create(val_list)
         # post messages
@@ -125,6 +122,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         comodel_name='rma.operation',
         string='Requested operation',
     )
+    description = fields.Text()
 
     @api.onchange('product_id')
     def onchange_product_id(self):
@@ -166,4 +164,5 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             'product_uom_qty': self.quantity,
             'product_uom': self.uom_id.id,
             'operation_id': self.operation_id.id,
+            'description': self.description,
         }
