@@ -18,19 +18,19 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:36
+#: code:addons/rma_sale/controllers/sale_portal.py:39
 #, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:45
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:42
 #, python-format
 msgid " has been created."
 msgstr " ha sido creado."
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:47
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:44
 #, python-format
 msgid " have been created."
 msgstr " han sido creados."
@@ -60,22 +60,6 @@ msgstr "<i class=\"fa fa-times\"/> Cancelar"
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid ""
-"<span>\n"
-"                                If an RMA has already been created for a "
-"product in this sales order, it will not\n"
-"                                be possible to create another one from the "
-"web portal.\n"
-"                                </span>"
-msgstr ""
-"<span>\n"
-"                                Si ya se ha creado un RMA para un producto "
-"de esta orden de venta, no será\n"
-"                                posible crear otro desde el portal web.\n"
-"                                </span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -142,6 +126,13 @@ msgid "Close"
 msgstr "Cerrar"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid ""
+"Comment anything relevant to the return, like serial numbers, a description "
+"of the issue, etc"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
 msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
@@ -186,6 +177,11 @@ msgid "Delivery order"
 msgstr "Orden de entrega"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__description
+msgid "Description"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
 msgid "Display Name"
@@ -195,6 +191,11 @@ msgstr "Nombre mostrado"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
 msgid "ID"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
 
 #. module: rma_sale
@@ -308,9 +309,19 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "Select the product quantity and the requested operation"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "The limit will decrease when the units in other RMAs are confirmed"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
@@ -318,15 +329,54 @@ msgid "Unit of Measure"
 msgstr "Unidad de medida"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid ""
+"Use the comment button to add relevant information regarding the RMA, like "
+"returned serial numbers or a description of the issue"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
 msgid "Wizard"
 msgstr "Asistente"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid ""
+"You can only return as much product units as you received for this order"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "You can send a message in every RMA sent"
+msgstr ""
 
 #. module: rma_sale
 #: code:addons/rma_sale/models/sale.py:34
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr "Solo puedes crear RMAs desde una orden de venta confirmada o hecha."
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid ""
+"You're about to perform an RMA request. Our team will process it an will "
+"reach you once it's validated. Keep in mind that:"
+msgstr ""
+
+#~ msgid ""
+#~ "<span>\n"
+#~ "                                If an RMA has already been created for a "
+#~ "product in this sales order, it will not\n"
+#~ "                                be possible to create another one from "
+#~ "the web portal.\n"
+#~ "                                </span>"
+#~ msgstr ""
+#~ "<span>\n"
+#~ "                                Si ya se ha creado un RMA para un "
+#~ "producto de esta orden de venta, no será\n"
+#~ "                                posible crear otro desde el portal web.\n"
+#~ "                                </span>"
 
 #~ msgid "Domain Move"
 #~ msgstr "Dominio de movimientos"
