@@ -503,6 +503,7 @@ class Rma(models.Model):
             vals["team_id"] = self.env["rma.team"].search([], limit=1).id
         return super().create(vals)
 
+    @api.multi
     def copy(self, default=None):
         team = super().copy(default)
         for follower in self.message_follower_ids:
