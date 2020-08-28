@@ -74,15 +74,6 @@ class SaleOrder(models.Model):
             data += line.prepare_sale_rma_data()
         return data
 
-    def get_portal_delivery_rma_data(self):
-        self.ensure_one()
-        data = []
-        rma_product = self.rma_ids.mapped('product_id')
-        for line in self.order_line.filtered(
-                lambda r: r.product_id not in rma_product):
-            data += line.prepare_sale_rma_data()
-        return data
-
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
