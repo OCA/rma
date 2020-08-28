@@ -279,7 +279,7 @@
         </field>
     </record>
 
-    <record id="rma.rma_orders_menu" model="ir.ui.menu">
+    <record id="rma_orders_menu" model="ir.ui.menu">
         <field name="action" ref="rma_action"/>
     </record>
 </odoo>
