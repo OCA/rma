@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Copyright 2020 Tecnativa - Ernesto Tejeda
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import http, _
 from odoo.exceptions import AccessError, MissingError
@@ -23,7 +23,10 @@ class CustomerPortal(CustomerPortal):
         for name, value in post.items():
             row, field_name = name.split('-', 1)
             mapped_vals.setdefault(row, {}).update({field_name: value})
-        line_vals = [(0, 0, vals) for vals in mapped_vals.values()]
+        # If no operation is filled, no RMA will be created
+        line_vals = [
+            (0, 0, vals) for vals in mapped_vals.values()
+            if vals.get("operation_id")]
         # Create wizard an generate rmas
         order = order_obj.browse(order_id).sudo()
         location_id = order.warehouse_id.rma_loc_id.id
@@ -31,7 +34,7 @@ class CustomerPortal(CustomerPortal):
             'line_ids': line_vals,
             'location_id': location_id
         })
-        rma = wizard.sudo().create_rma(from_portal=True)
+        rma = wizard.sudo().create_rma()
         for rec in rma:
             rec.origin += _(' (Portal)')
         # Add the user as follower of the created RMAs so they can
