@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
 
 class RmaTeam(models.Model):
@@ -37,7 +37,9 @@ class RmaTeam(models.Model):
         string='Team Members',
     )
 
+    @api.multi
     def copy(self, default=None):
+        self.ensure_one()
         if default is None:
             default = {}
         if not default.get('name'):
