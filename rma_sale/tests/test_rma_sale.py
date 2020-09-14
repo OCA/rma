@@ -70,3 +70,16 @@ class TestRmaSale(SavepointCase):
             rma.reception_move_id.picking_id + self.order_out_picking,
             order.picking_ids,
         )
+        # Refund the RMA
+        user = self.env["res.users"].create(
+            {
+                "login": "test_refund_with_so",
+                "name": "Test",
+            }
+        )
+        order.user_id = user.id
+        rma.action_confirm()
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id.action_done()
+        rma.action_refund()
+        self.assertEqual(rma.refund_id.user_id, user)
