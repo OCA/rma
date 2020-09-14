@@ -81,3 +81,10 @@ class Rma(models.Model):
     @api.onchange('order_id')
     def _onchange_order_id(self):
         self.product_id = self.picking_id = False
+
+    def _prepare_refund(self, invoice_form, origin):
+        """Inject salesman from sales order (if any)"""
+        res = super()._prepare_refund(invoice_form, origin)
+        if self.order_id:
+            invoice_form.user_id = self.order_id.user_id
+        return res
