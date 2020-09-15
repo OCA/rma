@@ -266,7 +266,7 @@ class TestRma(SavepointCase):
         self.assertEqual(rma.refund_line_id.product_id, rma.product_id)
         self.assertEqual(rma.refund_line_id.quantity, 10)
         self.assertEqual(rma.refund_line_id.uom_id, rma.product_uom)
-        self.assertEqual(rma.state, 'waiting_refund')
+        self.assertEqual(rma.state, 'refunded')
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
@@ -275,7 +275,6 @@ class TestRma(SavepointCase):
             rma.refund_id.action_invoice_open()
         rma.refund_line_id.quantity = 10
         rma.refund_id.action_invoice_open()
-        self.assertEqual(rma.state, 'refunded')
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
@@ -311,6 +310,8 @@ class TestRma(SavepointCase):
         ctx = dict(self.env.context)
         ctx.update(active_ids=all_rmas.ids, active_model='rma')
         action.with_context(ctx).run()
+        # After that all RMAs are in 'refunded' state
+        self.assertEqual(all_rmas.mapped('state'), ['refunded'] * 4)
         # Two refunds were created
         refund_1 = (rma_1 | rma_2 | rma_3).mapped('refund_id')
         refund_2 = rma_4.refund_id
@@ -351,7 +352,6 @@ class TestRma(SavepointCase):
         rma_2.refund_line_id.quantity = 15
         refund_1.action_invoice_open()
         refund_2.action_invoice_open()
-        self.assertEqual(all_rmas.mapped('state'), ['refunded']*4)
 
     def test_replace(self):
         # Create, confirm and receive an RMA
@@ -636,3 +636,23 @@ class TestRma(SavepointCase):
         self.assertEqual(new_rma.product_uom_qty + rma.product_uom_qty, 10)
         self.assertEqual(new_rma.move_id.quantity_done, 10)
         self.assertEqual(new_rma.reception_move_id.quantity_done, 10)
+
+    def test_rma_to_receive_on_delete_invoice(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10,
+                                           self.rma_loc)
+        rma.action_refund()
+        self.assertEqual(rma.state, 'refunded')
+        rma.refund_id.unlink()
+        self.assertFalse(rma.refund_id)
+        self.assertEqual(rma.state, 'received')
+        self.assertTrue(rma.can_be_refunded)
+        self.assertTrue(rma.can_be_returned)
+        self.assertTrue(rma.can_be_replaced)
+
+    def test_rma_picking_type_default_values(self):
+        warehouse = self.env['stock.warehouse'].create({
+            'name': 'Stock - RMA Test',
+            'code': 'SRT',
+        })
+        self.assertFalse(warehouse.rma_in_type_id.use_create_lots)
+        self.assertTrue(warehouse.rma_in_type_id.use_existing_lots)
