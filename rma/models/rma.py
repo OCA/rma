@@ -164,7 +164,6 @@ class Rma(models.Model):
             ("draft", "Draft"),
             ("confirmed", "Confirmed"),
             ("received", "Received"),
-            ("waiting_refund", "Waiting for refund"),
             ("waiting_return", "Waiting for return"),
             ("waiting_replacement", "Waiting for replacement"),
             ("refunded", "Refunded"),
@@ -402,7 +401,7 @@ class Rma(models.Model):
     def _compute_can_be_locked(self):
         for r in self:
             r.can_be_locked = (r.remaining_qty_to_done > 0
-                               and r.state in ['received', 'waiting_refund',
+                               and r.state in ['received',
                                                'waiting_return',
                                                'waiting_replacement'])
 
@@ -590,7 +589,7 @@ class Rma(models.Model):
                 rma.write({
                     'refund_line_id': line.id,
                     'refund_id': refund.id,
-                    'state': 'waiting_refund',
+                    'state': 'refunded',
                 })
             refund.message_post_with_view(
                 'mail.message_origin_link',
