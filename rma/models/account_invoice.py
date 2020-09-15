@@ -21,11 +21,12 @@ class AccountInvoice(models.Model):
             raise ValidationError(
                 _("There is at least one invoice lines whose quantity is "
                   "less than the quantity specified in its linked RMA."))
-        res = super().action_invoice_open()
-        self.sudo().mapped('invoice_line_ids.rma_id').write(
-            {'state': 'refunded'}
-        )
-        return res
+        return super().action_invoice_open()
+
+    def unlink(self):
+        rma = self.mapped('invoice_line_ids.rma_id')
+        rma.write({'state': 'received'})
+        return super().unlink()
 
 
 class AccountInvoiceLine(models.Model):

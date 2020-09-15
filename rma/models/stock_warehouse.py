@@ -72,8 +72,8 @@ class StockWarehouse(models.Model):
             'rma_in_type_id': {
                 'name': _('RMA Receipts'),
                 'code': 'incoming',
-                'use_create_lots': True,
-                'use_existing_lots': False,
+                'use_create_lots': False,
+                'use_existing_lots': True,
                 'default_location_src_id': False,
                 'default_location_dest_id': self.rma_loc_id.id,
                 'sequence': max_sequence + 1,
