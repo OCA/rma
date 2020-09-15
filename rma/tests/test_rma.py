@@ -648,3 +648,11 @@ class TestRma(SavepointCase):
         self.assertTrue(rma.can_be_refunded)
         self.assertTrue(rma.can_be_returned)
         self.assertTrue(rma.can_be_replaced)
+
+    def test_rma_picking_type_default_values(self):
+        warehouse = self.env['stock.warehouse'].create({
+            'name': 'Stock - RMA Test',
+            'code': 'SRT',
+        })
+        self.assertFalse(warehouse.rma_in_type_id.use_create_lots)
+        self.assertTrue(warehouse.rma_in_type_id.use_existing_lots)
