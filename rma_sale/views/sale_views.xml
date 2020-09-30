@@ -10,7 +10,7 @@
                 <button name="action_create_rma"
                         type="object"
                         string="Create RMA"
-                        states="sale"/>
+                        states="sale,done"/>
             </button>
             <div name="button_box">
                 <button name="action_view_rma"
