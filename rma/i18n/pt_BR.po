@@ -454,7 +454,7 @@ msgid "Customer Portal URL"
 msgstr "URL do portal do cliente"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:38
+#: code:addons/rma/controllers/main.py:42
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -535,7 +535,7 @@ msgid "Draft RMA"
 msgstr "Rascunho do RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1097
+#: code:addons/rma/models/rma.py:1098
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -638,7 +638,7 @@ msgstr ""
 "sem removê-lo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1101
+#: code:addons/rma/models/rma.py:1102
 #, python-format
 msgid "Incoming e-mail"
 msgstr "E-mail recebido"
@@ -692,6 +692,11 @@ msgid "Last Updated on"
 msgstr "Última Atualização Feita em"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Late RMAs"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__location_id
 msgid "Location"
 msgstr "Localização"
@@ -735,7 +740,7 @@ msgid "Messages"
 msgstr "Mensagens"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:39
+#: code:addons/rma/controllers/main.py:43
 #: model:ir.model.fields,field_description:rma.field_rma__name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__name
 #: model:ir.model.fields,field_description:rma.field_rma_team__name
@@ -745,7 +750,7 @@ msgstr "Nome"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:494
-#: code:addons/rma/models/rma.py:1100
+#: code:addons/rma/models/rma.py:1101
 #, python-format
 msgid "New"
 msgstr "Novo(a)"
@@ -993,6 +998,16 @@ msgid "RMA Code"
 msgstr "Código RMA"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Date"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Deadline"
+msgstr ""
+
+#. module: rma
 #: code:addons/rma/models/stock_warehouse.py:82
 #, python-format
 msgid "RMA Delivery Orders"
@@ -1105,6 +1120,16 @@ msgid "RMAs"
 msgstr "RMAs"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs which deadline has passed"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs yet to be fully processed"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Receipt"
 msgstr "Recebimento"
@@ -1186,7 +1211,7 @@ msgid "Replaced"
 msgstr "Substituído"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1010
+#: code:addons/rma/models/rma.py:1011
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1198,7 +1223,7 @@ msgstr ""
 "data-oe-id=\"%d\">%s</a> foi criada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1021
+#: code:addons/rma/models/rma.py:1022
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1251,7 +1276,7 @@ msgid "Return to customer"
 msgstr "Retornar ao cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:971
+#: code:addons/rma/models/rma.py:972
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1355,7 +1380,7 @@ msgid "State"
 msgstr "Situação"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:40
+#: code:addons/rma/controllers/main.py:44
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
 msgid "Status"
@@ -1530,6 +1555,11 @@ msgstr "Mensagens não lidas"
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "Contador de Mensagens Não Lidas"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Unresolved RMAs"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
