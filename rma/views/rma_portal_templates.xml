@@ -256,7 +256,7 @@
                     <section id="description" class="mt-5" t-if="rma.description">
                         <h3 class="">Description</h3>
                         <hr class="mt-0 mb-1"/>
-                        <em t-field="rma.description"/>
+                        <t t-raw="rma.description"/>
                     </section>
                 </t>
             </t>

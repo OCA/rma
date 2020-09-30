@@ -176,7 +176,7 @@ class Rma(models.Model):
         copy=False,
         track_visibility="onchange",
     )
-    description = fields.Text(
+    description = fields.Html(
         states={
             'locked': [('readonly', True)],
             'cancelled': [('readonly', True)],
