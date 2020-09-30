@@ -176,7 +176,7 @@ class Rma(models.Model):
         copy=False,
         track_visibility="onchange",
     )
-    description = fields.Text(
+    description = fields.Html(
         states={
             'locked': [('readonly', True)],
             'cancelled': [('readonly', True)],
@@ -965,8 +965,9 @@ class Rma(models.Model):
                     picking_id=picking.id,
                     rma_id=rma.id,
                     move_orig_ids=[(4, rma.reception_move_id.id)],
+                    company_id=picking.company_id.id,
                 )
-                self.env['stock.move'].create(move_vals)
+                self.env['stock.move'].sudo().create(move_vals)
                 rma.message_post(
                     body=_(
                         'Return: <a href="#" data-oe-model="stock.picking" '
@@ -1070,7 +1071,7 @@ class Rma(models.Model):
     ):
         self.ensure_one()
         return {
-            'company_id': self.company_id.id,
+            'company_id': self.company_id,
             'group_id': group_id,
             'date_planned': scheduled_date,
             'warehouse_id': warehouse,
