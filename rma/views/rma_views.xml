@@ -19,6 +19,17 @@
                         string="Received"
                         domain="[('state','=', 'received')]" />
                 <separator />
+                <filter string="Unresolved RMAs"
+                        name="undone_rma"
+                        domain="[('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                        help="RMAs yet to be fully processed"/>
+                <filter string="Late RMAs"
+                        name="late_rma"
+                        domain="[('deadline', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                        help="RMAs which deadline has passed"/>
+                <separator />
+                <filter string="RMA Date" name="filter_rma_date" date="date"/>
+                <filter string="RMA Deadline" name="filter_rma_deadline" date="deadline"/>
                 <filter name="no_user_id_filter"
                         string="Unassigned RMAs"
                         domain="[('user_id','=', False)]" />
@@ -48,7 +59,8 @@
         <field name="model">rma</field>
         <field name="arch" type="xml">
             <tree decoration-muted="state in ['cancelled', 'locked']"
-                  decoration-bf="state == 'draft' and product_id == False">
+                  decoration-bf="state == 'draft' and product_id == False"
+                  decoration-danger="deadline and (deadline &lt; current_date)">
                 <field name="name"/>
                 <field name="origin"/>
                 <field name="user_id"/>
@@ -208,8 +220,7 @@
                                 </group>
                             </group>
                             <group>
-                                <label for="description" class="oe_edit_only"/>
-                                <field name="description" colspan="4" nolabel="1"/>
+                                <field name="description" widget="html" colspan="4" />
                             </group>
                         </page>
                     </notebook>

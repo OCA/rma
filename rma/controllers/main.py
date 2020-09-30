@@ -13,7 +13,11 @@ class PortalRma(CustomerPortal):
 
     def _prepare_portal_layout_values(self):
         values = super()._prepare_portal_layout_values()
-        values['rma_count'] = request.env['rma'].search_count([])
+        if request.env['rma'].check_access_rights(
+                'read', raise_exception=False):
+            values['rma_count'] = request.env['rma'].search_count([])
+        else:
+            values['rma_count'] = 0
         return values
 
     def _rma_get_page_view_values(self, rma, access_token, **kwargs):

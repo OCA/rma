@@ -81,7 +81,7 @@
                 </div>
                 <div t-if="doc.description">
                     <strong>RMA Note:</strong>
-                    <p t-field="doc.description" />
+                    <p t-raw="doc.description" />
                 </div>
             </div>
         </t>
