@@ -630,6 +630,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Late RMAs"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__location_id
 msgid "Location"
 msgstr ""
@@ -911,6 +916,16 @@ msgid "RMA Code"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Date"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Deadline"
+msgstr ""
+
+#. module: rma
 #: code:addons/rma/models/stock_warehouse.py:82
 #, python-format
 msgid "RMA Delivery Orders"
@@ -1020,6 +1035,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_ids
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_ids
 msgid "RMAs"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs which deadline has passed"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs yet to be fully processed"
 msgstr ""
 
 #. module: rma
@@ -1395,6 +1420,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
 msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Unresolved RMAs"
 msgstr ""
 
 #. module: rma
