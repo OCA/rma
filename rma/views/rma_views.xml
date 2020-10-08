@@ -274,7 +274,7 @@
         <field name="model_id" ref="model_rma"/>
         <field name="binding_model_id" ref="model_rma"/>
         <field name="state">code</field>
-        <field name="code">records.action_refund()</field>
+        <field name="code">action = records.action_refund()</field>
     </record>
 
     <record id="rma_action" model="ir.actions.act_window">

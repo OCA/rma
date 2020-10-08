@@ -567,6 +567,7 @@ class Rma(models.Model):
             key = (record.partner_invoice_id.id, record.company_id.id)
             group_dict.setdefault(key, self.env['rma'])
             group_dict[key] |= record
+        invoices = self.env['account.invoice']
         for rmas in group_dict.values():
             origin = ', '.join(rmas.mapped('name'))
             invoice_form = Form(self.env['account.invoice'].with_context(
@@ -596,6 +597,20 @@ class Rma(models.Model):
                 values={'self': refund, 'origin': rmas},
                 subtype_id=self.env.ref('mail.mt_note').id,
             )
+            invoices += refund
+        action = self.env.ref('account.action_invoice_out_refund').read()[0]
+        if len(invoices) > 1:
+            action['domain'] = [('id', 'in', invoices.ids)]
+        elif len(invoices) == 1:
+            form_view = [(self.env.ref('account.invoice_form').id, 'form')]
+            if 'views' in action:
+                action['views'] = form_view + [
+                    (state, view)
+                    for state, view in action['views'] if view != 'form']
+            else:
+                action['views'] = form_view
+            action['res_id'] = invoices.ids[0]
+        return action
 
     def action_replace(self):
         """Invoked when 'Replace' button in rma form view is clicked."""
