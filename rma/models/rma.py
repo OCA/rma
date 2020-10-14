@@ -966,7 +966,7 @@ class Rma(models.Model):
                     rma_id=rma.id,
                     move_orig_ids=[(4, rma.reception_move_id.id)],
                 )
-                self.env['stock.move'].create(move_vals)
+                self.env['stock.move'].sudo().create(move_vals)
                 rma.message_post(
                     body=_(
                         'Return: <a href="#" data-oe-model="stock.picking" '
