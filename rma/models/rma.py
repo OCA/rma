@@ -965,6 +965,7 @@ class Rma(models.Model):
                     picking_id=picking.id,
                     rma_id=rma.id,
                     move_orig_ids=[(4, rma.reception_move_id.id)],
+                    company_id=picking.company_id.id,
                 )
                 self.env['stock.move'].sudo().create(move_vals)
                 rma.message_post(
