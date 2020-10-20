@@ -62,6 +62,7 @@ class SaleOrder(models.Model):
             action.update(
                 res_id=rma.id,
                 view_mode="form",
+                views=[],
             )
         else:
             action['domain'] = [('id', 'in', rma.ids)]
