@@ -1071,7 +1071,7 @@ class Rma(models.Model):
     ):
         self.ensure_one()
         return {
-            'company_id': self.company_id.id,
+            'company_id': self.company_id,
             'group_id': group_id,
             'date_planned': scheduled_date,
             'warehouse_id': warehouse,
