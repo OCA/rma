@@ -65,6 +65,8 @@ class SaleOrder(models.Model):
             )
         else:
             action['domain'] = [('id', 'in', rma.ids)]
+        # reset context to show all related rma without default filters
+        action['context'] = {}
         return action
 
     def get_delivery_rma_data(self):
