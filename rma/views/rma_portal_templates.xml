@@ -16,7 +16,7 @@
 
     <template id="portal_my_home_rma" name="Portal My Home : RMA entries" inherit_id="portal.portal_my_home" priority="30">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
-            <t t-call="portal.portal_docs_entry">
+            <t t-call="portal.portal_docs_entry" t-if="rma_count">
                 <t t-set="title">RMA Orders</t>
                 <t t-set="url" t-value="'/my/rmas'"/>
                 <t t-set="count" t-value="rma_count"/>
