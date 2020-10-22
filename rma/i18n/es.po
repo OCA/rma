@@ -455,7 +455,7 @@ msgid "Customer Portal URL"
 msgstr "URL del portal de cliente"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:38
+#: code:addons/rma/controllers/main.py:42
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -741,7 +741,7 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:39
+#: code:addons/rma/controllers/main.py:43
 #: model:ir.model.fields,field_description:rma.field_rma__name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__name
 #: model:ir.model.fields,field_description:rma.field_rma_team__name
@@ -1382,7 +1382,7 @@ msgid "State"
 msgstr "Estado"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:40
+#: code:addons/rma/controllers/main.py:44
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
 msgid "Status"
