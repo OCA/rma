@@ -25,14 +25,28 @@ class ReturnPicking(models.TransientModel):
         if self.create_rma:
             warehouse = self.picking_id.picking_type_id.warehouse_id
             self.location_id = warehouse.rma_loc_id.id
-            rma_loc = warehouse.search([]).mapped("rma_loc_id")
+            rma_loc = warehouse.search(
+                [("company_id", "=", self.picking_id.company_id.id)]
+            ).mapped("rma_loc_id")
             rma_loc_domain = [("id", "child_of", rma_loc.ids)]
         else:
-            self.location_id = self.default_get(["location_id"])["location_id"]
+            # If self.create_rma is not True, the value of the location and
+            # the location domain will be the same as assigned by default.
+            location_id = self.picking_id.location_id.id
+            return_picking_type = self.picking_id.picking_type_id.return_picking_type_id
+            if return_picking_type.default_location_dest_id.return_location:
+                location_id = return_picking_type.default_location_dest_id.id
+            self.location_id = location_id
             rma_loc_domain = [
                 "|",
                 ("id", "=", self.picking_id.location_id.id),
+                "|",
+                "&",
                 ("return_location", "=", True),
+                ("company_id", "=", False),
+                "&",
+                ("return_location", "=", True),
+                ("company_id", "=", self.picking_id.company_id.id),
             ]
         return {"domain": {"location_id": rma_loc_domain}}
 

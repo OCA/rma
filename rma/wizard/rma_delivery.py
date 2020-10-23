@@ -4,8 +4,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-import odoo.addons.decimal_precision as dp
-
 
 class RmaReDeliveryWizard(models.TransientModel):
     _name = "rma.delivery.wizard"
@@ -13,7 +11,7 @@ class RmaReDeliveryWizard(models.TransientModel):
 
     rma_count = fields.Integer()
     type = fields.Selection(
-        selection=[("replace", "Replace"), ("return", "Return to customer"),],
+        selection=[("replace", "Replace"), ("return", "Return to customer")],
         string="Type",
         required=True,
     )
@@ -21,10 +19,10 @@ class RmaReDeliveryWizard(models.TransientModel):
         comodel_name="product.product", string="Replace Product",
     )
     product_uom_qty = fields.Float(
-        string="Product qty", digits=dp.get_precision("Product Unit of Measure"),
+        string="Product qty", digits="Product Unit of Measure",
     )
-    product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure",)
-    scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now(),)
+    product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure")
+    scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now())
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse", string="Warehouse", required=True,
     )

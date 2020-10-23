@@ -3,8 +3,6 @@
 
 from odoo import _, api, fields, models
 
-import odoo.addons.decimal_precision as dp
-
 
 class RmaReSplitWizard(models.TransientModel):
     _name = "rma.split.wizard"
@@ -13,7 +11,7 @@ class RmaReSplitWizard(models.TransientModel):
     rma_id = fields.Many2one(comodel_name="rma", string="RMA",)
     product_uom_qty = fields.Float(
         string="Quantity to extract",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         required=True,
         help="Quantity to extract to a new RMA.",
     )
