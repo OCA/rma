@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 from odoo.tests import Form
 from odoo.tools import html2plaintext
 
-import odoo.addons.decimal_precision as dp
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
 
 
@@ -34,7 +33,7 @@ class Rma(models.Model):
     )
     origin = fields.Char(
         string="Source Document",
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
         help="Reference of the document that generated this RMA.",
     )
     date = fields.Datetime(
@@ -45,24 +44,26 @@ class Rma(models.Model):
         states={"draft": [("readonly", False)]},
     )
     deadline = fields.Date(
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     user_id = fields.Many2one(
         comodel_name="res.users",
         string="Responsible",
-        track_visibility="always",
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        index=True,
+        default=lambda self: self.env.user,
+        tracking=True,
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     team_id = fields.Many2one(
         comodel_name="rma.team",
         string="RMA team",
         index=True,
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        default=lambda self: self.env.user.company_id,
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        default=lambda self: self.env.company,
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     partner_id = fields.Many2one(
         string="Customer",
@@ -70,14 +71,14 @@ class Rma(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         index=True,
-        track_visibility="always",
+        tracking=True,
     )
     partner_invoice_id = fields.Many2one(
         string="Invoice Address",
         comodel_name="res.partner",
         readonly=True,
         states={"draft": [("readonly", False)]},
-        domain=[("customer", "=", True)],
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
         help="Refund address for current RMA.",
     )
     commercial_partner_id = fields.Many2one(
@@ -111,7 +112,7 @@ class Rma(models.Model):
         string="Quantity",
         required=True,
         default=1.0,
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
@@ -158,10 +159,10 @@ class Rma(models.Model):
         ],
         default="draft",
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
     description = fields.Html(
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)],},
+        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     # Reception fields
     location_id = fields.Many2one(
@@ -178,10 +179,10 @@ class Rma(models.Model):
     )
     # Refund fields
     refund_id = fields.Many2one(
-        comodel_name="account.invoice", string="Refund", readonly=True, copy=False,
+        comodel_name="account.move", string="Refund", readonly=True, copy=False,
     )
     refund_line_id = fields.Many2one(
-        comodel_name="account.invoice.line",
+        comodel_name="account.move.line",
         string="Refund line",
         readonly=True,
         copy=False,
@@ -200,26 +201,27 @@ class Rma(models.Model):
     )
     delivered_qty = fields.Float(
         string="Delivered qty",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         store=True,
     )
     delivered_qty_done = fields.Float(
         string="Delivered qty done",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
+        compute_sudo=True,
     )
     can_be_returned = fields.Boolean(compute="_compute_can_be_returned",)
     can_be_replaced = fields.Boolean(compute="_compute_can_be_replaced",)
     can_be_locked = fields.Boolean(compute="_compute_can_be_locked",)
     remaining_qty = fields.Float(
         string="Remaining delivered qty",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
     )
     remaining_qty_to_done = fields.Float(
         string="Remaining delivered qty to done",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
     )
     # Split fields
@@ -457,7 +459,7 @@ class Rma(models.Model):
                 and not self.location_id
             ):
                 # If this condition is True, it is because a picking is not set
-                company = self.company_id or self.env.user.company_id
+                company = self.company_id or self.env.company
                 warehouse = self.env["stock.warehouse"].search(
                     [("company_id", "=", company.id)], limit=1
                 )
@@ -465,19 +467,21 @@ class Rma(models.Model):
         return {"domain": {"product_uom": domain_product_uom}}
 
     # CRUD methods (ORM overrides)
-    @api.model
-    def create(self, vals):
-        if vals.get("name", _("New")) == _("New"):
-            ir_sequence = self.env["ir.sequence"]
-            if "company_id" in vals:
-                ir_sequence = ir_sequence.with_context(force_company=vals["company_id"])
-            vals["name"] = ir_sequence.next_by_code("rma")
-        # Assign a default team_id which will be the first in the sequence
-        if "team_id" not in vals:
-            vals["team_id"] = self.env["rma.team"].search([], limit=1).id
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("name", _("New")) == _("New"):
+                ir_sequence = self.env["ir.sequence"]
+                if "company_id" in vals:
+                    ir_sequence = ir_sequence.with_context(
+                        force_company=vals["company_id"]
+                    )
+                vals["name"] = ir_sequence.next_by_code("rma")
+            # Assign a default team_id which will be the first in the sequence
+            if "team_id" not in vals:
+                vals["team_id"] = self.env["rma.team"].search([], limit=1).id
+        return super().create(vals_list)
 
-    @api.multi
     def copy(self, default=None):
         team = super().copy(default)
         for follower in self.message_follower_ids:
@@ -529,9 +533,7 @@ class Rma(models.Model):
                 reception_move = self._create_receptions_from_picking()
             else:
                 reception_move = self._create_receptions_from_product()
-            self.write(
-                {"reception_move_id": reception_move.id, "state": "confirmed",}
-            )
+            self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
             if self.partner_id not in self.message_partner_ids:
                 self.message_subscribe([self.partner_id.id])
 
@@ -547,24 +549,24 @@ class Rma(models.Model):
         for rmas in group_dict.values():
             origin = ", ".join(rmas.mapped("name"))
             invoice_form = Form(
-                self.env["account.invoice"].with_context(
+                self.env["account.move"].with_context(
                     default_type="out_refund", company_id=rmas[0].company_id.id,
                 ),
-                "account.invoice_form",
+                "account.view_move_form",
             )
             rmas[0]._prepare_refund(invoice_form, origin)
             refund = invoice_form.save()
             for rma in rmas:
+                # For each iteration the Form is edited, a new invoice line
+                # is added and then saved. This is to generate the other
+                # lines of the accounting entry and to specify the associated
+                # RMA to that new invoice line.
+                invoice_form = Form(refund)
                 with invoice_form.invoice_line_ids.new() as line_form:
                     rma._prepare_refund_line(line_form)
-                # rma_id is not present in the form view, so we need to get
-                # the 'values to save' to add the rma id and use the
-                # create method instead of save the form. We also need
-                # the new refund line id to be linked to the rma.
-                refund_vals = invoice_form._values_to_save(all_fields=True)
-                line_vals = refund_vals["invoice_line_ids"][-1][2]
-                line_vals.update(invoice_id=refund.id, rma_id=rma.id)
-                line = self.env["account.invoice.line"].create(line_vals)
+                refund = invoice_form.save()
+                line = refund.invoice_line_ids.filtered(lambda r: not r.rma_id)
+                line.rma_id = rma.id
                 rma.write(
                     {
                         "refund_line_id": line.id,
@@ -572,6 +574,7 @@ class Rma(models.Model):
                         "state": "refunded",
                     }
                 )
+            refund.invoice_origin = origin
             refund.message_post_with_view(
                 "mail.message_origin_link",
                 values={"self": refund, "origin": rmas},
@@ -683,8 +686,8 @@ class Rma(models.Model):
             "type": "ir.actions.act_window",
             "view_type": "form",
             "view_mode": "form",
-            "res_model": "account.invoice",
-            "views": [(self.env.ref("account.invoice_form").id, "form")],
+            "res_model": "account.move",
+            "views": [(self.env.ref("account.view_move_form").id, "form")],
             "res_id": self.refund_id.id,
         }
 
@@ -800,12 +803,15 @@ class Rma(models.Model):
         self.ensure_one()
         create_vals = {}
         if self.location_id:
-            create_vals["location_id"] = self.location_id.id
+            create_vals.update(
+                location_id=self.location_id.id, picking_id=self.picking_id.id,
+            )
         return_wizard = (
             self.env["stock.return.picking"]
             .with_context(active_id=self.picking_id.id, active_ids=self.picking_id.ids,)
             .create(create_vals)
         )
+        return_wizard._onchange_picking_id()
         return_wizard.product_return_moves.filtered(
             lambda r: r.move_id != self.move_id
         ).unlink()
@@ -843,7 +849,6 @@ class Rma(models.Model):
         return picking.move_lines
 
     def _prepare_picking(self, picking_form):
-        picking_form.company_id = self.company_id
         picking_form.origin = self.name
         picking_form.partner_id = self.partner_id
         picking_form.location_dest_id = self.location_id
@@ -898,9 +903,7 @@ class Rma(models.Model):
         rma.action_refund
         """
         self.ensure_one()
-        invoice_form.company_id = self.company_id
         invoice_form.partner_id = self.partner_invoice_id
-        invoice_form.origin = origin
 
     def _prepare_refund_line(self, line_form):
         """ Hook method for preparing a refund line Form.
@@ -914,7 +917,7 @@ class Rma(models.Model):
         self.ensure_one()
         line_form.product_id = self.product_id
         line_form.quantity = self.product_uom_qty
-        line_form.uom_id = self.product_uom
+        line_form.product_uom_id = self.product_uom
         line_form.price_unit = self._get_refund_line_price_unit()
 
     def _get_refund_line_price_unit(self):
@@ -928,7 +931,8 @@ class Rma(models.Model):
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
         group_dict = {}
-        for record in self.filtered("can_be_returned"):
+        rmas_to_return = self.filtered("can_be_returned")
+        for record in rmas_to_return:
             key = (record.partner_id.id, record.company_id.id, record.warehouse_id)
             group_dict.setdefault(key, self.env["rma"])
             group_dict[key] |= record
@@ -972,11 +976,10 @@ class Rma(models.Model):
                 values={"self": picking, "origin": rmas},
                 subtype_id=self.env.ref("mail.mt_note").id,
             )
-        self.write({"state": "waiting_return"})
+        rmas_to_return.write({"state": "waiting_return"})
 
     def _prepare_returning_picking(self, picking_form, origin=None):
         picking_form.picking_type_id = self.warehouse_id.rma_out_type_id
-        picking_form.company_id = self.company_id
         picking_form.origin = origin or self.name
         picking_form.partner_id = self.partner_id
 
@@ -1052,15 +1055,18 @@ class Rma(models.Model):
         values = self._prepare_procurement_values(
             self.procurement_group_id, scheduled_date, warehouse
         )
-        self.env["procurement.group"].run(
+        procurement = self.env["procurement.group"].Procurement(
             product,
             qty,
             uom,
             self.partner_id.property_stock_customer,
             self.product_id.display_name,
             self.procurement_group_id.name,
+            self.company_id,
             values,
         )
+        self.env["procurement.group"].run([procurement])
+        return True
 
     def _prepare_procurement_values(
         self, group_id, scheduled_date, warehouse,
@@ -1077,11 +1083,11 @@ class Rma(models.Model):
         }
 
     # Mail business methods
-    def _track_subtype(self, init_values):
-        self.ensure_one()
-        if "state" in init_values and self.state == "draft":
-            return "rma.mt_rma_draft"
-        return super()._track_subtype(init_values)
+    def _creation_subtype(self):
+        if self.state in ("draft", "confirmed"):
+            return self.env.ref("rma.mt_rma_draft")
+        else:
+            return super()._creation_subtype()
 
     def message_new(self, msg_dict, custom_values=None):
         """Extract the needed values from an incoming rma emails data-set
@@ -1091,7 +1097,10 @@ class Rma(models.Model):
             custom_values = {}
         subject = msg_dict.get("subject", "")
         body = html2plaintext(msg_dict.get("body", ""))
-        desc = _("E-mail subject: %s\n\nE-mail body:\n%s") % (subject, body)
+        desc = _("<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s") % (
+            subject,
+            body,
+        )
         defaults = {
             "description": desc,
             "name": _("New"),
