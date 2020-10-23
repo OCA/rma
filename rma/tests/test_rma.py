@@ -2,9 +2,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, SavepointCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestRma(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -16,27 +17,11 @@ class TestRma(SavepointCase):
             [("company_id", "=", cls.company.id)], limit=1
         )
         cls.rma_loc = cls.warehouse_company.rma_loc_id
-        account_pay = cls.env["account.account"].create(
-            {
-                "code": "X1111",
-                "name": "Creditors - (test)",
-                "user_type_id": cls.env.ref("account.data_account_type_payable").id,
-                "reconcile": True,
-            }
-        )
-        cls.journal = cls.env["account.journal"].create(
-            {
-                "name": "sale_0",
-                "code": "SALE0",
-                "type": "sale",
-                "default_debit_account_id": account_pay.id,
-            }
-        )
         cls.product = cls.product_product.create(
-            {"name": "Product test 1", "type": "product",}
+            {"name": "Product test 1", "type": "product"}
         )
         account_type = cls.env["account.account.type"].create(
-            {"name": "RCV type", "type": "receivable",}
+            {"name": "RCV type", "type": "receivable", "internal_group": "income"}
         )
         cls.account_receiv = cls.env["account.account"].create(
             {
@@ -116,7 +101,6 @@ class TestRma(SavepointCase):
             ),
             view="stock.view_picking_form",
         )
-        picking_form.company_id = self.company
         picking_form.partner_id = self.partner
         with picking_form.move_ids_without_package.new() as move:
             move.product_id = self.product
@@ -148,7 +132,7 @@ class TestRma(SavepointCase):
             }
         )
         product_2 = self.product_product.create(
-            {"name": "Product test 2", "type": "product", "uom_id": uom_ten.id,}
+            {"name": "Product test 2", "type": "product", "uom_id": uom_ten.id}
         )
         outgoing_picking_type = self.env["stock.picking.type"].search(
             [
@@ -165,8 +149,6 @@ class TestRma(SavepointCase):
             ),
             view="stock.view_picking_form",
         )
-        picking_form.company_id = self.company
-        picking_form.partner_id = self.partner
         picking_form.partner_id = self.partner
         with picking_form.move_ids_without_package.new() as move:
             move.product_id = product_2
@@ -275,16 +257,20 @@ class TestRma(SavepointCase):
         self.assertEqual(rma.refund_id.state, "draft")
         self.assertEqual(rma.refund_line_id.product_id, rma.product_id)
         self.assertEqual(rma.refund_line_id.quantity, 10)
-        self.assertEqual(rma.refund_line_id.uom_id, rma.product_uom)
+        self.assertEqual(rma.refund_line_id.product_uom_id, rma.product_uom)
         self.assertEqual(rma.state, "refunded")
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
-        rma.refund_line_id.quantity = 9
+        with Form(rma.refund_line_id.move_id) as refund_form:
+            with refund_form.invoice_line_ids.edit(0) as refund_line:
+                refund_line.quantity = 9
         with self.assertRaises(ValidationError):
-            rma.refund_id.action_invoice_open()
-        rma.refund_line_id.quantity = 10
-        rma.refund_id.action_invoice_open()
+            rma.refund_id.post()
+        with Form(rma.refund_line_id.move_id) as refund_form:
+            with refund_form.invoice_line_ids.edit(0) as refund_line:
+                refund_line.quantity = 10
+        rma.refund_id.post()
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
@@ -354,14 +340,18 @@ class TestRma(SavepointCase):
         for rma in all_rmas:
             self.assertEqual(rma.product_id, rma.refund_line_id.product_id)
             self.assertEqual(rma.product_uom_qty, rma.refund_line_id.quantity)
-            self.assertEqual(rma.product_uom, rma.refund_line_id.uom_id)
+            self.assertEqual(rma.product_uom, rma.refund_line_id.product_uom_id)
         # Less quantity -> error on confirm
-        rma_2.refund_line_id.quantity = 14
+        with Form(rma_2.refund_line_id.move_id) as refund_form:
+            with refund_form.invoice_line_ids.edit(1) as refund_line:
+                refund_line.quantity = 14
         with self.assertRaises(ValidationError):
-            refund_1.action_invoice_open()
-        rma_2.refund_line_id.quantity = 15
-        refund_1.action_invoice_open()
-        refund_2.action_invoice_open()
+            refund_1.post()
+        with Form(rma_2.refund_line_id.move_id) as refund_form:
+            with refund_form.invoice_line_ids.edit(1) as refund_line:
+                refund_line.quantity = 15
+        refund_1.post()
+        refund_2.post()
 
     def test_replace(self):
         # Create, confirm and receive an RMA
@@ -573,8 +563,9 @@ class TestRma(SavepointCase):
         return_wizard = (
             self.env["stock.return.picking"]
             .with_context(active_id=origin_delivery.id, active_ids=origin_delivery.ids,)
-            .create({"create_rma": True})
+            .create({"create_rma": True, "picking_id": origin_delivery.id})
         )
+        return_wizard._onchange_picking_id()
         picking_action = return_wizard.create_returns()
         # Each origin move is linked to a different RMA
         origin_moves = origin_delivery.move_lines
@@ -657,7 +648,11 @@ class TestRma(SavepointCase):
 
     def test_rma_picking_type_default_values(self):
         warehouse = self.env["stock.warehouse"].create(
-            {"name": "Stock - RMA Test", "code": "SRT",}
+            {"name": "Stock - RMA Test", "code": "SRT"}
         )
         self.assertFalse(warehouse.rma_in_type_id.use_create_lots)
         self.assertTrue(warehouse.rma_in_type_id.use_existing_lots)
+
+    def test_quantities_on_hand(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        self.assertEqual(rma.product_id.qty_available, 0)
