@@ -43,7 +43,7 @@ class StockMove(models.Model):
         cancelled_moves.mapped("rma_id").update_replaced_state()
         return res
 
-    def _action_done(self):
+    def _action_done(self, cancel_backorder=False):
         """ Avoids to validate stock.move with less quantity than the
         quantity in the linked receiver RMA. It also set the appropriated
         linked RMA to 'received' or 'delivered'.

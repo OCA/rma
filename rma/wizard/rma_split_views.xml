@@ -31,7 +31,6 @@
     <record id="rma_split_wizard_action" model="ir.actions.act_window">
         <field name="name">Split RMA</field>
         <field name="res_model">rma.split.wizard</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
