@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 
 
 class RmaTeam(models.Model):
@@ -20,7 +20,7 @@ class RmaTeam(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=lambda self: self.env.user.company_id,
+        default=lambda self: self.env.company,
     )
     user_id = fields.Many2one(
         comodel_name="res.users",
@@ -32,7 +32,6 @@ class RmaTeam(models.Model):
         comodel_name="res.users", inverse_name="rma_team_id", string="Team Members",
     )
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         if default is None:
