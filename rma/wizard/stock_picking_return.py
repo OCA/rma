@@ -6,18 +6,16 @@ from odoo.exceptions import ValidationError
 
 
 class ReturnPicking(models.TransientModel):
-    _inherit = 'stock.return.picking'
+    _inherit = "stock.return.picking"
 
-    create_rma = fields.Boolean(
-        string="Create RMAs"
-    )
+    create_rma = fields.Boolean(string="Create RMAs")
     picking_type_code = fields.Selection(
         selection=[
-            ('incoming', 'Vendors'),
-            ('outgoing', 'Customers'),
-            ('internal', 'Internal'),
+            ("incoming", "Vendors"),
+            ("outgoing", "Customers"),
+            ("internal", "Internal"),
         ],
-        related='picking_id.picking_type_id.code',
+        related="picking_id.picking_type_id.code",
         store=True,
         readonly=True,
     )
@@ -27,16 +25,16 @@ class ReturnPicking(models.TransientModel):
         if self.create_rma:
             warehouse = self.picking_id.picking_type_id.warehouse_id
             self.location_id = warehouse.rma_loc_id.id
-            rma_loc = warehouse.search([]).mapped('rma_loc_id')
-            rma_loc_domain = [('id', 'child_of', rma_loc.ids)]
+            rma_loc = warehouse.search([]).mapped("rma_loc_id")
+            rma_loc_domain = [("id", "child_of", rma_loc.ids)]
         else:
-            self.location_id = self.default_get(['location_id'])['location_id']
+            self.location_id = self.default_get(["location_id"])["location_id"]
             rma_loc_domain = [
-                '|',
-                ('id', '=', self.picking_id.location_id.id),
-                ('return_location', '=', True),
+                "|",
+                ("id", "=", self.picking_id.location_id.id),
+                ("return_location", "=", True),
             ]
-        return {'domain': {'location_id': rma_loc_domain}}
+        return {"domain": {"location_id": rma_loc_domain}}
 
     def create_returns(self):
         """ Override create_returns method for creating one or more
@@ -52,13 +50,18 @@ class ReturnPicking(models.TransientModel):
             self_with_context = self.with_context(set_rma_picking_type=True)
             res = super(ReturnPicking, self_with_context).create_returns()
             if not self.picking_id.partner_id:
-                raise ValidationError(_(
-                    "You must specify the 'Customer' in the "
-                    "'Stock Picking' from which RMAs will be created"))
-            returned_picking = self.env['stock.picking'].browse(res['res_id'])
-            vals_list = [move._prepare_return_rma_vals(self.picking_id)
-                         for move in returned_picking.move_lines]
-            self.env['rma'].create(vals_list)
+                raise ValidationError(
+                    _(
+                        "You must specify the 'Customer' in the "
+                        "'Stock Picking' from which RMAs will be created"
+                    )
+                )
+            returned_picking = self.env["stock.picking"].browse(res["res_id"])
+            vals_list = [
+                move._prepare_return_rma_vals(self.picking_id)
+                for move in returned_picking.move_lines
+            ]
+            self.env["rma"].create(vals_list)
             return res
         else:
             return super().create_returns()
