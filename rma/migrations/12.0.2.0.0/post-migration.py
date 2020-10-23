@@ -6,5 +6,4 @@ from openupgradelib import openupgrade
 @openupgrade.migrate()
 def migrate(env, version):
     # Convert Text description field to Html
-    openupgrade.convert_field_to_html(
-        env.cr, "rma", "description", "description")
+    openupgrade.convert_field_to_html(env.cr, "rma", "description", "description")
