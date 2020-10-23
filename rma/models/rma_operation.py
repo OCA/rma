@@ -11,5 +11,5 @@ class RmaOperation(models.Model):
     name = fields.Char(required=True, translate=True)
 
     _sql_constraints = [
-        ('name_uniq', 'unique (name)', "That operation name already exists !"),
+        ("name_uniq", "unique (name)", "That operation name already exists !"),
     ]

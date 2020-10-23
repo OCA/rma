@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, _
+from odoo import _, api, models
 
 
 class Company(models.Model):
@@ -14,10 +14,16 @@ class Company(models.Model):
         return company
 
     def create_rma_index(self):
-        return self.env['ir.sequence'].sudo().create({
-            'name': _('RMA Code'),
-            'prefix': 'RMA',
-            'code': 'rma',
-            'padding': 4,
-            'company_id': self.id,
-        })
+        return (
+            self.env["ir.sequence"]
+            .sudo()
+            .create(
+                {
+                    "name": _("RMA Code"),
+                    "prefix": "RMA",
+                    "code": "rma",
+                    "padding": 4,
+                    "company_id": self.id,
+                }
+            )
+        )
