@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockPicking(models.Model):
@@ -13,7 +13,6 @@ class StockPicking(models.Model):
         for rec in self:
             rec.rma_count = len(rec.move_lines.mapped("rma_ids"))
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         if self.env.context.get("set_rma_picking_type"):
