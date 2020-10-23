@@ -6,10 +6,10 @@ from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
 
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
-    def action_invoice_open(self):
+    def post(self):
         """ Avoids to validate a refund with less quantity of product than
         quantity in the linked RMA.
         """
@@ -33,7 +33,7 @@ class AccountInvoice(models.Model):
                     "less than the quantity specified in its linked RMA."
                 )
             )
-        return super().action_invoice_open()
+        return super().post()
 
     def unlink(self):
         rma = self.mapped("invoice_line_ids.rma_id")
@@ -41,7 +41,7 @@ class AccountInvoice(models.Model):
         return super().unlink()
 
 
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
 
     rma_id = fields.Many2one(comodel_name="rma", string="RMA",)

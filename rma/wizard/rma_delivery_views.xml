@@ -57,13 +57,11 @@
     <act_window
         id="rma_delivery_wizard_action"
         name="Return to customer"
-        src_model="rma"
+        binding_model="rma"
+        binding_views="list"
         res_model="rma.delivery.wizard"
-        view_type="form"
         view_mode="form"
-        key2="client_action_multi"
         target="new"
-        multi="True"
         context="{'rma_delivery_type': 'return'}"
     />
 </odoo>

@@ -16,9 +16,7 @@ class ResPartner(models.Model):
         rma_data = self.env["rma"].read_group(
             [("partner_id", "in", self.ids)], ["partner_id"], ["partner_id"]
         )
-        mapped_data = {
-            r["partner_id"][0]: r["partner_id_count"] for r in rma_data
-        }
+        mapped_data = {r["partner_id"][0]: r["partner_id_count"] for r in rma_data}
         for record in self:
             record.rma_count = mapped_data.get(record.id, 0)
 
