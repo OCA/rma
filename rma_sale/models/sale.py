@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
     rma_ids = fields.One2many(
         comodel_name="rma", inverse_name="order_id", string="RMAs", copy=False,
     )
-    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count",)
+    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count")
 
     def _compute_rma_count(self):
         rma_data = self.env["rma"].read_group(
@@ -48,7 +48,6 @@ class SaleOrder(models.Model):
         return {
             "name": _("Create RMA"),
             "type": "ir.actions.act_window",
-            "view_type": "form",
             "view_mode": "form",
             "res_model": "sale.order.rma.wizard",
             "res_id": wizard.id,

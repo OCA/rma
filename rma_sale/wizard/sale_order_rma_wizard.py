@@ -3,8 +3,6 @@
 
 from odoo import _, api, fields, models
 
-from odoo.addons import decimal_precision as dp
-
 
 class SaleOrderRmaWizard(models.TransientModel):
     _name = "sale.order.rma.wizard"
@@ -71,7 +69,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     _name = "sale.order.line.rma.wizard"
     _description = "Sale Order Line Rma Wizard"
 
-    wizard_id = fields.Many2one(comodel_name="sale.order.rma.wizard", string="Wizard",)
+    wizard_id = fields.Many2one(comodel_name="sale.order.rma.wizard", string="Wizard")
     order_id = fields.Many2one(
         comodel_name="sale.order",
         default=lambda self: self.env["sale.order"].browse(
@@ -91,9 +89,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         comodel_name="uom.category", related="product_id.uom_id.category_id",
     )
     quantity = fields.Float(
-        string="Quantity",
-        digits=dp.get_precision("Product Unit of Measure"),
-        required=True,
+        string="Quantity", digits="Product Unit of Measure", required=True,
     )
     uom_id = fields.Many2one(
         comodel_name="uom.uom",
