@@ -20,15 +20,15 @@ class Rma(models.Model):
     allowed_picking_ids = fields.Many2many(
         comodel_name="stock.picking", compute="_compute_allowed_picking_ids",
     )
-    picking_id = fields.Many2one(domain="[('id', 'in', allowed_picking_ids)]",)
+    picking_id = fields.Many2one(domain="[('id', 'in', allowed_picking_ids)]")
     allowed_move_ids = fields.Many2many(
         comodel_name="sale.order.line", compute="_compute_allowed_move_ids",
     )
-    move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]",)
+    move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
     allowed_product_ids = fields.Many2many(
         comodel_name="product.product", compute="_compute_allowed_product_ids",
     )
-    product_id = fields.Many2one(domain="[('id', 'in', allowed_product_ids)]",)
+    product_id = fields.Many2one(domain="[('id', 'in', allowed_product_ids)]")
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
@@ -81,5 +81,5 @@ class Rma(models.Model):
         """Inject salesman from sales order (if any)"""
         res = super()._prepare_refund(invoice_form, origin)
         if self.order_id:
-            invoice_form.user_id = self.order_id.user_id
+            invoice_form.invoice_user_id = self.order_id.user_id
         return res
