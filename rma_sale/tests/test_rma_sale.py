@@ -13,12 +13,12 @@ class TestRmaSale(SavepointCase):
         cls.sale_order = cls.env["sale.order"]
 
         cls.product_1 = cls.product_product.create(
-            {"name": "Product test 1", "type": "product",}
+            {"name": "Product test 1", "type": "product"}
         )
         cls.product_2 = cls.product_product.create(
-            {"name": "Product test 2", "type": "product",}
+            {"name": "Product test 2", "type": "product"}
         )
-        cls.partner = cls.res_partner.create({"name": "Partner test",})
+        cls.partner = cls.res_partner.create({"name": "Partner test"})
         order_form = Form(cls.sale_order)
         order_form.partner_id = cls.partner
         with order_form.order_line.new() as line_form:
@@ -41,6 +41,7 @@ class TestRmaSale(SavepointCase):
         rma_form.order_id = self.sale_order
         rma_form.product_id = self.product_1
         rma_form.product_uom_qty = 5
+        rma_form.location_id = self.sale_order.warehouse_id.rma_loc_id
         rma = rma_form.save()
         rma.action_confirm()
         self.assertTrue(rma.reception_move_id)
@@ -69,7 +70,7 @@ class TestRmaSale(SavepointCase):
         )
         # Refund the RMA
         user = self.env["res.users"].create(
-            {"login": "test_refund_with_so", "name": "Test",}
+            {"login": "test_refund_with_so", "name": "Test"}
         )
         order.user_id = user.id
         rma.action_confirm()

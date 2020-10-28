@@ -17,19 +17,19 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:39
+#: code:addons/rma_sale/controllers/sale_portal.py:0
 #, python-format
 msgid " (Portal)"
 msgstr " (Portal)"
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:42
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " has been created."
 msgstr " foi criado(a)."
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:44
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " have been created."
 msgstr " foi criado(a)."
@@ -140,7 +140,7 @@ msgstr ""
 "mesma categoria. A conversão será feita com base nas proporções."
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:48
+#: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
@@ -285,7 +285,6 @@ msgid "Requested operation"
 msgstr "Operação Requisitada"
 
 #. module: rma_sale
-#: model:ir.model,name:rma_sale.model_sale_order
 #: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
 msgid "Sale Order"
 msgstr "Pedido de Venda"
@@ -299,6 +298,11 @@ msgstr "Assistente da Linha do Pedido de Venda RMA"
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
 msgstr "Assistente do Pedido de Venda RMA"
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order
+msgid "Sales Order"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line
@@ -349,7 +353,7 @@ msgid "You can send a message in every RMA sent"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:34
+#: code:addons/rma_sale/models/sale.py:0
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr ""

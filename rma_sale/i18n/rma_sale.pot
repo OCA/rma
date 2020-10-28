@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* rma_sale
+# 	* rma_sale
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:39
+#: code:addons/rma_sale/controllers/sale_portal.py:0
 #, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:42
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " has been created."
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:44
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " have been created."
 msgstr ""
@@ -120,16 +120,20 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "Comment anything relevant to the return, like serial numbers, a description of the issue, etc"
+msgid ""
+"Comment anything relevant to the return, like serial numbers, a description "
+"of the issue, etc"
 msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
-msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:48
+#: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
@@ -274,7 +278,6 @@ msgid "Requested operation"
 msgstr ""
 
 #. module: rma_sale
-#: model:ir.model,name:rma_sale.model_sale_order
 #: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
 msgid "Sale Order"
 msgstr ""
@@ -287,6 +290,11 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order
+msgid "Sales Order"
 msgstr ""
 
 #. module: rma_sale
@@ -316,7 +324,9 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "Use the comment button to add relevant information regarding the RMA, like returned serial numbers or a description of the issue"
+msgid ""
+"Use the comment button to add relevant information regarding the RMA, like "
+"returned serial numbers or a description of the issue"
 msgstr ""
 
 #. module: rma_sale
@@ -326,7 +336,8 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "You can only return as much product units as you received for this order"
+msgid ""
+"You can only return as much product units as you received for this order"
 msgstr ""
 
 #. module: rma_sale
@@ -335,13 +346,14 @@ msgid "You can send a message in every RMA sent"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:34
+#: code:addons/rma_sale/models/sale.py:0
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "You're about to perform an RMA request. Our team will process it an will reach you once it's validated. Keep in mind that:"
+msgid ""
+"You're about to perform an RMA request. Our team will process it an will "
+"reach you once it's validated. Keep in mind that:"
 msgstr ""
-
