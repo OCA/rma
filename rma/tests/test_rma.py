@@ -656,3 +656,10 @@ class TestRma(SavepointCase):
         })
         self.assertFalse(warehouse.rma_in_type_id.use_create_lots)
         self.assertTrue(warehouse.rma_in_type_id.use_existing_lots)
+
+    def test_quantities_on_hand(self):
+        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma.action_confirm()
+        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.picking_id.action_done()
+        self.assertEqual(rma.product_id.qty_available, 0)

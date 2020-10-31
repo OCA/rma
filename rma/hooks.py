@@ -22,11 +22,10 @@ def post_init_hook(cr, registry):
 
     def create_rma_locations(warehouse):
         stock_location = env['stock.location']
-        location_vals = warehouse._get_locations_values({})
-        for field_name, values in location_vals.items():
-            if field_name == 'rma_loc_id' and not warehouse.rma_loc_id:
-                warehouse.rma_loc_id = stock_location.with_context(
-                    active_test=False).create(values).id
+        if not warehouse.rma_loc_id:
+            rma_location_vals = warehouse._get_rma_location_values()
+            warehouse.rma_loc_id = stock_location.with_context(
+                active_test=False).create(rma_location_vals).id
 
     def create_rma_picking_types(whs):
         ir_sequence_sudo = env['ir.sequence'].sudo()

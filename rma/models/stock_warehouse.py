@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 
 class StockWarehouse(models.Model):
@@ -27,19 +27,33 @@ class StockWarehouse(models.Model):
         string='RMA Location',
     )
 
-    def _get_locations_values(self, vals):
-        values = super()._get_locations_values(vals)
-        values.update({
-            'rma_loc_id': {
-                'name': 'RMA',
-                'active': True,
-                'return_location': True,
-                'usage': 'internal',
-                'company_id': vals.get('company_id', self.company_id.id),
-                'location_id': self.view_location_id.id,
-            },
-        })
-        return values
+    @api.model_create_multi
+    def create(self, vals_list):
+        """ To create an RMA location and link it with a new warehouse,
+        this method is overridden instead of '_get_locations_values'
+        method because the locations that are created with the
+        values ​​returned by that method are forced to be children
+        of view_location_id, and we don't want that.
+        """
+        res = super().create(vals_list)
+        stock_location = self.env['stock.location']
+        for record in res:
+            rma_location_vals = record._get_rma_location_values()
+            record.rma_loc_id = stock_location.create(rma_location_vals).id
+        return res
+
+    def _get_rma_location_values(self):
+        """ this method is intended to be used by 'create' method
+        to create a new RMA location to be linked to a new warehouse.
+        """
+        return {
+            'name': self.view_location_id.name,
+            'active': True,
+            'return_location': True,
+            'usage': 'internal',
+            'company_id': self.company_id.id,
+            'location_id': self.env.ref("rma.stock_location_rma").id,
+        }
 
     def _get_sequence_values(self):
         values = super()._get_sequence_values()
