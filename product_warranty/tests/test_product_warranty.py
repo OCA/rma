@@ -1,5 +1,5 @@
-# © 2016 Cyril Gaudin (Camptocamp)
-# © 2015 Vauxoo, Yanina Aular
+# Copyright 2016 Cyril Gaudin (Camptocamp)
+# Copyright 2015 Vauxoo, Yanina Aular
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase

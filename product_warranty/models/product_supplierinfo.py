@@ -1,6 +1,6 @@
-# © 2016 Cyril Gaudin (Camptocamp)
-# © 2015 Vauxoo
-# © 2009-2011  Akretion, Emmanuel Samyn, Benoît Guillot
+# Copyright 2016 Cyril Gaudin (Camptocamp)
+# Copyright 2015 Vauxoo
+# Copyright 2009-2011  Akretion, Emmanuel Samyn, Benoît Guillot
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models

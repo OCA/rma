@@ -14,23 +14,19 @@ Product Warranty
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/12.0/product_warranty
+    :target: https://github.com/OCA/rma/tree/13.0/product_warranty
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-12-0/rma-12-0-product_warranty
+    :target: https://translation.odoo-community.org/projects/rma-13-0/rma-13-0-product_warranty
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/145/12.0
+    :target: https://runbot.odoo-community.org/runbot/145/13.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-Extends the product warranty management with warranty details on product /
-supplier relation:
-
-* Supplier warranty duration
-* Set default return address for company (if different from standard one)
-* Whether to return product to company, supplier, other
+This module extends the functionality of 'Sales Management' to allows you
+to set product warranty details on products and product-supplier relation.
 
 **Table of contents**
 
@@ -40,9 +36,14 @@ supplier relation:
 Usage
 =====
 
-The new information is not explicitly used by the system until you install
-another module that makes use of it, e.g. RMA Claim (Product Return
-Management).
+To use this module, you need to:
+
+#. Go to *Sales > Products > Products (or Product Variants)*
+#. Create a new product (or product variant) or edit an existing one
+   and set 'Warranty Duration' under 'Sales' tab.
+#. If 'Purchase' module is installed, got to
+   *Sales > Products > Products (or Product Variants)*, go to 'Purchase' tab,
+   edit supplier information lines an set the warranty information for each one.
 
 Bug Tracker
 ===========
@@ -50,7 +51,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20product_warranty%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20product_warranty%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -116,6 +117,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-osi-scampbell| |maintainer-max3903| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/12.0/product_warranty>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/13.0/product_warranty>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
