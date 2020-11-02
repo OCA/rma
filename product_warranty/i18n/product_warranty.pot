@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_warranty
+# 	* product_warranty
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,7 @@ msgid "Companies"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
 msgid "Company"
 msgstr ""
 
@@ -44,13 +44,15 @@ msgid "Created on"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__day
 msgid "Day(s)"
 msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_res_company__crm_return_address_id
-msgid "Default address where the customers has to send back the returned product. If empty, the address is the company address."
+msgid ""
+"Default address where the customers has to send back the returned product. "
+"If empty, the address is the company address."
 msgstr ""
 
 #. module: product_warranty
@@ -65,7 +67,9 @@ msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__is_default
-msgid "If is default, will be use to set the default value in supplier info's. Be careful to have only one default."
+msgid ""
+"If is default, will be use to set the default value in supplier info's. Be "
+"careful to have only one default."
 msgstr ""
 
 #. module: product_warranty
@@ -112,12 +116,12 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__month
 msgid "Month(s)"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__other
 msgid "Other"
 msgstr ""
 
@@ -160,7 +164,7 @@ msgid "Return type"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__supplier
 msgid "Supplier"
 msgstr ""
 
@@ -193,7 +197,10 @@ msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_duration
-msgid "Warranty in month for this product/supplier relation. Only for company/supplier relation (purchase order) ; the  customer/company relation (sale order) always use the product main warranty field."
+msgid ""
+"Warranty in month for this product/supplier relation. Only for "
+"company/supplier relation (purchase order) ; the  customer/company relation "
+"(sale order) always use the product main warranty field."
 msgstr ""
 
 #. module: product_warranty
@@ -202,27 +209,34 @@ msgid "Warranty informations"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__week
 msgid "Week(s)"
 msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_other_address
-msgid "Where the customer has to send back the product(s) if warranty return is set to 'other'."
+msgid ""
+"Where the customer has to send back the product(s) if warranty return is set"
+" to 'other'."
 msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_address
-msgid "Where the goods should be returned  (computed field based on other infos.)"
+msgid ""
+"Where the goods should be returned  (computed field based on other infos.)"
 msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_partner
-msgid "Who is in charge of the warranty return treatment toward the end customer. Company will use the current company delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarily mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty)."
+msgid ""
+"Who is in charge of the warranty return treatment toward the end customer. "
+"Company will use the current company delivery or default address and so on "
+"for supplier and brand manufacturer. Doesn't necessarily mean that the "
+"warranty to be applied is the one of the return partner (ie: can be returned"
+" to the company and be under the brand warranty)."
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr ""
-
