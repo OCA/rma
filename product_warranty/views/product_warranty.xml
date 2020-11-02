@@ -32,7 +32,6 @@
     <record id="product_return_instructions_action" model="ir.actions.act_window">
         <field name="name">Products Return Instructions</field>
         <field name="res_model">return.instruction</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="product_return_instructions_tree_view" />
     </record>

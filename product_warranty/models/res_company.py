@@ -1,5 +1,5 @@
-# © 2016 Joel Grand-Guillaume, Cyril Gaudin (Camptocamp)
-# © 2009-2013 Akretion, Emmanuel Samyn, Raphaël Valyi, Sébastien Beau
+# Copyright 2016 Joel Grand-Guillaume, Cyril Gaudin (Camptocamp)
+# Copyright 2009-2013 Akretion, Emmanuel Samyn, Raphaël Valyi, Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
