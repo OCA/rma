@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_team_view_tree" model="ir.ui.view">
+        <field name="model">rma.team</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="user_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+    <record id="rma_team_view_form" model="ir.ui.view">
+        <field name="name">rma.team.view.form</field>
+        <field name="model">rma.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="toggle_active"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-archive"
+                        >
+                            <field
+                                name="active"
+                                widget="boolean_button"
+                                options='{"terminology": "archive"}'
+                            />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="RMA Team" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" />
+                            <field
+                                name="company_id"
+                                options="{'no_create': True}"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="members" string="Team Members">
+                            <field
+                                name="member_ids"
+                                widget="many2many"
+                                options="{'not_delete': True}"
+                            >
+                                <kanban
+                                    quick_create="false"
+                                    create="true"
+                                    delete="true"
+                                >
+                                    <field name="id" />
+                                    <field name="name" />
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div
+                                                class="oe_kanban_global_click"
+                                                style="max-width: 200px"
+                                            >
+                                                <div class="o_kanban_record_top">
+                                                    <img
+                                                        t-att-src="kanban_image('res.users', 'image_small', record.id.raw_value)"
+                                                        height="40"
+                                                        width="40"
+                                                        class="oe_avatar oe_kanban_avatar_smallbox mb0"
+                                                        alt="Avatar"
+                                                    />
+                                                    <div
+                                                        class="o_kanban_record_headings ml8"
+                                                    >
+                                                        <strong
+                                                            class="o_kanban_record_title"
+                                                        >
+                                                            <field name="name" />
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page
+                            name="emails"
+                            string="Email"
+                            attrs="{'invisible': [('alias_domain', '=', False)]}"
+                        >
+                            <group name="group_alias">
+                                <label for="alias_name" string="Email Alias" />
+                                <div name="alias_def">
+                                    <field
+                                        name="alias_id"
+                                        class="oe_read_only oe_inline"
+                                        string="Email Alias"
+                                        required="0"
+                                    />
+                                    <div
+                                        class="oe_edit_only oe_inline"
+                                        name="edit_alias"
+                                        style="display: inline;"
+                                    >
+                                        <field
+                                            name="alias_name"
+                                            class="oe_inline"
+                                        />@<field
+                                            name="alias_domain"
+                                            class="oe_inline"
+                                            readonly="1"
+                                        />
+                                    </div>
+                                </div>
+                                <field
+                                    name="alias_contact"
+                                    class="oe_inline oe_edit_only"
+                                    string="Accept Emails From"
+                                />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="rma_team_action" model="ir.actions.act_window">
+        <field name="name">RMA team</field>
+        <field name="res_model">rma.team</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new RMA.
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="rma_configuration_rma_team_menu"
+        name="RMA Team"
+        parent="rma_configuration_menu"
+        action="rma_team_action"
+    />
+</odoo>
