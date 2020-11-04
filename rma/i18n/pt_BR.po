@@ -1008,7 +1008,7 @@ msgid "RMA Deadline"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:82
+#: code:addons/rma/models/stock_warehouse.py:96
 #, python-format
 msgid "RMA Delivery Orders"
 msgstr "Pedidos de Entrega RMA"
@@ -1046,7 +1046,7 @@ msgid "RMA Out Type"
 msgstr "Tipo Saída RMA"
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:73
+#: code:addons/rma/models/stock_warehouse.py:87
 #, python-format
 msgid "RMA Receipts"
 msgstr "Recebimentos RMA"
@@ -1326,13 +1326,13 @@ msgid "Sequence"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:48
+#: code:addons/rma/models/stock_warehouse.py:62
 #, python-format
 msgid "Sequence RMA in"
 msgstr "Sequência de Entrada RMA"
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:53
+#: code:addons/rma/models/stock_warehouse.py:67
 #, python-format
 msgid "Sequence RMA out"
 msgstr "Sequência de Saída RMA"
