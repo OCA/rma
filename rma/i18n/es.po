@@ -44,21 +44,6 @@ msgstr ""
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
 #, fuzzy
-#| msgid ""
-#| "<div style=\"margin: 0px; padding: 0px;\">\n"
-#| "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-#| "    Dear ${object.partner_id.name}\n"
-#| "    % if object.partner_id.parent_id:\n"
-#| "        (${object.partner_id.parent_id.name})\n"
-#| "    % endif\n"
-#| "    <br/><br/>\n"
-#| "    Here is the RMA <strong>${object.name}</strong> from ${object."
-#| "company_id.name}.\n"
-#| "    <br/><br/>\n"
-#| "    Do not hesitate to contact us if you have any question.\n"
-#| "</p>\n"
-#| "</div>\n"
-#| "        "
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
@@ -102,7 +87,6 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #, fuzzy
-#| msgid "<i class=\"fa fa-fw fa-check\"/> <b>Paid</b>"
 msgid ""
 "<i class=\"fa fa-fw fa-check\"/>\n"
 "                                <b>Paid</b>"
@@ -111,7 +95,6 @@ msgstr "<i class=\"fa fa-fw fa-check\"/><b>Pagado</b>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #, fuzzy
-#| msgid "<i class=\"fa fa-fw fa-clock-o\"/> <b>Waiting Payment</b>"
 msgid ""
 "<i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                <b>Waiting Payment</b>"
@@ -1325,7 +1308,6 @@ msgstr "Cantidad de RMAs"
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
 #, fuzzy
-#| msgid "Message Delivery error"
 msgid "SMS Delivery error"
 msgstr "Error de Envío de Mensaje"
 
