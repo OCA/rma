@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-rma Odoo addons",
     version=version,
     install_requires=[
+        'odoo13-addon-product_warranty',
         'odoo13-addon-rma',
     ],
     classifiers=[
