@@ -1,0 +1,242 @@
+<odoo>
+    <template
+        id="sale_order_portal_template"
+        name="Request RMA"
+        inherit_id="sale.sale_order_portal_template"
+    >
+        <xpath
+            expr="//div[hasclass('o_portal_sale_sidebar')]//div[hasclass('o_download_pdf')]/.."
+            position="after"
+        >
+            <li
+                t-if="sale_order.state in ['sale', 'done']"
+                class="list-group-item flex-grow-1"
+                id="li-request-rma"
+            >
+                <a
+                    role="button"
+                    class="btn btn-secondary btn-block mb8"
+                    data-toggle="modal"
+                    data-target="#modal-request-rma"
+                    href="#"
+                >
+                    <i class="fa fa-reply" /> Request RMAs
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//div[@id='modaldecline']" position="after">
+            <div role="dialog" class="modal fade" id="modal-request-rma">
+                <div class="modal-dialog" style="max-width: 1000px;">
+                    <form
+                        id="form-request-rma"
+                        method="POST"
+                        t-attf-action="/my/orders/#{sale_order.id}/requestrma?access_token=#{sale_order.access_token}"
+                        class="modal-content"
+                    >
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            t-att-value="request.csrf_token()"
+                        />
+                        <header class="modal-header">
+                            <h4 class="modal-title">Request RMAs</h4>
+                            <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                            >&amp;times;</button>
+                        </header>
+                        <main class="modal-body" id="modal-body-request-rma">
+                            <div class="alert alert-info mb-2 mb-sm-1" role="alert">
+                                <span>
+                                You're about to perform an RMA request. Our team will process it an will reach you once it's validated. Keep in mind that:
+                                <ul>
+                                        <li
+                                        >Select the product quantity and the requested operation</li>
+                                        <li
+                                        >Use the comment button to add relevant information regarding the RMA, like returned serial numbers or a description of the issue</li>
+                                        <li
+                                        >If no requested operation is set, the RMA won't be correctly fulfilled</li>
+                                        <li
+                                        >You can only return as much product units as you received for this order</li>
+                                        <li
+                                        >The limit will decrease when the units in other RMAs are confirmed</li>
+                                        <li
+                                        >You can send a message in every RMA sent</li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <t
+                                t-set="data_list"
+                                t-value="sale_order.get_delivery_rma_data()"
+                            />
+                            <t
+                                t-set="operations"
+                                t-value="sale_order.env['rma.operation'].search([])"
+                            />
+                            <table class="table table-sm" id="request-rma-table">
+                                <thead class="bg-100">
+                                    <tr>
+                                        <th class="text-left">Product</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-left">Delivery</th>
+                                        <th class="text-left">Requested operation</th>
+                                        <th name="portal_rma_button_desc" />
+                                    </tr>
+                                </thead>
+                                <tbody class="request-rma-tbody">
+                                    <t t-foreach="data_list" t-as="data">
+                                        <t t-if="data['quantity'] > 0">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <span
+                                                        t-esc="data['product'].display_name"
+                                                    />
+                                                    <input
+                                                        type="hidden"
+                                                        t-attf-name="#{data_index}-product_id"
+                                                        t-att-value="data['product'].id"
+                                                    />
+                                                </td>
+                                                <td class="text-right">
+                                                    <div id="delivery-rma-qty">
+                                                        <input
+                                                            type="number"
+                                                            t-attf-name="#{data_index}-quantity"
+                                                            class="o_input text-right"
+                                                            placeholder="0"
+                                                            min="0"
+                                                            t-att-max="data['quantity']"
+                                                            t-att-value="0"
+                                                            style="max-width: 60px;"
+                                                        />
+                                                        <span
+                                                            t-esc="data['uom'].name"
+                                                            groups="uom.group_uom"
+                                                        />
+                                                        <input
+                                                            type="hidden"
+                                                            t-attf-name="#{data_index}-uom_id"
+                                                            t-att-value="data['uom'].id"
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <span
+                                                        t-if="data['picking']"
+                                                        t-esc="data['picking'].name"
+                                                    />
+                                                    <input
+                                                        type="hidden"
+                                                        t-attf-name="#{data_index}-picking_id"
+                                                        t-att-value="data['picking'].id"
+                                                    />
+                                                </td>
+                                                <td class="text-left">
+                                                    <select
+                                                        t-attf-name="#{data_index}-operation_id"
+                                                        class="form-control"
+                                                    >
+                                                        <option value="">---</option>
+                                                        <t
+                                                            t-foreach="operations"
+                                                            t-as="operation"
+                                                        >
+                                                            <option
+                                                                t-att-value="operation.id"
+                                                            >
+                                                                <t
+                                                                    t-esc="operation.name"
+                                                                />
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-primary fa fa-comments"
+                                                        type="button"
+                                                        data-toggle="collapse"
+                                                        t-attf-data-target="#comment-#{data_index}"
+                                                        aria-expanded="false"
+                                                        t-attf-aria-controls="comment-#{data_index}"
+                                                    />
+                                                </td>
+                                            </tr>
+                                            <tr
+                                                class="collapse"
+                                                t-attf-id="comment-#{data_index}"
+                                            >
+                                                <td colspan="5">
+                                                    <textarea
+                                                        class="form-control o_website_form_input"
+                                                        t-attf-name="#{data_index}-description"
+                                                        placeholder="Comment anything relevant to the return, like serial numbers, a description of the issue, etc"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </main>
+                        <footer class="modal-footer">
+                            <button
+                                type="submit"
+                                t-att-id="sale_order.id"
+                                class="btn btn-primary"
+                            ><i class="fa fa-check" /> Request RMAs</button>
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                data-dismiss="modal"
+                            ><i class="fa fa-times" /> Cancel</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template
+        id="sale_order_portal_content"
+        name="Show RMAs"
+        inherit_id="sale.sale_order_portal_content"
+    >
+        <xpath expr="//div[@id='introduction']/h2[hasclass('my-0')]" position="inside">
+            <span t-if="sale_order.rma_count" class="float-right">
+                <a
+                    role="button"
+                    t-attf-href="/my/rmas?sale_id=#{sale_order.id}"
+                    class="btn btn-sm btn-secondary"
+                >
+                    <span class="fa fa-reply" role="img" aria-label="RMA" title="RMA" />
+                    <span t-esc="sale_order.rma_count" />
+                    <span>RMA</span>
+                </a>
+            </span>
+        </xpath>
+    </template>
+    <template id="portal_rma_page" name="Show RMAs" inherit_id="rma.portal_rma_page">
+        <xpath expr="//div[@t-if='rma.picking_id']" position="before">
+            <div t-if="rma.order_id" class="row mb-2 mb-sm-1">
+                <div class="col-12 col-sm-4">
+                    <strong>Sale order</strong>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <span t-field="rma.order_id" />
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@t-if='rma.origin']" position="after">
+            <div t-if="rma.operation_id" class="row mb-2 mb-sm-1">
+                <div class="col-12 col-sm-4">
+                    <strong>Requested operation</strong>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <span t-field="rma.operation_id" />
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
