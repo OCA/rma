@@ -37,7 +37,7 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
 msgid "Company"
 msgstr "Compañía"
 
@@ -52,7 +52,7 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__day
 msgid "Day(s)"
 msgstr ""
 
@@ -133,12 +133,12 @@ msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__month
 msgid "Month(s)"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__other
 msgid "Other"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgid "Return type"
 msgstr "Tipo de devolución"
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__supplier
 #, fuzzy
 msgid "Supplier"
 msgstr "Proveedor activo"
@@ -233,7 +233,7 @@ msgid "Warranty informations"
 msgstr "Información de garantía"
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__week
 msgid "Week(s)"
 msgstr ""
 
@@ -272,7 +272,7 @@ msgstr ""
 "se puede devolver a la empresa y estar bajo la garantía de la marca)"
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr ""
 
