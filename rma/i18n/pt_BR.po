@@ -27,16 +27,22 @@ msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 
 #. module: rma
-#: code:addons/rma/models/rma_team.py:46
+#: code:addons/rma/models/rma_team.py:0
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (Cópia)"
 
 #. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
+msgstr ""
+
+#. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "    Dear ${object.partner_id.name}\n"
 "    % if object.partner_id.parent_id:\n"
 "        (${object.partner_id.parent_id.name})\n"
@@ -47,23 +53,9 @@ msgid ""
 "    <br/><br/>\n"
 "    Do not hesitate to contact us if you have any question.\n"
 "</p>\n"
-"</div>\n"
+"            </div>\n"
 "        "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\">\n"
-"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Dear ${object.partner_id.name}\n"
-"    % if object.partner_id.parent_id:\n"
-"        (${object.partner_id.parent_id.name})\n"
-"    % endif\n"
-"    <br/><br/>\n"
-"    Aqui está o RMA <strong>${object.name}</strong> from ${object.company_id."
-"name}.\n"
-"    <br/><br/>\n"
-"    Não deixe de nos contactar se houver qualquer dúvida ou outra questão.\n"
-"</p>\n"
-"</div>\n"
-"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -76,13 +68,17 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-fw fa-check\"/> <b>Paid</b>"
-msgstr "<i class=\"fa fa-fw fa-check\"/> <b>Pago</b>"
+msgid ""
+"<i class=\"fa fa-fw fa-check\"/>\n"
+"                                <b>Paid</b>"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-fw fa-clock-o\"/> <b>Waiting Payment</b>"
-msgstr "<i class=\"fa fa-fw fa-clock-o\"/> <b>Aguardando Pagamento</b>"
+msgid ""
+"<i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                <b>Waiting Payment</b>"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -290,6 +286,11 @@ msgid "Activities"
 msgstr "Atividades"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_state
 msgid "Activity State"
 msgstr "Situação da Atividade"
@@ -368,7 +369,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__cancelled
 msgid "Canceled"
 msgstr "Cancelado(a)"
 
@@ -410,7 +411,8 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__confirmed
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Confirmed"
 msgstr "Confirmado(a)"
 
@@ -454,7 +456,7 @@ msgid "Customer Portal URL"
 msgstr "URL do portal do cliente"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:38
+#: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -524,7 +526,8 @@ msgid "Display Name"
 msgstr "Exibir Nome"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__draft
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Draft"
 msgstr "Rascunho"
 
@@ -533,20 +536,6 @@ msgstr "Rascunho"
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_draft
 msgid "Draft RMA"
 msgstr "Rascunho do RMA"
-
-#. module: rma
-#: code:addons/rma/models/rma.py:1098
-#, python-format
-msgid ""
-"E-mail subject: %s\n"
-"\n"
-"E-mail body:\n"
-"%s"
-msgstr ""
-"Assunto do E-mail: %s\n"
-"\n"
-"Corpo do E-mail:\n"
-"%s"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -559,7 +548,7 @@ msgid "Email Alias"
 msgstr "Alias do Email"
 
 #. module: rma
-#: code:addons/rma/wizard/rma_split.py:63
+#: code:addons/rma/wizard/rma_split.py:0
 #, python-format
 msgid "Extracted RMA"
 msgstr "RMA Extraído"
@@ -611,20 +600,28 @@ msgstr ""
 "de criação da tarefa)"
 
 #. module: rma
-#: model:ir.model.fields,help:rma.field_rma__message_unread
-#: model:ir.model.fields,help:rma.field_rma_team__message_unread
-msgid "If checked new messages require your attention."
-msgstr "Se marcada, novas mensagens requerem sua atenção."
+#: model:ir.model.fields,field_description:rma.field_rma__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction
+#: model:ir.model.fields,help:rma.field_rma__message_unread
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction
+#: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
+#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
+#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam um erro de entrega."
 
@@ -638,15 +635,10 @@ msgstr ""
 "sem removê-lo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1102
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Incoming e-mail"
 msgstr "E-mail recebido"
-
-#. module: rma
-#: model:ir.model,name:rma.model_account_invoice
-msgid "Invoice"
-msgstr "Fatura"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
@@ -654,15 +646,20 @@ msgid "Invoice Address"
 msgstr "Endereço de Faturamento"
 
 #. module: rma
-#: model:ir.model,name:rma.model_account_invoice_line
-msgid "Invoice Line"
-msgstr "Linha da Fatura"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
 msgstr "É Seguidor"
+
+#. module: rma
+#: model:ir.model,name:rma.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: rma
+#: model:ir.model,name:rma.model_account_move_line
+msgid "Journal Item"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma____last_update
@@ -707,7 +704,7 @@ msgid "Lock"
 msgstr "Travar"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__locked
 msgid "Locked"
 msgstr "Travado"
 
@@ -740,7 +737,7 @@ msgid "Messages"
 msgstr "Mensagens"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:39
+#: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__name
 #: model:ir.model.fields,field_description:rma.field_rma_team__name
@@ -749,8 +746,7 @@ msgid "Name"
 msgstr "Nome"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:494
-#: code:addons/rma/models/rma.py:1101
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "New"
 msgstr "Novo(a)"
@@ -771,24 +767,24 @@ msgid "Next Activity Type"
 msgstr "Tipo da Próxima Atividade"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:772
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Nenhum dos RMAs selecionados pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:755
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr "Nenhum dos RMAs selecionados pode executar uma devolução."
 
 #. module: rma
-#: selection:rma,priority:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__1
 msgid "Normal"
 msgstr "Normal"
 
 #. module: rma
-#: selection:rma,priority:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__0
 msgid "Not urgent"
 msgstr "Não é urgente"
 
@@ -801,8 +797,8 @@ msgstr "Número de Ações"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_error_counter
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_error_counter
-msgid "Number of error"
-msgstr "Número de Erros"
+msgid "Number of errors"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
@@ -854,11 +850,6 @@ msgid "Other Information"
 msgstr "Outra Informação"
 
 #. module: rma
-#: selection:rma,activity_state:0
-msgid "Overdue"
-msgstr "Vencidos(as)"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_user_id
 msgid "Owner"
 msgstr "Proprietário"
@@ -888,11 +879,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Partner"
 msgstr "Parceiro"
-
-#. module: rma
-#: selection:rma,activity_state:0
-msgid "Planned"
-msgstr "Planejado)a)"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_contact
@@ -947,7 +933,8 @@ msgid "Quantity"
 msgstr "Quantidade"
 
 #. module: rma
-#: code:addons/rma/wizard/rma_delivery.py:49 sql_constraint:rma.split.wizard:0
+#: code:addons/rma/wizard/rma_delivery.py:0
+#: model:ir.model.constraint,message:rma.constraint_rma_split_wizard_check_product_uom_qty_positive
 #, python-format
 msgid "Quantity must be greater than 0."
 msgstr "Quantidade precisa ser maior que zero."
@@ -958,7 +945,7 @@ msgid "Quantity to extract"
 msgstr "Quantidade a extrair"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:805
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity (%s "
@@ -975,7 +962,7 @@ msgstr "Quantidade a extrair para um novo RMA."
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_action
 #: model:ir.model,name:rma.model_rma
-#: model:ir.model.fields,field_description:rma.field_account_invoice_line__rma_id
+#: model:ir.model.fields,field_description:rma.field_account_move_line__rma_id
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__rma_id
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma
 #: model:ir.module.category,name:rma.rma_module_category
@@ -992,7 +979,7 @@ msgid "RMA #"
 msgstr "RMA #"
 
 #. module: rma
-#: code:addons/rma/models/res_company.py:18
+#: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
 msgstr "Código RMA"
@@ -1008,7 +995,7 @@ msgid "RMA Deadline"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:82
+#: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Delivery Orders"
 msgstr "Pedidos de Entrega RMA"
@@ -1046,7 +1033,7 @@ msgid "RMA Out Type"
 msgstr "Tipo Saída RMA"
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:73
+#: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Receipts"
 msgstr "Recebimentos RMA"
@@ -1135,7 +1122,8 @@ msgid "Receipt"
 msgstr "Recebimento"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__received
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Received"
 msgstr "Recebido"
 
@@ -1155,7 +1143,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Referência do documento que gerou este RMA."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:693
+#: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1174,7 +1162,7 @@ msgid "Refund line"
 msgstr "Linha de Restituição"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
 msgid "Refunded"
 msgstr "Restituído"
 
@@ -1194,8 +1182,8 @@ msgid "Repair"
 msgstr "Reparo"
 
 #. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__replace
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
-#: selection:rma.delivery.wizard,type:0
 #: model:rma.operation,name:rma.rma_operation_replace
 msgid "Replace"
 msgstr "Substituir"
@@ -1206,12 +1194,12 @@ msgid "Replace Product"
 msgstr "Substituir Produto"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__replaced
 msgid "Replaced"
 msgstr "Substituído"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1011
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1223,7 +1211,7 @@ msgstr ""
 "data-oe-id=\"%d\">%s</a> foi criada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1022
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1247,7 +1235,7 @@ msgid "Requested operation"
 msgstr "Operação Solicitada"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:736
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Required field(s):%s"
 msgstr "Campo(s) Solicitado(s):%s"
@@ -1270,13 +1258,13 @@ msgstr "Retorno de Coleta"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
+#: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
-#: selection:rma.delivery.wizard,type:0
 msgid "Return to customer"
 msgstr "Retornar ao cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:972
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1286,7 +1274,7 @@ msgstr ""
 "a> foi criado."
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
 msgid "Returned"
 msgstr "Retornado(a)"
 
@@ -1294,6 +1282,12 @@ msgstr "Retornado(a)"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
 msgstr "Contagem de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1326,13 +1320,13 @@ msgid "Sequence"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:48
+#: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA in"
 msgstr "Sequência de Entrada RMA"
 
 #. module: rma
-#: code:addons/rma/models/stock_warehouse.py:53
+#: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA out"
 msgstr "Sequência de Saída RMA"
@@ -1364,7 +1358,7 @@ msgid "Split RMA"
 msgstr "Dividir RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:889
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
@@ -1380,7 +1374,7 @@ msgid "State"
 msgstr "Situação"
 
 #. module: rma
-#: code:addons/rma/controllers/main.py:40
+#: code:addons/rma/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
 msgid "Status"
@@ -1421,7 +1415,7 @@ msgid "Team Members"
 msgstr "Membros da Equipe"
 
 #. module: rma
-#: sql_constraint:rma.operation:0
+#: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
 msgid "That operation name already exists !"
 msgstr "Esse nome de operação já existe!"
 
@@ -1459,7 +1453,7 @@ msgstr ""
 "nenhum usuário do sistema for encontrado para esse endereço."
 
 #. module: rma
-#: code:addons/rma/models/stock_move.py:64
+#: code:addons/rma/models/stock_move.py:0
 #, python-format
 msgid ""
 "The quantity done for the product '%s' must be equal to its initial demand "
@@ -1469,13 +1463,13 @@ msgstr ""
 "inicial, porque a movimentação do estoque está vinculada a uma RMA (%s)."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:793
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "A quantidade a retornar é maior que a quantidade restante."
 
 #. module: rma
-#: code:addons/rma/models/account_invoice.py:22
+#: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
 "There is at least one invoice lines whose quantity is less than the quantity "
@@ -1485,19 +1479,19 @@ msgstr ""
 "especificada na sua RMA vinculada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:782
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Esta RMA não pode ser dividida."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:769
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Esta RMA não pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:752
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr "Este RMA não pode executar uma devolução."
@@ -1507,11 +1501,6 @@ msgstr "Este RMA não pode executar uma devolução."
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "To Refund"
 msgstr "A Ser Restituído"
-
-#. module: rma
-#: selection:rma,activity_state:0
-msgid "Today"
-msgstr "Hoje"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_picking
@@ -1527,6 +1516,11 @@ msgstr "Tipo"
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__picking_type_code
 msgid "Type of Operation"
 msgstr "Tipo de Operação"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1567,7 +1561,7 @@ msgid "UoM"
 msgstr "Unidade de Medida"
 
 #. module: rma
-#: selection:rma,priority:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__2
 msgid "Urgent"
 msgstr "Urgente"
 
@@ -1587,17 +1581,17 @@ msgid "Users"
 msgstr "Usuários"
 
 #. module: rma
-#: selection:rma,priority:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__3
 msgid "Very Urgent"
 msgstr "Muito Urgente"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
 msgid "Waiting for replacement"
 msgstr "Aguardando Substituição"
 
 #. module: rma
-#: selection:rma,state:0
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_return
 msgid "Waiting for return"
 msgstr "Aguardando Devolução"
 
@@ -1621,13 +1615,13 @@ msgid "Website communication history"
 msgstr "Histórico de Comunicação Através do Site"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:516
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
 msgstr "Você não pode apagar RMAs que não estejam na situação \"Rascunho\""
 
 #. module: rma
-#: code:addons/rma/wizard/stock_picking_return.py:55
+#: code:addons/rma/wizard/stock_picking_return.py:0
 #, python-format
 msgid ""
 "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
@@ -1635,6 +1629,11 @@ msgid ""
 msgstr ""
 "Você deve especificar o 'Cliente' na 'Seleção de estoque' a partir do qual "
 "as RMAs serão criadas"
+
+#. module: rma
+#: model:ir.actions.report,print_report_name:rma.report_rma_action
+msgid "object._get_report_base_filename()"
+msgstr ""
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_all
@@ -1655,6 +1654,76 @@ msgid ""
 msgstr ""
 "o usuário terá acesso à configuração RMA, bem como aos relatórios "
 "estatísticos."
+
+#~ msgid ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#~ "    Dear ${object.partner_id.name}\n"
+#~ "    % if object.partner_id.parent_id:\n"
+#~ "        (${object.partner_id.parent_id.name})\n"
+#~ "    % endif\n"
+#~ "    <br/><br/>\n"
+#~ "    Here is the RMA <strong>${object.name}</strong> from ${object."
+#~ "company_id.name}.\n"
+#~ "    <br/><br/>\n"
+#~ "    Do not hesitate to contact us if you have any question.\n"
+#~ "</p>\n"
+#~ "</div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#~ "    Dear ${object.partner_id.name}\n"
+#~ "    % if object.partner_id.parent_id:\n"
+#~ "        (${object.partner_id.parent_id.name})\n"
+#~ "    % endif\n"
+#~ "    <br/><br/>\n"
+#~ "    Aqui está o RMA <strong>${object.name}</strong> from ${object."
+#~ "company_id.name}.\n"
+#~ "    <br/><br/>\n"
+#~ "    Não deixe de nos contactar se houver qualquer dúvida ou outra "
+#~ "questão.\n"
+#~ "</p>\n"
+#~ "</div>\n"
+#~ "        "
+
+#~ msgid "<i class=\"fa fa-fw fa-check\"/> <b>Paid</b>"
+#~ msgstr "<i class=\"fa fa-fw fa-check\"/> <b>Pago</b>"
+
+#~ msgid "<i class=\"fa fa-fw fa-clock-o\"/> <b>Waiting Payment</b>"
+#~ msgstr "<i class=\"fa fa-fw fa-clock-o\"/> <b>Aguardando Pagamento</b>"
+
+#~ msgid ""
+#~ "E-mail subject: %s\n"
+#~ "\n"
+#~ "E-mail body:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Assunto do E-mail: %s\n"
+#~ "\n"
+#~ "Corpo do E-mail:\n"
+#~ "%s"
+
+#~ msgid "If checked new messages require your attention."
+#~ msgstr "Se marcada, novas mensagens requerem sua atenção."
+
+#~ msgid "Invoice"
+#~ msgstr "Fatura"
+
+#~ msgid "Invoice Line"
+#~ msgstr "Linha da Fatura"
+
+#~ msgid "Number of error"
+#~ msgstr "Número de Erros"
+
+#~ msgid "Overdue"
+#~ msgstr "Vencidos(as)"
+
+#~ msgid "Planned"
+#~ msgstr "Planejado)a)"
+
+#~ msgid "Today"
+#~ msgstr "Hoje"
 
 #~ msgid "Waiting for refund"
 #~ msgstr "Aguardando Restituição"
