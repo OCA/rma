@@ -35,7 +35,7 @@ msgid "Companies"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
 msgid "Company"
 msgstr ""
 
@@ -50,7 +50,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__day
 msgid "Day(s)"
 msgstr ""
 
@@ -122,12 +122,12 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__month
 msgid "Month(s)"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__other
 msgid "Other"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgid "Return type"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.supplierinfo,warranty_return_partner:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__supplier
 #, fuzzy
 msgid "Supplier"
 msgstr "Fournisseur actif"
@@ -221,7 +221,7 @@ msgid "Warranty informations"
 msgstr ""
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__week
 msgid "Week(s)"
 msgstr ""
 
@@ -255,7 +255,7 @@ msgstr ""
 "celui qui gère le retour."
 
 #. module: product_warranty
-#: selection:product.template,warranty_type:0
+#: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr ""
 
