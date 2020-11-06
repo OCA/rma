@@ -27,6 +27,16 @@ class SaleOrderRmaWizard(models.TransientModel):
         domain=_domain_location_id,
         default=lambda r: r.order_id.warehouse_id.rma_loc_id.id,
     )
+    commercial_partner_id = fields.Many2one(
+        comodel_name="res.partner",
+        related="order_id.partner_id.commercial_partner_id",
+        string="Commercial entity",
+    )
+    partner_shipping_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Shipping Address",
+        help="Will be used to return the goods when the RMA is completed",
+    )
 
     def create_rma(self, from_portal=None):
         self.ensure_one()
@@ -147,9 +157,13 @@ class SaleOrderLineRmaWizard(models.TransientModel):
 
     def _prepare_rma_values(self):
         self.ensure_one()
+        partner_shipping = (
+            self.wizard_id.partner_shipping_id or self.order_id.partner_shipping_id
+        )
         return {
             "partner_id": self.order_id.partner_id.id,
             "partner_invoice_id": self.order_id.partner_invoice_id.id,
+            "partner_shipping_id": partner_shipping.id,
             "origin": self.order_id.name,
             "company_id": self.order_id.company_id.id,
             "location_id": self.wizard_id.location_id.id,
