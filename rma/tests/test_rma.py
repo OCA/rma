@@ -44,6 +44,13 @@ class TestRma(SavepointCase):
                 "type": "invoice",
             }
         )
+        cls.partner_shipping = cls.res_partner.create(
+            {
+                "name": "Partner shipping test",
+                "parent_id": cls.partner.id,
+                "type": "delivery",
+            }
+        )
 
     def _create_rma(self, partner=None, product=None, qty=None, location=None):
         rma_form = Form(self.env["rma"])
@@ -181,7 +188,8 @@ class TestRma(SavepointCase):
             rma.action_confirm()
         self.assertEqual(
             e.exception.name,
-            "Required field(s):\nCustomer\nInvoice Address\nProduct\nLocation",
+            "Required field(s):\nCustomer\nShipping Address\nInvoice Address\n"
+            "Product\nLocation",
         )
         with Form(rma) as rma_form:
             rma_form.partner_id = self.partner
@@ -531,7 +539,7 @@ class TestRma(SavepointCase):
         # One picking per partner
         self.assertNotEqual(pick_1.partner_id, pick_2.partner_id)
         self.assertEqual(
-            pick_1.partner_id, (rma_1 | rma_2 | rma_3).mapped("partner_id"),
+            pick_1.partner_id, (rma_1 | rma_2 | rma_3).mapped("partner_shipping_id"),
         )
         self.assertEqual(pick_2.partner_id, rma_4.partner_id)
         # Each RMA of (rma_1, rma_2 and rma_3) is linked to a different
