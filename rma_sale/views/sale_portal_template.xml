@@ -30,6 +30,30 @@
                                 </ul>
                                 </span>
                             </div>
+                            <t
+                                t-set="delivery_addresses"
+                                t-value="sale_order.partner_id.commercial_partner_id.mapped('child_ids').filtered(lambda x: x.type in ['contact', 'delivery'])"
+                            />
+                            <button
+                                class="btn btn-primary btn-block mb8"
+                                type="button" data-toggle="collapse"
+                                data-target="#delivery_address_picker"
+                                aria-expanded="false"
+
+                            ><i class="fa fa-truck" /> Choose a delivery address</button>
+                            <div class="col-lg-12 collapse mt8" id="delivery_address_picker">
+                                <div data-toggle="buttons" class="row">
+                                    <label t-attf-class="card mr4 btn btn-light" t-foreach="delivery_addresses" t-as="address">
+                                            <input class="d-none" type="radio" name="partner_shipping_id" t-att-value="address.id">
+                                                <strong>
+                                                    <i t-attf-class="text-secondary fa #{address.type == 'delivery' and 'fa-truck' or 'fa-user'}" />
+                                                    <t t-esc="address.name"/>
+                                                </strong>
+                                                <pre><h6 t-esc="address.contact_address" /></pre>
+                                            </input>
+                                    </label>
+                                </div>
+                            </div>
                             <t t-set="data_list" t-value="sale_order.get_delivery_rma_data()"/>
                             <t t-set="operations" t-value="sale_order.env['rma.operation'].search([])"/>
                             <table class="table table-sm" id="request-rma-table">
