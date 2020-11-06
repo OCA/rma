@@ -73,6 +73,13 @@ class Rma(models.Model):
         index=True,
         tracking=True,
     )
+    partner_shipping_id = fields.Many2one(
+        string="Shipping Address",
+        comodel_name="res.partner",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        help="Shipping address for current RMA.",
+    )
     partner_invoice_id = fields.Many2one(
         string="Invoice Address",
         comodel_name="res.partner",
@@ -385,7 +392,9 @@ class Rma(models.Model):
             record.access_url = "/my/rmas/{}".format(record.id)
 
     # Constrains methods (@api.constrains)
-    @api.constrains("state", "partner_id", "partner_invoice_id", "product_id")
+    @api.constrains(
+        "state", "partner_id", "partner_shipping_id", "partner_invoice_id", "product_id"
+    )
     def _check_required_after_draft(self):
         """ Check that RMAs are being created or edited with the
         necessary fields filled out. Only applies to 'Draft' and
@@ -420,10 +429,13 @@ class Rma(models.Model):
     def _onchange_partner_id(self):
         self.picking_id = False
         partner_invoice_id = False
+        partner_shipping_id = False
         if self.partner_id:
-            address = self.partner_id.address_get(["invoice"])
+            address = self.partner_id.address_get(["invoice", "delivery"])
             partner_invoice_id = address.get("invoice", False)
+            partner_shipping_id = address.get("delivery", False)
         self.partner_invoice_id = partner_invoice_id
+        self.partner_shipping_id = partner_shipping_id
 
     @api.onchange("picking_id")
     def _onchange_picking_id(self):
@@ -723,7 +735,10 @@ class Rma(models.Model):
     # Validation business methods
     def _ensure_required_fields(self):
         """ This method is used to ensure the following fields are not empty:
-        ['partner_id', 'partner_invoice_id', 'product_id', 'location_id']
+        [
+            'partner_id', 'partner_invoice_id', 'partner_shipping_id',
+            'product_id', 'location_id'
+        ]
 
         This method is intended to be called on confirm RMA action and is
         invoked by:
@@ -731,7 +746,13 @@ class Rma(models.Model):
         rma.action_confirm
         """
         ir_translation = self.env["ir.translation"]
-        required = ["partner_id", "partner_invoice_id", "product_id", "location_id"]
+        required = [
+            "partner_id",
+            "partner_shipping_id",
+            "partner_invoice_id",
+            "product_id",
+            "location_id",
+        ]
         for record in self:
             desc = ""
             for field in filter(lambda item: not record[item], required):
@@ -863,7 +884,7 @@ class Rma(models.Model):
 
     def _prepare_picking(self, picking_form):
         picking_form.origin = self.name
-        picking_form.partner_id = self.partner_id
+        picking_form.partner_id = self.partner_shipping_id
         picking_form.location_dest_id = self.location_id
         with picking_form.move_ids_without_package.new() as move_form:
             move_form.product_id = self.product_id
@@ -962,7 +983,11 @@ class Rma(models.Model):
         group_dict = {}
         rmas_to_return = self.filtered("can_be_returned")
         for record in rmas_to_return:
-            key = (record.partner_id.id, record.company_id.id, record.warehouse_id)
+            key = (
+                record.partner_shipping_id.id,
+                record.company_id.id,
+                record.warehouse_id,
+            )
             group_dict.setdefault(key, self.env["rma"])
             group_dict[key] |= record
         for rmas in group_dict.values():
@@ -1010,7 +1035,7 @@ class Rma(models.Model):
     def _prepare_returning_picking(self, picking_form, origin=None):
         picking_form.picking_type_id = self.warehouse_id.rma_out_type_id
         picking_form.origin = origin or self.name
-        picking_form.partner_id = self.partner_id
+        picking_form.partner_id = self.partner_shipping_id
 
     def _prepare_returning_move(
         self, move_form, scheduled_date, quantity=None, uom=None
@@ -1076,7 +1101,7 @@ class Rma(models.Model):
                     {
                         "name": self.name,
                         "move_type": "direct",
-                        "partner_id": self.partner_id.id,
+                        "partner_id": self.partner_shipping_id.id,
                     }
                 )
                 .id
@@ -1088,7 +1113,7 @@ class Rma(models.Model):
             product,
             qty,
             uom,
-            self.partner_id.property_stock_customer,
+            self.partner_shipping_id.property_stock_customer,
             self.product_id.display_name,
             self.procurement_group_id.name,
             self.company_id,
@@ -1106,7 +1131,7 @@ class Rma(models.Model):
             "group_id": group_id,
             "date_planned": scheduled_date,
             "warehouse_id": warehouse,
-            "partner_id": self.partner_id.id,
+            "partner_id": self.partner_shipping_id.id,
             "rma_id": self.id,
             "priority": self.priority,
         }
