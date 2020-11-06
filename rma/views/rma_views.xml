@@ -239,6 +239,7 @@
                                 context="{'search_default_customer':1, 'show_address': 1, 'show_vat': True}"
                                 options="{'always_reload': True}"
                             />
+                            <field name="partner_shipping_id" />
                             <field name="partner_invoice_id" />
                             <field name="picking_id" options="{'no_create': True}" />
                             <field
