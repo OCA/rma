@@ -18,19 +18,19 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:39
+#: code:addons/rma_sale/controllers/sale_portal.py:41
 #, python-format
 msgid " (Portal)"
 msgstr " (Portal)"
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:42
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:52
 #, python-format
 msgid " has been created."
 msgstr " ha sido creado."
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:44
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:54
 #, python-format
 msgid " have been created."
 msgstr " han sido creados."
@@ -54,6 +54,11 @@ msgstr "<i class=\"fa fa-reply\"/> Solicitar RMAs"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-times\"/> Cancel"
 msgstr "<i class=\"fa fa-times\"/> Cancelar"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -132,6 +137,11 @@ msgid ""
 msgstr ""
 "Comente cualquier asunto relevante relacionado con la devolución, como "
 "números de serie, descripción del problema, etc"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
+msgid "Commercial entity"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -316,6 +326,11 @@ msgid "Select the product quantity and the requested operation"
 msgstr "Selecciones la cantidad de producto y la operación solicitada"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
@@ -323,7 +338,8 @@ msgstr "Movimiento de existencias"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "The limit will decrease when the units in other RMAs are confirmed"
-msgstr "El límite disminuirá cuando las unidades de otros RMAs sean confirmadas"
+msgstr ""
+"El límite disminuirá cuando las unidades de otros RMAs sean confirmadas"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
@@ -339,6 +355,11 @@ msgstr ""
 "Utilice el botón de comentarios para añadir información relevante "
 "relacionada con el RMA, como números de serie devueltos o una descripción "
 "del problema"
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Will be used to return the goods when the RMA is completed"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
