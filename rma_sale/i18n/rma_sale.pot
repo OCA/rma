@@ -14,19 +14,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:39
+#: code:addons/rma_sale/controllers/sale_portal.py:41
 #, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:42
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:52
 #, python-format
 msgid " has been created."
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:44
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:54
 #, python-format
 msgid " have been created."
 msgstr ""
@@ -49,6 +49,11 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-times\"/> Cancel"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
 msgstr ""
 
 #. module: rma_sale
@@ -121,6 +126,11 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Comment anything relevant to the return, like serial numbers, a description of the issue, etc"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
+msgid "Commercial entity"
 msgstr ""
 
 #. module: rma_sale
@@ -300,6 +310,11 @@ msgid "Select the product quantity and the requested operation"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
 msgstr ""
@@ -317,6 +332,11 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Use the comment button to add relevant information regarding the RMA, like returned serial numbers or a description of the issue"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Will be used to return the goods when the RMA is completed"
 msgstr ""
 
 #. module: rma_sale
