@@ -100,13 +100,18 @@ class StockMove(models.Model):
         partner = original_picking.partner_id
         if hasattr(original_picking, 'sale_id') and original_picking.sale_id:
             partner_invoice_id = original_picking.sale_id.partner_invoice_id.id
+            partner_shipping_id = (
+                original_picking.sale_id.partner_shipping_id.id)
         else:
             partner_invoice_id = partner.address_get(
-                ['invoice']).get('invoice', False),
+                ['invoice']).get('invoice', False)
+            partner_shipping_id = partner.address_get(
+                ['delivery']).get('delivery', False)
         return {
             'user_id': self.env.user.id,
             'partner_id': partner.id,
             'partner_invoice_id': partner_invoice_id,
+            'partner_shipping_id': partner_shipping_id,
             'origin': original_picking.name,
             'picking_id': original_picking.id,
             'move_id': self.origin_returned_move_id.id,

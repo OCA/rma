@@ -1,10 +1,12 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2020 Tecnativa - David Vidal
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Return Merchandise Authorization Management",
     "summary": "Return Merchandise Authorization (RMA)",
-    "version": "12.0.1.6.1",
-    "development_status": "Beta",
+    "version": "12.0.2.0.0",
+    "development_status": "Production/Stable",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
     "author": "Tecnativa, Odoo Community Association (OCA)",
