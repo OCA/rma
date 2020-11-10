@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 04:40+0000\n"
-"PO-Revision-Date: 2020-10-06 14:16+0000\n"
+"PO-Revision-Date: 2020-11-10 12:08+0000\n"
 "Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -58,7 +58,7 @@ msgstr "<i class=\"fa fa-times\"/> Cancelar"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
-msgstr ""
+msgstr "<i class=\"fa fa-truck\"/> Escoja una dirección de envío"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -141,7 +141,7 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
 msgid "Commercial entity"
-msgstr ""
+msgstr "Entidad comercial"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -328,7 +328,7 @@ msgstr "Selecciones la cantidad de producto y la operación solicitada"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Shipping Address"
-msgstr ""
+msgstr "Dirección de envío"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
@@ -359,7 +359,7 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Will be used to return the goods when the RMA is completed"
-msgstr ""
+msgstr "Se utilizará para retornar los productos cuando el RMA sea procesado"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
