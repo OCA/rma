@@ -40,7 +40,7 @@ class CustomerPortal(CustomerPortal):
         wizard = wizard_obj.with_context(active_id=order_id).create(
             {"line_ids": line_vals, "location_id": location_id}
         )
-        rma = wizard.sudo().create_rma()
+        rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(" (Portal)")
         # Add the user as follower of the created RMAs so they can

@@ -131,12 +131,14 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-left">
-                                                    <t t-if="data['picking']">
-                                                        <span t-esc="data['picking'].name"/>
-                                                        <input type="hidden"
-                                                            t-attf-name="#{data_index}-picking_id"
-                                                            t-att-value="data['picking'].id"/>
-                                                    </t>
+                                                    <span
+                                                        t-esc="data['picking'] and data['picking'].name"
+                                                    />
+                                                    <input
+                                                        type="hidden"
+                                                        t-attf-name="#{data_index}-picking_id"
+                                                        t-att-value="data['picking'] and data['picking'].id"
+                                                    />
                                                 </td>
                                                 <td class="text-left">
                                                     <select
