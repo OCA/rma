@@ -31,6 +31,9 @@ class Rma(models.Model):
     move_id = fields.Many2one(
         domain="[('id', 'in', allowed_move_ids)]",
     )
+    sale_line_id = fields.Many2one(
+        related="move_id.sale_line_id",
+    )
     allowed_product_ids = fields.Many2many(
         comodel_name='product.product',
         compute="_compute_allowed_product_ids",
@@ -88,3 +91,34 @@ class Rma(models.Model):
         if self.order_id:
             invoice_form.user_id = self.order_id.user_id
         return res
+
+    def _get_refund_line_price_unit(self):
+        """Get the sale order price unit"""
+        if self.sale_line_id:
+            return self.sale_line_id.price_unit
+        return super()._get_refund_line_price_unit()
+
+    def _get_refund_line_product(self):
+        """To be overriden in a third module with the proper origin values
+        in case a kit is linked with the rma """
+        if not self.sale_line_id:
+            return super()._get_refund_line_product()
+        return self.sale_line_id.product_id
+
+    def _prepare_refund_line(self, line_form):
+        """Add line data"""
+        super()._prepare_refund_line(line_form)
+        line = self.sale_line_id
+        if line:
+            line_form.discount = line.discount
+
+    def _get_extra_refund_line_vals(self):
+        """Link sale line"""
+        self.ensure_one()
+        vals = super()._get_extra_refund_line_vals()
+        line = self.sale_line_id
+        if line:
+            vals.update({
+                "sequence": line.sequence,
+            })
+        return vals

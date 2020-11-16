@@ -36,7 +36,7 @@ class CustomerPortal(CustomerPortal):
             'location_id': location_id,
             'partner_shipping_id': partner_shipping_id,
         })
-        rma = wizard.sudo().create_rma()
+        rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(' (Portal)')
         # Add the user as follower of the created RMAs so they can
