@@ -46,7 +46,7 @@
                     <tr class="active">
                         <th>RMA #</th>
                         <th class='d-none d-md-table-cell'>Date</th>
-                        <th>Product</th>
+                        <th name="th_product">Product</th>
                         <th class='text-right'>Quantity</th>
                         <th class='d-none d-md-table-cell'>Status</th>
                     </tr>
@@ -66,7 +66,7 @@
                                 <span t-field="rma.date" />
                             </td>
                             <!-- Portal users don't have access to unpublished products -->
-                            <td>
+                            <td name="td_product">
                                 <span t-esc="rma.sudo().product_id.display_name" />
                             </td>
                             <td class='text-right'>

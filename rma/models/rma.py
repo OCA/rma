@@ -925,15 +925,31 @@ class Rma(models.Model):
         rma.action_refund
         """
         self.ensure_one()
-        line_form.product_id = self.product_id
-        line_form.quantity = self.product_uom_qty
-        line_form.product_uom_id = self.product_uom
+        product = self._get_refund_line_product()
+        qty, uom = self._get_refund_line_quantity()
+        line_form.product_id = product
+        line_form.quantity = qty
+        line_form.product_uom_id = uom
         line_form.price_unit = self._get_refund_line_price_unit()
+
+    def _get_refund_line_product(self):
+        """To be overriden in a third module with the proper origin values
+        in case a kit is linked with the rma"""
+        return self.product_id
+
+    def _get_refund_line_quantity(self):
+        """To be overriden in a third module with the proper origin values
+        in case a kit is linked with the rma """
+        return (self.product_uom_qty, self.product_uom)
 
     def _get_refund_line_price_unit(self):
         """To be overriden in a third module with the proper origin values
         in case a sale order is linked to the original move"""
         return self.product_id.lst_price
+
+    def _get_extra_refund_line_vals(self):
+        """Override to write aditional stuff into the refund line"""
+        return {}
 
     # Returning business methods
     def create_return(self, scheduled_date, qty=None, uom=None):
