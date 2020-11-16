@@ -9,14 +9,13 @@ from odoo.tools import float_compare
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    def post(self):
-        """ Avoids to validate a refund with less quantity of product than
-        quantity in the linked RMA.
-        """
+    def _check_rma_invoice_lines_qty(self):
+        """We can't refund a different qty than the stated in the RMA.
+        Extend to change criteria """
         precision = self.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
         )
-        if (
+        return (
             self.sudo()
             .mapped("invoice_line_ids")
             .filtered(
@@ -26,7 +25,13 @@ class AccountMove(models.Model):
                     < 0
                 )
             )
-        ):
+        )
+
+    def post(self):
+        """ Avoids to validate a refund with less quantity of product than
+        quantity in the linked RMA.
+        """
+        if self._check_rma_invoice_lines_qty():
             raise ValidationError(
                 _(
                     "There is at least one invoice lines whose quantity is "
