@@ -584,6 +584,7 @@ class Rma(models.Model):
             invoice_form = Form(self.env['account.invoice'].with_context(
                 default_type='out_refund',
                 company_id=rmas[0].company_id.id,
+                tracking_disable=True,
             ), "account.invoice_form")
             rmas[0]._prepare_refund(invoice_form, origin)
             refund = invoice_form.save()
