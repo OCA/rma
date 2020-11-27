@@ -204,6 +204,11 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Shipping address:</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>State:</strong>"
 msgstr ""
 
