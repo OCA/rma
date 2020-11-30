@@ -11,8 +11,13 @@ class WebsiteForm(WebsiteForm):
     def insert_record(self, request, model, values, custom, meta=None):
         if model.model == 'rma':
             values['partner_id'] = request.env.user.partner_id.id
-        return super(WebsiteForm, self).insert_record(
-            request, model, values, custom, meta=meta)
+        res = super(WebsiteForm, self).insert_record(
+            request, model, values, custom, meta)
+        # Add the customer to the followers, the same as when creating
+        # an RMA from a sales order in the portal.
+        rma = request.env['rma'].browse(res).sudo()
+        rma.message_subscribe([rma.partner_id.id])
+        return res
 
 
 class WebsiteRMA(http.Controller):
