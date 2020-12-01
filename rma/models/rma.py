@@ -4,7 +4,7 @@
 from collections import Counter
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import Form
 from odoo.tools import html2plaintext
 
@@ -1134,6 +1134,17 @@ class Rma(models.Model):
         # RMA followers
         self_with_context = self.with_context(mail_post_autofollow=True)
         return super(Rma, self_with_context).message_post(**kwargs)
+
+    def _message_get_suggested_recipients(self):
+        recipients = super()._message_get_suggested_recipients()
+        try:
+            for record in self.filtered("partner_id"):
+                record._message_add_suggested_recipient(
+                    recipients, partner=record.partner_id, reason=_("Customer")
+                )
+        except AccessError:  # no read access rights
+            pass
+        return recipients
 
     # Reporting business methods
     def _get_report_base_filename(self):
