@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class IrModel(models.Model):
-    _inherit = 'ir.model'
+    _inherit = "ir.model"
 
     @api.model
     def get_authorized_fields(self, model_name):
@@ -17,7 +17,7 @@ class IrModel(models.Model):
         readonly always.
         """
         res = super().get_authorized_fields(model_name)
-        if model_name == 'rma':
-            auth_fields = ['product_uom_qty', 'product_uom', 'partner_id']
+        if model_name == "rma":
+            auth_fields = ["product_uom_qty", "product_uom", "partner_id"]
             res.update(self.env[model_name].fields_get(auth_fields))
         return res

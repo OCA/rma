@@ -5,25 +5,24 @@ from odoo.tests.common import Form, HttpCase
 
 
 class TestWebsiteRma(HttpCase):
-
     def setUp(self):
         super().setUp()
-        self.product = self.env['product.product'].create({
-            'name': 'Website rma 1',
-            'type': 'product',
-        })
-        picking_type = self.env['stock.picking.type'].search(
+        self.product = self.env["product.product"].create(
+            {"name": "Website rma 1", "type": "product",}
+        )
+        picking_type = self.env["stock.picking.type"].search(
             [
-                ('code', '=', 'outgoing'),
-                '|',
-                ('warehouse_id.company_id', '=', self.env.user.company_id.id),
-                ('warehouse_id', '=', False)
+                ("code", "=", "outgoing"),
+                "|",
+                ("warehouse_id.company_id", "=", self.env.user.company_id.id),
+                ("warehouse_id", "=", False),
             ],
             limit=1,
         )
         picking_form = Form(
-            recordp=self.env['stock.picking'].with_context(
-                default_picking_type_id=picking_type.id),
+            recordp=self.env["stock.picking"].with_context(
+                default_picking_type_id=picking_type.id
+            ),
             view="stock.view_picking_form",
         )
         picking_form.partner_id = self.env.user.partner_id
@@ -38,14 +37,14 @@ class TestWebsiteRma(HttpCase):
     def test_website_form_request_rma(self):
         self.browser_js(
             url_path="/my",
-            code="odoo.__DEBUG__.services['web_tour.tour']"
-                 ".run('request_rma')",
-            ready="odoo.__DEBUG__.services['web_tour.tour']"
-                  ".tours.request_rma.ready",
+            code="odoo.__DEBUG__.services['web_tour.tour']" ".run('request_rma')",
+            ready="odoo.__DEBUG__.services['web_tour.tour']" ".tours.request_rma.ready",
             login="admin",
         )
-        rma = self.env['rma'].search([
-            ('operation_id', '!=', False),
-            ('description', '=', "RMA test from website form"),
-        ])
+        rma = self.env["rma"].search(
+            [
+                ("operation_id", "!=", False),
+                ("description", "=", "RMA test from website form"),
+            ]
+        )
         self.assertTrue(bool(rma))
