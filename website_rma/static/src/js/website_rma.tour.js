@@ -20,14 +20,10 @@ odoo.define("website_sale_vat_required.tour", function(require) {
                 trigger: ".o_portal_my_home a[href='/requestrma']",
             },
             {
-                content: "Click on request button with the form empty",
-                trigger: "a.o_website_form_send",
-            },
-            {
                 content: "Fill form",
                 trigger: "#rma_request_form",
                 extra_trigger: "#rma_request_form",
-                run: function(actions) {
+                run: function() {
                     $("select[name='operation_id'] > option:eq(1)").prop(
                         "selected",
                         true
