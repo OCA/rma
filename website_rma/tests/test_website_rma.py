@@ -8,7 +8,7 @@ class TestWebsiteRma(HttpCase):
     def setUp(self):
         super().setUp()
         self.product = self.env["product.product"].create(
-            {"name": "Website rma 1", "type": "product",}
+            {"name": "Website rma 1", "type": "product"}
         )
         picking_type = self.env["stock.picking.type"].search(
             [
@@ -35,12 +35,7 @@ class TestWebsiteRma(HttpCase):
         picking.button_validate()
 
     def test_website_form_request_rma(self):
-        self.browser_js(
-            url_path="/my",
-            code="odoo.__DEBUG__.services['web_tour.tour']" ".run('request_rma')",
-            ready="odoo.__DEBUG__.services['web_tour.tour']" ".tours.request_rma.ready",
-            login="admin",
-        )
+        self.start_tour("/my", "request_rma", login="admin")
         rma = self.env["rma"].search(
             [
                 ("operation_id", "!=", False),

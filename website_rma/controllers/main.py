@@ -10,11 +10,7 @@ from odoo.addons.website_form.controllers.main import WebsiteForm
 
 class WebsiteForm(WebsiteForm):
     def insert_record(self, request, model, values, custom, meta=None):
-        if model.model == "rma":
-            values["partner_id"] = request.env.user.partner_id.id
-        res = super(WebsiteForm, self).insert_record(
-            request, model, values, custom, meta
-        )
+        res = super().insert_record(request, model, values, custom, meta)
         # Add the customer to the followers, the same as when creating
         # an RMA from a sales order in the portal.
         rma = request.env["rma"].browse(res).sudo()
@@ -43,14 +39,14 @@ class WebsiteRMA(http.Controller):
         methods=["GET"],
         website=True,
     )
-    def rma_product_read(self, q="", l=25, **post):
+    def rma_product_read(self, q="", limit=25, **post):
         data = (
             request.env["product.product"]
             .sudo()
             .search_read(
                 domain=self._get_website_rma_product_domain(q),
                 fields=["id", "display_name", "uom_id"],
-                limit=int(l),
+                limit=int(limit),
             )
         )
         return json.dumps(data)
