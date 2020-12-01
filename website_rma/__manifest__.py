@@ -10,10 +10,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",
-    "depends": [
-        "rma",
-        "website_form",
-    ],
+    "depends": ["rma", "website_form",],
     "data": [
         "data/ir_model_data.xml",
         "views/assets.xml",
