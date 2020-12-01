@@ -424,7 +424,9 @@ msgid "Created on"
 msgstr ""
 
 #. module: rma
+#: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
+#, python-format
 msgid "Customer"
 msgstr ""
 
