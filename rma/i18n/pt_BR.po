@@ -449,7 +449,9 @@ msgid "Created on"
 msgstr "Criado em"
 
 #. module: rma
+#: code:addons/rma/models/rma.py:1156
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
+#, python-format
 msgid "Customer"
 msgstr "Cliente"
 
