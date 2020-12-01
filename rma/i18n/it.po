@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-11-25 13:36+0000\n"
+"PO-Revision-Date: 2020-12-01 13:36+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -253,7 +253,7 @@ msgstr "<strong>Responsabile:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Shipping address:</strong>"
-msgstr ""
+msgstr "<strong>Indirizzo di spedizione:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -1322,49 +1322,49 @@ msgstr "Sequenza"
 #: code:addons/rma/models/stock_warehouse.py:62
 #, python-format
 msgid "Sequence RMA in"
-msgstr ""
+msgstr "Sequenza RMA in ingresso"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:67
 #, python-format
 msgid "Sequence RMA out"
-msgstr ""
+msgstr "Sequenza RMA in uscita"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Set to draft"
-msgstr ""
+msgstr "Imposta a bozza"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Share"
-msgstr ""
+msgstr "Condividi"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
 msgid "Shipping Address"
-msgstr ""
+msgstr "Indirizzo di Spedizione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr ""
+msgstr "Indirizzo di Spedizione per questo RMA."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
 msgid "Source Document"
-msgstr ""
+msgstr "Documento di Origine"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_split_wizard_view_form2
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Split"
-msgstr ""
+msgstr "Dividi"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_split_wizard_action
 msgid "Split RMA"
-msgstr ""
+msgstr "Dividi RMA"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:906
@@ -1373,19 +1373,21 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
 "created."
 msgstr ""
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> è "
+"stato creato."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "State"
-msgstr ""
+msgstr "Stato"
 
 #. module: rma
 #: code:addons/rma/controllers/main.py:44
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_state
@@ -1395,32 +1397,36 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Stato basato sulle attività\n"
+"Scaduto: la data di scadenza è già passata\n"
+"Oggi: la data dell'attività è oggi\n"
+"Pianificato: attività future."
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di Magazzino"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di Magazzino"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
 msgid "Team Leader"
-msgstr ""
+msgstr "Team Leader"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
-msgstr ""
+msgstr "Membri del Team"
 
 #. module: rma
 #: sql_constraint:rma.operation:0
 msgid "That operation name already exists !"
-msgstr ""
+msgstr "Questo nome operazione esiste già!"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
@@ -1453,12 +1459,14 @@ msgid ""
 "The quantity done for the product '%s' must be equal to its initial demand "
 "because the stock move is linked to an RMA (%s)."
 msgstr ""
+"La quantità completata per il prodotto '%s' deve essere uguale alla quantità "
+"iniziale perchè il movimento è legato ad un RMA (%s)."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:810
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
-msgstr ""
+msgstr "La quantità da restituire è maggiore della quantità restante."
 
 #. module: rma
 #: code:addons/rma/models/account_invoice.py:22
@@ -1467,148 +1475,150 @@ msgid ""
 "There is at least one invoice lines whose quantity is less than the quantity "
 "specified in its linked RMA."
 msgstr ""
+"C'è almeno una riga di fatturazione con una quantità minore della quantità "
+"specificata nella riga dell'RMA collegato."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:799
 #, python-format
 msgid "This RMA cannot be split."
-msgstr ""
+msgstr "Questo RMA non può essere diviso."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:786
 #, python-format
 msgid "This RMA cannot perform a replacement."
-msgstr ""
+msgstr "Questo RMA non può eseguire una sostituzione."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:769
 #, python-format
 msgid "This RMA cannot perform a return."
-msgstr ""
+msgstr "Questo RMA non può eseguire un reso."
 
 #. module: rma
 #: model:ir.actions.server,name:rma.rma_refund_action_server
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "To Refund"
-msgstr ""
+msgstr "Da rimborsare"
 
 #. module: rma
 #: selection:rma,activity_state:0
 msgid "Today"
-msgstr ""
+msgstr "Oggi"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__picking_type_code
 msgid "Type of Operation"
-msgstr ""
+msgstr "Tipo di operazione"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unassigned RMAs"
-msgstr ""
+msgstr "RMA non assegnati"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__product_uom
 msgid "Unit of measure"
-msgstr ""
+msgstr "Unità di misura"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Unlock"
-msgstr ""
+msgstr "Sblocca"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_unread
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Messaggi non letti"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Conteggio messaggi non letti"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
-msgstr ""
+msgstr "RMA non completati"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
 msgid "UoM"
-msgstr ""
+msgstr "UdM"
 
 #. module: rma
 #: selection:rma,priority:0
 msgid "Urgent"
-msgstr ""
+msgstr "Urgente"
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_all
 msgid "User: All Documents"
-msgstr ""
+msgstr "Utente: Tutti i documenti"
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_own
 msgid "User: Own Documents Only"
-msgstr ""
+msgstr "Utente: solo i propri documenti"
 
 #. module: rma
 #: model:ir.model,name:rma.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
 #. module: rma
 #: selection:rma,priority:0
 msgid "Very Urgent"
-msgstr ""
+msgstr "Molto Urgente"
 
 #. module: rma
 #: selection:rma,state:0
 msgid "Waiting for replacement"
-msgstr ""
+msgstr "In attesa di sostituzione"
 
 #. module: rma
 #: selection:rma,state:0
 msgid "Waiting for return"
-msgstr ""
+msgstr "In attesa di reso"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_warehouse
 #: model:ir.model.fields,field_description:rma.field_rma__warehouse_id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__warehouse_id
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__website_message_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Messaggi sito web"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__website_message_ids
 #: model:ir.model.fields,help:rma.field_rma_team__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Storico comunicazioni sito web"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:528
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
-msgstr ""
+msgstr "Non puoi eliminare RMA che non sono in stato \"bozza\""
 
 #. module: rma
 #: code:addons/rma/wizard/stock_picking_return.py:55
@@ -1617,12 +1627,15 @@ msgid ""
 "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
 "be created"
 msgstr ""
+"Devi specificare il cliente nel picking dal quale gli RMA verranno creati"
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_all
 msgid ""
 "the user will have access to all records of everyone in the RMA application."
 msgstr ""
+"l'utente avrà accesso a tutti i record di tutti gli utenti nell'applicazione "
+"RMA."
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_own
