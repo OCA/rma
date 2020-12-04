@@ -69,7 +69,7 @@ class TestRma(SavepointCase):
         rma = self._create_rma(partner, product, qty, location)
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         return rma
 
     def _test_readonly_fields(self, rma):
@@ -161,7 +161,7 @@ class TestRma(SavepointCase):
             move.product_uom_qty = 15
             move.product_uom = uom_ten
         picking = picking_form.save()
-        picking.action_done()
+        picking._action_done()
         rma_form.picking_id = picking
         rma_form.move_id = picking.move_lines
         self.assertEqual(rma_form.product_id, product_2)
@@ -174,12 +174,6 @@ class TestRma(SavepointCase):
         self.assertEqual(rma_form.product_uom_qty, 15)
         self.assertNotEqual(rma_form.product_uom, uom_ten)
         self.assertEqual(rma_form.product_uom, self.product.uom_id)
-        rma = rma_form.save()
-        # If product changes, unit of measure domain should also change
-        domain = rma._onchange_product_id()["domain"]["product_uom"]
-        self.assertListEqual(
-            domain, [("category_id", "=", self.product.uom_id.category_id.id)]
-        )
 
     def test_ensure_required_fields_on_confirm(self):
         rma = self._create_rma()
@@ -212,9 +206,9 @@ class TestRma(SavepointCase):
         self._test_readonly_fields(rma)
         rma.reception_move_id.quantity_done = 9
         with self.assertRaises(ValidationError):
-            rma.reception_move_id.picking_id.action_done()
+            rma.reception_move_id.picking_id._action_done()
         rma.reception_move_id.quantity_done = 10
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
         self.assertEqual(rma.reception_move_id.quantity_done, 10)
         self.assertEqual(rma.state, "received")
@@ -260,7 +254,7 @@ class TestRma(SavepointCase):
         self.assertTrue(rma.can_be_returned)
         self.assertTrue(rma.can_be_replaced)
         rma.action_refund()
-        self.assertEqual(rma.refund_id.type, "out_refund")
+        self.assertEqual(rma.refund_id.move_type, "out_refund")
         self.assertEqual(rma.refund_id.state, "draft")
         self.assertEqual(rma.refund_line_id.product_id, rma.product_id)
         self.assertEqual(rma.refund_line_id.quantity, 10)
@@ -273,11 +267,11 @@ class TestRma(SavepointCase):
             with refund_form.invoice_line_ids.edit(0) as refund_line:
                 refund_line.quantity = 9
         with self.assertRaises(ValidationError):
-            rma.refund_id.post()
+            rma.refund_id.action_post()
         with Form(rma.refund_line_id.move_id) as refund_form:
             with refund_form.invoice_line_ids.edit(0) as refund_line:
                 refund_line.quantity = 10
-        rma.refund_id.post()
+        rma.refund_id.action_post()
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
@@ -356,12 +350,12 @@ class TestRma(SavepointCase):
             with refund_form.invoice_line_ids.edit(1) as refund_line:
                 refund_line.quantity = 14
         with self.assertRaises(ValidationError):
-            refund_1.post()
+            refund_1.action_post()
         with Form(rma_2.refund_line_id.move_id) as refund_form:
             with refund_form.invoice_line_ids.edit(1) as refund_line:
                 refund_line.quantity = 15
-        refund_1.post()
-        refund_2.post()
+        refund_1.action_post()
+        refund_2.action_post()
 
     def test_replace(self):
         # Create, confirm and receive an RMA
@@ -616,7 +610,7 @@ class TestRma(SavepointCase):
         rma = rma_form.save()
         rma.action_confirm()
         rma.reception_move_id.quantity_done = 10
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         # Return quantity 4 of the same product to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
