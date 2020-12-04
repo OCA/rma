@@ -4,6 +4,7 @@
         <field name="model">rma.tag</field>
         <field name="arch" type="xml">
             <search string="RMA Tags">
+                <field name="name" />
                 <filter
                     string="Archived"
                     name="inactive"

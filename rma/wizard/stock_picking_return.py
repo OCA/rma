@@ -9,16 +9,7 @@ class ReturnPicking(models.TransientModel):
     _inherit = "stock.return.picking"
 
     create_rma = fields.Boolean(string="Create RMAs")
-    picking_type_code = fields.Selection(
-        selection=[
-            ("incoming", "Vendors"),
-            ("outgoing", "Customers"),
-            ("internal", "Internal"),
-        ],
-        related="picking_id.picking_type_id.code",
-        store=True,
-        readonly=True,
-    )
+    picking_type_code = fields.Selection(related="picking_id.picking_type_id.code")
 
     @api.onchange("create_rma")
     def _onchange_create_rma(self):

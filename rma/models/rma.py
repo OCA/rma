@@ -249,6 +249,7 @@ class Rma(models.Model):
         digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
     )
+    uom_category_id = fields.Many2one(related="product_id.uom_id.category_id")
     # Split fields
     can_be_split = fields.Boolean(
         compute="_compute_can_be_split",
@@ -481,12 +482,8 @@ class Rma(models.Model):
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
-        domain_product_uom = []
         if self.product_id:
-            # Set UoM and UoM domain (product_uom)
-            domain_product_uom = [
-                ("category_id", "=", self.product_id.uom_id.category_id.id)
-            ]
+            # Set UoM
             if not self.product_uom or self.product_id.uom_id.id != self.product_uom.id:
                 self.product_uom = self.product_id.uom_id
             # Set stock location (location_id)
@@ -501,7 +498,6 @@ class Rma(models.Model):
                     [("company_id", "=", company.id)], limit=1
                 )
                 self.location_id = warehouse.rma_loc_id.id
-        return {"domain": {"product_uom": domain_product_uom}}
 
     # CRUD methods (ORM overrides)
     @api.model_create_multi
@@ -510,9 +506,7 @@ class Rma(models.Model):
             if vals.get("name", _("New")) == _("New"):
                 ir_sequence = self.env["ir.sequence"]
                 if "company_id" in vals:
-                    ir_sequence = ir_sequence.with_context(
-                        force_company=vals["company_id"]
-                    )
+                    ir_sequence = ir_sequence.with_company(vals["company_id"])
                 vals["name"] = ir_sequence.next_by_code("rma")
             # Assign a default team_id which will be the first in the sequence
             if "team_id" not in vals:
@@ -600,7 +594,7 @@ class Rma(models.Model):
             origin = ", ".join(rmas.mapped("name"))
             invoice_form = Form(
                 self.env["account.move"].with_context(
-                    default_type="out_refund",
+                    default_move_type="out_refund",
                     company_id=rmas[0].company_id.id,
                 ),
                 "account.view_move_form",
@@ -1056,6 +1050,8 @@ class Rma(models.Model):
                     move_orig_ids=[(4, rma.reception_move_id.id)],
                     company_id=picking.company_id.id,
                 )
+                if "product_qty" in move_vals:
+                    move_vals.pop("product_qty")
                 self.env["stock.move"].sudo().create(move_vals)
                 rma.message_post(
                     body=_(
@@ -1084,7 +1080,7 @@ class Rma(models.Model):
         move_form.product_id = self.product_id
         move_form.product_uom_qty = quantity or self.product_uom_qty
         move_form.product_uom = uom or self.product_uom
-        move_form.date_expected = scheduled_date
+        move_form.date = scheduled_date
 
     # Replacing business methods
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
