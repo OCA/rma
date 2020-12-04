@@ -42,7 +42,6 @@
         <field name="report_template" ref="report_rma_action" />
         <field name="report_name">${(object.name or '')}</field>
         <field name="lang">${object.partner_id.lang}</field>
-        <field name="user_signature" eval="True" />
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
