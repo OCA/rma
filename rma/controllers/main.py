@@ -46,7 +46,6 @@ class PortalRma(CustomerPortal):
         if not sortby:
             sortby = "date"
         order = searchbar_sortings[sortby]["order"]
-        archive_groups = self._get_archive_groups("rma", domain)
         if date_begin and date_end:
             domain += [
                 ("create_date", ">", date_begin),
@@ -77,7 +76,6 @@ class PortalRma(CustomerPortal):
                 "rmas": rmas,
                 "page_name": "RMA",
                 "pager": pager,
-                "archive_groups": archive_groups,
                 "default_url": "/my/rmas",
                 "searchbar_sortings": searchbar_sortings,
                 "sortby": sortby,
@@ -118,7 +116,7 @@ class PortalRma(CustomerPortal):
         except exceptions.AccessError:
             return request.redirect("/my")
         report_sudo = request.env.ref("stock.action_report_delivery").sudo()
-        pdf = report_sudo.render_qweb_pdf([picking_sudo.id])[0]
+        pdf = report_sudo._render_qweb_pdf([picking_sudo.id])[0]
         pdfhttpheaders = [
             ("Content-Type", "application/pdf"),
             ("Content-Length", len(pdf)),
