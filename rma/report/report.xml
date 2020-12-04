@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
-        <report
-            id="report_rma_action"
-            string="RMA Report"
-            model="rma"
-            report_type="qweb-pdf"
-            file="rma.report_rma"
-            name="rma.report_rma"
-            print_report_name="object._get_report_base_filename()"
-        />
-    </data>
+    <record id="report_rma_action" model="ir.actions.report">
+        <field name="name">RMA Report</field>
+        <field name="model">rma</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rma.report_rma</field>
+        <field name="report_file">rma.report_rma</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+    </record>
 </odoo>
