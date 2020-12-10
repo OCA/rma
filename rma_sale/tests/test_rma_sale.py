@@ -79,7 +79,7 @@ class TestRmaSale(SavepointCase):
         order.user_id = user.id
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
 
@@ -88,7 +88,7 @@ class TestRmaSale(SavepointCase):
         wizard = self._rma_sale_wizard(self.sale_order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         wizard = self._rma_sale_wizard(self.sale_order)
         self.assertEqual(
             wizard.line_ids.quantity,
@@ -106,7 +106,7 @@ class TestRmaSale(SavepointCase):
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
         picking.move_lines.quantity_done = rma.product_uom_qty
-        picking.action_done()
+        picking._action_done()
         # The product is returned to the customer, so we should be able to make
         # another RMA in the future
         wizard = self._rma_sale_wizard(self.sale_order)
