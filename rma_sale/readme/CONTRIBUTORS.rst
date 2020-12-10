@@ -3,3 +3,5 @@
   * Ernesto Tejeda
   * Pedro M. Baeza
   * David Vidal
+
+* Chafique Delli <chafique.delli@akretion.com>

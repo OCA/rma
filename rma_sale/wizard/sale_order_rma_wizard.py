@@ -144,16 +144,16 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     @api.depends("picking_id")
     def _compute_move_id(self):
         for record in self:
+            move_id = False
             if record.picking_id:
-                record.move_id = record.picking_id.move_lines.filtered(
+                move_id = record.picking_id.move_lines.filtered(
                     lambda r: (
                         r.sale_line_id == record.sale_line_id
                         and r.sale_line_id.product_id == record.product_id
                         and r.sale_line_id.order_id == record.order_id
                     )
                 )
-            else:
-                record.move_id = False
+            record.move_id = move_id
 
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):
