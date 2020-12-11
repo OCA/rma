@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-12-11 15:36+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -14,28 +15,31 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: rma
 #: model:mail.template,report_name:rma.mail_template_rma_notification
+#, fuzzy
 msgid "${(object.name or '')}"
-msgstr ""
+msgstr "${(object.name or '')}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
+#, fuzzy
 msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
-msgstr ""
+msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copie)"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
-msgstr ""
+msgstr "<b>Subiect e-mail:</b> %s<br/><br/><b>Conținut e-mail:</b><br/>%s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -54,11 +58,27 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dragă ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Aici este RMA <strong>${object.name}</strong> de la "
+"${object.company_id.name}.\n"
+"    <br/><br/>\n"
+"   Nu ezitați să ne contactați dacă aveți întrebări.\n"
+"</p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
 msgstr ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Descarcă\" title=\""
+"Descarcă\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -119,12 +139,12 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Delivery</strong>"
-msgstr ""
+msgstr "<strong class=\"d-block mb-1\">Livrare</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Reception</strong>"
-msgstr ""
+msgstr "<strong class=\"d-block mb-1\">Recepție</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -134,12 +154,12 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Customer:</strong>"
-msgstr ""
+msgstr "<strong>Client:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Date:</strong>"
-msgstr ""
+msgstr "<strong>Data:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -164,12 +184,12 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Invoicing address:</strong>"
-msgstr ""
+msgstr "<strong>Adresă facturare:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Move:</strong>"
-msgstr ""
+msgstr "<strong>Mișcare:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -189,43 +209,43 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Origin</strong>"
-msgstr ""
+msgstr "<strong>Origine</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Product:</strong>"
-msgstr ""
+msgstr "<strong>Produs:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Product</strong>"
-msgstr ""
+msgstr "<strong>Produs</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Quantity:</strong>"
-msgstr ""
+msgstr "<strong>Cantitate:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Quantity</strong>"
-msgstr ""
+msgstr "<strong>Cantitate</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>RMA Date</strong>"
-msgstr ""
+msgstr "<strong>Dată RMA</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>RMA Note:</strong>"
-msgstr ""
+msgstr "<strong>Notă RMA:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Responsible:</strong>"
-msgstr ""
+msgstr "<strong>Responsabil:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
