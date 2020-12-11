@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-12-11 15:36+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__active_supplier
@@ -33,7 +35,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
 msgid "Company"
-msgstr ""
+msgstr "Companie"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__create_uid
@@ -56,6 +58,8 @@ msgid ""
 "Default address where the customers has to send back the returned product. "
 "If empty, the address is the company address."
 msgstr ""
+"Adresă implicită unde clienții trebuie să trimită produsul returnat. Dacă "
+"este goală, adresa este adresa companiei."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
@@ -73,13 +77,15 @@ msgid ""
 "If is default, will be use to set the default value in supplier info's. Be "
 "careful to have only one default."
 msgstr ""
+"Dacă este implicit, va fi utilizat pentru a seta valoarea implicită în "
+"informațiile furnizorului. Aveți grijă să aveți o singură valoare implicită."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__return_instructions
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__instructions
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
 msgid "Instructions"
-msgstr ""
+msgstr "Instrucțiuni"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_return_instruction
@@ -90,7 +96,7 @@ msgstr ""
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__return_instructions
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__instructions
 msgid "Instructions for product return."
-msgstr ""
+msgstr "Instrucțiuni pentru returnarea produsului."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
@@ -168,7 +174,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__supplier
 msgid "Supplier"
-msgstr ""
+msgstr "Furnizor"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_product_supplierinfo
@@ -183,19 +189,19 @@ msgstr ""
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_template_extend_warranty
 msgid "Warranty"
-msgstr ""
+msgstr "Garanție"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product__warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_template__warranty
 msgid "Warranty Duration"
-msgstr ""
+msgstr "Durată garanție"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product__warranty_type
 #: model:ir.model.fields,field_description:product_warranty.field_product_template__warranty_type
 msgid "Warranty Type"
-msgstr ""
+msgstr "Tip garanție"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_duration
@@ -208,12 +214,12 @@ msgstr ""
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_supplierinfo_warranty_form_view
 msgid "Warranty informations"
-msgstr ""
+msgstr "Informații despre garanție"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__week
 msgid "Week(s)"
-msgstr ""
+msgstr "Săptămâni"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_other_address
@@ -237,8 +243,14 @@ msgid ""
 "warranty to be applied is the one of the return partner (ie: can be returned"
 " to the company and be under the brand warranty)."
 msgstr ""
+"Cine este responsabil cu tratamentul de returnare a garanției către clientul "
+"final. Compania va utiliza adresa curentă de livrare a companiei sau adresa "
+"implicită și așa mai departe pentru furnizor și producătorul mărcii. Nu "
+"înseamnă neapărat că garanția care trebuie aplicată este cea a partenerului "
+"de returnare (adică: poate fi returnată companiei și poate fi sub garanția "
+"mărcii)."
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
-msgstr ""
+msgstr "Ani"
