@@ -12,5 +12,6 @@ class Rma(models.Model):
             team_id=values.get("team_id") or request.website.rma_default_team_id.id,
             user_id=values.get("user_id") or request.website.rma_default_user_id.id,
             partner_id=values.get("partner_id") or request.env.user.partner_id.id,
+            origin="Website form",
         )
         return values
