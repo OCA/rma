@@ -62,6 +62,8 @@ class SaleOrderRmaWizard(models.TransientModel):
     def create_and_open_rma(self):
         self.ensure_one()
         rma = self.create_rma()
+        if not rma:
+            return
         for rec in rma:
             rec.action_confirm()
         action = self.env.ref('rma.rma_action').read()[0]
@@ -137,6 +139,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     @api.onchange('product_id')
     def onchange_product_id(self):
         self.picking_id = False
+        self.uom_id = self.product_id.uom_id
 
     @api.depends('picking_id')
     def _compute_move_id(self):

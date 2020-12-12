@@ -11,6 +11,7 @@ class WebsiteForm(WebsiteForm):
     def insert_record(self, request, model, values, custom, meta=None):
         if model.model == 'rma':
             values['partner_id'] = request.env.user.partner_id.id
+            values['origin'] = 'Website form'
         res = super(WebsiteForm, self).insert_record(
             request, model, values, custom, meta)
         # Add the customer to the followers, the same as when creating
