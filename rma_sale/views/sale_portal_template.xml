@@ -87,7 +87,9 @@
                                 </thead>
                                 <tbody class="request-rma-tbody">
                                     <t t-foreach="data_list" t-as="data">
-                                        <t t-if="data['quantity'] > 0">
+                                        <t
+                                            t-if="data['quantity'] > 0 and data['picking']"
+                                        >
                                             <tr>
                                                 <td class="text-left">
                                                     <span
@@ -124,7 +126,6 @@
                                                 </td>
                                                 <td class="text-left">
                                                     <span
-                                                        t-if="data['picking']"
                                                         t-esc="data['picking'].name"
                                                     />
                                                     <input
