@@ -6,48 +6,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-12-13 23:19+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__active_supplier
 msgid "Active Supplier"
-msgstr ""
+msgstr "Actieve leverancier"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.company_form
+#, fuzzy
 msgid "CRM Product Return Address"
-msgstr ""
+msgstr "CRM Product Retour adres"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Bedrijven"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
 msgid "Company"
-msgstr ""
+msgstr "Bedrijf"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__day
 msgid "Day(s)"
-msgstr ""
+msgstr "Dag(en)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_res_company__crm_return_address_id
@@ -55,16 +58,18 @@ msgid ""
 "Default address where the customers has to send back the returned product. "
 "If empty, the address is the company address."
 msgstr ""
+"Standaard adres waar de klanten hun retouren naar moeten sturen. Wanneer "
+"leeg, wordt het bedrijfsadres gebruikt."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Weergave naam"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__is_default
@@ -78,23 +83,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__instructions
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
 msgid "Instructions"
-msgstr ""
+msgstr "Instructies"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_return_instruction
 msgid "Instructions for product return"
-msgstr ""
+msgstr "Instructies voor het retourneren van het product"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__return_instructions
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__instructions
 msgid "Instructions for product return."
-msgstr ""
+msgstr "Instructies voor het retourneren van het product."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
 msgid "Is default"
-msgstr ""
+msgstr "Is standaard"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__active_supplier
@@ -104,97 +109,97 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst gewijzigt op"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatste update door"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatste update op"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__month
 msgid "Month(s)"
-msgstr ""
+msgstr "Maand(en)"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__other
 msgid "Other"
-msgstr ""
+msgstr "Anders"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__warranty_duration
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Product sjabloon"
 
 #. module: product_warranty
 #: model:ir.actions.act_window,name:product_warranty.product_return_instructions_action
 #: model:ir.ui.menu,name:product_warranty.menu_product_return_instructions_action
 msgid "Products Return Instructions"
-msgstr ""
+msgstr "Product retourneer instructies"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__warranty_return_address
 #: model:ir.model.fields,field_description:product_warranty.field_res_company__crm_return_address_id
 msgid "Return address"
-msgstr ""
+msgstr "Retour adres"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_tree_view
 msgid "Return instructions"
-msgstr ""
+msgstr "Retour instructies"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__warranty_return_other_address
 msgid "Return other address"
-msgstr ""
+msgstr "ander retouradres"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__warranty_return_partner
 msgid "Return type"
-msgstr ""
+msgstr "Retour type"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__supplier
 msgid "Supplier"
-msgstr ""
+msgstr "Leverancier"
 
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_product_supplierinfo
 msgid "Supplier Pricelist"
-msgstr ""
+msgstr "Leveranciers prijslijst"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__name
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_template_extend_warranty
 msgid "Warranty"
-msgstr ""
+msgstr "Garantie"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product__warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_template__warranty
 msgid "Warranty Duration"
-msgstr ""
+msgstr "Garantieduur"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_product__warranty_type
 #: model:ir.model.fields,field_description:product_warranty.field_product_template__warranty_type
 msgid "Warranty Type"
-msgstr ""
+msgstr "Garantie type"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_duration
@@ -207,12 +212,12 @@ msgstr ""
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_supplierinfo_warranty_form_view
 msgid "Warranty informations"
-msgstr ""
+msgstr "Garantie informatie"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__week
 msgid "Week(s)"
-msgstr ""
+msgstr "Week(en)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_other_address
@@ -220,12 +225,17 @@ msgid ""
 "Where the customer has to send back the product(s) if warranty return is set"
 " to 'other'."
 msgstr ""
+"Waar dient de klant de product(en) naar toe te sturen, indien het garantie "
+"type 'anders' is."
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_address
+#, fuzzy
 msgid ""
 "Where the goods should be returned  (computed field based on other infos.)"
 msgstr ""
+"Waar het product naar geretourneerd dient te worden (berekend op basis van "
+"andere info.)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_partner
@@ -240,4 +250,4 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
-msgstr ""
+msgstr "Jaar"
