@@ -6,31 +6,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-12-13 23:19+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: rma_sale
 #: code:addons/rma_sale/controllers/sale_portal.py:0
 #, python-format
 msgid " (Portal)"
-msgstr ""
+msgstr " (Portal)"
 
 #. module: rma_sale
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " has been created."
-msgstr ""
+msgstr " is aangemaakt."
 
 #. module: rma_sale
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " have been created."
-msgstr ""
+msgstr " is aangemaakt."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -60,7 +62,7 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid "<span>RMA</span>"
-msgstr ""
+msgstr "<span>RMA</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
@@ -85,7 +87,7 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
 msgid "Accept"
-msgstr ""
+msgstr "Accepteer"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_move_ids
@@ -107,17 +109,17 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
 msgid "Category"
-msgstr ""
+msgstr "Categorie"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -125,6 +127,8 @@ msgid ""
 "Comment anything relevant to the return, like serial numbers, a description "
 "of the issue, etc"
 msgstr ""
+"Relevante opmerking voor de retour zending zoals; serie nummers, "
+"probleemomschrijving, etc"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -138,7 +142,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
-msgstr ""
+msgstr "RMA aanmaken"
 
 #. module: rma_sale
 #: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
@@ -149,18 +153,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Delivery"
-msgstr ""
+msgstr "Levering"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__picking_id
@@ -170,19 +174,19 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__description
 msgid "Description"
-msgstr ""
+msgstr "Omschrijving"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Weergavenaam"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -193,24 +197,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatste update door"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatste update op"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
 msgid "Lines"
-msgstr ""
+msgstr "Regels"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
@@ -221,12 +225,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__order_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__order_id
 msgid "Order"
-msgstr ""
+msgstr "Bestelling"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__picking_id
 msgid "Origin Delivery"
-msgstr ""
+msgstr "Originele levering"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__move_id
@@ -238,50 +242,51 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__product_id
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Product"
-msgstr ""
+msgstr "Product"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Quantity"
-msgstr ""
+msgstr "Aantal"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_rma
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 msgid "RMA"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_count
 msgid "RMA count"
-msgstr ""
+msgstr "RMA aantal"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__location_id
 msgid "RMA location"
-msgstr ""
+msgstr "RMA Locatie"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
 msgid "RMAs"
-msgstr ""
+msgstr "RMA's"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Request RMAs"
-msgstr ""
+msgstr "aangevraagde RMA's"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#, fuzzy
 msgid "Requested operation"
-msgstr ""
+msgstr "Verzochte handeling"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
 msgid "Sale Order"
-msgstr ""
+msgstr "Verkoop order"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
@@ -291,27 +296,27 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr ""
+msgstr "Verkooporder retour gids"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Verkooporder"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "verkoopregel"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Select the product quantity and the requested operation"
-msgstr ""
+msgstr "Selecteer het productaantal en de gewenste handeling"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Voorraad aanpassing"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -320,8 +325,9 @@ msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
+#, fuzzy
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Grootheid"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -329,32 +335,40 @@ msgid ""
 "Use the comment button to add relevant information regarding the RMA, like "
 "returned serial numbers or a description of the issue"
 msgstr ""
+"Gebruik de onderstaande opmerkingen knop om relevante informatie over de RMA "
+"in te vullen, zoals serienummer of een omschrijving van het probleem"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "gids"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid ""
 "You can only return as much product units as you received for this order"
 msgstr ""
+"U kunt maximaal het aantal producten retourneren als dat u in deze "
+"bestelling heeft ontvangen"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#, fuzzy
 msgid "You can send a message in every RMA sent"
-msgstr ""
+msgstr "U kunt een bericht sturen in elke RMA zending"
 
 #. module: rma_sale
 #: code:addons/rma_sale/models/sale.py:0
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
-msgstr ""
+msgstr "U mag alleen een RMA maken van bevestigde of afgehandelde verkopen."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#, fuzzy
 msgid ""
 "You're about to perform an RMA request. Our team will process it an will "
 "reach you once it's validated. Keep in mind that:"
 msgstr ""
+"U staat op het punt een RMA verzoek in te dienen. Ons team zal de aanvraag "
+"verwerken. Let op dat:"
