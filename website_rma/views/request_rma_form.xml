@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="request_rma" name="Request RMA">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div
+                    class="oe_structure mt-2"
+                    id="oe_structure_website_rma_form_request_0"
+                />
+                <section class="pt8 pb8">
+                    <div class="container">
+                        <div class="row s_nb_column_fixed">
+                            <div class="col-lg-12 s_title pt16 pb16">
+                                <h1>Request RMA</h1>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="container mt-2">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div
+                                class="oe_structure mt-2"
+                                id="oe_structure_website_rma_form_request_1"
+                            />
+                            <section class="s_text_block">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                Our team will process it an will reach you once it's validated.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="request_rma_container">
+                                <form
+                                    action="/website_form/"
+                                    method="post"
+                                    data-model_name="rma"
+                                    data-success_page="/requestrma-thank-you"
+                                    class="s_website_form container-fluid mt32"
+                                    enctype="multipart/form-data"
+                                    data-editable-form="false"
+                                    id="rma_request_form"
+                                >
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-lg-3 col-md-4 col-form-label"
+                                            for="product_id"
+                                        >
+                                            Product
+                                        </label>
+                                        <div class="col-lg-7 col-md-8">
+                                            <input
+                                                type="hidden"
+                                                name="product_id"
+                                                class="form-control o_website_form_input"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="form-group row form-field o_website_form_required"
+                                    >
+                                        <label
+                                            class="col-lg-3 col-md-4 col-form-label"
+                                            for="product_uom_qty"
+                                        >
+                                            Quantity
+                                        </label>
+                                        <div class="col-lg-4 col-md-5">
+                                            <input
+                                                class="form-control o_website_form_input"
+                                                pattern="^\d*(\.\d{0,3})?$"
+                                                name="product_uom_qty"
+                                                required=""
+                                                t-att-value="request.params.get('product_uom_qty', '1.000')"
+                                            />
+                                        </div>
+                                        <div class="col-lg-3 col-md-3">
+                                            <input type="hidden" name="product_uom" />
+                                            <input
+                                                type="text"
+                                                class="form-control o_website_form_input"
+                                                name="product_uom_name"
+                                                disabled="true"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row form-field">
+                                        <label
+                                            class="col-lg-3 col-md-4 col-form-label"
+                                            for="operation_id"
+                                        >Operation</label>
+                                        <div class="col-lg-7 col-md-8">
+                                            <select
+                                                name="operation_id"
+                                                class="form-control custom-select o_website_form_input"
+                                            >
+                                                <option />
+                                                <t
+                                                    t-foreach="request.env['rma.operation'].sudo().search([])"
+                                                    t-as="o"
+                                                >
+                                                    <option t-att-value="o.id">
+                                                        <t t-esc="o.name" />
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="form-group row form-field o_website_form_required_custom"
+                                    >
+                                        <label
+                                            class="col-lg-3 col-md-4 col-form-label"
+                                            for="description"
+                                        >Description</label>
+                                        <div class="col-lg-7 col-md-8">
+                                            <textarea
+                                                class="form-control o_website_form_input"
+                                                name="description"
+                                                required=""
+                                            >
+                                                <t
+                                                    t-esc="request.params.get('description', '')"
+                                                />
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div
+                                            class="offset-lg-3 offset-md-4 col-md-8 col-lg-7"
+                                        >
+                                            <a
+                                                href="#"
+                                                role="button"
+                                                class="btn btn-primary btn-lg o_website_form_send"
+                                            >Request</a>
+                                            <span id="o_website_form_result" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div
+                                class="oe_structure mt-2"
+                                id="oe_structure_website_rma_form_request_2"
+                            />
+                        </div>
+                        <div class="col-lg-4">
+                            <t t-call="website.company_description" />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="oe_structure mt-2"
+                    id="oe_structure_website_rma_form_request_3"
+                />
+            </div>
+        </t>
+    </template>
+    <record id="request_rma_thanks_page_view" model="ir.ui.view">
+        <field name="name">Thanks (Request RMA)</field>
+        <field name="type">qweb</field>
+        <field name="key">website_rma.requestrma_thanks</field>
+        <field name="arch" type="xml">
+            <t name="Thanks (Request RMA)" t-name="website_crm.requestrma_thanks">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div
+                            class="oe_structure"
+                            id="oe_structure_website_rma_request_rma_thanks_1"
+                        />
+                        <div class="container" id="request_rma_thanks">
+                            <h1>Thanks!</h1>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-success" role="status">
+                                    Your request has been sent successfully.
+                                    <button
+                                            type="button"
+                                            class="close"
+                                            data-dismiss="alert"
+                                        >&amp;times;</button>
+                                </div>
+                                    <p>
+                                    We will get back to you shortly.
+                                </p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <t t-call="website.company_description" />
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="oe_structure"
+                            id="oe_structure_website_rma_request_rma_thanks_2"
+                        />
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+</odoo>

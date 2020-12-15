@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="contact_us_request_rma"
+        name="Request RMA"
+        inherit_id="website.contactus"
+    >
+        <xpath
+            expr="//t[@t-call='website.company_description']/../../div[hasclass('col-lg-8')]"
+            position="inside"
+        >
+            <div class="oe_structure">
+                <section class="s_text_block">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 bg-300">
+                                <p style="margin-top: 1rem;">
+                                    You can request an RMA <strong>
+                                        <a href="/requestrma">here</a>
+                                    </strong> if you do not
+                                    know the sales order from which it was made.
+                                    If you know the sales order, go to it and click on the corresponding button.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+</odoo>
