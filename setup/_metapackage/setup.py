@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo13-addon-product_warranty',
         'odoo13-addon-rma',
         'odoo13-addon-rma_sale',
+        'odoo13-addon-website_rma',
     ],
     classifiers=[
         'Programming Language :: Python',
