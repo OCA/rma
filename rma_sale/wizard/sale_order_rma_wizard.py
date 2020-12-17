@@ -134,6 +134,9 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         comodel_name='rma.operation',
         string='Requested operation',
     )
+    sale_line_id = fields.Many2one(
+        comodel_name="sale.order.line",
+    )
     description = fields.Text()
 
     @api.onchange('product_id')
@@ -146,8 +149,10 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         for record in self:
             if record.picking_id:
                 record.move_id = record.picking_id.move_lines.filtered(
-                    lambda r: (r.sale_line_id.product_id == record.product_id
-                               and r.sale_line_id.order_id == record.order_id))
+                    lambda r: (
+                        r.sale_line_id == record.sale_line_id and
+                        r.sale_line_id.product_id == record.product_id
+                        and r.sale_line_id.order_id == record.order_id))
 
     @api.depends('order_id')
     def _compute_allowed_product_ids(self):

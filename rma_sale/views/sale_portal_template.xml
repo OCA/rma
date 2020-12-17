@@ -74,6 +74,10 @@
                                                     <input type="hidden"
                                                            t-attf-name="#{data_index}-product_id"
                                                            t-att-value="data['product'].id"/>
+                                                    <input type="hidden"
+                                                           t-if="data.get('sale_line_id')"
+                                                           t-attf-name="#{data_index}-sale_line_id"
+                                                           t-att-value="data['sale_line_id'].id"/>
                                                 </td>
                                                 <td class="text-right">
                                                     <div id="delivery-rma-qty">
