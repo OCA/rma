@@ -36,6 +36,7 @@ class SaleOrder(models.Model):
                 {
                     "product_id": data["product"].id,
                     "quantity": data["quantity"],
+                    "sale_line_id": data["sale_line_id"].id,
                     "uom_id": data["uom"].id,
                     "picking_id": data["picking"] and data["picking"].id,
                 },
@@ -83,7 +84,7 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
         return self.move_ids.filtered(
             lambda r: (
-                self.product_id == r.product_id
+                self == r.sale_line_id
                 and r.state == "done"
                 and not r.scrapped
                 and r.location_dest_id.usage == "customer"
@@ -114,6 +115,7 @@ class SaleOrderLine(models.Model):
                         "quantity": qty,
                         "uom": move.product_uom,
                         "picking": move.picking_id,
+                        "sale_line_id": self,
                     }
                 )
         else:
@@ -123,6 +125,7 @@ class SaleOrderLine(models.Model):
                     "quantity": self.qty_delivered,
                     "uom": self.product_uom,
                     "picking": False,
+                    "sale_line_id": self,
                 }
             )
         return data
