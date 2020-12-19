@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-11 15:36+0000\n"
+"PO-Revision-Date: 2020-12-19 13:43+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: rma_sale
 #: code:addons/rma_sale/controllers/sale_portal.py:0
@@ -37,18 +37,19 @@ msgstr " au fost create."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#, fuzzy
 msgid "&amp;times;"
-msgstr ""
+msgstr "&amp;times;"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-check\"/> Request RMAs"
-msgstr "<i class=\"fa fa-check\"/> Cerere RMAs"
+msgstr "<i class=\"fa fa-check\"/> Cerere retur"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-reply\"/> Request RMAs"
-msgstr "<i class=\"fa fa-reply\"/> Cerere RMAs"
+msgstr "<i class=\"fa fa-reply\"/> Cerere retur"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -57,16 +58,15 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
-#, fuzzy
 msgid "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
-"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"Retur\" title=\"Retur\""
+"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
-#, fuzzy
 msgid "<span>RMA</span>"
-msgstr "<span>RMA</span>"
+msgstr "<span>Retur</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
@@ -148,12 +148,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
-msgstr "Creați RMA"
+msgstr "Creați cerere retur"
 
 #. module: rma_sale
 #: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
 msgid "Create RMAs"
-msgstr "Creați RMAuri"
+msgstr "Creați cereri retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
@@ -199,20 +199,20 @@ msgstr "ID"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
-"Dacă nu este setată nicio operațiune solicitată, RMA nu va fi îndeplinit "
-"corect"
+"Dacă nu este setată nicio operațiune solicitată, cererea de retur nu va fi "
+"completată corect"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modificare în"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima modificare de"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
@@ -262,29 +262,28 @@ msgstr "Cantitate"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_rma
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
-#, fuzzy
 msgid "RMA"
-msgstr "RMA"
+msgstr "Retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_count
 msgid "RMA count"
-msgstr "Număr RMA"
+msgstr "Număr cereri retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__location_id
 msgid "RMA location"
-msgstr "Locație RMA"
+msgstr "Locație retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
 msgid "RMAs"
-msgstr "RMA-uri"
+msgstr "Cereri retur"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Request RMAs"
-msgstr ""
+msgstr "Cereri retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
@@ -315,7 +314,7 @@ msgstr "Comandă vânzare"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Linie comandă vânzare"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -330,7 +329,7 @@ msgstr "Mișcare stoc"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "The limit will decrease when the units in other RMAs are confirmed"
-msgstr "Limita va scădea atunci când unitățile din alte RMA-uri sunt confirmate"
+msgstr "Limita va scădea atunci când unitățile din alte cereri sunt confirmate"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
@@ -344,13 +343,13 @@ msgid ""
 "returned serial numbers or a description of the issue"
 msgstr ""
 "Utilizați butonul de comentariu pentru a adăuga informații relevante cu "
-"privire la RMA, cum ar fi numerele de serie returnate sau o descriere a "
+"privire la retur, cum ar fi numerele de serie returnate sau o descriere a "
 "problemei"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistent"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -362,15 +361,14 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "You can send a message in every RMA sent"
-msgstr "Puteți trimite un mesaj în fiecare RMA trimis"
+msgstr "Puteți trimite un mesaj în fiecare cerere de retur trimisă"
 
 #. module: rma_sale
 #: code:addons/rma_sale/models/sale.py:0
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr ""
-"Puteți crea RMA-uri numai dintr-o comandă de vânzare confirmată sau "
-"finalizată."
+"Puteți crea retur numai dintr-o comandă de vânzare confirmată sau finalizată."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -378,5 +376,5 @@ msgid ""
 "You're about to perform an RMA request. Our team will process it an will "
 "reach you once it's validated. Keep in mind that:"
 msgstr ""
-"Sunteți pe cale să efectuați o solicitare RMA. Echipa noastră o va procesa "
-"odată ce va fi validată. Ține minte că:"
+"Sunteți pe cale să efectuați o solicitare de retur. Echipa noastră o va "
+"procesa odată ce va fi validată. Ține minte că:"
