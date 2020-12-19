@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-19 09:43+0000\n"
+"PO-Revision-Date: 2020-12-19 13:43+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
@@ -47,12 +47,16 @@ msgstr "Echipa implicită"
 msgid ""
 "Default responsible for new leads created through the 'Request RMA' form."
 msgstr ""
+"Responsabil implicit pentru noii clienți potențiali creați prin formularul „"
+"Cerere retur”."
 
 #. module: website_rma
 #: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_team_id
 #: model:ir.model.fields,help:website_rma.field_website__rma_default_team_id
 msgid "Default team for new RMAs created through the 'Request RMA' form."
 msgstr ""
+"Echipa implicită pentru noile cereri de retur create prin formularul „Cerere "
+"retur”."
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
@@ -62,7 +66,7 @@ msgstr "Descriere"
 #. module: website_rma
 #: model:ir.model,name:website_rma.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modele"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
@@ -73,6 +77,7 @@ msgstr "Operație"
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
 msgid "Our team will process it an will reach you once it's validated."
 msgstr ""
+"Echipa noastră o va procesa și va ajunge la dvs. odată ce va fi validată."
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
@@ -87,17 +92,17 @@ msgstr "Cantitate"
 #. module: website_rma
 #: model:ir.model,name:website_rma.model_rma
 msgid "RMA"
-msgstr ""
+msgstr "Cerere retur"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "RMA Responsible"
-msgstr ""
+msgstr "Responsabil cerere retur"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "RMA Team"
-msgstr ""
+msgstr "Echipă"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
@@ -108,17 +113,17 @@ msgstr "Cerere"
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "Request RMA"
-msgstr ""
+msgstr "Cerere retur"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "Request RMA Form"
-msgstr ""
+msgstr "Formular cerere retur"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "Return Merchandise Authorization (RMA)"
-msgstr ""
+msgstr "Autorizație de returnare a mărfurilor (RMA)"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
@@ -132,6 +137,8 @@ msgid ""
 "Set the default RMA Team and RMA responsible of the RMAs created from the "
 "Request RMA page."
 msgstr ""
+"Setați echipa  implicită și  responsabilul pentru cererile de retur create "
+"din pagina Cerere retur."
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
@@ -148,13 +155,13 @@ msgstr "Te vom contacta în curând."
 #. module: website_rma
 #: model:ir.model,name:website_rma.model_website
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
 msgid "You can request an RMA"
-msgstr ""
+msgstr "Puteți solicita o returnare"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
@@ -166,7 +173,7 @@ msgstr "Solicitarea dvs. a fost trimisă cu succes."
 #: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
 msgid "here"
-msgstr ""
+msgstr "aici"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
@@ -195,4 +202,4 @@ msgstr ""
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "page"
-msgstr ""
+msgstr "pagină"
