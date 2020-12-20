@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-19 13:43+0000\n"
+"PO-Revision-Date: 2020-12-20 05:43+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
@@ -19,7 +19,6 @@ msgstr ""
 
 #. module: rma
 #: model:mail.template,report_name:rma.mail_template_rma_notification
-#, fuzzy
 msgid "${(object.name or '')}"
 msgstr "${(object.name or '')}"
 
@@ -164,7 +163,7 @@ msgstr "<strong class=\"d-block mb-1\">Recepție</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Refund</strong>"
-msgstr "<strong class=\"d-block mb-1\">Restituire</strong>"
+msgstr "<strong class=\"d-block mb-1\">Rambursat</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -279,28 +278,28 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Accept Emails From"
-msgstr ""
+msgstr "Acceptă email-uri de la"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_warning
 msgid "Access warning"
-msgstr ""
+msgstr "Avertizare acces"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_needaction
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Acțiune necesară"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__active
 msgid "Active"
-msgstr ""
+msgstr "Activ"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Activități"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_exception_decoration
@@ -310,12 +309,12 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Status activitate"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_id
 msgid "Alias"
-msgstr ""
+msgstr "Alias"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_contact
@@ -437,7 +436,7 @@ msgstr "Confirmat"
 #: model:ir.model,name:rma.model_res_partner
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
@@ -451,7 +450,7 @@ msgstr "Creați cerere retur"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_date
@@ -460,7 +459,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat în"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -497,7 +496,7 @@ msgstr "Termen limită"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_defaults
 msgid "Default Values"
-msgstr ""
+msgstr "Valori implicite"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
@@ -527,7 +526,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivery_move_ids
 msgid "Delivery reservation"
-msgstr ""
+msgstr "Rezervare livrare"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__description
@@ -542,7 +541,7 @@ msgstr "Descriere"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nume afișat"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__draft
@@ -559,7 +558,7 @@ msgstr "Cerere retur ciornă"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -575,25 +574,25 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin_split_rma_id
 msgid "Extracted from"
-msgstr ""
+msgstr "Extras din"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_follower_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Urmăritori"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_channel_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Urmăritori (Canale)"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_partner_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Urmăritori (Parteneri)"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -607,7 +606,7 @@ msgstr "Grupează după"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
@@ -632,7 +631,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction
 #: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Dacă este bifat, mesajele noi necesită atenție."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
@@ -640,7 +639,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Dacă este bifat, unele mesaje au o eroare de livrare."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__active
@@ -649,13 +648,13 @@ msgid ""
 "without removing it."
 msgstr ""
 "Dacă câmpul activ este setat la fals, acesta vă va permite să ascundeți "
-"echipa RMA fără a o elimina."
+"echipa fără a o elimina."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Incoming e-mail"
-msgstr ""
+msgstr "E-mail primite"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
@@ -666,7 +665,7 @@ msgstr "Adresă facurare"
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Este Urmăritor"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
@@ -685,7 +684,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_team____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modificare în"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__write_uid
@@ -694,7 +693,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima modificare de"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__write_date
@@ -703,12 +702,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima modificare în"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Late RMAs"
-msgstr ""
+msgstr "Cereri retur întârziate"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__location_id
@@ -718,12 +717,12 @@ msgstr "Locație"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Lock"
-msgstr ""
+msgstr "Închide"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__locked
 msgid "Locked"
-msgstr ""
+msgstr "Închis"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_main_attachment_id
@@ -760,7 +759,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_team__name
 #, python-format
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
@@ -788,18 +787,20 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
-msgstr "Niciunul dintre RMA-urile selectate nu poate efectua o înlocuire."
+msgstr ""
+"La niciuna dintre cererile de retur selectate nu poate efectua o înlocuire."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr ""
+"La niciuna dintre cererile de retur selectate nu poate efectua un retur."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__priority__1
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__priority__0
@@ -890,7 +891,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Partner"
-msgstr ""
+msgstr "Partener"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_contact
@@ -913,7 +914,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Preview"
-msgstr ""
+msgstr "Previzualizare"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__priority
@@ -929,12 +930,12 @@ msgstr "Grupul de achiziții"
 #: model:ir.model.fields,field_description:rma.field_rma__product_id
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 msgid "Product"
-msgstr ""
+msgstr "Produs"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom_qty
 msgid "Product qty"
-msgstr ""
+msgstr "Cantitate produs"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
@@ -986,29 +987,29 @@ msgstr "Cerere retur"
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "RMA #"
-msgstr ""
+msgstr "Număr retur"
 
 #. module: rma
 #: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
-msgstr ""
+msgstr "Cod cerere retur"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Date"
-msgstr ""
+msgstr "Dată"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Deadline"
-msgstr ""
+msgstr "Termen limită"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Delivery Orders"
-msgstr ""
+msgstr "Comenzi livrare"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_delivery_wizard
@@ -1023,7 +1024,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_loc_id
 msgid "RMA Location"
-msgstr ""
+msgstr "Locație"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1046,12 +1047,12 @@ msgstr ""
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Receipts"
-msgstr ""
+msgstr "Recepții"
 
 #. module: rma
 #: model:ir.actions.report,name:rma.report_rma_action
 msgid "RMA Report"
-msgstr ""
+msgstr "Raport"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_split_wizard
@@ -1064,7 +1065,7 @@ msgstr ""
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
-msgstr ""
+msgstr "Echipă"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
@@ -1086,7 +1087,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
 msgid "RMA receivers"
-msgstr ""
+msgstr "Recepții"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_stock_warehouse__rma
@@ -1096,7 +1097,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model,name:rma.model_rma_operation
 msgid "RMA requested operation"
-msgstr ""
+msgstr "Operație solicitată"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_id
@@ -1107,7 +1108,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
 msgid "RMA team"
-msgstr ""
+msgstr "Echipă"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids
@@ -1135,7 +1136,7 @@ msgstr "Recepție"
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__received
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Received"
-msgstr ""
+msgstr "Recepționat"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__reception_move_id
@@ -1159,17 +1160,17 @@ msgstr ""
 #: model:rma.operation,name:rma.rma_operation_refund
 #, python-format
 msgid "Refund"
-msgstr ""
+msgstr "Ramburs"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
 msgid "Refund address for current RMA."
-msgstr ""
+msgstr "Adresă ramburs pentru cererea curentă."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
 msgid "Refund line"
-msgstr ""
+msgstr "Linie ramburs"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
@@ -1238,7 +1239,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
 msgid "Requested operation"
-msgstr ""
+msgstr "Operație solicitată"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1343,7 +1344,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Share"
-msgstr ""
+msgstr "Partajează"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -1404,13 +1405,13 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
 msgid "Team Leader"
-msgstr ""
+msgstr "Șef echipă"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
-msgstr ""
+msgstr "Membrii echipei"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
@@ -1440,6 +1441,11 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"Proprietarul înregistrărilor create la primirea e-mailurilor de la acest "
+"alias. Dacă acest câmp nu este setat, sistemul va încerca să găsească "
+"proprietarul potrivit în funcție de adresa expeditorului (De la) sau va "
+"utiliza contul de administrator dacă nu este găsit niciun utilizator de "
+"sistem pentru acea adresă."
 
 #. module: rma
 #: code:addons/rma/models/stock_move.py:0
@@ -1485,7 +1491,7 @@ msgstr ""
 #: model:ir.actions.server,name:rma.rma_refund_action_server
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "To Refund"
-msgstr ""
+msgstr "De rambursat"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_picking
