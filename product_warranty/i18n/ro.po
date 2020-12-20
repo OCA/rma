@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-19 13:43+0000\n"
+"PO-Revision-Date: 2020-12-20 05:43+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__active_supplier
 msgid "Active Supplier"
-msgstr ""
+msgstr "Furnizor activ"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.company_form
@@ -30,7 +30,7 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model,name:product_warranty.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Companii"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_supplierinfo__warranty_return_partner__company
@@ -40,17 +40,17 @@ msgstr "Companie"
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat în"
 
 #. module: product_warranty
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__day
 msgid "Day(s)"
-msgstr ""
+msgstr "Zi(le)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_res_company__crm_return_address_id
@@ -64,12 +64,12 @@ msgstr ""
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nume afișat"
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__is_default
@@ -101,7 +101,7 @@ msgstr "Instrucțiuni pentru returnarea produsului."
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
 msgid "Is default"
-msgstr ""
+msgstr "Este implicit"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__active_supplier
