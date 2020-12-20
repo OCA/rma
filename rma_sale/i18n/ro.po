@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-19 13:43+0000\n"
+"PO-Revision-Date: 2020-12-20 05:43+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ro\n"
@@ -37,7 +37,6 @@ msgstr " au fost create."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-#, fuzzy
 msgid "&amp;times;"
 msgstr "&amp;times;"
 
@@ -54,7 +53,7 @@ msgstr "<i class=\"fa fa-reply\"/> Cerere retur"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-times\"/> Cancel"
-msgstr ""
+msgstr "<i class=\"fa fa-times\"/> Anulat"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -191,7 +190,6 @@ msgstr "Nume afișat"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
-#, fuzzy
 msgid "ID"
 msgstr "ID"
 
@@ -218,7 +216,7 @@ msgstr "Ultima modificare de"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima modificare în"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
@@ -299,12 +297,12 @@ msgstr "Comandă vânzare"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr ""
+msgstr "Line comandă vânzare asistent retur"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr ""
+msgstr "Comanda vânzare asistent retur"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
