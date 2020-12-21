@@ -3,7 +3,7 @@
 {
     "name": "Return Merchandise Authorization Management - Website Form",
     "summary": "Return Merchandise Authorization (RMA)",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.1.0",
     "development_status": "Production/Stable",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
