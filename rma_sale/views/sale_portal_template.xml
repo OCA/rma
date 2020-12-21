@@ -67,13 +67,17 @@
                                 </thead>
                                 <tbody class="request-rma-tbody">
                                     <t t-foreach="data_list" t-as="data">
-                                        <t t-if="data['quantity'] > 0">
+                                        <t t-if="data['quantity'] > 0 and data['picking']">
                                             <tr>
                                                 <td class="text-left">
                                                     <span t-esc="data['product'].display_name"/>
                                                     <input type="hidden"
                                                            t-attf-name="#{data_index}-product_id"
                                                            t-att-value="data['product'].id"/>
+                                                    <input type="hidden"
+                                                           t-if="data.get('sale_line_id')"
+                                                           t-attf-name="#{data_index}-sale_line_id"
+                                                           t-att-value="data['sale_line_id'].id"/>
                                                 </td>
                                                 <td class="text-right">
                                                     <div id="delivery-rma-qty">
@@ -92,12 +96,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-left">
-                                                    <t t-if="data['picking']">
-                                                        <span t-esc="data['picking'].name"/>
-                                                        <input type="hidden"
-                                                            t-attf-name="#{data_index}-picking_id"
-                                                            t-att-value="data['picking'].id"/>
-                                                    </t>
+                                                    <span t-esc="data['picking'].name"/>
+                                                    <input type="hidden"
+                                                        t-attf-name="#{data_index}-picking_id"
+                                                        t-att-value="data['picking'].id"/>
                                                 </td>
                                                 <td class="text-left">
                                                     <select t-attf-name="#{data_index}-operation_id"
