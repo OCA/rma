@@ -23,10 +23,19 @@ class WebsiteRMA(http.Controller):
         """Domain used for the products to be shown in selection of
         the web form.
         """
-        return [
+        domain = [
             ("name", "=ilike", "%{}%".format(q or "")),
             ("sale_ok", "=", True),
         ]
+        # HACK: As there is no glue module for this purpose we have put
+        # this this condition to check that the mrp module is installed.
+        if "bom_ids" in request.env["product.product"]._fields:
+            domain += [
+                "|",
+                ("bom_ids.type", "!=", "phantom"),
+                ("bom_ids", "=", False),
+            ]
+        return domain
 
     @http.route(["/requestrma"], type="http", auth="user", website=True)
     def request_rma(self, **kw):
