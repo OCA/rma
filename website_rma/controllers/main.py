@@ -13,8 +13,9 @@ class WebsiteForm(WebsiteForm):
         res = super().insert_record(request, model, values, custom, meta)
         # Add the customer to the followers, the same as when creating
         # an RMA from a sales order in the portal.
-        rma = request.env["rma"].browse(res).sudo()
-        rma.message_subscribe([rma.partner_id.id])
+        if model.model == "rma":
+            rma = request.env["rma"].sudo().browse(res)
+            rma.message_subscribe([rma.partner_id.id])
         return res
 
 
