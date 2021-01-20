@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* repair_procurement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-20 22:14+0000\n"
+"PO-Revision-Date: 2021-01-20 16:14-0600\n"
+"Last-Translator: Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order__picking_count
+msgid "Delivery Orders"
+msgstr "Albaranes de salida"
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_procurement_group__display_name
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_line__display_name
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order__display_name
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_move__display_name
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_rule__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_procurement_group__id
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_line__id
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order__id
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_move__id
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_picking__id
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_procurement_group____last_update
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_line____last_update
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order____last_update
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_move____last_update
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_rule____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order__picking_ids
+#: model_terms:ir.ui.view,arch_db:repair_procurement.repair_order_form
+msgid "Pickings"
+msgstr "Albaranes"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_procurement_group
+#: model:ir.model.fields,field_description:repair_procurement.field_repair_order__procurement_group_id
+msgid "Procurement Group"
+msgstr "Grupo de abastecimiento"
+
+#. module: repair_procurement
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_move__repair_line_id
+msgid "Repair Line"
+msgstr "Línea de reparación"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_repair_line
+msgid "Repair Line (parts)"
+msgstr "Línea de Reparación (partes)"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_repair_order
+#: model:ir.model.fields,field_description:repair_procurement.field_procurement_group__repair_id
+#: model:ir.model.fields,field_description:repair_procurement.field_stock_picking__repair_id
+msgid "Repair Order"
+msgstr "Orden de reparación"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regla de Inventario"
+
+#. module: repair_procurement
+#: model:ir.model,name:repair_procurement.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"

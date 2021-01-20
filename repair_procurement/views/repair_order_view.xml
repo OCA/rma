@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="repair_order_form">
+        <field name="name">repair_order.form</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_created_invoice']" position="after">
+                <field name="picking_count" invisible="1" />
+                <button
+                    type="object"
+                    name="action_view_pickings"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    attrs="{'invisible': [('picking_count', '=', 0)]}"
+                >
+                    <field name="picking_count" widget="statinfo" string="Pickings" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
