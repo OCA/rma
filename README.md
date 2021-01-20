@@ -48,7 +48,14 @@ Upgrade the standard crm_claim module to add :
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[product_warranty](product_warranty/) | 13.0.1.0.0 | Product Warranty
+[rma](rma/) | 13.0.1.0.1 | Return Merchandise Authorization (RMA)
+[rma_sale](rma_sale/) | 13.0.1.1.0 | Sale Order - Return Merchandise Authorization (RMA)
+[website_rma](website_rma/) | 13.0.1.1.1 | Return Merchandise Authorization (RMA)
 
 [//]: # (end addons)
 
