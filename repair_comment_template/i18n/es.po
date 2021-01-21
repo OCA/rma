@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_requisition_comment_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-20 13:29+0000\n"
+"PO-Revision-Date: 2021-01-20 07:30-0600\n"
+"Last-Translator: Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__note2
+msgid "Bottom Comment"
+msgstr "Comentario inferior"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__comment_template2_id
+msgid "Bottom Comment Template"
+msgstr "Plantilla de comentario inferior"
+
+#. module: purchase_requisition_comment_template
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_comment_template.view_purchase_requisition_form_add_comment
+msgid "Bottom Comments"
+msgstr "Comentarios inferiores"
+
+#. module: purchase_requisition_comment_template
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_comment_template.view_purchase_requisition_form_add_comment
+msgid "Comments"
+msgstr "Comentarios"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_order__id
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__id
+msgid "ID"
+msgstr "ID (Identificador)"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: purchase_requisition_comment_template
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_comment_template.view_purchase_requisition_form_add_comment
+msgid "Load a template"
+msgstr "Cargar Plantilla"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model,name:purchase_requisition_comment_template.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de compra"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model,name:purchase_requisition_comment_template.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "Acuerdo de compra"
+
+#. module: purchase_requisition_comment_template
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_comment_template.view_purchase_requisition_form_add_comment
+msgid ""
+"The comments will be displayed on the printed document. You can load a "
+"predefined template, write your own text or load a template and then modify "
+"it only for this document."
+msgstr ""
+"Los comentarios se mostrarán en el documento impreso. Puede cargar una "
+"plantilla predefinida, escribir su propio texto o cargar una plantilla y "
+"luego modificarla solo para este documento."
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__note1
+msgid "Top Comment"
+msgstr "Comentario superior"
+
+#. module: purchase_requisition_comment_template
+#: model:ir.model.fields,field_description:purchase_requisition_comment_template.field_purchase_requisition__comment_template1_id
+msgid "Top Comment Template"
+msgstr "Plantilla de comentario superior"
+
+#. module: purchase_requisition_comment_template
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_comment_template.view_purchase_requisition_form_add_comment
+msgid "Top Comments"
+msgstr "Comentarios Superiores"

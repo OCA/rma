@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_repair_order_document" inherit_id="repair.report_repairorder">
+        <xpath expr="//div[@id='informations']" position="after">
+            <p t-if="o.note1">
+                <span t-field="o.note1" />
+            </p>
+        </xpath>
+        <xpath expr="//p[@t-field='o.quotation_notes']" position="after">
+            <p t-if="o.note2">
+                <span t-field="o.note2" />
+            </p>
+        </xpath>
+    </template>
+</odoo>
