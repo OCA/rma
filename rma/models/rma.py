@@ -498,10 +498,19 @@ class Rma(models.Model):
             )
         return super().unlink()
 
+    def _send_confirmation_email(self):
+        """Auto send notifications"""
+        for rma in self.filtered(lambda p: p.company_id.send_rma_confirmation):
+            rma_template_id = rma.company_id.rma_mail_confirmation_template_id.id
+            rma.with_context(
+                force_send=True, mark_rma_as_sent=True
+            ).message_post_with_template(rma_template_id)
+
     # Action methods
     def action_rma_send(self):
         self.ensure_one()
         template = self.env.ref("rma.mail_template_rma_notification", False)
+        template = self.company_id.rma_mail_confirmation_template_id or template
         form = self.env.ref("mail.email_compose_message_wizard_form", False)
         ctx = {
             "default_model": "rma",
@@ -536,6 +545,7 @@ class Rma(models.Model):
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
             if self.partner_id not in self.message_partner_ids:
                 self.message_subscribe([self.partner_id.id])
+            self._send_confirmation_email()
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked
