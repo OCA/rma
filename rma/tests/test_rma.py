@@ -669,3 +669,20 @@ class TestRma(SavepointCase):
         rma.reception_move_id.quantity_done = 10
         rma.reception_move_id.picking_id.action_done()
         self.assertEqual(rma.product_id.qty_available, 0)
+
+    def test_autoconfirm_email(self):
+        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma.company_id.send_rma_confirmation = True
+        rma.company_id.rma_mail_confirmation_template_id = (
+            self.env.ref("rma.mail_template_rma_notification")
+        )
+        previous_mails = self.env["mail.mail"].search(
+            [("partner_ids", "in", self.partner.ids)]
+        )
+        self.assertFalse(previous_mails)
+        rma.action_confirm()
+        mail = self.env["mail.message"].search(
+            [("partner_ids", "in", self.partner.ids)]
+        )
+        self.assertTrue(rma.name in mail.subject)
+        self.assertTrue(rma.name in mail.body)
