@@ -140,6 +140,13 @@ msgstr ""
 "clock-o\"/> Parzialmente disponibile</span>"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Delivery</strong>"
 msgstr "<strong class=\"d-block mb-1\">Consegna</strong>"
@@ -404,6 +411,11 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: rma
+#: model:ir.model,name:rma.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: rma
 #: model:ir.ui.menu,name:rma.rma_configuration_menu
 msgid "Configuration"
 msgstr "Configurazione"
@@ -448,7 +460,7 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1156
+#: code:addons/rma/models/rma.py:1170
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -541,7 +553,7 @@ msgid "Draft RMA"
 msgstr "Bozza RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1115
+#: code:addons/rma/models/rma.py:1129
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -563,6 +575,23 @@ msgstr "Email"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Email Alias"
 msgstr "Alias Email"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Email Template"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email Template confirmation for RMA"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email sent to the customer once the RMA is confirmed."
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/wizard/rma_split.py:63
@@ -642,7 +671,7 @@ msgstr ""
 "Team RMA senza rimuoverlo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1119
+#: code:addons/rma/models/rma.py:1133
 #, python-format
 msgid "Incoming e-mail"
 msgstr "Email in arrivo"
@@ -754,7 +783,7 @@ msgstr "Nome"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:506
-#: code:addons/rma/models/rma.py:1118
+#: code:addons/rma/models/rma.py:1132
 #, python-format
 msgid "New"
 msgstr "Nuovo"
@@ -775,13 +804,13 @@ msgid "Next Activity Type"
 msgstr "Tipo prossima attività"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:789
+#: code:addons/rma/models/rma.py:803
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Nessun RMA selezionato è adatto per una sostituzione."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:772
+#: code:addons/rma/models/rma.py:786
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr "Nessun RMA selezionato è adatto per un reso."
@@ -951,7 +980,7 @@ msgid "Quantity to extract"
 msgstr "Quantità da prelevare"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:822
+#: code:addons/rma/models/rma.py:836
 #, python-format
 msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity (%s "
@@ -985,10 +1014,15 @@ msgid "RMA #"
 msgstr "# RMA"
 
 #. module: rma
-#: code:addons/rma/models/res_company.py:18
+#: code:addons/rma/models/res_company.py:37
 #, python-format
 msgid "RMA Code"
 msgstr "Codice RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Confirmation Email"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1148,7 +1182,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Riferimento del documento che ha generato questo RMA."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:705
+#: code:addons/rma/models/rma.py:719
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1204,7 +1238,7 @@ msgid "Replaced"
 msgstr "Sostituito"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1028
+#: code:addons/rma/models/rma.py:1042
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1216,7 +1250,7 @@ msgstr ""
 "\" data-oe-id=\"%d\">%s</a>) è stato creato."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1039
+#: code:addons/rma/models/rma.py:1053
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1240,7 +1274,7 @@ msgid "Requested operation"
 msgstr "Operazione Richiesta"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:753
+#: code:addons/rma/models/rma.py:767
 #, python-format
 msgid "Required field(s):%s"
 msgstr "Campi richiesti:%s"
@@ -1269,7 +1303,7 @@ msgid "Return to customer"
 msgstr "Rendi al cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:989
+#: code:addons/rma/models/rma.py:1003
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1297,6 +1331,17 @@ msgstr "Data Prevista"
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
 msgid "Security Token"
 msgstr "Token di Sicurezza"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_confirmation
+msgid "Send RMA Confirmation"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA info to customer"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1367,7 +1412,7 @@ msgid "Split RMA"
 msgstr "Dividi RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:906
+#: code:addons/rma/models/rma.py:920
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
@@ -1463,7 +1508,7 @@ msgstr ""
 "iniziale perchè il movimento è legato ad un RMA (%s)."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:810
+#: code:addons/rma/models/rma.py:824
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "La quantità da restituire è maggiore della quantità restante."
@@ -1479,19 +1524,19 @@ msgstr ""
 "specificata nella riga dell'RMA collegato."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:799
+#: code:addons/rma/models/rma.py:813
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Questo RMA non può essere diviso."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:786
+#: code:addons/rma/models/rma.py:800
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Questo RMA non può eseguire una sostituzione."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:769
+#: code:addons/rma/models/rma.py:783
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr "Questo RMA non può eseguire un reso."
@@ -1613,6 +1658,18 @@ msgstr "Messaggi sito web"
 #: model:ir.model.fields,help:rma.field_rma_team__website_message_ids
 msgid "Website communication history"
 msgstr "Storico comunicazioni sito web"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "When the RMA is confirmed, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_confirmation
+msgid ""
+"When the delivery is confirmed, send a confirmation email to the customer."
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma.py:528
