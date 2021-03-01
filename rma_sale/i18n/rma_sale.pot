@@ -87,7 +87,7 @@ msgid "<strong>Sale order</strong>"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Accept"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgid "Allowed Product"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgid "Conversion between Units of Measure can only occur if they belong to the 
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:49
+#: code:addons/rma_sale/models/sale.py:55
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
@@ -284,6 +284,7 @@ msgid "Requested operation"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
 msgstr ""
@@ -360,7 +361,7 @@ msgid "You can send a message in every RMA sent"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/models/sale.py:34
+#: code:addons/rma_sale/models/sale.py:44
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr ""
