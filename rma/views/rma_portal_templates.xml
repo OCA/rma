@@ -36,7 +36,7 @@
                 <tr class="active">
                     <th>RMA #</th>
                     <th class='d-none d-md-table-cell'>Date</th>
-                    <th>Product</th>
+                    <th name="th_product">Product</th>
                     <th class='text-right'>Quantity</th>
                     <th class='d-none d-md-table-cell'>Status</th>
                 </tr>
@@ -51,7 +51,7 @@
                         </td>
                         <td class="d-none d-md-table-cell"><span t-field="rma.date"/></td>
                         <!-- Portal users don't have access to unpublished products -->
-                        <td><span t-esc="rma.sudo().product_id.display_name"/></td>
+                        <td name="td_product"><span t-esc="rma.sudo().product_id.display_name"/></td>
                         <td class='text-right'><span t-field="rma.product_uom_qty"/></td>
                         <td class="d-none d-md-table-cell tx_status">
                             <span class="badge badge-pill badge-secondary"><span t-field="rma.state"/></span>

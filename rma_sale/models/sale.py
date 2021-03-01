@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -28,19 +28,25 @@ class SaleOrder(models.Model):
         for record in self:
             record.rma_count = mapped_data.get(record.id, 0)
 
+    def _prepare_rma_wizard_line_vals(self, data):
+        """So we can extend the wizard easily"""
+        return {
+            'product_id': data['product'].id,
+            'quantity': data['quantity'],
+            'sale_line_id': data['sale_line_id'].id,
+            'uom_id': data['uom'].id,
+            'picking_id': data['picking'] and data['picking'].id,
+        }
+
     def action_create_rma(self):
         self.ensure_one()
         if self.state not in ['sale', 'done']:
             raise ValidationError(_("You may only create RMAs from a "
                                     "confirmed or done sale order."))
         wizard_obj = self.env['sale.order.rma.wizard']
-        line_vals = [(0, 0, {
-            'product_id': data['product'].id,
-            'quantity': data['quantity'],
-            'sale_line_id': data['sale_line_id'].id,
-            'uom_id': data['uom'].id,
-            'picking_id': data['picking'] and data['picking'].id,
-        }) for data in self.get_delivery_rma_data()]
+        line_vals = [
+            (0, 0, self._prepare_rma_wizard_line_vals(data))
+            for data in self.get_delivery_rma_data()]
         wizard = wizard_obj.with_context(active_id=self.id).create({
             'line_ids': line_vals,
             'location_id': self.warehouse_id.rma_loc_id.id
@@ -78,6 +84,19 @@ class SaleOrder(models.Model):
             data += line.prepare_sale_rma_data()
         return data
 
+    @api.depends("rma_ids.refund_id")
+    def _get_invoiced(self):
+        """Search for possible RMA refunds and link them to the order. We
+        don't want to link their sale lines as that would unbalance the
+        qtys to invoice wich isn't correct for this case"""
+        super()._get_invoiced()
+        for order in self:
+            refunds = order.sudo().rma_ids.mapped("refund_id")
+            if not refunds:
+                continue
+            order.invoice_ids += refunds
+            order.invoice_count = len(order.invoice_ids)
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -96,7 +115,7 @@ class SaleOrderLine(models.Model):
     def prepare_sale_rma_data(self):
         self.ensure_one()
         product = self.product_id
-        if self.product_id.type != 'product':
+        if self.product_id.type not in ['product', 'consu']:
             return {}
         moves = self.get_delivery_move()
         data = []
