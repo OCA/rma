@@ -462,7 +462,7 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1170
+#: code:addons/rma/models/rma.py:1188
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -555,7 +555,7 @@ msgid "Draft RMA"
 msgstr "RMA en estado Borrador"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1129
+#: code:addons/rma/models/rma.py:1147
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -675,7 +675,7 @@ msgstr ""
 "sin eliminarlo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1133
+#: code:addons/rma/models/rma.py:1151
 #, python-format
 msgid "Incoming e-mail"
 msgstr "Correo electrónico entrante"
@@ -787,7 +787,7 @@ msgstr "Nombre"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:506
-#: code:addons/rma/models/rma.py:1132
+#: code:addons/rma/models/rma.py:1150
 #, python-format
 msgid "New"
 msgstr "Nuevo"
@@ -808,13 +808,13 @@ msgid "Next Activity Type"
 msgstr "Siguiente tipo de actividad"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:803
+#: code:addons/rma/models/rma.py:805
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Ninguno de los RMAs seleccionados puede realizar un reemplazo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:786
+#: code:addons/rma/models/rma.py:788
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr "Ninguno de los RMAs seleccionados puede realizar una devolución."
@@ -995,7 +995,7 @@ msgid "Quantity to extract"
 msgstr "Cantidad a extraer"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:836
+#: code:addons/rma/models/rma.py:838
 #, python-format
 msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity (%s "
@@ -1198,7 +1198,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Referencia al documento que generó este RMA."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:719
+#: code:addons/rma/models/rma.py:721
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1254,7 +1254,7 @@ msgid "Replaced"
 msgstr "Reemplazado"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1042
+#: code:addons/rma/models/rma.py:1060
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1266,7 +1266,7 @@ msgstr ""
 "picking\" data-oe-id=\"%d\">%s</a>) ha sido creado."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1053
+#: code:addons/rma/models/rma.py:1071
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1290,7 +1290,7 @@ msgid "Requested operation"
 msgstr "Operación solicitada"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:767
+#: code:addons/rma/models/rma.py:769
 #, python-format
 msgid "Required field(s):%s"
 msgstr "Campo(s) requerido(s):%s"
@@ -1319,7 +1319,7 @@ msgid "Return to customer"
 msgstr "Devolver al cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1003
+#: code:addons/rma/models/rma.py:1021
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1428,7 +1428,7 @@ msgid "Split RMA"
 msgstr "Dividir RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:920
+#: code:addons/rma/models/rma.py:922
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
@@ -1534,13 +1534,13 @@ msgstr ""
 "inicial porque el movimiento está enlazado a un RMA (%s)."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:824
+#: code:addons/rma/models/rma.py:826
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "La cantidad a devolver es mayor que la cantidad restante del RMA."
 
 #. module: rma
-#: code:addons/rma/models/account_invoice.py:22
+#: code:addons/rma/models/account_invoice.py:27
 #, python-format
 msgid ""
 "There is at least one invoice lines whose quantity is less than the quantity "
@@ -1550,19 +1550,19 @@ msgstr ""
 "cantidad especificada en el RMA asociado."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:813
+#: code:addons/rma/models/rma.py:815
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Este RMA no puede ser dividido."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:800
+#: code:addons/rma/models/rma.py:802
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Este RMA no puede realizar un reemplazo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:783
+#: code:addons/rma/models/rma.py:785
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr "Este RMA no puede realizar una devolución."
