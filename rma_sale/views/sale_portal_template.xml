@@ -103,7 +103,7 @@
                                                 </td>
                                                 <td class="text-left">
                                                     <select t-attf-name="#{data_index}-operation_id"
-                                                            class="form-control">
+                                                            class="form-control rma-operation">
                                                         <option value="">---</option>
                                                         <t t-foreach="operations" t-as="operation">
                                                             <option t-att-value="operation.id">
