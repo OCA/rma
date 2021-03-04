@@ -135,6 +135,13 @@ msgstr ""
 "clock-o\"/> Parcialmente Disponível</span>"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Delivery</strong>"
 msgstr "<strong class=\"d-block mb-1\">Entrega</strong>"
@@ -401,6 +408,11 @@ msgid "Company"
 msgstr "Empresa"
 
 #. module: rma
+#: model:ir.model,name:rma.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: rma
 #: model:ir.ui.menu,name:rma.rma_configuration_menu
 msgid "Configuration"
 msgstr "Configuração"
@@ -548,6 +560,23 @@ msgstr "Email"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Email Alias"
 msgstr "Alias do Email"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Email Template"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email Template confirmation for RMA"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email sent to the customer once the RMA is confirmed."
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/wizard/rma_split.py:0
@@ -987,6 +1016,11 @@ msgid "RMA Code"
 msgstr "Código RMA"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Confirmation Email"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Date"
 msgstr ""
@@ -1016,6 +1050,16 @@ msgstr "Tipo Entrada RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_loc_id
 msgid "RMA Location"
 msgstr "Localização RMA"
+
+#. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
+msgid "RMA Notification"
+msgstr ""
+
+#. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_notification
+msgid "RMA Notificatoin"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1062,6 +1106,11 @@ msgstr "Equipe RMA"
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
 msgid "RMA Team the user is member of."
 msgstr "Equipe de RMA da qual o usuário é membro."
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_notification
+msgid "RMA automatic customer notifications"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
@@ -1302,6 +1351,17 @@ msgid "Security Token"
 msgstr "Token de Segurança"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_confirmation
+msgid "Send RMA Confirmation"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA info to customer"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Send by Email"
 msgstr "Enviado por Email"
@@ -1342,6 +1402,16 @@ msgstr "Marcado como Rascunho"
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Share"
 msgstr "Compartilhar"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
+msgid "Shipping address for current RMA."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -1615,6 +1685,18 @@ msgstr "Mensagens do Site"
 #: model:ir.model.fields,help:rma.field_rma_team__website_message_ids
 msgid "Website communication history"
 msgstr "Histórico de Comunicação Através do Site"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "When the RMA is confirmed, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_confirmation
+msgid ""
+"When the delivery is confirmed, send a confirmation email to the customer."
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
