@@ -885,6 +885,7 @@ class Rma(models.Model):
     def _prepare_picking(self, picking_form):
         picking_form.origin = self.name
         picking_form.partner_id = self.partner_shipping_id
+        picking_form.location_id = self.partner_shipping_id.property_stock_customer
         picking_form.location_dest_id = self.location_id
         with picking_form.move_ids_without_package.new() as move_form:
             move_form.product_id = self.product_id
