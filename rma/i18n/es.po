@@ -462,7 +462,7 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1188
+#: code:addons/rma/models/rma.py:1189
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -555,7 +555,7 @@ msgid "Draft RMA"
 msgstr "RMA en estado Borrador"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1147
+#: code:addons/rma/models/rma.py:1148
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -675,7 +675,7 @@ msgstr ""
 "sin eliminarlo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1151
+#: code:addons/rma/models/rma.py:1152
 #, python-format
 msgid "Incoming e-mail"
 msgstr "Correo electrónico entrante"
@@ -787,7 +787,7 @@ msgstr "Nombre"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:506
-#: code:addons/rma/models/rma.py:1150
+#: code:addons/rma/models/rma.py:1151
 #, python-format
 msgid "New"
 msgstr "Nuevo"
@@ -1254,7 +1254,7 @@ msgid "Replaced"
 msgstr "Reemplazado"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1060
+#: code:addons/rma/models/rma.py:1061
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1266,7 +1266,7 @@ msgstr ""
 "picking\" data-oe-id=\"%d\">%s</a>) ha sido creado."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1071
+#: code:addons/rma/models/rma.py:1072
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1319,7 +1319,7 @@ msgid "Return to customer"
 msgstr "Devolver al cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1021
+#: code:addons/rma/models/rma.py:1022
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1428,7 +1428,7 @@ msgid "Split RMA"
 msgstr "Dividir RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:922
+#: code:addons/rma/models/rma.py:923
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
