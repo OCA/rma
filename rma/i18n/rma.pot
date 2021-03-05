@@ -409,7 +409,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1188
+#: code:addons/rma/models/rma.py:1189
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -503,7 +503,7 @@ msgid "Draft RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1147
+#: code:addons/rma/models/rma.py:1148
 #, python-format
 msgid "E-mail subject: %s\n"
 "\n"
@@ -610,7 +610,7 @@ msgid "If the active field is set to false, it will allow you to hide the RMA Te
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1151
+#: code:addons/rma/models/rma.py:1152
 #, python-format
 msgid "Incoming e-mail"
 msgstr ""
@@ -723,7 +723,7 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:31
 #: code:addons/rma/models/rma.py:506
-#: code:addons/rma/models/rma.py:1150
+#: code:addons/rma/models/rma.py:1151
 #, python-format
 msgid "New"
 msgstr ""
@@ -1169,13 +1169,13 @@ msgid "Replaced"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1060
+#: code:addons/rma/models/rma.py:1061
 #, python-format
 msgid "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a>) has been created."
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1071
+#: code:addons/rma/models/rma.py:1072
 #, python-format
 msgid "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not create a new move, but one of the previously created moves was updated with this data."
 msgstr ""
@@ -1220,7 +1220,7 @@ msgid "Return to customer"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1021
+#: code:addons/rma/models/rma.py:1022
 #, python-format
 msgid "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a> has been created."
 msgstr ""
@@ -1325,7 +1325,7 @@ msgid "Split RMA"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:922
+#: code:addons/rma/models/rma.py:923
 #, python-format
 msgid "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been created."
 msgstr ""
