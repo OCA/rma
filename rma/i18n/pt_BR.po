@@ -461,7 +461,7 @@ msgid "Created on"
 msgstr "Criado em"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1189
+#: code:addons/rma/models/rma.py:1194
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -554,7 +554,7 @@ msgid "Draft RMA"
 msgstr "Rascunho do RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1148
+#: code:addons/rma/models/rma.py:1153
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -674,7 +674,7 @@ msgstr ""
 "sem removê-lo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1152
+#: code:addons/rma/models/rma.py:1157
 #, python-format
 msgid "Incoming e-mail"
 msgstr "E-mail recebido"
@@ -786,7 +786,7 @@ msgstr "Nome"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:506
-#: code:addons/rma/models/rma.py:1151
+#: code:addons/rma/models/rma.py:1156
 #, python-format
 msgid "New"
 msgstr "Novo(a)"
@@ -807,13 +807,13 @@ msgid "Next Activity Type"
 msgstr "Tipo da Próxima Atividade"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:805
+#: code:addons/rma/models/rma.py:807
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Nenhum dos RMAs selecionados pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:788
+#: code:addons/rma/models/rma.py:790
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr "Nenhum dos RMAs selecionados pode executar uma devolução."
@@ -994,7 +994,7 @@ msgid "Quantity to extract"
 msgstr "Quantidade a extrair"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:838
+#: code:addons/rma/models/rma.py:840
 #, python-format
 msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity (%s "
@@ -1070,6 +1070,16 @@ msgid "RMA Location"
 msgstr "Localização RMA"
 
 #. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
+msgid "RMA Notification"
+msgstr ""
+
+#. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_notification
+msgid "RMA Notificatoin"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "RMA Order -"
 msgstr "Pedido RMA -"
@@ -1114,6 +1124,11 @@ msgstr "Equipe RMA"
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
 msgid "RMA Team the user is member of."
 msgstr "Equipe de RMA da qual o usuário é membro."
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_notification
+msgid "RMA automatic customer notifications"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
@@ -1196,7 +1211,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Referência do documento que gerou este RMA."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:721
+#: code:addons/rma/models/rma.py:723
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1252,7 +1267,7 @@ msgid "Replaced"
 msgstr "Substituído"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1061
+#: code:addons/rma/models/rma.py:1063
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1264,7 +1279,7 @@ msgstr ""
 "data-oe-id=\"%d\">%s</a> foi criada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1072
+#: code:addons/rma/models/rma.py:1074
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1288,7 +1303,7 @@ msgid "Requested operation"
 msgstr "Operação Solicitada"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:769
+#: code:addons/rma/models/rma.py:771
 #, python-format
 msgid "Required field(s):%s"
 msgstr "Campo(s) Solicitado(s):%s"
@@ -1317,7 +1332,7 @@ msgid "Return to customer"
 msgstr "Retornar ao cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1022
+#: code:addons/rma/models/rma.py:1024
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1426,7 +1441,7 @@ msgid "Split RMA"
 msgstr "Dividir RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:923
+#: code:addons/rma/models/rma.py:925
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
@@ -1531,7 +1546,7 @@ msgstr ""
 "inicial, porque a movimentação do estoque está vinculada a uma RMA (%s)."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:826
+#: code:addons/rma/models/rma.py:828
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "A quantidade a retornar é maior que a quantidade restante."
@@ -1547,19 +1562,19 @@ msgstr ""
 "especificada na sua RMA vinculada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:815
+#: code:addons/rma/models/rma.py:817
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Esta RMA não pode ser dividida."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:802
+#: code:addons/rma/models/rma.py:804
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Esta RMA não pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:785
+#: code:addons/rma/models/rma.py:787
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr "Este RMA não pode executar uma devolução."
