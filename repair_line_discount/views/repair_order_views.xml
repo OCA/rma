@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="rma_repair_order_form">
+        <field name="name">qualmex.repair.order.form</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form" />
+        <field name="arch" type="xml">
+             <xpath
+                expr="//page[@name='parts']/field[@name='operations']/tree/field[@name='product_uom_qty']"
+                position="after"
+            >
+                <field name="discount" />
+            </xpath>
+            <xpath
+                expr="//page[@name='operations']/field[@name='fees_lines']/tree/field[@name='product_uom_qty']"
+                position="after"
+            >
+                <field name="discount" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
