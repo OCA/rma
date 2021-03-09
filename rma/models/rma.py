@@ -536,7 +536,8 @@ class Rma(models.Model):
             )
             rma.with_context(
                 force_send=True,
-                mark_rma_as_sent=True
+                mark_rma_as_sent=True,
+                default_subtype_id=self.env.ref('rma.mt_rma_notification').id,
             ).message_post_with_template(rma_template_id)
 
     # Action methods
@@ -548,6 +549,7 @@ class Rma(models.Model):
         form = self.env.ref('mail.email_compose_message_wizard_form', False)
         ctx = {
             'default_model': 'rma',
+            'default_subtype_id': self.env.ref('rma.mt_rma_notification').id,
             'default_res_id': self.ids[0],
             'default_use_template': bool(template),
             'default_template_id': template and template.id or False,
@@ -1133,8 +1135,11 @@ class Rma(models.Model):
     # Mail business methods
     def _track_subtype(self, init_values):
         self.ensure_one()
-        if 'state' in init_values and self.state == 'draft':
-            return 'rma.mt_rma_draft'
+        if 'state' in init_values:
+            if self.state == 'draft':
+                return 'rma.mt_rma_draft'
+            elif self.state == 'confirmed':
+                return 'rma.mt_rma_notification'
         return super()._track_subtype(init_values)
 
     def message_new(self, msg_dict, custom_values=None):

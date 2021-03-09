@@ -7,6 +7,12 @@
         <field name="default" eval="False"/>
         <field name="description">RMA in draft state</field>
     </record>
+    <record id="mt_rma_notification" model="mail.message.subtype">
+        <field name="name">RMA Notificatoin</field>
+        <field name="res_model">rma</field>
+        <field name="default" eval="False"/>
+        <field name="description">RMA automatic customer notifications</field>
+    </record>
     <!-- rma_team-related subtypes for messaging / Chatter -->
     <record id="mt_rma_team_rma_draft" model="mail.message.subtype">
         <field name="name">Draft RMA</field>
@@ -14,6 +20,14 @@
         <field name="res_model">rma.team</field>
         <field name="default" eval="True"/>
         <field name="parent_id" eval="ref('rma.mt_rma_draft')"/>
+        <field name="relation_field">team_id</field>
+    </record>
+    <record id="mt_rma_team_rma_notification" model="mail.message.subtype">
+        <field name="name">RMA Notification</field>
+        <field name="sequence">20</field>
+        <field name="res_model">rma.team</field>
+        <field name="default" eval="True"/>
+        <field name="parent_id" eval="ref('rma.mt_rma_notification')"/>
         <field name="relation_field">team_id</field>
     </record>
     <!--RMA email template -->

@@ -686,3 +686,5 @@ class TestRma(SavepointCase):
         )
         self.assertTrue(rma.name in mail.subject)
         self.assertTrue(rma.name in mail.body)
+        self.assertEqual(
+            self.env.ref("rma.mt_rma_notification"), mail.subtype_id)
