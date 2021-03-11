@@ -6,33 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-03-12 01:45+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-times\"/> Cancelled</span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelado</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Draft</span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Rascunho</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Waiting</span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Em Espera</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
 msgid "<span>Product</span>"
-msgstr ""
+msgstr "<span>Produto</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
@@ -93,7 +101,7 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_category_id
 msgid "Category"
-msgstr ""
+msgstr "Categoria"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_rma_wizard__component_line_ids
@@ -108,37 +116,37 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__picking_id
 msgid "Delivery order"
-msgstr ""
+msgstr "Ordem de Entrega"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__description
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome a Exibir"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_my_rmas
@@ -179,7 +187,7 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__order_id
 msgid "Order"
-msgstr ""
+msgstr "Encomenda"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__per_kit_quantity
@@ -202,17 +210,17 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Quantidade"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_rma
 msgid "RMA"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__phantom_bom_product
@@ -232,27 +240,27 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__sale_line_id
 msgid "Sale Line"
-msgstr ""
+msgstr "Linha de Venda"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order
 msgid "Sale Order"
-msgstr ""
+msgstr "Encomenda de Venda"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr ""
+msgstr "Assistente da Linha de RMA da Encomenda de Venda"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr ""
+msgstr "Assistente da RMA da Encomenda de Venda"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Linha de Encomenda de Venda"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
@@ -262,7 +270,7 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_id
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Unidade de Medida"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line_rma_wizard_component
@@ -278,7 +286,7 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Assistente"
 
 #. module: rma_sale_mrp
 #: code:addons/rma_sale_mrp/models/rma.py:49
