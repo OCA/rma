@@ -18,5 +18,5 @@ class ProductTemplate(models.Model):
         string="Warranty Type",
         required=True,
         default="day",
-        tranking=1,
+        tracking=1,
     )
