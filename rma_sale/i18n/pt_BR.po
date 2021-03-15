@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-07-22 18:19+0000\n"
-"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"PO-Revision-Date: 2021-03-15 08:45+0000\n"
+"Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: rma_sale
 #: code:addons/rma_sale/controllers/sale_portal.py:41
@@ -57,7 +57,7 @@ msgstr "<i class=\"fa fa-times\"/> Cancelar"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
-msgstr ""
+msgstr "<i class=\"fa fa-truck\"/> Escolha um endereço de entrega"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -134,11 +134,13 @@ msgid ""
 "Comment anything relevant to the return, like serial numbers, a description "
 "of the issue, etc"
 msgstr ""
+"Comente qualquer coisa relevante para a devolução, como números de série, "
+"uma descrição do problema, etc"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
 msgid "Commercial entity"
-msgstr ""
+msgstr "Entidade Comercial"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -186,7 +188,7 @@ msgstr "Ordem de Entrega"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__description
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
@@ -204,6 +206,8 @@ msgstr "ID"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
+"Se nenhuma operação solicitada for configurada, o RMA não será cumprido "
+"corretamente"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
@@ -298,7 +302,7 @@ msgstr "Operação Requisitada"
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
-msgstr ""
+msgstr "Linha de Venda"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
@@ -324,22 +328,22 @@ msgstr "Linha do Pedido de Venda"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "Select the product quantity and the requested operation"
-msgstr ""
+msgstr "Selecione a quantidade do produto e a operação solicitada"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Shipping Address"
-msgstr ""
+msgstr "Endereço de Entrega"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de Estoque"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "The limit will decrease when the units in other RMAs are confirmed"
-msgstr ""
+msgstr "O limite diminuirá quando as unidades em outros RMAs forem confirmadas"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
@@ -352,11 +356,13 @@ msgid ""
 "Use the comment button to add relevant information regarding the RMA, like "
 "returned serial numbers or a description of the issue"
 msgstr ""
+"Use o botão de comentários para adicionar informações relevantes sobre o "
+"RMA, como números de série devolvidos ou uma descrição do problema"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Will be used to return the goods when the RMA is completed"
-msgstr ""
+msgstr "Será usado para devolver a mercadoria quando o RMA for concluído"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
@@ -368,11 +374,13 @@ msgstr "Assistente"
 msgid ""
 "You can only return as much product units as you received for this order"
 msgstr ""
+"Você só pode retornar o máximo de unidades de produtos que você recebeu para "
+"esta ordem"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "You can send a message in every RMA sent"
-msgstr ""
+msgstr "Você pode enviar uma mensagem em cada RMA enviado"
 
 #. module: rma_sale
 #: code:addons/rma_sale/models/sale.py:44
@@ -388,6 +396,8 @@ msgid ""
 "You're about to perform an RMA request. Our team will process it an will "
 "reach you once it's validated. Keep in mind that:"
 msgstr ""
+"Você está prestes a realizar uma solicitação de RMA. Nossa equipe irá "
+"processá-lo e chegará a você assim que for validado. Tenha em mente que:"
 
 #~ msgid ""
 #~ "<span>\n"
