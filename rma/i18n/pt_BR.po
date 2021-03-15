@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-03-15 14:41+0000\n"
+"PO-Revision-Date: 2021-03-15 17:45+0000\n"
 "Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -261,7 +261,7 @@ msgstr "<strong>Responsável:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Shipping address:</strong>"
-msgstr "<strong>Endereço de entrega: </strong><strong>"
+msgstr "<strong>Endereço de entrega: </strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -336,7 +336,7 @@ msgstr "Modelo do Alias"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Are you sure you want to cancel this RMA"
-msgstr "tem certeza que quer cancelar este RMA"
+msgstr "Tem certeza que quer cancelar este RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_attachment_count
@@ -1043,12 +1043,12 @@ msgstr "E-mail de Confirmação da RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Date"
-msgstr ""
+msgstr "Data do RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Deadline"
-msgstr ""
+msgstr "Prazo do RMA"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:96
@@ -1079,7 +1079,7 @@ msgstr "Notificação RMA"
 #. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 msgid "RMA Notificatoin"
-msgstr ""
+msgstr "RMA Notificação"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1130,7 +1130,7 @@ msgstr "Equipe de RMA da qual o usuário é membro."
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_notification
 msgid "RMA automatic customer notifications"
-msgstr ""
+msgstr "Notificações RMA automáticas para clientes"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
@@ -1142,7 +1142,7 @@ msgstr "Contagem de RMA"
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
-msgstr ""
+msgstr "RMA em estado de rascunho"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1180,12 +1180,12 @@ msgstr "RMAs"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMAs which deadline has passed"
-msgstr ""
+msgstr "RMAs que prazo passou"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMAs yet to be fully processed"
-msgstr ""
+msgstr "RMAs ainda a serem totalmente processados"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1367,12 +1367,12 @@ msgstr "Token de Segurança"
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_confirmation
 msgid "Send RMA Confirmation"
-msgstr ""
+msgstr "Enviar Confirmação do RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA info to customer"
-msgstr ""
+msgstr "Envie informações automáticas do RMA ao cliente"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1392,7 +1392,7 @@ msgstr "Enviado(a)"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:62
@@ -1419,12 +1419,12 @@ msgstr "Compartilhar"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
 msgid "Shipping Address"
-msgstr ""
+msgstr "Endereço de Entrega"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr ""
+msgstr "Endereço atual de envio RMA."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -1638,7 +1638,7 @@ msgstr "Contador de Mensagens Não Lidas"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
-msgstr ""
+msgstr "RMAs Não Resolvidos"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
@@ -1702,7 +1702,7 @@ msgstr "Histórico de Comunicação Através do Site"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
-msgstr ""
+msgstr "Quando o RMA for confirmado, envie um e-mail automático de informações."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
@@ -1710,6 +1710,7 @@ msgstr ""
 msgid ""
 "When the delivery is confirmed, send a confirmation email to the customer."
 msgstr ""
+"Quando a entrega for confirmada, envie um e-mail de confirmação ao cliente."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:528
