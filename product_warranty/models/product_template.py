@@ -7,7 +7,7 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    warranty = fields.Integer(string="Warranty Duration",tracking=1)
+    warranty = fields.Integer(string="Warranty Duration", tracking=1)
     warranty_type = fields.Selection(
         [
             ("day", "Day(s)"),
