@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-03-21 11:46+0000\n"
+"Last-Translator: Dong <dong@freshoo.cn>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: rma
 #: model:mail.template,report_name:rma.mail_template_rma_notification
@@ -1113,7 +1115,7 @@ msgstr ""
 #: model:rma.operation,name:rma.rma_operation_refund
 #, python-format
 msgid "Refund"
-msgstr ""
+msgstr "退货"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
@@ -1143,24 +1145,24 @@ msgstr ""
 #. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
-msgstr ""
+msgstr "维修"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__replace
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_replace
 msgid "Replace"
-msgstr ""
+msgstr "换货"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_id
 msgid "Replace Product"
-msgstr ""
+msgstr "换货产品"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__replaced
 msgid "Replaced"
-msgstr ""
+msgstr "已换货"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
