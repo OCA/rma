@@ -25,11 +25,16 @@ class CustomerPortal(CustomerPortal):
             return request.redirect("/my")
         order_obj = request.env["sale.order"]
         wizard_obj = request.env["sale.order.rma.wizard"]
+        wizard_line_field_types = {
+            f: d["type"] for f, d in wizard_obj.line_ids.fields_get().items()
+        }
         # Set wizard line vals
         mapped_vals = {}
         partner_shipping_id = post.pop("partner_shipping_id", False)
         for name, value in post.items():
             row, field_name = name.split("-", 1)
+            if wizard_line_field_types.get(field_name) == "many2one":
+                value = int(value) if value else False
             mapped_vals.setdefault(row, {}).update({field_name: value})
         # If no operation is filled, no RMA will be created
         line_vals = [
