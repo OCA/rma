@@ -53,8 +53,8 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_warranty](product_warranty/) | 13.0.1.0.0 | Product Warranty
-[rma](rma/) | 13.0.1.0.1 | Return Merchandise Authorization (RMA)
-[rma_sale](rma_sale/) | 13.0.1.1.0 | Sale Order - Return Merchandise Authorization (RMA)
+[rma](rma/) | 13.0.1.1.0 | Return Merchandise Authorization (RMA)
+[rma_sale](rma_sale/) | 13.0.1.2.0 | Sale Order - Return Merchandise Authorization (RMA)
 [website_rma](website_rma/) | 13.0.1.2.0 | Return Merchandise Authorization (RMA)
 
 [//]: # (end addons)
