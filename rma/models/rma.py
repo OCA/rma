@@ -73,6 +73,13 @@ class Rma(models.Model):
         index=True,
         tracking=True,
     )
+    partner_shipping_id = fields.Many2one(
+        string="Shipping Address",
+        comodel_name="res.partner",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        help="Shipping address for current RMA.",
+    )
     partner_invoice_id = fields.Many2one(
         string="Invoice Address",
         comodel_name="res.partner",
@@ -385,7 +392,9 @@ class Rma(models.Model):
             record.access_url = "/my/rmas/{}".format(record.id)
 
     # Constrains methods (@api.constrains)
-    @api.constrains("state", "partner_id", "partner_invoice_id", "product_id")
+    @api.constrains(
+        "state", "partner_id", "partner_shipping_id", "partner_invoice_id", "product_id"
+    )
     def _check_required_after_draft(self):
         """ Check that RMAs are being created or edited with the
         necessary fields filled out. Only applies to 'Draft' and
@@ -420,10 +429,13 @@ class Rma(models.Model):
     def _onchange_partner_id(self):
         self.picking_id = False
         partner_invoice_id = False
+        partner_shipping_id = False
         if self.partner_id:
-            address = self.partner_id.address_get(["invoice"])
+            address = self.partner_id.address_get(["invoice", "delivery"])
             partner_invoice_id = address.get("invoice", False)
+            partner_shipping_id = address.get("delivery", False)
         self.partner_invoice_id = partner_invoice_id
+        self.partner_shipping_id = partner_shipping_id
 
     @api.onchange("picking_id")
     def _onchange_picking_id(self):
@@ -498,13 +510,25 @@ class Rma(models.Model):
             )
         return super().unlink()
 
+    def _send_confirmation_email(self):
+        """Auto send notifications"""
+        for rma in self.filtered(lambda p: p.company_id.send_rma_confirmation):
+            rma_template_id = rma.company_id.rma_mail_confirmation_template_id.id
+            rma.with_context(
+                force_send=True,
+                mark_rma_as_sent=True,
+                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
+            ).message_post_with_template(rma_template_id)
+
     # Action methods
     def action_rma_send(self):
         self.ensure_one()
         template = self.env.ref("rma.mail_template_rma_notification", False)
+        template = self.company_id.rma_mail_confirmation_template_id or template
         form = self.env.ref("mail.email_compose_message_wizard_form", False)
         ctx = {
             "default_model": "rma",
+            "default_subtype_id": self.env.ref("rma.mt_rma_notification").id,
             "default_res_id": self.ids[0],
             "default_use_template": bool(template),
             "default_template_id": template and template.id or False,
@@ -536,6 +560,7 @@ class Rma(models.Model):
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
             if self.partner_id not in self.message_partner_ids:
                 self.message_subscribe([self.partner_id.id])
+            self._send_confirmation_email()
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked
@@ -710,7 +735,10 @@ class Rma(models.Model):
     # Validation business methods
     def _ensure_required_fields(self):
         """ This method is used to ensure the following fields are not empty:
-        ['partner_id', 'partner_invoice_id', 'product_id', 'location_id']
+        [
+            'partner_id', 'partner_invoice_id', 'partner_shipping_id',
+            'product_id', 'location_id'
+        ]
 
         This method is intended to be called on confirm RMA action and is
         invoked by:
@@ -718,7 +746,13 @@ class Rma(models.Model):
         rma.action_confirm
         """
         ir_translation = self.env["ir.translation"]
-        required = ["partner_id", "partner_invoice_id", "product_id", "location_id"]
+        required = [
+            "partner_id",
+            "partner_shipping_id",
+            "partner_invoice_id",
+            "product_id",
+            "location_id",
+        ]
         for record in self:
             desc = ""
             for field in filter(lambda item: not record[item], required):
@@ -850,7 +884,8 @@ class Rma(models.Model):
 
     def _prepare_picking(self, picking_form):
         picking_form.origin = self.name
-        picking_form.partner_id = self.partner_id
+        picking_form.partner_id = self.partner_shipping_id
+        picking_form.location_id = self.partner_shipping_id.property_stock_customer
         picking_form.location_dest_id = self.location_id
         with picking_form.move_ids_without_package.new() as move_form:
             move_form.product_id = self.product_id
@@ -915,15 +950,31 @@ class Rma(models.Model):
         rma.action_refund
         """
         self.ensure_one()
-        line_form.product_id = self.product_id
-        line_form.quantity = self.product_uom_qty
-        line_form.product_uom_id = self.product_uom
+        product = self._get_refund_line_product()
+        qty, uom = self._get_refund_line_quantity()
+        line_form.product_id = product
+        line_form.quantity = qty
+        line_form.product_uom_id = uom
         line_form.price_unit = self._get_refund_line_price_unit()
+
+    def _get_refund_line_product(self):
+        """To be overriden in a third module with the proper origin values
+        in case a kit is linked with the rma"""
+        return self.product_id
+
+    def _get_refund_line_quantity(self):
+        """To be overriden in a third module with the proper origin values
+        in case a kit is linked with the rma """
+        return (self.product_uom_qty, self.product_uom)
 
     def _get_refund_line_price_unit(self):
         """To be overriden in a third module with the proper origin values
         in case a sale order is linked to the original move"""
         return self.product_id.lst_price
+
+    def _get_extra_refund_line_vals(self):
+        """Override to write aditional stuff into the refund line"""
+        return {}
 
     # Returning business methods
     def create_return(self, scheduled_date, qty=None, uom=None):
@@ -933,7 +984,11 @@ class Rma(models.Model):
         group_dict = {}
         rmas_to_return = self.filtered("can_be_returned")
         for record in rmas_to_return:
-            key = (record.partner_id.id, record.company_id.id, record.warehouse_id)
+            key = (
+                record.partner_shipping_id.id,
+                record.company_id.id,
+                record.warehouse_id,
+            )
             group_dict.setdefault(key, self.env["rma"])
             group_dict[key] |= record
         for rmas in group_dict.values():
@@ -981,7 +1036,7 @@ class Rma(models.Model):
     def _prepare_returning_picking(self, picking_form, origin=None):
         picking_form.picking_type_id = self.warehouse_id.rma_out_type_id
         picking_form.origin = origin or self.name
-        picking_form.partner_id = self.partner_id
+        picking_form.partner_id = self.partner_shipping_id
 
     def _prepare_returning_move(
         self, move_form, scheduled_date, quantity=None, uom=None
@@ -1047,7 +1102,7 @@ class Rma(models.Model):
                     {
                         "name": self.name,
                         "move_type": "direct",
-                        "partner_id": self.partner_id.id,
+                        "partner_id": self.partner_shipping_id.id,
                     }
                 )
                 .id
@@ -1059,7 +1114,7 @@ class Rma(models.Model):
             product,
             qty,
             uom,
-            self.partner_id.property_stock_customer,
+            self.partner_shipping_id.property_stock_customer,
             self.product_id.display_name,
             self.procurement_group_id.name,
             self.company_id,
@@ -1077,17 +1132,26 @@ class Rma(models.Model):
             "group_id": group_id,
             "date_planned": scheduled_date,
             "warehouse_id": warehouse,
-            "partner_id": self.partner_id.id,
+            "partner_id": self.partner_shipping_id.id,
             "rma_id": self.id,
             "priority": self.priority,
         }
 
     # Mail business methods
     def _creation_subtype(self):
-        if self.state in ("draft", "confirmed"):
+        if self.state in ("draft"):
             return self.env.ref("rma.mt_rma_draft")
         else:
             return super()._creation_subtype()
+
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if "state" in init_values:
+            if self.state == "draft":
+                return self.env.ref("rma.mt_rma_draft")
+            elif self.state == "confirmed":
+                return self.env.ref("rma.mt_rma_notification")
+        return super()._track_subtype(init_values)
 
     def message_new(self, msg_dict, custom_values=None):
         """Extract the needed values from an incoming rma emails data-set

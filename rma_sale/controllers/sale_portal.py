@@ -27,6 +27,7 @@ class CustomerPortal(CustomerPortal):
         wizard_obj = request.env["sale.order.rma.wizard"]
         # Set wizard line vals
         mapped_vals = {}
+        partner_shipping_id = post.pop("partner_shipping_id", False)
         for name, value in post.items():
             row, field_name = name.split("-", 1)
             mapped_vals.setdefault(row, {}).update({field_name: value})
@@ -38,9 +39,13 @@ class CustomerPortal(CustomerPortal):
         order = order_obj.browse(order_id).sudo()
         location_id = order.warehouse_id.rma_loc_id.id
         wizard = wizard_obj.with_context(active_id=order_id).create(
-            {"line_ids": line_vals, "location_id": location_id}
+            {
+                "line_ids": line_vals,
+                "location_id": location_id,
+                "partner_shipping_id": partner_shipping_id,
+            }
         )
-        rma = wizard.sudo().create_rma()
+        rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(" (Portal)")
         # Add the user as follower of the created RMAs so they can
