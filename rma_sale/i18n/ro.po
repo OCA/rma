@@ -56,6 +56,11 @@ msgid "<i class=\"fa fa-times\"/> Cancel"
 msgstr "<i class=\"fa fa-times\"/> Anulat"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
+msgstr ""
+
+#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
@@ -133,6 +138,11 @@ msgid ""
 msgstr ""
 "Menționează orice este relevant pentru returnare, cum ar fi numerele de "
 "serie, o descriere a problemei etc."
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
+msgid "Commercial entity"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -291,6 +301,7 @@ msgid "Requested operation"
 msgstr "Operație solicitată"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
 msgstr ""
@@ -326,6 +337,11 @@ msgid "Select the product quantity and the requested operation"
 msgstr "Selectați cantitatea produsului și operațiunea solicitată"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
 msgstr "Mișcare stoc"
@@ -349,6 +365,11 @@ msgstr ""
 "Utilizați butonul de comentariu pentru a adăuga informații relevante cu "
 "privire la retur, cum ar fi numerele de serie returnate sau o descriere a "
 "problemei"
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Will be used to return the goods when the RMA is completed"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
