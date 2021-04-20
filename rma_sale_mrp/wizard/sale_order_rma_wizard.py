@@ -33,33 +33,39 @@ class SaleOrderRmaWizard(models.TransientModel):
         return super().create(vals)
 
     def create_rma(self, from_portal=None):
-        """We'll decompose the RMAs and remove the phantom lines"""
+        """We kept the component lines in the shade and now we need to take
+        the ones linked to the phatom lines (kits) to create the proper RMA
+        for each component according to the proper component quantities"""
         phantom_lines = self.line_ids.filtered("phantom_kit_line")
-        # Coming from the portal, we'll compute how many per kit to receive.
-        # From backend we'll be returning them from each individual component
-        # import pdb; pdb.set_trace()
+        kit_line_vals = []
         for line in phantom_lines:
-            kit_lines = self.component_line_ids.filtered(
+            # There could be two lines for the same product, so we need to
+            # split them to get the right quantities and operations for each
+            # one and then group them by product to process them altogether
+            kit_component_lines = self.component_line_ids.filtered(
                 lambda x: x.phantom_bom_product == line.product_id
                 and x.sale_line_id == line.sale_line_id
             )
-            component_products = kit_lines.mapped("product_id")
-            for product in component_products:
-                product_kit_lines = kit_lines.filtered(
-                    lambda x: x.product_id == product)
-                qty_to_return = product_kit_lines[0].per_kit_quantity * line.quantity
-                while qty_to_return:
-                    for kit_line in product_kit_lines:
+            for product in kit_component_lines.mapped("product_id"):
+                product_kit_component_lines = kit_component_lines.filtered(
+                    lambda x: x.product_id == product and x.quantity
+                )
+                qty_to_return = (
+                    product_kit_component_lines[0].per_kit_quantity
+                    * line.quantity
+                )
+                while qty_to_return > 0:
+                    for kit_line in product_kit_component_lines:
                         kit_line.quantity = min(qty_to_return, kit_line.quantity)
                         kit_line.operation_id = line.operation_id
                         kit_line.kit_qty_done = (
                             kit_line.quantity / kit_line.per_kit_quantity)
                         qty_to_return -= kit_line.quantity
-            # Finally we add them the main line_ids
-            kit_line_vals = [
-                (0, 0, x._convert_to_write(x._cache)) for x in kit_lines]
-            self.update({"line_ids": kit_line_vals})
-        # We don't need them anymore
+            kit_line_vals += [
+                (0, 0, x._convert_to_write(x._cache)) for x in kit_component_lines]
+        self.update({"line_ids": kit_line_vals})
+        # We don't need the phantom lines anymore as we already have the
+        # kit component ones.
         phantom_lines.unlink()
         return super().create_rma(from_portal=from_portal)
 
