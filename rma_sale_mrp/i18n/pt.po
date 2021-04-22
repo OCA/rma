@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* rma_sale_mrp
+# 	* rma_sale_mrp
 #
 msgid ""
 msgstr ""
@@ -18,21 +18,27 @@ msgstr ""
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-times\"/> Cancelled</span>"
+msgid ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
 "times\"/> Cancelado</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Draft</span>"
+msgid ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Draft</span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Rascunho</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Waiting</span>"
+msgid ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Waiting</span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Em Espera</span>"
@@ -110,7 +116,9 @@ msgstr ""
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_category_id
-msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
 msgstr ""
 
 #. module: rma_sale_mrp
@@ -263,8 +271,18 @@ msgid "Sales Order Line"
 msgstr "Linha de Encomenda de Venda"
 
 #. module: rma_sale_mrp
+#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:55
+#, python-format
+msgid ""
+"The kit corresponding to the product %s can't be put in the RMA. Either all "
+"or some of the components where already put in another RMA"
+msgstr ""
+
+#. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
-msgid "To how many kits this components corresponds to. Used mainly for refunding the right quantity"
+msgid ""
+"To how many kits this components corresponds to. Used mainly for refunding "
+"the right quantity"
 msgstr ""
 
 #. module: rma_sale_mrp

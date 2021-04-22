@@ -1,6 +1,7 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderRmaWizard(models.TransientModel):
@@ -50,6 +51,12 @@ class SaleOrderRmaWizard(models.TransientModel):
                 product_kit_component_lines = kit_component_lines.filtered(
                     lambda x: x.product_id == product and x.quantity
                 )
+                if not product_kit_component_lines:
+                    raise ValidationError(_(
+                        "The kit corresponding to the product %s can't be "
+                        "put in the RMA. Either all or some of the components "
+                        "where already put in another RMA"
+                    ) % line.product_id.name)
                 qty_to_return = (
                     product_kit_component_lines[0].per_kit_quantity
                     * line.quantity
