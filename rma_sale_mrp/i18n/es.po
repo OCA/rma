@@ -10,32 +10,72 @@ msgstr ""
 "PO-Revision-Date: 2021-01-22 14:44+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es\n"
 "X-Generator: Poedit 2.3\n"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-times\"/> Cancelled</span>"
-msgstr "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-times\"/>Cancelado</span>"
+msgid ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
+msgstr ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/>Cancelado</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Draft</span>"
-msgstr "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Borrador</span>"
+msgid ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Draft</span>"
+msgstr ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Borrador</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Waiting</span>"
-msgstr "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> En espera</span>"
+msgid ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Waiting</span>"
+msgstr ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> En espera</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>Product</span>"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>Quantity</span>"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>RMA</span>"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>State</span>"
+msgstr ""
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
 msgid "<strong class=\"d-block mb-1\">Related Kit Components RMAs</strong>"
-msgstr "<strong class=\"d-block mb-1\">RMAs relacionados de los componentes del kit</strong>"
+msgstr ""
+"<strong class=\"d-block mb-1\">RMAs relacionados de los componentes del kit</"
+"strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong class=\"d-block mt32 mb-1\">Kit information</strong>"
+msgstr ""
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
@@ -46,6 +86,16 @@ msgstr "<strong><i class=\"fa fa-th-large text-info\"/> Ctd. de kits</strong>"
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid "<strong><i class=\"fa fa-th-large text-info\"/> Kit</strong>"
 msgstr "<strong><i class=\"fa fa-th-large text-info\"/> Kit</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong>Kit Quantity:</strong>"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong>Kit:</strong>"
+msgstr ""
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__allowed_picking_ids
@@ -69,8 +119,13 @@ msgstr "Líneas de componentes"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_category_id
-msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
-msgstr "La conversión entre las unidades de medidas sólo pueden ocurrir si pertenecen a la misma categoría. La conversión se basará en los ratios establecidos."
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+"La conversión entre las unidades de medidas sólo pueden ocurrir si "
+"pertenecen a la misma categoría. La conversión se basará en los ratios "
+"establecidos."
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__create_uid
@@ -100,6 +155,11 @@ msgstr "Nombre mostrado"
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__id
 msgid "ID"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_account_invoice
+msgid "Invoice"
 msgstr ""
 
 #. module: rma_sale_mrp
@@ -217,9 +277,21 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: rma_sale_mrp
+#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:55
+#, python-format
+msgid ""
+"The kit corresponding to the product %s can't be put in the RMA. Either all "
+"or some of the components where already put in another RMA"
+msgstr ""
+
+#. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
-msgid "To how many kits this components corresponds to. Used mainly for refunding the right quantity"
-msgstr "A cuántos kits corresponde este componente. Utilizado principalmente para reembolsar la cantidad correcta"
+msgid ""
+"To how many kits this components corresponds to. Used mainly for refunding "
+"the right quantity"
+msgstr ""
+"A cuántos kits corresponde este componente. Utilizado principalmente para "
+"reembolsar la cantidad correcta"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_id
@@ -235,7 +307,9 @@ msgstr "Utilizado para ocultar los componentes en los asistentes"
 #: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard__kit_qty_done
 #: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard_component__kit_qty_done
 msgid "Used to inform kit qty used in the rma. Will be useful to refund"
-msgstr "Utilizado para informar la cantidad de kits utilizados en el RMA. Resultará útil al reembolsar"
+msgstr ""
+"Utilizado para informar la cantidad de kits utilizados en el RMA. Resultará "
+"útil al reembolsar"
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__wizard_id
