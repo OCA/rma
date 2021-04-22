@@ -254,6 +254,12 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: rma_sale_mrp
+#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:55
+#, python-format
+msgid "The kit corresponding to the product %s can't be put in the RMA. Either all or some of the components where already put in another RMA"
+msgstr ""
+
+#. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
 msgid "To how many kits this components corresponds to. Used mainly for refunding the right quantity"
 msgstr ""

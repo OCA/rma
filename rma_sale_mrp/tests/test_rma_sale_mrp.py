@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.tests import Form, SavepointCase
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class TestRmaSaleMrp(SavepointCase):
@@ -153,3 +153,12 @@ class TestRmaSaleMrp(SavepointCase):
         wizard_id = order.action_create_rma()["res_id"]
         wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
         self.assertEqual(wizard.line_ids.quantity, 1)
+        wizard.create_and_open_rma()
+        # Now we open the wizard again and try to force the RMA qty wich should
+        # be 0 at this time
+        wizard_id = order.action_create_rma()["res_id"]
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        self.assertEqual(wizard.line_ids.quantity, 0)
+        wizard.line_ids.quantity = 1
+        with self.assertRaises(ValidationError):
+            wizard.create_and_open_rma()
