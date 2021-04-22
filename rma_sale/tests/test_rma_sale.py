@@ -38,6 +38,10 @@ class TestRmaSale(SavepointCase):
         cls.order_out_picking.move_lines.quantity_done = 5
         cls.order_out_picking.button_validate()
 
+    def _rma_sale_wizard(self, order):
+        wizard_id = order.action_create_rma()["res_id"]
+        return self.env["sale.order.rma.wizard"].browse(wizard_id)
+
     def test_create_rma_with_so(self):
         rma_form = Form(self.env['rma'])
         rma_form.partner_id = self.partner
@@ -83,3 +87,34 @@ class TestRmaSale(SavepointCase):
         rma.reception_move_id.picking_id.action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
+
+    def test_create_recurrent_rma(self):
+        """An RMA of a product that had an RMA in the past should be possible"""
+        wizard = self._rma_sale_wizard(self.sale_order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id.action_done()
+        wizard = self._rma_sale_wizard(self.sale_order)
+        self.assertEqual(
+            wizard.line_ids.quantity, 0,
+            "There shouldn't be any allowed quantities for RMAs"
+        )
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="return",
+            )
+        )
+        delivery_form.product_uom_qty = rma.product_uom_qty
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        picking = rma.delivery_move_ids.picking_id
+        picking.move_lines.quantity_done = rma.product_uom_qty
+        picking.action_done()
+        # The product is returned to the customer, so we should be able to make
+        # another RMA in the future
+        wizard = self._rma_sale_wizard(self.sale_order)
+        self.assertEqual(
+            wizard.line_ids.quantity, rma.product_uom_qty,
+            "We should be allowed to return the product again"
+        )

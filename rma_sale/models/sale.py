@@ -114,6 +114,12 @@ class SaleOrderLine(models.Model):
 
     def prepare_sale_rma_data(self):
         self.ensure_one()
+        # Method helper to filter chained moves
+
+        def destination_moves(_move):
+            return _move.mapped("move_dest_ids").filtered(
+                lambda r: r.state in ["partially_available", "assigned", "done"]
+            )
         product = self.product_id
         if self.product_id.type not in ['product', 'consu']:
             return {}
@@ -121,11 +127,20 @@ class SaleOrderLine(models.Model):
         data = []
         if moves:
             for move in moves:
+                # Look for chained moves to check how many items we can allow
+                # to return. When a product is re-delivered it should be
+                # allowed to open an RMA again on it.
                 qty = move.product_uom_qty
-                move_dest = move.move_dest_ids.filtered(
-                    lambda r: r.state in ['partially_available',
-                                          'assigned', 'done'])
-                qty -= sum(move_dest.mapped('product_uom_qty'))
+                qty_returned = 0
+                move_dest = destination_moves(move)
+                while move_dest:
+                    qty_returned -= sum(move_dest.mapped("product_uom_qty"))
+                    move_dest = destination_moves(move_dest)
+                    if move_dest:
+                        qty += sum(move_dest.mapped("product_uom_qty"))
+                        move_dest = destination_moves(move_dest)
+                # If by chance we get a negative qty we should ignore it
+                qty = max(0, sum((qty, qty_returned)))
                 data.append({
                     'product': move.product_id,
                     'quantity': qty,
