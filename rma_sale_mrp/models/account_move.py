@@ -4,8 +4,8 @@ from odoo import models
 from odoo.tools import float_compare
 
 
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
     def _check_rma_invoice_lines_qty(self):
         """For those with differences, check if the kit quantity is the same"""
