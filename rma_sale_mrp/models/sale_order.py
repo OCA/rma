@@ -73,7 +73,7 @@ class SaleOrderLine(models.Model):
 
     def get_delivery_move(self):
         self.ensure_one()
-        if self.product_id and not self.product_id._is_phantom_bom():
+        if self.product_id and not self._rma_is_kit_product():
             return super().get_delivery_move()
         return self.move_ids.filtered(
             lambda m: (
@@ -92,7 +92,7 @@ class SaleOrderLine(models.Model):
         can play with them when filtering or showing to the customer"""
         self.ensure_one()
         data = super().prepare_sale_rma_data()
-        if self.product_id and self.product_id._is_phantom_bom():
+        if self.product_id and self._rma_is_kit_product():
             for d in data:
                 d.update(
                     {
@@ -107,7 +107,11 @@ class SaleOrderLine(models.Model):
         rely on the matching of sale order and pickings demands, but if those
         were manually changed, it could lead to inconsistencies"""
         self.ensure_one()
-        if self.product_id and not self.product_id._is_phantom_bom():
+        if (
+            self.product_id
+            and not self._rma_is_kit_product()
+            or not self.product_uom_qty
+        ):
             return 0
         component_demand = sum(
             self.move_ids.filtered(
@@ -115,3 +119,17 @@ class SaleOrderLine(models.Model):
             ).mapped("product_uom_qty")
         )
         return component_demand / self.product_uom_qty
+
+    def _rma_is_kit_product(self):
+        """The method _is_phantom_bom isn't available anymore. We wan't to use
+        the same rule Odoo does in core"""
+        bom = (
+            self.env["mrp.bom"]
+            .sudo()
+            ._bom_find(
+                product=self.product_id,
+                company_id=self.company_id.id,
+                bom_type="phantom",
+            )
+        )
+        return bom and bom.type == "phantom"
