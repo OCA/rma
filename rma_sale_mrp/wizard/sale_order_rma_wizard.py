@@ -98,7 +98,8 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         """We need to process kit components separately so we can match them
         against their phantom product"""
         not_kit = self.filtered(
-            lambda x: not x.phantom_bom_product and not x.product_id._is_phantom_bom()
+            lambda x: not x.phantom_bom_product
+            and not x.sale_line_id._rma_is_kit_product()
         )
         super(SaleOrderLineRmaWizard, not_kit)._compute_move_id()
         for line in self.filtered(lambda x: x.phantom_bom_product and x.picking_id):

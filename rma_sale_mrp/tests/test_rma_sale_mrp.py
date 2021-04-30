@@ -131,7 +131,7 @@ class TestRmaSaleMrp(SavepointCase):
         self.assertEqual(rma.refund_id, rmas_left.mapped("refund_id"))
         # The refund product is the kit, not the components
         self.assertEqual(rma.refund_id.invoice_line_ids.product_id, self.product_kit)
-        rma.refund_id.action_invoice_open()
+        rma.refund_id.post()
         # We can still return another kit
         wizard_id = order.action_create_rma()["res_id"]
         wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
