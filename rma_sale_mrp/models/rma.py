@@ -3,8 +3,6 @@
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-import odoo.addons.decimal_precision as dp
-
 
 class Rma(models.Model):
     _inherit = "rma"
@@ -14,7 +12,7 @@ class Rma(models.Model):
     )
     kit_qty = fields.Float(
         string="Kit quantity",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         readonly=True,
         help="To how many kits this components corresponds to. Used mainly "
         "for refunding the right quantity",
