@@ -10,10 +10,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["chienandalu"],
     "license": "AGPL-3",
-    "depends": [
-        "rma_sale",
-        "mrp",
-    ],
+    "depends": ["rma_sale", "mrp"],
     "data": [
         "views/sale_order_portal_template.xml",
         "views/rma_views.xml",
