@@ -93,7 +93,7 @@ msgid "<strong>Sale order</strong>"
 msgstr "<strong>Orden de venta</strong>"
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Accept"
 msgstr "Aceptar"
 
@@ -115,7 +115,7 @@ msgid "Allowed Product"
 msgstr "Producto Permitido"
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.=sale_order_rma_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr "Cancelar"
 
