@@ -140,7 +140,7 @@ class SaleOrderLine(models.Model):
                 qty = max(0, sum((qty, qty_returned)))
                 data.append(
                     {
-                        "product": product,
+                        "product": move.product_id,
                         "quantity": qty,
                         "uom": move.product_uom,
                         "picking": move.picking_id,
