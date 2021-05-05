@@ -2,10 +2,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase, tagged
+from odoo.tests import Form, SavepointCase
 
 
-@tagged("post_install", "-at_install")
 class TestRma(SavepointCase):
     @classmethod
     def setUpClass(cls):
