@@ -60,6 +60,7 @@ class Rma(models.Model):
         index=True,
         states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
+    tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company,
