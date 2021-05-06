@@ -69,6 +69,7 @@ class Rma(models.Model):
             'cancelled': [('readonly', True)],
         },
     )
+    tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.user.company_id,

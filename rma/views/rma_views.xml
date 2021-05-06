@@ -9,6 +9,7 @@
             <search>
                 <field name="name" />
                 <field name="user_id" />
+                <field name="tag_ids" />
                 <filter name="draft_filter"
                         string="Draft"
                         domain="[('state','=', 'draft')]" />
@@ -196,6 +197,12 @@
                             <field name="date"/>
                             <field name="user_id"/>
                             <field name="team_id"/>
+                            <field
+                                name="tag_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}"
+                                placeholder="Tags..."
+                            />
                             <field name="origin"/>
                             <field name="operation_id"/>
                             <field name="company_id"
