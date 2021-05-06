@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_tag_view_search" model="ir.ui.view">
+        <field name="model">rma.tag</field>
+        <field name="arch" type="xml">
+            <search string="RMA Tags">
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <filter
+                    string="Active"
+                    name="active"
+                    domain="[('active','!=',False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="view_rma_tag_form" model="ir.ui.view">
+        <field name="name">Rma Tags</field>
+        <field name="model">rma.tag</field>
+        <field name="arch" type="xml">
+            <form string="RMA Tag">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            type="object"
+                            name="toggle_active"
+                            icon="fa-archive"
+                        >
+                            <field
+                                name="active"
+                                widget="boolean_button"
+                                options='{"terminology": "archive"}'
+                            />
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_rma_tag_list" model="ir.ui.view">
+        <field name="name">RMA Tags</field>
+        <field name="model">rma.tag</field>
+        <field eval="6" name="priority" />
+        <field name="arch" type="xml">
+            <tree string="RMA Tags">
+                <field name="name" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_rma_tag" model="ir.actions.act_window">
+        <field name="name">RMA Tags</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rma.tag</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new RMA tag
+            </p><p>
+            Manage RMA tags to better classify them for tracking and analysis purposes.
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="rma_configuration_rma_tag_menu"
+        name="RMA Tags"
+        parent="rma_configuration_menu"
+        action="action_rma_tag"
+    />
+</odoo>
