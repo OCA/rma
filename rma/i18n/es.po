@@ -303,7 +303,9 @@ msgid "Action Needed"
 msgstr "Acción Necesaria"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__active
 #: model:ir.model.fields,field_description:rma.field_rma_team__active
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "Active"
 msgstr "Activo"
 
@@ -346,6 +348,11 @@ msgstr "Seudónimo del dominio"
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_model_id
 msgid "Aliased Model"
 msgstr "Modelo con seudónimo"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
+msgid "Archived"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -407,6 +414,11 @@ msgid "Click to add a new RMA."
 msgstr "Click para agregar un nuevo RMA."
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__color
+msgid "Color Index"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__commercial_partner_id
 msgid "Commercial Entity"
 msgstr "Entidad comercial"
@@ -460,10 +472,16 @@ msgid "Create RMAs"
 msgstr "Crear RMAs"
 
 #. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Create a new RMA tag"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_operation__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_tag__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -473,6 +491,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_operation__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_tag__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -555,6 +574,7 @@ msgstr "Descripción"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_tag__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -637,6 +657,7 @@ msgstr "Agrupar por"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_operation__id
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
+#: model:ir.model.fields,field_description:rma.field_rma_tag__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
 msgid "ID"
 msgstr "ID"
@@ -717,6 +738,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_operation____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_tag____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_team____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
@@ -726,6 +748,7 @@ msgstr "Última modificación en"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_operation__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_tag__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -735,6 +758,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_operation__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_tag__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
@@ -764,6 +788,12 @@ msgstr "Bloqueado"
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "Adjuntos principales"
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid ""
+"Manage RMA tags to better classify them for tracking and analysis purposes."
+msgstr ""
 
 #. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
@@ -1115,6 +1145,20 @@ msgid "RMA Split Wizard"
 msgstr "Asistente para dividir RMA"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_form
+msgid "RMA Tag"
+msgstr ""
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
+#: model:ir.model,name:rma.model_rma_tag
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_list
+msgid "RMA Tags"
+msgstr ""
+
+#. module: rma
 #: model:ir.model,name:rma.model_rma_team
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
@@ -1351,6 +1395,11 @@ msgid "Returned"
 msgstr "Devuelto"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
+msgid "Rma"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
 msgstr "Cantidad de RMAs"
@@ -1498,6 +1547,26 @@ msgid "Stock Rule"
 msgstr "Regla de Inventario"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__name
+msgid "Tag Name"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.constraint,message:rma.constraint_rma_tag_name_uniq
+msgid "Tag name already exists !"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+msgid "Tags"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Tags..."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
 msgid "Team Leader"
 msgstr "Líder del equipo"
@@ -1512,6 +1581,11 @@ msgstr "Miembros del equipo"
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
 msgid "That operation name already exists !"
 msgstr "¡El nombre de operación ya existe!"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_tag__active
+msgid "The active field allows you to hide the category without removing it."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id

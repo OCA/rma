@@ -6,3 +6,5 @@ access_rma_user_own,rma.user.own,model_rma,rma_group_user_own,1,1,1,0
 access_rma_manager,rma.manager,model_rma,rma_group_manager,1,1,1,1
 access_rma_operation_user_own,rma.operation.user.own,model_rma_operation,rma_group_user_own,1,0,0,0
 access_rma_operation_manager,rma.operation.manager,model_rma_operation,rma_group_manager,1,1,1,1
+access_rma_tag_user_own,rma.tag.user.own,model_rma_tag,rma_group_user_own,1,0,0,0
+access_rma_tag_manager,rma.tag.manager,model_rma_tag,rma_group_manager,1,1,1,1
