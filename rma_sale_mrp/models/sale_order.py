@@ -101,7 +101,10 @@ class SaleOrderLine(models.Model):
         rely on the matching of sale order and pickings demands, but if those
         were manually changed, it could lead to inconsistencies"""
         self.ensure_one()
-        if self.product_id and not self.product_id._is_phantom_bom():
+        if (
+            self.product_id and not self.product_id._is_phantom_bom() or
+            not self.product_uom_qty
+        ):
             return 0
         component_demand = sum(
             self.move_ids.filtered(
