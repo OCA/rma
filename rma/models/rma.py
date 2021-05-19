@@ -493,7 +493,13 @@ class Rma(models.Model):
             # Assign a default team_id which will be the first in the sequence
             if "team_id" not in vals:
                 vals["team_id"] = self.env["rma.team"].search([], limit=1).id
-        return super().create(vals_list)
+        rmas = super().create(vals_list)
+        # Send acknowledge when the RMA is created from the portal and the
+        # company has the proper setting active. This context is set by the
+        # `rma_sale` module.
+        if self.env.context.get("from_portal"):
+            rmas._send_draft_email()
+        return rmas
 
     def copy(self, default=None):
         team = super().copy(default)
@@ -511,10 +517,32 @@ class Rma(models.Model):
             )
         return super().unlink()
 
+    def _send_draft_email(self):
+        """Send customer notifications they place the RMA from the portal"""
+        for rma in self.filtered("company_id.send_rma_draft_confirmation"):
+            rma_template_id = rma.company_id.rma_mail_draft_confirmation_template_id.id
+            rma.with_context(
+                force_send=True,
+                mark_rma_as_sent=True,
+                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
+            ).message_post_with_template(rma_template_id)
+
     def _send_confirmation_email(self):
         """Auto send notifications"""
         for rma in self.filtered(lambda p: p.company_id.send_rma_confirmation):
             rma_template_id = rma.company_id.rma_mail_confirmation_template_id.id
+            rma.with_context(
+                force_send=True,
+                mark_rma_as_sent=True,
+                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
+            ).message_post_with_template(rma_template_id)
+
+    def _send_receipt_confirmation_email(self):
+        """Send customer notifications when the products are received"""
+        for rma in self.filtered("company_id.send_rma_receipt_confirmation"):
+            rma_template_id = (
+                rma.company_id.rma_mail_receipt_confirmation_template_id.id
+            )
             rma.with_context(
                 force_send=True,
                 mark_rma_as_sent=True,
@@ -1217,6 +1245,16 @@ class Rma(models.Model):
         return "RMA Report - %s" % self.name
 
     # Other business methods
+
+    def update_received_state_on_reception(self):
+        """ Invoked by:
+            [stock.move]._action_done
+            Here we can attach methods to trigger when the customer products
+            are received on the RMA location, such as automatic notifications
+        """
+        self.write({"state": "received"})
+        self._send_receipt_confirmation_email()
+
     def update_received_state(self):
         """ Invoked by:
          [stock.move].unlink
