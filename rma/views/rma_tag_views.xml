@@ -39,6 +39,7 @@
                     </div>
                     <group>
                         <field name="name" />
+                        <field name="is_public" />
                     </group>
                 </sheet>
             </form>
@@ -51,6 +52,7 @@
         <field name="arch" type="xml">
             <tree string="RMA Tags">
                 <field name="name" />
+                <field name="is_public" />
                 <field name="active" />
             </tree>
         </field>
