@@ -1091,6 +1091,11 @@ msgid "Product qty"
 msgstr "Cantidad"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
+msgid "Public Tag"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 msgid "Quantity"
@@ -1739,6 +1744,11 @@ msgstr ""
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "La cantidad a devolver es mayor que la cantidad restante del RMA."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_tag__is_public
+msgid "The tag is visible in the portal view"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/account_invoice.py:27
