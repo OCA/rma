@@ -15,6 +15,10 @@
                    t-attf-name="#{data_index}-phantom_kit_line"
                    t-att-value="1"/>
         </xpath>
+        <!-- The component lines are splitted on the wizard so we should set the quantity properly -->
+        <xpath expr="//input[@t-attf-name='#{data_index}-quantity']" position="attributes">
+            <attribute name="t-att-value">data.get('phantom_bom_product') and data['quantity'] or 0</attribute>
+        </xpath>
         <!-- TODO: We could give a clue about what's to be returned, with readonly detailed lines -->
         <xpath expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data[&apos;quantity&apos;] &gt; 0 and data[&apos;picking&apos;]&quot;]/tr" position="attributes">
             <attribute name="t-attf-class">#{data.get('phantom_bom_product') and 'd-none'}</attribute>
