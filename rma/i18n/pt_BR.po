@@ -17,7 +17,9 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: rma
+#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
 #: model:mail.template,report_name:rma.mail_template_rma_notification
+#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
 msgid "${(object.name or '')}"
 msgstr "${(object.name or '')}"
 
@@ -25,6 +27,20 @@ msgstr "${(object.name or '')}"
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_receipt_notification
+msgid ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
+"received"
+msgstr ""
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_draft_notification
+msgid ""
+"${object.company_id.name} Your RMA has been succesfully created (Ref "
+"${object.name or 'n/a' })"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:46
@@ -64,6 +80,45 @@ msgstr ""
 "</p>\n"
 "</div>\n"
 "        "
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    The products for your RMA <strong>${object.name}</strong>\n"
+"    from ${object.company_id.name} have been received in our warehouse.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_draft_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    You've succesfully placed your RMA <strong>${object.name}</strong>\n"
+"    on ${object.company_id.name}. Our team will check it and will validate\n"
+"    it as soon as possible.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -482,7 +537,7 @@ msgid "Created on"
 msgstr "Criado em"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1195
+#: code:addons/rma/models/rma.py:1225
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
 msgid "Customer"
@@ -576,7 +631,7 @@ msgid "Draft RMA"
 msgstr "Rascunho do RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1154
+#: code:addons/rma/models/rma.py:1184
 #, python-format
 msgid ""
 "E-mail subject: %s\n"
@@ -611,10 +666,34 @@ msgid "Email Template confirmation for RMA"
 msgstr "Modelo de E-mail de confirmação para RMA"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email Template draft notification for RMA"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email Template receipt confirmation for RMA"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email sent to the customer once the RMA is confirmed."
 msgstr "Email enviado ao cliente assim que o RMA for confirmado."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email sent to the customer once the RMA products are received."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email sent to the customer when they place an RMA from the portal"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/wizard/rma_split.py:63
@@ -697,7 +776,7 @@ msgstr ""
 "sem removê-lo."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1158
+#: code:addons/rma/models/rma.py:1188
 #, python-format
 msgid "Incoming e-mail"
 msgstr "E-mail recebido"
@@ -818,7 +897,7 @@ msgstr "Nome"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:507
-#: code:addons/rma/models/rma.py:1157
+#: code:addons/rma/models/rma.py:1187
 #, python-format
 msgid "New"
 msgstr "Novo(a)"
@@ -839,13 +918,13 @@ msgid "Next Activity Type"
 msgstr "Tipo da Próxima Atividade"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:808
+#: code:addons/rma/models/rma.py:838
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Nenhum dos RMAs selecionados pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:791
+#: code:addons/rma/models/rma.py:821
 #, python-format
 msgid "None of the selected RMAs can perform a return."
 msgstr "Nenhum dos RMAs selecionados pode executar uma devolução."
@@ -1026,7 +1105,7 @@ msgid "Quantity to extract"
 msgstr "Quantidade a extrair"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:841
+#: code:addons/rma/models/rma.py:871
 #, python-format
 msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity (%s "
@@ -1060,7 +1139,7 @@ msgid "RMA #"
 msgstr "RMA #"
 
 #. module: rma
-#: code:addons/rma/models/res_company.py:37
+#: code:addons/rma/models/res_company.py:73
 #, python-format
 msgid "RMA Code"
 msgstr "Código RMA"
@@ -1102,14 +1181,10 @@ msgid "RMA Location"
 msgstr "Localização RMA"
 
 #. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 msgid "RMA Notification"
 msgstr "Notificação RMA"
-
-#. module: rma
-#: model:mail.message.subtype,name:rma.mt_rma_notification
-msgid "RMA Notificatoin"
-msgstr "RMA Notificação"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1127,6 +1202,11 @@ msgstr "Pedidos RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
 msgstr "Tipo Saída RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Receipt Confirmation Email"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:87
@@ -1182,6 +1262,11 @@ msgstr "Notificações RMA automáticas para clientes"
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Contagem de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA draft notification Email"
+msgstr ""
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
@@ -1257,7 +1342,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Referência do documento que gerou este RMA."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:724
+#: code:addons/rma/models/rma.py:754
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1313,7 +1398,7 @@ msgid "Replaced"
 msgstr "Substituído"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1064
+#: code:addons/rma/models/rma.py:1094
 #, python-format
 msgid ""
 "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
@@ -1325,7 +1410,7 @@ msgstr ""
 "data-oe-id=\"%d\">%s</a> foi criada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1075
+#: code:addons/rma/models/rma.py:1105
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
@@ -1349,7 +1434,7 @@ msgid "Requested operation"
 msgstr "Operação Solicitada"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:772
+#: code:addons/rma/models/rma.py:802
 #, python-format
 msgid "Required field(s):%s"
 msgstr "Campo(s) Solicitado(s):%s"
@@ -1378,7 +1463,7 @@ msgid "Return to customer"
 msgstr "Retornar ao cliente"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:1025
+#: code:addons/rma/models/rma.py:1055
 #, python-format
 msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
@@ -1419,9 +1504,31 @@ msgid "Send RMA Confirmation"
 msgstr "Enviar Confirmação do RMA"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid "Send RMA Receipt Confirmation"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "Send RMA draft Confirmation"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA info to customer"
 msgstr "Envie informações automáticas do RMA ao cliente"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA products reception notification to customer"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic notification when the customer places an RMA"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1492,7 +1599,7 @@ msgid "Split RMA"
 msgstr "Dividir RMA"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:926
+#: code:addons/rma/models/rma.py:956
 #, python-format
 msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
@@ -1622,7 +1729,7 @@ msgstr ""
 "inicial, porque a movimentação do estoque está vinculada a uma RMA (%s)."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:829
+#: code:addons/rma/models/rma.py:859
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "A quantidade a retornar é maior que a quantidade restante."
@@ -1638,19 +1745,19 @@ msgstr ""
 "especificada na sua RMA vinculada."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:818
+#: code:addons/rma/models/rma.py:848
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Esta RMA não pode ser dividida."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:805
+#: code:addons/rma/models/rma.py:835
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Esta RMA não pode executar uma substituição."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:788
+#: code:addons/rma/models/rma.py:818
 #, python-format
 msgid "This RMA cannot perform a return."
 msgstr "Este RMA não pode executar uma devolução."
@@ -1774,10 +1881,36 @@ msgid "Website communication history"
 msgstr "Histórico de Comunicação Através do Site"
 
 #. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "When a customer places an RMA, send a notification with it"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When customers themselves place an RMA from the portal, send an automatic "
+"notification acknowleging it."
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
 msgstr ""
 "Quando o RMA for confirmado, envie um e-mail automático de informações."
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When the RMA products are received, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid ""
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
@@ -1788,7 +1921,7 @@ msgstr ""
 "Quando a entrega for confirmada, envie um e-mail de confirmação ao cliente."
 
 #. module: rma
-#: code:addons/rma/models/rma.py:529
+#: code:addons/rma/models/rma.py:535
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
 msgstr "Você não pode apagar RMAs que não estejam na situação \"Rascunho\""
@@ -1822,6 +1955,9 @@ msgid ""
 msgstr ""
 "o usuário terá acesso à configuração RMA, bem como aos relatórios "
 "estatísticos."
+
+#~ msgid "RMA Notificatoin"
+#~ msgstr "RMA Notificação"
 
 #~ msgid "Waiting for refund"
 #~ msgstr "Aguardando Restituição"
