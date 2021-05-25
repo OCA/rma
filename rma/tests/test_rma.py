@@ -671,20 +671,46 @@ class TestRma(SavepointCase):
         self.assertEqual(rma.product_id.qty_available, 0)
 
     def test_autoconfirm_email(self):
-        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
-        rma.company_id.send_rma_confirmation = True
-        rma.company_id.rma_mail_confirmation_template_id = (
+        self.company.send_rma_confirmation = True
+        self.company.send_rma_receipt_confirmation = True
+        self.company.send_rma_draft_confirmation = True
+        self.company.rma_mail_confirmation_template_id = (
             self.env.ref("rma.mail_template_rma_notification")
+        )
+        self.company.rma_mail_receipt_confirmation_template_id = (
+            self.env.ref("rma.mail_template_rma_receipt_notification")
+        )
+        self.company.rma_mail_draft_confirmation_template_id = (
+            self.env.ref("rma.mail_template_rma_draft_notification")
         )
         previous_mails = self.env["mail.mail"].search(
             [("partner_ids", "in", self.partner.ids)]
         )
         self.assertFalse(previous_mails)
-        rma.action_confirm()
-        mail = self.env["mail.message"].search(
+        # Force the context to mock an RMA created from the portal, which is
+        # feature that we get on `rma_sale`. We drop it after the RMA creation
+        # to avoid uncontrolled side effects
+        ctx = self.env.context
+        self.env.context = dict(ctx, from_portal=True)
+        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        self.env.context = ctx
+        mail_draft = self.env["mail.message"].search(
             [("partner_ids", "in", self.partner.ids)]
         )
-        self.assertTrue(rma.name in mail.subject)
-        self.assertTrue(rma.name in mail.body)
+        rma.action_confirm()
+        mail_confirm = self.env["mail.message"].search(
+            [("partner_ids", "in", self.partner.ids)]
+        ) - mail_draft
+        self.assertTrue(rma.name in mail_confirm.subject)
+        self.assertTrue(rma.name in mail_confirm.body)
         self.assertEqual(
-            self.env.ref("rma.mt_rma_notification"), mail.subtype_id)
+            self.env.ref("rma.mt_rma_notification"), mail_confirm.subtype_id)
+        # Now we'll confirm the incoming goods picking and the automatic
+        # reception notification should be sent
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
+        mail_receipt = self.env["mail.message"].search(
+            [("partner_ids", "in", self.partner.ids)]
+        ) - mail_draft - mail_confirm
+        self.assertTrue(rma.name in mail_receipt.subject)
+        self.assertTrue("products received" in mail_receipt.subject)

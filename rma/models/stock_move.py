@@ -72,7 +72,7 @@ class StockMove(models.Model):
         # if the stock user has no RMA permissions.
         to_be_received = move_done.sudo().mapped('rma_receiver_ids').filtered(
             lambda r: r.state == 'confirmed')
-        to_be_received.write({'state': 'received'})
+        to_be_received.update_received_state_on_reception()
         # Set RMAs as delivered
         move_done.mapped('rma_id').update_replaced_state()
         move_done.mapped('rma_id').update_returned_state()
