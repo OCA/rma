@@ -83,6 +83,12 @@
                             </a>
                         </span>
                         <span class="float-right">
+                            <!-- Tags -->
+                            <t t-set="tags" t-value="rma.tag_ids.filtered('is_public')" />
+                            <!-- We don't have the color o_tag_color_# classes available in the frontend -->
+                            <t t-foreach="tags" t-as="tag">
+                                <span class="badge badge-pill badge-info label-text-align" t-esc="tag.name" />
+                            </t>
                             <t t-if="rma.state in ['refunded', 'returned', 'replaced']">
                                 <span class="small text-success orders_label_text_align"><i class="fa fa-fw fa-check"/> <b><span t-field="rma.state"/></b></span>
                             </t>
