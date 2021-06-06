@@ -10,7 +10,10 @@ class StockMove(models.Model):
 
     # RMAs that were created from the delivery move
     rma_ids = fields.One2many(
-        comodel_name="rma", inverse_name="move_id", string="RMAs", copy=False,
+        comodel_name="rma",
+        inverse_name="move_id",
+        string="RMAs",
+        copy=False,
     )
     # RMAs linked to the incoming movement from client
     rma_receiver_ids = fields.One2many(
@@ -20,7 +23,11 @@ class StockMove(models.Model):
         copy=False,
     )
     # RMA that create the delivery movement to the customer
-    rma_id = fields.Many2one(comodel_name="rma", string="RMA return", copy=False,)
+    rma_id = fields.Many2one(
+        comodel_name="rma",
+        string="RMA return",
+        copy=False,
+    )
 
     def unlink(self):
         # A stock user could have no RMA permissions, so the ids wouldn't
@@ -44,7 +51,7 @@ class StockMove(models.Model):
         return res
 
     def _action_done(self, cancel_backorder=False):
-        """ Avoids to validate stock.move with less quantity than the
+        """Avoids to validate stock.move with less quantity than the
         quantity in the linked receiver RMA. It also set the appropriated
         linked RMA to 'received' or 'delivered'.
         """
@@ -76,13 +83,13 @@ class StockMove(models.Model):
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
-        """ The main use is that launched delivery RMAs doesn't merge
+        """The main use is that launched delivery RMAs doesn't merge
         two moves if they are linked to a different RMAs.
         """
         return super()._prepare_merge_moves_distinct_fields() + ["rma_id"]
 
     def _prepare_move_split_vals(self, qty):
-        """ Intended to the backport of picking linked to RMAs propagates the
+        """Intended to the backport of picking linked to RMAs propagates the
         RMA link id.
         """
         res = super()._prepare_move_split_vals(qty)
@@ -90,8 +97,7 @@ class StockMove(models.Model):
         return res
 
     def _prepare_return_rma_vals(self, original_picking):
-        """ hook method for preparing an RMA from the 'return picking wizard'.
-        """
+        """hook method for preparing an RMA from the 'return picking wizard'."""
         self.ensure_one()
         partner = original_picking.partner_id
         if hasattr(original_picking, "sale_id") and original_picking.sale_id:

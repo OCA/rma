@@ -7,7 +7,10 @@ from odoo import fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count",)
+    rma_count = fields.Integer(
+        string="RMA count",
+        compute="_compute_rma_count",
+    )
 
     def _compute_rma_count(self):
         for rec in self:
@@ -30,7 +33,10 @@ class StockPicking(models.Model):
         rma = self.move_lines.mapped("rma_ids")
         if len(rma) == 1:
             action.update(
-                res_id=rma.id, view_mode="form", view_id=False, views=False,
+                res_id=rma.id,
+                view_mode="form",
+                view_id=False,
+                views=False,
             )
         else:
             action["domain"] = [("id", "in", rma.ids)]

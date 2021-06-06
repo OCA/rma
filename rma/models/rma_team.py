@@ -11,7 +11,10 @@ class RmaTeam(models.Model):
     _order = "sequence, name"
 
     sequence = fields.Integer()
-    name = fields.Char(required=True, translate=True,)
+    name = fields.Char(
+        required=True,
+        translate=True,
+    )
     active = fields.Boolean(
         default=True,
         help="If the active field is set to false, it will allow you "
@@ -29,7 +32,9 @@ class RmaTeam(models.Model):
         default=lambda self: self.env.user,
     )
     member_ids = fields.One2many(
-        comodel_name="res.users", inverse_name="rma_team_id", string="Team Members",
+        comodel_name="res.users",
+        inverse_name="rma_team_id",
+        string="Team Members",
     )
 
     def copy(self, default=None):
