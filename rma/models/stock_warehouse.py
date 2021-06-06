@@ -16,16 +16,21 @@ class StockWarehouse(models.Model):
         help="RMA related products can be stored in this warehouse.",
     )
     rma_in_type_id = fields.Many2one(
-        comodel_name="stock.picking.type", string="RMA In Type",
+        comodel_name="stock.picking.type",
+        string="RMA In Type",
     )
     rma_out_type_id = fields.Many2one(
-        comodel_name="stock.picking.type", string="RMA Out Type",
+        comodel_name="stock.picking.type",
+        string="RMA Out Type",
     )
-    rma_loc_id = fields.Many2one(comodel_name="stock.location", string="RMA Location",)
+    rma_loc_id = fields.Many2one(
+        comodel_name="stock.location",
+        string="RMA Location",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
-        """ To create an RMA location and link it with a new warehouse,
+        """To create an RMA location and link it with a new warehouse,
         this method is overridden instead of '_get_locations_values'
         method because the locations that are created with the
         values ​​returned by that method are forced to be children
@@ -39,7 +44,7 @@ class StockWarehouse(models.Model):
         return res
 
     def _get_rma_location_values(self):
-        """ this method is intended to be used by 'create' method
+        """this method is intended to be used by 'create' method
         to create a new RMA location to be linked to a new warehouse.
         """
         return {
