@@ -11,7 +11,7 @@ class AccountMove(models.Model):
 
     def _check_rma_invoice_lines_qty(self):
         """We can't refund a different qty than the stated in the RMA.
-        Extend to change criteria """
+        Extend to change criteria"""
         precision = self.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
         )
@@ -28,7 +28,7 @@ class AccountMove(models.Model):
         )
 
     def post(self):
-        """ Avoids to validate a refund with less quantity of product than
+        """Avoids to validate a refund with less quantity of product than
         quantity in the linked RMA.
         """
         if self._check_rma_invoice_lines_qty():
@@ -49,4 +49,7 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    rma_id = fields.Many2one(comodel_name="rma", string="RMA",)
+    rma_id = fields.Many2one(
+        comodel_name="rma",
+        string="RMA",
+    )
