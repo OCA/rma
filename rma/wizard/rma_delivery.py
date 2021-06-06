@@ -16,15 +16,19 @@ class RmaReDeliveryWizard(models.TransientModel):
         required=True,
     )
     product_id = fields.Many2one(
-        comodel_name="product.product", string="Replace Product",
+        comodel_name="product.product",
+        string="Replace Product",
     )
     product_uom_qty = fields.Float(
-        string="Product qty", digits="Product Unit of Measure",
+        string="Product qty",
+        digits="Product Unit of Measure",
     )
     product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure")
     scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now())
     warehouse_id = fields.Many2one(
-        comodel_name="stock.warehouse", string="Warehouse", required=True,
+        comodel_name="stock.warehouse",
+        string="Warehouse",
+        required=True,
     )
 
     @api.constrains("product_uom_qty")

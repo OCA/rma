@@ -51,7 +51,7 @@ class ReturnPicking(models.TransientModel):
         return {"domain": {"location_id": rma_loc_domain}}
 
     def create_returns(self):
-        """ Override create_returns method for creating one or more
+        """Override create_returns method for creating one or more
         'confirmed' RMAs after return a delivery picking in case
         'Create RMAs' checkbox is checked in this wizard.
         New RMAs will be linked to the delivery picking as the origin

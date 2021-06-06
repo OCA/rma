@@ -90,7 +90,8 @@ class Rma(models.Model):
         help="Refund address for current RMA.",
     )
     commercial_partner_id = fields.Many2one(
-        comodel_name="res.partner", related="partner_id.commercial_partner_id",
+        comodel_name="res.partner",
+        related="partner_id.commercial_partner_id",
     )
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
@@ -114,7 +115,8 @@ class Rma(models.Model):
         states={"draft": [("readonly", False)]},
     )
     product_id = fields.Many2one(
-        comodel_name="product.product", domain=[("type", "in", ["consu", "product"])],
+        comodel_name="product.product",
+        domain=[("type", "in", ["consu", "product"])],
     )
     product_uom_qty = fields.Float(
         string="Quantity",
@@ -150,7 +152,8 @@ class Rma(models.Model):
         states={"draft": [("readonly", False)]},
     )
     operation_id = fields.Many2one(
-        comodel_name="rma.operation", string="Requested operation",
+        comodel_name="rma.operation",
+        string="Requested operation",
     )
     state = fields.Selection(
         [
@@ -180,14 +183,21 @@ class Rma(models.Model):
         states={"draft": [("readonly", False)]},
     )
     warehouse_id = fields.Many2one(
-        comodel_name="stock.warehouse", compute="_compute_warehouse_id", store=True,
+        comodel_name="stock.warehouse",
+        compute="_compute_warehouse_id",
+        store=True,
     )
     reception_move_id = fields.Many2one(
-        comodel_name="stock.move", string="Reception move", copy=False,
+        comodel_name="stock.move",
+        string="Reception move",
+        copy=False,
     )
     # Refund fields
     refund_id = fields.Many2one(
-        comodel_name="account.move", string="Refund", readonly=True, copy=False,
+        comodel_name="account.move",
+        string="Refund",
+        readonly=True,
+        copy=False,
     )
     refund_line_id = fields.Many2one(
         comodel_name="account.move.line",
@@ -205,7 +215,8 @@ class Rma(models.Model):
         copy=False,
     )
     delivery_picking_count = fields.Integer(
-        string="Delivery count", compute="_compute_delivery_picking_count",
+        string="Delivery count",
+        compute="_compute_delivery_picking_count",
     )
     delivered_qty = fields.Float(
         string="Delivered qty",
@@ -219,9 +230,15 @@ class Rma(models.Model):
         compute="_compute_delivered_qty",
         compute_sudo=True,
     )
-    can_be_returned = fields.Boolean(compute="_compute_can_be_returned",)
-    can_be_replaced = fields.Boolean(compute="_compute_can_be_replaced",)
-    can_be_locked = fields.Boolean(compute="_compute_can_be_locked",)
+    can_be_returned = fields.Boolean(
+        compute="_compute_can_be_returned",
+    )
+    can_be_replaced = fields.Boolean(
+        compute="_compute_can_be_replaced",
+    )
+    can_be_locked = fields.Boolean(
+        compute="_compute_can_be_locked",
+    )
     remaining_qty = fields.Float(
         string="Remaining delivered qty",
         digits="Product Unit of Measure",
@@ -233,9 +250,14 @@ class Rma(models.Model):
         compute="_compute_remaining_qty",
     )
     # Split fields
-    can_be_split = fields.Boolean(compute="_compute_can_be_split",)
+    can_be_split = fields.Boolean(
+        compute="_compute_can_be_split",
+    )
     origin_split_rma_id = fields.Many2one(
-        comodel_name="rma", string="Extracted from", readonly=True, copy=False,
+        comodel_name="rma",
+        string="Extracted from",
+        readonly=True,
+        copy=False,
     )
 
     def _compute_delivery_picking_count(self):
@@ -263,7 +285,7 @@ class Rma(models.Model):
         "product_uom",
     )
     def _compute_delivered_qty(self):
-        """ Compute 'delivered_qty' and 'delivered_qty_done' fields.
+        """Compute 'delivered_qty' and 'delivered_qty_done' fields.
 
         delivered_qty: represents the quantity delivery or to be
         delivery. For each move in delivery_move_ids the quantity done
@@ -301,7 +323,7 @@ class Rma(models.Model):
 
     @api.depends("product_uom_qty", "delivered_qty", "delivered_qty_done")
     def _compute_remaining_qty(self):
-        """ Compute 'remaining_qty' and 'remaining_qty_to_done' fields.
+        """Compute 'remaining_qty' and 'remaining_qty_to_done' fields.
 
         remaining_qty: is used to set a default quantity of replacing
         or returning of product to the customer.
@@ -316,9 +338,11 @@ class Rma(models.Model):
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
             r.remaining_qty_to_done = r.product_uom_qty - r.delivered_qty_done
 
-    @api.depends("state",)
+    @api.depends(
+        "state",
+    )
     def _compute_can_be_refunded(self):
-        """ Compute 'can_be_refunded'. This field controls the visibility
+        """Compute 'can_be_refunded'. This field controls the visibility
         of 'Refund' button in the rma form view and determinates if
         an rma can be refunded. It is used in rma.action_refund method.
         """
@@ -327,7 +351,7 @@ class Rma(models.Model):
 
     @api.depends("remaining_qty", "state")
     def _compute_can_be_returned(self):
-        """ Compute 'can_be_returned'. This field controls the visibility
+        """Compute 'can_be_returned'. This field controls the visibility
         of the 'Return to customer' button in the rma form
         view and determinates if an rma can be returned to the customer.
         This field is used in:
@@ -341,7 +365,7 @@ class Rma(models.Model):
 
     @api.depends("state")
     def _compute_can_be_replaced(self):
-        """ Compute 'can_be_replaced'. This field controls the visibility
+        """Compute 'can_be_replaced'. This field controls the visibility
         of 'Replace' button in the rma form
         view and determinates if an rma can be replaced.
         This field is used in:
@@ -357,7 +381,7 @@ class Rma(models.Model):
 
     @api.depends("product_uom_qty", "state", "remaining_qty", "remaining_qty_to_done")
     def _compute_can_be_split(self):
-        """ Compute 'can_be_split'. This field controls the
+        """Compute 'can_be_split'. This field controls the
         visibility of 'Split' button in the rma form view and
         determinates if an rma can be split.
         This field is used in:
@@ -397,7 +421,7 @@ class Rma(models.Model):
         "state", "partner_id", "partner_shipping_id", "partner_invoice_id", "product_id"
     )
     def _check_required_after_draft(self):
-        """ Check that RMAs are being created or edited with the
+        """Check that RMAs are being created or edited with the
         necessary fields filled out. Only applies to 'Draft' and
         'Cancelled' states.
         """
@@ -576,7 +600,8 @@ class Rma(models.Model):
             origin = ", ".join(rmas.mapped("name"))
             invoice_form = Form(
                 self.env["account.move"].with_context(
-                    default_type="out_refund", company_id=rmas[0].company_id.id,
+                    default_type="out_refund",
+                    company_id=rmas[0].company_id.id,
                 ),
                 "account.view_move_form",
             )
@@ -621,7 +646,9 @@ class Rma(models.Model):
         action["name"] = "Replace product(s)"
         action["context"] = dict(self.env.context)
         action["context"].update(
-            active_id=self.id, active_ids=self.ids, rma_delivery_type="replace",
+            active_id=self.id,
+            active_ids=self.ids,
+            rma_delivery_type="replace",
         )
         return action
 
@@ -640,7 +667,9 @@ class Rma(models.Model):
         )
         action["context"] = dict(self.env.context)
         action["context"].update(
-            active_id=self.id, active_ids=self.ids, rma_delivery_type="return",
+            active_id=self.id,
+            active_ids=self.ids,
+            rma_delivery_type="return",
         )
         return action
 
@@ -729,13 +758,16 @@ class Rma(models.Model):
             action["domain"] = [("id", "in", picking.ids)]
         elif picking:
             action.update(
-                res_id=picking.id, view_mode="form", view_id=False, views=False,
+                res_id=picking.id,
+                view_mode="form",
+                view_id=False,
+                views=False,
             )
         return action
 
     # Validation business methods
     def _ensure_required_fields(self):
-        """ This method is used to ensure the following fields are not empty:
+        """This method is used to ensure the following fields are not empty:
         [
             'partner_id', 'partner_invoice_id', 'partner_shipping_id',
             'product_id', 'location_id'
@@ -762,7 +794,7 @@ class Rma(models.Model):
                 raise ValidationError(_("Required field(s):%s") % desc)
 
     def _ensure_can_be_returned(self):
-        """ This method is intended to be invoked after user click on
+        """This method is intended to be invoked after user click on
         'Replace' or 'Return to customer' button (before the delivery wizard
         is launched) and after confirm the wizard.
 
@@ -779,7 +811,7 @@ class Rma(models.Model):
             raise ValidationError(_("None of the selected RMAs can perform a return."))
 
     def _ensure_can_be_replaced(self):
-        """ This method is intended to be invoked after user click on
+        """This method is intended to be invoked after user click on
         'Replace' button (before the delivery wizard
         is launched) and after confirm the wizard.
 
@@ -806,7 +838,7 @@ class Rma(models.Model):
             raise ValidationError(_("This RMA cannot be split."))
 
     def _ensure_qty_to_return(self, qty=None, uom=None):
-        """ This method is intended to be invoked after confirm the wizard.
+        """This method is intended to be invoked after confirm the wizard.
         invoked by: rma.create_return
         """
         if qty and uom:
@@ -818,7 +850,7 @@ class Rma(models.Model):
                 )
 
     def _ensure_qty_to_extract(self, qty, uom):
-        """ This method is intended to be invoked after confirm the wizard.
+        """This method is intended to be invoked after confirm the wizard.
         invoked by: rma.extract_quantity
         """
         to_split_uom_qty = qty
@@ -839,11 +871,15 @@ class Rma(models.Model):
         create_vals = {}
         if self.location_id:
             create_vals.update(
-                location_id=self.location_id.id, picking_id=self.picking_id.id,
+                location_id=self.location_id.id,
+                picking_id=self.picking_id.id,
             )
         return_wizard = (
             self.env["stock.return.picking"]
-            .with_context(active_id=self.picking_id.id, active_ids=self.picking_id.ids,)
+            .with_context(
+                active_id=self.picking_id.id,
+                active_ids=self.picking_id.ids,
+            )
             .create(create_vals)
         )
         return_wizard._onchange_picking_id()
@@ -924,13 +960,16 @@ class Rma(models.Model):
                 'Split: <a href="#" data-oe-model="rma" '
                 'data-oe-id="%d">%s</a> has been created.'
             )
-            % (extracted_rma.id, extracted_rma.name,)
+            % (
+                extracted_rma.id,
+                extracted_rma.name,
+            )
         )
         return extracted_rma
 
     # Refund business methods
     def _prepare_refund(self, invoice_form, origin):
-        """ Hook method for preparing the refund Form.
+        """Hook method for preparing the refund Form.
 
         This method could be override in order to add new custom field
         values in the refund creation.
@@ -942,7 +981,7 @@ class Rma(models.Model):
         invoice_form.partner_id = self.partner_invoice_id
 
     def _prepare_refund_line(self, line_form):
-        """ Hook method for preparing a refund line Form.
+        """Hook method for preparing a refund line Form.
 
         This method could be override in order to add new custom field
         values in the refund line creation.
@@ -965,7 +1004,7 @@ class Rma(models.Model):
 
     def _get_refund_line_quantity(self):
         """To be overriden in a third module with the proper origin values
-        in case a kit is linked with the rma """
+        in case a kit is linked with the rma"""
         return (self.product_uom_qty, self.product_uom)
 
     def _get_refund_line_price_unit(self):
@@ -1088,9 +1127,14 @@ class Rma(models.Model):
             self.state = "waiting_replacement"
 
     def _action_launch_stock_rule(
-        self, scheduled_date, warehouse, product, qty, uom,
+        self,
+        scheduled_date,
+        warehouse,
+        product,
+        qty,
+        uom,
     ):
-        """ Creates a delivery picking and launch stock rule. It is invoked by:
+        """Creates a delivery picking and launch stock rule. It is invoked by:
         rma.create_replace
         """
         self.ensure_one()
@@ -1125,7 +1169,10 @@ class Rma(models.Model):
         return True
 
     def _prepare_procurement_values(
-        self, group_id, scheduled_date, warehouse,
+        self,
+        group_id,
+        scheduled_date,
+        warehouse,
     ):
         self.ensure_one()
         return {
@@ -1189,7 +1236,7 @@ class Rma(models.Model):
 
     @api.returns("mail.message", lambda value: value.id)
     def message_post(self, **kwargs):
-        """ Set 'sent' field to True when an email is sent from rma form
+        """Set 'sent' field to True when an email is sent from rma form
         view. This field (sent) is used to set the appropriate style to the
         'Send by Email' button in the rma form view.
         """
@@ -1218,20 +1265,20 @@ class Rma(models.Model):
 
     # Other business methods
     def update_received_state(self):
-        """ Invoked by:
-         [stock.move].unlink
-         [stock.move]._action_cancel
-         """
+        """Invoked by:
+        [stock.move].unlink
+        [stock.move]._action_cancel
+        """
         rma = self.filtered(lambda r: r.delivered_qty == 0)
         if rma:
             rma.write({"state": "received"})
 
     def update_replaced_state(self):
-        """ Invoked by:
-         [stock.move]._action_done
-         [stock.move].unlink
-         [stock.move]._action_cancel
-         """
+        """Invoked by:
+        [stock.move]._action_done
+        [stock.move].unlink
+        [stock.move]._action_cancel
+        """
         rma = self.filtered(
             lambda r: (
                 r.state == "waiting_replacement"

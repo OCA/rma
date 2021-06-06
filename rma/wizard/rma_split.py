@@ -8,7 +8,10 @@ class RmaReSplitWizard(models.TransientModel):
     _name = "rma.split.wizard"
     _description = "RMA Split Wizard"
 
-    rma_id = fields.Many2one(comodel_name="rma", string="RMA",)
+    rma_id = fields.Many2one(
+        comodel_name="rma",
+        string="RMA",
+    )
     product_uom_qty = fields.Float(
         string="Quantity to extract",
         digits="Product Unit of Measure",
@@ -16,7 +19,9 @@ class RmaReSplitWizard(models.TransientModel):
         help="Quantity to extract to a new RMA.",
     )
     product_uom = fields.Many2one(
-        comodel_name="uom.uom", string="Unit of measure", required=True,
+        comodel_name="uom.uom",
+        string="Unit of measure",
+        required=True,
     )
 
     _sql_constraints = [
