@@ -50,7 +50,9 @@ def post_init_hook(cr, registry):
                 picking_sequence = sequence_data[picking_type]
                 sequence = ir_sequence_sudo.create(picking_sequence)
                 values.update(
-                    warehouse_id=whs.id, color=color, sequence_id=sequence.id,
+                    warehouse_id=whs.id,
+                    color=color,
+                    sequence_id=sequence.id,
                 )
                 data[picking_type] = stock_picking_type.create(values).id
 
