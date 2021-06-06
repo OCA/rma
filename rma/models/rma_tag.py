@@ -12,7 +12,12 @@ class RmaTag(models.Model):
         default=True,
         help="The active field allows you to hide the category without " "removing it.",
     )
-    name = fields.Char(string="Tag Name", required=True, translate=True, copy=False,)
+    name = fields.Char(
+        string="Tag Name",
+        required=True,
+        translate=True,
+        copy=False,
+    )
     color = fields.Integer(string="Color Index")
     rma_ids = fields.Many2many(comodel_name="rma")
 
