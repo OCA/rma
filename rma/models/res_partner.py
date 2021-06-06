@@ -8,9 +8,14 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     rma_ids = fields.One2many(
-        comodel_name="rma", inverse_name="partner_id", string="RMAs",
+        comodel_name="rma",
+        inverse_name="partner_id",
+        string="RMAs",
     )
-    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count",)
+    rma_count = fields.Integer(
+        string="RMA count",
+        compute="_compute_rma_count",
+    )
 
     def _compute_rma_count(self):
         rma_data = self.env["rma"].read_group(
@@ -26,7 +31,10 @@ class ResPartner(models.Model):
         rma = self.rma_ids
         if len(rma) == 1:
             action.update(
-                res_id=rma.id, view_mode="form", view_id=False, views=False,
+                res_id=rma.id,
+                view_mode="form",
+                view_id=False,
+                views=False,
             )
         else:
             action["domain"] = [("partner_id", "in", self.ids)]
