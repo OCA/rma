@@ -1,4 +1,5 @@
 # Copyright (C) 2018 - TODAY, Open Source Integrators
+# Copyright (C) 2021 Serpent Consulting Services
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -9,17 +10,9 @@
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
     "category": "Stock",
     "website": "https://github.com/OCA/rma",
-    "depends": [
-        "product_warranty",
-        "stock",
-    ],
-    "data": [
-        "views/stock_production_lot.xml",
-    ],
+    "depends": ["product_warranty", "stock"],
+    "data": ["views/stock_production_lot.xml"],
     "installable": True,
     "development_status": "Beta",
-    "maintainers": [
-        "osi-scampbell",
-        "max3903",
-    ],
+    "maintainers": ["osi-scampbell", "max3903"],
 }
