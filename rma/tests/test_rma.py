@@ -748,3 +748,10 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def test_validation_without_reception_step(self):
+        rma = self._create_rma(self.partner, self.product, 2, self.rma_loc)
+        rma.bypass_reception_step = True
+        rma.action_confirm()
+        self.assertEqual(rma.state, "received")
+        self.assertFalse(rma.can_be_returned)

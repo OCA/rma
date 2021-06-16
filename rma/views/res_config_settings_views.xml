@@ -137,6 +137,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-6 o_setting_box" title="Rma Steps">
+                    <div class="o_setting_left_pane">
+                        <field name="rma_bypass_reception_step" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="rma_bypass_reception_step"
+                            string="Do not manage the reception of products in RMAs"
+                        />
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

@@ -303,6 +303,7 @@
                                         options="{'no_create': True, 'no_open': True}"
                                         groups="stock.group_stock_multi_locations"
                                     />
+                                    <field name="bypass_reception_step" />
                                 </group>
                                 <group>
                                     <field name="deadline" />

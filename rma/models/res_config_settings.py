@@ -35,3 +35,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.rma_mail_draft_confirmation_template_id",
         readonly=False,
     )
+    rma_bypass_reception_step = fields.Boolean(
+        related="company_id.rma_bypass_reception_step", readonly=False
+    )

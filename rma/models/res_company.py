@@ -60,6 +60,7 @@ class Company(models.Model):
         default=_default_rma_mail_draft_template,
         help="Email sent to the customer when they place " "an RMA from the portal",
     )
+    rma_bypass_reception_step = fields.Boolean()
 
     @api.model
     def create(self, vals):

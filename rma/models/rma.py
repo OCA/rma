@@ -28,7 +28,20 @@ class Rma(models.Model):
         )
         return [("id", "child_of", rma_loc.ids)]
 
+    @api.depends("company_id")
+    def _compute_recetion_step(self):
+        for rma in self:
+            rma.bypass_reception_step = rma.company_id.rma_bypass_reception_step
+
     # General fields
+    bypass_reception_step = fields.Boolean(
+        compute="_compute_recetion_step",
+        readonly=False,
+        store=True,
+        help="If checked, the reception step will be bypassed on RMA. You will be "
+        "able to replace/return the product even if the customer did not send "
+        "it back first.",
+    )
     sent = fields.Boolean()
     name = fields.Char(
         string="Name",
@@ -172,8 +185,8 @@ class Rma(models.Model):
     state = fields.Selection(
         [
             ("draft", "Draft"),
-            ("confirmed", "Confirmed"),
-            ("received", "Received"),
+            ("confirmed", "Waiting product"),
+            ("received", "Ready"),
             ("waiting_return", "Waiting for return"),
             ("waiting_replacement", "Waiting for replacement"),
             ("refunded", "Refunded"),
@@ -381,7 +394,9 @@ class Rma(models.Model):
         """
         for r in self:
             r.can_be_returned = (
-                r.state in ["received", "waiting_return"] and r.remaining_qty > 0
+                r.state in ["received", "waiting_return"]
+                and r.remaining_qty > 0
+                and not r.bypass_reception_step
             )
 
     @api.depends("state")
@@ -628,11 +643,16 @@ class Rma(models.Model):
         self.ensure_one()
         self._ensure_required_fields()
         if self.state == "draft":
-            if self.picking_id:
-                reception_move = self._create_receptions_from_picking()
+            if not self.bypass_reception_step:
+                if self.picking_id:
+                    reception_move = self._create_receptions_from_picking()
+                else:
+                    reception_move = self._create_receptions_from_product()
+                self.write(
+                    {"reception_move_id": reception_move.id, "state": "confirmed"}
+                )
             else:
-                reception_move = self._create_receptions_from_product()
-            self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
+                self.write({"state": "received"})
             if self.partner_id not in self.message_partner_ids:
                 self.message_subscribe([self.partner_id.id])
             self._send_confirmation_email()
