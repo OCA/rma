@@ -140,9 +140,7 @@ class SaleOrderLine(models.Model):
                     if move_dest:
                         visited_moves += move_dest
                         qty += sum(move_dest.mapped("product_uom_qty"))
-                        move_dest = (
-                            destination_moves(move_dest) - visited_moves
-                        )
+                        move_dest = destination_moves(move_dest) - visited_moves
                 # If by chance we get a negative qty we should ignore it
                 qty = max(0, sum((qty, qty_returned)))
                 data.append(
