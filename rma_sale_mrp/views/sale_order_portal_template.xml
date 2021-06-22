@@ -3,7 +3,7 @@
     <template
         id="sale_order_portal_template"
         name="Request RMA MRP"
-        inherit_id="rma_sale.sale_order_portal_template"
+        inherit_id="rma_sale.sale_rma_request_form"
     >
         <xpath expr="//input[@t-attf-name='#{data_index}-product_id']" position="after">
             <input
@@ -26,8 +26,13 @@
             />
         </xpath>
         <!-- The component lines are splitted on the wizard so we should set the quantity properly -->
-        <xpath expr="//input[@t-attf-name='#{data_index}-quantity']" position="attributes">
-            <attribute name="t-att-value">data.get('phantom_bom_product') and data['quantity'] or 0</attribute>
+        <xpath
+            expr="//input[@t-attf-name='#{data_index}-quantity']"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-value"
+            >data.get('phantom_bom_product') and data['quantity'] or 0</attribute>
         </xpath>
         <!-- TODO: We could give a clue about what's to be returned, with readonly detailed lines -->
         <xpath
