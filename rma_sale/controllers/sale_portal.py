@@ -20,10 +20,16 @@ class CustomerPortal(CustomerPortal):
         wizard_obj = request.env['sale.order.rma.wizard']
         # Set wizard line vals
         mapped_vals = {}
+        custom_vals = {}
         partner_shipping_id = post.pop("partner_shipping_id", False)
         for name, value in post.items():
-            row, field_name = name.split('-', 1)
-            mapped_vals.setdefault(row, {}).update({field_name: value})
+            try:
+                row, field_name = name.split('-', 1)
+                mapped_vals.setdefault(row, {}).update({field_name: value})
+            # Catch possible form custom fields to add them to the RMA
+            # description values
+            except ValueError:
+                custom_vals.update({name: value})
         # If no operation is filled, no RMA will be created
         line_vals = [
             (0, 0, vals) for vals in mapped_vals.values()
@@ -31,10 +37,20 @@ class CustomerPortal(CustomerPortal):
         # Create wizard an generate rmas
         order = order_obj.browse(order_id).sudo()
         location_id = order.warehouse_id.rma_loc_id.id
+        # Add custom fields text
+        custom_description = ""
+        if custom_vals:
+            custom_description = r"<br \>---<br \>"
+            custom_description += (
+                r"<br \>".join(
+                    ["{}: {}".format(x, y) for x, y in custom_vals.items()]
+                )
+            )
         wizard = wizard_obj.with_context(active_id=order_id).create({
             'line_ids': line_vals,
             'location_id': location_id,
             'partner_shipping_id': partner_shipping_id,
+            'custom_description': custom_description,
         })
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
@@ -47,3 +63,28 @@ class CustomerPortal(CustomerPortal):
         else:
             route = "/my/rmas?sale_id=%d" % order_id
         return request.redirect(route)
+
+    @http.route(
+        ["/my/requestrma/<int:order_id>"],
+        type="http", auth="public", website=True
+    )
+    def request_sale_rma(self, order_id, access_token=None, **kw):
+        """Request RMA on a single page"""
+        try:
+            order_sudo = self._document_check_access(
+                "sale.order", order_id, access_token=access_token
+            )
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        if order_sudo.state in ("draft", "sent", "cancel"):
+            return request.redirect("/my")
+        values = {
+            "sale_order": order_sudo,
+            "page_name": "request_rma",
+            "default_url": order_sudo.get_portal_url(),
+            "token": access_token,
+            "partner_id": order_sudo.partner_id.id,
+        }
+        if order_sudo.company_id:
+            values["res_company"] = order_sudo.company_id
+        return request.render("rma_sale.request_rma_single_page", values)
