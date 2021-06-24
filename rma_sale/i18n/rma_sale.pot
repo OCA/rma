@@ -14,30 +14,30 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: rma_sale
-#: code:addons/rma_sale/controllers/sale_portal.py:41
+#: code:addons/rma_sale/controllers/sale_portal.py:57
 #, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:52
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:55
 #, python-format
 msgid " has been created."
 msgstr ""
 
 #. module: rma_sale
-#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:54
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:57
 #, python-format
 msgid " have been created."
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "&amp;times;"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<i class=\"fa fa-check\"/> Request RMAs"
 msgstr ""
 
@@ -47,13 +47,18 @@ msgid "<i class=\"fa fa-reply\"/> Request RMAs"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<i class=\"fa fa-times\"/> Cancel"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 
 #. module: rma_sale
@@ -119,18 +124,28 @@ msgid "Category"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Close"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Comment anything relevant to the return, like serial numbers, a description of the issue, etc"
 msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
 msgid "Commercial entity"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: rma_sale
@@ -163,7 +178,12 @@ msgid "Created on"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__custom_description
+msgid "Custom Description"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Delivery"
 msgstr ""
 
@@ -184,13 +204,25 @@ msgid "Display Name"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_res_company__show_full_page_sale_rma
+#: model:ir.model.fields,help:rma_sale.field_res_config_settings__show_full_page_sale_rma
+msgid "From the frontend sale order page go to a single RMA page creation instead of the usual popup"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__show_full_page_sale_rma
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__show_full_page_sale_rma
+msgid "Full page RMA creation"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
 msgid "ID"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
 
@@ -241,13 +273,13 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__product_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__product_id
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Product"
 msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Quantity"
 msgstr ""
 
@@ -268,18 +300,23 @@ msgid "RMA location"
 msgstr ""
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.request_rma_single_page
+msgid "RMA request for order"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
 msgid "RMAs"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Request RMAs"
 msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Requested operation"
 msgstr ""
 
@@ -311,7 +348,7 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Select the product quantity and the requested operation"
 msgstr ""
 
@@ -321,12 +358,22 @@ msgid "Shipping Address"
 msgstr ""
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Show portal RMA request in a single page"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Single page RMA request"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "The limit will decrease when the units in other RMAs are confirmed"
 msgstr ""
 
@@ -336,8 +383,18 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Use the comment button to add relevant information regarding the RMA, like returned serial numbers or a description of the issue"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__custom_description
+msgid "Values coming from portal RMA request form custom fields"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "When we hit the RMA request button from the portal sale page, open in a single page instead of a popup."
 msgstr ""
 
 #. module: rma_sale
@@ -351,12 +408,12 @@ msgid "Wizard"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "You can only return as much product units as you received for this order"
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "You can send a message in every RMA sent"
 msgstr ""
 
@@ -367,7 +424,7 @@ msgid "You may only create RMAs from a confirmed or done sale order."
 msgstr ""
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "You're about to perform an RMA request. Our team will process it an will reach you once it's validated. Keep in mind that:"
 msgstr ""
 
