@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="sale_order_portal_template" name="Request RMA MRP" inherit_id="rma_sale.sale_order_portal_template">
+    <template id="sale_order_portal_template" name="Request RMA MRP" inherit_id="rma_sale.sale_rma_request_form">
         <xpath expr="//input[@t-attf-name='#{data_index}-product_id']" position="after">
             <input type="hidden"
                    t-if="data.get('phantom_bom_product')"

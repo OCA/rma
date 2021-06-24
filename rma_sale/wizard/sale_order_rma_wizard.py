@@ -38,6 +38,9 @@ class SaleOrderRmaWizard(models.TransientModel):
         string="Shipping Address",
         help="Will be used to return the goods when the RMA is completed",
     )
+    custom_description = fields.Text(
+        help="Values coming from portal RMA request form custom fields",
+    )
 
     def create_rma(self, from_portal=None):
         self.ensure_one()
@@ -172,6 +175,9 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         partner_shipping = (
             self.wizard_id.partner_shipping_id or
             self.order_id.partner_shipping_id)
+        description = (
+            (self.description or '') + (self.wizard_id.custom_description or '')
+        )
         return {
             'partner_id': self.order_id.partner_id.id,
             'partner_invoice_id': self.order_id.partner_invoice_id.id,
@@ -186,5 +192,5 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             'product_uom_qty': self.quantity,
             'product_uom': self.uom_id.id,
             'operation_id': self.operation_id.id,
-            'description': self.description,
+            'description': description,
         }

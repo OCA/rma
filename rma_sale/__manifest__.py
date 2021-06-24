@@ -20,6 +20,7 @@
         "views/rma_views.xml",
         "views/sale_views.xml",
         "views/sale_portal_template.xml",
+        "views/res_config_settings_views.xml",
         "wizard/sale_order_rma_wizard_views.xml",
     ],
 }
