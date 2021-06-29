@@ -18,7 +18,9 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: rma
+#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
 #: model:mail.template,report_name:rma.mail_template_rma_notification
+#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
 msgid "${(object.name or '')}"
 msgstr "${(object.name or '')}"
 
@@ -26,6 +28,20 @@ msgstr "${(object.name or '')}"
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_receipt_notification
+msgid ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
+"received"
+msgstr ""
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_draft_notification
+msgid ""
+"${object.company_id.name} Your RMA has been succesfully created (Ref "
+"${object.name or 'n/a' })"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -74,6 +90,45 @@ msgstr ""
 "</p>\n"
 "</div>\n"
 "        "
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    The products for your RMA <strong>${object.name}</strong>\n"
+"    from ${object.company_id.name} have been received in our warehouse.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_draft_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    You've succesfully placed your RMA <strong>${object.name}</strong>\n"
+"    on ${object.company_id.name}. Our team will check it and will validate\n"
+"    it as soon as possible.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -613,9 +668,33 @@ msgid "Email Template confirmation for RMA"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email Template draft notification for RMA"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email Template receipt confirmation for RMA"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email sent to the customer once the RMA is confirmed."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email sent to the customer once the RMA products are received."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email sent to the customer when they place an RMA from the portal"
 msgstr ""
 
 #. module: rma
@@ -1008,6 +1087,11 @@ msgid "Product qty"
 msgstr "Cantidad"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
+msgid "Public Tag"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 msgid "Quantity"
@@ -1102,13 +1186,9 @@ msgid "RMA Location"
 msgstr "Ubicación de RMA"
 
 #. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 msgid "RMA Notification"
-msgstr ""
-
-#. module: rma
-#: model:mail.message.subtype,name:rma.mt_rma_notification
-msgid "RMA Notificatoin"
 msgstr ""
 
 #. module: rma
@@ -1127,6 +1207,11 @@ msgstr "Órdenes de RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
 msgstr "Tipo de operación para entrega de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Receipt Confirmation Email"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
@@ -1182,6 +1267,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Cantidad de RMAs"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA draft notification Email"
+msgstr ""
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
@@ -1428,8 +1518,30 @@ msgid "Send RMA Confirmation"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid "Send RMA Receipt Confirmation"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "Send RMA draft Confirmation"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA info to customer"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA products reception notification to customer"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic notification when the customer places an RMA"
 msgstr ""
 
 #. module: rma
@@ -1638,6 +1750,11 @@ msgid "The quantity to return is greater than remaining quantity."
 msgstr "La cantidad a devolver es mayor que la cantidad restante del RMA."
 
 #. module: rma
+#: model:ir.model.fields,help:rma.field_rma_tag__is_public
+msgid "The tag is visible in the portal view"
+msgstr ""
+
+#. module: rma
 #: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
@@ -1784,8 +1901,34 @@ msgid "Website communication history"
 msgstr "Historial de comunicaciones del sitio web"
 
 #. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "When a customer places an RMA, send a notification with it"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When customers themselves place an RMA from the portal, send an automatic "
+"notification acknowleging it."
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When the RMA products are received, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid ""
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 
 #. module: rma
