@@ -104,14 +104,14 @@
                             <span t-esc="kit_rma.name" class="mr-lg-3" />
                             <div class="d-lg-inline-block"><span
                                     t-field="kit_rma.sudo().product_id.display_name"
-                                /> (<t t-field="kit_rma.product_uom_qty" />)</div>
+                                /> (<span t-field="kit_rma.product_uom_qty" />)</div>
                         </div>
                         <t
                             t-if="kit_rma.state in ['confirmed', 'received', 'returned', 'replaced', 'locked', 'refunded']"
                         >
                             <span class="badge badge-success label-text-align"><i
                                     class="fa fa-fw fa-reply"
-                                /> <t t-field="kit_rma.state" /></span>
+                                /> <span t-field="kit_rma.state" /></span>
                         </t>
                         <t
                             t-if="kit_rma.state in ['waiting_return', 'waiting_replacement']"
