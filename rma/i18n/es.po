@@ -358,6 +358,7 @@ msgid "Action Needed"
 msgstr "Acción Necesaria"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__active
 #: model:ir.model.fields,field_description:rma.field_rma_tag__active
 #: model:ir.model.fields,field_description:rma.field_rma_team__active
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
