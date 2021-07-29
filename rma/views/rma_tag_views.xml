@@ -24,20 +24,6 @@
         <field name="arch" type="xml">
             <form string="RMA Tag">
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button
-                            class="oe_stat_button"
-                            type="object"
-                            name="toggle_active"
-                            icon="fa-archive"
-                        >
-                            <field
-                                name="active"
-                                widget="boolean_button"
-                                options='{"terminology": "archive"}'
-                            />
-                        </button>
-                    </div>
                     <group>
                         <field name="name" />
                         <field name="is_public" />
