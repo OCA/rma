@@ -46,7 +46,7 @@ class TestProductWarranty(TransactionCase):
             "product_warranty." "return_instruction_1"
         )
 
-        self.assertEquals(
+        self.assertEqual(
             self.supplierinfo_brw.return_instructions.id, return_instructions_id.id
         )
 
@@ -57,21 +57,21 @@ class TestProductWarranty(TransactionCase):
         """
         self.create_product_supplierinfo()
 
-        self.assertEquals(
+        self.assertEqual(
             self.supplierinfo_brw.warranty_return_address.id,
             self.supplierinfo_brw.name.id,
         )
 
         self.supplierinfo_brw.write({"warranty_return_partner": "company"})
 
-        self.assertEquals(
+        self.assertEqual(
             self.supplierinfo_brw.warranty_return_address.id,
             self.supplierinfo_brw.company_id.crm_return_address_id.id,
         )
 
         self.supplierinfo_brw.write({"warranty_return_partner": "other"})
 
-        self.assertEquals(
+        self.assertEqual(
             self.supplierinfo_brw.warranty_return_address.id,
             self.supplierinfo_brw.warranty_return_other_address.id,
         )
