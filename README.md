@@ -17,9 +17,9 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[rma](rma/) | 14.0.1.0.0 | Return Merchandise Authorization (RMA)
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[rma](rma/) | 14.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Return Merchandise Authorization (RMA)
 
 [//]: # (end addons)
 
