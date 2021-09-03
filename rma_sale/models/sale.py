@@ -10,7 +10,10 @@ class SaleOrder(models.Model):
 
     # RMAs that were created from a sale order
     rma_ids = fields.One2many(
-        comodel_name="rma", inverse_name="order_id", string="RMAs", copy=False,
+        comodel_name="rma",
+        inverse_name="order_id",
+        string="RMAs",
+        copy=False,
     )
     rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count")
 
@@ -61,7 +64,9 @@ class SaleOrder(models.Model):
         rma = self.rma_ids
         if len(rma) == 1:
             action.update(
-                res_id=rma.id, view_mode="form", views=[],
+                res_id=rma.id,
+                view_mode="form",
+                views=[],
             )
         else:
             action["domain"] = [("id", "in", rma.ids)]
