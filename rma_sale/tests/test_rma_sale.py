@@ -97,7 +97,8 @@ class TestRmaSale(SavepointCase):
         )
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
-                active_ids=rma.ids, rma_delivery_type="return",
+                active_ids=rma.ids,
+                rma_delivery_type="return",
             )
         )
         delivery_form.product_uom_qty = rma.product_uom_qty

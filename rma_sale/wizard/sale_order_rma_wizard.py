@@ -75,7 +75,10 @@ class SaleOrderRmaWizard(models.TransientModel):
             action["domain"] = [("id", "in", rma.ids)]
         elif rma:
             action.update(
-                res_id=rma.id, view_mode="form", view_id=False, views=False,
+                res_id=rma.id,
+                view_mode="form",
+                view_id=False,
+                views=False,
             )
         return action
 
@@ -101,10 +104,13 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         domain="[('id', 'in', allowed_product_ids)]",
     )
     uom_category_id = fields.Many2one(
-        comodel_name="uom.category", related="product_id.uom_id.category_id",
+        comodel_name="uom.category",
+        related="product_id.uom_id.category_id",
     )
     quantity = fields.Float(
-        string="Quantity", digits="Product Unit of Measure", required=True,
+        string="Quantity",
+        digits="Product Unit of Measure",
+        required=True,
     )
     uom_id = fields.Many2one(
         comodel_name="uom.uom",
@@ -122,9 +128,12 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     )
     move_id = fields.Many2one(comodel_name="stock.move", compute="_compute_move_id")
     operation_id = fields.Many2one(
-        comodel_name="rma.operation", string="Requested operation",
+        comodel_name="rma.operation",
+        string="Requested operation",
     )
-    sale_line_id = fields.Many2one(comodel_name="sale.order.line",)
+    sale_line_id = fields.Many2one(
+        comodel_name="sale.order.line",
+    )
     description = fields.Text()
 
     @api.onchange("product_id")
