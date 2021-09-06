@@ -869,12 +869,14 @@ class Rma(models.Model):
             create_vals.update(
                 location_id=self.location_id.id, picking_id=self.picking_id.id,
             )
-        return_wizard = (
-            self.env["stock.return.picking"]
-            .with_context(active_id=self.picking_id.id, active_ids=self.picking_id.ids,)
-            .create(create_vals)
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=self.picking_id.ids,
+                active_id=self.picking_id.id,
+                active_model="stock.picking",
+            )
         )
-        return_wizard._onchange_picking_id()
+        return_wizard = stock_return_picking_form.save()
         return_wizard.product_return_moves.filtered(
             lambda r: r.move_id != self.move_id
         ).unlink()
