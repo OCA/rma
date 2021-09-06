@@ -571,15 +571,15 @@ class TestRma(SavepointCase):
     def test_rma_from_picking_return(self):
         # Create a return from a delivery picking
         origin_delivery = self._create_delivery()
-        return_wizard = (
-            self.env["stock.return.picking"]
-            .with_context(
-                active_id=origin_delivery.id,
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
                 active_ids=origin_delivery.ids,
+                active_id=origin_delivery.id,
+                active_model="stock.picking",
             )
-            .create({"create_rma": True, "picking_id": origin_delivery.id})
         )
-        return_wizard._onchange_picking_id()
+        stock_return_picking_form.create_rma = True
+        return_wizard = stock_return_picking_form.save()
         picking_action = return_wizard.create_returns()
         # Each origin move is linked to a different RMA
         origin_moves = origin_delivery.move_lines
