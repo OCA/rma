@@ -66,7 +66,7 @@ class StockMove(models.Model):
                     )
                     % (move.product_id.name, move.rma_receiver_ids.name)
                 )
-        res = super()._action_done()
+        res = super()._action_done(cancel_backorder=cancel_backorder)
         move_done = self.filtered(lambda r: r.state == "done").sudo()
         # Set RMAs as received. We sudo so we can grant the operation even
         # if the stock user has no RMA permissions.
