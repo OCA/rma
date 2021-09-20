@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - Ernesto Tejeda
 /* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  */
-odoo.define("website_sale_vat_required.tour", function(require) {
+odoo.define("website_rma.tour", function(require) {
     "use strict";
 
     var tour = require("web_tour.tour");
