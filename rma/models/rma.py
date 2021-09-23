@@ -864,11 +864,6 @@ class Rma(models.Model):
     # Reception business methods
     def _create_receptions_from_picking(self):
         self.ensure_one()
-        create_vals = {}
-        if self.location_id:
-            create_vals.update(
-                location_id=self.location_id.id, picking_id=self.picking_id.id,
-            )
         stock_return_picking_form = Form(
             self.env["stock.return.picking"].with_context(
                 active_ids=self.picking_id.ids,
@@ -876,6 +871,8 @@ class Rma(models.Model):
                 active_model="stock.picking",
             )
         )
+        if self.location_id:
+            stock_return_picking_form.location_id = self.location_id
         return_wizard = stock_return_picking_form.save()
         return_wizard.product_return_moves.filtered(
             lambda r: r.move_id != self.move_id
