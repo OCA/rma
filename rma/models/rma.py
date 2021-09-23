@@ -50,7 +50,6 @@ class Rma(models.Model):
         comodel_name="res.users",
         string="Responsible",
         index=True,
-        default=lambda self: self.env.user,
         tracking=True,
         states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
@@ -491,7 +490,7 @@ class Rma(models.Model):
                     )
                 vals["name"] = ir_sequence.next_by_code("rma")
             # Assign a default team_id which will be the first in the sequence
-            if "team_id" not in vals:
+            if not vals.get("team_id"):
                 vals["team_id"] = self.env["rma.team"].search([], limit=1).id
         rmas = super().create(vals_list)
         # Send acknowledge when the RMA is created from the portal and the
