@@ -50,7 +50,6 @@ class Rma(models.Model):
         comodel_name="res.users",
         string="Responsible",
         index=True,
-        default=lambda self: self.env.user,
         tracking=True,
         states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
@@ -509,7 +508,7 @@ class Rma(models.Model):
                     ir_sequence = ir_sequence.with_company(vals["company_id"])
                 vals["name"] = ir_sequence.next_by_code("rma")
             # Assign a default team_id which will be the first in the sequence
-            if "team_id" not in vals:
+            if not vals.get("team_id"):
                 vals["team_id"] = self.env["rma.team"].search([], limit=1).id
         rmas = super().create(vals_list)
         # Send acknowledge when the RMA is created from the portal and the
@@ -890,21 +889,16 @@ class Rma(models.Model):
     # Reception business methods
     def _create_receptions_from_picking(self):
         self.ensure_one()
-        create_vals = {}
-        if self.location_id:
-            create_vals.update(
-                location_id=self.location_id.id,
-                picking_id=self.picking_id.id,
-            )
-        return_wizard = (
-            self.env["stock.return.picking"]
-            .with_context(
-                active_id=self.picking_id.id,
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
                 active_ids=self.picking_id.ids,
+                active_id=self.picking_id.id,
+                active_model="stock.picking",
             )
-            .create(create_vals)
         )
-        return_wizard._onchange_picking_id()
+        if self.location_id:
+            stock_return_picking_form.location_id = self.location_id
+        return_wizard = stock_return_picking_form.save()
         return_wizard.product_return_moves.filtered(
             lambda r: r.move_id != self.move_id
         ).unlink()
