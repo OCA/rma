@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Request RMA">
+        <xpath expr="//link[last()]" position="after">
+            <script
+                type="text/javascript"
+                src="/rma_sale/static/src/js/rma_portal_form.js"
+            />
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/rma_sale/static/src/scss/rma_sale.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
