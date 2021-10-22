@@ -9,7 +9,12 @@ class SaleOrderRmaWizard(models.TransientModel):
     _description = "Sale Order Rma Wizard"
 
     def _domain_location_id(self):
-        rma_loc = self.env["stock.warehouse"].search([]).mapped("rma_loc_id")
+        sale = self.env["sale.order"].browse(self.env.context.get("active_id"))
+        rma_loc = (
+            self.env["stock.warehouse"]
+            .search([("company_id", "=", sale.company_id.id)])
+            .mapped("rma_loc_id")
+        )
         return [("id", "child_of", rma_loc.ids)]
 
     order_id = fields.Many2one(
