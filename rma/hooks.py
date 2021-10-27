@@ -43,18 +43,18 @@ def post_init_hook(cr, registry):
         sequence_data = whs._get_sequence_values()
         data = {}
         for picking_type, values in create_data.items():
-            if (
-                picking_type in ["rma_in_type_id", "rma_out_type_id"]
-                and not whs[picking_type]
-            ):
-                picking_sequence = sequence_data[picking_type]
-                sequence = ir_sequence_sudo.create(picking_sequence)
-                values.update(
-                    warehouse_id=whs.id,
-                    color=color,
-                    sequence_id=sequence.id,
-                )
-                data[picking_type] = stock_picking_type.create(values).id
+            if picking_type in ["rma_in_type_id", "rma_out_type_id"]:
+                if whs[picking_type]:
+                    data[picking_type] = whs[picking_type].id 
+                else:
+                    picking_sequence = sequence_data[picking_type]
+                    sequence = ir_sequence_sudo.create(picking_sequence)
+                    values.update(
+                        warehouse_id=whs.id,
+                        color=color,
+                        sequence_id=sequence.id,
+                    )
+                    data[picking_type] = stock_picking_type.create(values).id
 
         rma_out_type = stock_picking_type.browse(data["rma_out_type_id"])
         rma_out_type.write(
