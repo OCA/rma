@@ -45,7 +45,7 @@ def post_init_hook(cr, registry):
         for picking_type, values in create_data.items():
             if picking_type in ["rma_in_type_id", "rma_out_type_id"]:
                 if whs[picking_type]:
-                    data[picking_type] = whs[picking_type].id 
+                    data[picking_type] = whs[picking_type] 
                 else:
                     picking_sequence = sequence_data[picking_type]
                     sequence = ir_sequence_sudo.create(picking_sequence)
