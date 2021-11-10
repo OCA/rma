@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - Ernesto Tejeda
 /* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  */
-odoo.define("website_rma.tour", function(require) {
+odoo.define("website_rma.tour", function (require) {
     "use strict";
 
     var tour = require("web_tour.tour");
@@ -23,7 +23,7 @@ odoo.define("website_rma.tour", function(require) {
                 content: "Fill form",
                 trigger: "#rma_request_form",
                 extra_trigger: "#rma_request_form",
-                run: function() {
+                run: function () {
                     $("select[name='operation_id'] > option:eq(1)").prop(
                         "selected",
                         true
