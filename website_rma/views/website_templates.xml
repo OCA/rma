@@ -8,7 +8,7 @@
         inherit_id="website.contactus"
     >
         <xpath
-            expr="//t[@t-call='website.company_description']/../../div[hasclass('col-lg-8')]"
+            expr="//t[@t-call='website.company_description']/../../div[hasclass('col-lg-7')]"
             position="inside"
         >
             <div class="oe_structure">

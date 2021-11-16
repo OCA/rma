@@ -16,11 +16,11 @@
                         title="Set the default RMA Team and RMA responsible of the RMAs created from the Request RMA page."
                     >
                         <div class="o_setting_right_pane">
-                            <label for="id" string="Request RMA Form" />
-                            <div
-                                class="text-muted"
-                                id="msg_contact_form_install_setting"
-                            >
+                            <label
+                                for="rma_default_team_id"
+                                string="Request RMA Form"
+                            />
+                            <div class="text-muted" id="website_rma_settings">
                                 Set the default RMA Team and RMA responsible of the RMAs created from the <a
                                     href="/requestrma"
                                 >Request RMA</a> page
