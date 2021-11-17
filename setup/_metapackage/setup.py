@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-rma',
         'odoo14-addon-rma_sale',
+        'odoo14-addon-website_rma',
     ],
     classifiers=[
         'Programming Language :: Python',
