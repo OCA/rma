@@ -34,7 +34,6 @@ class Rma(models.Model):
         comodel_name="product.product",
         compute="_compute_allowed_product_ids",
     )
-    product_id = fields.Many2one(domain="[('id', 'in', allowed_product_ids)]")
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
@@ -67,11 +66,7 @@ class Rma(models.Model):
                     lambda r: r.type in ["consu", "product"]
                 ).ids
             else:
-                rec.allowed_product_ids = (
-                    self.env["product.product"]
-                    .search([("type", "in", ["consu", "product"])])
-                    .ids
-                )
+                rec.allowed_product_ids = []
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
@@ -82,6 +77,12 @@ class Rma(models.Model):
     @api.onchange("order_id")
     def _onchange_order_id(self):
         self.product_id = self.picking_id = False
+        if self.order_id:
+            return {
+                "domain": {"product_id": [("id", "in", self.allowed_product_ids.ids)]}
+            }
+        else:
+            return {"domain": {"product_id": [("type", "in", ("consu", "product"))]}}
 
     def _prepare_refund(self, invoice_form, origin):
         """Inject salesman from sales order (if any)"""
