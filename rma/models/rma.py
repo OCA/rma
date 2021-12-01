@@ -18,7 +18,14 @@ class Rma(models.Model):
     _inherit = ["mail.thread", "portal.mixin", "mail.activity.mixin"]
 
     def _domain_location_id(self):
-        rma_loc = self.env["stock.warehouse"].search([]).mapped("rma_loc_id")
+        # this is done with sudo, intercompany rules are not applied by default so we
+        # add company in domain explicitly to avoid multi-company rule error when
+        # the user will try to choose a location
+        rma_loc = (
+            self.env["stock.warehouse"]
+            .search([("company_id", "in", self.env.companies.ids)])
+            .mapped("rma_loc_id")
+        )
         return [("id", "child_of", rma_loc.ids)]
 
     # General fields
