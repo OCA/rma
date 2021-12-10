@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-12-03 20:36+0000\n"
-"Last-Translator: Samuele Mariani <samuele@ooops404.com>\n"
+"PO-Revision-Date: 2021-12-10 17:39+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -34,6 +34,8 @@ msgid ""
 "${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
 "received"
 msgstr ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) prodotti "
+"ricevuti"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_draft_notification
@@ -41,6 +43,8 @@ msgid ""
 "${object.company_id.name} Your RMA has been succesfully created (Ref "
 "${object.name or 'n/a' })"
 msgstr ""
+"${object.company_id.name} Il tuo RMA è stato creato correttamente (Ref ${"
+"object.name or 'n/a' })"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -76,6 +80,20 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Gentile ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Di seguito l'RMA <strong>${object.name}</strong> da ${object.company_id."
+"name}.\n"
+"    <br/><br/>\n"
+"    Non esiti a contattarci per qualsiasi domanda.\n"
+"</p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
@@ -95,6 +113,20 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Gentile ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    I prodotti del suo RMA <strong>${object.name}</strong>\n"
+"    da ${object.company_id.name} sono stati ricevuti nel nostro magazzino.\n"
+"    <br/><br/>\n"
+"    Non esiti a contattarci per qualsiasi domanda.\n"
+"</p>\n"
+"</div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
@@ -115,6 +147,21 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Gentile ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    ha inserito con successo il suo RMA <strong>${object.name}</strong>\n"
+"    per ${object.company_id.name}. Il nostro team lo verificherà \n"
+"    il prima possibile.\n"
+"    <br/><br/>\n"
+"    Non esiti a contattarci per qualsiasi domanda.\n"
+"</p>\n"
+"</div>\n"
+"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -201,6 +248,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati sono "
+"specifici per Azienda.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -754,7 +803,7 @@ msgstr "Seguito da (Clienti)"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font awesome icon e.g. fa-tasks"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
