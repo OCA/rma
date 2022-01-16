@@ -43,8 +43,8 @@ msgid ""
 "${object.company_id.name} Your RMA has been succesfully created (Ref "
 "${object.name or 'n/a' })"
 msgstr ""
-"${object.company_id.name} Il tuo RMA è stato creato correttamente (Ref ${"
-"object.name or 'n/a' })"
+"${object.company_id.name} Il tuo RMA è stato creato correttamente (Ref "
+"${object.name or 'n/a' })"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -73,7 +73,8 @@ msgid ""
 "        (${object.partner_id.parent_id.name})\n"
 "    % endif\n"
 "    <br/><br/>\n"
-"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id.name}.\n"
+"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id."
+"name}.\n"
 "    <br/><br/>\n"
 "    Do not hesitate to contact us if you have any question.\n"
 "</p>\n"
@@ -165,7 +166,9 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
@@ -191,8 +194,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\""
-" title=\"Download\"/>"
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
@@ -200,8 +203,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
-"title=\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
@@ -504,10 +507,14 @@ msgid "Canceled"
 msgstr "Annullato"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__uom_category_id
 msgid "Category"
 msgstr "Categoria"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
+msgid "Category UoM"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
@@ -834,8 +841,8 @@ msgstr "ID"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr ""
 "ID del record padre che contiene l'alias (esempio: progetto che contiene "
 "l'alias di creazione dell'attività)"
@@ -1023,8 +1030,7 @@ msgid "Name"
 msgstr "Nome"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "New"
 msgstr "Nuovo"
@@ -1140,8 +1146,8 @@ msgstr "ID Filo Record Padre"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
 "Modello genitore che detiene l'alias. Il modello che contiene il riferimento "
@@ -1159,7 +1165,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 
 #. module: rma
@@ -1514,13 +1521,13 @@ msgstr "Sostituito"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" "
-"data-oe-id=\"%d\">%s</a>) has been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
+"\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+"\"%d\">%s</a>) has been created."
 msgstr ""
 "Sostituzione: Il trasferimento <a href=\"#\" data-oe-model=\"stock.move\" "
-"data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock."
-"picking\" data-oe-id=\"%d\">%s</a>) è stato creato."
+"data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking"
+"\" data-oe-id=\"%d\">%s</a>) è stato creato."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1579,8 +1586,8 @@ msgstr "Rendi al cliente"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%d\">%s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
+"a> has been created."
 msgstr ""
 "Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a> "
 "è stato creato."
@@ -1722,8 +1729,8 @@ msgstr "Dividi RMA"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been"
-" created."
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
+"created."
 msgstr ""
 "Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> è "
 "stato creato."
@@ -1808,9 +1815,9 @@ msgstr "Il campo attivo permette di nascondere la categoria senza rimuoverla."
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
 
 #. module: rma
@@ -1854,8 +1861,8 @@ msgstr "L'etichetta è visibile nella vista del portale"
 #: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
-"There is at least one invoice lines whose quantity is less than the quantity"
-" specified in its linked RMA."
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
 msgstr ""
 "C'è almeno una riga di fatturazione con una quantità minore della quantità "
 "specificata nella riga dell'RMA collegato."
@@ -2023,8 +2030,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
 msgid ""
-"When the RMA receipt is confirmed, send a confirmation email to the "
-"customer."
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 "Quando la ricevuta RMA è confermata, inviare un'e-mail di conferma al "
 "cliente."

@@ -432,9 +432,13 @@ msgid "Canceled"
 msgstr ""
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__uom_category_id
 msgid "Category"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
+msgid "Category UoM"
 msgstr ""
 
 #. module: rma
