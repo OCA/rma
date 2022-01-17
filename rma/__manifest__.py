@@ -10,7 +10,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",
-    "depends": ["account", "stock"],
+    "depends": ["stock_account"],
     "data": [
         "views/report_rma.xml",
         "report/report.xml",
