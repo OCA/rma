@@ -877,7 +877,14 @@ class Rma(models.Model):
             lambda r: r.move_id != self.move_id
         ).unlink()
         return_line = return_wizard.product_return_moves
-        return_line.quantity = self.product_uom_qty
+        return_line.update(
+            {
+                "quantity": self.product_uom_qty,
+                # The to_refund field is now True by default, which isn't right in the RMA
+                # creation context.
+                "to_refund": False,
+            }
+        )
         # set_rma_picking_type is to override the copy() method of stock
         # picking and change the default picking type to rma picking type.
         picking_action = return_wizard.with_context(
