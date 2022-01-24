@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__customer_method
+msgid "Customer method"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__mixed_method
+msgid "Customer method (fallback to fixed)"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_delivery_method
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_fixed_delivery_method
+msgid "Default RMA delivery method"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
+msgid "Fixed method"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_rma
+msgid "RMA"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_delivery_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_delivery_strategy
+msgid "RMA delivery method strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "RMA delivery strategy"
+msgstr ""
