@@ -123,6 +123,8 @@ class TestRma(SavepointCase):
         picking.button_validate()
         return picking
 
+
+class TestRmaCase(TestRma):
     def test_onchange(self):
         rma_form = Form(self.env["rma"])
         # If partner changes, the invoice address is set
