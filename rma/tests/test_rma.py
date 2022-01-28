@@ -50,6 +50,13 @@ class TestRma(SavepointCase):
                 "type": "delivery",
             }
         )
+        cls.finalization_reason_1 = cls.env["rma.finalization"].create(
+            {"name": "[Test] It can't be repaired and customer doesn't want it"}
+        )
+        cls.finalization_reason_2 = cls.env["rma.finalization"].create(
+            {"name": "[Test] It's out of warranty. To be scrapped"}
+        )
+        cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
 
     def _create_rma(self, partner=None, product=None, qty=None, location=None):
         rma_form = Form(self.env["rma"])
@@ -501,6 +508,22 @@ class TestRmaCase(TestRma):
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
         self._test_readonly_fields(rma)
+
+    def test_finish_rma(self):
+        # Create, confirm and receive an RMA
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        rma.action_finish()
+        finalization_form = Form(
+            self.env["rma.finalization.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_finalization_type="replace",
+            )
+        )
+        finalization_form.finalization_id = self.finalization_reason_2
+        finalization_wizard = finalization_form.save()
+        finalization_wizard.action_finish()
+        self.assertEqual(rma.state, "finished")
+        self.assertEqual(rma.finalization_id, self.finalization_reason_2)
 
     def test_mass_return_to_customer(self):
         # Create, confirm and receive rma_1
