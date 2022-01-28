@@ -98,6 +98,7 @@
                 <field name="product_uom" groups="uom.group_uom" />
                 <field name="date" />
                 <field name="deadline" />
+                <field name="finalization_id" optional="hide" />
                 <field name="state" />
             </tree>
         </field>
@@ -277,6 +278,10 @@
                             <field name="origin" />
                             <field name="operation_id" />
                             <field
+                                name="finalization_id"
+                                attrs="{'invisible': [('state', '!=', 'finished')]}"
+                            />
+                            <field
                                 name="company_id"
                                 options="{'no_create': True}"
                                 groups="base.group_multi_company"
@@ -316,6 +321,7 @@
                     <field name="can_be_replaced" invisible="1" />
                     <field name="can_be_split" invisible="1" />
                     <field name="can_be_locked" invisible="1" />
+                    <field name="can_be_finished" invisible="1" />
                     <field name="commercial_partner_id" invisible="1" />
                     <field name="remaining_qty" invisible="1" />
                 </sheet>
@@ -325,6 +331,28 @@
                     <field name="message_ids" widget="mail_thread" />
                 </div>
             </form>
+        </field>
+    </record>
+    <record id="rma_finalization_form" model="ir.ui.view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('rma.group_rma_manual_finalization'))]"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//form//header//button[@name='action_cancel']"
+                position="before"
+            >
+                <button
+                    type="object"
+                    string="Finish"
+                    name="action_finish"
+                    class="btn-primary"
+                    attrs="{'invisible': [('can_be_finished', '=', False)]}"
+                />
+            </xpath>
         </field>
     </record>
     <record id="rma_view_pivot" model="ir.ui.view">
