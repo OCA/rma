@@ -51,6 +51,11 @@ If you want RMAs to be created from incoming emails, you need to:
    one.
 #. Go to 'Email' tab and set an 'Email Alias'.
 
+If you want to manually finish RMAs, you need to:
+
+#. Go to *Settings > Inventory*.
+#. Set *Finish RMAs manually* checkbox on.
+
 Usage
 =====
 
@@ -79,6 +84,11 @@ To use this module, you need to:
      The RMA will be set automatically to 'Replaced' or 'Returned' state when
      the RMA quantity is equal or lower than the quantity in done delivery
      orders linked to it.
+#. You can also finish the RMA without further ado. To do so click on the *Finish*
+   button. A wizard will ask you for the reason from a selection of preconfigured ones.
+   Be sure to configure them in advance on *RMA > Configuration > Finalization Reasons*.
+   Once the RMA is finished, it will be set to that state and the reason will be
+   registered.
 
 An RMA can also be created from a return of a delivery order:
 

@@ -2,6 +2,7 @@
 
 from . import account_move
 from . import rma
+from . import rma_finalization
 from . import rma_operation
 from . import rma_tag
 from . import rma_team

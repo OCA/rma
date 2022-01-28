@@ -8,6 +8,21 @@
                 expr="//div[@data-key='stock']/div[hasclass('o_settings_container')]"
                 position="inside"
             >
+                <div class="col-12 col-lg-6 o_setting_box" title="Finish RMAs manually">
+                    <div class="o_setting_left_pane">
+                        <field name="group_rma_manual_finalization" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="group_rma_manual_finalization"
+                            string="RMA Manual Finalization"
+                        />
+                        <div class="text-muted">
+                            When the RMA is receive, allow to finsish it manually choosing
+                            a finalization reason.
+                        </div>
+                    </div>
+                </div>
                 <div
                     class="col-12 col-lg-6 o_setting_box"
                     title="Send automatic RMA info to customer"
