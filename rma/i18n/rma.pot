@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-28 15:54+0000\n"
-"PO-Revision-Date: 2022-01-28 15:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -373,6 +371,16 @@ msgid "Aliased Model"
 msgstr ""
 
 #. module: rma
+#: model:res.groups,name:rma.group_rma_manual_finalization
+msgid "Allow RMA manual finalization"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_config_settings__group_rma_manual_finalization
+msgid "Allow to finish an RMA without returning back a product or refunding"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
@@ -707,7 +715,7 @@ msgid "Finalization name already exists !"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_form
 msgid "Finish"
 msgstr ""
 
@@ -719,6 +727,16 @@ msgstr ""
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_finalization_wizard_action
 msgid "Finish RMA Manualy"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__group_rma_manual_finalization
+msgid "Finish RMA manually choosing a reason"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Finish RMAs manually"
 msgstr ""
 
 #. module: rma
@@ -1232,6 +1250,11 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_loc_id
 msgid "RMA Location"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Manual Finalization"
 msgstr ""
 
 #. module: rma
@@ -1944,6 +1967,13 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When the RMA is receive, allow to finsish it manually choosing\n"
+"                            a finalization reason."
 msgstr ""
 
 #. module: rma
