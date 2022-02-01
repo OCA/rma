@@ -159,6 +159,7 @@
                 <t t-set="card_body">
                     <div id="general_information">
                         <div class="row mt4">
+                            <!-- Customer -->
                             <div
                                 t-if="rma.partner_id"
                                 class="col-12 col-md-6 mb-4 mb-md-0"
@@ -189,6 +190,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Shipping Address -->
+                            <div
+                                t-if="rma.partner_shipping_id"
+                                class="col-12 col-md-6 mb-4 mb-md-0"
+                            >
+                                <h6>
+                                    <strong>Shipping address:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img
+                                            t-if="rma.partner_shipping_id.image_1024"
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            t-att-src="image_data_uri(rma.partner_shipping_id.image_1024)"
+                                            alt="Contact"
+                                        />
+                                        <img
+                                            t-else=""
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            alt="Contact"
+                                        />
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address
+                                            t-field="rma.partner_shipping_id"
+                                            t-options='{"widget": "contact", "fields": ["name", "email", "phone", "address"]}'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- RMA Info -->
                             <div t-if="rma.user_id" class="col-12 col-md-6">
                                 <h6>
                                     <strong>Responsible:</strong>

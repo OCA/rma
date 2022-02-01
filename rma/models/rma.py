@@ -67,6 +67,14 @@ class Rma(models.Model):
         states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
     )
     tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
+    finalization_id = fields.Many2one(
+        string="Finalization Reason",
+        comodel_name="rma.finalization",
+        copy=False,
+        readonly=True,
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        tracking=True,
+    )
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company,
@@ -171,6 +179,7 @@ class Rma(models.Model):
             ("refunded", "Refunded"),
             ("returned", "Returned"),
             ("replaced", "Replaced"),
+            ("finished", "Finished"),
             ("locked", "Locked"),
             ("cancelled", "Canceled"),
         ],
@@ -244,6 +253,9 @@ class Rma(models.Model):
     )
     can_be_locked = fields.Boolean(
         compute="_compute_can_be_locked",
+    )
+    can_be_finished = fields.Boolean(
+        compute="_compute_can_be_finished",
     )
     remaining_qty = fields.Float(
         string="Remaining delivered qty",
@@ -387,6 +399,14 @@ class Rma(models.Model):
                 "waiting_replacement",
                 "replaced",
             ]
+
+    @api.depends("state", "remaining_qty")
+    def _compute_can_be_finished(self):
+        for rma in self:
+            rma.can_be_finished = (
+                rma.state in {"received", "waiting_replacement", "waiting_return"}
+                and rma.remaining_qty > 0
+            )
 
     @api.depends("product_uom_qty", "state", "remaining_qty", "remaining_qty_to_done")
     def _compute_can_be_split(self):
@@ -718,6 +738,21 @@ class Rma(models.Model):
         action["context"].update(active_id=self.id, active_ids=self.ids)
         return action
 
+    def action_finish(self):
+        """Invoked when a user wants to manually finalize the RMA"""
+        self.ensure_one()
+        self._ensure_can_be_returned()
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action = (
+            self.env.ref("rma.rma_finalization_wizard_action")
+            .with_context(active_id=self.id)
+            .read()[0]
+        )
+        action["context"] = dict(self.env.context)
+        action["context"].update(active_id=self.id, active_ids=self.ids)
+        return action
+
     def action_cancel(self):
         """Invoked when 'Cancel' button in rma form view is clicked."""
         self.mapped("reception_move_id")._action_cancel()
@@ -912,7 +947,14 @@ class Rma(models.Model):
             lambda r: r.move_id != self.move_id
         ).unlink()
         return_line = return_wizard.product_return_moves
-        return_line.quantity = self.product_uom_qty
+        return_line.update(
+            {
+                "quantity": self.product_uom_qty,
+                # The to_refund field is now True by default, which isn't right in the RMA
+                # creation context.
+                "to_refund": False,
+            }
+        )
         # set_rma_picking_type is to override the copy() method of stock
         # picking and change the default picking type to rma picking type.
         picking_action = return_wizard.with_context(
