@@ -68,6 +68,7 @@ class SaleOrderRmaWizard(models.TransientModel):
                     for kit_line in product_kit_component_lines:
                         kit_line.quantity = min(qty_to_return, kit_line.quantity)
                         kit_line.operation_id = line.operation_id
+                        kit_line.description = line.description
                         kit_line.kit_qty_done = (
                             kit_line.quantity / kit_line.per_kit_quantity
                         )
