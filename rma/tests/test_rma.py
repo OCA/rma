@@ -2,13 +2,18 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, SavepointCase, new_test_user, users
 
 
 class TestRma(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestRma, cls).setUpClass()
+        cls.user_rma = new_test_user(
+            cls.env,
+            login="user_rma",
+            groups="rma.rma_group_user_own,stock.group_stock_user",
+        )
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
         cls.company = cls.env.user.company_id
@@ -256,6 +261,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma_1.state, "draft")
         self.assertEqual(rma_2.state, "received")
 
+    @users("__system__", "user_rma")
     def test_action_refund(self):
         rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
         self.assertEqual(rma.state, "received")
@@ -272,6 +278,10 @@ class TestRmaCase(TestRma):
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
+        # A regular user can create the refund but only Invoicing users will be able
+        # to edit it and post it
+        if self.env.user.login != "__system__":
+            return
         with Form(rma.refund_line_id.move_id) as refund_form:
             with refund_form.invoice_line_ids.edit(0) as refund_line:
                 refund_line.quantity = 9
