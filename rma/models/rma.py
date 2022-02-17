@@ -649,7 +649,9 @@ class Rma(models.Model):
         for rmas in group_dict.values():
             origin = ", ".join(rmas.mapped("name"))
             invoice_form = Form(
-                self.env["account.move"].with_context(
+                self.env["account.move"]
+                .sudo()
+                .with_context(
                     default_move_type="out_refund",
                     company_id=rmas[0].company_id.id,
                 ),
@@ -676,7 +678,7 @@ class Rma(models.Model):
                     }
                 )
             refund.invoice_origin = origin
-            refund.message_post_with_view(
+            refund.with_user(self.env.uid).message_post_with_view(
                 "mail.message_origin_link",
                 values={"self": refund, "origin": rmas},
                 subtype_id=self.env.ref("mail.mt_note").id,
