@@ -26,7 +26,7 @@
 
 {
     'name': 'RMA Claim (Product Return Management)',
-    'version': '8.0.1.1.1',
+    'version': '8.0.1.2.0',
     'category': 'Generic Modules/CRM & SRM',
     'author': "Akretion, Camptocamp, Eezee-it, MONK Software, Vauxoo, "
               "Odoo Community Association (OCA)",
