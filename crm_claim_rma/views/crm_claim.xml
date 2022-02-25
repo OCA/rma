@@ -62,6 +62,7 @@
         <record model="ir.ui.view" id="crm_claim_rma_form_view">
             <field name="name">CRM - Claim product return Form</field>
             <field name="model">crm.claim</field>
+            <field name="priority" eval="100"/>
             <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
             <field name="priority">99</field>
             <field name="arch" type="xml">

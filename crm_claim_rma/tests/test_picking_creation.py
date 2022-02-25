@@ -21,7 +21,7 @@
 #
 ##############################################################################
 from openerp.tests import common
-from openerp.tools import safe_eval
+from openerp.tools.safe_eval import safe_eval
 
 
 class TestPickingCreation(common.TransactionCase):
@@ -87,9 +87,10 @@ class TestPickingCreation(common.TransactionCase):
                           "Incorrect destination location")
 
     def test_01_new_delivery(self):
-        """Test wizard creates a correct picking for a new delivery
-
+        """Test wizard creates and runs a procurement for a new delivery
         """
+
+        group_model = self.env['procurement.group']
 
         wizardchangeproductqty = self.env['stock.change.product.qty']
         wizard_chg_qty = wizardchangeproductqty.with_context({
@@ -101,6 +102,9 @@ class TestPickingCreation(common.TransactionCase):
 
         wizard_chg_qty.change_product_qty()
 
+        self.assertEqual(0, group_model.search_count([
+            ('claim_id', '=', self.claim_id.id)
+        ]))
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
@@ -109,29 +113,37 @@ class TestPickingCreation(common.TransactionCase):
         }).create({})
         wizard.action_create_picking()
 
+        procurement_group = group_model.search([
+            ('claim_id', '=', self.claim_id.id)
+        ])
+        self.assertEqual(1, len(procurement_group))
+
         self.assertEquals(len(self.claim_id.picking_ids), 1,
                           "Incorrect number of pickings created")
-        picking = self.claim_id.picking_ids[0]
 
-        self.assertEquals(picking.location_id, self.warehouse_id.lot_stock_id,
+        # Should have 1 procurement by product:
+        # One on Customer location and one on output
+        self.assertEqual(3, len(procurement_group.procurement_ids))
+
+        # And 2 pickings
+        self.assertEqual(1, len(self.claim_id.picking_ids))
+
+        self.assertEquals(self.warehouse_id.lot_stock_id,
+                          self.claim_id.picking_ids.location_id,
                           "Incorrect source location")
-        self.assertEquals(picking.location_dest_id, self.customer_location_id,
+        self.assertEquals(self.customer_location_id,
+                          self.claim_id.picking_ids.location_dest_id,
                           "Incorrect destination location")
 
     def test_02_new_product_return(self):
         """Test wizard creates a correct picking for product return
 
         """
-        company = self.env.ref('base.main_company')
-        warehouse_obj = self.env['stock.warehouse']
-        warehouse_rec = \
-            warehouse_obj.search([('company_id',
-                                   '=', company.id)])[0]
         wizard = self.wizard_make_picking.with_context({
             'active_id': self.claim_id.id,
             'partner_id': self.partner_id.id,
             'warehouse_id': self.warehouse_id.id,
-            'picking_type': warehouse_rec.in_type_id.id,
+            'picking_type': 'in',
         }).create({})
         wizard.action_create_picking()
 
@@ -144,23 +156,6 @@ class TestPickingCreation(common.TransactionCase):
         self.assertEquals(picking.location_dest_id,
                           self.warehouse_id.lot_stock_id,
                           "Incorrect destination location")
-
-    def create_invoice(self):
-        sale_order_id = self.env['sale.order'].create({
-            'partner_id': self.ref('base.res_partner_9'),
-            'client_order_ref': 'TEST_SO',
-            'order_policy': 'manual',
-            'order_line': [(0, 0, {
-                'product_id': self.ref('product.product_product_8'),
-                'product_uom_qty': 2
-            })]
-        })
-        sale_order_id.action_button_confirm()
-        sale_order_id.action_invoice_create()
-        self.assertTrue(sale_order_id.invoice_ids)
-        invoice_id = sale_order_id.invoice_ids
-        invoice_id.signal_workflow('invoice_open')
-        return invoice_id
 
     def test_03_invoice_refund(self):
         claim_id = self.env['crm.claim'].browse(
