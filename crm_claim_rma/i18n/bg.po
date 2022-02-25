@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:121
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:104
 #, python-format
 msgid "A picking has already been created for this claim."
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:233
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:205
 #, python-format
 msgid ""
 "A product return cannot be created for various destination addresses, please "
@@ -33,7 +33,7 @@ msgid ""
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:223
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:195
 #, python-format
 msgid ""
 "A product return cannot be created for various destination locations, please "
@@ -80,7 +80,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:account.invoice,claim_id:0
 #: model:ir.model,name:crm_claim_rma.model_crm_claim
-#: field:stock.picking,claim_id:0
+#: field:procurement.group,claim_id:0 field:stock.picking,claim_id:0
 msgid "Claim"
 msgstr "Жалба"
 
@@ -203,13 +203,13 @@ msgid "Current"
 msgstr ""
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:166
+#: code:addons/crm_claim_rma/models/crm_claim.py:182
 #, python-format
 msgid "Customer"
 msgstr "Клиент"
 
 #. module: crm_claim_rma
-#: code:addons/crm_claim_rma/models/crm_claim.py:170
+#: code:addons/crm_claim_rma/models/crm_claim.py:186
 #, python-format
 msgid "Customer Email"
 msgstr ""
@@ -275,9 +275,9 @@ msgstr ""
 #: code:addons/crm_claim_rma/models/claim_line.py:318
 #: code:addons/crm_claim_rma/models/claim_line.py:401
 #: code:addons/crm_claim_rma/models/claim_line.py:405
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:120
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:222
-#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:232
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:103
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:194
+#: code:addons/crm_claim_rma/wizards/claim_make_picking.py:204
 #, python-format
 msgid "Error"
 msgstr ""
@@ -654,6 +654,11 @@ msgid "Problem"
 msgstr ""
 
 #. module: crm_claim_rma
+#: model:ir.model,name:crm_claim_rma.model_procurement_group
+msgid "Procurement Requisition"
+msgstr ""
+
+#. module: crm_claim_rma
 #: view:claim.line:crm_claim_rma.view_crm_claim_lines_filter
 #: field:claim.line,product_id:0
 msgid "Product"
@@ -862,6 +867,11 @@ msgid "Source Location"
 msgstr ""
 
 #. module: crm_claim_rma
+#: field:claim_make_picking.wizard,delivery_warehouse_id:0
+msgid "Source Warehouse"
+msgstr ""
+
+#. module: crm_claim_rma
 #: view:crm.claim:crm_claim_rma.view_crm_case_claims_filter
 msgid "Stage"
 msgstr ""
@@ -1016,6 +1026,11 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:crm.claim,warehouse_id:0
 msgid "Warehouse"
+msgstr ""
+
+#. module: crm_claim_rma
+#: help:claim_make_picking.wizard,delivery_warehouse_id:0
+msgid "Warehouse where to take the replacement products for customers."
 msgstr ""
 
 #. module: crm_claim_rma
