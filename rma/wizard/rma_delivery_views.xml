@@ -14,6 +14,10 @@
                             name="warehouse_id"
                             attrs="{'invisible': [('type', '!=', 'replace')]}"
                         />
+                        <field
+                            name="rma_return_grouping"
+                            attrs="{'invisible': ['|', ('type', '=', 'replace'), ('rma_count', '=', 1)]}"
+                        />
                     </group>
                     <group>
                         <field name="uom_category_id" invisible="1" />
