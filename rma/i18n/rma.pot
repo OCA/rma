@@ -6,6 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-07 16:33+0000\n"
+"PO-Revision-Date: 2022-03-07 16:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -765,6 +767,18 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Group By"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
+msgid "Group RMA returns by customer address and warehouse"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Group RMA returns by customer and warehouse."
 msgstr ""
 
 #. module: rma
