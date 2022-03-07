@@ -1088,6 +1088,9 @@ class Rma(models.Model):
     # Returning business methods
     def create_return(self, scheduled_date, qty=None, uom=None):
         """Intended to be invoked by the delivery wizard"""
+        group_returns = self.env.company.rma_return_grouping
+        if "rma_return_grouping" in self.env.context:
+            group_returns = self.env.context.get("rma_return_grouping")
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
         group_dict = {}
@@ -1100,7 +1103,11 @@ class Rma(models.Model):
             )
             group_dict.setdefault(key, self.env["rma"])
             group_dict[key] |= record
-        for rmas in group_dict.values():
+        if group_returns:
+            grouped_rmas = group_dict.values()
+        else:
+            grouped_rmas = rmas_to_return
+        for rmas in grouped_rmas:
             origin = ", ".join(rmas.mapped("name"))
             rma_out_type = rmas[0].warehouse_id.rma_out_type_id
             picking_form = Form(
