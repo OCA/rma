@@ -25,6 +25,10 @@ class Company(models.Model):
         except ValueError:
             return False
 
+    rma_return_grouping = fields.Boolean(
+        string="Group RMA returns by customer address and warehouse",
+        default=True,
+    )
     send_rma_confirmation = fields.Boolean(
         string="Send RMA Confirmation",
         help="When the delivery is confirmed, send a confirmation email "
