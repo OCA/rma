@@ -89,7 +89,7 @@
                 decoration-bf="state == 'draft' and product_id == False"
                 decoration-danger="deadline and (deadline &lt; current_date)"
             >
-                <field name="name" />
+                <field name="name" width="100px" />
                 <field name="origin" />
                 <field name="user_id" />
                 <field name="partner_id" />
