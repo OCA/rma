@@ -67,9 +67,13 @@ class CustomerPortal(CustomerPortal):
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(" (Portal)")
-        # Add the user as follower of the created RMAs so they can
-        # later view them.
+        # Add the user as follower of the created RMAs so they can later view them.
         rma.message_subscribe([request.env.user.partner_id.id])
+        # Subscribe the user to the notification subtype so he receives the confirmation
+        # note.
+        rma.message_follower_ids.filtered(
+            lambda x: x.partner_id == request.env.user.partner_id
+        ).subtype_ids += request.env.ref("rma.mt_rma_notification")
         if len(rma) == 0:
             route = order_sudo.get_portal_url()
         else:
