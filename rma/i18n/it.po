@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-12-10 17:39+0000\n"
+"PO-Revision-Date: 2022-03-23 12:17+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -363,12 +363,12 @@ msgstr "<strong>Responsabile:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Shipping Address:</strong>"
-msgstr ""
+msgstr "<strong>Indirizzo di consegna:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Shipping address:</strong>"
-msgstr ""
+msgstr "<strong>Indirizzo di consegna:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -458,12 +458,12 @@ msgstr "Modello con alias"
 #. module: rma
 #: model:res.groups,name:rma.group_rma_manual_finalization
 msgid "Allow RMA manual finalization"
-msgstr ""
+msgstr "Permetti chiusura manuale RMA"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_config_settings__group_rma_manual_finalization
 msgid "Allow to finish an RMA without returning back a product or refunding"
-msgstr ""
+msgstr "Permetti di chiudere un RMA senza restituire un prodotto o rimborso"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
@@ -491,7 +491,7 @@ msgstr "Avatar"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
 msgid "Can Be Finished"
-msgstr ""
+msgstr "Può essere chiuso"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_locked
@@ -539,7 +539,7 @@ msgstr "Categoria"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
 msgid "Category UoM"
-msgstr ""
+msgstr "Categoria UdM"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
@@ -619,7 +619,7 @@ msgstr "Crea RMA"
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
 msgid "Create a new RMA finalization"
-msgstr ""
+msgstr "Crea una nuova chiusura RMA"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
@@ -829,42 +829,42 @@ msgstr "Estratto da"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__finalization_id
 msgid "Finalization Reason"
-msgstr ""
+msgstr "Motivo chiusura"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_finalization_name_company_uniq
 msgid "Finalization name already exists !"
-msgstr ""
+msgstr "Esiste già questo nome per la chiusura!"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_form
 msgid "Finish"
-msgstr ""
+msgstr "Chiudi"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_wizard_view_form
 msgid "Finish RMA"
-msgstr ""
+msgstr "Chiudi RMA"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_finalization_wizard_action
 msgid "Finish RMA Manualy"
-msgstr ""
+msgstr "Chiudi RMA manualmente"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__group_rma_manual_finalization
 msgid "Finish RMA manually choosing a reason"
-msgstr ""
+msgstr "Chiudi RMA manualmente indicando un motivo"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Finish RMAs manually"
-msgstr ""
+msgstr "Chiudi RMAs manualmente"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__finished
 msgid "Finished"
-msgstr ""
+msgstr "Chiuso"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_follower_ids
@@ -984,12 +984,12 @@ msgstr "Indirizzo di Fatturazione"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Invoicing Address:"
-msgstr ""
+msgstr "Indirizzo di fatturazione:"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Invoicing and Shipping Address:"
-msgstr ""
+msgstr "Indirizzo di fatturazione e spedizione:"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
@@ -1086,6 +1086,8 @@ msgid ""
 "Manage RMA finalization reasons to better classify them for tracking and "
 "analysis purposes."
 msgstr ""
+"Gestisci le motivazioni per la chiusura degli RMA per classificarle ai fini "
+"di tracciamento e analisi."
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
@@ -1270,6 +1272,11 @@ msgid ""
 "- followers: only followers of the related document or members of following "
 "channels\n"
 msgstr ""
+"Politica per inviare un messaggio sul documento utilizzando il mailgateway.\n"
+"- chiunque: chiunque può inviare\n"
+"- clienti: solo i clienti autenticati\n"
+"- followers: solo chi segue il documento collegato o i membri dei seguenti "
+"canali\n"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_url
@@ -1394,12 +1401,12 @@ msgstr "Wizard Consegna RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
 msgid "RMA Finalization"
-msgstr ""
+msgstr "Chiusura RMA"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_finalization
 msgid "RMA Finalization Reason"
-msgstr ""
+msgstr "Motivo Chiusura RMA"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.action_rma_finalization
@@ -1407,12 +1414,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_list
 msgid "RMA Finalization Reasons"
-msgstr ""
+msgstr "Motivi chiusura RMA"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_finalization_wizard
 msgid "RMA Finalization Wizard"
-msgstr ""
+msgstr "Wizard Chiusura RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_type_id
@@ -1427,7 +1434,7 @@ msgstr "Ubicazione RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Manual Finalization"
-msgstr ""
+msgstr "Chiusura manuale RMA"
 
 #. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
@@ -1568,12 +1575,12 @@ msgstr "RMA ancora da processare completamente"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__finalization_id
 msgid "Reason"
-msgstr ""
+msgstr "Motivo"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__name
 msgid "Reason Name"
-msgstr ""
+msgstr "Nome Motivo"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -2164,6 +2171,8 @@ msgid ""
 "When the RMA is receive, allow to finsish it manually choosing\n"
 "                            a finalization reason."
 msgstr ""
+"Quando si riceve l'RMA, permetti di chiuderlo manualmente scegliendo\n"
+"                            un motivo per la chiusura."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
