@@ -8,7 +8,7 @@ def post_init_hook(cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
 
     def _get_next_picking_type_color():
-        """ Choose the next available color for the operation types."""
+        """Choose the next available color for the operation types."""
         stock_picking_type = env["stock.picking.type"]
         picking_type = stock_picking_type.search_read(
             [("warehouse_id", "!=", False), ("color", "!=", False)],
