@@ -1368,7 +1368,7 @@ class Rma(models.Model):
             rma.write({"state": "replaced"})
 
     def update_returned_state(self):
-        """ Invoked by [stock.move]._action_done"""
+        """Invoked by [stock.move]._action_done"""
         rma = self.filtered(
             lambda r: (r.state == "waiting_return" and r.remaining_qty_to_done <= 0)
         )
