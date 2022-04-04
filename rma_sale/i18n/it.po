@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-31 12:17+0000\n"
+"PO-Revision-Date: 2022-04-04 11:05+0000\n"
 "Last-Translator: Samuele Mariani <samuele@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -107,7 +107,7 @@ msgstr "Accettare"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_move_ids
 msgid "Allowed Move"
-msgstr "Spostamento consentito"
+msgstr "Movimento consentito"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_picking_ids
@@ -174,7 +174,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
 msgid "Create RMA"
-msgstr "RMA Creato"
+msgstr "Crea RMA"
 
 #. module: rma_sale
 #: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
@@ -308,7 +308,7 @@ msgstr "Origine consegna"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__move_id
 msgid "Origin move"
-msgstr "Origine spostamento"
+msgstr "Origine movimento"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__product_id
@@ -414,7 +414,7 @@ msgstr "Richiesta RMA a singola pagina"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr "Spostamento delle scorte"
+msgstr "Movimento delle scorte"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
