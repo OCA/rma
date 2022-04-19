@@ -13,7 +13,6 @@
             <sheet>
                 <field name="allowed_picking_ids" invisible="1" />
                 <field name="allowed_move_ids" invisible="1" />
-                <field name="allowed_product_ids" invisible="1" />
             </sheet>
         </field>
     </record>
