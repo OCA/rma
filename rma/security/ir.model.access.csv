@@ -13,4 +13,4 @@ access_rma_split_wizard_user_all,rma.split.wizard.user.all,model_rma_split_wizar
 access_rma_finalization_portal,rma.finalization.portal,model_rma_finalization,base.group_portal,1,0,0,0
 access_rma_finalization_user_own,rma.finalization.user.own,model_rma_finalization,rma_group_user_own,1,0,0,0
 access_rma_finalization_manager,rma.finalization.manager,model_rma_finalization,rma_group_manager,1,1,1,1
-access_rma_finalization_wizard_user_own,rma.finalization.wizard.user.own,model_rma_finalization_wizard,rma_group_user_own,1,0,0,0
+access_rma_finalization_wizard_user_own,rma.finalization.wizard.user.own,model_rma_finalization_wizard,group_rma_manual_finalization,1,1,1,1
