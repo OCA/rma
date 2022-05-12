@@ -12,7 +12,6 @@ class RmaReDeliveryWizard(models.TransientModel):
     rma_count = fields.Integer()
     type = fields.Selection(
         selection=[("replace", "Replace"), ("return", "Return to customer")],
-        string="Type",
         required=True,
     )
     product_id = fields.Many2one(

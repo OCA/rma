@@ -1,20 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="rma_finalization_view_search" model="ir.ui.view">
         <field name="model">rma.finalization</field>
         <field name="arch" type="xml">
             <search string="RMA Finalization Reasons">
                 <field name="name" />
-                <filter
-                    string="Archived"
-                    name="inactive"
-                    domain="[('active','=',False)]"
-                />
-                <filter
-                    string="Active"
-                    name="active"
-                    domain="[('active','!=',False)]"
-                />
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]" />
+                <filter string="Active" name="active" domain="[('active','!=',False)]" />
             </search>
         </field>
     </record>
@@ -24,12 +16,7 @@
         <field name="arch" type="xml">
             <form string="RMA Finalization">
                 <sheet>
-                    <widget
-                        name="web_ribbon"
-                        title="Archived"
-                        bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
-                    />
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
                     <group>
                         <field name="name" />
                         <field name="company_id" groups="base.group_multi_company" />
@@ -44,7 +31,7 @@
         <field name="model">rma.finalization</field>
         <field eval="6" name="priority" />
         <field name="arch" type="xml">
-            <tree string="RMA Finalization Reasons">
+            <tree>
                 <field name="name" />
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
@@ -57,16 +44,11 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
             Create a new RMA finalization
-            </p><p>
+            </p>
+            <p>
             Manage RMA finalization reasons to better classify them for tracking and analysis purposes.
             </p>
         </field>
     </record>
-    <menuitem
-        id="rma_configuration_rma_finalization_menu"
-        name="RMA Finalization Reasons"
-        parent="rma_configuration_menu"
-        action="action_rma_finalization"
-        groups="rma.group_rma_manual_finalization"
-    />
+    <menuitem id="rma_configuration_rma_finalization_menu" name="RMA Finalization Reasons" parent="rma_configuration_menu" action="action_rma_finalization" groups="rma.group_rma_manual_finalization" />
 </odoo>

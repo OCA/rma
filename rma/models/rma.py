@@ -31,7 +31,6 @@ class Rma(models.Model):
     # General fields
     sent = fields.Boolean()
     name = fields.Char(
-        string="Name",
         index=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
@@ -159,7 +158,6 @@ class Rma(models.Model):
         },
     )
     priority = fields.Selection(
-        string="Priority",
         selection=PROCUREMENT_PRIORITIES,
         default="1",
         readonly=True,
@@ -234,13 +232,11 @@ class Rma(models.Model):
         compute="_compute_delivery_picking_count",
     )
     delivered_qty = fields.Float(
-        string="Delivered qty",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         store=True,
     )
     delivered_qty_done = fields.Float(
-        string="Delivered qty done",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         compute_sudo=True,
@@ -925,9 +921,8 @@ class Rma(models.Model):
             raise ValidationError(
                 _(
                     "Quantity to extract cannot be greater than remaining "
-                    "delivery quantity (%s %s)"
+                    "delivery quantity (%(self.remaining_qty)s %(self.product_uom.name)s)"
                 )
-                % (self.remaining_qty, self.product_uom.name)
             )
 
     # Reception business methods
