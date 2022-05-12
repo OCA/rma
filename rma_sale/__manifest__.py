@@ -20,10 +20,10 @@
         "views/res_config_settings_views.xml",
         "wizard/sale_order_rma_wizard_views.xml",
     ],
-    'assets': {
-
-        'assets_frontend': [
+    "assets": {
+        "assets_frontend": [
             "/rma_sale/static/src/js/rma_portal_form.js",
             "/rma_sale/static/src/scss/rma_sale.scss",
-        ]},
+        ]
+    },
 }

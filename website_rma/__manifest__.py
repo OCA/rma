@@ -19,11 +19,10 @@
         "views/website_templates.xml",
         "data/website_data.xml",
     ],
-    'assets': {
-
-        'assets_frontend': [
+    "assets": {
+        "assets_frontend": [
             "/website_rma/static/src/js/website_rma.tour.js",
             "/website_rma/static/src/js/website_rma.js",
-        ]},
-
+        ]
+    },
 }
