@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data noupdate="1">
+    <!-- rma-related subtypes for messaging / Chatter -->
+    <record id="mt_rma_draft" model="mail.message.subtype">
+        <field name="name">Draft RMA</field>
+        <field name="res_model">rma</field>
+        <field name="default" eval="False" />
+        <field name="description">RMA in draft state</field>
+    </record>
+    <record id="mt_rma_notification" model="mail.message.subtype">
+        <field name="name">RMA Notification</field>
+        <field name="res_model">rma</field>
+        <field name="default" eval="False" />
+        <field name="description">RMA automatic customer notifications</field>
+    </record>
+    <!-- rma_team-related subtypes for messaging / Chatter -->
+    <record id="mt_rma_team_rma_draft" model="mail.message.subtype">
+        <field name="name">Draft RMA</field>
+        <field name="sequence">10</field>
+        <field name="res_model">rma.team</field>
+        <field name="default" eval="True" />
+        <field name="parent_id" eval="ref('rma.mt_rma_draft')" />
+        <field name="relation_field">team_id</field>
+    </record>
+    <record id="mt_rma_team_rma_notification" model="mail.message.subtype">
+        <field name="name">RMA Notification</field>
+        <field name="sequence">20</field>
+        <field name="res_model">rma.team</field>
+        <field name="default" eval="True" />
+        <field name="parent_id" eval="ref('rma.mt_rma_notification')" />
+        <field name="relation_field">team_id</field>
+    </record>
+    <!--RMA email template -->
+    <record id="mail_template_rma_notification" model="mail.template">
+        <field name="name">RMA Notification</field>
+        <field name="model_id" ref="model_rma" />
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field
+            name="subject"
+        >${object.company_id.name} RMA (Ref ${object.name or 'n/a' })</field>
+        <field name="report_template" ref="report_rma_action" />
+        <field name="report_name">${(object.name or '')}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+    Dear ${object.partner_id.name}
+    % if object.partner_id.parent_id:
+        (${object.partner_id.parent_id.name})
+    % endif
+    <br /><br />
+    Here is the RMA <strong>${object.name}</strong> from ${object.company_id.name}.
+    <br /><br />
+    Do not hesitate to contact us if you have any question.
+</p>
+            </div>
+        </field>
+    </record>
+    <!--RMA receipt confirmation email template -->
+    <record id="mail_template_rma_receipt_notification" model="mail.template">
+        <field name="name">RMA Receipt Notification</field>
+        <field name="model_id" ref="model_rma" />
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field
+            name="subject"
+        >${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products received</field>
+        <field name="report_template" ref="report_rma_action" />
+        <field name="report_name">${(object.name or '')}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+<p style="margin: 0px; padding: 0px; font-size: 13px;">
+    Dear ${object.partner_id.name}
+    % if object.partner_id.parent_id:
+        (${object.partner_id.parent_id.name})
+    % endif
+    <br /><br />
+    The products for your RMA <strong>${object.name}</strong>
+    from ${object.company_id.name} have been received in our warehouse.
+    <br /><br />
+    Do not hesitate to contact us if you have any question.
+</p>
+</div>
+        </field>
+    </record>
+    <record id="mail_template_rma_draft_notification" model="mail.template">
+        <field name="name">RMA Draft Notification</field>
+        <field name="model_id" ref="model_rma" />
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field
+            name="subject"
+        >${object.company_id.name} Your RMA has been succesfully created (Ref ${object.name or 'n/a' })</field>
+        <field name="report_template" ref="report_rma_action" />
+        <field name="report_name">${(object.name or '')}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+<p style="margin: 0px; padding: 0px; font-size: 13px;">
+    Dear ${object.partner_id.name}
+    % if object.partner_id.parent_id:
+        (${object.partner_id.parent_id.name})
+    % endif
+    <br /><br />
+    You've succesfully placed your RMA <strong>${object.name}</strong>
+    on ${object.company_id.name}. Our team will check it and will validate
+    it as soon as possible.
+    <br /><br />
+    Do not hesitate to contact us if you have any question.
+</p>
+</div>
+        </field>
+    </record>
+</data>
