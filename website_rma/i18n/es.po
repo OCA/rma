@@ -1,0 +1,237 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-01 18:49+0000\n"
+"PO-Revision-Date: 2020-12-01 13:59-0500\n"
+"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+#, fuzzy
+msgid "&amp;times;"
+msgstr "&amp;times;"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_user_id
+msgid "Default Responsible"
+msgstr "Responsable por defecto"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_team_id
+msgid "Default Team"
+msgstr "Equipo por defecto"
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_user_id
+msgid ""
+"Default responsible for new leads created through the 'Request RMA' form."
+msgstr ""
+"Responsable por defecto para las nuevas RMAs creadas desde el formulario "
+"'Solicitar RMA'."
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_team_id
+msgid "Default team for new RMAs created through the 'Request RMA' form."
+msgstr ""
+"Equipo por defecto para las nuevas RMAs creadas desde el formulario "
+"'Solicitar RMA'."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Description"
+msgstr "Descripción"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_ir_model
+msgid "Models"
+msgstr "Modelos"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Operation"
+msgstr "Operación"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Our team will process it an will reach you once it's validated."
+msgstr "Nuestro equipo lo procesará y le contactará una vez que sea validada."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Product"
+msgstr "Producto"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_rma
+msgid "RMA"
+msgstr ""
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Responsible"
+msgstr "Responsable de RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Team"
+msgstr "Equipo de RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Request"
+msgstr "Solicitar"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Request RMA"
+msgstr "Solicitar RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+#, fuzzy
+#| msgid "Request RMA"
+msgid "Request RMA Form"
+msgstr "Solicitar RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Return Merchandise Authorization (RMA)"
+msgstr ""
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the"
+msgstr ""
+"Establece el Equipo de RMA y el responsable de RMA por defecto de las RMAs "
+"creadas desde la página "
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the "
+"Request RMA page."
+msgstr ""
+"Establece el Equipo de RMA y el responsable de RMA de las RMAs creadas desde "
+"la página de solicitud de RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Thanks!"
+msgstr "¡Gracias!"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "We will get back to you shortly."
+msgstr "Le contestaremos en breve."
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_website
+msgid "Website"
+msgstr "Sitio web"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "You can request an RMA"
+msgstr "Puede solicitar"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Your request has been sent successfully."
+msgstr "Su solicitud ha sido enviada satisfactoriamente."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "here"
+msgstr "aquí"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was "
+"made.\n"
+"                                    If you know the sales order, go to it "
+"and click on the corresponding button."
+msgstr ""
+"si usted no\n"
+"                                    conoce el pedido desde el cual fue "
+"realizado.\n"
+"                                    Si usted conoce el pedido, vaya a éste y "
+"pinche en el correspondiente botón."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was "
+"made. If you know\n"
+"                                    the sales order, go to it and click on "
+"the corresponding button."
+msgstr ""
+"si usted no\n"
+"                                    conoce el pedido desde el cual fue "
+"realizado. Si usted conoce\n"
+"                                    el pedido, vaya a éste y pinche en el "
+"correspondiente botón."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "page"
+msgstr "."
+
+#~ msgid ""
+#~ "if you do not\n"
+#~ "                            know the sales order from which it was made.\n"
+#~ "                            If you know the sales order, go to it and "
+#~ "click on the corresponding button."
+#~ msgstr ""
+#~ "directamente una devolución si no conoce\n"
+#~ "                            el pedido de venta desde el que se realizó.\n"
+#~ "                            Si conoce el pedido, vaya a él y pulse en el "
+#~ "botón correspondiente."
+
+#~ msgid ""
+#~ "if you do not\n"
+#~ "                    know the sales order from which it was made. If you "
+#~ "know\n"
+#~ "                    the sales order, go to it and click on the "
+#~ "corresponding button."
+#~ msgstr ""
+#~ "directamente una devolución si no conoce\n"
+#~ "                            el pedido de venta desde el que se realizó.\n"
+#~ "                            Si conoce el pedido, vaya a él y pulse en el "
+#~ "botón correspondiente."
