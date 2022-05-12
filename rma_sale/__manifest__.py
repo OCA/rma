@@ -13,7 +13,6 @@
     "depends": ["rma", "sale_stock"],
     "data": [
         "security/ir.model.access.csv",
-        "views/assets.xml",
         "views/report_rma.xml",
         "views/rma_views.xml",
         "views/sale_views.xml",
@@ -21,4 +20,10 @@
         "views/res_config_settings_views.xml",
         "wizard/sale_order_rma_wizard_views.xml",
     ],
+    'assets': {
+
+        'assets_frontend': [
+            "/rma_sale/static/src/js/rma_portal_form.js",
+            "/rma_sale/static/src/scss/rma_sale.scss",
+        ]},
 }

@@ -13,11 +13,17 @@
     "depends": ["rma", "website_form"],
     "data": [
         "data/ir_model_data.xml",
-        "views/assets.xml",
         "views/request_rma_form.xml",
         "views/res_config_settings_views.xml",
         "views/website_rma_portal_templates.xml",
         "views/website_templates.xml",
         "data/website_data.xml",
     ],
+    'assets': {
+
+        'assets_frontend': [
+            "/website_rma/static/src/js/website_rma.tour.js",
+            "/website_rma/static/src/js/website_rma.js",
+        ]},
+
 }
