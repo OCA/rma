@@ -1,8 +1,9 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=14.0)
-[![Build Status](https://travis-ci.com/OCA/rma.svg?branch=14.0)](https://travis-ci.com/OCA/rma)
-[![codecov](https://codecov.io/gh/OCA/rma/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/rma)
-[![Translation Status](https://translation.odoo-community.org/widgets/rma-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/rma-14-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=15.0)
+[![Pre-commit Status](https://github.com/OCA/rma/actions/workflows/pre-commit.yml/badge.svg?branch=15.0)](https://github.com/OCA/rma/actions/workflows/pre-commit.yml?query=branch%3A15.0)
+[![Build Status](https://github.com/OCA/rma/actions/workflows/test.yml/badge.svg?branch=15.0)](https://github.com/OCA/rma/actions/workflows/test.yml?query=branch%3A15.0)
+[![codecov](https://codecov.io/gh/OCA/rma/branch/15.0/graph/badge.svg)](https://codecov.io/gh/OCA/rma)
+[![Translation Status](https://translation.odoo-community.org/widgets/rma-15-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/rma-15-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
@@ -16,14 +17,7 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[product_warranty](product_warranty/) | 14.0.1.0.0 | [![osi-scampbell](https://github.com/osi-scampbell.png?size=30px)](https://github.com/osi-scampbell) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Product Warranty
-[rma](rma/) | 14.0.2.3.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Return Merchandise Authorization (RMA)
-[rma_sale](rma_sale/) | 14.0.1.2.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Sale Order - Return Merchandise Authorization (RMA)
-[website_rma](website_rma/) | 14.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Return Merchandise Authorization (RMA)
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 
