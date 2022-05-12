@@ -1,0 +1,496 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-01 04:40+0000\n"
+"PO-Revision-Date: 2020-10-06 14:16+0000\n"
+"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
+
+#. module: rma_sale
+#: code:addons/rma_sale/controllers/sale_portal.py:0
+#, python-format
+msgid " (Portal)"
+msgstr " (Portal)"
+
+#. module: rma_sale
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
+#, python-format
+msgid " has been created."
+msgstr " ha sido creado."
+
+#. module: rma_sale
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
+#, python-format
+msgid " have been created."
+msgstr " han sido creados."
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "&amp;times;"
+msgstr "&amp;times;"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "<i class=\"fa fa-check\"/> Request RMAs"
+msgstr "<i class=\"fa fa-check\"/> Solicitar RMAs"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
+msgid "<i class=\"fa fa-reply\"/> Request RMAs"
+msgstr "<i class=\"fa fa-reply\"/> Solicitar RMAs"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "<i class=\"fa fa-times\"/> Cancel"
+msgstr "<i class=\"fa fa-times\"/> Cancelar"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
+msgid ""
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
+msgstr ""
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
+msgid "<span>RMA</span>"
+msgstr "<span>RMA</span>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
+msgid "<strong>Requested operation:</strong>"
+msgstr "<strong>Operación solicitada:</strong>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
+msgid "<strong>Requested operation</strong>"
+msgstr "<strong>Operación solicitada:</strong>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
+msgid "<strong>Sale order:</strong>"
+msgstr "<strong>Orden de venta:</strong>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
+msgid "<strong>Sale order</strong>"
+msgstr "<strong>Orden de venta</strong>"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
+msgid "Accept"
+msgstr "Aceptar"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_move_ids
+msgid "Allowed Move"
+msgstr "Movimientos permitido"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_picking_ids
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_picking_ids
+msgid "Allowed Picking"
+msgstr "Albaranes permitidos"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_product_ids
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_product_ids
+msgid "Allowed Product"
+msgstr "Producto Permitido"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
+msgid "Category"
+msgstr "Categoría"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid ""
+"Comment anything relevant to the return, like serial numbers, a description "
+"of the issue, etc"
+msgstr ""
+"Comente cualquier asunto relevante relacionado con la devolución, como "
+"números de serie, descripción del problema, etc"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
+msgid "Commercial entity"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+"La conversión entre las unidades de medidas sólo pueden ocurrir si "
+"pertenecen a la misma categoría. La conversión se basará en los ratios "
+"establecidos."
+
+#. module: rma_sale
+#: code:addons/rma_sale/models/sale.py:0
+#: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
+#, python-format
+msgid "Create RMA"
+msgstr "Crear RMA"
+
+#. module: rma_sale
+#: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
+msgid "Create RMAs"
+msgstr "Crear RMAs"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_date
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__custom_description
+msgid "Custom Description"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__picking_id
+msgid "Delivery order"
+msgstr "Orden de entrega"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_res_company__show_full_page_sale_rma
+#: model:ir.model.fields,help:rma_sale.field_res_config_settings__show_full_page_sale_rma
+msgid ""
+"From the frontend sale order page go to a single RMA page creation instead "
+"of the usual popup"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__show_full_page_sale_rma
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__show_full_page_sale_rma
+msgid "Full page RMA creation"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
+msgstr ""
+"Si no se establece operación solicitada, el RMA no se procesará correctamente"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_uid
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
+msgid "Move"
+msgstr "Movimiento"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__order_id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__order_id
+msgid "Order"
+msgstr "Orden"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__picking_id
+msgid "Origin Delivery"
+msgstr "Orden de Entrega"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__move_id
+msgid "Origin move"
+msgstr "Movimiento"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__product_id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__product_id
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Product"
+msgstr "Producto"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_rma
+#: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
+msgid "RMA"
+msgstr "RMA"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_count
+msgid "RMA count"
+msgstr "Cantidad de RMAs"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__location_id
+msgid "RMA location"
+msgstr "Ubicación de RMA"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.request_rma_single_page
+msgid "RMA request for order"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
+msgid "RMAs"
+msgstr "RMAs"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Request RMAs"
+msgstr "Solicitar RMAs"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Requested operation"
+msgstr "Operación solicitada"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
+msgid "Sale Line"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
+msgid "Sale Order"
+msgstr "Pedido de venta"
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
+msgid "Sale Order Line Rma Wizard"
+msgstr "Linea de Asistente de Orden de Venta - RMA "
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
+msgid "Sale Order Rma Wizard"
+msgstr "Asistente de Orden de Venta - RMA"
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "Select the product quantity and the requested operation"
+msgstr "Selecciones la cantidad de producto y la operación solicitada"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Show portal RMA request in a single page"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Single page RMA request"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "The limit will decrease when the units in other RMAs are confirmed"
+msgstr ""
+"El límite disminuirá cuando las unidades de otros RMAs sean confirmadas"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
+msgid "Unit of Measure"
+msgstr "Unidad de medida"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid ""
+"Use the comment button to add relevant information regarding the RMA, like "
+"returned serial numbers or a description of the issue"
+msgstr ""
+"Utilice el botón de comentarios para añadir información relevante "
+"relacionada con el RMA, como números de serie devueltos o una descripción "
+"del problema"
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__custom_description
+msgid "Values coming from portal RMA request form custom fields"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid ""
+"When we hit the RMA request button from the portal sale page, open in a "
+"single page instead of a popup."
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
+msgid "Will be used to return the goods when the RMA is completed"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid ""
+"You can only return as much product units as you received for this order"
+msgstr ""
+"Solo puede devolver tanta cantidad de producto como usted recibió en el "
+"pedido original"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "You can send a message in every RMA sent"
+msgstr "Puede mandar un mensaje en cada RMA enviado"
+
+#. module: rma_sale
+#: code:addons/rma_sale/models/sale.py:0
+#, python-format
+msgid "You may only create RMAs from a confirmed or done sale order."
+msgstr "Solo puedes crear RMAs desde una orden de venta confirmada o hecha."
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid ""
+"You're about to perform an RMA request. Our team will process it an will "
+"reach you once it's validated. Keep in mind that:"
+msgstr ""
+"Va a realizar una petición de RMA. Nuestro equipo la procesará y se pondrá "
+"en contacto con usted una vez validad. Tenga en cuenta que:"
+
+#~ msgid ""
+#~ "<span>\n"
+#~ "                                If an RMA has already been created for a "
+#~ "product in this sales order, it will not\n"
+#~ "                                be possible to create another one from "
+#~ "the web portal.\n"
+#~ "                                </span>"
+#~ msgstr ""
+#~ "<span>\n"
+#~ "                                Si ya se ha creado un RMA para un "
+#~ "producto de esta orden de venta, no será\n"
+#~ "                                posible crear otro desde el portal web.\n"
+#~ "                                </span>"
+
+#~ msgid "Domain Move"
+#~ msgstr "Dominio de movimientos"
+
+#~ msgid "Domain Picking"
+#~ msgstr "Dominio de entregas"
+
+#~ msgid "Domain Product"
+#~ msgstr "Dominio de productos"
+
+#, fuzzy
+#~| msgid "Delivery"
+#~ msgid "Is Sale Delivery"
+#~ msgstr "Es entrega de orden de venta"
