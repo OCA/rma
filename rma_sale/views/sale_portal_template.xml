@@ -245,15 +245,39 @@
     >
         <xpath expr="//div[@id='introduction']/h2[hasclass('my-0')]" position="inside">
             <span t-if="sale_order.rma_count" class="float-right">
-                <a
-                    role="button"
-                    t-attf-href="/my/rmas?sale_id=#{sale_order.id}"
-                    class="btn btn-sm btn-secondary"
-                >
-                    <span class="fa fa-reply" role="img" aria-label="RMA" title="RMA" />
-                    <span t-esc="sale_order.rma_count" />
-                    <span>RMA</span>
-                </a>
+                <t t-if="not user_has_group_portal_or_public">
+                    <a
+                        role="button"
+                        t-attf-href="/my/rmas?sale_id=#{sale_order.id}"
+                        class="btn btn-sm btn-secondary"
+                    >
+                        <span
+                            class="fa fa-reply"
+                            role="img"
+                            aria-label="RMA"
+                            title="RMA"
+                        />
+                        <span t-esc="sale_order.rma_count" />
+                        <span>RMA</span>
+                    </a>
+                </t>
+                <t t-if="user_has_group_portal_or_public">
+                    <t t-foreach="sale_order.rma_ids.sudo()" t-as="rma">
+                        <a
+                            role="button"
+                            t-attf-href="#{rma._get_share_url()}"
+                            class="btn btn-sm btn-secondary"
+                        >
+                            <span
+                                class="fa fa-reply"
+                                role="img"
+                                aria-label="RMA"
+                                title="RMA"
+                            />
+                            <span t-esc="rma.name" />
+                        </a>
+                    </t>
+                </t>
             </span>
         </xpath>
     </template>

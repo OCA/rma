@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, http
@@ -56,14 +57,21 @@ class CustomerPortal(CustomerPortal):
             custom_description += r"<br \>".join(
                 ["{}: {}".format(x, y) for x, y in custom_vals.items()]
             )
-        wizard = wizard_obj.with_context(active_id=order_id).create(
-            {
-                "line_ids": line_vals,
-                "location_id": location_id,
-                "partner_shipping_id": partner_shipping_id,
-                "custom_description": custom_description,
-            }
+        wizard = (
+            wizard_obj.with_context(active_id=order_id)
+            .sudo()
+            .create(
+                {
+                    "line_ids": line_vals,
+                    "location_id": location_id,
+                    "partner_shipping_id": partner_shipping_id,
+                    "custom_description": custom_description,
+                }
+            )
         )
+        user_has_group_portal = request.env.user.has_group(
+            "base.group_portal"
+        ) or request.env.user.has_group("base.group_public")
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(" (Portal)")
@@ -72,8 +80,14 @@ class CustomerPortal(CustomerPortal):
         rma.message_subscribe([request.env.user.partner_id.id])
         if len(rma) == 0:
             route = order_sudo.get_portal_url()
+        elif len(rma) == 1:
+            route = rma._get_share_url() if user_has_group_portal else rma.access_url
         else:
-            route = "/my/rmas?sale_id=%d" % order_id
+            route = (
+                order._get_share_url()
+                if user_has_group_portal
+                else "/my/rmas?sale_id=%d" % order_id
+            )
         return request.redirect(route)
 
     @http.route(
@@ -99,3 +113,17 @@ class CustomerPortal(CustomerPortal):
         if order_sudo.company_id:
             values["res_company"] = order_sudo.company_id
         return request.render("rma_sale.request_rma_single_page", values)
+
+    def _order_get_page_view_values(self, order, access_token, **kwargs):
+        res = super()._order_get_page_view_values(
+            order=order, access_token=access_token, **kwargs
+        )
+        res.update(
+            {
+                "user_has_group_portal_or_public": (
+                    request.env.user.has_group("base.group_portal")
+                    or request.env.user.has_group("base.group_public")
+                )
+            }
+        )
+        return res
