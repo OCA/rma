@@ -11,9 +11,8 @@ class ReturnInstruction(models.Model):
     _description = "Instructions for product return"
 
     name = fields.Char("Title", required=True)
-    instructions = fields.Text("Instructions", help="Instructions for product return.")
+    instructions = fields.Text(help="Instructions for product return.")
     is_default = fields.Boolean(
-        "Is default",
         help="If is default, will be use "
         "to set the default value in "
         "supplier info's. Be careful to "

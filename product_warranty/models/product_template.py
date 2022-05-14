@@ -15,7 +15,6 @@ class ProductTemplate(models.Model):
             ("month", "Month(s)"),
             ("year", "Year(s)"),
         ],
-        string="Warranty Type",
         required=True,
         default="day",
     )
