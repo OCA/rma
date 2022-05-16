@@ -4,7 +4,7 @@
         <form
             id="form-request-rma"
             method="POST"
-            t-attf-action="/my/orders/#{sale_order.id}/requestrma?access_token=#{sale_order.access_token}"
+            t-attf-action="/my/orders/#{sale_order.id}/requestrma?{{ keep_query() }}"
             t-att-class="not single_page_mode and 'modal-content' or 'col-12'"
         >
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
