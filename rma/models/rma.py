@@ -594,6 +594,10 @@ class Rma(models.Model):
             "context": ctx,
         }
 
+    def _add_message_subscribe_partner(self):
+        if self.partner_id and self.partner_id not in self.message_partner_ids:
+            self.message_subscribe([self.partner_id.id])
+
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
         self.ensure_one()
@@ -604,8 +608,7 @@ class Rma(models.Model):
             else:
                 reception_move = self._create_receptions_from_product()
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
-            if self.partner_id not in self.message_partner_ids:
-                self.message_subscribe([self.partner_id.id])
+            self._add_message_subscribe_partner()
             self._send_confirmation_email()
 
     def action_refund(self):
