@@ -98,10 +98,12 @@ class TestRmaSaleMrp(SavepointCase):
         self.assertEqual(rma_2.mapped("product_uom"), move_2.mapped("product_uom"))
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
-            rma_1.mapped("reception_move_id.origin_returned_move_id"), move_1,
+            rma_1.mapped("reception_move_id.origin_returned_move_id"),
+            move_1,
         )
         self.assertEqual(
-            rma_2.mapped("reception_move_id.origin_returned_move_id"), move_2,
+            rma_2.mapped("reception_move_id.origin_returned_move_id"),
+            move_2,
         )
         self.assertEqual(
             rmas.mapped("reception_move_id.picking_id")

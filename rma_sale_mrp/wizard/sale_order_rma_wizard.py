@@ -86,12 +86,16 @@ class SaleOrderRmaWizard(models.TransientModel):
 class SaleOrderLineRmaWizard(models.TransientModel):
     _inherit = "sale.order.line.rma.wizard"
 
-    phantom_bom_product = fields.Many2one(comodel_name="product.product",)
+    phantom_bom_product = fields.Many2one(
+        comodel_name="product.product",
+    )
     kit_qty_done = fields.Float(
         readonly=True,
         help="Used to inform kit qty used in the rma. Will be useful to refund",
     )
-    per_kit_quantity = fields.Float(readonly=True,)
+    per_kit_quantity = fields.Float(
+        readonly=True,
+    )
     phantom_kit_line = fields.Boolean(readonly=True)
 
     @api.depends("picking_id")
