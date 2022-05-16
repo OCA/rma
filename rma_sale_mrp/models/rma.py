@@ -8,7 +8,9 @@ class Rma(models.Model):
     _inherit = "rma"
 
     phantom_bom_product = fields.Many2one(
-        comodel_name="product.product", string="Related kit product", readonly=True,
+        comodel_name="product.product",
+        string="Related kit product",
+        readonly=True,
     )
     kit_qty = fields.Float(
         string="Kit quantity",
