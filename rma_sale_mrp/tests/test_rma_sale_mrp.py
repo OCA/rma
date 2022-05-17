@@ -61,7 +61,9 @@ class TestRmaSaleMrp(SavepointCase):
         for line in cls.order_out_picking.move_lines:
             line.quantity_done = line.product_uom_qty - 7
         wiz_act = cls.order_out_picking.button_validate()
-        wiz = cls.env["stock.backorder.confirmation"].browse(wiz_act["res_id"])
+        wiz = Form(
+            cls.env[wiz_act["res_model"]].with_context(wiz_act["context"])
+        ).save()
         wiz.process()
         cls.backorder = cls.sale_order.picking_ids - cls.order_out_picking
         for line in cls.backorder.move_lines:
@@ -117,7 +119,7 @@ class TestRmaSaleMrp(SavepointCase):
         )
         order.user_id = user.id
         rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id.action_done()
+        rma.reception_move_id.picking_id._action_done()
         # All the component RMAs must be received if we want to make a refund
         with self.assertRaises(UserError):
             rma.action_refund()
@@ -126,14 +128,14 @@ class TestRmaSaleMrp(SavepointCase):
             additional_rma.reception_move_id.quantity_done = (
                 additional_rma.product_uom_qty
             )
-            additional_rma.reception_move_id.picking_id.action_done()
+            additional_rma.reception_move_id.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
         # The component RMAs get automatically refunded
         self.assertEqual(rma.refund_id, rmas_left.mapped("refund_id"))
         # The refund product is the kit, not the components
         self.assertEqual(rma.refund_id.invoice_line_ids.product_id, self.product_kit)
-        rma.refund_id.post()
+        rma.refund_id.action_post()
         # We can still return another kit
         wizard_id = order.action_create_rma()["res_id"]
         wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
