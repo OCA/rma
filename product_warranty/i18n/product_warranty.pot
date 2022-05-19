@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,17 +56,11 @@ msgid ""
 msgstr ""
 
 #. module: product_warranty
-#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__display_name
-#: model:ir.model.fields,field_description:product_warranty.field_product_template__display_name
-#: model:ir.model.fields,field_description:product_warranty.field_res_company__display_name
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: product_warranty
-#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__id
-#: model:ir.model.fields,field_description:product_warranty.field_product_template__id
-#: model:ir.model.fields,field_description:product_warranty.field_res_company__id
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__id
 msgid "ID"
 msgstr ""
@@ -98,7 +92,7 @@ msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
-msgid "Is default"
+msgid "Is Default"
 msgstr ""
 
 #. module: product_warranty
@@ -107,9 +101,6 @@ msgid "Is this supplier still active, only for information."
 msgstr ""
 
 #. module: product_warranty
-#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo____last_update
-#: model:ir.model.fields,field_description:product_warranty.field_product_template____last_update
-#: model:ir.model.fields,field_description:product_warranty.field_res_company____last_update
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -158,7 +149,6 @@ msgstr ""
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
-#: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_tree_view
 msgid "Return instructions"
 msgstr ""
 
