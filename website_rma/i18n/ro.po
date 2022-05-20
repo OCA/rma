@@ -1,0 +1,205 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2020-12-20 05:43+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "&amp;times;"
+msgstr "&amp;times;"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurare"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_user_id
+msgid "Default Responsible"
+msgstr "Responsabil implicit"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_team_id
+msgid "Default Team"
+msgstr "Echipa implicită"
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_user_id
+msgid ""
+"Default responsible for new leads created through the 'Request RMA' form."
+msgstr ""
+"Responsabil implicit pentru noii clienți potențiali creați prin formularul „"
+"Cerere retur”."
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_team_id
+msgid "Default team for new RMAs created through the 'Request RMA' form."
+msgstr ""
+"Echipa implicită pentru noile cereri de retur create prin formularul „Cerere "
+"retur”."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Description"
+msgstr "Descriere"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_ir_model
+msgid "Models"
+msgstr "Modele"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Operation"
+msgstr "Operație"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Our team will process it an will reach you once it's validated."
+msgstr ""
+"Echipa noastră o va procesa și va ajunge la dvs. odată ce va fi validată."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Product"
+msgstr "Produs"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Quantity"
+msgstr "Cantitate"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_rma
+msgid "RMA"
+msgstr "Cerere retur"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Responsible"
+msgstr "Responsabil cerere retur"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Team"
+msgstr "Echipă"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Request"
+msgstr "Cerere"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Request RMA"
+msgstr "Cerere retur"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Request RMA Form"
+msgstr "Formular cerere retur"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Return Merchandise Authorization (RMA)"
+msgstr "Autorizație de returnare a mărfurilor (RMA)"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the"
+msgstr ""
+"Setați echipa implicită și responsabilul pentru cererile de retur create din"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the "
+"Request RMA page."
+msgstr ""
+"Setați echipa implicită și  responsabilul pentru cererile de retur create "
+"din pagina Cerere retur."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Thanks!"
+msgstr "Mulțumim!"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "We will get back to you shortly."
+msgstr "Te vom contacta în curând."
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_website
+msgid "Website"
+msgstr "Website"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "You can request an RMA"
+msgstr "Puteți solicita o returnare"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Your request has been sent successfully."
+msgstr "Solicitarea dvs. a fost trimisă cu succes."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "here"
+msgstr "aici"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was made.\n"
+"                                    If you know the sales order, go to it and click on the corresponding button."
+msgstr ""
+"Dacă nu cunoașteți \n"
+"comanda de vânzare din care a fost făcută.\n"
+"Dacă cunoașteți comanda de vânzare, accesați-o și faceți clic pe butonul "
+"corespunzător."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was made. If you know\n"
+"                                    the sales order, go to it and click on the corresponding button."
+msgstr ""
+"dacă nu cunoașteți \n"
+"comanda de vânzare din care a fost făcută. Dacă cunoașteți comanda de "
+"vânzare, \n"
+"accesați-o și faceți clic pe butonul corespunzător."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "page"
+msgstr "pagină"
