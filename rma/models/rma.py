@@ -1,6 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import logging
 from collections import Counter
 
 from odoo import _, api, fields, models
@@ -9,6 +10,8 @@ from odoo.tests import Form
 from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
+
+_logger = logging.getLogger(__name__)
 
 
 class Rma(models.Model):
@@ -31,7 +34,6 @@ class Rma(models.Model):
     # General fields
     sent = fields.Boolean()
     name = fields.Char(
-        string="Name",
         index=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
@@ -159,7 +161,6 @@ class Rma(models.Model):
         },
     )
     priority = fields.Selection(
-        string="Priority",
         selection=PROCUREMENT_PRIORITIES,
         default="1",
         readonly=True,
@@ -234,13 +235,11 @@ class Rma(models.Model):
         compute="_compute_delivery_picking_count",
     )
     delivered_qty = fields.Float(
-        string="Delivered qty",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         store=True,
     )
     delivered_qty_done = fields.Float(
-        string="Delivered qty done",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         compute_sudo=True,
@@ -925,9 +924,8 @@ class Rma(models.Model):
             raise ValidationError(
                 _(
                     "Quantity to extract cannot be greater than remaining "
-                    "delivery quantity (%s %s)"
+                    "delivery quantity (%(self.remaining_qty)s %(self.product_uom.name)s)"
                 )
-                % (self.remaining_qty, self.product_uom.name)
             )
 
     # Reception business methods
@@ -1025,11 +1023,7 @@ class Rma(models.Model):
         self.message_post(
             body=_(
                 'Split: <a href="#" data-oe-model="rma" '
-                'data-oe-id="%d">%s</a> has been created.'
-            )
-            % (
-                extracted_rma.id,
-                extracted_rma.name,
+                'data-oe-id="%(extracted_rma.id)d">%(extracted_rma.name)s</a> has been created.'
             )
         )
         return extracted_rma
@@ -1129,9 +1123,8 @@ class Rma(models.Model):
                 rma.message_post(
                     body=_(
                         'Return: <a href="#" data-oe-model="stock.picking" '
-                        'data-oe-id="%d">%s</a> has been created.'
+                        'data-oe-id="%(picking.id)d">%(picking.name)s</a> has been created.'
                     )
-                    % (picking.id, picking.name)
                 )
             picking.action_confirm()
             picking.action_assign()
@@ -1169,15 +1162,9 @@ class Rma(models.Model):
                 body=_(
                     "Replacement: "
                     'Move <a href="#" data-oe-model="stock.move" '
-                    'data-oe-id="%d">%s</a> (Picking <a href="#" '
-                    'data-oe-model="stock.picking" data-oe-id="%d">%s</a>) '
+                    'data-oe-id="%(new_move.id)d">%(new_move.name_get()[0][1])s</a> (Picking <a href="#" '
+                    'data-oe-model="stock.picking" data-oe-id="%(new_move.picking_id.id)d">%(new_move.picking_id.name)s</a>) '
                     "has been created."
-                )
-                % (
-                    new_move.id,
-                    new_move.name_get()[0][1],
-                    new_move.picking_id.id,
-                    new_move.picking_id.name,
                 )
             )
         else:
@@ -1185,12 +1172,11 @@ class Rma(models.Model):
                 body=_(
                     "Replacement:<br/>"
                     'Product <a href="#" data-oe-model="product.product" '
-                    'data-oe-id="%d">%s</a><br/>'
-                    "Quantity %f %s<br/>"
+                    'data-oe-id="%(product.id)d">%(product.display_name)s</a><br/>'
+                    "Quantity %(qty)f %(uom.name)s<br/>"
                     "This replacement did not create a new move, but one of "
                     "the previously created moves was updated with this data."
                 )
-                % (product.id, product.display_name, qty, uom.name)
             )
         if self.state != "waiting_replacement":
             self.state = "waiting_replacement"
@@ -1276,11 +1262,10 @@ class Rma(models.Model):
         """
         if custom_values is None:
             custom_values = {}
-        subject = msg_dict.get("subject", "")
-        body = html2plaintext(msg_dict.get("body", ""))
-        desc = _("<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s") % (
-            subject,
-            body,
+        msg_dict.get("subject", "")
+        html2plaintext(msg_dict.get("body", ""))
+        desc = _(
+            "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
         )
         defaults = {
             "description": desc,
@@ -1323,8 +1308,8 @@ class Rma(models.Model):
                 record._message_add_suggested_recipient(
                     recipients, partner=record.partner_id, reason=_("Customer")
                 )
-        except AccessError:  # no read access rights
-            pass
+        except AccessError as e:  # no read access rights
+            _logger.debug(e)
         return recipients
 
     # Reporting business methods

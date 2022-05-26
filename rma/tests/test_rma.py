@@ -318,7 +318,7 @@ class TestRmaCase(TestRma):
         action = self.env.ref("rma.rma_refund_action_server")
         ctx = dict(self.env.context)
         ctx.update(active_ids=all_rmas.ids, active_model="rma")
-        action.with_context(ctx).run()
+        action.with_context(**ctx).run()
         # After that all RMAs are in 'refunded' state
         self.assertEqual(all_rmas.mapped("state"), ["refunded"] * 4)
         # Two refunds were created
