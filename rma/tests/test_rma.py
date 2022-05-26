@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, TransactionCase
 
 
-class TestRma(SavepointCase):
+class TestRma(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestRma, cls).setUpClass()
@@ -15,9 +15,10 @@ class TestRma(SavepointCase):
         cls.warehouse_company = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.company.id)], limit=1
         )
+
         cls.rma_loc = cls.warehouse_company.rma_loc_id
         cls.product = cls.product_product.create(
-            {"name": "Product test 1", "type": "product"}
+            {"name": "Product test 1", "type": "product"}  #
         )
         account_type = cls.env["account.account.type"].create(
             {"name": "RCV type", "type": "receivable", "internal_group": "income"}
@@ -36,6 +37,7 @@ class TestRma(SavepointCase):
                 "property_account_receivable_id": cls.account_receiv.id,
             }
         )
+
         cls.partner_invoice = cls.res_partner.create(
             {
                 "name": "Partner invoice test",
@@ -733,6 +735,7 @@ class TestRmaCase(TestRma):
             - mail_draft
         )
         self.assertTrue(rma.name in mail_confirm.subject)
+        print(mail_confirm.body)
         self.assertTrue(rma.name in mail_confirm.body)
         self.assertEqual(
             self.env.ref("rma.mt_rma_notification"), mail_confirm.subtype_id

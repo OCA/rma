@@ -566,10 +566,12 @@ class Rma(models.Model):
         """Send customer notifications they place the RMA from the portal"""
         for rma in self.filtered("company_id.send_rma_draft_confirmation"):
             rma_template_id = rma.company_id.rma_mail_draft_confirmation_template_id.id
+
+            default_subtype_id = self.env.ref("rma.mt_rma_notification").id
             rma.with_context(
                 force_send=True,
                 mark_rma_as_sent=True,
-                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
+                default_subtype_id=default_subtype_id,
             ).message_post_with_template(rma_template_id)
 
     def _send_confirmation_email(self):
