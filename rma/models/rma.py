@@ -1164,7 +1164,6 @@ class Rma(models.Model):
         self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
         new_move = self.delivery_move_ids - moves_before
         if new_move:
-            self.reception_move_id.move_dest_ids = [(4, new_move.id)]
             self.message_post(
                 body=_(
                     "Replacement: "
