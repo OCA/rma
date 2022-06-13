@@ -4,14 +4,12 @@
 from odoo import api, fields, models
 from odoo.osv import expression
 
-ORDER_STATE_DOMAIN = [
-    ('state', 'in', ['sale', 'done'])
-]
+ORDER_STATE_DOMAIN = [("state", "in", ["sale", "done"])]
 
 
 class Rma(models.Model):
     _inherit = "rma"
-    
+
     def _domain_product_id(self):
         return [("type", "in", ["consu", "product"])]
 
@@ -62,32 +60,29 @@ class Rma(models.Model):
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
         res = super()._onchange_partner_id()
-        
+
         def add_order_domain(r, domain):
             r = r or {}
-            _domain = r.setdefault('domain', {})
-            _domain['order_id'] = domain
+            _domain = r.setdefault("domain", {})
+            _domain["order_id"] = domain
             return r
-        
-        PARTNER_DOMAIN = [(
-            'partner_id',
-            'child_of',
-            self.partner_id.commercial_partner_id.id
-        )]
+
+        PARTNER_DOMAIN = [
+            ("partner_id", "child_of", self.partner_id.commercial_partner_id.id)
+        ]
         if not self.partner_id or not self.order_id.filtered_domain(PARTNER_DOMAIN):
             self.order_id = False
             if not self.partner_id:
-                res = add_order_domain(
-                    res,
-                    ORDER_STATE_DOMAIN
-                )
+                res = add_order_domain(res, ORDER_STATE_DOMAIN)
             else:
                 res = add_order_domain(
                     res,
-                    expression.AND([
-                        ORDER_STATE_DOMAIN,
-                        PARTNER_DOMAIN,
-                    ])
+                    expression.AND(
+                        [
+                            ORDER_STATE_DOMAIN,
+                            PARTNER_DOMAIN,
+                        ]
+                    ),
                 )
         return res
 
@@ -96,14 +91,12 @@ class Rma(models.Model):
         self.product_id = self.picking_id = False
         domain = self._domain_product_id()
         if self.order_id:
-            domain += [
-                ('id', 'in', self.order_id.order_line.mapped('product_id').ids)
-            ]
+            domain += [("id", "in", self.order_id.order_line.mapped("product_id").ids)]
             self.partner_id = self.order_id.partner_id
             self.partner_invoice_id = self.order_id.partner_invoice_id
             self.partner_shipping_id = self.order_id.partner_shipping_id
         return {"domain": {"product_id": domain}}
-    
+
     @api.onchange("order_id", "product_id")
     def _onchange_order_id_product_id(self):
         if not self.order_id or not self.product_id:
@@ -113,12 +106,14 @@ class Rma(models.Model):
         allowed_moves = self.allowed_picking_ids.filtered(
             lambda p: self.product_id in p.move_lines.product_id
         ).move_lines
-        
+
         if not allowed_moves:
             self.picking_id = self.move_id = False
             return
 
-        last_move = allowed_moves.sorted(key=lambda m: m.picking_id.date_done, reverse=True)[0]
+        last_move = allowed_moves.sorted(
+            key=lambda m: m.picking_id.date_done, reverse=True
+        )[0]
         self.move_id = last_move
         self.picking_id = last_move.picking_id
 
