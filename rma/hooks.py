@@ -23,7 +23,7 @@ def post_init_hook(cr, registry):
 
     def create_rma_locations(warehouse):
         stock_location = env["stock.location"]
-        if not warehouse.rma_loc_id:
+        if not warehouse.rma_loc_id:  # pragma: no cover
             rma_location_vals = warehouse._get_rma_location_values()
             warehouse.rma_loc_id = (
                 stock_location.with_context(active_test=False)
@@ -42,7 +42,7 @@ def post_init_hook(cr, registry):
         create_data = whs._get_picking_type_create_values(max_sequence)[0]
         sequence_data = whs._get_sequence_values()
         data = {}
-        for picking_type, values in create_data.items():
+        for picking_type, values in create_data.items():  # pragma: no cover
             if (
                 picking_type in ["rma_in_type_id", "rma_out_type_id"]
                 and not whs[picking_type]
