@@ -2,22 +2,24 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, TransactionCase
 
 
-class TestRma(SavepointCase):
+class TestRma(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestRma, cls).setUpClass()
         cls.res_partner = cls.env["res.partner"]
+        cls.rma_team = cls.env["rma.team"]
         cls.product_product = cls.env["product.product"]
         cls.company = cls.env.user.company_id
         cls.warehouse_company = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.company.id)], limit=1
         )
+
         cls.rma_loc = cls.warehouse_company.rma_loc_id
         cls.product = cls.product_product.create(
-            {"name": "Product test 1", "type": "product"}
+            {"name": "Product test 1", "type": "product"}  #
         )
         account_type = cls.env["account.account.type"].create(
             {"name": "RCV type", "type": "receivable", "internal_group": "income"}
@@ -36,6 +38,13 @@ class TestRma(SavepointCase):
                 "property_account_receivable_id": cls.account_receiv.id,
             }
         )
+
+        cls.team = cls.res_partner.create(
+            {
+                "name": "RMA Team test",
+            }
+        )
+
         cls.partner_invoice = cls.res_partner.create(
             {
                 "name": "Partner invoice test",
@@ -131,6 +140,7 @@ class TestRma(SavepointCase):
         return picking
 
 
+# @ tagged('notcurrent')
 class TestRmaCase(TestRma):
     def test_onchange(self):
         rma_form = Form(self.env["rma"])
@@ -183,6 +193,272 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma_form.product_uom_qty, 15)
         self.assertNotEqual(rma_form.product_uom, uom_ten)
         self.assertEqual(rma_form.product_uom, self.product.uom_id)
+
+    def test_rma_team(self):
+
+        team_copy = self.team.copy()
+        self.assertIn("(copy)", team_copy["name"])
+
+        team_default = self.team.copy(default=None)
+        self.assertIn("(copy)", team_default["name"])
+
+    def test_access_url(self):
+
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+
+        rma_2 = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc
+        )
+
+        self.assertEqual(rma_1.access_url, f"/my/rmas/{rma_1.id}")
+
+        with self.assertRaises(ValidationError) as e:
+            rma_2.unlink()
+
+        self.assertEqual(
+            e.exception.name, "You cannot delete RMAs that are not in draft state"
+        )
+
+    # Action methods
+
+    def test_action_rma_send(self):
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+
+        action = rma_1.action_rma_send()
+
+        self.assertEqual(action["res_model"], "mail.compose.message")
+
+    def test_replacement(self):
+
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        self.assertEqual(rma.state, "received")
+        self.assertTrue(rma.can_be_refunded)
+        self.assertTrue(rma.can_be_returned)
+        self.assertTrue(rma.can_be_replaced)
+
+        action = rma.action_replace()
+
+        self.assertEqual(
+            action["context"],
+            {
+                "active_id": rma.id,
+                "active_ids": [rma.id],
+                "rma_delivery_type": "replace",
+            },
+        )
+
+    def test_action_return(self):
+
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        self.assertEqual(rma.state, "received")
+        self.assertTrue(rma.can_be_refunded)
+        self.assertTrue(rma.can_be_returned)
+        self.assertTrue(rma.can_be_replaced)
+
+        action = rma.action_return()
+
+        self.assertEqual(
+            action["context"],
+            {
+                "active_id": rma.id,
+                "active_ids": [rma.id],
+                "rma_delivery_type": "return",
+            },
+        )
+
+    def test_action_split(self):
+
+        # Create, confirm and receive an RMA
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        # Replace with another product with quantity 2.
+        product_2 = self.product_product.create(
+            {"name": "Product 2 test", "type": "product"}
+        )
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="replace",
+            )
+        )
+        delivery_form.product_id = product_2
+        delivery_form.product_uom_qty = 2
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        self.assertEqual(len(rma.delivery_move_ids.picking_id.move_lines), 1)
+        self.assertEqual(rma.delivery_move_ids.product_id, product_2)
+        self.assertEqual(rma.delivery_move_ids.product_uom_qty, 2)
+        self.assertTrue(rma.delivery_move_ids.picking_id.state, "waiting")
+        self.assertEqual(rma.state, "waiting_replacement")
+
+        action = rma.action_split()
+
+        ctx = action["context"]
+
+        self.assertEqual(ctx, {"active_id": rma.id, "active_ids": [rma.id]})
+
+    def test_action_draft(self):
+        # cancel a draft RMA
+        rma = self._create_rma(self.partner, self.product)
+        rma.action_cancel()
+        self.assertEqual(rma.state, "cancelled")
+
+        rma.action_draft()
+
+        self.assertEqual(rma.state, "draft")
+
+    def test_action_preview(self):
+        rma = self._create_rma(self.partner, self.product)
+        action = rma.action_preview()
+
+        self.assertEqual(
+            action,
+            {
+                "type": "ir.actions.act_url",
+                "target": "self",
+                "url": rma.get_portal_url(),
+            },
+        )
+
+    def test_action_view_receipt(self):
+        # view a RMA receipt
+        rma = self._create_rma(self.partner, self.product)
+        action = rma.action_view_receipt()
+        self.assertEqual(action["name"], "Transfers")
+
+    def test_action_view_delivery(self):
+        # view a RMA receipt
+        rma = self._create_rma(self.partner, self.product)
+        action = rma.action_view_delivery()
+
+        self.assertEqual(action["xml_id"], "stock.action_picking_tree_all")
+
+    def test_ensure_can_be_returned(self):
+        rma_1 = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc
+        )
+        rma_2 = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc
+        )
+
+        rma_1.action_refund()
+        rma_2.action_refund()
+
+        with self.assertRaises(ValidationError) as e:
+            rma_1.action_return()
+        self.assertEqual(
+            e.exception.name,
+            "This RMA cannot perform a return.",
+        )
+
+    def test_qty_to_return_is_greater(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        # Return the same product with quantity 2 to the customer.
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="return",
+            )
+        )
+
+        delivery_form.product_uom_qty = 20
+        delivery_wizard = delivery_form.save()
+
+        with self.assertRaises(ValidationError) as e:
+            delivery_wizard.action_deliver()
+            # return_wizard.action_return()
+        self.assertEqual(
+            e.exception.name,
+            "The quantity to return is greater than remaining quantity.",
+        )
+
+    def test_get_extra_refund_line_vals(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+
+        self.assertEqual(
+            rma._get_extra_refund_line_vals(),
+            {},
+        )
+
+    def test_message_new(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        msg_dict = {"author_id": 1, "priority": "1"}
+        result = rma.message_new(msg_dict)
+
+        self.assertEqual(
+            result["access_url"],
+            f"/my/rmas/{result.id}",
+        )
+
+    def test_action_split_exotic_product(self):
+
+        # Create, confirm and receive an RMA
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        # Replace with another product with quantity 2.
+        product_2 = self.product_product.create(
+            {"name": "Product 2 test", "type": "service", "uom_id": 1}
+        )
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="replace",
+            )
+        )
+        delivery_form.product_id = product_2
+        delivery_form.product_uom_qty = 2
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+
+    def test_message_get_suggested_recipients(self):
+
+        # Create, confirm and receive an RMA
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        recipients = rma._message_get_suggested_recipients()
+
+        self.assertEqual(
+            recipients,
+            {rma.id: []},
+        )
+
+    def test_get_report_base_filename(self):
+
+        # Create, confirm and receive an RMA
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        name = rma._get_report_base_filename()
+
+        self.assertEqual(name, f"RMA Report - RMA{str(rma.id).zfill(4)}")
+
+    def test_rma_count(self):
+
+        # nik
+        partner_id = self.res_partner.create(
+            {
+                "name": "Partner 2 test",
+                "property_account_receivable_id": self.account_receiv.id,
+                "company_id": self.company.id,
+            }
+        )
+
+        self.assertEqual(partner_id.rma_count, 0)
+
+        action = partner_id.action_view_rma()
+
+        self.assertEqual(action["res_model"], "rma")
+        self.assertEqual(action["view_mode"], "tree,form,pivot,calendar,activity")
+        self.assertEqual(action["domain"], [("partner_id", "in", [partner_id.id])])
+
+        origin_delivery = self._create_delivery()
+        rma_form = Form(self.env["rma"])
+        rma_form.partner_id = self.partner
+        rma_form.picking_id = origin_delivery
+        rma_form.move_id = origin_delivery.move_lines.filtered(
+            lambda r: r.product_id == self.product
+        )
+        rma_form.save()
+
+        action = partner_id.action_view_rma()
+
+        self.assertEqual(action["res_model"], "rma")
+        self.assertEqual(action["domain"], [("partner_id", "in", [partner_id.id])])
 
     def test_ensure_required_fields_on_confirm(self):
         rma = self._create_rma()
@@ -318,7 +594,7 @@ class TestRmaCase(TestRma):
         action = self.env.ref("rma.rma_refund_action_server")
         ctx = dict(self.env.context)
         ctx.update(active_ids=all_rmas.ids, active_model="rma")
-        action.with_context(ctx).run()
+        action.with_context(**ctx).run()
         # After that all RMAs are in 'refunded' state
         self.assertEqual(all_rmas.mapped("state"), ["refunded"] * 4)
         # Two refunds were created
@@ -660,6 +936,16 @@ class TestRmaCase(TestRma):
             .create({})
         )
         action = split_wizard.action_split()
+
+        # nik
+
+        with self.assertRaises(ValidationError) as e:
+            split_wizard.action_split()
+        self.assertEqual(
+            e.exception.name,
+            "This RMA cannot be split.",
+        )
+
         # Check rma is set to 'returned' after split. Check new_rma values
         self.assertEqual(rma.state, "returned")
         new_rma = self.env["rma"].browse(action["res_id"])
