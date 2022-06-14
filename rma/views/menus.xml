@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <menuitem id="rma_menu" name="RMA" web_icon="rma,static/description/icon.png" />
+    <menuitem id="rma_orders_menu" parent="rma_menu" name="Orders" sequence="10" />
+    <menuitem
+        id="rma_reporting_menu"
+        parent="rma_menu"
+        name="Reporting"
+        sequence="20"
+    />
+    <menuitem
+        id="rma_configuration_menu"
+        parent="rma_menu"
+        name="Configuration"
+        sequence="30"
+    />
+</odoo>
