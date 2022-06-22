@@ -1048,6 +1048,8 @@ class Rma(models.Model):
         """
         self.ensure_one()
         invoice_form.partner_id = self.partner_invoice_id
+        # Avoid set partner default value
+        invoice_form.invoice_payment_term_id = self.env["account.payment.term"]
 
     def _prepare_refund_line(self, line_form):
         """Hook method for preparing a refund line Form.
