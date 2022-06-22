@@ -39,6 +39,9 @@ class TestRma(SavepointCase):
             {
                 "name": "Partner test",
                 "property_account_receivable_id": cls.account_receiv.id,
+                "property_payment_term_id": cls.env.ref(
+                    "account.account_payment_term_30days"
+                ).id,
             }
         )
         cls.partner_invoice = cls.res_partner.create(
@@ -277,6 +280,7 @@ class TestRmaCase(TestRma):
         rma.action_refund()
         self.assertEqual(rma.refund_id.type, "out_refund")
         self.assertEqual(rma.refund_id.state, "draft")
+        self.assertFalse(rma.refund_id.invoice_payment_term_id)
         self.assertEqual(rma.refund_line_id.product_id, rma.product_id)
         self.assertEqual(rma.refund_line_id.quantity, 10)
         self.assertEqual(rma.refund_line_id.product_uom_id, rma.product_uom)
