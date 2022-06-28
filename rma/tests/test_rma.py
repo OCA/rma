@@ -65,6 +65,8 @@ class TestRma(SavepointCase):
             {"name": "[Test] It's out of warranty. To be scrapped"}
         )
         cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
+        # Ensure grouping
+        cls.env.company.rma_return_grouping = True
 
     def _create_rma(self, partner=None, product=None, qty=None, location=None):
         rma_form = Form(self.env["rma"])
@@ -601,6 +603,39 @@ class TestRmaCase(TestRma):
         pick_1.button_validate()
         pick_2.button_validate()
         self.assertEqual(all_rmas.mapped("state"), ["returned"] * 4)
+
+    def test_mass_return_to_customer_ungrouped(self):
+        """We can choose to avoid the customer returns grouping"""
+        self.env.company.rma_return_grouping = False
+        # Create, confirm and receive rma_1
+        rma_1 = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc
+        )
+        # create, confirm and receive 3 more RMAs
+        # rma_2: Same partner and same product as rma_1
+        rma_2 = self._create_confirm_receive(
+            self.partner, self.product, 15, self.rma_loc
+        )
+        # rma_3: Same partner and different product than rma_1
+        product = self.product_product.create(
+            {"name": "Product 2 test", "type": "product"}
+        )
+        rma_3 = self._create_confirm_receive(self.partner, product, 20, self.rma_loc)
+        # rma_4: Different partner and same product as rma_1
+        partner = self.res_partner.create({"name": "Partner 2 test"})
+        rma_4 = self._create_confirm_receive(partner, product, 25, self.rma_loc)
+        # all rmas are ready to be returned to the customer
+        all_rmas = rma_1 | rma_2 | rma_3 | rma_4
+        self.assertEqual(all_rmas.mapped("state"), ["received"] * 4)
+        self.assertEqual(all_rmas.mapped("can_be_returned"), [True] * 4)
+        # Mass return of those four RMAs
+        delivery_wizard = (
+            self.env["rma.delivery.wizard"]
+            .with_context(active_ids=all_rmas.ids, rma_delivery_type="return")
+            .create({})
+        )
+        delivery_wizard.action_deliver()
+        self.assertEqual(4, len(all_rmas.delivery_move_ids.picking_id))
 
     def test_rma_from_picking_return(self):
         # Create a return from a delivery picking

@@ -26,6 +26,10 @@ class RmaReDeliveryWizard(models.TransientModel):
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse", string="Warehouse", required=True,
     )
+    rma_return_grouping = fields.Boolean(
+        string="Group RMA returns by customer address and warehouse",
+        default=lambda self: self.env.company.rma_return_grouping,
+    )
 
     @api.constrains("product_uom_qty")
     def _check_product_uom_qty(self):
@@ -87,4 +91,6 @@ class RmaReDeliveryWizard(models.TransientModel):
             qty = uom = None
             if self.rma_count == 1:
                 qty, uom = self.product_uom_qty, self.product_uom
-            rma.create_return(self.scheduled_date, qty, uom)
+            rma.with_context(
+                rma_return_grouping=self.rma_return_grouping
+            ).create_return(self.scheduled_date, qty, uom)
