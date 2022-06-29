@@ -839,6 +839,18 @@ msgid "Group By"
 msgstr "Agrupado Por"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
+msgid "Group RMA returns by customer address and warehouse"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Group RMA returns by customer and warehouse."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_account_move__id
 #: model:ir.model.fields,field_description:rma.field_account_move_line__id
 #: model:ir.model.fields,field_description:rma.field_res_company__id
