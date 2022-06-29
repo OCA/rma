@@ -14,3 +14,5 @@ access_rma_finalization_portal,rma.finalization.portal,model_rma_finalization,ba
 access_rma_finalization_user_own,rma.finalization.user.own,model_rma_finalization,rma_group_user_own,1,0,0,0
 access_rma_finalization_manager,rma.finalization.manager,model_rma_finalization,rma_group_manager,1,1,1,1
 access_rma_finalization_wizard_user_own,rma.finalization.wizard.user.own,model_rma_finalization_wizard,group_rma_manual_finalization,1,1,1,1
+access_account_move_rma_user,account_move rma_user,account.model_account_move,rma.rma_group_user_own,1,0,0,0
+access_account_move_line_rma_user,account_move_line rma_user,account.model_account_move_line,rma.rma_group_user_own,1,0,0,0
