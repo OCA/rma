@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, http
@@ -64,6 +65,9 @@ class CustomerPortal(CustomerPortal):
                 "custom_description": custom_description,
             }
         )
+        user_has_group_portal = request.env.user.has_group(
+            "base.group_portal"
+        ) or request.env.user.has_group("base.group_public")
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
             rec.origin += _(" (Portal)")
@@ -76,8 +80,14 @@ class CustomerPortal(CustomerPortal):
         ).subtype_ids += request.env.ref("rma.mt_rma_notification")
         if len(rma) == 0:
             route = order_sudo.get_portal_url()
+        elif len(rma) == 1:
+            route = rma._get_share_url() if user_has_group_portal else rma.access_url
         else:
-            route = "/my/rmas?sale_id=%d" % order_id
+            route = (
+                order._get_share_url()
+                if user_has_group_portal
+                else "/my/rmas?sale_id=%d" % order_id
+            )
         return request.redirect(route)
 
     @http.route(
