@@ -5,7 +5,7 @@
 {
     "name": "Warranty Date on Lot/Serial Numbers",
     "summary": "Add warranty date to stock production lot",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "AGPL-3",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
     "category": "Stock",
