@@ -44,7 +44,7 @@
         <field name="model">rma.finalization</field>
         <field eval="6" name="priority" />
         <field name="arch" type="xml">
-            <tree string="RMA Finalization Reasons">
+            <tree>
                 <field name="name" />
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
@@ -57,7 +57,8 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
             Create a new RMA finalization
-            </p><p>
+            </p>
+            <p>
             Manage RMA finalization reasons to better classify them for tracking and analysis purposes.
             </p>
         </field>

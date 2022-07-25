@@ -25,7 +25,11 @@ class TestRma(SavepointCase):
             {"name": "Product test 1", "type": "product"}
         )
         account_type = cls.env["account.account.type"].create(
-            {"name": "RCV type", "type": "receivable", "internal_group": "income"}
+            {
+                "name": "RCV type",
+                "type": "receivable",
+                "internal_group": "income",
+            }
         )
         cls.account_receiv = cls.env["account.account"].create(
             {
@@ -59,7 +63,7 @@ class TestRma(SavepointCase):
             }
         )
         cls.finalization_reason_1 = cls.env["rma.finalization"].create(
-            {"name": "[Test] It can't be repaired and customer doesn't want it"}
+            {"name": ("[Test] It can't be repaired and customer doesn't want it")}
         )
         cls.finalization_reason_2 = cls.env["rma.finalization"].create(
             {"name": "[Test] It's out of warranty. To be scrapped"}
@@ -334,7 +338,7 @@ class TestRmaCase(TestRma):
         action = self.env.ref("rma.rma_refund_action_server")
         ctx = dict(self.env.context)
         ctx.update(active_ids=all_rmas.ids, active_model="rma")
-        action.with_context(ctx).run()
+        action.with_context(**ctx).run()
         # After that all RMAs are in 'refunded' state
         self.assertEqual(all_rmas.mapped("state"), ["refunded"] * 4)
         # Two refunds were created
