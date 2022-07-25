@@ -60,9 +60,10 @@ class StockMove(models.Model):
             if rma_receiver and move.quantity_done != rma_receiver.product_uom_qty:
                 raise ValidationError(
                     _(
-                        "The quantity done for the product '%s' must "
-                        "be equal to its initial demand because the "
-                        "stock move is linked to an RMA (%s)."
+                        "The quantity done for the product"
+                        " '%(move.product_id.name)s' must be equal to its"
+                        " initial demand because the stock move is linked to"
+                        " an RMA (%(move.rma_receiver_ids.name)s)."
                     )
                     % (move.product_id.name, move.rma_receiver_ids.name)
                 )

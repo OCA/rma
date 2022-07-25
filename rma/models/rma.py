@@ -1,6 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import logging
 from collections import Counter
 
 from odoo import _, api, fields, models
@@ -9,6 +10,8 @@ from odoo.tests import Form
 from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
+
+_logger = logging.getLogger(__name__)
 
 
 class Rma(models.Model):
@@ -31,7 +34,6 @@ class Rma(models.Model):
     # General fields
     sent = fields.Boolean()
     name = fields.Char(
-        string="Name",
         index=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
@@ -40,7 +42,10 @@ class Rma(models.Model):
     )
     origin = fields.Char(
         string="Source Document",
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
         help="Reference of the document that generated this RMA.",
     )
     date = fields.Datetime(
@@ -51,20 +56,29 @@ class Rma(models.Model):
         states={"draft": [("readonly", False)]},
     )
     deadline = fields.Date(
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
     )
     user_id = fields.Many2one(
         comodel_name="res.users",
         string="Responsible",
         index=True,
         tracking=True,
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
     )
     team_id = fields.Many2one(
         comodel_name="rma.team",
         string="RMA team",
         index=True,
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
     )
     tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
     finalization_id = fields.Many2one(
@@ -72,13 +86,18 @@ class Rma(models.Model):
         comodel_name="rma.finalization",
         copy=False,
         readonly=True,
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain=(
+            "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
+        ),
         tracking=True,
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company,
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
     )
     partner_id = fields.Many2one(
         string="Customer",
@@ -100,7 +119,9 @@ class Rma(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={"draft": [("readonly", False)]},
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain=(
+            "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
+        ),
         help="Refund address for current RMA.",
     )
     commercial_partner_id = fields.Many2one(
@@ -110,21 +131,25 @@ class Rma(models.Model):
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
         string="Origin Delivery",
-        domain="["
-        "    ('state', '=', 'done'),"
-        "    ('picking_type_id.code', '=', 'outgoing'),"
-        "    ('partner_id', 'child_of', commercial_partner_id),"
-        "]",
+        domain=(
+            "["
+            "    ('state', '=', 'done'),"
+            "    ('picking_type_id.code', '=', 'outgoing'),"
+            "    ('partner_id', 'child_of', commercial_partner_id),"
+            "]"
+        ),
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
     move_id = fields.Many2one(
         comodel_name="stock.move",
         string="Origin move",
-        domain="["
-        "    ('picking_id', '=', picking_id),"
-        "    ('picking_id', '!=', False)"
-        "]",
+        domain=(
+            "["
+            "    ('picking_id', '=', picking_id),"
+            "    ('picking_id', '!=', False)"
+            "]"
+        ),
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
@@ -159,7 +184,6 @@ class Rma(models.Model):
         },
     )
     priority = fields.Selection(
-        string="Priority",
         selection=PROCUREMENT_PRIORITIES,
         default="1",
         readonly=True,
@@ -188,7 +212,10 @@ class Rma(models.Model):
         tracking=True,
     )
     description = fields.Html(
-        states={"locked": [("readonly", True)], "cancelled": [("readonly", True)]},
+        states={
+            "locked": [("readonly", True)],
+            "cancelled": [("readonly", True)],
+        },
     )
     # Reception fields
     location_id = fields.Many2one(
@@ -210,13 +237,11 @@ class Rma(models.Model):
     # Refund fields
     refund_id = fields.Many2one(
         comodel_name="account.move",
-        string="Refund",
         readonly=True,
         copy=False,
     )
     refund_line_id = fields.Many2one(
         comodel_name="account.move.line",
-        string="Refund line",
         readonly=True,
         copy=False,
     )
@@ -234,13 +259,11 @@ class Rma(models.Model):
         compute="_compute_delivery_picking_count",
     )
     delivered_qty = fields.Float(
-        string="Delivered qty",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         store=True,
     )
     delivered_qty_done = fields.Float(
-        string="Delivered qty done",
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         compute_sudo=True,
@@ -447,7 +470,11 @@ class Rma(models.Model):
 
     # Constrains methods (@api.constrains)
     @api.constrains(
-        "state", "partner_id", "partner_shipping_id", "partner_invoice_id", "product_id"
+        "state",
+        "partner_id",
+        "partner_shipping_id",
+        "partner_invoice_id",
+        "product_id",
     )
     def _check_required_after_draft(self):
         """Check that RMAs are being created or edited with the
@@ -929,10 +956,10 @@ class Rma(models.Model):
         if to_split_uom_qty > self.remaining_qty:
             raise ValidationError(
                 _(
-                    "Quantity to extract cannot be greater than remaining "
-                    "delivery quantity (%s %s)"
+                    "Quantity to extract cannot be greater than remaining"
+                    " delivery quantity (%(self.remaining_qty)s"
+                    " %(self.product_uom.name)s)"
                 )
-                % (self.remaining_qty, self.product_uom.name)
             )
 
     # Reception business methods
@@ -1029,8 +1056,9 @@ class Rma(models.Model):
         )
         self.message_post(
             body=_(
-                'Split: <a href="#" data-oe-model="rma" '
-                'data-oe-id="%d">%s</a> has been created.'
+                'Split: <a href="#" data-oe-model="rma"'
+                ' data-oe-id="%(extracted_rma.id)d">%(extracted_rma.name)s</a>'
+                " has been created."
             )
             % (
                 extracted_rma.id,
@@ -1142,10 +1170,10 @@ class Rma(models.Model):
                 self.env["stock.move"].sudo().create(move_vals)
                 rma.message_post(
                     body=_(
-                        'Return: <a href="#" data-oe-model="stock.picking" '
-                        'data-oe-id="%d">%s</a> has been created.'
+                        'Return: <a href="#" data-oe-model="stock.picking"'
+                        ' data-oe-id="%(picking.id)d">%(picking.name)s</a> has'
+                        " been created."
                     )
-                    % (picking.id, picking.name)
                 )
             picking.action_confirm()
             picking.action_assign()
@@ -1182,28 +1210,24 @@ class Rma(models.Model):
                 body=_(
                     "Replacement: "
                     'Move <a href="#" data-oe-model="stock.move" '
-                    'data-oe-id="%d">%s</a> (Picking <a href="#" '
-                    'data-oe-model="stock.picking" data-oe-id="%d">%s</a>) '
-                    "has been created."
-                )
-                % (
-                    new_move.id,
-                    new_move.name_get()[0][1],
-                    new_move.picking_id.id,
-                    new_move.picking_id.name,
+                    'data-oe-id="%(new_move.id)d">'
+                    "%(new_move.name_get()[0][1])s"
+                    '</a> (Picking <a href="#" '
+                    'data-oe-model="stock.picking" data-oe-id="'
+                    '%(new_move.picking_id.id)d">%(new_move.picking_id.name)s'
+                    "</a>)has been created."
                 )
             )
         else:
             self.message_post(
                 body=_(
-                    "Replacement:<br/>"
-                    'Product <a href="#" data-oe-model="product.product" '
-                    'data-oe-id="%d">%s</a><br/>'
-                    "Quantity %f %s<br/>"
-                    "This replacement did not create a new move, but one of "
-                    "the previously created moves was updated with this data."
+                    'Replacement:<br/>Product <a href="#"'
+                    ' data-oe-model="product.product"'
+                    ' data-oe-id="%(product.id)d">%(product.display_name)s</a><br/>Quantity'
+                    " %(qty)f %(uom.name)s<br/>This replacement did not create"
+                    " a new move, but one of the previously created moves was"
+                    " updated with this data."
                 )
-                % (product.id, product.display_name, qty, uom.name)
             )
         if self.state != "waiting_replacement":
             self.state = "waiting_replacement"
@@ -1289,11 +1313,11 @@ class Rma(models.Model):
         """
         if custom_values is None:
             custom_values = {}
-        subject = msg_dict.get("subject", "")
-        body = html2plaintext(msg_dict.get("body", ""))
-        desc = _("<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s") % (
-            subject,
-            body,
+        msg_dict.get("subject", "")
+        html2plaintext(msg_dict.get("body", ""))
+        desc = _(
+            "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail"
+            " body:</b><br/>%(body)s"
         )
         defaults = {
             "description": desc,
@@ -1336,8 +1360,8 @@ class Rma(models.Model):
                 record._message_add_suggested_recipient(
                     recipients, partner=record.partner_id, reason=_("Customer")
                 )
-        except AccessError:  # no read access rights
-            pass
+        except AccessError as e:  # no read access rights
+            _logger.debug(e)
         return recipients
 
     # Reporting business methods
