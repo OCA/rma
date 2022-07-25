@@ -2,13 +2,13 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase, new_test_user, users
+from odoo.tests import Form, TransactionCase, new_test_user, users
 
 
-class TestRma(SavepointCase):
+class TestRma(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestRma, cls).setUpClass()
+        super().setUpClass()
         cls.user_rma = new_test_user(
             cls.env,
             login="user_rma",
@@ -25,7 +25,11 @@ class TestRma(SavepointCase):
             {"name": "Product test 1", "type": "product"}
         )
         account_type = cls.env["account.account.type"].create(
-            {"name": "RCV type", "type": "receivable", "internal_group": "income"}
+            {
+                "name": "RCV type",
+                "type": "receivable",
+                "internal_group": "income",
+            }
         )
         cls.account_receiv = cls.env["account.account"].create(
             {
@@ -199,7 +203,7 @@ class TestRmaCase(TestRma):
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
         self.assertEqual(
-            e.exception.name,
+            e.exception.args[0],
             "Required field(s):\nCustomer\nShipping Address\nInvoice Address\n"
             "Product\nLocation",
         )
@@ -207,7 +211,7 @@ class TestRmaCase(TestRma):
             rma_form.partner_id = self.partner
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
-        self.assertEqual(e.exception.name, "Required field(s):\nProduct\nLocation")
+        self.assertEqual(e.exception.args[0], "Required field(s):\nProduct\nLocation")
         with Form(rma) as rma_form:
             rma_form.product_id = self.product
             rma_form.location_id = self.rma_loc
@@ -334,7 +338,7 @@ class TestRmaCase(TestRma):
         action = self.env.ref("rma.rma_refund_action_server")
         ctx = dict(self.env.context)
         ctx.update(active_ids=all_rmas.ids, active_model="rma")
-        action.with_context(ctx).run()
+        action.with_context(**ctx).run()
         # After that all RMAs are in 'refunded' state
         self.assertEqual(all_rmas.mapped("state"), ["refunded"] * 4)
         # Two refunds were created
