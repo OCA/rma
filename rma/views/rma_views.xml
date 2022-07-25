@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_view_search" model="ir.ui.view">
+        <field name="name">rma.view.search</field>
+        <field name="model">rma</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="user_id" />
+                <field name="tag_ids" />
+                <filter
+                    name="draft_filter"
+                    string="Draft"
+                    domain="[('state','=', 'draft')]"
+                />
+                <filter
+                    name="confirmed_filter"
+                    string="Confirmed"
+                    domain="[('state','=', 'confirmed')]"
+                />
+                <filter
+                    name="received_filter"
+                    string="Received"
+                    domain="[('state','=', 'received')]"
+                />
+                <separator />
+                <filter
+                    string="Unresolved RMAs"
+                    name="undone_rma"
+                    domain="[('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                    help="RMAs yet to be fully processed"
+                />
+                <filter
+                    string="Late RMAs"
+                    name="late_rma"
+                    domain="[('deadline', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                    help="RMAs which deadline has passed"
+                />
+                <separator />
+                <filter string="RMA Date" name="filter_rma_date" date="date" />
+                <filter
+                    string="RMA Deadline"
+                    name="filter_rma_deadline"
+                    date="deadline"
+                />
+                <filter
+                    name="no_user_id_filter"
+                    string="Unassigned RMAs"
+                    domain="[('user_id','=', False)]"
+                />
+                <group string="Group By" name="group_by">
+                    <filter
+                        string="Partner"
+                        name="partner_id_group_by"
+                        context="{'group_by':'partner_id'}"
+                    />
+                    <filter
+                        string="Responsible"
+                        name="user_id_group_by"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="state_group_by"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter
+                        string="Date"
+                        name="date_group_by"
+                        context="{'group_by':'date'}"
+                    />
+                    <filter
+                        string="Deadline"
+                        name="deadline_group_by"
+                        context="{'group_by':'deadline'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="rma_view_tree" model="ir.ui.view">
+        <field name="name">rma.view.tree</field>
+        <field name="model">rma</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-muted="state in ['cancelled', 'locked']"
+                decoration-bf="state == 'draft' and product_id == False"
+                decoration-danger="deadline and (deadline &lt; current_date)"
+            >
+                <field name="name" width="100px" />
+                <field name="origin" />
+                <field name="user_id" />
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="product_uom_qty" />
+                <field name="product_uom" groups="uom.group_uom" />
+                <field name="date" />
+                <field name="deadline" />
+                <field name="finalization_id" optional="hide" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    <record id="rma_view_form" model="ir.ui.view">
+        <field name="name">rma.view.form</field>
+        <field name="model">rma</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="%(portal.portal_share_action)d"
+                        string="Share"
+                        type="action"
+                        class="oe_highlight oe_read_only"
+                    />
+                    <button
+                        type="object"
+                        string="Send by Email"
+                        name="action_rma_send"
+                        attrs="{'invisible':['|', ('sent','=',True), ('state', 'not in', ['draft', 'confirmed', 'received'])]}"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
+                        string="Send by Mail"
+                        name="action_rma_send"
+                        attrs="{'invisible':['|', ('sent','=',False), ('state', 'not in', ['draft', 'confirmed', 'received'])]}"
+                    />
+                    <button
+                        type="object"
+                        string="Confirm"
+                        name="action_confirm"
+                        states="draft"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
+                        string="To Refund"
+                        name="action_refund"
+                        attrs="{'invisible': [('can_be_refunded', '=', False)]}"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
+                        string="Replace"
+                        name="action_replace"
+                        attrs="{'invisible': [('can_be_replaced', '=', False)]}"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
+                        string="Return to customer"
+                        name="action_return"
+                        attrs="{'invisible': [('can_be_returned', '=', False)]}"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
+                        string="Split"
+                        name="action_split"
+                        attrs="{'invisible': [('can_be_split', '=', False)]}"
+                    />
+                    <button
+                        type="object"
+                        string="Cancel"
+                        name="action_cancel"
+                        confirm="Are you sure you want to cancel this RMA"
+                        states="draft,confirmed"
+                    />
+                    <button
+                        type="object"
+                        string="Set to draft"
+                        name="action_draft"
+                        states="cancelled"
+                    />
+                    <button
+                        type="object"
+                        string="Lock"
+                        name="action_lock"
+                        attrs="{'invisible': [('can_be_locked', '=', False)]}"
+                    />
+                    <button
+                        type="object"
+                        string="Unlock"
+                        name="action_unlock"
+                        states="locked"
+                    />
+                    <button type="object" string="Preview" name="action_preview" />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirmed,received"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            type="object"
+                            name="action_view_receipt"
+                            string="Receipt"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('reception_move_id', '=', False)]}"
+                        >
+                        </button>
+                        <button
+                            type="object"
+                            name="action_view_delivery"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('delivery_picking_count', '=', 0)]}"
+                        >
+                            <field
+                                name="delivery_picking_count"
+                                widget="statinfo"
+                                string="Delivery"
+                            />
+                        </button>
+                        <button
+                            type="object"
+                            string="Refund"
+                            name="action_view_refund"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('refund_id', '=', False)]}"
+                        >
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field
+                                name="partner_id"
+                                widget="res_partner_many2one"
+                                context="{'search_default_customer':1, 'show_address': 1, 'show_vat': True}"
+                                options="{'always_reload': True}"
+                            />
+                            <field name="partner_shipping_id" />
+                            <field name="partner_invoice_id" />
+                            <field name="picking_id" options="{'no_create': True}" />
+                            <field
+                                name="move_id"
+                                attrs="{'required': [('picking_id', '!=', False)], 'readonly': ['|', ('picking_id', '=', False), ('state', '!=', 'draft')]}"
+                                options="{'no_create': True}"
+                                force_save="1"
+                            />
+                            <field
+                                name="product_id"
+                                force_save="1"
+                                attrs="{'readonly': ['|', ('picking_id', '!=', False), ('state', '!=', 'draft')]}"
+                            />
+                            <field name="uom_category_id" invisible="1" />
+                            <label for="product_uom_qty" />
+                            <div class="o_row">
+                                <field name="product_uom_qty" />
+                                <field
+                                    name="product_uom"
+                                    groups="uom.group_uom"
+                                    domain="[('category_id', '=', uom_category_id)]"
+                                />
+                            </div>
+                            <field
+                                name="delivered_qty"
+                                attrs="{'invisible': [('delivered_qty', '=', 0.0)]}"
+                            />
+                        </group>
+                        <group>
+                            <field name="date" />
+                            <field name="user_id" />
+                            <field name="team_id" />
+                            <field
+                                name="tag_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}"
+                                placeholder="Tags..."
+                            />
+                            <field name="origin" />
+                            <field name="operation_id" />
+                            <field
+                                name="finalization_id"
+                                attrs="{'invisible': [('state', '!=', 'finished')]}"
+                            />
+                            <field
+                                name="company_id"
+                                options="{'no_create': True}"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="page_other" string="Other Information">
+                            <group>
+                                <group>
+                                    <field name="procurement_group_id" />
+                                    <field
+                                        name="location_id"
+                                        options="{'no_create': True, 'no_open': True}"
+                                        groups="stock.group_stock_multi_locations"
+                                    />
+                                </group>
+                                <group>
+                                    <field name="deadline" />
+                                    <field name="priority" widget="priority" />
+                                    <field
+                                        name="origin_split_rma_id"
+                                        attrs="{'invisible': [('origin_split_rma_id', '=', False)]}"
+                                    />
+                                </group>
+                            </group>
+                            <group>
+                                <field name="description" widget="html" colspan="4" />
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="sent" invisible="1" />
+                    <field name="reception_move_id" invisible="1" />
+                    <field name="refund_id" invisible="1" />
+                    <field name="can_be_refunded" invisible="1" />
+                    <field name="can_be_returned" invisible="1" />
+                    <field name="can_be_replaced" invisible="1" />
+                    <field name="can_be_split" invisible="1" />
+                    <field name="can_be_locked" invisible="1" />
+                    <field name="can_be_finished" invisible="1" />
+                    <field name="commercial_partner_id" invisible="1" />
+                    <field name="remaining_qty" invisible="1" />
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="rma_finalization_form" model="ir.ui.view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('rma.group_rma_manual_finalization'))]"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//form//header//button[@name='action_cancel']"
+                position="before"
+            >
+                <button
+                    type="object"
+                    string="Finish"
+                    name="action_finish"
+                    class="btn-primary"
+                    attrs="{'invisible': [('can_be_finished', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="rma_view_pivot" model="ir.ui.view">
+        <field name="name">rma.pivot</field>
+        <field name="model">rma</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="date" type="row" />
+                <field name="product_uom_qty" type="measure" />
+                <field name="delivered_qty" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="rma_view_calendar" model="ir.ui.view">
+        <field name="name">rma.calendar</field>
+        <field name="model">rma</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date" mode="month" color="state" quick_add="False">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="product_uom_qty" widget="monetary" />
+            </calendar>
+        </field>
+    </record>
+    <record id="rma_refund_action_server" model="ir.actions.server">
+        <field name="name">To Refund</field>
+        <field name="model_id" ref="model_rma" />
+        <field name="binding_model_id" ref="model_rma" />
+        <field name="state">code</field>
+        <field name="code">records.action_refund()</field>
+    </record>
+    <record id="rma_action" model="ir.actions.act_window">
+        <field name="name">RMA</field>
+        <field name="res_model">rma</field>
+        <field name="view_mode">tree,form,pivot,calendar,activity</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new RMA.
+            </p>
+        </field>
+    </record>
+    <record id="rma_orders_menu" model="ir.ui.menu">
+        <field name="action" ref="rma_action" />
+    </record>
+</odoo>
