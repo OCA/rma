@@ -14,13 +14,13 @@ Warranty Date on Lot/Serial Numbers
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/12.0/stock_production_lot_warranty
+    :target: https://github.com/OCA/rma/tree/15.0/stock_production_lot_warranty
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-12-0/rma-12-0-stock_production_lot_warranty
+    :target: https://translation.odoo-community.org/projects/rma-15-0/rma-15-0-stock_production_lot_warranty
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/145/12.0
+    :target: https://runbot.odoo-community.org/runbot/145/15.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -42,7 +42,7 @@ To configure this module:
 
 * Go to Inventory > Configuration > Settings
 * Activate the traceability
-* Go to Inventory > Master Data > Products
+* Go to Inventory > Products > Products
 * Create or select a product and set the warranty
 * Go to the Inventory tab in the Logistics section
 * Set the warranty duration
@@ -52,7 +52,7 @@ Usage
 
 To use this module,
 
-* Go to Inventory > Master Data > Lot/Serial Numbers
+* Go to Inventory > Products > Lot/Serial Numbers
 * Create a new serial number and select a product
 * The Warranty Expiration Date is automatically computed based on today + the
   warranty duration from the select product
@@ -64,7 +64,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20stock_production_lot_warranty%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20stock_production_lot_warranty%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -115,6 +115,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-osi-scampbell| |maintainer-max3903| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/12.0/stock_production_lot_warranty>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/15.0/stock_production_lot_warranty>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
