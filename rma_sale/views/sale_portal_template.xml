@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- Call this form via controller to add it to an independent page -->
     <template id="sale_rma_request_form" name="RMA Request Form">
@@ -76,7 +77,7 @@
                 <t t-set="data_list" t-value="sale_order.get_delivery_rma_data()" />
                 <t
                     t-set="operations"
-                    t-value="sale_order.env['rma.operation'].search([])"
+                    t-value="request.env['rma.operation'].search([])"
                 />
                 <table class="table table-sm" id="request-rma-table">
                     <thead class="bg-100">
