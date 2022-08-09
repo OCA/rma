@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_rma_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <t t-if="doc.partner_id">
+                <t t-set="address">
+                    <div
+                        t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
+                    />
+                    <p t-if="doc.partner_id.vat"><t
+                            t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"
+                        />: <span t-field="doc.partner_id.vat" /></p>
+                </t>
+            </t>
+            <t
+                t-if="doc.partner_shipping_id == doc.partner_invoice_id
+            and doc.partner_invoice_id != doc.partner_id
+            or doc.partner_shipping_id != doc.partner_invoice_id"
+            >
+            <t t-set="information_block">
+                <strong
+                        t-if="doc.partner_shipping_id == doc.partner_invoice_id"
+                    >Invoicing and Shipping Address:</strong>
+                <strong
+                        t-if="doc.partner_shipping_id != doc.partner_invoice_id"
+                    >Invoicing Address:</strong>
+                <div
+                        t-field="doc.partner_invoice_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                    <strong>Shipping Address:</strong>
+                    <div
+                            t-field="doc.partner_shipping_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                        />
+                </t>
+                </t>
+            </t>
+            <div class="page">
+                <h2 class="mt16">
+                    <span t-if="doc.state not in ['draft', 'cancelled']">RMA # </span>
+                    <span t-field="doc.name" />
+                </h2>
+                <div class="row mt32 mb32" id="general_information">
+                    <div t-if="doc.origin" class="col-auto mw-100 mb-2">
+                        <strong>Origin:</strong>
+                        <p class="m-0" t-field="doc.origin" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <strong>Date:</strong>
+                        <p class="m-0" t-field="doc.date" />
+                    </div>
+                    <div t-if="doc.deadline" class="col-auto mw-100 mb-2">
+                        <strong>Deadline:</strong>
+                        <p class="m-0" t-field="doc.deadline" />
+                    </div>
+                    <div t-if="doc.user_id" class="col-auto mw-100 mb-2">
+                        <strong>Responsible:</strong>
+                        <p class="m-0" t-field="doc.user_id" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <strong>State:</strong>
+                        <p class="m-0">
+                            <t t-if="doc.state in ['refunded', 'replaced', 'returned']">
+                                <span
+                                    class="small text-success orders_label_text_align"
+                                >
+                                    <i class="fa fa-fw fa-check" />
+                                    <b>
+                                        <span t-field="doc.state" />
+                                    </b>
+                                </span>
+                            </t>
+                            <t t-elif="doc.state in ['cancelled', 'locked']">
+                                <span class="small text-danger orders_label_text_align">
+                                    <i class="fa fa-fw fa-times" />
+                                    <b>
+                                        <span t-field="doc.state" />
+                                    </b>
+                                </span>
+                            </t>
+                            <t t-else="">
+                                <span class="small text-info orders_label_text_align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    <b>
+                                        <span t-field="doc.state" />
+                                    </b>
+                                </span>
+                            </t>
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="product_information">
+                    <div t-if="doc.picking_id" class="col-auto mw-100 mb-2">
+                        <strong>Origin delivery:</strong>
+                        <p class="m-0" t-field="doc.picking_id" />
+                    </div>
+                    <div t-if="doc.move_id" class="col-auto mw-100 mb-2">
+                        <strong>Move:</strong>
+                        <p class="m-0" t-field="doc.move_id" />
+                    </div>
+                    <div t-if="doc.product_id" class="col-auto mw-100 mb-2">
+                        <strong>Product:</strong>
+                        <p class="m-0" t-field="doc.product_id" />
+                    </div>
+                    <div t-if="doc.product_id" class="col-auto mw-100 mb-2">
+                        <strong>Quantity:</strong>
+                        <p class="m-0" t-field="doc.product_uom_qty">
+                            <span t-field="doc.product_uom_qty" />
+                            <span t-field="doc.uom_id" groups="uom.group_uom" />
+                        </p>
+                    </div>
+                    <div t-if="doc.delivered_qty" class="col-auto mw-100 mb-2">
+                        <strong>Delivered qty:</strong>
+                        <p class="m-0" t-field="doc.delivered_qty" />
+                    </div>
+                </div>
+                <div t-if="doc.description">
+                    <strong>RMA Note:</strong>
+                    <p t-raw="doc.description" />
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_rma">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="rma.report_rma_document" t-lang="doc.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+</odoo>

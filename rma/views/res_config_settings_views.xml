@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@data-key='stock']/div[hasclass('o_settings_container')]"
+                position="inside"
+            >
+                <div class="col-12 col-lg-6 o_setting_box" title="Finish RMAs manually">
+                    <div class="o_setting_left_pane">
+                        <field name="group_rma_manual_finalization" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="group_rma_manual_finalization"
+                            string="RMA Manual Finalization"
+                        />
+                        <div class="text-muted">
+                            When the RMA is receive, allow to finsish it manually choosing
+                            a finalization reason.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="rma_return_grouping" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="rma_return_grouping" />
+                        <span
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            Group RMA returns by customer and warehouse.
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    title="Send automatic RMA info to customer"
+                >
+                    <div class="o_setting_left_pane">
+                        <field name="send_rma_confirmation" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="send_rma_confirmation"
+                            string="RMA Confirmation Email"
+                        />
+                        <span
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            When the RMA is confirmed, send an automatic information email.
+                        </div>
+                        <div
+                            class="row mt16"
+                            attrs="{'invisible': [('send_rma_confirmation', '=', False)]}"
+                        >
+                            <label
+                                for="rma_mail_confirmation_template_id"
+                                string="Email Template"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <field
+                                name="rma_mail_confirmation_template_id"
+                                class="oe_inline"
+                                attrs="{'required': [('send_rma_confirmation', '=', True)]}"
+                                context="{'default_model': 'rma'}"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    title="Send automatic RMA products reception notification to customer"
+                >
+                    <div class="o_setting_left_pane">
+                        <field name="send_rma_receipt_confirmation" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="send_rma_receipt_confirmation"
+                            string="RMA Receipt Confirmation Email"
+                        />
+                        <span
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            When the RMA products are received, send an automatic information email.
+                        </div>
+                        <div
+                            class="row mt16"
+                            attrs="{'invisible': [('send_rma_receipt_confirmation', '=', False)]}"
+                        >
+                            <label
+                                for="rma_mail_receipt_confirmation_template_id"
+                                string="Email Template"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <field
+                                name="rma_mail_receipt_confirmation_template_id"
+                                class="oe_inline"
+                                attrs="{'required': [('send_rma_receipt_confirmation', '=', True)]}"
+                                context="{'default_model': 'rma'}"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    title="Send automatic notification when the customer places an RMA"
+                >
+                    <div class="o_setting_left_pane">
+                        <field name="send_rma_draft_confirmation" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="send_rma_draft_confirmation"
+                            string="RMA draft notification Email"
+                        />
+                        <span
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            When customers themselves place an RMA from the portal, send an automatic notification acknowleging it.
+                        </div>
+                        <div
+                            class="row mt16"
+                            attrs="{'invisible': [('send_rma_draft_confirmation', '=', False)]}"
+                        >
+                            <label
+                                for="rma_mail_draft_confirmation_template_id"
+                                string="Email Template"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <field
+                                name="rma_mail_draft_confirmation_template_id"
+                                class="oe_inline"
+                                attrs="{'required': [('send_rma_draft_confirmation', '=', True)]}"
+                                context="{'default_model': 'rma'}"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

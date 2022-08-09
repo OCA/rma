@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_stock_return_picking_form" model="ir.ui.view">
+        <field name="name">Return lines inherit RMA</field>
+        <field name="model">stock.return.picking</field>
+        <field name="inherit_id" ref="stock.view_stock_return_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//group[.//field[@name='product_return_moves']]"
+                position="before"
+            >
+                <group name="group_rma">
+                    <field
+                        name="create_rma"
+                        attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"
+                    />
+                    <field name="picking_id" invisible="1" />
+                    <field name="picking_type_code" invisible="1" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

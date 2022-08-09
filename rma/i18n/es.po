@@ -1,0 +1,2249 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-23 20:11+0000\n"
+"PO-Revision-Date: 2022-01-17 12:39+0000\n"
+"Last-Translator: xavigutipujol <jgutierrez@pyming.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: rma
+#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
+#: model:mail.template,report_name:rma.mail_template_rma_notification
+#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
+msgid "${(object.name or '')}"
+msgstr "${(object.name or '')}"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_notification
+msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
+msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_receipt_notification
+#, fuzzy
+msgid ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
+"received"
+msgstr ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) productos "
+"recibidos"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_draft_notification
+msgid ""
+"${object.company_id.name} Your RMA has been succesfully created (Ref "
+"${object.name or 'n/a' })"
+msgstr ""
+"${object.company_id.name} Su RMA se ha creado con éxito (Ref ${object.name "
+"or 'n/a' })"
+
+#. module: rma
+#: code:addons/rma/models/rma_team.py:0
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (copia)"
+
+#. module: rma
+#: model:ir.actions.report,print_report_name:rma.report_rma_action
+msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
+msgstr ""
+"<b>Asunto del correo electrónico:</b> %s<br/><br/><b>Cuerpo del correo "
+"electrónico:</b><br/>%s"
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id."
+"name}.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Estimado ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Aquí tiene el RMA <strong>${object.name}</strong> Desde ${object."
+"company_id.name}.\n"
+"    <br/><br/>\n"
+"    No dude en ponerse en contacto con nosotros si tiene alguna pregunta.\n"
+"</p>\n"
+"</div>\n"
+"        "
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    The products for your RMA <strong>${object.name}</strong>\n"
+"    from ${object.company_id.name} have been received in our warehouse.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Estimado ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Los productos de su RMA <strong>${object.name}</strong>\n"
+"    from ${object.company_id.name} han sido recibidos en nuestro almacén.\n"
+"    <br/><br/>\n"
+"    Póngase en contacto con nosotros para cualquier duda al respecto.\n"
+"</p>\n"
+"</div>\n"
+"        "
+
+#. module: rma
+#: model:mail.template,body_html:rma.mail_template_rma_draft_notification
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    You've succesfully placed your RMA <strong>${object.name}</strong>\n"
+"    on ${object.company_id.name}. Our team will check it and will validate\n"
+"    it as soon as possible.\n"
+"    <br/><br/>\n"
+"    Do not hesitate to contact us if you have any question.\n"
+"</p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    Estimado ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (${object.partner_id.parent_id.name})\n"
+"    % endif\n"
+"    <br/><br/>\n"
+"    Ha solicitado con éxito su RMA <strong>${object.name}</strong>\n"
+"    en ${object.company_id.name}. Nuestro equipo la comprobará y validará\n"
+"    tan pronto como sea posible.\n"
+"    <br/><br/>\n"
+"    Póngase en contacto con nosotros para cualquier duda al respecto.\n"
+"</p>\n"
+"</div>\n"
+"        "
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
+msgstr ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Descargar\"/>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<i class=\"fa fa-fw fa-check\"/>\n"
+"                                <b>Paid</b>"
+msgstr "<i class=\"fa fa-fw fa-check\"/><b>Pagado</b>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                <b>Waiting Payment</b>"
+msgstr "<i class=\"fa fa-fw fa-clock-o\"/><b>Esperando Pago</b>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
+msgstr ""
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Descargar\"/>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
+msgstr ""
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Descargar\"/>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
+msgstr ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/>Cancelado</span>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Preparation</span>"
+msgstr ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/>Preparación</span>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
+"truck\"/> Shipped</span>"
+msgstr ""
+"<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
+"truck\"/> Enviado</span>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Partially Available</span>"
+msgstr ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/>Disponible parcialmente</span>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Valores específicos por "
+"compañía.\" groups=\"base.group_multi_company\"/>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong class=\"d-block mb-1\">Delivery</strong>"
+msgstr "<strong class=\"d-block mb-1\">Órdenes de entrega</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong class=\"d-block mb-1\">Reception</strong>"
+msgstr "<strong class=\"d-block mb-1\">Recepción</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong class=\"d-block mb-1\">Refund</strong>"
+msgstr "<strong class=\"d-block mb-1\">Factura rectificativa</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Customer:</strong>"
+msgstr "<strong>Cliente:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Fecha:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Deadline:</strong>"
+msgstr "<strong>Fecha límite:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Deadline</strong>"
+msgstr "<strong>Fecha límite:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Delivered qty:</strong>"
+msgstr "<strong>Cantidad entregada:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Delivered quantity</strong>"
+msgstr "<strong>Cantidad entregada</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Move:</strong>"
+msgstr "<strong>Movimiento:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Origin delivery:</strong>"
+msgstr "<strong>Orden de Entrega:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Origin delivery</strong>"
+msgstr "<strong>Entrega origen</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Origin:</strong>"
+msgstr "<strong>Referencia:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Origin</strong>"
+msgstr "<strong>Referencia:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Product:</strong>"
+msgstr "<strong>Producto:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Quantity:</strong>"
+msgstr "<strong>Cantidad:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Cantidad</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>RMA Date</strong>"
+msgstr "<strong>Fecha</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>RMA Note:</strong>"
+msgstr "<strong>Nota:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Responsible:</strong>"
+msgstr "<strong>Responsable:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Shipping Address:</strong>"
+msgstr "<strong>Dirección de envío:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Shipping address:</strong>"
+msgstr "<strong>Dirección de envío:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>State:</strong>"
+msgstr "<strong>Estado:</strong>"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_defaults
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
+msgstr ""
+"Diccionario Python a evaluar para proporcionar valores por defecto cuando un "
+"nuevo registro se cree para este seudónimo."
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "Accept Emails From"
+msgstr "Aceptar los correos electrónicos de"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__access_warning
+msgid "Access warning"
+msgstr "Alerta de acceso"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_needaction
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_needaction
+msgid "Action Needed"
+msgstr "Acción Necesaria"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__active
+#: model:ir.model.fields,field_description:rma.field_rma_operation__active
+#: model:ir.model.fields,field_description:rma.field_rma_tag__active
+#: model:ir.model.fields,field_description:rma.field_rma_team__active
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
+msgid "Active"
+msgstr "Activo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_id
+msgid "Alias"
+msgstr "Seudónimo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_contact
+msgid "Alias Contact Security"
+msgstr "Seudónimo del contacto de seguridad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_name
+msgid "Alias Name"
+msgstr "Seudónimo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_domain
+msgid "Alias domain"
+msgstr "Seudónimo del dominio"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_model_id
+msgid "Aliased Model"
+msgstr "Modelo con seudónimo"
+
+#. module: rma
+#: model:res.groups,name:rma.group_rma_manual_finalization
+msgid "Allow RMA manual finalization"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_config_settings__group_rma_manual_finalization
+msgid "Allow to finish an RMA without returning back a product or refunding"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Are you sure you want to cancel this RMA"
+msgstr "¿Está seguro de querer cancelar este RMA?"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_attachment_count
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteo de archivos adjuntos"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "Avatar"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
+msgid "Can Be Finished"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_locked
+msgid "Can Be Locked"
+msgstr "Puede ser bloquedo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_refunded
+msgid "Can Be Refunded"
+msgstr "Puede ser reembolsado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_replaced
+msgid "Can Be Replaced"
+msgstr "Puede ser reemplazado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_returned
+msgid "Can Be Returned"
+msgstr "Puede ser devuelto"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_split
+msgid "Can Be Split"
+msgstr "Puede ser dividido"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:rma.rma_split_wizard_view_form2
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__cancelled
+msgid "Canceled"
+msgstr "Cancelado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__uom_category_id
+msgid "Category"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
+msgid "Category UoM"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_action
+#: model_terms:ir.actions.act_window,help:rma.rma_team_action
+msgid "Click to add a new RMA."
+msgstr "Click para agregar un nuevo RMA."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__color
+msgid "Color Index"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__commercial_partner_id
+msgid "Commercial Entity"
+msgstr "Entidad comercial"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "Communication"
+msgstr "Comunicación"
+
+#. module: rma
+#: model:ir.model,name:rma.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__company_id
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__company_id
+#: model:ir.model.fields,field_description:rma.field_rma_team__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: rma
+#: model:ir.model,name:rma.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: rma
+#: model:ir.ui.menu,name:rma.rma_configuration_menu
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__confirmed
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: rma
+#: model:ir.model,name:rma.model_res_partner
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__uom_category_id
+#: model:ir.model.fields,help:rma.field_rma_delivery_wizard__uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
+msgid "Create RMAs"
+msgstr "Crear RMAs"
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
+msgid "Create a new RMA finalization"
+msgstr "Crear un nuevo motivo de finalización de RMA"
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Create a new RMA tag"
+msgstr "Crear una nueva etiqueta de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_operation__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_tag__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_team__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_operation__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_tag__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_team__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_bounced_content
+msgid "Custom Bounced Message"
+msgstr ""
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#: model:ir.model.fields,field_description:rma.field_rma__partner_id
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__access_url
+msgid "Customer Portal URL"
+msgstr "URL del portal de cliente"
+
+#. module: rma
+#: code:addons/rma/controllers/main.py:0
+#: model:ir.model.fields,field_description:rma.field_rma__date
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "Date:"
+msgstr "Fecha:"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__deadline
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Deadline"
+msgstr "Fecha límite"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_defaults
+msgid "Default Values"
+msgstr "Valores por defecto"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
+msgid "Deliver"
+msgstr "Entregar"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty
+msgid "Delivered qty"
+msgstr "Ctd. entregada"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
+msgid "Delivered qty done"
+msgstr "Ctd. entregada realizada"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivery_picking_count
+msgid "Delivery count"
+msgstr "Cantidad de entregas"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivery_move_ids
+msgid "Delivery reservation"
+msgstr "Movimientos de entrega"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__description
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "Description"
+msgstr "Descripción"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_account_move__display_name
+#: model:ir.model.fields,field_description:rma.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:rma.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma.field_res_partner__display_name
+#: model:ir.model.fields,field_description:rma.field_res_users__display_name
+#: model:ir.model.fields,field_description:rma.field_rma__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_operation__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_tag__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_team__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_move__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__draft
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_draft
+#: model:mail.message.subtype,name:rma.mt_rma_team_rma_draft
+msgid "Draft RMA"
+msgstr "RMA en estado Borrador"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "Email Alias"
+msgstr "Pseudónimo de correo"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Email Template"
+msgstr "Plantillade correo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email Template confirmation for RMA"
+msgstr "Plantilla de correo de confirmación de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email Template draft notification for RMA"
+msgstr "Plantilla de correo de notificación de borrador RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email Template receipt confirmation for RMA"
+msgstr "Plantilla de correo de confirmación de recepción RMA"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
+msgid "Email sent to the customer once the RMA is confirmed."
+msgstr "Enviar correo al cliente una vez se confirma el RMA."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_receipt_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
+msgid "Email sent to the customer once the RMA products are received."
+msgstr "Enviar correo al cliente una vez se recepcionen los productos del RMA."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
+msgid "Email sent to the customer when they place an RMA from the portal"
+msgstr ""
+"Enviar correo de confirmación al cliente una vez se tramite el RMA desde el "
+"portal"
+
+#. module: rma
+#: code:addons/rma/wizard/rma_split.py:0
+#, python-format
+msgid "Extracted RMA"
+msgstr "RMA Extraído"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__origin_split_rma_id
+msgid "Extracted from"
+msgstr "Extraído de"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__finalization_id
+msgid "Finalization Reason"
+msgstr "Motivo de finalización"
+
+#. module: rma
+#: model:ir.model.constraint,message:rma.constraint_rma_finalization_name_company_uniq
+msgid "Finalization name already exists !"
+msgstr "¡El nombre de finalización ya existe!"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_form
+msgid "Finish"
+msgstr "Finalizar"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_wizard_view_form
+msgid "Finish RMA"
+msgstr "Finalizar RMA"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_finalization_wizard_action
+msgid "Finish RMA Manualy"
+msgstr "Finalizar RMA manualmente"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__group_rma_manual_finalization
+msgid "Finish RMA manually choosing a reason"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Finish RMAs manually"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__finished
+msgid "Finished"
+msgstr "Finalizado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_follower_ids
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_channel_ids
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_partner_ids
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Empresas)"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
+msgid "Group RMA returns by customer address and warehouse"
+msgstr ""
+"Agrupar las devoluciones de RMA a cliente por dirección de envío y almacén"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Group RMA returns by customer and warehouse."
+msgstr ""
+"Agrupar las devoluciones de RMA a cliente por dirección de envío y almacén"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_account_move__id
+#: model:ir.model.fields,field_description:rma.field_account_move_line__id
+#: model:ir.model.fields,field_description:rma.field_res_company__id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma.field_res_partner__id
+#: model:ir.model.fields,field_description:rma.field_res_users__id
+#: model:ir.model.fields,field_description:rma.field_rma__id
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__id
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__id
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__id
+#: model:ir.model.fields,field_description:rma.field_rma_operation__id
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
+#: model:ir.model.fields,field_description:rma.field_rma_tag__id
+#: model:ir.model.fields,field_description:rma.field_rma_team__id
+#: model:ir.model.fields,field_description:rma.field_stock_move__id
+#: model:ir.model.fields,field_description:rma.field_stock_picking__id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:rma.field_stock_rule__id
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__id
+msgid "ID"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
+msgstr ""
+"ID del registro padre que tiene el seudónimo. (ejemplo: el proyecto que "
+"contiene el seudónimo para la creación de tareas)"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__message_needaction
+#: model:ir.model.fields,help:rma.field_rma__message_unread
+#: model:ir.model.fields,help:rma.field_rma_team__message_needaction
+#: model:ir.model.fields,help:rma.field_rma_team__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__message_has_error
+#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
+#: model:ir.model.fields,help:rma.field_rma_team__message_has_error
+#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_bounced_content
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__active
+msgid ""
+"If the active field is set to false, it will allow you to hide the RMA Team "
+"without removing it."
+msgstr ""
+"Si el campo activo se establece a Falso, permitirá ocultar El equipo de RMA "
+"sin eliminarlo."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "Incoming e-mail"
+msgstr "Correo electrónico entrante"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
+msgid "Invoice Address"
+msgstr "Dirección de factura"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "Invoicing Address:"
+msgstr "Dirección de facturación:"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "Invoicing and Shipping Address:"
+msgstr "Dirección de envío y facturación:"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: rma
+#: model:ir.model,name:rma.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: rma
+#: model:ir.model,name:rma.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_account_move____last_update
+#: model:ir.model.fields,field_description:rma.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:rma.field_res_company____last_update
+#: model:ir.model.fields,field_description:rma.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:rma.field_res_partner____last_update
+#: model:ir.model.fields,field_description:rma.field_res_users____last_update
+#: model:ir.model.fields,field_description:rma.field_rma____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_finalization____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_operation____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_tag____last_update
+#: model:ir.model.fields,field_description:rma.field_rma_team____last_update
+#: model:ir.model.fields,field_description:rma.field_stock_move____last_update
+#: model:ir.model.fields,field_description:rma.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking____last_update
+#: model:ir.model.fields,field_description:rma.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_operation__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_tag__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_team__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_operation__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_tag__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_team__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Late RMAs"
+msgstr "RMAs retrasados"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__location_id
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Lock"
+msgstr "Bloquear"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__locked
+msgid "Locked"
+msgstr "Bloqueado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_main_attachment_id
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjuntos principales"
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
+msgid ""
+"Manage RMA finalization reasons to better classify them for tracking and "
+"analysis purposes."
+msgstr ""
+"Adminitrar motivos de finalización de RMA para una mejor clasificación de "
+"estos para su seguimiento análisis posterior."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid ""
+"Manage RMA tags to better classify them for tracking and analysis purposes."
+msgstr ""
+"Administrar etiquetas de RMA para clasificarlos de modo que mejore el "
+"seguimiento y análisis de los mismos."
+
+#. module: rma
+#: model:ir.module.category,description:rma.rma_module_category
+msgid "Manage Return Merchandise Authorizations (RMAs)."
+msgstr "Autorización de Devolución de Mercancía (RMA)."
+
+#. module: rma
+#: model:res.groups,name:rma.rma_group_manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_has_error
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_ids
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: rma
+#: code:addons/rma/controllers/main.py:0
+#: model:ir.model.fields,field_description:rma.field_rma__name
+#: model:ir.model.fields,field_description:rma.field_rma_operation__name
+#: model:ir.model.fields,field_description:rma.field_rma_team__name
+#, python-format
+msgid "Name"
+msgstr "Nombre"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Siguiente plazo de actividad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_type_id
+msgid "Next Activity Type"
+msgstr "Siguiente tipo de actividad"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "None of the selected RMAs can perform a replacement."
+msgstr "Ninguno de los RMAs seleccionados puede realizar un reemplazo."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "None of the selected RMAs can perform a return."
+msgstr "Ninguno de los RMAs seleccionados puede realizar una devolución."
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__0
+msgid "Normal"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_needaction_counter
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_has_error_counter
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
+#: model:ir.model.fields,help:rma.field_rma_team__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__message_has_error_counter
+#: model:ir.model.fields,help:rma.field_rma_team__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__message_unread_counter
+#: model:ir.model.fields,help:rma.field_rma_team__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leidos"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
+msgstr ""
+"Id. opcional de un hilo (registro) al que todos los mensajes entrantes serán "
+"adjuntados, incluso si no fueron respuestas del mismo. Si se establece, se "
+"deshabilitará completamente la creación de nuevos registros."
+
+#. module: rma
+#: model:ir.ui.menu,name:rma.rma_orders_menu
+msgid "Orders"
+msgstr "Órdenes"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__picking_id
+msgid "Origin Delivery"
+msgstr "Orden de Entrega"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__move_id
+msgid "Origin move"
+msgstr "Movimiento"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Other Information"
+msgstr "Otra información"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_user_id
+msgid "Owner"
+msgstr "Propietario"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_parent_model_id
+msgid "Parent Model"
+msgstr "Modelo padre"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_parent_thread_id
+msgid "Parent Record Thread ID"
+msgstr "ID del hilo del registro padre"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
+msgstr ""
+"Modelo padre que contiene el alias. El modelo que contiene la referencia "
+"alias no es necesariamente el modelo dado por alias_model_id"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_contact
+msgid ""
+"Policy to post a message on the document using the mailgateway.\n"
+"- everyone: everyone can post\n"
+"- partners: only authenticated partners\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
+msgstr ""
+"Política para publicar un mensaje en el documento utilizando el servidor de "
+"correo.\n"
+"- todo el mundo: todos pueden publicar\n"
+"- socios: sólo socios autenticados\n"
+"- seguidores: sólo seguidores del documento relacionado o miembros de los "
+"siguientes canales\n"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__access_url
+msgid "Portal Access URL"
+msgstr "URL de acceso al portal"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Preview"
+msgstr "Previsualizar"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__priority
+msgid "Priority"
+msgstr "Prioridad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
+msgid "Procurement group"
+msgstr "Grupo de abastecimiento"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__product_id
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+msgid "Product"
+msgstr "Producto"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom_qty
+msgid "Product qty"
+msgstr "Cantidad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
+msgid "Public Tag"
+msgstr "Etiqueta pública"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: rma
+#: code:addons/rma/wizard/rma_delivery.py:0
+#: model:ir.model.constraint,message:rma.constraint_rma_split_wizard_check_product_uom_qty_positive
+#, python-format
+msgid "Quantity must be greater than 0."
+msgstr "La cantidad debe ser mayor que cero."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__product_uom_qty
+msgid "Quantity to extract"
+msgstr "Cantidad a extraer"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid ""
+"Quantity to extract cannot be greater than remaining delivery quantity (%s "
+"%s)"
+msgstr ""
+"La cantidad a extraer no puede ser mayor que la cantidad de entrega "
+"restante(%s %s)"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
+msgid "Quantity to extract to a new RMA."
+msgstr "Cantidad a extraer en nuevo RMA."
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_action
+#: model:ir.model,name:rma.model_rma
+#: model:ir.model.fields,field_description:rma.field_account_move_line__rma_id
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__rma_id
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma
+#: model:ir.module.category,name:rma.rma_module_category
+#: model:ir.ui.menu,name:rma.rma_menu
+#: model_terms:ir.ui.view,arch_db:rma.view_partner_form
+#: model_terms:ir.ui.view,arch_db:rma.view_picking_form
+msgid "RMA"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "RMA #"
+msgstr "RMA nº"
+
+#. module: rma
+#: code:addons/rma/models/res_company.py:0
+#, python-format
+msgid "RMA Code"
+msgstr "Código de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Confirmation Email"
+msgstr "Correo de confirmación de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Date"
+msgstr "Fecha de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMA Deadline"
+msgstr "RMA fecha límite"
+
+#. module: rma
+#: code:addons/rma/models/stock_warehouse.py:0
+#, python-format
+msgid "RMA Delivery Orders"
+msgstr "Órdenes de entrega de RMA"
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_delivery_wizard
+msgid "RMA Delivery Wizard"
+msgstr "Asistente de entrega de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
+msgid "RMA Finalization"
+msgstr "Finalización de RMA"
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_finalization
+msgid "RMA Finalization Reason"
+msgstr "Motivo de finalización de RMA"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_finalization
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_finalization_menu
+#: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_list
+msgid "RMA Finalization Reasons"
+msgstr "Motivos de finalización de RMA"
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_finalization_wizard
+msgid "RMA Finalization Wizard"
+msgstr "Asistente de finalización de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_type_id
+msgid "RMA In Type"
+msgstr "Tipo de operación para recepción de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_loc_id
+msgid "RMA Location"
+msgstr "Ubicación de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Manual Finalization"
+msgstr ""
+
+#. module: rma
+#: model:mail.message.subtype,name:rma.mt_rma_notification
+#: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
+msgid "RMA Notification"
+msgstr "Notificación de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "RMA Order -"
+msgstr "Orden de RMA -"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_home_menu_rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+msgid "RMA Orders"
+msgstr "Órdenes de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
+msgid "RMA Out Type"
+msgstr "Tipo de operación para entrega de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA Receipt Confirmation Email"
+msgstr "Correo de confirmación de recepción de RMA"
+
+#. module: rma
+#: code:addons/rma/models/stock_warehouse.py:0
+#, python-format
+msgid "RMA Receipts"
+msgstr "Recepciones de RMA"
+
+#. module: rma
+#: model:ir.actions.report,name:rma.report_rma_action
+msgid "RMA Report"
+msgstr "Reporte de RMA"
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_split_wizard
+msgid "RMA Split Wizard"
+msgstr "Asistente para dividir RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_form
+msgid "RMA Tag"
+msgstr "Etiqueta RMA"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
+#: model:ir.model,name:rma.model_rma_tag
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
+#: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
+#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_list
+msgid "RMA Tags"
+msgstr "Etiquetas RMA"
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_team
+#: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "RMA Team"
+msgstr "Equipo de RMA"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_users__rma_team_id
+msgid "RMA Team the user is member of."
+msgstr "Equipo de RMA del cual el usuario es miembro."
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_notification
+msgid "RMA automatic customer notifications"
+msgstr "Notificaciones automáticas de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
+#: model:ir.model.fields,field_description:rma.field_res_users__rma_count
+#: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
+msgid "RMA count"
+msgstr "Cantidad de RMAs"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "RMA draft notification Email"
+msgstr "Correo de notificación de borrador de RMA"
+
+#. module: rma
+#: model:mail.message.subtype,description:rma.mt_rma_draft
+msgid "RMA in draft state"
+msgstr "RMA en estado borrador"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
+msgid "RMA receivers"
+msgstr "RMAs que originaron esta orden"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_stock_warehouse__rma
+msgid "RMA related products can be stored in this warehouse."
+msgstr ""
+"Productos relacionados con el RMA pueden ser guardados en este almacén."
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_operation
+msgid "RMA requested operation"
+msgstr "Operación de RMA solicitada"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_move__rma_id
+msgid "RMA return"
+msgstr "RMA que realizó esta devolución"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_team_action
+#: model:ir.model.fields,field_description:rma.field_rma__team_id
+msgid "RMA team"
+msgstr "Equipo de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids
+#: model:ir.model.fields,field_description:rma.field_res_users__rma_ids
+#: model:ir.model.fields,field_description:rma.field_stock_move__rma_ids
+msgid "RMAs"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs which deadline has passed"
+msgstr "RMAs pasados de fecha límite"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "RMAs yet to be fully processed"
+msgstr "RMAs pendientes de ser procesados por completo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__finalization_id
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_finalization__name
+msgid "Reason Name"
+msgstr "Nombre del motivo"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Receipt"
+msgstr "Recepción"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__received
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Received"
+msgstr "Recibido"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__reception_move_id
+msgid "Reception move"
+msgstr "Movimiento de recepción"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_force_thread_id
+msgid "Record Thread ID"
+msgstr "Id. del hilo de registro"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__origin
+msgid "Reference of the document that generated this RMA."
+msgstr "Referencia al documento que generó este RMA."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#: model:ir.model.fields,field_description:rma.field_rma__refund_id
+#: model:rma.operation,name:rma.rma_operation_refund
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+#, python-format
+msgid "Refund"
+msgstr "Factura rectificativa"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
+msgid "Refund address for current RMA."
+msgstr "Dirección de facturación de este RMA."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
+msgid "Refund line"
+msgstr "Línea de factura rectificativa"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
+msgid "Refunded"
+msgstr "Reembolsado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
+msgid "Remaining delivered qty"
+msgstr "Ctd. entregada restante"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
+msgid "Remaining delivered qty to done"
+msgstr "Ctd. entregada restante por realizar"
+
+#. module: rma
+#: model:rma.operation,name:rma.rma_operation_return
+msgid "Repair"
+msgstr "Reparar"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__replace
+#: model:rma.operation,name:rma.rma_operation_replace
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Replace"
+msgstr "Reemplazar"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_id
+msgid "Replace Product"
+msgstr "Reemplazar producto"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__replaced
+msgid "Replaced"
+msgstr "Reemplazado"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid ""
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
+"\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+"\"%d\">%s</a>) has been created."
+msgstr ""
+"Reemplazo: El movimiento <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%d\">%s</a> (Orden de entrega <a href=\"#\" data-oe-model=\"stock."
+"picking\" data-oe-id=\"%d\">%s</a>) ha sido creado."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid ""
+"Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
+"data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not "
+"create a new move, but one of the previously created moves was updated with "
+"this data."
+msgstr ""
+"Reemplazo:<br/>Producto <a href=\"#\" data-oe-model=\"product.product\" data-"
+"oe-id=\"%d\">%s</a><br/>Cantidad %f %s<br/>El reemplazo realizado no creó un "
+"movimiento nuevo, pero uno de los movimientos creados anteriormente fué "
+"actualizado con estos datos."
+
+#. module: rma
+#: model:ir.ui.menu,name:rma.rma_reporting_menu
+msgid "Reporting"
+msgstr "Informes"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__operation_id
+msgid "Requested operation"
+msgstr "Operación solicitada"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "Required field(s):%s"
+msgstr "Campo(s) requerido(s):%s"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__user_id
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: rma
+#: model:ir.model,name:rma.model_stock_return_picking
+msgid "Return Picking"
+msgstr "Albarán de devolución"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
+#: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Return to customer"
+msgstr "Devolver al cliente"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid ""
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
+"a> has been created."
+msgstr ""
+"Devolución: La orden de entrega <a href=\"#\" data-oe-model=\"stock.picking"
+"\" data-oe-id=\"%d\">%s</a> ha sido creada."
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
+msgid "Returned"
+msgstr "Devuelto"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
+msgid "Rma"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
+msgid "Rma Count"
+msgstr "Cantidad de RMAs"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
+msgid "Scheduled Date"
+msgstr "Fecha prevista"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__access_token
+msgid "Security Token"
+msgstr "Token de seguridad"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_confirmation
+msgid "Send RMA Confirmation"
+msgstr "Enviar confirmación de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid "Send RMA Receipt Confirmation"
+msgstr "Enviar confirmación de recepción de RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "Send RMA draft Confirmation"
+msgstr "Enviar confirmación de borrador RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA info to customer"
+msgstr "Enviar información automática de RMA al cliente"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic RMA products reception notification to customer"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Send automatic notification when the customer places an RMA"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Send by Email"
+msgstr "Enviar por correo electrónico"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Send by Mail"
+msgstr "Enviar por correo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__sent
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: rma
+#: code:addons/rma/models/stock_warehouse.py:0
+#, python-format
+msgid "Sequence RMA in"
+msgstr "Secuencia de recepción de RMA"
+
+#. module: rma
+#: code:addons/rma/models/stock_warehouse.py:0
+#, python-format
+msgid "Sequence RMA out"
+msgstr "Secuencia de entrega de RMA"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Set to draft"
+msgstr "Establecer a borrador"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Share"
+msgstr "Compartir"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
+msgid "Shipping Address"
+msgstr "Dirección de envío"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
+msgid "Shipping address for current RMA."
+msgstr "Dirección de envío para el RMA en curso"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__origin
+msgid "Source Document"
+msgstr "Documento origen"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_split_wizard_view_form2
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Split"
+msgstr "Dividir"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_split_wizard_action
+msgid "Split RMA"
+msgstr "Dividir RMA"
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid ""
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
+"created."
+msgstr ""
+"División: El RMA <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</"
+"a> ha sido creado."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__state
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "State"
+msgstr "Estado"
+
+#. module: rma
+#: code:addons/rma/controllers/main.py:0
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+#, python-format
+msgid "Status"
+msgstr "Estado"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencida: la fecha tope ya ha pasado\n"
+"Hoy: La fecha tope es hoy\n"
+"Planificada: futuras actividades."
+
+#. module: rma
+#: model:ir.model,name:rma.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: rma
+#: model:ir.model,name:rma.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regla de Inventario"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_tag__name
+msgid "Tag Name"
+msgstr "Nombre de etiqueta"
+
+#. module: rma
+#: model:ir.model.constraint,message:rma.constraint_rma_tag_name_uniq
+msgid "Tag name already exists !"
+msgstr "¡El nombre de etiqueta ya existe!"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Tags..."
+msgstr "Etiquetas..."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__user_id
+msgid "Team Leader"
+msgstr "Líder del equipo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
+#: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
+msgid "Team Members"
+msgstr "Miembros del equipo"
+
+#. module: rma
+#: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
+msgid "That operation name already exists !"
+msgstr "¡El nombre de operación ya existe!"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_tag__active
+msgid "The active field allows you to hide the category without removing it."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
+msgstr ""
+"El modelo (Tipo de documento de Odoo) al que corresponde este seudónimo. "
+"Cualquier correo entrante que no sea respuesta a un registro existente, "
+"causará la creación de un nuevo registro de este modelo"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_name
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
+msgstr ""
+"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos"
+"\", si lo que quiere es obtener los correos para <trabajos@example.odoo.com>"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
+msgid ""
+"The owner of records created upon receiving emails on this alias. If this "
+"field is not set the system will attempt to find the right owner based on "
+"the sender (From) address, or will use the Administrator account if no "
+"system user is found for that address."
+msgstr ""
+"El propietario de los registros creados al recibir correos electrónicos en "
+"este seudónimo. Si el campo no está establecido, el sistema tratará de "
+"encontrar el propietario adecuado basado en la dirección del emisor (De), o "
+"usará la cuenta de administrador si no se encuentra un usuario para esa "
+"dirección."
+
+#. module: rma
+#: code:addons/rma/models/stock_move.py:0
+#, python-format
+msgid ""
+"The quantity done for the product '%s' must be equal to its initial demand "
+"because the stock move is linked to an RMA (%s)."
+msgstr ""
+"La cantidad realizada para el producto '%s' debe ser igual a la demanda "
+"inicial porque el movimiento está enlazado a un RMA (%s)."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "The quantity to return is greater than remaining quantity."
+msgstr "La cantidad a devolver es mayor que la cantidad restante del RMA."
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_tag__is_public
+msgid "The tag is visible in the portal view"
+msgstr "La etiqueta es visible en la vista de portal"
+
+#. module: rma
+#: code:addons/rma/models/account_move.py:0
+#, python-format
+msgid ""
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
+msgstr ""
+"Hay al menos una linea de factura que tiene una cantidad menor que la "
+"cantidad especificada en el RMA asociado."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "This RMA cannot be split."
+msgstr "Este RMA no puede ser dividido."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "This RMA cannot perform a replacement."
+msgstr "Este RMA no puede realizar un reemplazo."
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "This RMA cannot perform a return."
+msgstr "Este RMA no puede realizar una devolución."
+
+#. module: rma
+#: model:ir.actions.server,name:rma.rma_refund_action_server
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "To Refund"
+msgstr "Reembolsar"
+
+#. module: rma
+#: model:ir.model,name:rma.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__picking_type_code
+msgid "Type of Operation"
+msgstr "Tipo de operación"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Unassigned RMAs"
+msgstr "RMAs no asignados"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom
+#: model:ir.model.fields,field_description:rma.field_rma_split_wizard__product_uom
+msgid "Unit of measure"
+msgstr "Unidad de Medida"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_unread
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes por leer"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes sin leer"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
+msgid "Unresolved RMAs"
+msgstr "RMAs sin resolver"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__product_uom
+msgid "UoM"
+msgstr "UdM"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__priority__1
+msgid "Urgent"
+msgstr "Urgente"
+
+#. module: rma
+#: model:res.groups,name:rma.rma_group_user_all
+msgid "User: All Documents"
+msgstr "Usuario: Mostrar todos los documentos"
+
+#. module: rma
+#: model:res.groups,name:rma.rma_group_user_own
+msgid "User: Own Documents Only"
+msgstr "Usuario: Solo mostrar documentos propios"
+
+#. module: rma
+#: model:ir.model,name:rma.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
+msgid "Waiting for replacement"
+msgstr "Esperando por reemplazo"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_return
+msgid "Waiting for return"
+msgstr "Esperando por devolución"
+
+#. module: rma
+#: model:ir.model,name:rma.model_stock_warehouse
+#: model:ir.model.fields,field_description:rma.field_rma__warehouse_id
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__website_message_ids
+#: model:ir.model.fields,field_description:rma.field_rma_team__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__website_message_ids
+#: model:ir.model.fields,help:rma.field_rma_team__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_draft_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_draft_confirmation
+msgid "When a customer places an RMA, send a notification with it"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When customers themselves place an RMA from the portal, send an automatic "
+"notification acknowleging it."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "When the RMA is confirmed, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When the RMA is receive, allow to finsish it manually choosing\n"
+"                            a finalization reason."
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"When the RMA products are received, send an automatic information email."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
+msgid ""
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
+#: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_confirmation
+msgid ""
+"When the delivery is confirmed, send a confirmation email to the customer."
+msgstr ""
+
+#. module: rma
+#: code:addons/rma/models/rma.py:0
+#, python-format
+msgid "You cannot delete RMAs that are not in draft state"
+msgstr "No puede eliminar RMAs que no estén en estado borrador"
+
+#. module: rma
+#: code:addons/rma/wizard/stock_picking_return.py:0
+#, python-format
+msgid ""
+"You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
+"be created"
+msgstr ""
+"Debe seleccionar el 'Cliente' en la 'Orden de Entrega' desde la cual los "
+"RMAs serán creados"
+
+#. module: rma
+#: model:res.groups,comment:rma.rma_group_user_all
+msgid ""
+"the user will have access to all records of everyone in the RMA application."
+msgstr ""
+"El usuario tendrá acceso a todos los registros de RMA de todos lo usuarios."
+
+#. module: rma
+#: model:res.groups,comment:rma.rma_group_user_own
+msgid "the user will have access to his own data in the RMA application."
+msgstr "el usuario tendrá acceso solo a sus propios RMAs."
+
+#. module: rma
+#: model:res.groups,comment:rma.rma_group_manager
+msgid ""
+"the user will have an access to the RMA configuration as well as statistic "
+"reports."
+msgstr ""
+"El usuario tendrá acceso a la configuración de RMA y a los informes "
+"estadísticos."
