@@ -6,47 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-23 20:11+0000\n"
-"PO-Revision-Date: 2022-01-17 12:39+0000\n"
+"POT-Creation-Date: 2022-08-09 08:07+0000\n"
+"PO-Revision-Date: 2022-08-09 10:16+0200\n"
 "Last-Translator: xavigutipujol <jgutierrez@pyming.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
-
-#. module: rma
-#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
-#: model:mail.template,report_name:rma.mail_template_rma_notification
-#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
-msgid "${(object.name or '')}"
-msgstr "${(object.name or '')}"
-
-#. module: rma
-#: model:mail.template,subject:rma.mail_template_rma_notification
-msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
-msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
-
-#. module: rma
-#: model:mail.template,subject:rma.mail_template_rma_receipt_notification
-#, fuzzy
-msgid ""
-"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
-"received"
-msgstr ""
-"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) productos "
-"recibidos"
-
-#. module: rma
-#: model:mail.template,subject:rma.mail_template_rma_draft_notification
-msgid ""
-"${object.company_id.name} Your RMA has been succesfully created (Ref "
-"${object.name or 'n/a' })"
-msgstr ""
-"${object.company_id.name} Su RMA se ha creado con éxito (Ref ${object.name "
-"or 'n/a' })"
+"X-Generator: Poedit 2.3\n"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -61,27 +30,54 @@ msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
-#, python-format
-msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
+#, fuzzy, python-format
+#| msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
+msgid ""
+"<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Asunto del correo electrónico:</b> %s<br/><br/><b>Cuerpo del correo "
-"electrónico:</b><br/>%s"
+"<b>Asunto del correo electrónico:</b> %(subject)s<br/><br/><b>Cuerpo del correo "
+"electrónico:</b><br/>%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
+#, fuzzy
+#| msgid ""
+#| "<div style=\"margin: 0px; padding: 0px;\">\n"
+#| "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+#| "\">\n"
+#| "    Dear ${object.partner_id.name}\n"
+#| "    % if object.partner_id.parent_id:\n"
+#| "        (${object.partner_id.parent_id.name})\n"
+#| "    % endif\n"
+#| "    <br/><br/>\n"
+#| "    Here is the RMA <strong>${object.name}</strong> from ${object."
+#| "company_id.name}.\n"
+#| "    <br/><br/>\n"
+#| "    Do not hesitate to contact us if you have any question.\n"
+#| "</p>\n"
+#| "            </div>\n"
+#| "        "
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Dear ${object.partner_id.name}\n"
-"    % if object.partner_id.parent_id:\n"
-"        (${object.partner_id.parent_id.name})\n"
-"    % endif\n"
-"    <br/><br/>\n"
-"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id."
-"name}.\n"
-"    <br/><br/>\n"
-"    Do not hesitate to contact us if you have any question.\n"
-"</p>\n"
+"                    Dear\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                    </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Here is the RMA\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"/>\n"
+"                    </strong>\n"
+"                    from\n"
+"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    .\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Do not hesitate to contact us if you have any question.\n"
+"                </p>\n"
 "            </div>\n"
 "        "
 msgstr ""
@@ -102,20 +98,44 @@ msgstr ""
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
+#, fuzzy
+#| msgid ""
+#| "<div style=\"margin: 0px; padding: 0px;\">\n"
+#| "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#| "    Dear ${object.partner_id.name}\n"
+#| "    % if object.partner_id.parent_id:\n"
+#| "        (${object.partner_id.parent_id.name})\n"
+#| "    % endif\n"
+#| "    <br/><br/>\n"
+#| "    The products for your RMA <strong>${object.name}</strong>\n"
+#| "    from ${object.company_id.name} have been received in our warehouse.\n"
+#| "    <br/><br/>\n"
+#| "    Do not hesitate to contact us if you have any question.\n"
+#| "</p>\n"
+#| "</div>\n"
+#| "        "
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Dear ${object.partner_id.name}\n"
-"    % if object.partner_id.parent_id:\n"
-"        (${object.partner_id.parent_id.name})\n"
-"    % endif\n"
-"    <br/><br/>\n"
-"    The products for your RMA <strong>${object.name}</strong>\n"
-"    from ${object.company_id.name} have been received in our warehouse.\n"
-"    <br/><br/>\n"
-"    Do not hesitate to contact us if you have any question.\n"
-"</p>\n"
-"</div>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Dear\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                    </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    The products for your RMA\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"/>\n"
+"                    </strong>\n"
+"                    from\n"
+"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    have been received in our warehouse.\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Do not hesitate to contact us if you have any question.\n"
+"                </p>\n"
+"            </div>\n"
 "        "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
@@ -135,21 +155,47 @@ msgstr ""
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
+#, fuzzy
+#| msgid ""
+#| "<div style=\"margin: 0px; padding: 0px;\">\n"
+#| "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#| "    Dear ${object.partner_id.name}\n"
+#| "    % if object.partner_id.parent_id:\n"
+#| "        (${object.partner_id.parent_id.name})\n"
+#| "    % endif\n"
+#| "    <br/><br/>\n"
+#| "    You've succesfully placed your RMA <strong>${object.name}</strong>\n"
+#| "    on ${object.company_id.name}. Our team will check it and will "
+#| "validate\n"
+#| "    it as soon as possible.\n"
+#| "    <br/><br/>\n"
+#| "    Do not hesitate to contact us if you have any question.\n"
+#| "</p>\n"
+#| "</div>\n"
+#| "        "
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Dear ${object.partner_id.name}\n"
-"    % if object.partner_id.parent_id:\n"
-"        (${object.partner_id.parent_id.name})\n"
-"    % endif\n"
-"    <br/><br/>\n"
-"    You've succesfully placed your RMA <strong>${object.name}</strong>\n"
-"    on ${object.company_id.name}. Our team will check it and will validate\n"
-"    it as soon as possible.\n"
-"    <br/><br/>\n"
-"    Do not hesitate to contact us if you have any question.\n"
-"</p>\n"
-"</div>\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Dear\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                    </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    You've succesfully placed your RMA\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"/>\n"
+"                    </strong>\n"
+"                    on\n"
+"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    . Our team will check it and will validate it as soon as "
+"possible.\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Do not hesitate to contact us if you have any question.\n"
+"                </p>\n"
+"            </div>\n"
 "        "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
@@ -418,7 +464,7 @@ msgstr "Actividades"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Decoración de excepción de actividad"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_state
@@ -534,7 +580,7 @@ msgstr "Cancelado"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__uom_category_id
 msgid "Category"
-msgstr ""
+msgstr "Categoría"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
@@ -697,12 +743,12 @@ msgstr "Entregar"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty
-msgid "Delivered qty"
+msgid "Delivered Qty"
 msgstr "Ctd. entregada"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
-msgid "Delivered qty done"
+msgid "Delivered Qty Done"
 msgstr "Ctd. entregada realizada"
 
 #. module: rma
@@ -727,12 +773,6 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_account_move__display_name
-#: model:ir.model.fields,field_description:rma.field_account_move_line__display_name
-#: model:ir.model.fields,field_description:rma.field_res_company__display_name
-#: model:ir.model.fields,field_description:rma.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:rma.field_res_partner__display_name
-#: model:ir.model.fields,field_description:rma.field_res_users__display_name
 #: model:ir.model.fields,field_description:rma.field_rma__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__display_name
@@ -741,11 +781,6 @@ msgstr "Descripción"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_tag__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
-#: model:ir.model.fields,field_description:rma.field_stock_move__display_name
-#: model:ir.model.fields,field_description:rma.field_stock_picking__display_name
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking__display_name
-#: model:ir.model.fields,field_description:rma.field_stock_rule__display_name
-#: model:ir.model.fields,field_description:rma.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -872,12 +907,6 @@ msgid "Followers"
 msgstr "Seguidores"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_channel_ids
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_channel_ids
-msgid "Followers (Channels)"
-msgstr "Seguidores (Canales)"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_partner_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_partner_ids
 msgid "Followers (Partners)"
@@ -908,12 +937,12 @@ msgstr ""
 "Agrupar las devoluciones de RMA a cliente por dirección de envío y almacén"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_account_move__id
-#: model:ir.model.fields,field_description:rma.field_account_move_line__id
-#: model:ir.model.fields,field_description:rma.field_res_company__id
-#: model:ir.model.fields,field_description:rma.field_res_config_settings__id
-#: model:ir.model.fields,field_description:rma.field_res_partner__id
-#: model:ir.model.fields,field_description:rma.field_res_users__id
+#: model:ir.model.fields,field_description:rma.field_rma__has_message
+#: model:ir.model.fields,field_description:rma.field_rma_team__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__id
@@ -922,13 +951,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_tag__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
-#: model:ir.model.fields,field_description:rma.field_stock_move__id
-#: model:ir.model.fields,field_description:rma.field_stock_picking__id
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking__id
-#: model:ir.model.fields,field_description:rma.field_stock_rule__id
-#: model:ir.model.fields,field_description:rma.field_stock_warehouse__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
@@ -947,7 +971,7 @@ msgstr "Icono"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Icono para indicar una actividad de excepción."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction
@@ -1011,7 +1035,7 @@ msgstr "Es un seguidor"
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Asiento contable"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move_line
@@ -1019,12 +1043,6 @@ msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_account_move____last_update
-#: model:ir.model.fields,field_description:rma.field_account_move_line____last_update
-#: model:ir.model.fields,field_description:rma.field_res_company____last_update
-#: model:ir.model.fields,field_description:rma.field_res_config_settings____last_update
-#: model:ir.model.fields,field_description:rma.field_res_partner____last_update
-#: model:ir.model.fields,field_description:rma.field_res_users____last_update
 #: model:ir.model.fields,field_description:rma.field_rma____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_finalization____last_update
@@ -1033,11 +1051,6 @@ msgstr "Apunte contable"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_tag____last_update
 #: model:ir.model.fields,field_description:rma.field_rma_team____last_update
-#: model:ir.model.fields,field_description:rma.field_stock_move____last_update
-#: model:ir.model.fields,field_description:rma.field_stock_picking____last_update
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking____last_update
-#: model:ir.model.fields,field_description:rma.field_stock_rule____last_update
-#: model:ir.model.fields,field_description:rma.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
@@ -1180,7 +1193,7 @@ msgstr "Ninguno de los RMAs seleccionados puede realizar una devolución."
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__priority__0
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_needaction_counter
@@ -1347,11 +1360,11 @@ msgstr "Cantidad a extraer"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Quantity to extract cannot be greater than remaining delivery quantity (%s "
-"%s)"
+"Quantity to extract cannot be greater than remaining delivery quantity "
+"(%(remaining_qty)s %(product_uom)s)"
 msgstr ""
 "La cantidad a extraer no puede ser mayor que la cantidad de entrega "
-"restante(%s %s)"
+"restante(%(remaining_qty)s %(product_uom)s)"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
@@ -1410,6 +1423,11 @@ msgid "RMA Delivery Wizard"
 msgstr "Asistente de entrega de RMA"
 
 #. module: rma
+#: model:mail.template,name:rma.mail_template_rma_draft_notification
+msgid "RMA Draft Notification"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
 msgid "RMA Finalization"
 msgstr "Finalización de RMA"
@@ -1423,7 +1441,6 @@ msgstr "Motivo de finalización de RMA"
 #: model:ir.actions.act_window,name:rma.action_rma_finalization
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_finalization_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_list
 msgid "RMA Finalization Reasons"
 msgstr "Motivos de finalización de RMA"
 
@@ -1450,6 +1467,7 @@ msgstr ""
 #. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
+#: model:mail.template,name:rma.mail_template_rma_notification
 msgid "RMA Notification"
 msgstr "Notificación de RMA"
 
@@ -1474,6 +1492,11 @@ msgstr "Tipo de operación para entrega de RMA"
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Receipt Confirmation Email"
 msgstr "Correo de confirmación de recepción de RMA"
+
+#. module: rma
+#: model:mail.template,name:rma.mail_template_rma_receipt_notification
+msgid "RMA Receipt Notification"
+msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
@@ -1501,7 +1524,6 @@ msgstr "Etiqueta RMA"
 #: model:ir.model,name:rma.model_rma_tag
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_list
 msgid "RMA Tags"
 msgstr "Etiquetas RMA"
 
@@ -1630,14 +1652,14 @@ msgid "Refund"
 msgstr "Factura rectificativa"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
+msgid "Refund Line"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
 msgid "Refund address for current RMA."
 msgstr "Dirección de facturación de este RMA."
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
-msgid "Refund line"
-msgstr "Línea de factura rectificativa"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
@@ -1680,27 +1702,29 @@ msgstr "Reemplazado"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
-"\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
-"\"%d\">%s</a>) has been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
+"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
+"been created."
 msgstr ""
 "Reemplazo: El movimiento <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%d\">%s</a> (Orden de entrega <a href=\"#\" data-oe-model=\"stock."
-"picking\" data-oe-id=\"%d\">%s</a>) ha sido creado."
+"id=\"%(move_id)d\">%(move_name)s</a> (Orden de entrega <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) "
+"ha sido creado."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
 "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
-"data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not "
-"create a new move, but one of the previously created moves was updated with "
-"this data."
+"data-oe-id=\"%(id)d\">%(name)s</a><br/>Quantity %(qty)s %(uom)s<br/>This "
+"replacement did not create a new move, but one of the previously created "
+"moves was updated with this data."
 msgstr ""
 "Reemplazo:<br/>Producto <a href=\"#\" data-oe-model=\"product.product\" data-"
-"oe-id=\"%d\">%s</a><br/>Cantidad %f %s<br/>El reemplazo realizado no creó un "
-"movimiento nuevo, pero uno de los movimientos creados anteriormente fué "
-"actualizado con estos datos."
+"oe-id=\"%(id)d\">%(name)s</a><br/>Cantidad %(qty) s%(uom)s<br/>El reemplazo "
+"realizado no creó un movimiento nuevo, pero uno de los movimientos creados "
+"anteriormente fué actualizado con estos datos."
 
 #. module: rma
 #: model:ir.ui.menu,name:rma.rma_reporting_menu
@@ -1745,11 +1769,11 @@ msgstr "Devolver al cliente"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
-"a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> has been created."
 msgstr ""
 "Devolución: La orden de entrega <a href=\"#\" data-oe-model=\"stock.picking"
-"\" data-oe-id=\"%d\">%s</a> ha sido creada."
+"\" data-oe-id=\"%(id)d\">%(name)s</a> ha sido creada."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -1887,11 +1911,11 @@ msgstr "Dividir RMA"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
-"created."
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
+"a> has been created."
 msgstr ""
-"División: El RMA <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</"
-"a> ha sido creado."
+"División: El RMA <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> ha sido creado."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -1968,7 +1992,7 @@ msgstr "¡El nombre de operación ya existe!"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_tag__active
 msgid "The active field allows you to hide the category without removing it."
-msgstr ""
+msgstr "El campo activo le permite ocultar la clase sin tener que eliminarla."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
@@ -2008,11 +2032,11 @@ msgstr ""
 #: code:addons/rma/models/stock_move.py:0
 #, python-format
 msgid ""
-"The quantity done for the product '%s' must be equal to its initial demand "
-"because the stock move is linked to an RMA (%s)."
+"The quantity done for the product '%(id)s' must be equal to its initial "
+"demand because the stock move is linked to an RMA (%(name)s)."
 msgstr ""
-"La cantidad realizada para el producto '%s' debe ser igual a la demanda "
-"inicial porque el movimiento está enlazado a un RMA (%s)."
+"La cantidad realizada para el producto '%(id)s' debe ser igual a la demanda "
+"inicial porque el movimiento está enlazado a un RMA (%(name)s)."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -2077,7 +2101,7 @@ msgstr "Tipo de operación"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Tipo de actividad de excepción en registro."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -2247,3 +2271,36 @@ msgid ""
 msgstr ""
 "El usuario tendrá acceso a la configuración de RMA y a los informes "
 "estadísticos."
+
+#. module: rma
+#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
+#: model:mail.template,report_name:rma.mail_template_rma_notification
+#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
+msgid "{{(object.name or '')}}"
+msgstr "{{(object.name or '')}}"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_notification
+msgid "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
+msgstr "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_receipt_notification
+msgid ""
+"{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products "
+"received"
+msgstr ""
+"{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) productos "
+"recibidos"
+
+#. module: rma
+#: model:mail.template,subject:rma.mail_template_rma_draft_notification
+msgid ""
+"{{object.company_id.name}} Your RMA has been succesfully created (Ref "
+"{{object.name or 'n/a' }})"
+msgstr ""
+"{{object.company_id.name}} Su RMA se ha creado con éxito (Ref {{object.name "
+"or 'n/a' }})"
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "Seguidores (Canales)"

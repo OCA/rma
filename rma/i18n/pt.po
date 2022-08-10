@@ -2188,6 +2188,3 @@ msgid ""
 msgstr ""
 "o utilizador terá acesso à configuração RMA, bem como aos relatórios "
 "estatísticos."
-
-#~ msgid "<strong>Invoicing address:</strong>"
-#~ msgstr "<strong>Endereço de Cobrança:</strong>"

@@ -12,7 +12,6 @@ class RmaReDeliveryWizard(models.TransientModel):
     rma_count = fields.Integer()
     type = fields.Selection(
         selection=[("replace", "Replace"), ("return", "Return to customer")],
-        string="Type",
         required=True,
     )
     product_id = fields.Many2one(
@@ -24,7 +23,7 @@ class RmaReDeliveryWizard(models.TransientModel):
         digits="Product Unit of Measure",
     )
     product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure")
-    scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now())
+    scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now)
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse",
         string="Warehouse",

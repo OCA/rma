@@ -97,7 +97,8 @@
                 <t t-set="card_header">
                     <h5 class="mb-0">
                         <span>
-                            RMA Order - <span t-field="rma.name" />
+                            RMA Order -
+                            <span t-field="rma.name" />
                         </span>
                         <span
                             style="position: absolute; left: 50%;"
@@ -353,32 +354,36 @@
                                     title="Download"
                                 />
                                 <span t-esc="picking.name" class="mr-lg-3" />
-                                <div class="d-lg-inline-block">Date: <span
-                                        class="text-muted"
-                                        t-field="picking.date"
-                                    /></div>
+                                <div class="d-lg-inline-block">
+                                    Date:
+                                    <span class="text-muted" t-field="picking.date" />
+                                </div>
                             </div>
                             <t t-if="picking.state == 'done'">
-                                <span class="badge badge-success label-text-align"><i
-                                        class="fa fa-fw fa-truck"
-                                    /> Shipped</span>
+                                <span class="badge badge-success label-text-align">
+                                    <i class="fa fa-fw fa-truck" />
+                                    Shipped
+                                </span>
                             </t>
                             <t t-if="picking.state == 'partially_available'">
-                                <span class="badge badge-warning label-text-align"><i
-                                        class="fa fa-fw fa-clock-o"
-                                    /> Partially Available</span>
+                                <span class="badge badge-warning label-text-align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    Partially Available
+                                </span>
                             </t>
                             <t t-if="picking.state == 'cancel'">
-                                <span class="badge badge-danger label-text-align"><i
-                                        class="fa fa-fw fa-times"
-                                    /> Cancelled</span>
+                                <span class="badge badge-danger label-text-align">
+                                    <i class="fa fa-fw fa-times" />
+                                    Cancelled
+                                </span>
                             </t>
                             <t
                                 t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
                             >
-                                <span class="badge badge-info label-text-align"><i
-                                        class="fa fa-fw fa-clock-o"
-                                    /> Preparation</span>
+                                <span class="badge badge-info label-text-align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    Preparation
+                                </span>
                             </t>
                         </a>
                     </section>
@@ -406,10 +411,13 @@
                                     title="Download"
                                 />
                                 <span t-esc="refund.name" class="mr-lg-3" />
-                                <div class="d-lg-inline-block">Date: <span
+                                <div class="d-lg-inline-block">
+                                    Date:
+                                    <span
                                         class="text-muted"
                                         t-field="refund.invoice_date"
-                                    /></div>
+                                    />
+                                </div>
                             </div>
                             <span
                                 t-if="refund.state == 'paid'"
@@ -455,38 +463,45 @@
                                             title="Download"
                                         />
                                         <span t-esc="picking.name" class="mr-lg-3" />
-                                        <div class="d-lg-inline-block">Date: <span
+                                        <div class="d-lg-inline-block">
+                                            Date:
+                                            <span
                                                 class="text-muted"
                                                 t-field="picking.date"
-                                            /></div>
+                                            />
+                                        </div>
                                     </div>
                                     <t t-if="picking.state == 'done'">
                                         <span
                                             class="badge badge-success label-text-align"
-                                        ><i class="fa fa-fw fa-truck" /> Shipped</span>
+                                        >
+                                            <i class="fa fa-fw fa-truck" />
+                                            Shipped
+                                        </span>
                                     </t>
                                     <t t-if="picking.state == 'partially_available'">
                                         <span
                                             class="badge badge-warning label-text-align"
-                                        ><i
-                                                class="fa fa-fw fa-clock-o"
-                                            /> Partially Available</span>
+                                        >
+                                            <i class="fa fa-fw fa-clock-o" />
+                                            Partially Available
+                                        </span>
                                     </t>
                                     <t t-if="picking.state == 'cancel'">
                                         <span
                                             class="badge badge-danger label-text-align"
-                                        ><i
-                                                class="fa fa-fw fa-times"
-                                            /> Cancelled</span>
+                                        >
+                                            <i class="fa fa-fw fa-times" />
+                                            Cancelled
+                                        </span>
                                     </t>
                                     <t
                                         t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
                                     >
-                                        <span
-                                            class="badge badge-info label-text-align"
-                                        ><i
-                                                class="fa fa-fw fa-clock-o"
-                                            /> Preparation</span>
+                                        <span class="badge badge-info label-text-align">
+                                            <i class="fa fa-fw fa-clock-o" />
+                                            Preparation
+                                        </span>
                                     </t>
                                 </a>
                             </t>
@@ -495,7 +510,7 @@
                     <section id="description" class="mt-5" t-if="rma.description">
                         <h3 class="">Description</h3>
                         <hr class="mt-0 mb-1" />
-                        <t t-raw="rma.description" />
+                        <t t-out="rma.description" />
                     </section>
                 </t>
             </t>
