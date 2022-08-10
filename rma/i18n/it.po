@@ -2255,6 +2255,3 @@ msgid ""
 "the user will have an access to the RMA configuration as well as statistic "
 "reports."
 msgstr "l'utente avrà accesso alla configurazione RMA e ai report statistici."
-
-#~ msgid "<strong>Invoicing address:</strong>"
-#~ msgstr "<strong>Indirizzo di fatturazione:</strong>"

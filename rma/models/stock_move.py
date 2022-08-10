@@ -60,11 +60,16 @@ class StockMove(models.Model):
             if rma_receiver and move.quantity_done != rma_receiver.product_uom_qty:
                 raise ValidationError(
                     _(
-                        "The quantity done for the product '%s' must "
+                        "The quantity done for the product '%(id)s' must "
                         "be equal to its initial demand because the "
-                        "stock move is linked to an RMA (%s)."
+                        "stock move is linked to an RMA (%(name)s)."
                     )
-                    % (move.product_id.name, move.rma_receiver_ids.name)
+                    % (
+                        {
+                            "id": move.product_id.name,
+                            "name": move.rma_receiver_ids.name,
+                        }
+                    )
                 )
         res = super()._action_done(cancel_backorder=cancel_backorder)
         move_done = self.filtered(lambda r: r.state == "done").sudo()
