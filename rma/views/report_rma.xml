@@ -9,9 +9,11 @@
                         t-field="doc.partner_id"
                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
                     />
-                    <p t-if="doc.partner_id.vat"><t
-                            t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"
-                        />: <span t-field="doc.partner_id.vat" /></p>
+                    <p t-if="doc.partner_id.vat">
+                        <t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'" />
+                        :
+                        <span t-field="doc.partner_id.vat" />
+                    </p>
                 </t>
             </t>
             <t
@@ -19,24 +21,24 @@
             and doc.partner_invoice_id != doc.partner_id
             or doc.partner_shipping_id != doc.partner_invoice_id"
             >
-            <t t-set="information_block">
-                <strong
+                <t t-set="information_block">
+                    <strong
                         t-if="doc.partner_shipping_id == doc.partner_invoice_id"
                     >Invoicing and Shipping Address:</strong>
-                <strong
+                    <strong
                         t-if="doc.partner_shipping_id != doc.partner_invoice_id"
                     >Invoicing Address:</strong>
-                <div
+                    <div
                         t-field="doc.partner_invoice_id"
                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                     />
-                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
-                    <strong>Shipping Address:</strong>
-                    <div
+                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                        <strong>Shipping Address:</strong>
+                        <div
                             t-field="doc.partner_shipping_id"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                         />
-                </t>
+                    </t>
                 </t>
             </t>
             <div class="page">
@@ -120,7 +122,7 @@
                 </div>
                 <div t-if="doc.description">
                     <strong>RMA Note:</strong>
-                    <p t-raw="doc.description" />
+                    <p t-out="doc.description" />
                 </div>
             </div>
         </t>
