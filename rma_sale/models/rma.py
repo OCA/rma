@@ -10,10 +10,12 @@ class Rma(models.Model):
     order_id = fields.Many2one(
         comodel_name="sale.order",
         string="Sale Order",
-        domain="["
-        "    ('partner_id', 'child_of', commercial_partner_id),"
-        "    ('state', 'in', ['sale', 'done']),"
-        "]",
+        domain=(
+            "["
+            "    ('partner_id', 'child_of', commercial_partner_id),"
+            "    ('state', 'in', ['sale', 'done']),"
+            "]"
+        ),
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
@@ -38,7 +40,10 @@ class Rma(models.Model):
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
-        domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
+        domain = [
+            ("state", "=", "done"),
+            ("picking_type_id.code", "=", "outgoing"),
+        ]
         for rec in self:
             if rec.partner_id:
                 commercial_partner = rec.partner_id.commercial_partner_id
@@ -105,8 +110,9 @@ class Rma(models.Model):
 
     def _prepare_refund_line(self, line_form):
         """Add line data"""
-        super()._prepare_refund_line(line_form)
+        res = super(Rma, self)._prepare_refund_line(line_form)
         line = self.sale_line_id
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+        return res

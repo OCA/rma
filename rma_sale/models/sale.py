@@ -47,7 +47,10 @@ class SaleOrder(models.Model):
             for data in self.get_delivery_rma_data()
         ]
         wizard = wizard_obj.with_context(active_id=self.id).create(
-            {"line_ids": line_vals, "location_id": self.warehouse_id.rma_loc_id.id}
+            {
+                "line_ids": line_vals,
+                "location_id": self.warehouse_id.rma_loc_id.id,
+            }
         )
         return {
             "name": _("Create RMA"),
@@ -86,13 +89,14 @@ class SaleOrder(models.Model):
         """Search for possible RMA refunds and link them to the order. We
         don't want to link their sale lines as that would unbalance the
         qtys to invoice wich isn't correct for this case"""
-        super()._get_invoiced()
+        res = super(SaleOrder, self)._get_invoiced()
         for order in self:
             refunds = order.sudo().rma_ids.mapped("refund_id")
             if not refunds:
                 continue
             order.invoice_ids += refunds
             order.invoice_count = len(order.invoice_ids)
+        return res
 
 
 class SaleOrderLine(models.Model):
