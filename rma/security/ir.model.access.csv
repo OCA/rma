@@ -1,0 +1,18 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rma_team_user_own,rma.team.user.own,model_rma_team,rma_group_user_own,1,0,0,0
+access_rma_team_manager,rma.team.manager,model_rma_team,rma_group_manager,1,1,1,1
+access_rma_portal,rma.portal,model_rma,base.group_portal,1,0,0,0
+access_rma_user_own,rma.user.own,model_rma,rma_group_user_own,1,1,1,0
+access_rma_manager,rma.manager,model_rma,rma_group_manager,1,1,1,1
+access_rma_operation_user_own,rma.operation.user.own,model_rma_operation,rma_group_user_own,1,0,0,0
+access_rma_operation_manager,rma.operation.manager,model_rma_operation,rma_group_manager,1,1,1,1
+access_rma_tag_user_own,rma.tag.user.own,model_rma_tag,rma_group_user_own,1,0,0,0
+access_rma_tag_manager,rma.tag.manager,model_rma_tag,rma_group_manager,1,1,1,1
+access_rma_delivery_wizard_user_all,rma.delivery.wizard.user.all,model_rma_delivery_wizard,rma_group_user_all,1,1,1,1
+access_rma_split_wizard_user_all,rma.split.wizard.user.all,model_rma_split_wizard,rma_group_user_all,1,1,1,1
+access_rma_finalization_portal,rma.finalization.portal,model_rma_finalization,base.group_portal,1,0,0,0
+access_rma_finalization_user_own,rma.finalization.user.own,model_rma_finalization,rma_group_user_own,1,0,0,0
+access_rma_finalization_manager,rma.finalization.manager,model_rma_finalization,rma_group_manager,1,1,1,1
+access_rma_finalization_wizard_user_own,rma.finalization.wizard.user.own,model_rma_finalization_wizard,group_rma_manual_finalization,1,1,1,1
+access_account_move_rma_user,account_move rma_user,account.model_account_move,rma.rma_group_user_own,1,0,0,0
+access_account_move_line_rma_user,account_move_line rma_user,account.model_account_move_line,rma.rma_group_user_own,1,0,0,0
