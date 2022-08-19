@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <record id="mail_template_rma_notification" model="mail.template">
+        <field name="email_from">{{object.user_id.email_formatted}}</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field
+            name="subject"
+        >{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})</field>
+        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="lang">{{object.partner_id.lang}}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    <t t-out="object.partner_id.name" />
+                    <t t-if="object.partner_id.parent_id">
+                        <t t-out="object.partner_id.parent_id.name" />
+                    </t>
+                    <br />
+                    <br />
+                    Here is the RMA
+                    <strong>
+                        <t t-out="object.name" />
+                    </strong>
+                    from
+                    <t t-out="object.company_id.name" />
+                    .
+                    <br />
+                    <br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+        </field>
+    </record>
+    <record id="mail_template_rma_receipt_notification" model="mail.template">
+        <field name="email_from">{{object.user_id.email_formatted }}</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field
+            name="subject"
+        >{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products received</field>
+        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="lang">{{object.partner_id.lang}}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    <t t-out="object.partner_id.name" />
+                    <t t-if="object.partner_id.parent_id">
+                        <t t-out="object.partner_id.parent_id.name" />
+                    </t>
+                    <br />
+                    <br />
+                    The products for your RMA
+                    <strong>
+                        <t t-out="object.name" />
+                    </strong>
+                    from
+                    <t t-out="object.company_id.name" />
+                    have been received in our warehouse.
+                    <br />
+                    <br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+        </field>
+    </record>
+    <record id="mail_template_rma_draft_notification" model="mail.template">
+        <field name="email_from">{{object.user_id.email_formatted}}</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field
+            name="subject"
+        >{{object.company_id.name}} Your RMA has been succesfully created (Ref {{object.name or 'n/a' }})</field>
+        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="lang">{{object.partner_id.lang}}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    <t t-out="object.partner_id.name" />
+                    <t t-if="object.partner_id.parent_id">
+                        <t t-out="object.partner_id.parent_id.name" />
+                    </t>
+                    <br />
+                    <br />
+                    You've succesfully placed your RMA
+                    <strong>
+                        <t t-out="object.name" />
+                    </strong>
+                    on
+                    <t t-out="object.company_id.name" />
+                    . Our team will check it and will validate it as soon as possible.
+                    <br />
+                    <br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>
