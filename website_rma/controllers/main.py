@@ -5,10 +5,10 @@ import json
 from odoo import http
 from odoo.http import request
 
-from odoo.addons.website_form.controllers.main import WebsiteForm
+from odoo.addons.website.controllers import form
 
 
-class WebsiteForm(WebsiteForm):
+class WebsiteForm(form.WebsiteForm):
     def insert_record(self, request, model, values, custom, meta=None):
         res = super().insert_record(request, model, values, custom, meta)
         # Add the customer to the followers, the same as when creating
