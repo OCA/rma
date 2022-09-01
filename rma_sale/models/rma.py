@@ -105,3 +105,8 @@ class Rma(models.Model):
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+
+    def action_refund(self):
+        super().action_refund()
+        if self.refund_line_id and self.sale_line_id:
+            self.refund_line_id.sale_line_ids = [(4, self.sale_line_id.id)]
