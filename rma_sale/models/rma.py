@@ -105,3 +105,9 @@ class Rma(models.Model):
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+            # remove all auto-set taxes (in case order line has not taxes)
+            for tax in line_form.tax_ids:
+                line_form.tax_ids.remove(tax.id)
+            # apply the right taxes
+            for tax in line.tax_id:
+                line_form.tax_ids.add(tax)

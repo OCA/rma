@@ -82,6 +82,7 @@ class TestRmaSale(SavepointCase):
         rma.reception_move_id.picking_id.action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
+        self.assertEqual(rma.refund_line_id.tax_ids, rma.sale_line_id.tax_id)
 
     def test_create_recurrent_rma(self):
         """An RMA of a product that had an RMA in the past should be possible"""
