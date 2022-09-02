@@ -31,7 +31,7 @@
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">RMA Orders</t>
                 <t t-set="url" t-value="'/my/rmas'" />
-                <t t-set="count" t-value="rma_count" />
+                <t t-set="placeholder_count" t-value="'rma_count'" />
             </t>
         </xpath>
     </template>
