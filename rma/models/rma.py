@@ -790,10 +790,8 @@ class Rma(models.Model):
         self.ensure_one()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.action_picking_tree_all"
         )
         action.update(
             res_id=self.reception_move_id.picking_id.id,
