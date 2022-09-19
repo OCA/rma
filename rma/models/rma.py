@@ -691,12 +691,8 @@ class Rma(models.Model):
         """Invoked when 'Replace' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_replaced()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["name"] = "Replace product(s)"
         action["context"] = dict(self.env.context)
@@ -713,12 +709,8 @@ class Rma(models.Model):
         """
         self.ensure_one()
         self._ensure_can_be_returned()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(
@@ -732,12 +724,8 @@ class Rma(models.Model):
         """Invoked when 'Split' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_split()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_split_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_split_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
@@ -747,12 +735,8 @@ class Rma(models.Model):
         """Invoked when a user wants to manually finalize the RMA"""
         self.ensure_one()
         self._ensure_can_be_returned()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_finalization_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_finalization_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
