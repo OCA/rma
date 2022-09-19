@@ -788,8 +788,6 @@ class Rma(models.Model):
     def action_view_receipt(self):
         """Invoked when 'Receipt' smart button in rma form view is clicked."""
         self.ensure_one()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
         action = self.env["ir.actions.actions"]._for_xml_id(
             "stock.action_picking_tree_all"
         )
@@ -816,10 +814,8 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.action_picking_tree_all"
         )
         picking = self.delivery_move_ids.mapped("picking_id")
         if len(picking) > 1:

@@ -29,7 +29,7 @@ class StockPicking(models.Model):
 
     def action_view_rma(self):
         self.ensure_one()
-        action = self.sudo().env.ref("rma.rma_action").read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id("rma.rma_action")
         rma = self.move_lines.mapped("rma_ids")
         if len(rma) == 1:
             action.update(
