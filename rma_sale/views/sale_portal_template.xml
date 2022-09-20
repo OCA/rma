@@ -66,9 +66,9 @@
                                         <i
                                         t-attf-class="text-secondary fa #{address.type == 'delivery' and 'fa-truck' or 'fa-user'}"
                                     />
-                                        <t t-esc="address.name" />
+                                        <t t-out="address.name" />
                                     </strong>
-                                    <pre><h6 t-esc="address.contact_address" /></pre>
+                                    <pre><h6 t-out="address.contact_address" /></pre>
                                 </input>
                         </label>
                     </div>
@@ -93,7 +93,7 @@
                             <t t-if="data['quantity'] > 0 and data['picking']">
                                 <tr>
                                     <td class="text-left">
-                                        <span t-esc="data['product'].display_name" />
+                                        <span t-out="data['product'].display_name" />
                                         <input
                                             type="hidden"
                                             t-attf-name="#{data_index}-product_id"
@@ -119,7 +119,7 @@
                                                 style="max-width: 60px;"
                                             />
                                             <span
-                                                t-esc="data['uom'].name"
+                                                t-out="data['uom'].name"
                                                 groups="uom.group_uom"
                                             />
                                             <input
@@ -131,7 +131,7 @@
                                     </td>
                                     <td class="text-left">
                                         <span
-                                            t-esc="data['picking'] and data['picking'].name"
+                                            t-out="data['picking'] and data['picking'].name"
                                         />
                                         <input
                                             type="hidden"
@@ -147,7 +147,7 @@
                                             <option value="">---</option>
                                             <t t-foreach="operations" t-as="operation">
                                                 <option t-att-value="operation.id">
-                                                    <t t-esc="operation.name" />
+                                                    <t t-out="operation.name" />
                                                 </option>
                                             </t>
                                         </select>
@@ -251,7 +251,7 @@
                     class="btn btn-sm btn-secondary"
                 >
                     <span class="fa fa-reply" role="img" aria-label="RMA" title="RMA" />
-                    <span t-esc="sale_order.rma_count" />
+                    <span t-out="sale_order.rma_count" />
                     <span>RMA</span>
                 </a>
             </span>
@@ -286,7 +286,7 @@
                 <t t-set="card_header">
                     <h5 class="mb-0">
                         <span>
-                            RMA request for order <t t-esc="sale_order.name" />
+                            RMA request for order <t t-out="sale_order.name" />
                         </span>
                     </h5>
                 </t>
@@ -315,7 +315,7 @@
             <t t-else="">
                 <li class="breadcrumb-item active">
                     <a t-if="sale_order" t-att-href="default_url"><t
-                            t-esc="sale_order.name"
+                            t-out="sale_order.name"
                         /></a>
                 </li>
             </t>
