@@ -124,7 +124,6 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         related="product_id.uom_id.category_id",
     )
     quantity = fields.Float(
-        string="Quantity",
         digits="Product Unit of Measure",
         required=True,
     )

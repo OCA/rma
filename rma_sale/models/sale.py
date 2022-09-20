@@ -86,13 +86,14 @@ class SaleOrder(models.Model):
         """Search for possible RMA refunds and link them to the order. We
         don't want to link their sale lines as that would unbalance the
         qtys to invoice wich isn't correct for this case"""
-        super()._get_invoiced()
+        res = super()._get_invoiced()
         for order in self:
             refunds = order.sudo().rma_ids.mapped("refund_id")
             if not refunds:
                 continue
             order.invoice_ids += refunds
             order.invoice_count = len(order.invoice_ids)
+        return res
 
 
 class SaleOrderLine(models.Model):

@@ -3,7 +3,7 @@
 {
     "name": "Return Merchandise Authorization Management - Link with Sales",
     "summary": "Sale Order - Return Merchandise Authorization (RMA)",
-    "version": "14.0.2.1.0",
+    "version": "15.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
@@ -13,7 +13,6 @@
     "depends": ["rma", "sale_stock"],
     "data": [
         "security/ir.model.access.csv",
-        "views/assets.xml",
         "views/report_rma.xml",
         "views/rma_views.xml",
         "views/sale_views.xml",
@@ -21,4 +20,10 @@
         "views/res_config_settings_views.xml",
         "wizard/sale_order_rma_wizard_views.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [
+            "/rma_sale/static/src/js/rma_portal_form.js",
+            "/rma_sale/static/src/scss/rma_sale.scss",
+        ],
+    },
 }

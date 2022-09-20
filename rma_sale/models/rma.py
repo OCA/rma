@@ -105,8 +105,9 @@ class Rma(models.Model):
 
     def _prepare_refund_line(self, line_form):
         """Add line data"""
-        super()._prepare_refund_line(line_form)
+        res = super()._prepare_refund_line(line_form)
         line = self.sale_line_id
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+        return res
