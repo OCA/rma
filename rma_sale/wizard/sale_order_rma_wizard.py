@@ -167,6 +167,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
                         r.sale_line_id == record.sale_line_id
                         and r.sale_line_id.product_id == record.product_id
                         and r.sale_line_id.order_id == record.order_id
+                        and r.state == "done"
                     )
                 )
             record.move_id = move_id
@@ -183,7 +184,9 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             line = record.order_id.order_line.filtered(
                 lambda r: r.product_id == record.product_id
             )
-            record.allowed_picking_ids = line.mapped("move_ids.picking_id")
+            record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
+                lambda x: x.state == "done"
+            )
 
     def _prepare_rma_values(self):
         self.ensure_one()
