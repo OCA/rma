@@ -35,9 +35,9 @@ class Rma(models.Model):
     def _compute_allowed_picking_ids(self):
         domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
         for rec in self:
-            # if rec.partner_id:
-            commercial_partner = rec.partner_id.commercial_partner_id
-            domain.append(("partner_id", "child_of", commercial_partner.id))
+            if rec.partner_id:
+                commercial_partner = rec.partner_id.commercial_partner_id
+                domain.append(("partner_id", "child_of", commercial_partner.id))
             if rec.order_id:
                 domain.append(("sale_id", "=", rec.order_id.id))
             rec.allowed_picking_ids = self.env["stock.picking"].search(domain)
@@ -48,7 +48,7 @@ class Rma(models.Model):
             if rec.order_id:
                 order_move = rec.order_id.order_line.mapped("move_ids")
                 rec.allowed_move_ids = order_move.filtered(
-                    lambda r: r.picking_id == self.picking_id
+                    lambda r: r.picking_id == self.picking_id and r.state == "done"
                 ).ids
             else:
                 rec.allowed_move_ids = self.picking_id.move_lines.ids
