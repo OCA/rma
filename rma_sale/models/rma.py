@@ -35,9 +35,9 @@ class Rma(models.Model):
     def _compute_allowed_picking_ids(self):
         domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
         for rec in self:
-            # if rec.partner_id:
-            commercial_partner = rec.partner_id.commercial_partner_id
-            domain.append(("partner_id", "child_of", commercial_partner.id))
+            if rec.partner_id:
+                commercial_partner = rec.partner_id.commercial_partner_id
+                domain.append(("partner_id", "child_of", commercial_partner.id))
             if rec.order_id:
                 domain.append(("sale_id", "=", rec.order_id.id))
             rec.allowed_picking_ids = self.env["stock.picking"].search(domain)
