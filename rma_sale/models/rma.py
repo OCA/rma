@@ -53,7 +53,7 @@ class Rma(models.Model):
             if rec.order_id:
                 order_move = rec.order_id.order_line.mapped("move_ids")
                 rec.allowed_move_ids = order_move.filtered(
-                    lambda r: r.picking_id == self.picking_id
+                    lambda r: r.picking_id == self.picking_id and r.state == "done"
                 ).ids
             else:
                 rec.allowed_move_ids = self.picking_id.move_lines.ids
