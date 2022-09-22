@@ -25,7 +25,7 @@ class CustomerPortal(CustomerPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
         order_obj = request.env["sale.order"]
-        wizard_obj = request.env["sale.order.rma.wizard"]
+        wizard_obj = request.env["sale.order.rma.wizard"].sudo()
         wizard_line_field_types = {
             f: d["type"] for f, d in wizard_obj.line_ids.fields_get().items()
         }
