@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_warranty](product_warranty/) | 15.0.1.0.1 | [![osi-scampbell](https://github.com/osi-scampbell.png?size=30px)](https://github.com/osi-scampbell) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Product Warranty
 [rma](rma/) | 15.0.1.1.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Return Merchandise Authorization (RMA)
+[rma_sale](rma_sale/) | 15.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Sale Order - Return Merchandise Authorization (RMA)
 [stock_production_lot_warranty](stock_production_lot_warranty/) | 15.0.1.0.0 | [![osi-scampbell](https://github.com/osi-scampbell.png?size=30px)](https://github.com/osi-scampbell) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Add warranty date to stock production lot
 
 [//]: # (end addons)
