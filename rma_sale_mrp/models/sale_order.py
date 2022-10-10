@@ -124,9 +124,9 @@ class SaleOrderLine(models.Model):
             self.env["mrp.bom"]
             .sudo()
             ._bom_find(
-                product=self.product_id,
+                products=self.product_id,
                 company_id=self.company_id.id,
                 bom_type="phantom",
             )
         )
-        return bom and bom.type == "phantom"
+        return bom and bom.get(self.product_id).type == "phantom"

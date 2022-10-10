@@ -106,7 +106,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             lambda x: not x.phantom_bom_product
             and not x.sale_line_id._rma_is_kit_product()
         )
-        super(SaleOrderLineRmaWizard, not_kit)._compute_move_id()
+        res = super(SaleOrderLineRmaWizard, not_kit)._compute_move_id()
         for line in self.filtered(lambda x: x.phantom_bom_product and x.picking_id):
             line.move_id = line.picking_id.move_lines.filtered(
                 lambda ml: (
@@ -116,6 +116,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
                     and ml.sale_line_id.order_id == line.order_id
                 )
             )
+        return res
 
     def _prepare_rma_values(self):
         """It will be used as a reference for the components"""

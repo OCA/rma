@@ -48,7 +48,7 @@ class Rma(models.Model):
                     _("You can't refund a kit in wich some RMAs aren't received")
                 )
             self |= rmas_by_register[0]
-        super().action_refund()
+        res = super().action_refund()
         # We can just link the line to an RMA but we can link several RMAs
         # to one invoice line.
         for rma_kit_register in set(phantom_rmas.mapped("rma_kit_register")):
@@ -64,3 +64,4 @@ class Rma(models.Model):
                     "state": "refunded",
                 }
             )
+        return res
