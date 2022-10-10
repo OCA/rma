@@ -38,14 +38,11 @@ class SaleOrder(models.Model):
             component_index = data_list.index(first_component_dict)
             # Prevent miscalculation if there partial deliveries
             quantity = sum(
-                [
-                    x.get("quantity", 0)
-                    for x in data_list
-                    if x.get("sale_line_id")
-                    and x.get("product") == first_component_dict.get("product")
-                    and x.get("sale_line_id")
-                    == first_component_dict.get("sale_line_id")
-                ]
+                x.get("quantity", 0)
+                for x in data_list
+                if x.get("sale_line_id")
+                and x.get("product") == first_component_dict.get("product")
+                and x.get("sale_line_id") == first_component_dict.get("sale_line_id")
             )
             data_list.insert(
                 component_index,
