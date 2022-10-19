@@ -15,8 +15,12 @@
                     <field name="line_ids" nolabel="1">
                         <tree editable="bottom">
                             <field name="order_id" invisible="1" />
-                            <field name="allowed_product_ids" invisible="1" />
-                            <field name="product_id" options="{'no_create': True}" />
+                            <field name="product_id_domain" invisible="1" />
+                            <field
+                                name="product_id"
+                                options="{'no_create': True}"
+                                domain="product_id_domain"
+                            />
                             <field name="quantity" />
                             <field name="uom_category_id" invisible="1" />
                             <field
@@ -24,11 +28,12 @@
                                 groups="uom.group_uom"
                                 options="{'no_create': True}"
                             />
-                            <field name="allowed_picking_ids" invisible="1" />
+                            <field name="picking_id_domain" invisible="1" />
                             <field
                                 name="picking_id"
                                 options="{'no_create': True}"
                                 required="1"
+                                domain="picking_id_domain"
                             />
                             <field name="operation_id" />
                         </tree>

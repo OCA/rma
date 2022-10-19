@@ -1,5 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import json
 
 from odoo import api, fields, models
 
@@ -17,27 +19,30 @@ class Rma(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
-    allowed_picking_ids = fields.Many2many(
-        comodel_name="stock.picking",
-        compute="_compute_allowed_picking_ids",
+    picking_id_domain = fields.Char(
+        compute="_compute_picking_id_domain",
+        readonly=True,
+        store=False,
     )
-    picking_id = fields.Many2one(domain="[('id', 'in', allowed_picking_ids)]")
-    allowed_move_ids = fields.Many2many(
-        comodel_name="sale.order.line",
-        compute="_compute_allowed_move_ids",
+    picking_id = fields.Many2one()
+    move_id_domain = fields.Char(
+        compute="_compute_move_id_domain",
+        readonly=True,
+        store=False,
     )
-    move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
+    move_id = fields.Many2one()
     sale_line_id = fields.Many2one(
         related="move_id.sale_line_id",
     )
-    allowed_product_ids = fields.Many2many(
-        comodel_name="product.product",
-        compute="_compute_allowed_product_ids",
+    product_id_domain = fields.Char(
+        compute="_compute_product_id_domain",
+        readonly=True,
+        store=False,
     )
-    product_id = fields.Many2one(domain="[('id', 'in', allowed_product_ids)]")
+    product_id = fields.Many2one()
 
     @api.depends("partner_id", "order_id")
-    def _compute_allowed_picking_ids(self):
+    def _compute_picking_id_domain(self):
         domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
         for rec in self:
             if rec.partner_id:
@@ -45,33 +50,33 @@ class Rma(models.Model):
                 domain.append(("partner_id", "child_of", commercial_partner.id))
             if rec.order_id:
                 domain.append(("sale_id", "=", rec.order_id.id))
-            rec.allowed_picking_ids = self.env["stock.picking"].search(domain)
+            rec.picking_id_domain = json.dumps(domain)
 
     @api.depends("order_id", "picking_id")
-    def _compute_allowed_move_ids(self):
+    def _compute_move_id_domain(self):
         for rec in self:
             if rec.order_id:
                 order_move = rec.order_id.order_line.mapped("move_ids")
-                rec.allowed_move_ids = order_move.filtered(
+                moves = order_move.filtered(
                     lambda r: r.picking_id == self.picking_id and r.state == "done"
-                ).ids
+                )
+                domain = [("id", "in", moves.ids)]
             else:
-                rec.allowed_move_ids = self.picking_id.move_lines.ids
+                domain = [("id", "in", self.picking_id.move_lines.ids)]
+            rec.move_id_domain = json.dumps(domain)
 
     @api.depends("order_id")
-    def _compute_allowed_product_ids(self):
+    def _compute_product_id_domain(self):
         for rec in self:
             if rec.order_id:
                 order_product = rec.order_id.order_line.mapped("product_id")
-                rec.allowed_product_ids = order_product.filtered(
+                products = order_product.filtered(
                     lambda r: r.type in ["consu", "product"]
-                ).ids
-            else:
-                rec.allowed_product_ids = (
-                    self.env["product.product"]
-                    .search([("type", "in", ["consu", "product"])])
-                    .ids
                 )
+                domain = [("id", "in", products.ids)]
+            else:
+                domain = [("type", "in", ["consu", "product"])]
+            rec.product_id_domain = json.dumps(domain)
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):

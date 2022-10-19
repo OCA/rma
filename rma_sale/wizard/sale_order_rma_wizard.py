@@ -1,6 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import json
 
 from odoo import SUPERUSER_ID, _, api, fields, models
 
@@ -110,14 +111,15 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             self.env.context.get("active_id", False)
         ),
     )
-    allowed_product_ids = fields.Many2many(
-        comodel_name="product.product", compute="_compute_allowed_product_ids"
+    product_id_domain = fields.Char(
+        compute="_compute_product_id_domain",
+        readonly=True,
+        store=False,
     )
     product_id = fields.Many2one(
         comodel_name="product.product",
         string="Product",
         required=True,
-        domain="[('id', 'in', allowed_product_ids)]",
     )
     uom_category_id = fields.Many2one(
         comodel_name="uom.category",
@@ -134,13 +136,14 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         domain="[('category_id', '=', uom_category_id)]",
         required=True,
     )
-    allowed_picking_ids = fields.Many2many(
-        comodel_name="stock.picking", compute="_compute_allowed_picking_ids"
+    picking_id_domain = fields.Char(
+        compute="_compute_picking_id_domain",
+        readonly=True,
+        store=False,
     )
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
         string="Delivery order",
-        domain="[('id', 'in', allowed_picking_ids)]",
     )
     move_id = fields.Many2one(comodel_name="stock.move", compute="_compute_move_id")
     operation_id = fields.Many2one(
@@ -173,20 +176,21 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             record.move_id = move_id
 
     @api.depends("order_id")
-    def _compute_allowed_product_ids(self):
+    def _compute_product_id_domain(self):
         for record in self:
-            product_ids = record.order_id.order_line.mapped("product_id.id")
-            record.allowed_product_ids = product_ids
+            products = record.order_id.order_line.mapped("product_id")
+            record.product_id_domain = json.dumps([("id", "in", products.ids)])
 
     @api.depends("product_id")
-    def _compute_allowed_picking_ids(self):
+    def _compute_picking_id_domain(self):
         for record in self:
             line = record.order_id.order_line.filtered(
                 lambda r: r.product_id == record.product_id
             )
-            record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
+            pickings = line.mapped("move_ids.picking_id").filtered(
                 lambda x: x.state == "done"
             )
+            record.picking_id_domain = json.dumps([("id", "in", pickings.ids)])
 
     def _prepare_rma_values(self):
         self.ensure_one()
