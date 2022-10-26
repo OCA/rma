@@ -1210,10 +1210,13 @@ class Rma(models.Model):
         self._ensure_can_be_replaced()
         moves_before = self.delivery_move_ids
         self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
-        new_move = self.delivery_move_ids - moves_before
-        if new_move:
-            self.message_post(
-                body=_(
+        new_moves = self.delivery_move_ids - moves_before
+        body = ""
+        # The product replacement could explode into several moves like in the case of
+        # MRP BoM Kits
+        for new_move in new_moves:
+            body += (
+                _(
                     'Replacement: Move <a href="#" data-oe-model="stock.move"'
                     ' data-oe-id="%(move_id)d">%(move_name)s</a> (Picking <a'
                     ' href="#" data-oe-model="stock.picking"'
@@ -1228,26 +1231,27 @@ class Rma(models.Model):
                         "picking_name": new_move.picking_id.name,
                     }
                 )
+                + "\n"
             )
-        else:
-            self.message_post(
-                body=_(
-                    "Replacement:<br/>"
-                    'Product <a href="#" data-oe-model="product.product" '
-                    'data-oe-id="%(id)d">%(name)s</a><br/>'
-                    "Quantity %(qty)s %(uom)s<br/>"
-                    "This replacement did not create a new move, but one of "
-                    "the previously created moves was updated with this data."
-                )
-                % (
-                    {
-                        "id": product.id,
-                        "name": product.display_name,
-                        "qty": qty,
-                        "uom": uom.name,
-                    }
-                )
+        self.message_post(
+            body=body
+            or _(
+                "Replacement:<br/>"
+                'Product <a href="#" data-oe-model="product.product" '
+                'data-oe-id="%(id)d">%(name)s</a><br/>'
+                "Quantity %(qty)s %(uom)s<br/>"
+                "This replacement did not create a new move, but one of "
+                "the previously created moves was updated with this data."
             )
+            % (
+                {
+                    "id": product.id,
+                    "name": product.display_name,
+                    "qty": qty,
+                    "uom": uom.name,
+                }
+            )
+        )
         if self.state != "waiting_replacement":
             self.state = "waiting_replacement"
 
