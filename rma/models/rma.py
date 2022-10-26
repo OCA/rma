@@ -1154,10 +1154,13 @@ class Rma(models.Model):
         self._ensure_can_be_replaced()
         moves_before = self.delivery_move_ids
         self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
-        new_move = self.delivery_move_ids - moves_before
-        if new_move:
-            self.message_post(
-                body=_(
+        new_moves = self.delivery_move_ids - moves_before
+        body = ""
+        # The product replacement could explode into several moves like in the case of
+        # MRP BoM Kits
+        for new_move in new_moves:
+            body += (
+                _(
                     "Replacement: "
                     'Move <a href="#" data-oe-model="stock.move" '
                     'data-oe-id="%d">%s</a> (Picking <a href="#" '
@@ -1170,19 +1173,20 @@ class Rma(models.Model):
                     new_move.picking_id.id,
                     new_move.picking_id.name,
                 )
+                + "\n"
             )
-        else:
-            self.message_post(
-                body=_(
-                    "Replacement:<br/>"
-                    'Product <a href="#" data-oe-model="product.product" '
-                    'data-oe-id="%d">%s</a><br/>'
-                    "Quantity %f %s<br/>"
-                    "This replacement did not create a new move, but one of "
-                    "the previously created moves was updated with this data."
-                )
-                % (product.id, product.display_name, qty, uom.name)
+        self.message_post(
+            body=body
+            or _(
+                "Replacement:<br/>"
+                'Product <a href="#" data-oe-model="product.product" '
+                'data-oe-id="%d">%s</a><br/>'
+                "Quantity %f %s<br/>"
+                "This replacement did not create a new move, but one of "
+                "the previously created moves was updated with this data."
             )
+            % (product.id, product.display_name, qty, uom.name)
+        )
         if self.state != "waiting_replacement":
             self.state = "waiting_replacement"
 
