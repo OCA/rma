@@ -22,12 +22,12 @@ msgstr ""
 #: model:mail.template,report_name:rma.mail_template_rma_notification
 #: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
 msgid "${(object.name or '')}"
-msgstr ""
+msgstr "${(object.name or '')}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
-msgstr ""
+msgstr "${object.company_id.name} RMA (Ref ${object.name or 'n/a' })"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_receipt_notification
@@ -251,6 +251,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Valores específicos por "
+"compañía.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -890,6 +892,20 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Group By"
 msgstr "Agrupar por"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
+msgid "Group RMA returns by customer address and warehouse"
+msgstr ""
+"Agrupar las devoluciones de RMA a cliente por dirección de envío y almacén"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Group RMA returns by customer and warehouse."
+msgstr ""
+"Agrupar las devoluciones de RMA a cliente por dirección de envío y almacén"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_account_move__id

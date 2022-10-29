@@ -623,6 +623,10 @@ class Rma(models.Model):
             "context": ctx,
         }
 
+    def _add_message_subscribe_partner(self):
+        if self.partner_id and self.partner_id not in self.message_partner_ids:
+            self.message_subscribe([self.partner_id.id])
+
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
         self.ensure_one()
@@ -633,8 +637,7 @@ class Rma(models.Model):
             else:
                 reception_move = self._create_receptions_from_product()
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
-            if self.partner_id not in self.message_partner_ids:
-                self.message_subscribe([self.partner_id.id])
+            self._add_message_subscribe_partner()
             self._send_confirmation_email()
 
     def action_refund(self):
@@ -649,7 +652,9 @@ class Rma(models.Model):
         for rmas in group_dict.values():
             origin = ", ".join(rmas.mapped("name"))
             invoice_form = Form(
-                self.env["account.move"].with_context(
+                self.env["account.move"]
+                .sudo()
+                .with_context(
                     default_move_type="out_refund",
                     company_id=rmas[0].company_id.id,
                 ),
@@ -676,7 +681,7 @@ class Rma(models.Model):
                     }
                 )
             refund.invoice_origin = origin
-            refund.message_post_with_view(
+            refund.with_user(self.env.uid).message_post_with_view(
                 "mail.message_origin_link",
                 values={"self": refund, "origin": rmas},
                 subtype_id=self.env.ref("mail.mt_note").id,
@@ -686,12 +691,8 @@ class Rma(models.Model):
         """Invoked when 'Replace' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_replaced()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["name"] = "Replace product(s)"
         action["context"] = dict(self.env.context)
@@ -708,12 +709,8 @@ class Rma(models.Model):
         """
         self.ensure_one()
         self._ensure_can_be_returned()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(
@@ -727,12 +724,8 @@ class Rma(models.Model):
         """Invoked when 'Split' button in rma form view is clicked."""
         self.ensure_one()
         self._ensure_can_be_split()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_split_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_split_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
@@ -742,12 +735,8 @@ class Rma(models.Model):
         """Invoked when a user wants to manually finalize the RMA"""
         self.ensure_one()
         self._ensure_can_be_returned()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("rma.rma_finalization_wizard_action")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "rma.rma_finalization_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
@@ -783,12 +772,8 @@ class Rma(models.Model):
     def action_view_receipt(self):
         """Invoked when 'Receipt' smart button in rma form view is clicked."""
         self.ensure_one()
-        # Force active_id to avoid issues when coming from smart buttons
-        # in other models
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.action_picking_tree_all"
         )
         action.update(
             res_id=self.reception_move_id.picking_id.id,
@@ -813,10 +798,8 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.action_picking_tree_all"
         )
         picking = self.delivery_move_ids.mapped("picking_id")
         if len(picking) > 1:
@@ -1046,6 +1029,8 @@ class Rma(models.Model):
         """
         self.ensure_one()
         invoice_form.partner_id = self.partner_invoice_id
+        # Avoid set partner default value
+        invoice_form.invoice_payment_term_id = self.env["account.payment.term"]
 
     def _prepare_refund_line(self, line_form):
         """Hook method for preparing a refund line Form.
@@ -1086,6 +1071,9 @@ class Rma(models.Model):
     # Returning business methods
     def create_return(self, scheduled_date, qty=None, uom=None):
         """Intended to be invoked by the delivery wizard"""
+        group_returns = self.env.company.rma_return_grouping
+        if "rma_return_grouping" in self.env.context:
+            group_returns = self.env.context.get("rma_return_grouping")
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
         group_dict = {}
@@ -1098,7 +1086,11 @@ class Rma(models.Model):
             )
             group_dict.setdefault(key, self.env["rma"])
             group_dict[key] |= record
-        for rmas in group_dict.values():
+        if group_returns:
+            grouped_rmas = group_dict.values()
+        else:
+            grouped_rmas = rmas_to_return
+        for rmas in grouped_rmas:
             origin = ", ".join(rmas.mapped("name"))
             rma_out_type = rmas[0].warehouse_id.rma_out_type_id
             picking_form = Form(
@@ -1162,10 +1154,13 @@ class Rma(models.Model):
         self._ensure_can_be_replaced()
         moves_before = self.delivery_move_ids
         self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
-        new_move = self.delivery_move_ids - moves_before
-        if new_move:
-            self.message_post(
-                body=_(
+        new_moves = self.delivery_move_ids - moves_before
+        body = ""
+        # The product replacement could explode into several moves like in the case of
+        # MRP BoM Kits
+        for new_move in new_moves:
+            body += (
+                _(
                     "Replacement: "
                     'Move <a href="#" data-oe-model="stock.move" '
                     'data-oe-id="%d">%s</a> (Picking <a href="#" '
@@ -1178,19 +1173,20 @@ class Rma(models.Model):
                     new_move.picking_id.id,
                     new_move.picking_id.name,
                 )
+                + "\n"
             )
-        else:
-            self.message_post(
-                body=_(
-                    "Replacement:<br/>"
-                    'Product <a href="#" data-oe-model="product.product" '
-                    'data-oe-id="%d">%s</a><br/>'
-                    "Quantity %f %s<br/>"
-                    "This replacement did not create a new move, but one of "
-                    "the previously created moves was updated with this data."
-                )
-                % (product.id, product.display_name, qty, uom.name)
+        self.message_post(
+            body=body
+            or _(
+                "Replacement:<br/>"
+                'Product <a href="#" data-oe-model="product.product" '
+                'data-oe-id="%d">%s</a><br/>'
+                "Quantity %f %s<br/>"
+                "This replacement did not create a new move, but one of "
+                "the previously created moves was updated with this data."
             )
+            % (product.id, product.display_name, qty, uom.name)
+        )
         if self.state != "waiting_replacement":
             self.state = "waiting_replacement"
 

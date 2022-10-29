@@ -1,7 +1,8 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import SUPERUSER_ID, _, api, fields, models
 
 
 class SaleOrderRmaWizard(models.TransientModel):
@@ -46,11 +47,21 @@ class SaleOrderRmaWizard(models.TransientModel):
         help="Values coming from portal RMA request form custom fields",
     )
 
-    def create_rma(self, from_portal=None):
+    def create_rma(self, from_portal=False):
         self.ensure_one()
+        user_has_group_portal = self.env.user.has_group(
+            "base.group_portal"
+        ) or self.env.user.has_group("base.group_public")
         lines = self.line_ids.filtered(lambda r: r.quantity > 0.0)
         val_list = [line._prepare_rma_values() for line in lines]
-        rma = self.env["rma"].create(val_list)
+        rma_model = (
+            self.env["rma"].with_user(SUPERUSER_ID)
+            if user_has_group_portal
+            else self.env["rma"]
+        )
+        rma = rma_model.create(val_list)
+        if from_portal:
+            rma._add_message_subscribe_partner()
         # post messages
         msg_list = [
             '<a href="#" data-oe-model="rma" data-oe-id="%d">%s</a>' % (r.id, r.name)
@@ -156,6 +167,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
                         r.sale_line_id == record.sale_line_id
                         and r.sale_line_id.product_id == record.product_id
                         and r.sale_line_id.order_id == record.order_id
+                        and r.state == "done"
                     )
                 )
             record.move_id = move_id
@@ -172,7 +184,9 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             line = record.order_id.order_line.filtered(
                 lambda r: r.product_id == record.product_id
             )
-            record.allowed_picking_ids = line.mapped("move_ids.picking_id")
+            record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
+                lambda x: x.state == "done"
+            )
 
     def _prepare_rma_values(self):
         self.ensure_one()
