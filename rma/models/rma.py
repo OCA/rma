@@ -635,7 +635,7 @@ class Rma(models.Model):
             if self.picking_id:
                 reception_move = self._create_receptions_from_picking()
             else:
-                reception_move = self._create_receptions_from_product()
+                reception_move = self._create_receptions_from_product()[0]
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
             self._add_message_subscribe_partner()
             self._send_confirmation_email()
