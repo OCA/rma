@@ -40,7 +40,7 @@
             name="product_tmpl_id"
             ref="product.product_product_3_product_template"
         />
-        <field name="name" ref="base.res_partner_4" />
+        <field name="partner_id" ref="base.res_partner_4" />
         <field name="delay">5</field>
         <field name="min_qty">1</field>
     </record>
@@ -52,7 +52,7 @@
             name="product_tmpl_id"
             ref="product.product_product_3_product_template"
         />
-        <field name="name" ref="base.res_partner_3" />
+        <field name="partner_id" ref="base.res_partner_3" />
         <field name="delay">5</field>
         <field name="min_qty">1</field>
     </record>

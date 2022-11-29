@@ -258,6 +258,3 @@ msgstr ""
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr ""
-
-#~ msgid "Information about a product supplier"
-#~ msgstr "Information sur le fournisseur du produit"
