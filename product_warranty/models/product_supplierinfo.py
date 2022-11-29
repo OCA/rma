@@ -16,30 +16,6 @@ class ProductSupplierInfo(models.Model):
             [("is_default", "=", True)], limit=1
         )
 
-    @api.depends("warranty_return_partner")
-    def _compute_warranty_return_address(self):
-        """Method to return the partner delivery address or if none, the
-        default address
-        """
-        for record in self:
-            return_partner = record.warranty_return_partner
-            partner_id = record.company_id.partner_id.id
-            if return_partner and return_partner == "supplier":
-                partner_id = record.name.id
-            elif (
-                return_partner
-                and return_partner == "company"
-                and record.company_id.crm_return_address_id
-            ):
-                partner_id = record.company_id.crm_return_address_id.id
-            elif (
-                return_partner
-                and return_partner == "other"
-                and record.warranty_return_other_address
-            ):
-                partner_id = record.warranty_return_other_address.id
-            record.warranty_return_address = partner_id
-
     warranty_duration = fields.Float(
         "Period",
         help="Warranty in month for this product/supplier relation. Only "
@@ -82,3 +58,27 @@ class ProductSupplierInfo(models.Model):
         help="Where the customer has to send back the product(s) "
         "if warranty return is set to 'other'.",
     )
+
+    @api.depends("warranty_return_partner")
+    def _compute_warranty_return_address(self):
+        """Method to return the partner delivery address or if none, the
+        default address
+        """
+        for record in self:
+            return_partner = record.warranty_return_partner
+            partner_id = record.company_id.partner_id.id
+            if return_partner and return_partner == "supplier":
+                partner_id = record.partner_id.id
+            elif (
+                return_partner
+                and return_partner == "company"
+                and record.company_id.crm_return_address_id
+            ):
+                partner_id = record.company_id.crm_return_address_id.id
+            elif (
+                return_partner
+                and return_partner == "other"
+                and record.warranty_return_other_address
+            ):
+                partner_id = record.warranty_return_other_address.id
+            record.warranty_return_address = partner_id
