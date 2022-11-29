@@ -23,7 +23,7 @@ class TestProductWarranty(TransactionCase):
         other_partner = self.env.ref("base.res_partner_12")
 
         supplierinfo_data = dict(
-            name=partner_id.id,
+            partner_id=partner_id.id,
             product_name="Test SupplierInfo for display Default Instruction",
             min_qty=4,
             delay=5,
@@ -59,7 +59,7 @@ class TestProductWarranty(TransactionCase):
 
         self.assertEqual(
             self.supplierinfo_brw.warranty_return_address.id,
-            self.supplierinfo_brw.name.id,
+            self.supplierinfo_brw.partner_id.id,
         )
 
         self.supplierinfo_brw.write({"warranty_return_partner": "company"})

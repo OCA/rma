@@ -25,7 +25,7 @@ class ProductSupplierInfo(models.Model):
             return_partner = record.warranty_return_partner
             partner_id = record.company_id.partner_id.id
             if return_partner and return_partner == "supplier":
-                partner_id = record.name.id
+                partner_id = record.partner_id.id
             elif (
                 return_partner
                 and return_partner == "company"

@@ -11,9 +11,10 @@
     "depends": ["sale_management"],
     "data": [
         "security/ir.model.access.csv",
-        "views/res_company.xml",
-        "views/product_warranty.xml",
-        "views/product_template.xml",
+        "views/res_company_views.xml",
+        "views/product_supplierinfo_views.xml",
+        "views/product_template_views.xml",
+        "views/return_instructions_views.xml",
     ],
     "demo": ["demo/product_warranty.xml", "demo/res_company.xml"],
     "images": ["images/product_warranty.png"],
