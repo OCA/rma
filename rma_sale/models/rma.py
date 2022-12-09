@@ -21,7 +21,10 @@ class Rma(models.Model):
         comodel_name="stock.picking",
         compute="_compute_allowed_picking_ids",
     )
-    picking_id = fields.Many2one(domain="[('id', 'in', allowed_picking_ids)]")
+    picking_id = fields.Many2one(
+        domain="(order_id or partner_id) and [('id', 'in', allowed_picking_ids)] or "
+        "[('state', '=', 'done'), ('picking_type_id.code', '=', 'outgoing')] "
+    )
     allowed_move_ids = fields.Many2many(
         comodel_name="sale.order.line",
         compute="_compute_allowed_move_ids",
@@ -34,18 +37,25 @@ class Rma(models.Model):
         comodel_name="product.product",
         compute="_compute_allowed_product_ids",
     )
-    product_id = fields.Many2one(domain="[('id', 'in', allowed_product_ids)]")
+    product_id = fields.Many2one(
+        domain="order_id and [('id', 'in', allowed_product_ids)] or "
+        "[('type', 'in', ['consu', 'product'])]"
+    )
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
         domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
         for rec in self:
+            domain2 = domain.copy()
             if rec.partner_id:
                 commercial_partner = rec.partner_id.commercial_partner_id
-                domain.append(("partner_id", "child_of", commercial_partner.id))
+                domain2.append(("partner_id", "child_of", commercial_partner.id))
             if rec.order_id:
-                domain.append(("sale_id", "=", rec.order_id.id))
-            rec.allowed_picking_ids = self.env["stock.picking"].search(domain)
+                domain2.append(("sale_id", "=", rec.order_id.id))
+            if domain2 != domain:
+                rec.allowed_picking_ids = self.env["stock.picking"].search(domain2)
+            else:
+                rec.allowed_picking_ids = False  # don't populate a big list
 
     @api.depends("order_id", "picking_id")
     def _compute_allowed_move_ids(self):
@@ -67,11 +77,7 @@ class Rma(models.Model):
                     lambda r: r.type in ["consu", "product"]
                 ).ids
             else:
-                rec.allowed_product_ids = (
-                    self.env["product.product"]
-                    .search([("type", "in", ["consu", "product"])])
-                    .ids
-                )
+                rec.allowed_product_ids = False  # don't populate a big list
 
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
