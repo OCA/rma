@@ -6,13 +6,13 @@ from odoo.tests import Form, TransactionCase
 from odoo.tests.common import users
 
 
-class TestRmaSale(TransactionCase):
+class TestRmaSaleBase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
-        cls.sale_order = cls.env["sale.order"]
+        cls.so_model = cls.env["sale.order"]
 
         cls.product_1 = cls.product_product.create(
             {"name": "Product test 1", "type": "product"}
@@ -23,22 +23,18 @@ class TestRmaSale(TransactionCase):
         cls.partner = cls.res_partner.create(
             {"name": "Partner test", "email": "partner@rma"}
         )
+        cls.report_model = cls.env["ir.actions.report"]
+        cls.rma_operation_model = cls.env["rma.operation"]
         cls._partner_portal_wizard(cls, cls.partner)
-        order_form = Form(cls.sale_order)
-        order_form.partner_id = cls.partner
-        with order_form.order_line.new() as line_form:
-            line_form.product_id = cls.product_1
-            line_form.product_uom_qty = 5
-        cls.sale_order = order_form.save()
-        cls.sale_order.action_confirm()
-        # Maybe other modules create additional lines in the create
-        # method in sale.order model, so let's find the correct line.
-        cls.order_line = cls.sale_order.order_line.filtered(
-            lambda r: r.product_id == cls.product_1
-        )
-        cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_lines.quantity_done = 5
-        cls.order_out_picking.button_validate()
+
+    def _create_sale_order(self, products):
+        order_form = Form(self.so_model)
+        order_form.partner_id = self.partner
+        for product_info in products:
+            with order_form.order_line.new() as line_form:
+                line_form.product_id = product_info[0]
+                line_form.product_uom_qty = product_info[1]
+        return order_form.save()
 
     def _partner_portal_wizard(self, partner):
         wizard_all = (
@@ -51,6 +47,22 @@ class TestRmaSale(TransactionCase):
     def _rma_sale_wizard(self, order):
         wizard_id = order.action_create_rma()["res_id"]
         return self.env["sale.order.rma.wizard"].browse(wizard_id)
+
+
+class TestRmaSale(TestRmaSaleBase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sale_order = cls._create_sale_order(cls, [[cls.product_1, 5]])
+        cls.sale_order.action_confirm()
+        # Maybe other modules create additional lines in the create
+        # method in sale.order model, so let's find the correct line.
+        cls.order_line = cls.sale_order.order_line.filtered(
+            lambda r: r.product_id == cls.product_1
+        )
+        cls.order_out_picking = cls.sale_order.picking_ids
+        cls.order_out_picking.move_lines.quantity_done = 5
+        cls.order_out_picking.button_validate()
 
     def test_create_rma_with_so(self):
         rma_form = Form(self.env["rma"])
@@ -66,8 +78,7 @@ class TestRmaSale(TransactionCase):
 
     def test_create_rma_from_so(self):
         order = self.sale_order
-        wizard_id = order.action_create_rma()["res_id"]
-        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.partner_id, order.partner_id)
         self.assertEqual(rma.order_id, order)
@@ -102,7 +113,7 @@ class TestRmaSale(TransactionCase):
         wizard_obj = (
             self.env["sale.order.rma.wizard"].sudo().with_context(active_id=order)
         )
-        operation = self.env["rma.operation"].sudo().search([], limit=1)
+        operation = self.rma_operation_model.sudo().search([], limit=1)
         line_vals = [
             (
                 0,
@@ -159,3 +170,14 @@ class TestRmaSale(TransactionCase):
             rma.product_uom_qty,
             "We should be allowed to return the product again",
         )
+
+    def test_report_rma(self):
+        wizard = self._rma_sale_wizard(self.sale_order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        operation = self.rma_operation_model.sudo().search([], limit=1)
+        rma.operation_id = operation.id
+        res = self.report_model._get_report_from_name(
+            "rma.report_rma"
+        )._render_qweb_text(rma.ids, False)
+        self.assertRegex(str(res[0]), self.sale_order.name)
+        self.assertRegex(str(res[0]), operation.name)
