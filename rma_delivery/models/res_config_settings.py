@@ -7,8 +7,10 @@ class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
     rma_delivery_strategy = fields.Selection(
-        related="company_id.rma_delivery_strategy", readonly=False,
+        related="company_id.rma_delivery_strategy",
+        readonly=False,
     )
     rma_fixed_delivery_method = fields.Many2one(
-        related="company_id.rma_fixed_delivery_method", readonly=False,
+        related="company_id.rma_fixed_delivery_method",
+        readonly=False,
     )
