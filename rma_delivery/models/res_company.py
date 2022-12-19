@@ -17,5 +17,6 @@ class Company(models.Model):
         default="mixed_method",
     )
     rma_fixed_delivery_method = fields.Many2one(
-        comodel_name="delivery.carrier", string="Default RMA delivery method",
+        comodel_name="delivery.carrier",
+        string="Default RMA delivery method",
     )
