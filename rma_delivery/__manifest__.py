@@ -3,7 +3,7 @@
 {
     "name": "Return Merchandise Authorization Management - Link with deliveries",
     "summary": "Allow to choose a default delivery carrier for returns",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
