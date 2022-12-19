@@ -35,7 +35,8 @@ class TestRmaDelivery(TestRma):
         """Helper to return the rma"""
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
-                active_ids=rma.ids, rma_delivery_type=delivery_type,
+                active_ids=rma.ids,
+                rma_delivery_type=delivery_type,
             )
         )
         if delivery_type == "replace":
