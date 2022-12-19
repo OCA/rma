@@ -26,16 +26,18 @@ class Rma(models.Model):
         return delivery_method
 
     def _prepare_returning_picking(self, picking_form, origin=None):
-        super()._prepare_returning_picking(picking_form, origin)
+        res = super()._prepare_returning_picking(picking_form, origin)
         picking_form.carrier_id = self._get_default_carrier_id(
             picking_form.company_id, picking_form.partner_id
         )
+        return res
 
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
         existing_pickings = self.delivery_move_ids.mapped("picking_id")
-        super().create_replace(scheduled_date, warehouse, product, qty, uom)
+        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
         new_pickings = self.delivery_move_ids.mapped("picking_id") - existing_pickings
         for picking in new_pickings:
             picking.carrier_id = self._get_default_carrier_id(
                 picking.company_id, picking.partner_id
             )
+        return res
