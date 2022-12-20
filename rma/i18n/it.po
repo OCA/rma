@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-12-01 17:44+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
+"PO-Revision-Date: 2022-12-20 15:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -876,13 +876,13 @@ msgstr "Seguito da"
 #: model:ir.model.fields,field_description:rma.field_rma__message_channel_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_channel_ids
 msgid "Followers (Channels)"
-msgstr "Seguito da (canali)"
+msgstr "Iscritti (canali)"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_partner_ids
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Seguito da (partner)"
+msgstr "Iscritti (partner)"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_type_icon
@@ -899,12 +899,12 @@ msgstr "Raggruppa per"
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
 msgid "Group RMA returns by customer address and warehouse"
-msgstr ""
+msgstr "Raggruppa resi RMA per indirizzo cliente e magazzino"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Group RMA returns by customer and warehouse."
-msgstr ""
+msgstr "Raggruppa resi RMA per cliente e magazzino."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_account_move__id
@@ -1705,7 +1705,7 @@ msgstr ""
 #. module: rma
 #: model:ir.ui.menu,name:rma.rma_reporting_menu
 msgid "Reporting"
-msgstr "Reporting"
+msgstr "Rendicontazione"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
@@ -1759,7 +1759,7 @@ msgstr "Restituito"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
 msgid "Rma"
-msgstr "Rma"
+msgstr "RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
