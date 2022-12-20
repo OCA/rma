@@ -63,7 +63,7 @@ class TestRmaSale(SavepointCase):
         rma = rma_form.save()
         rma.action_confirm()
         self.assertTrue(rma.reception_move_id)
-        self.assertFalse(rma.reception_move_id.origin_returned_move_id)
+        self.assertTrue(rma.reception_move_id.origin_returned_move_id)
 
     def test_create_rma_from_so(self):
         order = self.sale_order
