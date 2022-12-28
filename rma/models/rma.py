@@ -1001,7 +1001,7 @@ class Rma(models.Model):
         picking_id = picking_action["res_id"]
         picking = self.env["stock.picking"].browse(picking_id)
         picking.origin = "{} ({})".format(self.name, picking.origin)
-        move = picking.move_lines
+        move = picking.move_ids
         move.priority = self.priority
         return move
 
@@ -1207,7 +1207,7 @@ class Rma(models.Model):
     ):
         move_form.product_id = self.product_id
         move_form.product_uom_qty = quantity or self.product_uom_qty
-        move_form.product_uom = uom or self.product_uom
+        # move_form.product_uom_id = uom or self.product_uom
         move_form.date = scheduled_date
 
     # Replacing business methods

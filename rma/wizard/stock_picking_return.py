@@ -64,7 +64,7 @@ class ReturnPicking(models.TransientModel):
             returned_picking = self.env["stock.picking"].browse(res["res_id"])
             vals_list = [
                 move._prepare_return_rma_vals(self.picking_id)
-                for move in returned_picking.move_lines
+                for move in returned_picking.move_ids
             ]
             self.env["rma"].create(vals_list)
             return res
