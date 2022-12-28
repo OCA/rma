@@ -14,7 +14,7 @@ class StockPicking(models.Model):
 
     def _compute_rma_count(self):
         for rec in self:
-            rec.rma_count = len(rec.move_lines.mapped("rma_ids"))
+            rec.rma_count = len(rec.move_ids.mapped("rma_ids"))
 
     def copy(self, default=None):
         self.ensure_one()

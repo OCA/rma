@@ -118,9 +118,6 @@ class Rma(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={"draft": [("readonly", False)]},
-        domain=(
-            "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
-        ),
         help="Refund address for current RMA.",
     )
     commercial_partner_id = fields.Many2one(
@@ -880,7 +877,6 @@ class Rma(models.Model):
         rma._check_required_after_draft
         rma.action_confirm
         """
-        ir_translation = self.env["ir.translation"]
         required = [
             "partner_id",
             "partner_shipping_id",
@@ -891,7 +887,7 @@ class Rma(models.Model):
         for record in self:
             desc = ""
             for field in filter(lambda item: not record[item], required):
-                desc += "\n%s" % ir_translation.get_field_string("rma")[field]
+                desc += "\n%s" % _(field)
             if desc:
                 raise ValidationError(_("Required field(s):%s") % desc)
 
@@ -1013,12 +1009,33 @@ class Rma(models.Model):
         self.ensure_one()
         picking_form = Form(
             recordp=self.env["stock.picking"].with_context(
-                default_picking_type_id=self.warehouse_id.rma_in_type_id.id
+                default_picking_type_id=self.warehouse_id.rma_in_type_id.id,
+                default_location_id=self.partner_shipping_id.property_stock_customer.id,
+                default_location_dest_id=self.location_id.id,
             ),
             view="stock.view_picking_form",
         )
-        self._prepare_picking(picking_form)
         picking = picking_form.save()
+        picking.write(
+            {
+                "partner_id": self.partner_shipping_id.id,
+                "move_ids_without_package": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": picking.name,
+                            "product_id": self.product_id,
+                            "location_id": self.partner_shipping_id.property_stock_customer.id,
+                            "location_dest_id": self.location_id.id,
+                            "product_uom_qty": self.product_uom_qty,
+                            "picking_type_id": picking.picking_type_id.id,
+                            "product_uom": self.product_uom,
+                        },
+                    )
+                ],
+            }
+        )
         picking.action_confirm()
         picking.action_assign()
         picking.message_post_with_view(
@@ -1026,17 +1043,7 @@ class Rma(models.Model):
             values={"self": picking, "origin": self},
             subtype_id=self.env.ref("mail.mt_note").id,
         )
-        return picking.move_lines
-
-    def _prepare_picking(self, picking_form):
-        picking_form.origin = self.name
-        picking_form.partner_id = self.partner_shipping_id
-        picking_form.location_id = self.partner_shipping_id.property_stock_customer
-        picking_form.location_dest_id = self.location_id
-        with picking_form.move_ids_without_package.new() as move_form:
-            move_form.product_id = self.product_id
-            move_form.product_uom_qty = self.product_uom_qty
-            move_form.product_uom = self.product_uom
+        return picking.move_line_ids
 
     # Extract business methods
     def extract_quantity(self, qty, uom):
