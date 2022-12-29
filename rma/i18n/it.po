@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-12-01 17:44+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
+"PO-Revision-Date: 2023-07-12 15:10+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -423,7 +423,7 @@ msgstr "Decorazione eccezione attività"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_state
 msgid "Activity State"
-msgstr "Stato Attività"
+msgstr "Stato attività"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_type_icon
@@ -470,7 +470,7 @@ msgstr "Permetti di chiudere un RMA senza restituire un prodotto o rimborso"
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
 msgid "Archived"
-msgstr "Archiviato"
+msgstr "In archivio"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -481,7 +481,7 @@ msgstr "Sei sicuro di voler cancellare questo RMA"
 #: model:ir.model.fields,field_description:rma.field_rma__message_attachment_count
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_attachment_count
 msgid "Attachment Count"
-msgstr "Conteggio Allegati"
+msgstr "Numero allegati"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -550,7 +550,7 @@ msgstr "Fai click per aggiungere un nuovo RMA."
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
 msgid "Color Index"
-msgstr "Indice Colore"
+msgstr "Indice colore"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__commercial_partner_id
@@ -577,7 +577,7 @@ msgstr "Azienda"
 #. module: rma
 #: model:ir.model,name:rma.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni di Configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: rma
 #: model:ir.ui.menu,name:rma.rma_configuration_menu
@@ -608,8 +608,9 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
-"La conversione tra Unità di Misura può avvenire solo se appartengono alla "
-"stessa categoria. La conversione sarà effettuata in base ai rapporti."
+"Le conversioni tra unità di misura possono avvenire solo se appartengono "
+"alla stessa categoria. La conversione verrà effettuata in base alle "
+"proporzioni."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
@@ -690,7 +691,7 @@ msgstr "Scadenza"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_defaults
 msgid "Default Values"
-msgstr "Valori Predefiniti"
+msgstr "Valori predefiniti"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
@@ -954,7 +955,7 @@ msgstr "Icona per indicare un'attività eccezione."
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction
 #: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked, new messages require your attention."
-msgstr "Se attivo, nuovi messaggi richiedono la tua attenzione."
+msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
@@ -962,7 +963,7 @@ msgstr "Se attivo, nuovi messaggi richiedono la tua attenzione."
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Se attivo, alcuni messaggi hanno un errore di consegna."
+msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_bounced_content
@@ -991,7 +992,7 @@ msgstr "Email in arrivo"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
 msgid "Invoice Address"
-msgstr "Indirizzo di Fatturazione"
+msgstr "Indirizzo di fatturazione"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -1007,17 +1008,17 @@ msgstr "Indirizzo di fatturazione e spedizione:"
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
-msgstr "E' un follower"
+msgstr "Sta seguendo"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
 msgid "Journal Entry"
-msgstr "Registrazione Contabile"
+msgstr "Registrazione contabile"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move_line
 msgid "Journal Item"
-msgstr "Oggetto Registro"
+msgstr "Movimento contabile"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_account_move____last_update
@@ -1123,7 +1124,11 @@ msgstr "Responsabile"
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_error
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_error
 msgid "Message Delivery error"
+<<<<<<< HEAD
 msgstr "Messaggio di Errore Consegna"
+=======
+msgstr "Errore di consegna messaggio"
+>>>>>>> 4498ae0 (Translated using Weblate (Italian))
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_ids
@@ -1134,7 +1139,7 @@ msgstr "Messaggi"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Scadenza della mia attività"
+msgstr "Scadenza mia attività"
 
 #. module: rma
 #: code:addons/rma/controllers/main.py:0
@@ -1164,7 +1169,7 @@ msgstr "Riepilogo prossima attività"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo prossima attività"
+msgstr "Tipologia prossima attività"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1199,13 +1204,13 @@ msgstr "Numero di Errore"
 #: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr "Numero di messaggi che richiedono una azione"
+msgstr "Numero di messaggi che richiedono un'azione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Numero di messaggi con errori di consegna"
+msgstr "Numero di messaggi con errore di consegna"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_unread_counter
@@ -1319,7 +1324,7 @@ msgstr "Prodotto"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom_qty
 msgid "Product qty"
-msgstr "Quantità Prodotto"
+msgstr "Q.tà prodotto"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
@@ -1710,7 +1715,7 @@ msgstr "Reporting"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
 msgid "Requested operation"
-msgstr "Operazione Richiesta"
+msgstr "Operazione richiesta"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1727,7 +1732,7 @@ msgstr "Responsabile"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_user_id
 msgid "Responsible User"
-msgstr "Utente Responsabile"
+msgstr "Utente responsabile"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
@@ -1770,12 +1775,12 @@ msgstr "Conteggio Rma"
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "SMS Errore Consegna"
+msgstr "Errore consegna SMS"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
 msgid "Scheduled Date"
-msgstr "Data Prevista"
+msgstr "Data programmata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
@@ -1861,12 +1866,12 @@ msgstr "Condividi"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
 msgid "Shipping Address"
-msgstr "Indirizzo di Spedizione"
+msgstr "Indirizzo di spedizione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr "Indirizzo spedizione per questo RMA."
+msgstr "Indirizzo di spedizione per questo RMA."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -1923,12 +1928,12 @@ msgstr ""
 #. module: rma
 #: model:ir.model,name:rma.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento di Magazzino"
+msgstr "Movimento di magazzino"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_rule
 msgid "Stock Rule"
-msgstr "Regola di Magazzino"
+msgstr "Regola di giacenza"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__name
@@ -2078,7 +2083,7 @@ msgstr "Tipo di operazione"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Tipo di attività di eccezione nel record."
+msgstr "Tipo di attività eccezione sul record."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -2106,7 +2111,7 @@ msgstr "Messaggi non letti"
 #: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr "Conteggio messaggi non letti"
+msgstr "Numero messaggi non letti"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
