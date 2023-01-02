@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-12-30 11:53+0000\n"
+"PO-Revision-Date: 2023-01-02 11:49+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -608,8 +608,9 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
-"La conversione tra Unità di Misura può avvenire solo se appartengono alla "
-"stessa categoria. La conversione sarà effettuata in base ai rapporti."
+"Le conversioni tra unità di misura possono avvenire solo se appartengono "
+"alla stessa categoria. La conversione verrà effettuata in base alle "
+"proporzioni."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
@@ -1012,12 +1013,12 @@ msgstr "E' un follower"
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
 msgid "Journal Entry"
-msgstr "Registrazione Contabile"
+msgstr "Registrazione contabile"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move_line
 msgid "Journal Item"
-msgstr "Oggetto Registro"
+msgstr "Movimento contabile"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_account_move____last_update
