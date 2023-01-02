@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-04 11:05+0000\n"
-"Last-Translator: Samuele Mariani <samuele@ooops404.com>\n"
+"PO-Revision-Date: 2023-06-15 11:09+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: rma_sale
 #: code:addons/rma_sale/controllers/sale_portal.py:0
@@ -102,7 +102,7 @@ msgstr "<strong>Ordine di vendita</strong>"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Accept"
-msgstr "Accettare"
+msgstr "Accetta"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__allowed_move_ids
@@ -158,7 +158,7 @@ msgstr "Aziende"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni di Configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -166,8 +166,9 @@ msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
 "same category. The conversion will be made based on the ratios."
 msgstr ""
-"La conversione tra Unità di Misura può avvenire solo se appartengono alla "
-"stessa categoria. La conversione verrà effettuata in base ai rapporti."
+"Le conversioni tra unità di misura possono avvenire solo se appartengono "
+"alla stessa categoria. La conversione verrà effettuata in base alle "
+"proporzioni."
 
 #. module: rma_sale
 #: code:addons/rma_sale/models/sale.py:0
@@ -292,7 +293,7 @@ msgstr "Righe"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
 msgid "Move"
-msgstr "Spostare"
+msgstr "Movimento"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__order_id
@@ -389,7 +390,7 @@ msgstr "Ordine di vendita"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Righe ordine di vendita"
+msgstr "Riga ordine di vendita"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -414,7 +415,7 @@ msgstr "Richiesta RMA a singola pagina"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento delle scorte"
+msgstr "Movimento di magazzino"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
