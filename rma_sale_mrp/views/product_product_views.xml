@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_product_form" model="ir.ui.view">
+        <field name="name">product.product.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="priority" eval="100" />
+        <field name="arch" type="xml">
+            <group name="invoicing" position="after">
+                <group
+                    name="rma"
+                    string="RMA"
+                    attrs="{'invisible': [('bom_count', '&lt;=', 0)]}"
+                >
+                    <field name="rma_kit_show_detailed" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

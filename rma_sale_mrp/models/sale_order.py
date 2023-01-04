@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - David Vidal
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import models
 
@@ -27,6 +28,8 @@ class SaleOrder(models.Model):
         # will be using as the control in frontend and for display purposes
         # in backend
         for product, sale_line_id in kit_products:
+            if product.rma_kit_show_detailed:
+                continue
             order_line_obj = self.env["sale.order.line"]
             product_obj = self.env["product.product"]
             first_component_dict = next(

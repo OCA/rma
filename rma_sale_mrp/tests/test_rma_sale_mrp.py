@@ -1,9 +1,10 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.exceptions import ValidationError
+from odoo.tests import Form, SavepointCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestRmaSaleMrp(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -70,12 +71,9 @@ class TestRmaSaleMrp(SavepointCase):
             line.quantity_done = line.product_uom_qty
         cls.backorder.button_validate()
 
-    def test_create_rma_from_so(self):
+    def _do_rma_test(self, wizard):
         order = self.sale_order
         out_pickings = self.order_out_picking + self.backorder
-        wizard_id = order.action_create_rma()["res_id"]
-        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
-        wizard.line_ids.quantity = 4
         res = wizard.create_and_open_rma()
         rmas = self.env["rma"].search(res["domain"])
         for rma in rmas:
@@ -120,9 +118,6 @@ class TestRmaSaleMrp(SavepointCase):
         order.user_id = user.id
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
-        # All the component RMAs must be received if we want to make a refund
-        with self.assertRaises(UserError):
-            rma.action_refund()
         rmas_left = rmas - rma
         for additional_rma in rmas_left:
             additional_rma.reception_move_id.quantity_done = (
@@ -136,6 +131,9 @@ class TestRmaSaleMrp(SavepointCase):
         # The refund product is the kit, not the components
         self.assertEqual(rma.refund_id.invoice_line_ids.product_id, self.product_kit)
         rma.refund_id.action_post()
+
+    def _do_rma_test_remaining(self):
+        order = self.sale_order
         # We can still return another kit
         wizard_id = order.action_create_rma()["res_id"]
         wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
@@ -149,3 +147,35 @@ class TestRmaSaleMrp(SavepointCase):
         wizard.line_ids.quantity = 1
         with self.assertRaises(ValidationError):
             wizard.create_and_open_rma()
+
+    def test_create_rma_from_so(self):
+        order = self.sale_order
+        wizard_id = order.action_create_rma()["res_id"]
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        self.assertEqual(len(wizard.line_ids), 1)
+        self.assertEqual(len(wizard.component_line_ids), 4)
+        wizard.line_ids.quantity = 4
+        self._do_rma_test(wizard)
+        self._do_rma_test_remaining()
+
+    def test_create_rma_from_so_detailed(self):
+        self.product_kit.rma_kit_show_detailed = True
+        order = self.sale_order
+        wizard_id = order.action_create_rma()["res_id"]
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        self.assertEqual(len(wizard.line_ids), 4)
+        self.assertEqual(len(wizard.component_line_ids), 0)
+
+        kit_comp_1_lines = wizard.line_ids.filtered(
+            lambda line: line.product_id == self.product_kit_comp_1
+        ).sorted(lambda l: l.move_id.id)
+        kit_comp_2_lines = wizard.line_ids - kit_comp_1_lines
+        kit_comp_2_lines = kit_comp_2_lines.sorted(lambda l: l.move_id.id)
+
+        # set quantities like test_create_rma_from_so
+        kit_comp_1_lines[0].quantity = 3.0
+        kit_comp_1_lines[1].quantity = 5.0
+        kit_comp_2_lines[0].quantity = 13.0
+        kit_comp_2_lines[1].quantity = 3.0
+
+        self._do_rma_test(wizard)

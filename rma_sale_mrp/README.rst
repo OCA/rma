@@ -85,6 +85,7 @@ Authors
 ~~~~~~~
 
 * Tecnativa
+* MT Software
 
 Contributors
 ~~~~~~~~~~~~
@@ -92,6 +93,8 @@ Contributors
 * `Tecnativa <https://www.tecnativa.com>`__:
 
   * David Vidal
+
+* Michael Tietz (MT Software) <mtietz@mt-software.de>
 
 Maintainers
 ~~~~~~~~~~~

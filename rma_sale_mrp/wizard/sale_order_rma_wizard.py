@@ -19,16 +19,18 @@ class SaleOrderRmaWizard(models.TransientModel):
     def create(self, vals):
         """Split component lines"""
         if "line_ids" in vals and vals.get("line_ids"):
-            line_ids = [
-                (x[0], x[1], x[2])
-                for x in vals.get("line_ids")
-                if not x[2].get("phantom_bom_product")
-            ]
-            component_line_ids = [
-                (x[0], x[1], x[2])
-                for x in vals.get("line_ids")
-                if x[2].get("phantom_bom_product")
-            ]
+            line_ids = []
+            component_line_ids = []
+            for x in vals.get("line_ids"):
+                data = x[2]
+                phantom_bom_product = data.get("phantom_bom_product")
+                phantom_bom_product = phantom_bom_product and self.env[
+                    "product.product"
+                ].browse(phantom_bom_product)
+                if not phantom_bom_product or phantom_bom_product.rma_kit_show_detailed:
+                    line_ids.append(x)
+                else:
+                    component_line_ids.append(x)
             vals.update(
                 {"line_ids": line_ids, "component_line_ids": component_line_ids}
             )
