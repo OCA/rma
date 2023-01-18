@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-01-02 11:49+0000\n"
+"PO-Revision-Date: 2023-01-18 12:03+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -415,7 +415,7 @@ msgstr "Richiesta RMA a singola pagina"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento delle scorte"
+msgstr "Movimento di magazzino"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
