@@ -12,6 +12,7 @@
     "license": "AGPL-3",
     "depends": ["rma", "sale_stock"],
     "data": [
+        "views/account_move_views.xml",
         "views/assets.xml",
         "views/report_rma.xml",
         "views/rma_views.xml",

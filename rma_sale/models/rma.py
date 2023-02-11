@@ -36,6 +36,8 @@ class Rma(models.Model):
         domain="order_id and [('id', 'in', allowed_product_ids)] or "
         "[('type', 'in', ['consu', 'product'])]"
     )
+    # Add index to this field, as we perform a search on it
+    refund_id = fields.Many2one(index=True)
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
@@ -84,6 +86,35 @@ class Rma(models.Model):
     def _onchange_order_id(self):
         self.product_id = self.picking_id = False
 
+    def _link_refund_with_reception_move(self):
+        """Perform the internal operations for linking the RMA reception move with the
+        sales order line.
+        """
+        self.ensure_one()
+        self.reception_move_id.sale_line_id = self.sale_line_id.id
+        self.reception_move_id.to_refund = True
+
+    def _unlink_refund_with_reception_move(self):
+        """Perform the internal operations for unlinking the RMA reception move with the
+        sales order line.
+        """
+        self.ensure_one()
+        self.reception_move_id.sale_line_id = False
+        self.reception_move_id.to_refund = False
+
+    def action_refund(self):
+        """As we have made a refund, the return move + the refund should be linked to
+        the source sales order line, to decrease both the delivered and invoiced
+        quantity.
+
+        NOTE: The refund line is linked to the SO line in `_prepare_refund_line`.
+        """
+        res = super().action_refund()
+        for rma in self:
+            if rma.sale_line_id:
+                rma._link_refund_with_reception_move()
+        return res
+
     def _prepare_refund(self, invoice_form, origin):
         """Inject salesman from sales order (if any)"""
         res = super()._prepare_refund(invoice_form, origin)
@@ -111,3 +142,4 @@ class Rma(models.Model):
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+            line_form.sale_line_ids.add(line)
