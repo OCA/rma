@@ -35,7 +35,9 @@ class StockMove(models.Model):
         rma_receiver = self.sudo().mapped("rma_receiver_ids")
         rma = self.sudo().mapped("rma_id")
         res = super().unlink()
-        rma_receiver.write({"state": "draft"})
+        rma_receiver.filtered(lambda x: x.state != "cancelled").write(
+            {"state": "draft"}
+        )
         rma.update_received_state()
         rma.update_replaced_state()
         return res
