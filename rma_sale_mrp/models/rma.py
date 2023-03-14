@@ -64,3 +64,13 @@ class Rma(models.Model):
                     "state": "refunded",
                 }
             )
+
+    def action_draft(self):
+        if self.filtered(lambda r: r.state == "cancelled" and r.phantom_bom_product):
+            raise UserError(
+                _(
+                    "To avoid kit quantities inconsistencies it is not possible to convert "
+                    "to draft a cancelled RMA. You should do a new one from the sales order."
+                )
+            )
+        return super().action_draft()
