@@ -148,18 +148,30 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_account_move__display_name
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order__display_name
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__display_name
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_rma_wizard__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_account_move__id
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__id
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order__id
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line__id
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__id
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_rma_wizard__id
 msgid "ID"
 msgstr ""
 
 #. module: rma_sale_mrp
-#: model:ir.model,name:rma_sale_mrp.model_account_invoice
-msgid "Invoice"
+#: model:ir.model,name:rma_sale_mrp.model_account_move
+msgid "Journal Entry"
 msgstr ""
 
 #. module: rma_sale_mrp
@@ -179,7 +191,13 @@ msgid "Kit quantity"
 msgstr "Cantidad de kit"
 
 #. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_account_move____last_update
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma____last_update
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order____last_update
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component____last_update
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_rma_wizard____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
@@ -257,11 +275,6 @@ msgid "Sale Line"
 msgstr "Línea de venta"
 
 #. module: rma_sale_mrp
-#: model:ir.model,name:rma_sale_mrp.model_sale_order
-msgid "Sale Order"
-msgstr "Pedido de venta"
-
-#. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
 msgstr "Asistente de RMA"
@@ -272,16 +285,29 @@ msgid "Sale Order Rma Wizard"
 msgstr "Asistente de Orden de Venta - RMA"
 
 #. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: rma_sale_mrp
-#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:55
+#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid ""
 "The kit corresponding to the product %s can't be put in the RMA. Either all "
 "or some of the components where already put in another RMA"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: code:addons/rma_sale_mrp/models/rma.py:0
+#, python-format
+msgid ""
+"To avoid kit quantities inconsistencies it is not possible to convert to "
+"draft a cancelled RMA. You should do a new one from the sales order."
 msgstr ""
 
 #. module: rma_sale_mrp
@@ -317,7 +343,10 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: rma_sale_mrp
-#: code:addons/rma_sale_mrp/models/rma.py:49
+#: code:addons/rma_sale_mrp/models/rma.py:0
 #, python-format
 msgid "You can't refund a kit in wich some RMAs aren't received"
 msgstr "No puedes reembolsar un kit cuyos RMAs no están en estado `recibido`"
+
+#~ msgid "Sale Order"
+#~ msgstr "Pedido de venta"
