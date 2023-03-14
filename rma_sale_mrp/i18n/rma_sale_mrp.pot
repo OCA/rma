@@ -288,6 +288,14 @@ msgid ""
 msgstr ""
 
 #. module: rma_sale_mrp
+#: code:addons/rma_sale_mrp/models/rma.py:0
+#, python-format
+msgid ""
+"To avoid kit quantities inconsistencies it is not possible to convert to "
+"draft a cancelled RMA. You should do a new one from the sales order."
+msgstr ""
+
+#. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
 msgid ""
 "To how many kits this components corresponds to. Used mainly for refunding "
