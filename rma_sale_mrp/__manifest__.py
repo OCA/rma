@@ -3,7 +3,7 @@
 {
     "name": "Return Merchandise Authorization Management - Link with MRP Kits",
     "summary": "Allow doing RMAs from MRP kits",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "development_status": "Beta",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
