@@ -20,6 +20,9 @@ class ReturnPicking(models.TransientModel):
                 [("company_id", "=", self.picking_id.company_id.id)]
             ).mapped("rma_loc_id")
             rma_loc_domain = [("id", "child_of", rma_loc.ids)]
+            # We want to avoid setting the return move `to_refund` as it will change
+            # the delivered quantities in the sale and set them to invoice.
+            self.product_return_moves.to_refund = False
         else:
             # If self.create_rma is not True, the value of the location and
             # the location domain will be the same as assigned by default.
