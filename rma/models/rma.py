@@ -980,6 +980,13 @@ class Rma(models.Model):
             ),
             view="stock.view_picking_form",
         )
+        if self.operation_id.name == "Replace":
+            self._action_launch_stock_rule(
+                    fields.Datetime.now(),
+                    self.warehouse_id,
+                    self.product_id,
+                    self.product_uom_qty,
+                    self.product_uom,)
         self._prepare_picking(picking_form)
         picking = picking_form.save()
         picking.action_confirm()
