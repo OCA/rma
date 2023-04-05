@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-09-26 10:58+0000\n"
+"PO-Revision-Date: 2023-04-05 07:26+0000\n"
 "Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde.com>"
 "\n"
 "Language-Team: none\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -1687,7 +1687,7 @@ msgstr "Name des Grundes"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Receipt"
-msgstr "Kassenbon"
+msgstr "Rückgabebeleg"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__received
