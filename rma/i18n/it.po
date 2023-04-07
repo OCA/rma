@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-04 15:24+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-04-07 18:25+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -1008,7 +1008,7 @@ msgstr "Indirizzo di fatturazione e spedizione:"
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
-msgstr "E' un follower"
+msgstr "Sta seguendo"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
@@ -1776,7 +1776,7 @@ msgstr "Errore consegna SMS"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
 msgid "Scheduled Date"
-msgstr "Data Prevista"
+msgstr "Data programmata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
