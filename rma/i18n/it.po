@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-04 15:24+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-04-07 18:28+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -342,7 +342,7 @@ msgstr "Avviso accesso"
 #: model:ir.model.fields,field_description:rma.field_rma__message_needaction
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_needaction
 msgid "Action Needed"
-msgstr "Azione Necessaria"
+msgstr "Azione richiesta"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_operation__active
@@ -795,7 +795,7 @@ msgstr "Riga Fattura"
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
-msgstr "E' un follower"
+msgstr "Sta seguendo"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma____last_update
@@ -1479,7 +1479,7 @@ msgstr "Conteggio RMA"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
 msgid "Scheduled Date"
-msgstr "Data Prevista"
+msgstr "Data programmata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
