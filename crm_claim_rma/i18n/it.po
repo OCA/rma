@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-15 07:35+0000\n"
-"PO-Revision-Date: 2022-12-30 11:48+0000\n"
+"PO-Revision-Date: 2023-04-07 16:34+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/"
 ")\n"
@@ -412,7 +412,7 @@ msgstr ""
 #: field:claim.line,message_is_follower:0
 #: field:stock.move,message_is_follower:0
 msgid "Is a Follower"
-msgstr "È un follower"
+msgstr "Sta seguendo"
 
 #. module: crm_claim_rma
 #: field:claim.line,message_last_post:0 field:stock.move,message_last_post:0
@@ -491,7 +491,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_ids:0 field:stock.move,message_ids:0
 msgid "Messages"
-msgstr "Messages"
+msgstr "Messaggi"
 
 #. module: crm_claim_rma
 #: help:claim.line,message_ids:0 help:stock.move,message_ids:0
