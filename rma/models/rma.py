@@ -1135,7 +1135,6 @@ class Rma(models.Model):
         moves_before = self.delivery_move_ids
         self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
         new_moves = self.delivery_move_ids - moves_before
-        self.reception_move_id.move_dest_ids += new_moves
         body = ""
         # The product replacement could explode into several moves like in the case of
         # MRP BoM Kits
