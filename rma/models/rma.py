@@ -293,7 +293,9 @@ class Rma(models.Model):
         )
         mapped_data = Counter(map(lambda r: r["rma_id"][0], rma_data))
         for record in self:
-            record.delivery_picking_count = mapped_data.get(record.id, 0)
+            record.delivery_picking_count = \
+                len(record.procurement_group_id.stock_move_ids.mapped('picking_id'))\
+                or len(record.delivery_move_ids.mapped('picking_id'))
 
     @api.depends(
         "delivery_move_ids",
@@ -823,7 +825,8 @@ class Rma(models.Model):
             .with_context(active_id=self.id)
             .read()[0]
         )
-        picking = self.delivery_move_ids.mapped("picking_id")
+        picking = self.procurement_group_id.stock_move_ids.mapped("picking_id")\
+                  or self.delivery_move_ids.mapped("picking_id")
         if len(picking) > 1:
             action["domain"] = [("id", "in", picking.ids)]
         elif picking:
