@@ -57,6 +57,11 @@ msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
 msgstr ""
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
+msgid "<option value=\"\">---</option>"
+msgstr ""
+
+#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
