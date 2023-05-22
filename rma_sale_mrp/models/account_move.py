@@ -13,11 +13,12 @@ class AccountMove(models.Model):
             "Product Unit of Measure"
         )
         lines = super()._check_rma_invoice_lines_qty()
-        if lines:
-            return lines.sudo().filtered(
-                lambda r: (
-                    r.rma_id.phantom_bom_product
-                    and float_compare(r.quantity, r.rma_id.kit_qty, precision) < 0
-                )
+        if not lines:
+            return lines
+        return lines.filtered(
+            lambda r: (
+                not r.rma_id.phantom_bom_product
+                or r.rma_id.phantom_bom_product
+                and float_compare(r.quantity, r.rma_id.kit_qty, precision) < 0
             )
-        return lines
+        )
