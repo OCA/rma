@@ -1,16 +1,17 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Return Merchandise Authorization Management",
     "summary": "Return Merchandise Authorization (RMA)",
-    "version": "14.0.3.2.8",
+    "version": "14.0.4.0.0",
     "development_status": "Production/Stable",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
-    "author": "Tecnativa, Odoo Community Association (OCA)",
+    "author": "Tecnativa, MT Software, Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",
-    "depends": ["stock_account"],
+    "depends": ["stock_account", "stock_helper"],
     "data": [
         "views/report_rma.xml",
         "report/report.xml",

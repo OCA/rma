@@ -1,8 +1,9 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase, new_test_user, users
+from odoo.tests import Form, SavepointCase, new_test_user, tagged, users
 
 
 class TestRma(SavepointCase):
@@ -85,8 +86,8 @@ class TestRma(SavepointCase):
     ):
         rma = self._create_rma(partner, product, qty, location)
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_ids.quantity_done = rma.product_uom_qty
+        rma.reception_move_ids.picking_id._action_done()
         return rma
 
     def _test_readonly_fields(self, rma):
@@ -141,6 +142,7 @@ class TestRma(SavepointCase):
         return picking
 
 
+@tagged("post_install", "-at_install")
 class TestRmaCase(TestRma):
     def test_onchange(self):
         rma_form = Form(self.env["rma"])
@@ -217,19 +219,19 @@ class TestRmaCase(TestRma):
     def test_confirm_and_receive(self):
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
-        self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")
-        self.assertEqual(rma.reception_move_id.product_id, rma.product_id)
-        self.assertEqual(rma.reception_move_id.product_uom_qty, 10)
-        self.assertEqual(rma.reception_move_id.product_uom, rma.product_uom)
+        self.assertEqual(rma.reception_move_ids.picking_id.state, "assigned")
+        self.assertEqual(rma.reception_move_ids.product_id, rma.product_id)
+        self.assertEqual(rma.reception_move_ids.product_uom_qty, 10)
+        self.assertEqual(rma.reception_move_ids.product_uom, rma.product_uom)
         self.assertEqual(rma.state, "confirmed")
         self._test_readonly_fields(rma)
-        rma.reception_move_id.quantity_done = 9
+        rma.reception_move_ids.quantity_done = 9
         with self.assertRaises(ValidationError):
-            rma.reception_move_id.picking_id._action_done()
-        rma.reception_move_id.quantity_done = 10
-        rma.reception_move_id.picking_id._action_done()
-        self.assertEqual(rma.reception_move_id.picking_id.state, "done")
-        self.assertEqual(rma.reception_move_id.quantity_done, 10)
+            rma.reception_move_ids.picking_id._action_done()
+        rma.reception_move_ids.quantity_done = 10
+        rma.reception_move_ids.picking_id._action_done()
+        self.assertEqual(rma.reception_move_ids.picking_id.state, "done")
+        self.assertEqual(rma.reception_move_ids.quantity_done, 10)
         self.assertEqual(rma.state, "received")
         self._test_readonly_fields(rma)
 
@@ -354,7 +356,7 @@ class TestRmaCase(TestRma):
         # line of refund_1
         self.assertEqual(len(refund_1.invoice_line_ids), 3)
         self.assertEqual(
-            refund_1.invoice_line_ids.mapped("rma_id"),
+            refund_1.invoice_line_ids.rma_id,
             (rma_1 | rma_2 | rma_3),
         )
         self.assertEqual(
@@ -588,7 +590,7 @@ class TestRmaCase(TestRma):
         # line of picking_1
         self.assertEqual(len(pick_1.move_lines), 3)
         self.assertEqual(
-            pick_1.move_lines.mapped("rma_id"),
+            pick_1.move_lines.rma_id,
             (rma_1 | rma_2 | rma_3),
         )
         self.assertEqual(
@@ -659,14 +661,14 @@ class TestRmaCase(TestRma):
         origin_moves = origin_delivery.move_lines
         self.assertTrue(origin_moves[0].rma_ids)
         self.assertTrue(origin_moves[1].rma_ids)
-        rmas = origin_moves.mapped("rma_ids")
+        rmas = origin_moves.rma_ids
         self.assertEqual(rmas.mapped("state"), ["confirmed"] * 2)
         # Each reception move is linked one of the generated RMAs
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         reception_moves = reception.move_lines
         self.assertTrue(reception_moves[0].rma_receiver_ids)
         self.assertTrue(reception_moves[1].rma_receiver_ids)
-        self.assertEqual(reception_moves.mapped("rma_receiver_ids"), rmas)
+        self.assertEqual(reception_moves.rma_receiver_ids, rmas)
         # Validate the reception picking to set rmas to 'received' state
         reception_moves[0].quantity_done = reception_moves[0].product_uom_qty
         reception_moves[1].quantity_done = reception_moves[1].product_uom_qty
@@ -683,8 +685,8 @@ class TestRmaCase(TestRma):
         )
         rma = rma_form.save()
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = 10
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_ids.quantity_done = 10
+        rma.reception_move_ids.picking_id._action_done()
         # Return quantity 4 of the same product to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -722,10 +724,10 @@ class TestRmaCase(TestRma):
         self.assertTrue(new_rma.can_be_returned)
         self.assertTrue(new_rma.can_be_replaced)
         self.assertEqual(new_rma.move_id, rma.move_id)
-        self.assertEqual(new_rma.reception_move_id, rma.reception_move_id)
+        self.assertEqual(new_rma.reception_move_ids, rma.reception_move_ids)
         self.assertEqual(new_rma.product_uom_qty + rma.product_uom_qty, 10)
         self.assertEqual(new_rma.move_id.quantity_done, 10)
-        self.assertEqual(new_rma.reception_move_id.quantity_done, 10)
+        self.assertEqual(new_rma.reception_move_ids.quantity_done, 10)
 
     def test_rma_to_receive_on_delete_invoice(self):
         rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
@@ -788,8 +790,8 @@ class TestRmaCase(TestRma):
         )
         # Now we'll confirm the incoming goods picking and the automatic
         # reception notification should be sent
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id.button_validate()
+        rma.reception_move_ids.quantity_done = rma.product_uom_qty
+        rma.reception_move_ids.picking_id.button_validate()
         mail_receipt = (
             self.env["mail.message"].search([("partner_ids", "in", self.partner.ids)])
             - mail_draft

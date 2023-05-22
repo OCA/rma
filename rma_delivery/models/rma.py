@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - David Vidal
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import models
 
@@ -25,17 +26,16 @@ class Rma(models.Model):
             delivery_method = partner_method
         return delivery_method
 
-    def _prepare_returning_picking(self, picking_form, origin=None):
-        super()._prepare_returning_picking(picking_form, origin)
-        picking_form.carrier_id = self._get_default_carrier_id(
-            picking_form.company_id, picking_form.partner_id
-        )
+    def _prepare_delivery_procurement_group_values(self):
+        values = super()._prepare_delivery_procurement_group_values()
+        values["carrier_id"] = self._get_default_carrier_id(
+            self.company_id, self.partner_shipping_id
+        ).id
+        return values
 
-    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
-        existing_pickings = self.delivery_move_ids.mapped("picking_id")
-        super().create_replace(scheduled_date, warehouse, product, qty, uom)
-        new_pickings = self.delivery_move_ids.mapped("picking_id") - existing_pickings
-        for picking in new_pickings:
-            picking.carrier_id = self._get_default_carrier_id(
-                picking.company_id, picking.partner_id
-            )
+    def _prepare_replace_procurement_group_values(self):
+        values = super()._prepare_delivery_procurement_group_values()
+        values["carrier_id"] = self._get_default_carrier_id(
+            self.company_id, self.partner_shipping_id
+        ).id
+        return values

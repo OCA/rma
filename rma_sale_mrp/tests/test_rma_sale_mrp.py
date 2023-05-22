@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - David Vidal
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, SavepointCase
@@ -100,15 +101,15 @@ class TestRmaSaleMrp(SavepointCase):
         self.assertEqual(rma_2.mapped("product_uom"), move_2.mapped("product_uom"))
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
-            rma_1.mapped("reception_move_id.origin_returned_move_id"),
+            rma_1.mapped("reception_move_ids.origin_returned_move_id"),
             move_1,
         )
         self.assertEqual(
-            rma_2.mapped("reception_move_id.origin_returned_move_id"),
+            rma_2.mapped("reception_move_ids.origin_returned_move_id"),
             move_2,
         )
         self.assertEqual(
-            rmas.mapped("reception_move_id.picking_id")
+            rmas.mapped("reception_move_ids.picking_id")
             + self.order_out_picking
             + self.backorder,
             order.picking_ids,
@@ -118,17 +119,17 @@ class TestRmaSaleMrp(SavepointCase):
             {"login": "test_refund_with_so", "name": "Test"}
         )
         order.user_id = user.id
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_ids.quantity_done = rma.product_uom_qty
+        rma.reception_move_ids.picking_id._action_done()
         # All the component RMAs must be received if we want to make a refund
         with self.assertRaises(UserError):
             rma.action_refund()
         rmas_left = rmas - rma
         for additional_rma in rmas_left:
-            additional_rma.reception_move_id.quantity_done = (
+            additional_rma.reception_move_ids.quantity_done = (
                 additional_rma.product_uom_qty
             )
-            additional_rma.reception_move_id.picking_id._action_done()
+            additional_rma.reception_move_ids.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
         # The component RMAs get automatically refunded

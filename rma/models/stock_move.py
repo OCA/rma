@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -10,30 +11,24 @@ class StockMove(models.Model):
 
     # RMAs that were created from the delivery move
     rma_ids = fields.One2many(
-        comodel_name="rma",
-        inverse_name="move_id",
-        string="RMAs",
+        "rma",
+        "move_id",
+        "RMAs",
         copy=False,
     )
-    # RMAs linked to the incoming movement from client
-    rma_receiver_ids = fields.One2many(
-        comodel_name="rma",
-        inverse_name="reception_move_id",
-        string="RMA receivers",
-        copy=False,
-    )
-    # RMA that create the delivery movement to the customer
+    # RMA that create the out move
     rma_id = fields.Many2one(
-        comodel_name="rma",
-        string="RMA return",
+        "rma",
+        "RMA return",
         copy=False,
     )
+    rma_receiver_ids = fields.Many2many("rma", string="RMA Receiver")
 
     def unlink(self):
         # A stock user could have no RMA permissions, so the ids wouldn't
         # be accessible due to record rules.
-        rma_receiver = self.sudo().mapped("rma_receiver_ids")
-        rma = self.sudo().mapped("rma_id")
+        rma_receiver = self.sudo().rma_receiver_ids
+        rma = self.sudo().rma_id
         res = super().unlink()
         rma_receiver.filtered(lambda x: x.state != "cancelled").write(
             {"state": "draft"}
@@ -47,9 +42,9 @@ class StockMove(models.Model):
         # A stock user could have no RMA permissions, so the ids wouldn't
         # be accessible due to record rules.
         cancelled_moves = self.filtered(lambda r: r.state == "cancel").sudo()
-        cancelled_moves.mapped("rma_receiver_ids").write({"state": "draft"})
-        cancelled_moves.mapped("rma_id").update_received_state()
-        cancelled_moves.mapped("rma_id").update_replaced_state()
+        cancelled_moves.rma_receiver_ids.write({"state": "draft"})
+        cancelled_moves.rma_id.update_received_state()
+        cancelled_moves.rma_id.update_replaced_state()
         return res
 
     def _action_done(self, cancel_backorder=False):
@@ -72,15 +67,13 @@ class StockMove(models.Model):
         move_done = self.filtered(lambda r: r.state == "done").sudo()
         # Set RMAs as received. We sudo so we can grant the operation even
         # if the stock user has no RMA permissions.
-        to_be_received = (
-            move_done.sudo()
-            .mapped("rma_receiver_ids")
-            .filtered(lambda r: r.state == "confirmed")
+        to_be_received = move_done.sudo().rma_receiver_ids.filtered(
+            lambda r: r.state == "confirmed"
         )
         to_be_received.update_received_state_on_reception()
         # Set RMAs as delivered
-        move_done.mapped("rma_id").update_replaced_state()
-        move_done.mapped("rma_id").update_returned_state()
+        move_done.rma_id.update_replaced_state()
+        move_done.rma_id.update_returned_state()
         return res
 
     @api.model
@@ -98,38 +91,22 @@ class StockMove(models.Model):
         res["rma_id"] = self.sudo().rma_id.id
         return res
 
-    def _prepare_return_rma_vals(self, original_picking):
-        """hook method for preparing an RMA from the 'return picking wizard'."""
-        self.ensure_one()
-        partner = original_picking.partner_id
-        if hasattr(original_picking, "sale_id") and original_picking.sale_id:
-            partner_invoice_id = original_picking.sale_id.partner_invoice_id.id
-            partner_shipping_id = original_picking.sale_id.partner_shipping_id.id
-        else:
-            partner_invoice_id = partner.address_get(["invoice"]).get("invoice", False)
-            partner_shipping_id = partner.address_get(["delivery"]).get(
-                "delivery", False
-            )
-        return {
-            "user_id": self.env.user.id,
-            "partner_id": partner.id,
-            "partner_shipping_id": partner_shipping_id,
-            "partner_invoice_id": partner_invoice_id,
-            "origin": original_picking.name,
-            "picking_id": original_picking.id,
-            "move_id": self.origin_returned_move_id.id,
-            "product_id": self.origin_returned_move_id.product_id.id,
-            "product_uom_qty": self.product_uom_qty,
-            "product_uom": self.product_uom.id,
-            "reception_move_id": self.id,
-            "company_id": self.company_id.id,
-            "location_id": self.location_dest_id.id,
-            "state": "confirmed",
-        }
+    def _prepare_procurement_values(self):
+        res = super()._prepare_procurement_values()
+        if self.rma_id:
+            res["rma_id"] = self.rma_id.id
+        return res
 
 
 class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _get_custom_move_fields(self):
-        return super()._get_custom_move_fields() + ["rma_id"]
+        move_fields = super()._get_custom_move_fields()
+        move_fields += [
+            "rma_id",
+            "origin_returned_move_id",
+            "move_orig_ids",
+            "rma_receiver_ids",
+        ]
+        return move_fields
