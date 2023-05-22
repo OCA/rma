@@ -140,7 +140,7 @@
                         type="object"
                         string="To Refund"
                         name="action_refund"
-                        attrs="{'invisible': [('can_be_refunded', '=', False)]}"
+                        attrs="{'invisible': ['|', ('state', '=', 'draft'), ('can_be_refunded', '=', False)]}"
                         class="btn-primary"
                     />
                     <button
@@ -154,7 +154,7 @@
                         type="object"
                         string="Return to customer"
                         name="action_return"
-                        attrs="{'invisible': [('can_be_returned', '=', False)]}"
+                        attrs="{'invisible': ['|', ('state', '=', 'draft'), ('can_be_returned', '=', False)]}"
                         class="btn-primary"
                     />
                     <button

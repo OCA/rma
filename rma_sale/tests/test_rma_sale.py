@@ -3,10 +3,11 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, SavepointCase, tagged
 from odoo.tests.common import users
 
 
+@tagged("post_install", "-at_install")
 class TestRmaSale(SavepointCase):
     @classmethod
     def setUpClass(cls):

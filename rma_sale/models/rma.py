@@ -4,6 +4,8 @@
 
 from odoo import api, fields, models
 
+from .rma_operation import TIMING_REFUND_SO
+
 
 class Rma(models.Model):
     _inherit = "rma"
@@ -125,5 +127,31 @@ class Rma(models.Model):
         return values
 
     def _create_delivery_procurement_group(self):
+        # Set the context to avoid creating a new sale.order.line
+        # see odoo's core code addons/sale_stock/models/stock.py stock.picking _action_done
         self = self.with_context(ignore_rma_sale_order=True)
         return super()._create_delivery_procurement_group()
+
+    def _update_procurement_values_for_sale_line_refund(self, values):
+        # If a rma should refunded via the sale.orders
+        # the sale_line_id must be set on a stock.move
+        # this in- or decreases the qty_delivered of a sale.order.line
+        if (
+            self.operation_id.create_refund_timing == TIMING_REFUND_SO
+            and self.sale_line_id
+        ):
+            values["sale_line_id"] = self.sale_line_id.id
+
+    def _prepare_reception_procurement_values(self, group=None):
+        values = super()._prepare_reception_procurement_values(group)
+        self._update_procurement_values_for_sale_line_refund(values)
+        if values.get("sale_line_id"):
+            values["to_refund"] = True
+        return values
+
+    def _prepare_delivery_procurement_values(self, scheduled_date=None):
+        values = super()._prepare_delivery_procurement_values(scheduled_date)
+        self._update_procurement_values_for_sale_line_refund(values)
+        if values.get("sale_line_id"):
+            values.pop("move_orig_ids")
+        return values
