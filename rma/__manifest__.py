@@ -31,6 +31,7 @@
         "views/rma_team_views.xml",
         "views/rma_views.xml",
         "views/rma_tag_views.xml",
+        "views/rma_operation_views.xml",
         "views/stock_picking_views.xml",
         "views/stock_warehouse_views.xml",
         "views/res_config_settings_views.xml",
