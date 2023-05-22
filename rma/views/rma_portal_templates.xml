@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <template
@@ -330,13 +331,16 @@
                         </div>
                     </div>
                     <section
-                        t-if="rma.reception_move_id"
+                        t-if="rma.reception_move_ids"
                         id="reception_section"
                         style="page-break-inside: auto;"
                         class="mt32"
                     >
                         <strong class="d-block mb-1">Reception</strong>
-                        <t t-set="picking" t-value="rma.reception_move_id.picking_id" />
+                        <t
+                            t-set="picking"
+                            t-value="rma.reception_move_ids.picking_id"
+                        />
                         <t
                             t-set="report_url"
                             t-value="'/my/rma/picking/pdf/%s/%s?%s' % (rma.id, picking.id, keep_query())"
