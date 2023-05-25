@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-12 13:59+0000\n"
-"PO-Revision-Date: 2017-07-12 14:09+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/"
-"it/)\n"
+"PO-Revision-Date: 2023-05-25 12:08+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/"
+")\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_warranty
 #: field:product.supplierinfo,active_supplier:0
@@ -59,7 +60,7 @@ msgstr ""
 #. module: product_warranty
 #: field:return.instruction,display_name:0
 msgid "Display Name"
-msgstr "Nome da visualizzare"
+msgstr "Nome visualizzato"
 
 #. module: product_warranty
 #: field:return.instruction,id:0
