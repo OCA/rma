@@ -30,6 +30,22 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    title="Group RMAs by Sale Orders"
+                >
+                    <div class="o_setting_left_pane">
+                        <field name="rma_group_by_sale_order" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="rma_group_by_sale_order" />
+                        <span
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

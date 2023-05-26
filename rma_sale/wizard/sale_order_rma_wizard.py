@@ -196,7 +196,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         description = (self.description or "") + (
             self.wizard_id.custom_description or ""
         )
-        return {
+        values = {
             "partner_id": self.order_id.partner_id.id,
             "partner_invoice_id": self.order_id.partner_invoice_id.id,
             "partner_shipping_id": partner_shipping.id,
@@ -212,3 +212,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             "operation_id": self.operation_id.id,
             "description": description,
         }
+        if self.order_id.company_id.rma_group_by_sale_order:
+            # Set the group of the sale order to all rmas of this order together
+            values["procurement_group_id"] = self.order_id.procurement_group_id.id
+        return values

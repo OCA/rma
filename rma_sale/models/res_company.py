@@ -11,3 +11,6 @@ class ResCompany(models.Model):
         help="From the frontend sale order page go to a single RMA page "
         "creation instead of the usual popup",
     )
+    rma_group_by_sale_order = fields.Boolean(
+        "RMA group by Order", help="Handle RMAs from the same Sale Order together"
+    )

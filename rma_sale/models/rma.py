@@ -89,6 +89,8 @@ class Rma(models.Model):
     @api.onchange("order_id")
     def _onchange_order_id(self):
         self.product_id = self.picking_id = False
+        if self.order_id and self.order_id.company_id.rma_group_by_sale_order:
+            self.procurement_group_id = self.order_id.procurement_group_id
 
     def _prepare_refund(self, invoice_form, origin):
         """Inject salesman from sales order (if any)"""

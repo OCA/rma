@@ -25,21 +25,39 @@ class TestRmaSale(SavepointCase):
             {"name": "Partner test", "email": "partner@rma"}
         )
         cls._partner_portal_wizard(cls, cls.partner)
-        order_form = Form(cls.sale_order)
-        order_form.partner_id = cls.partner
-        with order_form.order_line.new() as line_form:
-            line_form.product_id = cls.product_1
-            line_form.product_uom_qty = 5
-        cls.sale_order = order_form.save()
-        cls.sale_order.action_confirm()
+        cls.sale_order = cls._create_confirm_sale_order([(cls.product_1, 5)])
         # Maybe other modules create additional lines in the create
         # method in sale.order model, so let's find the correct line.
         cls.order_line = cls.sale_order.order_line.filtered(
             lambda r: r.product_id == cls.product_1
         )
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_lines.quantity_done = 5
-        cls.order_out_picking.button_validate()
+        cls._do_picking(cls.order_out_picking)
+
+    @classmethod
+    def _create_sale_order(cls, products_and_qties):
+        order_form = Form(cls.env["sale.order"])
+        order_form.partner_id = cls.partner
+        for product, qty in products_and_qties:
+            with order_form.order_line.new() as line_form:
+                line_form.product_id = product
+                line_form.product_uom_qty = qty
+        return order_form.save()
+
+    @classmethod
+    def _create_confirm_sale_order(cls, products_and_qties):
+        order = cls._create_sale_order(products_and_qties)
+        order.action_confirm()
+        return order
+
+    @classmethod
+    def _do_picking(cls, pickings, qty=None):
+        if qty:
+            pickings.move_lines.write({"quantity_done": qty})
+        else:
+            for move_line in pickings.move_lines:
+                move_line.quantity_done = move_line.product_uom_qty
+        pickings.button_validate()
 
     def _partner_portal_wizard(self, partner):
         wizard_all = (
@@ -97,6 +115,38 @@ class TestRmaSale(SavepointCase):
         rma.reception_move_ids.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
+
+    def _test_create_rma_from_so_multiple(self, picking_len):
+        order = self._create_confirm_sale_order(
+            [(self.product_1, 5), (self.product_2, 5)]
+        )
+        self._do_picking(order.picking_ids)
+        wizard_id = order.action_create_rma()["res_id"]
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        action = wizard.create_and_open_rma()
+        rma_ids = action["domain"][0][2]
+        rmas = self.env["rma"].browse(rma_ids)
+        self.assertEqual(len(rmas), 2)
+        self.assertEqual(len(rmas.reception_move_ids.picking_id), picking_len)
+        self._do_picking(rmas.reception_move_ids.picking_id)
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma_ids,
+                rma_delivery_type="return",
+            )
+        )
+        delivery_form.rma_return_grouping = False
+        delivery_form.product_uom_qty = rmas[0].product_uom_qty
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        self.assertEqual(len(rmas.delivery_move_ids.picking_id), picking_len)
+
+    def test_create_rma_from_so_multiple(self):
+        self._test_create_rma_from_so_multiple(2)
+
+    def test_create_rma_from_so_multiple_grouped(self):
+        self.sale_order.company_id.rma_group_by_sale_order = True
+        self._test_create_rma_from_so_multiple(1)
 
     @users("partner@rma")
     def test_create_rma_from_so_portal_user(self):

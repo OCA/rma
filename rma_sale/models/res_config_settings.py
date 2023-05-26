@@ -10,3 +10,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.show_full_page_sale_rma",
         readonly=False,
     )
+    rma_group_by_sale_order = fields.Boolean(
+        related="company_id.rma_group_by_sale_order", readonly=False
+    )
