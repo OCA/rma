@@ -61,7 +61,7 @@ class TestRmaSale(TestRmaSaleBase):
             lambda r: r.product_id == cls.product_1
         )
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_lines.quantity_done = 5
+        cls.order_out_picking.move_ids.quantity_done = 5
         cls.order_out_picking.button_validate()
 
     def test_create_rma_with_so(self):

@@ -4,7 +4,7 @@
         <field name="name">sale.order.form.inherit</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
-        <field name="groups_id" eval="[(4, ref('rma.rma_group_user_own'))]" />
+        <!-- <field name="groups_id" eval="[(4, ref('rma.rma_group_user_own'))]" /> -->
         <field name="arch" type="xml">
             <button name="action_draft" position="after">
                 <button

@@ -66,7 +66,7 @@ class Rma(models.Model):
                     lambda r: r.picking_id == self.picking_id and r.state == "done"
                 ).ids
             else:
-                rec.allowed_move_ids = self.picking_id.move_lines.ids
+                rec.allowed_move_ids = self.picking_id.move_ids.ids
 
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):
