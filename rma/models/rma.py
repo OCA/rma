@@ -1043,7 +1043,7 @@ class Rma(models.Model):
             values={"self": picking, "origin": self},
             subtype_id=self.env.ref("mail.mt_note").id,
         )
-        return picking.move_line_ids
+        return picking.move_ids
 
     # Extract business methods
     def extract_quantity(self, qty, uom):
