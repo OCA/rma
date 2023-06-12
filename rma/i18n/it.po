@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-07 13:19+0000\n"
+"PO-Revision-Date: 2023-06-12 17:10+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -2127,7 +2127,7 @@ msgstr "Urgente"
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_all
 msgid "User: All Documents"
-msgstr "Utente: Tutti i documenti"
+msgstr "Utente: tutti i documenti"
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_own
