@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-15 08:11+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-06-15 11:10+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -784,12 +784,12 @@ msgstr "Fattura"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
 msgid "Invoice Address"
-msgstr "Indirizzo di Fatturazione"
+msgstr "Indirizzo di fatturazione"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_invoice_line
 msgid "Invoice Line"
-msgstr "Riga Fattura"
+msgstr "Riga fattura"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
@@ -1420,7 +1420,7 @@ msgstr "Reporting"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
 msgid "Requested operation"
-msgstr "Operazione Richiesta"
+msgstr "Operazione richiesta"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:802
@@ -1564,12 +1564,12 @@ msgstr "Condividi"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_shipping_id
 msgid "Shipping Address"
-msgstr "Indirizzo di Spedizione"
+msgstr "Indirizzo di spedizione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr "Indirizzo di Spedizione per questo RMA."
+msgstr "Indirizzo di spedizione per questo RMA."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
