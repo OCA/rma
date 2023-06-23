@@ -22,3 +22,9 @@ class AccountMove(models.Model):
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
         return super().button_draft()
+
+    def unlink(self):
+        """If the invoice is removed, rollback the quantities correction"""
+        for rma in self.invoice_line_ids.rma_id.filtered("sale_line_id"):
+            rma._unlink_refund_with_reception_move()
+        return super().unlink()
