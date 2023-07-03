@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-15 07:35+0000\n"
-"PO-Revision-Date: 2023-06-16 13:10+0000\n"
+"PO-Revision-Date: 2023-07-03 16:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/"
 ")\n"
@@ -281,7 +281,7 @@ msgstr ""
 #: code:addons/crm_claim_rma/wizards/claim_make_picking.py:204
 #, python-format
 msgid "Error"
-msgstr "Error"
+msgstr "Errore"
 
 #. module: crm_claim_rma
 #: selection:claim.line,claim_origin:0
