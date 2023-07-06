@@ -59,7 +59,7 @@ class StockMove(models.Model):
         """
         for move in self.filtered(lambda r: r.state not in ("done", "cancel")):
             rma_receiver = move.sudo().rma_receiver_ids
-            if rma_receiver and abs(move.quantity_done - rma_receiver.product_uom_qty)>=0.00001:
+            if rma_receiver and (abs(move.quantity_done - rma_receiver.product_uom_qty)>=0.00001):
                 raise ValidationError(
                     _(
                         "The quantity done for the product '%(id)s' must "
