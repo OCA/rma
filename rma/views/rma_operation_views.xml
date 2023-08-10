@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_rma_operation_search" model="ir.ui.view">
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <search string="RMA Operations">
+                <field name="name" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <filter
+                    string="Active"
+                    name="active"
+                    domain="[('active','!=',False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="view_rma_operation_form" model="ir.ui.view">
+        <field name="name">Rma Operation</field>
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <form string="RMA Operation">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="active" />
+                        <field name="create_refund_timing" />
+                    </group>
+                    <group>
+                        <field name="create_receipt_timing" />
+                        <field name="create_return_timing" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_rma_operation_list" model="ir.ui.view">
+        <field name="name">RMA Operations</field>
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <tree string="RMA Operations">
+                <field name="name" />
+                <field name="create_receipt_timing" />
+                <field name="create_return_timing" />
+                <field name="create_refund_timing" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_rma_operation" model="ir.actions.act_window">
+        <field name="name">RMA Operations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rma.operation</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new RMA operation
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="rma_configuration_rma_operation_menu"
+        name="RMA Operations"
+        parent="rma_configuration_menu"
+        action="action_rma_operation"
+    />
+</odoo>

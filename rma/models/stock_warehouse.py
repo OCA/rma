@@ -1,7 +1,8 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 
 
 class StockWarehouse(models.Model):
@@ -27,34 +28,38 @@ class StockWarehouse(models.Model):
         comodel_name="stock.location",
         string="RMA Location",
     )
+    rma_in_route_id = fields.Many2one("stock.location.route", "RMA in Route")
+    rma_out_route_id = fields.Many2one("stock.location.route", "RMA out Route")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        """To create an RMA location and link it with a new warehouse,
-        this method is overridden instead of '_get_locations_values'
-        method because the locations that are created with the
-        values ​​returned by that method are forced to be children
-        of view_location_id, and we don't want that.
-        """
-        res = super().create(vals_list)
-        stock_location = self.env["stock.location"]
-        for record in res:
-            rma_location_vals = record._get_rma_location_values()
-            record.rma_loc_id = stock_location.create(rma_location_vals).id
-        return res
-
-    def _get_rma_location_values(self):
+    def _get_rma_location_values(self, vals, code=False):
         """this method is intended to be used by 'create' method
         to create a new RMA location to be linked to a new warehouse.
         """
+        company_id = vals.get(
+            "company_id", self.default_get(["company_id"])["company_id"]
+        )
+        code = vals.get("code") or code or ""
+        code = code.replace(" ", "").upper()
+        view_location_id = vals.get("view_location_id")
+        view_location = (
+            view_location_id
+            and self.view_location_id.browse(view_location_id)
+            or self.view_location_id
+        )
         return {
-            "name": self.view_location_id.name,
+            "name": view_location.name,
             "active": True,
             "return_location": True,
             "usage": "internal",
-            "company_id": self.company_id.id,
+            "company_id": company_id,
             "location_id": self.env.ref("rma.stock_location_rma").id,
+            "barcode": self._valid_barcode(code + "-RMA", company_id),
         }
+
+    def _get_locations_values(self, vals, code=False):
+        res = super()._get_locations_values(vals, code)
+        res["rma_loc_id"] = self._get_rma_location_values(vals, code)
+        return res
 
     def _get_sequence_values(self):
         values = super()._get_sequence_values()
@@ -138,3 +143,70 @@ class StockWarehouse(models.Model):
                 {"return_picking_type_id": data.get("rma_out_type_id", False)}
             )
         return data
+
+    def _get_routes_values(self):
+        res = super()._get_routes_values()
+        rma_routes = {
+            "rma_in_route_id": {
+                "routing_key": "rma_in",
+                "depends": ["active"],
+                "route_update_values": {
+                    "name": self._format_routename("RMA In"),
+                    "active": self.active,
+                },
+                "route_create_values": {
+                    "warehouse_selectable": True,
+                    "company_id": self.company_id.id,
+                    "sequence": 100,
+                },
+                "rules_values": {
+                    "active": True,
+                },
+            },
+            "rma_out_route_id": {
+                "routing_key": "rma_out",
+                "depends": ["active"],
+                "route_update_values": {
+                    "name": self._format_routename("RMA Out"),
+                    "active": self.active,
+                },
+                "route_create_values": {
+                    "warehouse_selectable": True,
+                    "company_id": self.company_id.id,
+                    "sequence": 110,
+                },
+                "rules_values": {
+                    "active": True,
+                },
+            },
+        }
+        if self.env.context.get("rma_post_init_hook"):
+            return rma_routes
+        res.update(rma_routes)
+        return res
+
+    def get_rules_dict(self):
+        res = super().get_rules_dict()
+        customer_loc, supplier_loc = self._get_partner_locations()
+        for warehouse in self:
+            res[warehouse.id].update(
+                {
+                    "rma_in": [
+                        self.Routing(
+                            customer_loc,
+                            warehouse.rma_loc_id,
+                            warehouse.rma_in_type_id,
+                            "pull",
+                        )
+                    ],
+                    "rma_out": [
+                        self.Routing(
+                            warehouse.rma_loc_id,
+                            customer_loc,
+                            warehouse.rma_out_type_id,
+                            "pull",
+                        )
+                    ],
+                }
+            )
+        return res

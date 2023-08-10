@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import SUPERUSER_ID, api
@@ -24,7 +25,9 @@ def post_init_hook(cr, registry):
     def create_rma_locations(warehouse):
         stock_location = env["stock.location"]
         if not warehouse.rma_loc_id:
-            rma_location_vals = warehouse._get_rma_location_values()
+            rma_location_vals = warehouse._get_rma_location_values(
+                {"company_id": warehouse.company_id.id}, warehouse.code
+            )
             warehouse.rma_loc_id = (
                 stock_location.with_context(active_test=False)
                 .create(rma_location_vals)
@@ -61,11 +64,19 @@ def post_init_hook(cr, registry):
         whs.rma_in_type_id.return_picking_type_id = whs.rma_out_type_id.id
         whs.rma_out_type_id.return_picking_type_id = whs.rma_in_type_id.id
 
+    def create_rma_routes(warehouses):
+        """Create initially rma in/out stock.location.routes and stock.rules"""
+        warehouses = warehouses.with_context(rma_post_init_hook=True)
+        for wh in warehouses:
+            route_vals = wh._create_or_update_route()
+            wh.write(route_vals)
+
     # Create rma locations and picking types
     warehouses = env["stock.warehouse"].search([])
     for warehouse in warehouses:
         create_rma_locations(warehouse)
         create_rma_picking_types(warehouse)
+    create_rma_routes(warehouses)
     # Create rma sequence per company
     for company in env["res.company"].search([]):
         company.create_rma_index()

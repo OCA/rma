@@ -1,0 +1,2 @@
+odoo14-addon-delivery_procurement_group_carrier @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1292/head#subdirectory=setup/delivery_procurement_group_carrier
+odoo14-addon-stock_helper @ git+https://github.com/OCA/stock-logistics-warehouse.git@refs/pull/1708/head#subdirectory=setup/stock_helper

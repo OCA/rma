@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import SUPERUSER_ID, _, api, fields, models
@@ -211,4 +212,6 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             "product_uom": self.uom_id.id,
             "operation_id": self.operation_id.id,
             "description": description,
+            # Set the group of the sale order to all rmas of this order together
+            # "procurement_group_id": self.order_id.procurement_group_id.id,
         }
