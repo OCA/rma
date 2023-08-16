@@ -96,16 +96,28 @@ class TestRmaSale(TestRmaSaleBase):
             rma.reception_move_id.picking_id + self.order_out_picking,
             order.picking_ids,
         )
-        # Refund the RMA
         user = self.env["res.users"].create(
             {"login": "test_refund_with_so", "name": "Test"}
         )
         order.user_id = user.id
+        # Receive the RMA
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
+        # Refund the RMA
         rma.action_refund()
+        self.assertEqual(self.order_line.qty_delivered, 0)
+        self.assertEqual(self.order_line.qty_invoiced, -5)
         self.assertEqual(rma.refund_id.user_id, user)
+        self.assertEqual(rma.refund_id.invoice_line_ids.sale_line_ids, self.order_line)
+        # Cancel the refund
+        rma.refund_id.button_cancel()
+        self.assertEqual(self.order_line.qty_delivered, 5)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
+        # And put it to draft again
+        rma.refund_id.button_draft()
+        self.assertEqual(self.order_line.qty_delivered, 0)
+        self.assertEqual(self.order_line.qty_invoiced, -5)
 
     @users("partner@rma")
     def test_create_rma_from_so_portal_user(self):
