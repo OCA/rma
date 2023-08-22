@@ -18,7 +18,10 @@ class StockPicking(models.Model):
 
     def copy(self, default=None):
         self.ensure_one()
-        if self.env.context.get("set_rma_picking_type"):
+        if (
+            self.env.context.get("set_rma_picking_type")
+            and "location_dest_id" in default
+        ):
             location_dest_id = default["location_dest_id"]
             warehouse = self.env["stock.warehouse"].search(
                 [("rma_loc_id", "parent_of", location_dest_id)], limit=1

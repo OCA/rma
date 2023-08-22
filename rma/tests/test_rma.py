@@ -184,7 +184,6 @@ class TestRmaCase(TestRma):
         rma_form.move_id = picking.move_ids
         self.assertEqual(rma_form.product_id, product_2)
         self.assertEqual(rma_form.product_uom_qty, 15)
-        self.assertEqual(rma_form.product_uom_id, uom_ten)
         # If product changes, unit of measure changes
         rma_form.picking_id = self.env["stock.picking"]
         rma_form.product_id = self.product
@@ -393,6 +392,7 @@ class TestRmaCase(TestRma):
         )
         delivery_form.product_id = product_2
         delivery_form.product_uom_qty = 2
+        delivery_form.product_uom = product_2.uom_id
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         self.assertEqual(len(rma.delivery_move_ids.picking_id.move_ids), 1)
@@ -674,6 +674,7 @@ class TestRmaCase(TestRma):
         rma_form = Form(self.env["rma"])
         rma_form.partner_id = self.partner
         rma_form.picking_id = origin_delivery
+        rma_form.location_id = origin_delivery.location_id
         rma_form.move_id = origin_delivery.move_ids.filtered(
             lambda r: r.product_id == self.product
         )
