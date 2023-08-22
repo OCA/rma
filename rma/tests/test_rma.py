@@ -66,9 +66,11 @@ class TestRma(TransactionCase):
         cls.env.company.rma_return_grouping = True
 
     def _create_rma(self, partner=None, product=None, qty=None, location=None):
-        rma_form = Form(recordp=self.env["rma"].with_context(
+        rma_form = Form(
+            recordp=self.env["rma"].with_context(
                 default_location_id=location and location.id,
-            ),)
+            ),
+        )
         if partner:
             rma_form.partner_id = partner
         if product:
@@ -200,7 +202,9 @@ class TestRmaCase(TestRma):
             rma_form.partner_id = self.partner
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
-        self.assertEqual(e.exception.args[0], "Required field(s):\nproduct_id\nlocation_id")
+        self.assertEqual(
+            e.exception.args[0], "Required field(s):\nproduct_id\nlocation_id"
+        )
         with Form(rma) as rma_form:
             rma_form.product_id = self.product
             rma_form.location_id = self.rma_loc
