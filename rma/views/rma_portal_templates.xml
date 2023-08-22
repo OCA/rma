@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="portal_my_home_menu_rma"
+        name="Portal layout : RMA menu entries"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="35"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'RMA'"
+                t-attf-class="breadcrumb-item #{'active ' if not rma else ''}"
+            >
+                <a t-if="rma" t-attf-href="/my/rmas?{{ keep_query() }}">RMA Orders</a>
+                <t t-else="">RMA Orders</t>
+            </li>
+            <li t-if="rma" class="breadcrumb-item active">
+                <t t-esc="rma.name" />
+            </li>
+        </xpath>
+    </template>
+    <template
+        id="portal_my_home_rma"
+        name="Portal My Home : RMA entries"
+        inherit_id="portal.portal_my_home"
+        priority="30"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">RMA Orders</t>
+                <t t-set="url" t-value="'/my/rmas'" />
+                <t t-set="placeholder_count" t-value="'rma_count'" />
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_rmas" name="My RMA Orders">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">RMA Orders</t>
+            </t>
+            <t t-if="rmas" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>RMA #</th>
+                        <th class='d-none d-md-table-cell'>Date</th>
+                        <th name="th_product">Product</th>
+                        <th class='text-right'>Quantity</th>
+                        <th class='d-none d-md-table-cell'>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="rmas" t-as="rma">
+                        <tr>
+                            <td>
+                                <a
+                                    t-att-href="rma.get_portal_url()"
+                                    t-att-title="rma.name"
+                                >
+                                    <t t-esc="rma.name" />
+                                </a>
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <span t-field="rma.date" />
+                            </td>
+                            <!-- Portal users don't have access to unpublished products -->
+                            <td name="td_product">
+                                <span t-esc="rma.sudo().product_id.display_name" />
+                            </td>
+                            <td class='text-right'>
+                                <span t-field="rma.product_uom_qty" />
+                            </td>
+                            <td class="d-none d-md-table-cell tx_status">
+                                <span class="badge badge-pill badge-secondary">
+                                    <span t-field="rma.state" />
+                                </span>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="portal_rma_page" name="My RMA">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" groups="rma.rma_group_user_own">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t
+                        t-set="backend_url"
+                        t-value="'/web#return_label=Website&amp;model=rma&amp;id=%s&amp;view_type=form' % (rma.id)"
+                    />
+                </t>
+            </t>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <h5 class="mb-0">
+                        <span>
+                            RMA Order -
+                            <span t-field="rma.name" />
+                        </span>
+                        <span
+                            style="position: absolute; left: 50%;"
+                            class="d-none d-sm-inline"
+                        >
+                            <a
+                                t-att-href="rma.get_portal_url(report_type='pdf', download=True)"
+                            >
+                                <i
+                                    class="fa fa-download"
+                                    role="img"
+                                    aria-label="Download"
+                                    title="Download"
+                                />
+                            </a>
+                        </span>
+                        <span class="float-right">
+                            <!-- Tags -->
+                            <t
+                                t-set="tags"
+                                t-value="rma.tag_ids.filtered('is_public')"
+                            />
+                            <!-- We don't have the color o_tag_color_# classes available in the frontend -->
+                            <t t-foreach="tags" t-as="tag">
+                                <span
+                                    class="badge badge-pill badge-info label-text-align"
+                                    t-esc="tag.name"
+                                />
+                            </t>
+                            <t t-if="rma.state in ['refunded', 'returned', 'replaced']">
+                                <span
+                                    class="small text-success orders_label_text_align"
+                                >
+                                    <i class="fa fa-fw fa-check" />
+                                    <b>
+                                        <span t-field="rma.state" />
+                                    </b>
+                                </span>
+                            </t>
+                            <t t-elif="rma.state in ['cancelled', 'locked']">
+                                <span class="small text-danger orders_label_text_align">
+                                    <i class="fa fa-fw fa-times" />
+                                    <b>
+                                        <span t-field="rma.state" />
+                                    </b>
+                                </span>
+                            </t>
+                            <t t-else="">
+                                <span class="small text-info orders_label_text_align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    <b>
+                                        <span t-field="rma.state" />
+                                    </b>
+                                </span>
+                            </t>
+                        </span>
+                    </h5>
+                </t>
+                <t t-set="card_body">
+                    <div id="general_information">
+                        <div class="row mt4">
+                            <!-- Customer -->
+                            <div
+                                t-if="rma.partner_id"
+                                class="col-12 col-md-6 mb-4 mb-md-0"
+                            >
+                                <h6>
+                                    <strong>Customer:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img
+                                            t-if="rma.partner_id.image_1024"
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            t-att-src="image_data_uri(rma.partner_id.image_1024)"
+                                            alt="Contact"
+                                        />
+                                        <img
+                                            t-else=""
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            alt="Contact"
+                                        />
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address
+                                            t-field="rma.partner_id"
+                                            t-options='{"widget": "contact", "fields": ["name", "email", "phone"]}'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Shipping Address -->
+                            <div
+                                t-if="rma.partner_shipping_id"
+                                class="col-12 col-md-6 mb-4 mb-md-0"
+                            >
+                                <h6>
+                                    <strong>Shipping address:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img
+                                            t-if="rma.partner_shipping_id.image_1024"
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            t-att-src="image_data_uri(rma.partner_shipping_id.image_1024)"
+                                            alt="Contact"
+                                        />
+                                        <img
+                                            t-else=""
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            alt="Contact"
+                                        />
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address
+                                            t-field="rma.partner_shipping_id"
+                                            t-options='{"widget": "contact", "fields": ["name", "email", "phone", "address"]}'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- RMA Info -->
+                            <div t-if="rma.user_id" class="col-12 col-md-6">
+                                <h6>
+                                    <strong>Responsible:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img
+                                            t-if="rma.user_id.image_1024"
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            t-att-src="image_data_uri(rma.user_id.image_1024)"
+                                            alt="Contact"
+                                        />
+                                        <img
+                                            t-else=""
+                                            class="rounded-circle mt-1 o_portal_contact_img"
+                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            alt="Contact"
+                                        />
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address
+                                            t-field="rma.user_id"
+                                            t-options='{"widget": "contact", "fields": ["name", "email", "phone"]}'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt32" id="product_information">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div t-if="rma.picking_id" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Origin delivery</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="rma.picking_id" />
+                                    </div>
+                                </div>
+                                <!-- We need to prevent access errors if the product is
+                                     unpublished-->
+                                <div
+                                    t-if="rma.sudo().product_id"
+                                    class="row mb-2 mb-sm-1"
+                                >
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Product</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span
+                                            t-esc="rma.sudo().product_id.display_name"
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    t-if="rma.product_uom_qty"
+                                    class="row mb-2 mb-sm-1"
+                                >
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Quantity</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="rma.product_uom_qty" />
+                                    </div>
+                                </div>
+                                <div t-if="rma.delivered_qty" class="row">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Delivered quantity</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="rma.delivered_qty" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div t-if="rma.date" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>RMA Date</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span
+                                            t-field="rma.date"
+                                            t-options='{"widget": "date"}'
+                                        />
+                                    </div>
+                                </div>
+                                <div t-if="rma.deadline" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Deadline</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span
+                                            t-field="rma.deadline"
+                                            t-options='{"widget": "date"}'
+                                        />
+                                    </div>
+                                </div>
+                                <div t-if="rma.origin" class="row">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Origin</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="rma.origin" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section
+                        t-if="rma.reception_move_id"
+                        id="reception_section"
+                        style="page-break-inside: auto;"
+                        class="mt32"
+                    >
+                        <strong class="d-block mb-1">Reception</strong>
+                        <t t-set="picking" t-value="rma.reception_move_id.picking_id" />
+                        <t
+                            t-set="report_url"
+                            t-value="'/my/rma/picking/pdf/%s/%s?%s' % (rma.id, picking.id, keep_query())"
+                        />
+                        <a
+                            class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3"
+                            t-att-href="report_url"
+                        >
+                            <div>
+                                <i
+                                    class="fa fa-truck mr-1"
+                                    role="img"
+                                    aria-label="Download"
+                                    title="Download"
+                                />
+                                <span t-esc="picking.name" class="mr-lg-3" />
+                                <div class="d-lg-inline-block">
+                                    Date:
+                                    <span class="text-muted" t-field="picking.date" />
+                                </div>
+                            </div>
+                            <t t-if="picking.state == 'done'">
+                                <span class="badge badge-success label-text-align">
+                                    <i class="fa fa-fw fa-truck" />
+                                    Shipped
+                                </span>
+                            </t>
+                            <t t-if="picking.state == 'partially_available'">
+                                <span class="badge badge-warning label-text-align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    Partially Available
+                                </span>
+                            </t>
+                            <t t-if="picking.state == 'cancel'">
+                                <span class="badge badge-danger label-text-align">
+                                    <i class="fa fa-fw fa-times" />
+                                    Cancelled
+                                </span>
+                            </t>
+                            <t
+                                t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                            >
+                                <span class="badge badge-info label-text-align">
+                                    <i class="fa fa-fw fa-clock-o" />
+                                    Preparation
+                                </span>
+                            </t>
+                        </a>
+                    </section>
+                    <section
+                        t-if="rma.refund_id"
+                        id="refund_section"
+                        style="page-break-inside: auto;"
+                        class="mt32"
+                    >
+                        <strong class="d-block mb-1">Refund</strong>
+                        <t t-set="refund" t-value="rma.refund_id" />
+                        <t
+                            t-set="report_url"
+                            t-value="refund.get_portal_url(report_type='pdf')"
+                        />
+                        <a
+                            class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3"
+                            t-att-href="report_url"
+                        >
+                            <div>
+                                <i
+                                    class="fa fa-pencil-square-o mr-1"
+                                    role="img"
+                                    aria-label="Download"
+                                    title="Download"
+                                />
+                                <span t-esc="refund.name" class="mr-lg-3" />
+                                <div class="d-lg-inline-block">
+                                    Date:
+                                    <span
+                                        class="text-muted"
+                                        t-field="refund.invoice_date"
+                                    />
+                                </div>
+                            </div>
+                            <span
+                                t-if="refund.state == 'paid'"
+                                class="small text-success orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-check" />
+                                <b>Paid</b>
+                            </span>
+                            <span
+                                t-else=""
+                                class="small text-info orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-clock-o" />
+                                <b>Waiting Payment</b>
+                            </span>
+                        </a>
+                    </section>
+                    <section
+                        t-if="rma.delivery_move_ids"
+                        id="reception_section"
+                        style="page-break-inside: auto;"
+                        class="mt32"
+                    >
+                        <strong class="d-block mb-1">Delivery</strong>
+                        <ul class="list-group mb-4">
+                            <t
+                                t-foreach="rma.delivery_move_ids.mapped('picking_id')"
+                                t-as="picking"
+                            >
+                                <t
+                                    t-set="report_url"
+                                    t-value="'/my/rma/picking/pdf/%s/%s?%s' % (rma.id, picking.id, keep_query())"
+                                />
+                                <a
+                                    class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3"
+                                    t-att-href="report_url"
+                                >
+                                    <div>
+                                        <i
+                                            class="fa fa-truck mr-1"
+                                            role="img"
+                                            aria-label="Download"
+                                            title="Download"
+                                        />
+                                        <span t-esc="picking.name" class="mr-lg-3" />
+                                        <div class="d-lg-inline-block">
+                                            Date:
+                                            <span
+                                                class="text-muted"
+                                                t-field="picking.date"
+                                            />
+                                        </div>
+                                    </div>
+                                    <t t-if="picking.state == 'done'">
+                                        <span
+                                            class="badge badge-success label-text-align"
+                                        >
+                                            <i class="fa fa-fw fa-truck" />
+                                            Shipped
+                                        </span>
+                                    </t>
+                                    <t t-if="picking.state == 'partially_available'">
+                                        <span
+                                            class="badge badge-warning label-text-align"
+                                        >
+                                            <i class="fa fa-fw fa-clock-o" />
+                                            Partially Available
+                                        </span>
+                                    </t>
+                                    <t t-if="picking.state == 'cancel'">
+                                        <span
+                                            class="badge badge-danger label-text-align"
+                                        >
+                                            <i class="fa fa-fw fa-times" />
+                                            Cancelled
+                                        </span>
+                                    </t>
+                                    <t
+                                        t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                    >
+                                        <span class="badge badge-info label-text-align">
+                                            <i class="fa fa-fw fa-clock-o" />
+                                            Preparation
+                                        </span>
+                                    </t>
+                                </a>
+                            </t>
+                        </ul>
+                    </section>
+                    <section id="description" class="mt-5" t-if="rma.description">
+                        <h3 class="">Description</h3>
+                        <hr class="mt-0 mb-1" />
+                        <t t-out="rma.description" />
+                    </section>
+                </t>
+            </t>
+            <!-- chatter -->
+            <div id="rma_communication" class="mt-4">
+                <h2>Communication</h2>
+                <t t-call="portal.message_thread">
+                    <t t-set="object" t-value="rma" />
+                    <t t-set="token" t-value="rma.access_token" />
+                    <t t-set="pid" t-value="pid" />
+                    <t t-set="hash" t-value="hash" />
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

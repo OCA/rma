@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data noupdate="1">
+    <record id="rma_operation_replace" model="rma.operation">
+        <field name="name">Replace</field>
+    </record>
+    <record id="rma_operation_return" model="rma.operation">
+        <field name="name">Repair</field>
+    </record>
+    <record id="rma_operation_refund" model="rma.operation">
+        <field name="name">Refund</field>
+    </record>
+</data>
