@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     Copyright 2023 Tecnativa - Pedro M. Baeza
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="view_partner_form" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
-        <field name="groups_id" eval="[(4, ref('rma.rma_group_user_own'))]" />
         <field name="arch" type="xml">
             <div name="button_box">
                 <button
@@ -15,6 +15,7 @@
                     class="oe_stat_button"
                     icon="fa-reply"
                     attrs="{'invisible': [('rma_count', '=', 0)]}"
+                    groups="rma.rma_group_user_own"
                 >
                     <field name="rma_count" widget="statinfo" string="RMA" />
                 </button>

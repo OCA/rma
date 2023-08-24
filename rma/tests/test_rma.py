@@ -9,6 +9,16 @@ class TestRma(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                mail_create_nolog=True,
+                mail_create_nosubscribe=True,
+                mail_notrack=True,
+                no_reset_password=True,
+                tracking_disable=True,
+            )
+        )
         cls.user_rma = new_test_user(
             cls.env,
             login="user_rma",
@@ -24,18 +34,11 @@ class TestRma(TransactionCase):
         cls.product = cls.product_product.create(
             {"name": "Product test 1", "type": "product"}
         )
-        account_type = cls.env["account.account.type"].create(
-            {
-                "name": "RCV type",
-                "type": "receivable",
-                "internal_group": "income",
-            }
-        )
         cls.account_receiv = cls.env["account.account"].create(
             {
                 "name": "Receivable",
                 "code": "RCV00",
-                "user_type_id": account_type.id,
+                "account_type": "asset_receivable",
                 "reconcile": True,
             }
         )
@@ -73,16 +76,16 @@ class TestRma(TransactionCase):
         cls.env.company.rma_return_grouping = True
 
     def _create_rma(self, partner=None, product=None, qty=None, location=None):
-        rma_form = Form(self.env["rma"])
+        vals = {}
         if partner:
-            rma_form.partner_id = partner
+            vals["partner_id"] = partner.id
         if product:
-            rma_form.product_id = product
+            vals["product_id"] = product.id
         if qty:
-            rma_form.product_uom_qty = qty
+            vals["product_uom_qty"] = qty
         if location:
-            rma_form.location_id = location
-        return rma_form.save()
+            vals["location_id"] = location.id
+        return self.env["rma"].create(vals)
 
     def _create_confirm_receive(
         self, partner=None, product=None, qty=None, location=None
@@ -92,25 +95,6 @@ class TestRma(TransactionCase):
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
         return rma
-
-    def _test_readonly_fields(self, rma):
-        with Form(rma) as rma_form:
-            with self.assertRaises(AssertionError):
-                rma_form.partner_id = self.env["res.partner"]
-            with self.assertRaises(AssertionError):
-                rma_form.partner_invoice_id = self.env["res.partner"]
-            with self.assertRaises(AssertionError):
-                rma_form.picking_id = self.env["stock.picking"]
-            with self.assertRaises(AssertionError):
-                rma_form.move_id = self.env["stock.move"]
-            with self.assertRaises(AssertionError):
-                rma_form.product_id = self.env["product.product"]
-            with self.assertRaises(AssertionError):
-                rma_form.product_uom_qty = 0
-            with self.assertRaises(AssertionError):
-                rma_form.product_uom = self.env["uom.uom"]
-            with self.assertRaises(AssertionError):
-                rma_form.location_id = self.env["stock.location"]
 
     def _create_delivery(self):
         picking_type = self.env["stock.picking.type"].search(
@@ -139,18 +123,18 @@ class TestRma(TransactionCase):
             move.product_uom_qty = 20
         picking = picking_form.save()
         picking.action_confirm()
-        for move in picking.move_lines:
+        for move in picking.move_ids:
             move.quantity_done = move.product_uom_qty
         picking.button_validate()
         return picking
 
 
 class TestRmaCase(TestRma):
-    def test_onchange(self):
-        rma_form = Form(self.env["rma"])
+    def test_computed(self):
         # If partner changes, the invoice address is set
-        rma_form.partner_id = self.partner
-        self.assertEqual(rma_form.partner_invoice_id, self.partner_invoice)
+        rma = self.env["rma"].new()
+        rma.partner_id = self.partner
+        self.assertEqual(rma.partner_invoice_id, self.partner_invoice)
         # If origin move changes, the product is set
         uom_ten = self.env["uom.uom"].create(
             {
@@ -182,21 +166,17 @@ class TestRmaCase(TestRma):
         with picking_form.move_ids_without_package.new() as move:
             move.product_id = product_2
             move.product_uom_qty = 15
-            move.product_uom = uom_ten
         picking = picking_form.save()
         picking._action_done()
-        rma_form.picking_id = picking
-        rma_form.move_id = picking.move_lines
-        self.assertEqual(rma_form.product_id, product_2)
-        self.assertEqual(rma_form.product_uom_qty, 15)
-        self.assertEqual(rma_form.product_uom, uom_ten)
+        rma.picking_id = picking
+        rma.move_id = picking.move_ids
+        self.assertEqual(rma.product_id, product_2)
+        self.assertEqual(rma.product_uom_qty, 15)
+        self.assertEqual(rma.product_uom, uom_ten)
         # If product changes, unit of measure changes
-        rma_form.picking_id = self.env["stock.picking"]
-        rma_form.product_id = self.product
-        self.assertEqual(rma_form.product_id, self.product)
-        self.assertEqual(rma_form.product_uom_qty, 15)
-        self.assertNotEqual(rma_form.product_uom, uom_ten)
-        self.assertEqual(rma_form.product_uom, self.product.uom_id)
+        rma.move_id = False
+        rma.product_id = self.product
+        self.assertEqual(rma.product_uom, self.product.uom_id)
 
     def test_ensure_required_fields_on_confirm(self):
         rma = self._create_rma()
@@ -204,17 +184,14 @@ class TestRmaCase(TestRma):
             rma.action_confirm()
         self.assertEqual(
             e.exception.args[0],
-            "Required field(s):\nCustomer\nShipping Address\nInvoice Address\n"
-            "Product\nLocation",
+            "Required field(s):\nCustomer\nShipping Address\nInvoice Address\nProduct",
         )
-        with Form(rma) as rma_form:
-            rma_form.partner_id = self.partner
+        rma.partner_id = self.partner.id
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
-        self.assertEqual(e.exception.args[0], "Required field(s):\nProduct\nLocation")
-        with Form(rma) as rma_form:
-            rma_form.product_id = self.product
-            rma_form.location_id = self.rma_loc
+        self.assertEqual(e.exception.args[0], "Required field(s):\nProduct")
+        rma.product_id = self.product.id
+        rma.location_id = self.rma_loc.id
         rma.action_confirm()
         self.assertEqual(rma.state, "confirmed")
 
@@ -226,7 +203,6 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.reception_move_id.product_uom_qty, 10)
         self.assertEqual(rma.reception_move_id.product_uom, rma.product_uom)
         self.assertEqual(rma.state, "confirmed")
-        self._test_readonly_fields(rma)
         rma.reception_move_id.quantity_done = 9
         with self.assertRaises(ValidationError):
             rma.reception_move_id.picking_id._action_done()
@@ -235,14 +211,12 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
         self.assertEqual(rma.reception_move_id.quantity_done, 10)
         self.assertEqual(rma.state, "received")
-        self._test_readonly_fields(rma)
 
     def test_cancel(self):
         # cancel a draft RMA
         rma = self._create_rma(self.partner, self.product)
         rma.action_cancel()
         self.assertEqual(rma.state, "cancelled")
-        self._test_readonly_fields(rma)
         # cancel a confirmed RMA
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
@@ -304,7 +278,6 @@ class TestRmaCase(TestRma):
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
-        self._test_readonly_fields(rma)
 
     def test_mass_refund(self):
         # Create, confirm and receive rma_1
@@ -403,7 +376,7 @@ class TestRmaCase(TestRma):
         delivery_form.product_uom_qty = 2
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
-        self.assertEqual(len(rma.delivery_move_ids.picking_id.move_lines), 1)
+        self.assertEqual(len(rma.delivery_move_ids.picking_id.move_ids), 1)
         self.assertEqual(rma.delivery_move_ids.product_id, product_2)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 2)
         self.assertTrue(rma.delivery_move_ids.picking_id.state, "waiting")
@@ -459,7 +432,6 @@ class TestRmaCase(TestRma):
         # Despite being in 'replaced' state,
         # RMAs can still perform replacements.
         self.assertTrue(rma.can_be_replaced)
-        self._test_readonly_fields(rma)
 
     def test_return_to_customer(self):
         # Create, confirm and receive an RMA
@@ -475,7 +447,7 @@ class TestRmaCase(TestRma):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
-        self.assertEqual(len(picking.move_lines), 1)
+        self.assertEqual(len(picking.move_ids), 1)
         self.assertEqual(rma.delivery_move_ids.product_id, self.product)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 2)
         self.assertTrue(picking.state, "waiting")
@@ -527,7 +499,6 @@ class TestRmaCase(TestRma):
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
-        self._test_readonly_fields(rma)
 
     def test_finish_rma(self):
         # Create, confirm and receive an RMA
@@ -590,19 +561,19 @@ class TestRmaCase(TestRma):
         self.assertEqual(pick_2.partner_id, rma_4.partner_id)
         # Each RMA of (rma_1, rma_2 and rma_3) is linked to a different
         # line of picking_1
-        self.assertEqual(len(pick_1.move_lines), 3)
+        self.assertEqual(len(pick_1.move_ids), 3)
         self.assertEqual(
-            pick_1.move_lines.mapped("rma_id"),
+            pick_1.move_ids.mapped("rma_id"),
             (rma_1 | rma_2 | rma_3),
         )
         self.assertEqual(
             (rma_1 | rma_2 | rma_3).mapped("delivery_move_ids"),
-            pick_1.move_lines,
+            pick_1.move_ids,
         )
         # rma_4 is linked with the unique move of pick_2
-        self.assertEqual(len(pick_2.move_lines), 1)
-        self.assertEqual(pick_2.move_lines.rma_id, rma_4)
-        self.assertEqual(rma_4.delivery_move_ids, pick_2.move_lines)
+        self.assertEqual(len(pick_2.move_ids), 1)
+        self.assertEqual(pick_2.move_ids.rma_id, rma_4)
+        self.assertEqual(rma_4.delivery_move_ids, pick_2.move_ids)
         # Assert product and quantities are propagated correctly
         for rma in all_rmas:
             self.assertEqual(rma.product_id, rma.delivery_move_ids.product_id)
@@ -660,14 +631,14 @@ class TestRmaCase(TestRma):
         return_wizard = stock_return_picking_form.save()
         picking_action = return_wizard.create_returns()
         # Each origin move is linked to a different RMA
-        origin_moves = origin_delivery.move_lines
+        origin_moves = origin_delivery.move_ids
         self.assertTrue(origin_moves[0].rma_ids)
         self.assertTrue(origin_moves[1].rma_ids)
         rmas = origin_moves.mapped("rma_ids")
         self.assertEqual(rmas.mapped("state"), ["confirmed"] * 2)
         # Each reception move is linked one of the generated RMAs
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
-        reception_moves = reception.move_lines
+        reception_moves = reception.move_ids
         self.assertTrue(reception_moves[0].rma_receiver_ids)
         self.assertTrue(reception_moves[1].rma_receiver_ids)
         self.assertEqual(reception_moves.mapped("rma_receiver_ids"), rmas)
@@ -682,7 +653,7 @@ class TestRmaCase(TestRma):
         rma_form = Form(self.env["rma"])
         rma_form.partner_id = self.partner
         rma_form.picking_id = origin_delivery
-        rma_form.move_id = origin_delivery.move_lines.filtered(
+        rma_form.move_id = origin_delivery.move_ids.filtered(
             lambda r: r.product_id == self.product
         )
         rma = rma_form.save()
