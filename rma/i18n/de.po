@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-04-05 07:26+0000\n"
-"Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde.com>"
-"\n"
+"Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde."
+"com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma_team.py:0
 #, python-format
 msgid "%s (copy)"
@@ -29,6 +30,7 @@ msgid "(object._get_report_base_filename())"
 msgstr "(object._get_report_base_filename())"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -42,55 +44,26 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Here is the RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    from\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
 "                    .\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
 "        "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\">\n"
-"                <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; "
-"font-size: 13px;\">\n"
-"                    Sehr geehrte/r\n"
-"                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
-"\"true\"></t>\n"
-"                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-group-"
-"active=\"true\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\" data-"
-"oe-t-inline=\"true\"></t>\n"
-"                    </t>\n"
-"                    <br>\n"
-"                    <br>\n"
-"                    Hiermit übermitteln wie Ihnen unseren RMA Auftrag\n"
-"                    <strong style=\"box-sizing:border-box;font-weight:500;\">"
-"\n"
-"                        <t t-out=\"object.name\" data-oe-t-inline=\"true\""
-"></t>\n"
-"                    </strong>\n"
-"                    von\n"
-"                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
-"\"true\"></t>\n"
-"                    .\n"
-"                    <br>\n"
-"                    <br>\n"
-"                    Zögern Sie nicht uns zu kontaktieren.\n"
-"                </p>\n"
-"            </div>\n"
-"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
@@ -98,49 +71,26 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    The products for your RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    from\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
 "                    have been received in our warehouse.\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
 "        "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\">\n"
-"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"                    Sehr geehrte/r\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
-"                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
-"                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
-"Die Produkte für ihren RMA\n"
-"                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
-"                    </strong>\n"
-"                    von\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
-"wurden in unserem Lager erfolgreich entgegen genommen.\n"
-"                    <br/>\n"
-"                    <br/>\n"
-"                    Zögern Sie nicht uns bei weiteren Fragen erneut zu "
-"kontaktieren\n"
-"                </p>\n"
-"            </div>\n"
-"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
@@ -148,61 +98,33 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    You've succesfully placed your RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    on\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
-"                    . Our team will check it and will validate it as soon as possible.\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
+"                    . Our team will check it and will validate it as soon as "
+"possible.\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
 "        "
 msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\">\n"
-"                <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; "
-"font-size: 13px;\">\n"
-"                    Sehr geehrte/r\n"
-"                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
-"\"true\"></t>\n"
-"                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-group-"
-"active=\"true\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\" data-"
-"oe-t-inline=\"true\"></t>\n"
-"                    </t>\n"
-"                    <br>\n"
-"                    <br>\n"
-"                    Sie haben erfolgreich ihren Reklamationsauftrag "
-"eingebracht.\n"
-"                    <strong style=\"box-sizing:border-box;font-weight:500;\">"
-"\n"
-"                        <t t-out=\"object.name\" data-oe-t-inline=\"true\""
-"></t>\n"
-"                    </strong>\n"
-"                    für\n"
-"                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
-"\"true\"></t>\n"
-"                    . Unser Team wird die Anfrage bearbeiten uns sich so "
-"bald wie möglich bei Ihnen melden.\n"
-"                    <br>\n"
-"                    <br>\n"
-"Zögern Sie nicht uns bei weiteren Fragen erneut zu kontaktieren\n"
-"                </p>\n"
-"            </div>\n"
-"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
@@ -228,8 +150,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\""
-" title=\"Download\"/>"
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
@@ -237,8 +159,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
-"title=\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
@@ -247,13 +169,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Cancelled\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Storniert\n"
 "                                        </span>"
 
@@ -274,13 +197,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparation\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            in Vorbereitung\n"
 "                                        </span>"
 
@@ -301,13 +225,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Shipped\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Versendet\n"
 "                                        </span>"
 
@@ -328,13 +253,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Partially Available\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            nur teilweise verfügbar\n"
 "                                        </span>"
 
@@ -764,6 +690,7 @@ msgid "Custom Bounced Message"
 msgstr "Benutzerdefinierte Bounce Message"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
@@ -776,6 +703,7 @@ msgid "Customer Portal URL"
 msgstr "Kundenportal URL"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
@@ -915,6 +843,7 @@ msgstr ""
 "aufgegeben wird"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/rma_split.py:0
 #, python-format
 msgid "Extracted RMA"
@@ -1020,8 +949,8 @@ msgstr "ID"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr ""
 "ID des übergeordneten Datensatzes, der den Alias enthält (Beispiel: Projekt "
 "enthält den Alias für die Aufgabenerstellung)"
@@ -1038,9 +967,7 @@ msgstr "Symbol zur Anzeige einer Ausnahmeaktivität."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction
-#: model:ir.model.fields,help:rma.field_rma__message_unread
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction
-#: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 "Wenn diese Option aktiviert ist, erfordern neue Nachrichten Ihre "
@@ -1048,9 +975,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 "Wenn diese Option aktiviert ist, weisen einige Nachrichten einen "
@@ -1075,6 +1000,7 @@ msgstr ""
 "ausblenden, ohne es zu entfernen."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Incoming e-mail"
@@ -1218,6 +1144,7 @@ msgid "My Activity Deadline"
 msgstr "Meine Aktivitätsfrist"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__name
@@ -1227,8 +1154,8 @@ msgid "Name"
 msgstr "Name"
 
 #. module: rma
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "New"
 msgstr "Neu"
@@ -1249,12 +1176,14 @@ msgid "Next Activity Type"
 msgstr "Nächster Aktivitätstyp"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Keiner der ausgewählten RMAs kann einen Austausch durchführen."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a return."
@@ -1280,20 +1209,14 @@ msgstr "Anzahl der Fehler"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "Anzahl der Nachrichten mit Zustellfehler"
-
-#. module: rma
-#: model:ir.model.fields,help:rma.field_rma__message_unread_counter
-#: model:ir.model.fields,help:rma.field_rma_team__message_unread_counter
-msgid "Number of unread messages"
-msgstr "Anzahl der ungelesenen Nachrichten"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
@@ -1344,8 +1267,8 @@ msgstr "Thread-ID des übergeordneten Datensatzes"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
 "Übergeordnetes Modell mit dem Alias. Das Modell, das die Alias-Referenz "
@@ -1363,7 +1286,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "Richtlinie zum Posten einer Nachricht im Dokument über das Mailgateway.\n"
 "- Jeder: Jeder kann Posten\n"
@@ -1414,6 +1338,7 @@ msgid "Quantity"
 msgstr "Menge"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/rma_delivery.py:0
 #: model:ir.model.constraint,message:rma.constraint_rma_split_wizard_check_product_uom_qty_positive
 #, python-format
@@ -1426,6 +1351,7 @@ msgid "Quantity to extract"
 msgstr "Zu extrahierende Menge"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -1460,6 +1386,7 @@ msgid "RMA #"
 msgstr "RMA #"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
@@ -1481,6 +1408,7 @@ msgid "RMA Deadline"
 msgstr "RMA-Frist"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Delivery Orders"
@@ -1568,6 +1496,7 @@ msgid "RMA Receipt Notification"
 msgstr "RMA-Empfangsbenachrichtigung"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Receipts"
@@ -1711,6 +1640,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr "Referenz des Dokuments, das diese RMA erstellt hat."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1767,20 +1697,22 @@ msgid "Replaced"
 msgstr "Ersetzt"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
-"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>)"
-" has been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
+"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
+"been created."
 msgstr ""
-"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\""
-"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model=\"stock."
-"picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) wurde "
+"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
+"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) wurde "
 "erstellt.."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -1805,6 +1737,7 @@ msgid "Requested operation"
 msgstr "Angeforderter Vorgang"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Required field(s):%s"
@@ -1822,6 +1755,11 @@ msgid "Responsible User"
 msgstr "Verantwortlicher Benutzer"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__location_id
+msgid "Return Location"
+msgstr ""
+
+#. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
 msgid "Return Picking"
 msgstr "Inbound Kommissionierung"
@@ -1834,14 +1772,15 @@ msgid "Return to customer"
 msgstr "Zurück zum Kunden"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> has been created."
 msgstr ""
-"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\""
-">%(name)s</a> wurde erstellt."
+"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d"
+"\">%(name)s</a> wurde erstellt."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -1859,10 +1798,9 @@ msgid "Rma Count"
 msgstr "Anzahl RMA"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "SMS-Zustellungsfehler"
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
+msgid "Rma Location"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1932,12 +1870,14 @@ msgid "Sequence"
 msgstr "Sequenz"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA in"
 msgstr "Reihenfolge RMA ein"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA out"
@@ -1980,11 +1920,12 @@ msgid "Split RMA"
 msgstr "Geteilter RMA"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
+"a> has been created."
 msgstr ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> wurde erstellt."
@@ -1996,6 +1937,7 @@ msgid "State"
 msgstr "Status"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
@@ -2071,9 +2013,9 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
 "Das Modell (Art des Odoo-Dokuments), dem dieser Alias entspricht. Jede "
 "eingehende E-Mail, die nicht auf einen vorhandenen Datensatz antwortet, "
@@ -2086,8 +2028,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"Der Name des E-Mail-Alias, z. „Jobs“, wenn Sie E-Mails für <jobs@"
-"example.odoo.com> abfangen möchten"
+"Der Name des E-Mail-Alias, z. „Jobs“, wenn Sie E-Mails für <jobs@example."
+"odoo.com> abfangen möchten"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
@@ -2104,6 +2046,7 @@ msgstr ""
 "Adresse gefunden wird."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_move.py:0
 #, python-format
 msgid ""
@@ -2115,6 +2058,7 @@ msgstr ""
 "(%(name)s) verknüpft ist."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
@@ -2126,28 +2070,32 @@ msgid "The tag is visible in the portal view"
 msgstr "Das Tag ist in der Portalansicht sichtbar"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
-"There is at least one invoice lines whose quantity is less than the quantity"
-" specified in its linked RMA."
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
 msgstr ""
 "Es gibt mindestens einen Rechnungsposten, dessen Menge geringer ist als die "
 "Menge, die in der verknüpften RMA angegeben ist."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot be split."
 msgstr "Diese RMA kann nicht aufgeteilt werden."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr "Diese RMA kann keinen Ersatz leisten."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a return."
@@ -2196,18 +2144,6 @@ msgid "Unlock"
 msgstr "Freischalten"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_unread
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread
-msgid "Unread Messages"
-msgstr "ungelesene Nachrichten"
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr "Zähler für ungelesene Nachrichten"
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
 msgstr "Ungelöste RMAs"
@@ -2223,6 +2159,11 @@ msgid "Urgent"
 msgstr "Dringend"
 
 #. module: rma
+#: model:ir.model,name:rma.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: rma
 #: model:res.groups,name:rma.rma_group_user_all
 msgid "User: All Documents"
 msgstr "Benutzer: Alle Dokumente"
@@ -2231,11 +2172,6 @@ msgstr "Benutzer: Alle Dokumente"
 #: model:res.groups,name:rma.rma_group_user_own
 msgid "User: Own Documents Only"
 msgstr "Benutzer: Nur eigene Dokumente"
-
-#. module: rma
-#: model:ir.model,name:rma.model_res_users
-msgid "Users"
-msgstr "Benutzer"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
@@ -2301,15 +2237,14 @@ msgstr ""
 msgid ""
 "When the RMA products are received, send an automatic information email."
 msgstr ""
-"Senden Sie nach Erhalt der RMA-Produkte eine automatische "
-"Informations-E-Mail."
+"Senden Sie nach Erhalt der RMA-Produkte eine automatische Informations-E-"
+"Mail."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
 msgid ""
-"When the RMA receipt is confirmed, send a confirmation email to the "
-"customer."
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 "Wenn der RMA-Eingang bestätigt ist, senden Sie eine Bestätigungs-E-Mail an "
 "den Kunden."
@@ -2324,6 +2259,7 @@ msgstr ""
 "Kunden."
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
@@ -2331,6 +2267,7 @@ msgstr ""
 "RMAs, die sich nicht im Entwurfsstatus befinden, können nicht gelöscht werden"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/stock_picking_return.py:0
 #, python-format
 msgid ""
@@ -2389,5 +2326,189 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} Ihre RMA wurde erfolgreich erstellt (Ref {{"
-"object.name or 'n/a' }})"
+"{{object.company_id.name}} Ihre RMA wurde erfolgreich erstellt (Ref {{object."
+"name or 'n/a' }})"
+
+#~ msgid ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+#~ "\">\n"
+#~ "                    Dear\n"
+#~ "                    <t t-out=\"object.partner_id.name\"/>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+#~ "                    </t>\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    Here is the RMA\n"
+#~ "                    <strong>\n"
+#~ "                        <t t-out=\"object.name\"/>\n"
+#~ "                    </strong>\n"
+#~ "                    from\n"
+#~ "                    <t t-out=\"object.company_id.name\"/>\n"
+#~ "                    .\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    Do not hesitate to contact us if you have any "
+#~ "question.\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"box-sizing:border-box;margin: 0px; padding: "
+#~ "0px; font-size: 13px;\">\n"
+#~ "                    Sehr geehrte/r\n"
+#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
+#~ "\"true\"></t>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-"
+#~ "group-active=\"true\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\" "
+#~ "data-oe-t-inline=\"true\"></t>\n"
+#~ "                    </t>\n"
+#~ "                    <br>\n"
+#~ "                    <br>\n"
+#~ "                    Hiermit übermitteln wie Ihnen unseren RMA Auftrag\n"
+#~ "                    <strong style=\"box-sizing:border-box;font-weight:500;"
+#~ "\">\n"
+#~ "                        <t t-out=\"object.name\" data-oe-t-inline=\"true"
+#~ "\"></t>\n"
+#~ "                    </strong>\n"
+#~ "                    von\n"
+#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
+#~ "\"true\"></t>\n"
+#~ "                    .\n"
+#~ "                    <br>\n"
+#~ "                    <br>\n"
+#~ "                    Zögern Sie nicht uns zu kontaktieren.\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+
+#~ msgid ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+#~ "\">\n"
+#~ "                    Dear\n"
+#~ "                    <t t-out=\"object.partner_id.name\"/>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+#~ "                    </t>\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    The products for your RMA\n"
+#~ "                    <strong>\n"
+#~ "                        <t t-out=\"object.name\"/>\n"
+#~ "                    </strong>\n"
+#~ "                    from\n"
+#~ "                    <t t-out=\"object.company_id.name\"/>\n"
+#~ "                    have been received in our warehouse.\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    Do not hesitate to contact us if you have any "
+#~ "question.\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+#~ "\">\n"
+#~ "                    Sehr geehrte/r\n"
+#~ "                    <t t-out=\"object.partner_id.name\"/>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+#~ "                    </t>\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "Die Produkte für ihren RMA\n"
+#~ "                    <strong>\n"
+#~ "                        <t t-out=\"object.name\"/>\n"
+#~ "                    </strong>\n"
+#~ "                    von\n"
+#~ "                    <t t-out=\"object.company_id.name\"/>\n"
+#~ "wurden in unserem Lager erfolgreich entgegen genommen.\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    Zögern Sie nicht uns bei weiteren Fragen erneut zu "
+#~ "kontaktieren\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+
+#~ msgid ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+#~ "\">\n"
+#~ "                    Dear\n"
+#~ "                    <t t-out=\"object.partner_id.name\"/>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+#~ "                    </t>\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    You've succesfully placed your RMA\n"
+#~ "                    <strong>\n"
+#~ "                        <t t-out=\"object.name\"/>\n"
+#~ "                    </strong>\n"
+#~ "                    on\n"
+#~ "                    <t t-out=\"object.company_id.name\"/>\n"
+#~ "                    . Our team will check it and will validate it as soon "
+#~ "as possible.\n"
+#~ "                    <br/>\n"
+#~ "                    <br/>\n"
+#~ "                    Do not hesitate to contact us if you have any "
+#~ "question.\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "                <p style=\"box-sizing:border-box;margin: 0px; padding: "
+#~ "0px; font-size: 13px;\">\n"
+#~ "                    Sehr geehrte/r\n"
+#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
+#~ "\"true\"></t>\n"
+#~ "                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-"
+#~ "group-active=\"true\">\n"
+#~ "                        <t t-out=\"object.partner_id.parent_id.name\" "
+#~ "data-oe-t-inline=\"true\"></t>\n"
+#~ "                    </t>\n"
+#~ "                    <br>\n"
+#~ "                    <br>\n"
+#~ "                    Sie haben erfolgreich ihren Reklamationsauftrag "
+#~ "eingebracht.\n"
+#~ "                    <strong style=\"box-sizing:border-box;font-weight:500;"
+#~ "\">\n"
+#~ "                        <t t-out=\"object.name\" data-oe-t-inline=\"true"
+#~ "\"></t>\n"
+#~ "                    </strong>\n"
+#~ "                    für\n"
+#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
+#~ "\"true\"></t>\n"
+#~ "                    . Unser Team wird die Anfrage bearbeiten uns sich so "
+#~ "bald wie möglich bei Ihnen melden.\n"
+#~ "                    <br>\n"
+#~ "                    <br>\n"
+#~ "Zögern Sie nicht uns bei weiteren Fragen erneut zu kontaktieren\n"
+#~ "                </p>\n"
+#~ "            </div>\n"
+#~ "        "
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "Anzahl der ungelesenen Nachrichten"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS-Zustellungsfehler"
+
+#~ msgid "Unread Messages"
+#~ msgstr "ungelesene Nachrichten"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "Zähler für ungelesene Nachrichten"
+
+#~ msgid "Users"
+#~ msgstr "Benutzer"

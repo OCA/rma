@@ -14,23 +14,24 @@ class StockPicking(models.Model):
 
     def _compute_rma_count(self):
         for rec in self:
-            rec.rma_count = len(rec.move_lines.mapped("rma_ids"))
+            rec.rma_count = len(rec.move_ids.mapped("rma_ids"))
 
     def copy(self, default=None):
         self.ensure_one()
         if self.env.context.get("set_rma_picking_type"):
-            location_dest_id = default["location_dest_id"]
-            warehouse = self.env["stock.warehouse"].search(
-                [("rma_loc_id", "parent_of", location_dest_id)], limit=1
-            )
-            if warehouse:
-                default["picking_type_id"] = warehouse.rma_in_type_id.id
+            location_dest_id = default.get("location_dest_id")
+            if location_dest_id:
+                warehouse = self.env["stock.warehouse"].search(
+                    [("rma_loc_id", "parent_of", location_dest_id)], limit=1
+                )
+                if warehouse:
+                    default["picking_type_id"] = warehouse.rma_in_type_id.id
         return super().copy(default)
 
     def action_view_rma(self):
         self.ensure_one()
         action = self.sudo().env.ref("rma.rma_action").read()[0]
-        rma = self.move_lines.mapped("rma_ids")
+        rma = self.move_ids.mapped("rma_ids")
         if len(rma) == 1:
             action.update(
                 res_id=rma.id,

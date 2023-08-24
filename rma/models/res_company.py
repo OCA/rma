@@ -1,10 +1,11 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
 
 
-class Company(models.Model):
+class ResCompany(models.Model):
     _inherit = "res.company"
 
     def _default_rma_mail_confirmation_template(self):
@@ -65,11 +66,12 @@ class Company(models.Model):
         help="Email sent to the customer when they place " "an RMA from the portal",
     )
 
-    @api.model
-    def create(self, vals):
-        company = super(Company, self).create(vals)
-        company.create_rma_index()
-        return company
+    @api.model_create_multi
+    def create(self, vals_list):
+        companies = super().create(vals_list)
+        for company in companies:
+            company.create_rma_index()
+        return companies
 
     def create_rma_index(self):
         return (

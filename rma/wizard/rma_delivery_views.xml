@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     Copyright 2023 Tecnativa - Pedro M. Baeza
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="rma_redelivery_wizard_view_form" model="ir.ui.view">
@@ -43,6 +44,7 @@
                                 attrs="{'required': [('rma_count', '=', 1)]}"
                                 domain="[('category_id', '=', uom_category_id)]"
                             />
+                            <field name="product_uom" invisible="1" />
                         </div>
                     </group>
                 </group>
