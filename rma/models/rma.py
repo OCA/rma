@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 from collections import Counter
@@ -78,6 +79,9 @@ class Rma(models.Model):
             "locked": [("readonly", True)],
             "cancelled": [("readonly", True)],
         },
+        compute="_compute_team_id",
+        store=True,
+        readonly=False,
     )
     tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
     finalization_id = fields.Many2one(
@@ -109,19 +113,21 @@ class Rma(models.Model):
     partner_shipping_id = fields.Many2one(
         string="Shipping Address",
         comodel_name="res.partner",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         help="Shipping address for current RMA.",
+        compute="_compute_partner_shipping_id",
+        store=True,
+        readonly=False,
     )
     partner_invoice_id = fields.Many2one(
         string="Invoice Address",
         comodel_name="res.partner",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         domain=(
             "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
         ),
         help="Refund address for current RMA.",
+        compute="_compute_partner_invoice_id",
+        store=True,
+        readonly=False,
     )
     commercial_partner_id = fields.Many2one(
         comodel_name="res.partner",
@@ -149,28 +155,34 @@ class Rma(models.Model):
             "    ('picking_id', '!=', False)"
             "]"
         ),
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        compute="_compute_move_id",
+        store=True,
+        readonly=False,
     )
     product_id = fields.Many2one(
         comodel_name="product.product",
         domain=[("type", "in", ["consu", "product"])],
+        compute="_compute_product_id",
+        store=True,
+        readonly=False,
     )
     product_uom_qty = fields.Float(
         string="Quantity",
         required=True,
         default=1.0,
         digits="Product Unit of Measure",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        compute="_compute_product_uom_qty",
+        store=True,
+        readonly=False,
     )
     product_uom = fields.Many2one(
         comodel_name="uom.uom",
         string="UoM",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         default=lambda self: self.env.ref("uom.product_uom_unit").id,
+        compute="_compute_product_uom",
+        store=True,
+        readonly=False,
     )
     procurement_group_id = fields.Many2one(
         comodel_name="procurement.group",
@@ -220,8 +232,9 @@ class Rma(models.Model):
     location_id = fields.Many2one(
         comodel_name="stock.location",
         domain=_domain_location_id,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        compute="_compute_location_id",
+        store=True,
+        readonly=False,
     )
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse",
@@ -463,6 +476,83 @@ class Rma(models.Model):
                 [("rma_loc_id", "parent_of", record.location_id.id)], limit=1
             )
 
+    @api.depends("user_id")
+    def _compute_team_id(self):
+        self.team_id = False
+        for record in self.filtered("user_id"):
+            record.team_id = (
+                self.env["rma.team"]
+                .sudo()
+                .search(
+                    [
+                        "|",
+                        ("user_id", "=", record.user_id.id),
+                        ("member_ids", "=", record.user_id.id),
+                        "|",
+                        ("company_id", "=", False),
+                        ("company_id", "child_of", record.company_id.ids),
+                    ],
+                    limit=1,
+                )
+            )
+
+    @api.depends("partner_id")
+    def _compute_partner_shipping_id(self):
+        self.partner_shipping_id = False
+        for record in self.filtered("partner_id"):
+            address = record.partner_id.address_get(["delivery"])
+            record.partner_shipping_id = address.get("delivery", False)
+
+    @api.depends("partner_id")
+    def _compute_partner_invoice_id(self):
+        self.partner_invoice_id = False
+        for record in self.filtered("partner_id"):
+            address = record.partner_id.address_get(["invoice"])
+            record.partner_invoice_id = address.get("invoice", False)
+
+    @api.depends("picking_id")
+    def _compute_move_id(self):
+        """Empty move on picking change, but selecting the move in it if it's single."""
+        self.move_id = False
+        for record in self.filtered("picking_id"):
+            if len(record.picking_id.move_ids) == 1:
+                record.move_id = record.picking_id.move_ids.id
+
+    @api.depends("move_id")
+    def _compute_product_id(self):
+        self.product_id = False
+        for record in self.filtered("move_id"):
+            record.product_id = record.move_id.product_id.id
+
+    @api.depends("move_id")
+    def _compute_product_uom_qty(self):
+        self.product_uom_qty = False
+        for record in self.filtered("move_id"):
+            record.product_uom_qty = record.move_id.product_uom_qty
+
+    @api.depends("move_id", "product_id")
+    def _compute_product_uom(self):
+        for record in self:
+            if record.move_id:
+                record.product_uom = record.move_id.product_uom.id
+            elif record.product_id:
+                record.product_uom = record.product_id.uom_id
+            else:
+                record.product_uom = False
+
+    @api.depends("picking_id", "product_id", "company_id")
+    def _compute_location_id(self):
+        for record in self:
+            if record.picking_id:
+                warehouse = record.picking_id.picking_type_id.warehouse_id
+                record.location_id = warehouse.rma_loc_id.id
+            elif not record.location_id:
+                company = record.company_id or self.env.company
+                warehouse = self.env["stock.warehouse"].search(
+                    [("company_id", "=", company.id)], limit=1
+                )
+                record.location_id = warehouse.rma_loc_id.id
+
     def _compute_access_url(self):
         for record in self:
             record.access_url = "/my/rmas/{}".format(record.id)
@@ -482,76 +572,6 @@ class Rma(models.Model):
         """
         rma = self.filtered(lambda r: r.state not in ["draft", "cancelled"])
         rma._ensure_required_fields()
-
-    # onchange methods (@api.onchange)
-    @api.onchange("user_id")
-    def _onchange_user_id(self):
-        if self.user_id:
-            self.team_id = (
-                self.env["rma.team"]
-                .sudo()
-                .search(
-                    [
-                        "|",
-                        ("user_id", "=", self.user_id.id),
-                        ("member_ids", "=", self.user_id.id),
-                        "|",
-                        ("company_id", "=", False),
-                        ("company_id", "child_of", self.company_id.ids),
-                    ],
-                    limit=1,
-                )
-            )
-        else:
-            self.team_id = False
-
-    @api.onchange("partner_id")
-    def _onchange_partner_id(self):
-        self.picking_id = False
-        partner_invoice_id = False
-        partner_shipping_id = False
-        if self.partner_id:
-            address = self.partner_id.address_get(["invoice", "delivery"])
-            partner_invoice_id = address.get("invoice", False)
-            partner_shipping_id = address.get("delivery", False)
-        self.partner_invoice_id = partner_invoice_id
-        self.partner_shipping_id = partner_shipping_id
-
-    @api.onchange("picking_id")
-    def _onchange_picking_id(self):
-        location = False
-        if self.picking_id:
-            warehouse = self.picking_id.picking_type_id.warehouse_id
-            location = warehouse.rma_loc_id.id
-        self.location_id = location
-        self.move_id = False
-        self.product_id = False
-
-    @api.onchange("move_id")
-    def _onchange_move_id(self):
-        if self.move_id:
-            self.product_id = self.move_id.product_id
-            self.product_uom_qty = self.move_id.product_uom_qty
-            self.product_uom = self.move_id.product_uom
-
-    @api.onchange("product_id")
-    def _onchange_product_id(self):
-        if self.product_id:
-            # Set UoM
-            if not self.product_uom or self.product_id.uom_id.id != self.product_uom.id:
-                self.product_uom = self.product_id.uom_id
-            # Set stock location (location_id)
-            user = self.env.user
-            if (
-                not user.has_group("stock.group_stock_multi_locations")
-                and not self.location_id
-            ):
-                # If this condition is True, it is because a picking is not set
-                company = self.company_id or self.env.company
-                warehouse = self.env["stock.warehouse"].search(
-                    [("company_id", "=", company.id)], limit=1
-                )
-                self.location_id = warehouse.rma_loc_id.id
 
     # CRUD methods (ORM overrides)
     @api.model_create_multi
@@ -677,41 +697,25 @@ class Rma(models.Model):
             group_dict[key] |= record
         for rmas in group_dict.values():
             origin = ", ".join(rmas.mapped("name"))
-            invoice_form = Form(
-                self.env["account.move"]
-                .sudo()
-                .with_context(
-                    default_move_type="out_refund",
-                    company_id=rmas[0].company_id.id,
-                ),
-                "account.view_move_form",
-            )
-            rmas[0]._prepare_refund(invoice_form, origin)
-            refund = invoice_form.save()
+            refund_vals = rmas[0]._prepare_refund_vals(origin)
             for rma in rmas:
-                # For each iteration the Form is edited, a new invoice line
-                # is added and then saved. This is to generate the other
-                # lines of the accounting entry and to specify the associated
-                # RMA to that new invoice line.
-                invoice_form = Form(refund)
-                with invoice_form.invoice_line_ids.new() as line_form:
-                    rma._prepare_refund_line(line_form)
-                refund = invoice_form.save()
-                line = refund.invoice_line_ids.filtered(lambda r: not r.rma_id)
-                line.rma_id = rma.id
-                rma.write(
+                refund_vals["invoice_line_ids"].append(
+                    (0, 0, rma._prepare_refund_line_vals())
+                )
+            refund = self.env["account.move"].sudo().create(refund_vals)
+            refund.with_user(self.env.uid).message_post_with_view(
+                "mail.message_origin_link",
+                values={"self": refund, "origin": rmas},
+                subtype_id=self.env.ref("mail.mt_note").id,
+            )
+            for line in refund.invoice_line_ids:
+                line.rma_id.write(
                     {
                         "refund_line_id": line.id,
                         "refund_id": refund.id,
                         "state": "refunded",
                     }
                 )
-            refund.invoice_origin = origin
-            refund.with_user(self.env.uid).message_post_with_view(
-                "mail.message_origin_link",
-                values={"self": refund, "origin": rmas},
-                subtype_id=self.env.ref("mail.mt_note").id,
-            )
 
     def action_replace(self):
         """Invoked when 'Replace' button in rma form view is clicked."""
@@ -880,7 +884,6 @@ class Rma(models.Model):
         rma._check_required_after_draft
         rma.action_confirm
         """
-        ir_translation = self.env["ir.translation"]
         required = [
             "partner_id",
             "partner_shipping_id",
@@ -891,7 +894,17 @@ class Rma(models.Model):
         for record in self:
             desc = ""
             for field in filter(lambda item: not record[item], required):
-                desc += "\n%s" % ir_translation.get_field_string("rma")[field]
+                field_record = (
+                    self.env["ir.model.fields"]
+                    .sudo()
+                    .search(
+                        [
+                            ("model_id.model", "=", record._name),
+                            ("name", "=", field),
+                        ]
+                    )
+                )
+                desc += f"\n{field_record.field_description}"
             if desc:
                 raise ValidationError(_("Required field(s):%s") % desc)
 
@@ -982,9 +995,9 @@ class Rma(models.Model):
                 active_model="stock.picking",
             )
         )
-        if self.location_id:
-            stock_return_picking_form.location_id = self.location_id
         return_wizard = stock_return_picking_form.save()
+        if self.location_id:
+            return_wizard.location_id = self.location_id
         return_wizard.product_return_moves.filtered(
             lambda r: r.move_id != self.move_id
         ).unlink()
@@ -992,8 +1005,8 @@ class Rma(models.Model):
         return_line.update(
             {
                 "quantity": self.product_uom_qty,
-                # The to_refund field is now True by default, which isn't right in the RMA
-                # creation context.
+                # The to_refund field is now True by default, which isn't right in the
+                # RMA creation context
                 "to_refund": False,
             }
         )
@@ -1005,20 +1018,13 @@ class Rma(models.Model):
         picking_id = picking_action["res_id"]
         picking = self.env["stock.picking"].browse(picking_id)
         picking.origin = "{} ({})".format(self.name, picking.origin)
-        move = picking.move_lines
+        move = picking.move_ids
         move.priority = self.priority
         return move
 
     def _create_receptions_from_product(self):
         self.ensure_one()
-        picking_form = Form(
-            recordp=self.env["stock.picking"].with_context(
-                default_picking_type_id=self.warehouse_id.rma_in_type_id.id
-            ),
-            view="stock.view_picking_form",
-        )
-        self._prepare_picking(picking_form)
-        picking = picking_form.save()
+        picking = self.env["stock.picking"].create(self._prepare_picking_vals())
         picking.action_confirm()
         picking.action_assign()
         picking.message_post_with_view(
@@ -1026,17 +1032,33 @@ class Rma(models.Model):
             values={"self": picking, "origin": self},
             subtype_id=self.env.ref("mail.mt_note").id,
         )
-        return picking.move_lines
+        return picking.move_ids
 
-    def _prepare_picking(self, picking_form):
-        picking_form.origin = self.name
-        picking_form.partner_id = self.partner_shipping_id
-        picking_form.location_id = self.partner_shipping_id.property_stock_customer
-        picking_form.location_dest_id = self.location_id
-        with picking_form.move_ids_without_package.new() as move_form:
-            move_form.product_id = self.product_id
-            move_form.product_uom_qty = self.product_uom_qty
-            move_form.product_uom = self.product_uom
+    def _prepare_picking_vals(self):
+        return {
+            "picking_type_id": self.warehouse_id.rma_in_type_id.id,
+            "origin": self.name,
+            "partner_id": self.partner_shipping_id.id,
+            "location_id": self.partner_shipping_id.property_stock_customer.id,
+            "location_dest_id": self.location_id.id,
+            "move_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "product_id": self.product_id.id,
+                        # same text as origin move or product text in partner lang
+                        "name": self.move_id.name
+                        or self.product_id.with_context(
+                            lang=self.partner_id.lang or "en_US"
+                        ).display_name,
+                        "location_id": self.partner_shipping_id.property_stock_customer.id,
+                        "location_dest_id": self.location_id.id,
+                        "product_uom_qty": self.product_uom_qty,
+                    },
+                )
+            ],
+        }
 
     # Extract business methods
     def extract_quantity(self, qty, uom):
@@ -1074,7 +1096,7 @@ class Rma(models.Model):
         return extracted_rma
 
     # Refund business methods
-    def _prepare_refund(self, invoice_form, origin):
+    def _prepare_refund_vals(self, origin=False):
         """Hook method for preparing the refund Form.
 
         This method could be override in order to add new custom field
@@ -1084,11 +1106,16 @@ class Rma(models.Model):
         rma.action_refund
         """
         self.ensure_one()
-        invoice_form.partner_id = self.partner_invoice_id
-        # Avoid set partner default value
-        invoice_form.invoice_payment_term_id = self.env["account.payment.term"]
+        return {
+            "move_type": "out_refund",
+            "company_id": self.company_id.id,
+            "partner_id": self.partner_invoice_id.id,
+            "invoice_payment_term_id": False,
+            "invoice_origin": origin,
+            "invoice_line_ids": [],
+        }
 
-    def _prepare_refund_line(self, line_form):
+    def _prepare_refund_line_vals(self):
         """Hook method for preparing a refund line Form.
 
         This method could be override in order to add new custom field
@@ -1098,31 +1125,13 @@ class Rma(models.Model):
         rma.action_refund
         """
         self.ensure_one()
-        product = self._get_refund_line_product()
-        qty, uom = self._get_refund_line_quantity()
-        line_form.product_id = product
-        line_form.quantity = qty
-        line_form.product_uom_id = uom
-        line_form.price_unit = self._get_refund_line_price_unit()
-
-    def _get_refund_line_product(self):
-        """To be overriden in a third module with the proper origin values
-        in case a kit is linked with the rma"""
-        return self.product_id
-
-    def _get_refund_line_quantity(self):
-        """To be overriden in a third module with the proper origin values
-        in case a kit is linked with the rma"""
-        return (self.product_uom_qty, self.product_uom)
-
-    def _get_refund_line_price_unit(self):
-        """To be overriden in a third module with the proper origin values
-        in case a sale order is linked to the original move"""
-        return self.product_id.lst_price
-
-    def _get_extra_refund_line_vals(self):
-        """Override to write aditional stuff into the refund line"""
-        return {}
+        return {
+            "product_id": self.product_id.id,
+            "quantity": self.product_uom_qty,
+            "product_uom_id": self.product_uom.id,
+            "price_unit": self.product_id.lst_price,
+            "rma_id": self.id,
+        }
 
     # Returning business methods
     def create_return(self, scheduled_date, qty=None, uom=None):
@@ -1148,32 +1157,13 @@ class Rma(models.Model):
             grouped_rmas = rmas_to_return
         for rmas in grouped_rmas:
             origin = ", ".join(rmas.mapped("name"))
-            rma_out_type = rmas[0].warehouse_id.rma_out_type_id
-            picking_form = Form(
-                recordp=self.env["stock.picking"].with_context(
-                    default_picking_type_id=rma_out_type.id
-                ),
-                view="stock.view_picking_form",
-            )
-            rmas[0]._prepare_returning_picking(picking_form, origin)
-            picking = picking_form.save()
+            picking_vals = rmas[0]._prepare_returning_picking_vals(origin)
             for rma in rmas:
-                with picking_form.move_ids_without_package.new() as move_form:
-                    rma._prepare_returning_move(move_form, scheduled_date, qty, uom)
-                # rma_id is not present in the form view, so we need to get
-                # the 'values to save' to add the rma id and use the
-                # create method intead of save the form.
-                picking_vals = picking_form._values_to_save(all_fields=True)
-                move_vals = picking_vals["move_ids_without_package"][-1][2]
-                move_vals.update(
-                    picking_id=picking.id,
-                    rma_id=rma.id,
-                    move_orig_ids=[(4, rma.reception_move_id.id)],
-                    company_id=picking.company_id.id,
+                picking_vals["move_ids"].append(
+                    (0, 0, rma._prepare_returning_move_vals(scheduled_date, qty, uom))
                 )
-                if "product_qty" in move_vals:
-                    move_vals.pop("product_qty")
-                self.env["stock.move"].sudo().create(move_vals)
+            picking = self.env["stock.picking"].create(picking_vals)
+            for rma in rmas:
                 rma.message_post(
                     body=_(
                         'Return: <a href="#" data-oe-model="stock.picking" '
@@ -1190,18 +1180,34 @@ class Rma(models.Model):
             )
         rmas_to_return.write({"state": "waiting_return"})
 
-    def _prepare_returning_picking(self, picking_form, origin=None):
-        picking_form.picking_type_id = self.warehouse_id.rma_out_type_id
-        picking_form.origin = origin or self.name
-        picking_form.partner_id = self.partner_shipping_id
+    def _prepare_returning_picking_vals(self, origin=None):
+        self.ensure_one()
+        return {
+            "picking_type_id": self.warehouse_id.rma_out_type_id.id,
+            "location_id": self.location_id.id,
+            "location_dest_id": self.reception_move_id.location_id.id,
+            "origin": origin or self.name,
+            "partner_id": self.partner_shipping_id.id,
+            "company_id": self.company_id.id,
+            "move_ids": [],
+        }
 
-    def _prepare_returning_move(
-        self, move_form, scheduled_date, quantity=None, uom=None
-    ):
-        move_form.product_id = self.product_id
-        move_form.product_uom_qty = quantity or self.product_uom_qty
-        move_form.product_uom = uom or self.product_uom
-        move_form.date = scheduled_date
+    def _prepare_returning_move_vals(self, scheduled_date, quantity=None, uom=None):
+        self.ensure_one()
+        return {
+            "product_id": self.product_id.id,
+            "name": self.product_id.with_context(
+                lang=self.partner_shipping_id.lang or "en_US"
+            ).display_name,
+            "product_uom_qty": quantity or self.product_uom_qty,
+            "product_uom": uom and uom.id or self.product_uom.id,
+            "location_id": self.location_id.id,
+            "location_dest_id": self.reception_move_id.location_id.id,
+            "date": scheduled_date,
+            "rma_id": self.id,
+            "move_orig_ids": [(4, self.reception_move_id.id)],
+            "company_id": self.company_id.id,
+        }
 
     # Replacing business methods
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
