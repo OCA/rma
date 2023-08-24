@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     Copyright 2023 Tecnativa - Pedro M. Baeza
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="rma_split_wizard_view_form2" model="ir.ui.view">
@@ -13,6 +14,7 @@
                         <div class="o_row">
                             <field name="product_uom_qty" />
                             <field name="product_uom" groups="uom.group_uom" />
+                            <field name="product_uom" invisible="1" />
                         </div>
                     </group>
                 </group>

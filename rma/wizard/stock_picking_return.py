@@ -10,39 +10,43 @@ class ReturnPicking(models.TransientModel):
 
     create_rma = fields.Boolean(string="Create RMAs")
     picking_type_code = fields.Selection(related="picking_id.picking_type_id.code")
+    rma_location_ids = fields.Many2many(
+        comodel_name="stock.location", compute="_compute_rma_location_id"
+    )
+    # Expand domain for RMAs
+    location_id = fields.Many2one(
+        domain="create_rma and [('id', 'child_of', rma_location_ids)]"
+        "or "
+        "['|', ('id', '=', original_location_id), '|', '&', "
+        "('return_location', '=', True), ('company_id', '=', False), '&', "
+        "('return_location', '=', True), ('company_id', '=', company_id)]"
+    )
+
+    @api.depends("picking_id")
+    def _compute_rma_location_id(self):
+        for record in self:
+            record.rma_location_ids = (
+                self.env["stock.warehouse"]
+                .search([("company_id", "=", record.picking_id.company_id.id)])
+                .rma_loc_id
+            )
 
     @api.onchange("create_rma")
     def _onchange_create_rma(self):
         if self.create_rma:
             warehouse = self.picking_id.picking_type_id.warehouse_id
             self.location_id = warehouse.rma_loc_id.id
-            rma_loc = warehouse.search(
-                [("company_id", "=", self.picking_id.company_id.id)]
-            ).mapped("rma_loc_id")
-            rma_loc_domain = [("id", "child_of", rma_loc.ids)]
             # We want to avoid setting the return move `to_refund` as it will change
             # the delivered quantities in the sale and set them to invoice.
             self.product_return_moves.to_refund = False
         else:
-            # If self.create_rma is not True, the value of the location and
-            # the location domain will be the same as assigned by default.
+            # If self.create_rma is not True, the value of the location will be the
+            # same as assigned by default
             location_id = self.picking_id.location_id.id
             return_picking_type = self.picking_id.picking_type_id.return_picking_type_id
             if return_picking_type.default_location_dest_id.return_location:
                 location_id = return_picking_type.default_location_dest_id.id
             self.location_id = location_id
-            rma_loc_domain = [
-                "|",
-                ("id", "=", self.picking_id.location_id.id),
-                "|",
-                "&",
-                ("return_location", "=", True),
-                ("company_id", "=", False),
-                "&",
-                ("return_location", "=", True),
-                ("company_id", "=", self.picking_id.company_id.id),
-            ]
-        return {"domain": {"location_id": rma_loc_domain}}
 
     def create_returns(self):
         """Override create_returns method for creating one or more
@@ -67,7 +71,7 @@ class ReturnPicking(models.TransientModel):
             returned_picking = self.env["stock.picking"].browse(res["res_id"])
             vals_list = [
                 move._prepare_return_rma_vals(self.picking_id)
-                for move in returned_picking.move_lines
+                for move in returned_picking.move_ids
             ]
             self.env["rma"].create(vals_list)
             return res
