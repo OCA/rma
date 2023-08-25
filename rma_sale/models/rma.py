@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -94,6 +95,7 @@ class Rma(models.Model):
         res = super()._prepare_refund(invoice_form, origin)
         if self.order_id:
             invoice_form.invoice_user_id = self.order_id.user_id
+            invoice_form.invoice_payment_term_id = self.order_id.payment_term_id
         return res
 
     def _get_refund_line_price_unit(self):

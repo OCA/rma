@@ -26,6 +26,8 @@ class TestRmaSale(SavepointCase):
         cls._partner_portal_wizard(cls, cls.partner)
         order_form = Form(cls.sale_order)
         order_form.partner_id = cls.partner
+        cls.payment_term = cls.env.ref("account.account_payment_term_immediate")
+        order_form.payment_term_id = cls.payment_term
         with order_form.order_line.new() as line_form:
             line_form.product_id = cls.product_1
             line_form.product_uom_qty = 5
@@ -96,6 +98,7 @@ class TestRmaSale(SavepointCase):
         rma.reception_move_id.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
+        self.assertEqual(rma.refund_id.invoice_payment_term_id, self.payment_term)
 
     @users("partner@rma")
     def test_create_rma_from_so_portal_user(self):
