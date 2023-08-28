@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_warranty](product_warranty/) | 16.0.1.0.0 | [![osi-scampbell](https://github.com/osi-scampbell.png?size=30px)](https://github.com/osi-scampbell) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Product Warranty
+[rma](rma/) | 16.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Return Merchandise Authorization (RMA)
 
 [//]: # (end addons)
 
