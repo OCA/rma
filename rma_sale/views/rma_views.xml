@@ -8,7 +8,11 @@
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
             <field name="partner_invoice_id" position="after">
-                <field name="order_id" options="{'no_create': True}" />
+                <field
+                    name="order_id"
+                    options="{'no_create': True}"
+                    attrs="{'readonly': [('state', '!=', 'draft')]}"
+                />
             </field>
             <sheet>
                 <field name="allowed_picking_ids" invisible="1" />

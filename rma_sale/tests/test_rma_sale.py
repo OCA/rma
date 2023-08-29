@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form, TransactionCase
@@ -61,17 +62,41 @@ class TestRmaSale(TestRmaSaleBase):
             lambda r: r.product_id == cls.product_1
         )
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_lines.quantity_done = 5
+        cls.order_out_picking.move_ids.quantity_done = 5
         cls.order_out_picking.button_validate()
 
+    def test_rma_sale_computes_onchange(self):
+        rma = self.env["rma"].new()
+        # No m2m values when everything is selectable
+        self.assertFalse(rma.allowed_picking_ids)
+        self.assertFalse(rma.allowed_move_ids)
+        self.assertFalse(rma.allowed_product_ids)
+        # Partner selected
+        rma.order_id = self.sale_order
+        rma.partner_id = self.partner
+        self.assertFalse(rma.order_id)
+        self.assertEqual(rma.allowed_picking_ids._origin, self.order_out_picking)
+        # Order selected
+        rma.order_id = self.sale_order
+        self.assertEqual(rma.allowed_picking_ids._origin, self.order_out_picking)
+        rma.picking_id = self.order_out_picking
+        self.assertEqual(rma.allowed_move_ids._origin, self.order_out_picking.move_ids)
+        self.assertEqual(rma.allowed_product_ids._origin, self.product_1)
+        # Onchanges
+        rma.product_id = self.product_1
+        rma._onchange_order_id()
+        self.assertFalse(rma.product_id)
+        self.assertFalse(rma.picking_id)
+
     def test_create_rma_with_so(self):
-        rma_form = Form(self.env["rma"])
-        rma_form.partner_id = self.partner
-        rma_form.order_id = self.sale_order
-        rma_form.product_id = self.product_1
-        rma_form.product_uom_qty = 5
-        rma_form.location_id = self.sale_order.warehouse_id.rma_loc_id
-        rma = rma_form.save()
+        rma_vals = {
+            "partner_id": self.partner.id,
+            "order_id": self.sale_order.id,
+            "product_id": self.product_1.id,
+            "product_uom_qty": 5,
+            "location_id": self.sale_order.warehouse_id.rma_loc_id.id,
+        }
+        rma = self.env["rma"].create(rma_vals)
         rma.action_confirm()
         self.assertTrue(rma.reception_move_id)
         self.assertFalse(rma.reception_move_id.origin_returned_move_id)
@@ -83,14 +108,14 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(rma.partner_id, order.partner_id)
         self.assertEqual(rma.order_id, order)
         self.assertEqual(rma.picking_id, self.order_out_picking)
-        self.assertEqual(rma.move_id, self.order_out_picking.move_lines)
+        self.assertEqual(rma.move_id, self.order_out_picking.move_ids)
         self.assertEqual(rma.product_id, self.product_1)
         self.assertEqual(rma.product_uom_qty, self.order_line.product_uom_qty)
         self.assertEqual(rma.product_uom, self.order_line.product_uom)
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
             rma.reception_move_id.origin_returned_move_id,
-            self.order_out_picking.move_lines,
+            self.order_out_picking.move_ids,
         )
         self.assertEqual(
             rma.reception_move_id.picking_id + self.order_out_picking,
@@ -123,7 +148,7 @@ class TestRmaSale(TestRmaSaleBase):
     def test_create_rma_from_so_portal_user(self):
         order = self.sale_order
         wizard_obj = (
-            self.env["sale.order.rma.wizard"].sudo().with_context(active_id=order)
+            self.env["sale.order.rma.wizard"].sudo().with_context(active_id=order.id)
         )
         operation = self.rma_operation_model.sudo().search([], limit=1)
         line_vals = [
@@ -149,6 +174,7 @@ class TestRmaSale(TestRmaSaleBase):
         rma = wizard.sudo().create_rma(from_portal=True)
         self.assertEqual(rma.order_id, order)
         self.assertIn(order.partner_id, rma.message_partner_ids)
+        self.assertEqual(order.rma_count, 1)
 
     def test_create_recurrent_rma(self):
         """An RMA of a product that had an RMA in the past should be possible"""
@@ -172,7 +198,7 @@ class TestRmaSale(TestRmaSaleBase):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
-        picking.move_lines.quantity_done = rma.product_uom_qty
+        picking.move_ids.quantity_done = rma.product_uom_qty
         picking._action_done()
         # The product is returned to the customer, so we should be able to make
         # another RMA in the future
@@ -188,8 +214,7 @@ class TestRmaSale(TestRmaSaleBase):
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         operation = self.rma_operation_model.sudo().search([], limit=1)
         rma.operation_id = operation.id
-        res = self.report_model._get_report_from_name(
-            "rma.report_rma"
-        )._render_qweb_text(rma.ids, False)
-        self.assertRegex(str(res[0]), self.sale_order.name)
-        self.assertRegex(str(res[0]), operation.name)
+        res = self.env["ir.actions.report"]._render_qweb_html("rma.report_rma", rma.ids)
+        res = str(res[0])
+        self.assertRegex(res, self.sale_order.name)
+        self.assertRegex(res, operation.name)

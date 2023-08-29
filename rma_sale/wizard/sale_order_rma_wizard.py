@@ -161,7 +161,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         for record in self:
             move_id = False
             if record.picking_id:
-                move_id = record.picking_id.move_lines.filtered(
+                move_id = record.picking_id.move_ids.filtered(
                     lambda r: (
                         r.sale_line_id == record.sale_line_id
                         and r.sale_line_id.product_id == record.product_id

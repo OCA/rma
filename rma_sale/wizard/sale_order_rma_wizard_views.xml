@@ -12,7 +12,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="line_ids" nolabel="1">
+                    <field name="line_ids" nolabel="1" colspan="2">
                         <tree editable="bottom">
                             <field name="order_id" invisible="1" />
                             <field name="allowed_product_ids" invisible="1" />
