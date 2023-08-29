@@ -16,8 +16,9 @@ class Rma(models.Model):
         "    ('partner_id', 'child_of', commercial_partner_id),"
         "    ('state', 'in', ['sale', 'done']),"
         "]",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        store=True,
+        readonly=False,
+        compute="_compute_order_id",
     )
     allowed_picking_ids = fields.Many2many(
         comodel_name="stock.picking",
@@ -28,7 +29,7 @@ class Rma(models.Model):
         "[('state', '=', 'done'), ('picking_type_id.code', '=', 'outgoing')] "
     )
     allowed_move_ids = fields.Many2many(
-        comodel_name="sale.order.line",
+        comodel_name="stock.move",
         compute="_compute_allowed_move_ids",
     )
     move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
@@ -70,7 +71,7 @@ class Rma(models.Model):
                     lambda r: r.picking_id == self.picking_id and r.state == "done"
                 ).ids
             else:
-                rec.allowed_move_ids = self.picking_id.move_lines.ids
+                rec.allowed_move_ids = self.picking_id.move_ids.ids
 
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):
@@ -83,11 +84,10 @@ class Rma(models.Model):
             else:
                 rec.allowed_product_ids = False  # don't populate a big list
 
-    @api.onchange("partner_id")
-    def _onchange_partner_id(self):
-        res = super()._onchange_partner_id()
+    @api.depends("partner_id")
+    def _compute_order_id(self):
+        """Empty sales order when changing partner."""
         self.order_id = False
-        return res
 
     @api.onchange("order_id")
     def _onchange_order_id(self):
@@ -132,36 +132,25 @@ class Rma(models.Model):
                 rma._link_refund_with_reception_move()
         return res
 
-    def _prepare_refund(self, invoice_form, origin):
+    def _prepare_refund_vals(self, origin=False):
         """Inject salesman from sales order (if any)"""
-        res = super()._prepare_refund(invoice_form, origin)
+        vals = super()._prepare_refund_vals(origin=origin)
         if self.order_id:
-            invoice_form.invoice_user_id = self.order_id.user_id
-        return res
+            vals["invoice_user_id"] = self.order_id.user_id.id
+        return vals
 
-    def _get_refund_line_price_unit(self):
-        """Get the sale order price unit"""
-        if self.sale_line_id:
-            return self.sale_line_id.price_unit
-        return super()._get_refund_line_price_unit()
-
-    def _get_refund_line_product(self):
-        """To be overriden in a third module with the proper origin values
-        in case a kit is linked with the rma"""
-        if not self.sale_line_id:
-            return super()._get_refund_line_product()
-        return self.sale_line_id.product_id
-
-    def _prepare_refund_line(self, line_form):
+    def _prepare_refund_line_vals(self):
         """Add line data and link to the sales order, only if the RMA is for the whole
         move quantity. In other cases, incorrect delivered/invoiced quantities will be
         logged on the sales order, so better to let the operations not linked.
         """
-        res = super()._prepare_refund_line(line_form)
+        vals = super()._prepare_refund_line_vals()
         line = self.sale_line_id
         if line:
-            line_form.discount = line.discount
-            line_form.sequence = line.sequence
+            vals["product_id"] = line.product_id.id
+            vals["price_unit"] = line.price_unit
+            vals["discount"] = line.discount
+            vals["sequence"] = line.sequence
             move = self.reception_move_id
             if (
                 move
@@ -172,5 +161,5 @@ class Rma(models.Model):
                 )
                 == 0
             ):
-                line_form.sale_line_ids.add(line)
-        return res
+                vals["sale_line_ids"] = [(4, line.id)]
+        return vals
