@@ -18,6 +18,7 @@ odoo.define("rma_sale.animation", function (require) {
         events: {
             "change .rma-operation": "_onChangeOperationId",
             "change #delivery-rma-qty input": "_onChangeQty",
+            "click .o_rma_portal_shipping_card": "_onChangeShippingAddress",
         },
 
         /**
@@ -119,6 +120,16 @@ odoo.define("rma_sale.animation", function (require) {
          */
         _onChangeQty: function () {
             this._checkCanSubmit();
+        },
+        _onChangeShippingAddress: function (ev) {
+            const $address_container = $(ev.currentTarget.parentElement);
+            $address_container.find("input").removeAttr("checked");
+            $address_container
+                .find(".o_rma_portal_shipping_card")
+                .removeClass("bg-primary")
+                .removeClass("text-primary");
+            $(ev.currentTarget).find("input").attr("checked", "checked");
+            $(ev.currentTarget).addClass("bg-primary").addClass("text-primary");
         },
     });
 });

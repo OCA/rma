@@ -33,6 +33,11 @@ class CustomerPortal(CustomerPortal):
         mapped_vals = {}
         custom_vals = {}
         partner_shipping_id = post.pop("partner_shipping_id", False)
+        if partner_shipping_id:
+            try:
+                partner_shipping_id = int(partner_shipping_id)
+            except ValueError:
+                partner_shipping_id = False
         for name, value in post.items():
             try:
                 row, field_name = name.split("-", 1)
