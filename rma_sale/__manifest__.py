@@ -29,5 +29,8 @@
             "/rma_sale/static/src/js/rma_portal_form.js",
             "/rma_sale/static/src/scss/rma_sale.scss",
         ],
+        "web.assets_tests": [
+            "/rma_sale/static/src/tests/*.js",
+        ],
     },
 }
