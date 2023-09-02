@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_rma_document" inherit_id="rma.report_rma_document">
+        <xpath expr="//div[@t-if='doc.picking_id']" position="before">
+            <div t-if="doc.order_id" class="col-auto mw-100 mb-2">
+                <strong>Sale order:</strong>
+                <p class="m-0" t-field="doc.order_id" />
+            </div>
+        </xpath>
+        <xpath expr="//div[@t-if='doc.user_id']" position="before">
+            <div t-if="doc.operation_id" class="col-auto mw-100 mb-2">
+                <strong>Requested operation:</strong>
+                <p class="m-0" t-field="doc.operation_id" />
+            </div>
+        </xpath>
+    </template>
+</odoo>
