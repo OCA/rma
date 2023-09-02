@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-product_warranty>=16.0dev,<16.1dev',
         'odoo-addon-rma>=16.0dev,<16.1dev',
+        'odoo-addon-rma_sale>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
