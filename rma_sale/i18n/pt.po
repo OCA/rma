@@ -17,18 +17,21 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: rma_sale
+#. odoo-python
 #: code:addons/rma_sale/controllers/sale_portal.py:0
 #, python-format
 msgid " (Portal)"
 msgstr " (Portal)"
 
 #. module: rma_sale
+#. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " has been created."
 msgstr " foi criado(a)."
 
 #. module: rma_sale
+#. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid " have been created."
@@ -176,6 +179,7 @@ msgstr ""
 "categoria. A conversão será feita com base nos coeficientes."
 
 #. module: rma_sale
+#. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 #, python-format
@@ -474,6 +478,7 @@ msgid "You can send a message in every RMA sent"
 msgstr "Você pode enviar uma mensagem em cada RMA enviada"
 
 #. module: rma_sale
+#. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #, python-format
 msgid "You may only create RMAs from a confirmed or done sale order."
