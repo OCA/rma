@@ -15,6 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma_team.py:0
 #, python-format
 msgid "%s (copy)"
@@ -26,6 +27,7 @@ msgid "(object._get_report_base_filename())"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -38,21 +40,21 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Here is the RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    from\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
 "                    .\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
@@ -65,21 +67,21 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    The products for your RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    from\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
 "                    have been received in our warehouse.\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
@@ -92,21 +94,22 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear\n"
-"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
 "                    <t t-if=\"object.partner_id.parent_id\">\n"
-"                        <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
 "                    </t>\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    You've succesfully placed your RMA\n"
 "                    <strong>\n"
-"                        <t t-out=\"object.name\"/>\n"
+"                        <t t-out=\"object.name\"></t>\n"
 "                    </strong>\n"
 "                    on\n"
-"                    <t t-out=\"object.company_id.name\"/>\n"
-"                    . Our team will check it and will validate it as soon as possible.\n"
-"                    <br/>\n"
-"                    <br/>\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
+"                    . Our team will check it and will validate it as soon as "
+"possible.\n"
+"                    <br>\n"
+"                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
 "                </p>\n"
 "            </div>\n"
@@ -115,7 +118,9 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 
 #. module: rma
@@ -135,22 +140,23 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\""
-" title=\"Download\"/>"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Cancelled\n"
 "                                        </span>"
 msgstr ""
@@ -168,7 +174,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparation\n"
 "                                        </span>"
 msgstr ""
@@ -186,7 +193,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Shipped\n"
 "                                        </span>"
 msgstr ""
@@ -204,7 +212,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Partially Available\n"
 "                                        </span>"
 msgstr ""
@@ -623,6 +632,7 @@ msgid "Custom Bounced Message"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 #, python-format
@@ -635,6 +645,7 @@ msgid "Customer Portal URL"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__date
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
@@ -771,6 +782,7 @@ msgid "Email sent to the customer when they place an RMA from the portal"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/rma_split.py:0
 #, python-format
 msgid "Extracted RMA"
@@ -876,8 +888,8 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr ""
 
 #. module: rma
@@ -892,17 +904,13 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction
-#: model:ir.model.fields,help:rma.field_rma__message_unread
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction
-#: model:ir.model.fields,help:rma.field_rma_team__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -921,6 +929,7 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Incoming e-mail"
@@ -1060,6 +1069,7 @@ msgid "My Activity Deadline"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__name
@@ -1069,8 +1079,8 @@ msgid "Name"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "New"
 msgstr ""
@@ -1091,12 +1101,14 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a return."
@@ -1122,19 +1134,13 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
-
-#. module: rma
-#: model:ir.model.fields,help:rma.field_rma__message_unread_counter
-#: model:ir.model.fields,help:rma.field_rma_team__message_unread_counter
-msgid "Number of unread messages"
 msgstr ""
 
 #. module: rma
@@ -1183,8 +1189,8 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
 
@@ -1199,7 +1205,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 
 #. module: rma
@@ -1245,6 +1252,7 @@ msgid "Quantity"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/rma_delivery.py:0
 #: model:ir.model.constraint,message:rma.constraint_rma_split_wizard_check_product_uom_qty_positive
 #, python-format
@@ -1257,6 +1265,7 @@ msgid "Quantity to extract"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -1289,6 +1298,7 @@ msgid "RMA #"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
@@ -1310,6 +1320,7 @@ msgid "RMA Deadline"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Delivery Orders"
@@ -1397,6 +1408,7 @@ msgid "RMA Receipt Notification"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Receipts"
@@ -1540,6 +1552,7 @@ msgid "Reference of the document that generated this RMA."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__refund_id
 #: model:rma.operation,name:rma.rma_operation_refund
@@ -1596,16 +1609,18 @@ msgid "Replaced"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
-"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>)"
-" has been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
+"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
+"been created."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
@@ -1626,6 +1641,7 @@ msgid "Requested operation"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "Required field(s):%s"
@@ -1643,6 +1659,11 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__location_id
+msgid "Return Location"
+msgstr ""
+
+#. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
 msgid "Return Picking"
 msgstr ""
@@ -1655,11 +1676,12 @@ msgid "Return to customer"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> has been created."
 msgstr ""
 
 #. module: rma
@@ -1678,9 +1700,8 @@ msgid "Rma Count"
 msgstr ""
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
+msgid "Rma Location"
 msgstr ""
 
 #. module: rma
@@ -1747,12 +1768,14 @@ msgid "Sequence"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA in"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA out"
@@ -1795,11 +1818,12 @@ msgid "Split RMA"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
+"a> has been created."
 msgstr ""
 
 #. module: rma
@@ -1809,6 +1833,7 @@ msgid "State"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #, python-format
@@ -1878,9 +1903,9 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
 
 #. module: rma
@@ -1900,6 +1925,7 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/stock_move.py:0
 #, python-format
 msgid ""
@@ -1908,6 +1934,7 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "The quantity to return is greater than remaining quantity."
@@ -1919,26 +1946,30 @@ msgid "The tag is visible in the portal view"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
-"There is at least one invoice lines whose quantity is less than the quantity"
-" specified in its linked RMA."
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot be split."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a replacement."
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a return."
@@ -1987,18 +2018,6 @@ msgid "Unlock"
 msgstr ""
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_unread
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_unread_counter
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr ""
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
 msgstr ""
@@ -2014,6 +2033,11 @@ msgid "Urgent"
 msgstr ""
 
 #. module: rma
+#: model:ir.model,name:rma.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: rma
 #: model:res.groups,name:rma.rma_group_user_all
 msgid "User: All Documents"
 msgstr ""
@@ -2021,11 +2045,6 @@ msgstr ""
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_own
 msgid "User: Own Documents Only"
-msgstr ""
-
-#. module: rma
-#: model:ir.model,name:rma.model_res_users
-msgid "Users"
 msgstr ""
 
 #. module: rma
@@ -2092,8 +2111,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
 msgid ""
-"When the RMA receipt is confirmed, send a confirmation email to the "
-"customer."
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 
 #. module: rma
@@ -2104,12 +2122,14 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
 msgstr ""
 
 #. module: rma
+#. odoo-python
 #: code:addons/rma/wizard/stock_picking_return.py:0
 #, python-format
 msgid ""
