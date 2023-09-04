@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-03 13:43+0000\n"
+"PO-Revision-Date: 2023-09-04 18:39+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -543,7 +543,7 @@ msgstr "Cliente"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__access_url
 msgid "Customer Portal URL"
-msgstr "URL Portale Cliente"
+msgstr "URL portale cliente"
 
 #. module: rma
 #: code:addons/rma/controllers/main.py:42
@@ -1043,7 +1043,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_url
 msgid "Portal Access URL"
-msgstr "URL Accesso Portale"
+msgstr "URL accesso portale"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1484,7 +1484,7 @@ msgstr "Data programmata"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
 msgid "Security Token"
-msgstr "Token di Sicurezza"
+msgstr "Token di sicurezza"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
