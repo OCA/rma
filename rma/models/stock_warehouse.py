@@ -56,8 +56,8 @@ class StockWarehouse(models.Model):
             "location_id": self.env.ref("rma.stock_location_rma").id,
         }
 
-    def _get_sequence_values(self):
-        values = super()._get_sequence_values()
+    def _get_sequence_values(self, name=False, code=False):
+        values = super()._get_sequence_values(name=name, code=code)
         values.update(
             {
                 "rma_in_type_id": {
