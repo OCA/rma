@@ -36,7 +36,7 @@
         </xpath>
         <!-- TODO: We could give a clue about what's to be returned, with readonly detailed lines -->
         <xpath
-            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data[&apos;quantity&apos;] &gt; 0 and data[&apos;picking&apos;]&quot;]/tr"
+            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data['quantity'] &gt; 0 and data['picking']&quot;]/tr"
             position="attributes"
         >
             <attribute
@@ -44,12 +44,12 @@
             >#{data.get('phantom_bom_product') and 'd-none'}</attribute>
         </xpath>
         <xpath
-            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data[&apos;quantity&apos;] &gt; 0 and data[&apos;picking&apos;]&quot;]"
+            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data['quantity'] &gt; 0 and data['picking']&quot;]"
             position="attributes"
         >
             <attribute
                 name="t-if"
-            >data['quantity'] > 0 and (data['picking'] or data.get('phantom_kit_line'))</attribute>
+            >data['quantity'] &gt; 0 and (data['picking'] or data.get('phantom_kit_line'))</attribute>
         </xpath>
         <xpath
             expr="//select[@t-attf-name='#{data_index}-operation_id']/option"
@@ -100,8 +100,8 @@
                         t-att-title="kit_rma.name"
                     >
                         <div>
-                            <i class="fa fa-reply mr-1" role="img" />
-                            <span t-esc="kit_rma.name" class="mr-lg-3" />
+                            <i class="fa-reply me-1 fa" role="img" />
+                            <span t-esc="kit_rma.name" class="me-lg-3" />
                             <div class="d-lg-inline-block"><span
                                     t-field="kit_rma.sudo().product_id.display_name"
                                 /> (<span t-field="kit_rma.product_uom_qty" />)</div>
@@ -109,24 +109,24 @@
                         <t
                             t-if="kit_rma.state in ['confirmed', 'received', 'returned', 'replaced', 'locked', 'refunded']"
                         >
-                            <span class="badge badge-success label-text-align"><i
+                            <span class="badge label-text-align bg-success"><i
                                     class="fa fa-fw fa-reply"
                                 /> <span t-field="kit_rma.state" /></span>
                         </t>
                         <t
                             t-if="kit_rma.state in ['waiting_return', 'waiting_replacement']"
                         >
-                            <span class="badge badge-warning label-text-align"><i
+                            <span class="label-text-align badge bg-warning"><i
                                     class="fa fa-fw fa-clock-o"
                                 /> Waiting</span>
                         </t>
                         <t t-if="kit_rma.state == 'cancelled'">
-                            <span class="badge badge-danger label-text-align"><i
+                            <span class="badge label-text-align bg-danger"><i
                                     class="fa fa-fw fa-times"
                                 /> Cancelled</span>
                         </t>
                         <t t-if="kit_rma.state == 'draft'">
-                            <span class="badge badge-info label-text-align"><i
+                            <span class="badge bg-info label-text-align"><i
                                     class="fa fa-fw fa-clock-o"
                                 /> Draft</span>
                         </t>
