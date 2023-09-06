@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - David Vidal
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -108,7 +109,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         )
         res = super(SaleOrderLineRmaWizard, not_kit)._compute_move_id()
         for line in self.filtered(lambda x: x.phantom_bom_product and x.picking_id):
-            line.move_id = line.picking_id.move_lines.filtered(
+            line.move_id = line.picking_id.move_ids.filtered(
                 lambda ml: (
                     ml.product_id == line.product_id
                     and ml.sale_line_id == line.sale_line_id

@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - David Vidal
 # Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form
@@ -49,7 +50,7 @@ class TestRmaSaleMrp(TestRmaSaleBase):
         cls.order_out_picking = cls.sale_order.picking_ids
         # Confirm but leave a backorder to split moves so we can test that
         # the wizard correctly creates the RMAs with the proper quantities
-        for line in cls.order_out_picking.move_lines:
+        for line in cls.order_out_picking.move_ids:
             line.quantity_done = line.product_uom_qty - 7
         wiz_act = cls.order_out_picking.button_validate()
         wiz = Form(
@@ -57,7 +58,7 @@ class TestRmaSaleMrp(TestRmaSaleBase):
         ).save()
         wiz.process()
         cls.backorder = cls.sale_order.picking_ids - cls.order_out_picking
-        for line in cls.backorder.move_lines:
+        for line in cls.backorder.move_ids:
             line.quantity_done = line.product_uom_qty
         cls.backorder.button_validate()
 
@@ -78,10 +79,10 @@ class TestRmaSaleMrp(TestRmaSaleBase):
         )
         rma_1 = rmas.filtered(lambda x: x.product_id == self.product_kit_comp_1)
         rma_2 = rmas.filtered(lambda x: x.product_id == self.product_kit_comp_2)
-        move_1 = out_pickings.mapped("move_lines").filtered(
+        move_1 = out_pickings.mapped("move_ids").filtered(
             lambda x: x.product_id == self.product_kit_comp_1
         )
-        move_2 = out_pickings.mapped("move_lines").filtered(
+        move_2 = out_pickings.mapped("move_ids").filtered(
             lambda x: x.product_id == self.product_kit_comp_2
         )
         self.assertEqual(sum(rma_1.mapped("product_uom_qty")), 8)
@@ -146,8 +147,8 @@ class TestRmaSaleMrp(TestRmaSaleBase):
         res = wizard.create_and_open_rma()
         rmas = self.env["rma"].search(res["domain"])
         for rma in rmas:
-            res = self.report_model._get_report_from_name(
-                "rma.report_rma"
-            )._render_qweb_text(rma.ids, False)
+            res = self.env["ir.actions.report"]._render_qweb_html(
+                "rma.report_rma", rma.ids
+            )
             self.assertRegex(str(res[0]), self.product_kit_comp_1.name)
             self.assertRegex(str(res[0]), self.product_kit_comp_2.name)

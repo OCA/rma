@@ -1,9 +1,10 @@
 # Copyright 2020 Tecnativa - David Vidal
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Return Merchandise Authorization Management - Link with MRP Kits",
     "summary": "Allow doing RMAs from MRP kits",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     "development_status": "Beta",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
