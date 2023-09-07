@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 04:40+0000\n"
-"PO-Revision-Date: 2020-10-06 14:16+0000\n"
-"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
+"PO-Revision-Date: 2023-09-07 17:37+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: rma_sale
 #. odoo-python
@@ -61,12 +61,12 @@ msgstr "<i class=\"fa fa-times\"/> Cancelar"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<i class=\"fa fa-truck\"/> Choose a delivery address"
-msgstr ""
+msgstr "<i class=\"fa fa-truck\"/> Elija una dirección de entrega"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<option value=\"\">---</option>"
-msgstr ""
+msgstr "<option value=\"\">---</option>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
@@ -74,6 +74,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -156,17 +158,17 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__commercial_partner_id
 msgid "Commercial entity"
-msgstr ""
+msgstr "Entidad comercial"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de configuración"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
@@ -206,7 +208,7 @@ msgstr "Creado el"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__custom_description
 msgid "Custom Description"
-msgstr ""
+msgstr "Descripción personalizada"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -236,12 +238,14 @@ msgid ""
 "From the frontend sale order page go to a single RMA page creation instead "
 "of the usual popup"
 msgstr ""
+"Desde la página de pedido de venta frontend ir a una sola creación de página "
+"RMA en lugar de la ventana emergente habitual"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_res_company__show_full_page_sale_rma
 #: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__show_full_page_sale_rma
 msgid "Full page RMA creation"
-msgstr ""
+msgstr "Creación de RMA de página completa"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
@@ -258,7 +262,7 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Entrada Diaria"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
@@ -336,7 +340,7 @@ msgstr "Ubicación de RMA"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.request_rma_single_page
 msgid "RMA request for order"
-msgstr ""
+msgstr "Solicitud de pedido RMA"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
@@ -346,7 +350,7 @@ msgstr "RMAs"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__refund_id
 msgid "Refund"
-msgstr ""
+msgstr "Devolución"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -363,7 +367,7 @@ msgstr "Operación solicitada"
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
-msgstr ""
+msgstr "Línea de Venta"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
@@ -373,7 +377,7 @@ msgstr "Pedido de venta"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr "Linea de Asistente de Orden de Venta - RMA "
+msgstr "Linea de Asistente de Orden de Venta - RMA"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
@@ -383,7 +387,7 @@ msgstr "Asistente de Orden de Venta - RMA"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Orden de Venta"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line
@@ -398,17 +402,17 @@ msgstr "Selecciones la cantidad de producto y la operación solicitada"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Shipping Address"
-msgstr ""
+msgstr "Dirección de envío"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Show portal RMA request in a single page"
-msgstr ""
+msgstr "Mostrar la solicitud de RMA del portal en una sola página"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
-msgstr ""
+msgstr "Solicitud de RMA de una sola página"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_move
@@ -440,6 +444,8 @@ msgstr ""
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__custom_description
 msgid "Values coming from portal RMA request form custom fields"
 msgstr ""
+"Valores provenientes de campos personalizados del formulario de solicitud "
+"RMA del portal"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
@@ -447,11 +453,13 @@ msgid ""
 "When we hit the RMA request button from the portal sale page, open in a "
 "single page instead of a popup."
 msgstr ""
+"Cuando pulsamos el botón de solicitud de RMA desde la página de venta del "
+"portal, se abre en una sola página en lugar de un popup."
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Will be used to return the goods when the RMA is completed"
-msgstr ""
+msgstr "Se utilizara para retornar los productos cuando el RMA sea procesado"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
