@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,21 +16,21 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
-"times\"/> Cancelled</span>"
-msgstr ""
-
-#. module: rma_sale_mrp
-#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
-msgid ""
-"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Draft</span>"
 msgstr ""
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid ""
+"<span class=\"label-text-align badge bg-warning\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Waiting</span>"
 msgstr ""
 
@@ -262,6 +262,7 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid ""
@@ -270,6 +271,7 @@ msgid ""
 msgstr ""
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
 #, python-format
 msgid ""
@@ -306,6 +308,7 @@ msgid "Wizard"
 msgstr ""
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
 #, python-format
 msgid "You can't refund a kit in wich some RMAs aren't received"
