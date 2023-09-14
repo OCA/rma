@@ -11,8 +11,9 @@
             <xpath expr="//tree/field[@name='picking_id']" position="attributes">
                 <attribute
                     name="attrs"
-                >{'readonly': [('phantom_kit_line', '=', True)]}</attribute>
+                >{'readonly': [('phantom_kit_line', '=', True)], 'required': [('phantom_kit_line', '=', False)]}</attribute>
                 <attribute name="force_save">1</attribute>
+                <attribute name="required" />
             </xpath>
         </field>
     </record>
