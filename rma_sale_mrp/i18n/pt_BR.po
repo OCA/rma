@@ -19,29 +19,23 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
-"times\"/> Cancelled</span>"
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-o"
+"\"/> Draft</span>"
 msgstr ""
-"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
-"times\"/> Cancelado</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/> Draft</span>"
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-times"
+"\"/> Cancelled</span>"
 msgstr ""
-"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/> Rascunho</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"<span class=\"label-text-align badge bg-warning\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Waiting</span>"
 msgstr ""
-"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/> Esperando</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
@@ -276,6 +270,7 @@ msgid "Sales Order Line"
 msgstr "Linha do Pedido de Venda"
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:0
 #, python-format
 msgid ""
@@ -284,6 +279,7 @@ msgid ""
 msgstr ""
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
 #, python-format
 msgid ""
@@ -324,10 +320,32 @@ msgid "Wizard"
 msgstr "Assistente"
 
 #. module: rma_sale_mrp
+#. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
 #, python-format
 msgid "You can't refund a kit in wich some RMAs aren't received"
 msgstr "Você não pode reembolsar um kit em que alguns RMAs não foram recebidos"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-times\"/> Cancelled</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-times\"/> Cancelado</span>"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "clock-o\"/> Draft</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "clock-o\"/> Rascunho</span>"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-clock-o\"/> Waiting</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-clock-o\"/> Esperando</span>"
 
 #~ msgid "Invoice"
 #~ msgstr "Fatura"
