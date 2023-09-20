@@ -6,16 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-05 07:26+0000\n"
-"Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde.com>"
-"\n"
+"PO-Revision-Date: 2023-09-20 09:39+0000\n"
+"Last-Translator: jans23 <jan@suhr.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:0
@@ -75,7 +74,8 @@ msgstr ""
 "                    </t>\n"
 "                    <br>\n"
 "                    <br>\n"
-"                    Hiermit übermitteln wie Ihnen unseren RMA Auftrag\n"
+"                    Hiermit übermitteln wie Ihnen unseren Reklamations-"
+"Auftrag\n"
 "                    <strong style=\"box-sizing:border-box;font-weight:500;\">"
 "\n"
 "                        <t t-out=\"object.name\" data-oe-t-inline=\"true\""
@@ -127,7 +127,7 @@ msgstr ""
 "                    </t>\n"
 "                    <br/>\n"
 "                    <br/>\n"
-"Die Produkte für ihren RMA\n"
+"Die Produkte für ihre Reklamation\n"
 "                    <strong>\n"
 "                        <t t-out=\"object.name\"/>\n"
 "                    </strong>\n"
@@ -453,12 +453,12 @@ msgstr "<strong>Menge</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>RMA Date</strong>"
-msgstr "<strong>RMA Datum</strong>"
+msgstr "<strong>Reklamations-Datum</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>RMA Note:</strong>"
-msgstr "<strong>RMA Notiz:</strong>"
+msgstr "<strong>Reklamations-Notiz:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -564,14 +564,14 @@ msgstr "Aliased Model"
 #. module: rma
 #: model:res.groups,name:rma.group_rma_manual_finalization
 msgid "Allow RMA manual finalization"
-msgstr "Erlauben Sie den manuellen RMA-Abschluss"
+msgstr "Erlauben Sie den manuellen Reklamations-Abschluss"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_config_settings__group_rma_manual_finalization
 msgid "Allow to finish an RMA without returning back a product or refunding"
 msgstr ""
-"Lassen Sie eine RMA abschließen, ohne ein Produkt zurückzusenden oder eine "
-"Rückerstattung zu leisten"
+"Lassen Sie eine Reklamation abschließen, ohne ein Produkt zurückzusenden "
+"oder eine Rückerstattung zu leisten"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
@@ -583,7 +583,7 @@ msgstr "Archiviert"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Are you sure you want to cancel this RMA"
-msgstr "Möchten Sie diese RMA wirklich stornieren"
+msgstr "Möchten Sie diese Reklamation wirklich stornieren"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_attachment_count
@@ -653,7 +653,7 @@ msgstr "Kategorie UoM"
 #: model_terms:ir.actions.act_window,help:rma.rma_action
 #: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
-msgstr "Klicken Sie hier, um eine neue RMA hinzuzufügen."
+msgstr "Klicken Sie hier, um eine neue Reklamation hinzuzufügen."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
@@ -722,17 +722,17 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
 msgid "Create RMAs"
-msgstr "Erstellen Sie RMAs"
+msgstr "Erstellen Sie Reklamationen"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
 msgid "Create a new RMA finalization"
-msgstr "Erstellen Sie einen neuen RMA-Abschluss"
+msgstr "Erstellen Sie einen neuen Reklamations-Abschluss"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
 msgid "Create a new RMA tag"
-msgstr "Erstellen Sie ein neues RMA-Tag"
+msgstr "Erstellen Sie ein neues Retoure-Tag"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
@@ -858,7 +858,7 @@ msgstr "Entwurf"
 #: model:mail.message.subtype,name:rma.mt_rma_draft
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_draft
 msgid "Draft RMA"
-msgstr "RMA Entwurf"
+msgstr "Retoure Entwurf"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -879,46 +879,48 @@ msgstr "Email Template"
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_confirmation_template_id
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email Template confirmation for RMA"
-msgstr "E-Mail-Vorlage Bestätigung für RMA"
+msgstr "E-Mail-Vorlage Bestätigung für Retoure"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_draft_confirmation_template_id
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
 msgid "Email Template draft notification for RMA"
-msgstr "E-Mail-Vorlagenentwurf Benachrichtigung für RMA"
+msgstr "E-Mail-Vorlagenentwurf Benachrichtigung für Reklamation"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_receipt_confirmation_template_id
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
 msgid "Email Template receipt confirmation for RMA"
-msgstr "E-Mail-Vorlage Empfangsbestätigung für RMA"
+msgstr "E-Mail-Vorlage Empfangsbestätigung für Reklamation"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email sent to the customer once the RMA is confirmed."
-msgstr "E-Mail wird an den Kunden gesendet, sobald die RMA bestätigt wurde."
+msgstr ""
+"E-Mail wird an den Kunden gesendet, sobald die Reklamation bestätigt wurde."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_receipt_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
 msgid "Email sent to the customer once the RMA products are received."
 msgstr ""
-"E-Mail wird an die Kunden gesendet, sobald die RMA-Produkte eingegangen sind."
+"E-Mail wird an die Kunden gesendet, sobald die Reklamations-Produkte "
+"eingegangen sind."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
 msgid "Email sent to the customer when they place an RMA from the portal"
 msgstr ""
-"Eine E-Mail wird an die Kunden gesendet, wenn eine RMA über das Portal "
-"aufgegeben wird"
+"Eine E-Mail wird an die Kunden gesendet, wenn eine Reklamation über das "
+"Portal aufgegeben wird"
 
 #. module: rma
 #: code:addons/rma/wizard/rma_split.py:0
 #, python-format
 msgid "Extracted RMA"
-msgstr "Extrahierter RMA"
+msgstr "Extrahierte Reklamation"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin_split_rma_id
@@ -943,22 +945,23 @@ msgstr "Abschluss"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_wizard_view_form
 msgid "Finish RMA"
-msgstr "RMA abschließen"
+msgstr "Reklamation abschließen"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_finalization_wizard_action
 msgid "Finish RMA Manualy"
-msgstr "RMA manuell abschließen"
+msgstr "Reklamation manuell abschließen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__group_rma_manual_finalization
 msgid "Finish RMA manually choosing a reason"
-msgstr "Schließen Sie die RMA manuell ab, indem Sie einen Grund auswählen"
+msgstr ""
+"Schließen Sie die Reklamation manuell ab, indem Sie einen Grund auswählen"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Finish RMAs manually"
-msgstr "Schließen Sie RMAs manuell ab"
+msgstr "Schließen Sie Reklamationen manuell ab"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__finished
@@ -992,12 +995,12 @@ msgstr "Gruppiere nach"
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
 msgid "Group RMA returns by customer address and warehouse"
-msgstr "Gruppieren Sie RMA-Rücksendungen nach Kundenadresse und Lager"
+msgstr "Gruppieren Sie Retouren nach Kundenadresse und Lager"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Group RMA returns by customer and warehouse."
-msgstr "Gruppieren Sie RMA-Rücksendungen nach Kunde und Lager."
+msgstr "Gruppieren Sie Retouren nach Kunde und Lager."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__has_message
@@ -1071,8 +1074,8 @@ msgid ""
 "If the active field is set to false, it will allow you to hide the RMA Team "
 "without removing it."
 msgstr ""
-"Wenn das aktive Feld auf „false“ gesetzt ist, können Sie das RMA-Team "
-"ausblenden, ohne es zu entfernen."
+"Wenn das aktive Feld auf „false“ gesetzt ist, können Sie das Reklamations-"
+"Team ausblenden, ohne es zu entfernen."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1150,7 +1153,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Late RMAs"
-msgstr "Verspätete RMAs"
+msgstr "Verspätete Reklamationen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__location_id
@@ -1179,7 +1182,7 @@ msgid ""
 "Manage RMA finalization reasons to better classify them for tracking and "
 "analysis purposes."
 msgstr ""
-"Verwalten Sie RMA-Abschlussgründe, um sie für Nachverfolgungs- und "
+"Verwalten Sie Reklamations-Abschlussgründe, um sie für Nachverfolgungs- und "
 "Analysezwecke besser zu klassifizieren."
 
 #. module: rma
@@ -1187,8 +1190,8 @@ msgstr ""
 msgid ""
 "Manage RMA tags to better classify them for tracking and analysis purposes."
 msgstr ""
-"Verwalten Sie RMA-Tags, um sie für Nachverfolgungs- und Analysezwecke besser "
-"zu klassifizieren."
+"Verwalten Sie Reklamation-Stichwörter, um sie für Nachverfolgungs- und "
+"Analysezwecke besser zu klassifizieren."
 
 #. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
@@ -1252,13 +1255,13 @@ msgstr "Nächster Aktivitätstyp"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a replacement."
-msgstr "Keiner der ausgewählten RMAs kann einen Austausch durchführen."
+msgstr "Keiner der ausgewählten Reklamationen kann einen Austausch durchführen."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "None of the selected RMAs can perform a return."
-msgstr "Keine der ausgewählten RMAs kann eine Rücksendung durchführen."
+msgstr "Keine der ausgewählten Reklamationen kann eine Rücksendung durchführen."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__priority__0
@@ -1438,7 +1441,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
 msgid "Quantity to extract to a new RMA."
-msgstr "Menge, die in eine neue RMA extrahiert werden soll."
+msgstr "Menge, die in eine neue Reklamation extrahiert werden soll."
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_action
@@ -1451,142 +1454,142 @@ msgstr "Menge, die in eine neue RMA extrahiert werden soll."
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
 #: model_terms:ir.ui.view,arch_db:rma.view_picking_form
 msgid "RMA"
-msgstr "RMA"
+msgstr "Reklamation"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "RMA #"
-msgstr "RMA #"
+msgstr "Reklamationsnr."
 
 #. module: rma
 #: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
-msgstr "RMA-Code"
+msgstr "Reklamations-Code"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Confirmation Email"
-msgstr "RMA-Bestätigungs-E-Mail"
+msgstr "Reklamations-Bestätigungs-E-Mail"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Date"
-msgstr "RMA-Datum"
+msgstr "Reklamations-Datum"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Deadline"
-msgstr "RMA-Frist"
+msgstr "Reklamations-Frist"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Delivery Orders"
-msgstr "RMA-Lieferaufträge"
+msgstr "Reklamations-Lieferaufträge"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_delivery_wizard
 msgid "RMA Delivery Wizard"
-msgstr "RMA-Zustellungsassistent"
+msgstr "Reklamations-Zustellungsassistent"
 
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_draft_notification
 msgid "RMA Draft Notification"
-msgstr "Benachrichtigung über RMA-Entwurf"
+msgstr "Benachrichtigung über Reklamations-Entwurf"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
 msgid "RMA Finalization"
-msgstr "RMA-Abschluss"
+msgstr "Reklamations-Abschluss"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_finalization
 msgid "RMA Finalization Reason"
-msgstr "RMA-Abschlussgrund"
+msgstr "Reklamations-Abschlussgrund"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.action_rma_finalization
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_finalization_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
 msgid "RMA Finalization Reasons"
-msgstr "Gründe für den RMA-Abschluss"
+msgstr "Gründe für den Reklamations-Abschluss"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_finalization_wizard
 msgid "RMA Finalization Wizard"
-msgstr "RMA-Abschlussassistent"
+msgstr "Reklamations-Abschlussassistent"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_type_id
 msgid "RMA In Type"
-msgstr "RMA-Eingangstyp"
+msgstr "Reklamations-Eingangstyp"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_loc_id
 msgid "RMA Location"
-msgstr "RMA-Standort"
+msgstr "Reklamations-Standort"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Manual Finalization"
-msgstr "Manueller RMA-Abschluss"
+msgstr "Manueller Reklamations-Abschluss"
 
 #. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 #: model:mail.template,name:rma.mail_template_rma_notification
 msgid "RMA Notification"
-msgstr "RMA-Benachrichtigung"
+msgstr "Reklamations-Benachrichtigung"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "RMA Order -"
-msgstr "RMA-Bestellung -"
+msgstr "Reklamations-Bestellung -"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_home_menu_rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 msgid "RMA Orders"
-msgstr "RMA-Bestellungen"
+msgstr "Reklamations-Bestellungen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
-msgstr "RMA-Out-Typ"
+msgstr "Reklamations-Ausgangs-Typ"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Receipt Confirmation Email"
-msgstr "RMA-Empfangsbestätigungs-E-Mail"
+msgstr "Reklamations-Empfangsbestätigungs-E-Mail"
 
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_receipt_notification
 msgid "RMA Receipt Notification"
-msgstr "RMA-Empfangsbenachrichtigung"
+msgstr "Reklamations-Empfangsbenachrichtigung"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "RMA Receipts"
-msgstr "RMA-Quittungen"
+msgstr "Reklamations-Quittungen"
 
 #. module: rma
 #: model:ir.actions.report,name:rma.report_rma_action
 msgid "RMA Report"
-msgstr "RMA-Bericht"
+msgstr "Reklamations-Bericht"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_split_wizard
 msgid "RMA Split Wizard"
-msgstr "RMA-Aufteilungsassistent"
+msgstr "Reklamations-Aufteilungsassistent"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_form
 msgid "RMA Tag"
-msgstr "RMA Tag"
+msgstr "Reklamations-Stichwort"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.action_rma_tag
@@ -1594,7 +1597,7 @@ msgstr "RMA Tag"
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "RMA Tags"
-msgstr "RMA-Tags"
+msgstr "Reklamations-Stichwörter"
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_team
@@ -1602,77 +1605,77 @@ msgstr "RMA-Tags"
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
-msgstr "RMA-Team"
+msgstr "Reklamations-Team"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
 msgid "RMA Team the user is member of."
-msgstr "RMA-Team, dem der Benutzer angehört."
+msgstr "Reklamations-Team, dem der Benutzer angehört."
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_notification
 msgid "RMA automatic customer notifications"
-msgstr "Automatische RMA-Kundenbenachrichtigungen"
+msgstr "Automatische Reklamations-Kundenbenachrichtigungen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_count
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
-msgstr "RMA-Zählung"
+msgstr "Reklamations-Zählung"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA draft notification Email"
-msgstr "Benachrichtigungs-E-Mail zum RMA-Entwurf"
+msgstr "Benachrichtigungs-E-Mail zum Reklamations-Entwurf"
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
-msgstr "RMA im Entwurfszustand"
+msgstr "Reklamation im Entwurfszustand"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
 msgid "RMA receivers"
-msgstr "RMA-Empfänger"
+msgstr "Reklamations-Empfänger"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_stock_warehouse__rma
 msgid "RMA related products can be stored in this warehouse."
-msgstr "RMA-bezogene Produkte können in diesem Lager gelagert werden."
+msgstr "Reklamations-bezogene Produkte können in diesem Lager gelagert werden."
 
 #. module: rma
 #: model:ir.model,name:rma.model_rma_operation
 msgid "RMA requested operation"
-msgstr "RMA angeforderter Vorgang"
+msgstr "Reklamation angeforderter Vorgang"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_id
 msgid "RMA return"
-msgstr "RMA-Rückgabe"
+msgstr "Retoure"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
 msgid "RMA team"
-msgstr "RMA-Team"
+msgstr "Reklamations-Team"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_ids
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_ids
 msgid "RMAs"
-msgstr "RMAs"
+msgstr "Reklamationen"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMAs which deadline has passed"
-msgstr "RMAs, deren Frist abgelaufen ist"
+msgstr "Reklamationen, deren Frist abgelaufen ist"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMAs yet to be fully processed"
-msgstr "RMAs müssen noch vollständig bearbeitet werden"
+msgstr "Reklamationen müssen noch vollständig bearbeitet werden"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__finalization_id
@@ -1708,7 +1711,7 @@ msgstr "Thread ID des Eintrags"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__origin
 msgid "Reference of the document that generated this RMA."
-msgstr "Referenz des Dokuments, das diese RMA erstellt hat."
+msgstr "Referenz des Dokuments, das diese Reklamation erstellt hat."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -1727,7 +1730,7 @@ msgstr "Rückerstattungsbuchungssatz"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
 msgid "Refund address for current RMA."
-msgstr "Rückerstattungsadresse für aktuelle RMA."
+msgstr "Rückerstattungsadresse für aktuelle Reklamation."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
@@ -1851,12 +1854,12 @@ msgstr "Ist zurückgekommen"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
 msgid "Rma"
-msgstr "Rma"
+msgstr "Reklamation"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
-msgstr "Anzahl RMA"
+msgstr "Anzahl Reklamationen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
@@ -1878,38 +1881,38 @@ msgstr "Sicherheitstoken"
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_confirmation
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_confirmation
 msgid "Send RMA Confirmation"
-msgstr "RMA-Bestätigung senden"
+msgstr "Reklamations-Bestätigung senden"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_receipt_confirmation
 msgid "Send RMA Receipt Confirmation"
-msgstr "RMA-Empfangsbestätigung senden"
+msgstr "Reklamations-Empfangsbestätigung senden"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_draft_confirmation
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_draft_confirmation
 msgid "Send RMA draft Confirmation"
-msgstr "RMA-Bestätigungsentwurf senden"
+msgstr "Reklamations-Bestätigungsentwurf senden"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA info to customer"
-msgstr "Senden Sie automatische RMA-Informationen an den Kunden"
+msgstr "Senden Sie automatische Reklamations-Informationen an den Kunden"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA products reception notification to customer"
 msgstr ""
-"Senden Sie eine automatische Benachrichtigung über den Empfang von RMA-"
-"Produkten an den Kunden"
+"Senden Sie eine automatische Benachrichtigung über den Empfang von "
+"Reklamations-Produkten an den Kunden"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic notification when the customer places an RMA"
 msgstr ""
-"Senden Sie eine automatische Benachrichtigung, wenn der Kunde eine RMA "
-"aufgibt"
+"Senden Sie eine automatische Benachrichtigung, wenn der Kunde eine "
+"Reklamation aufgibt"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1935,13 +1938,13 @@ msgstr "Sequenz"
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA in"
-msgstr "Reihenfolge RMA ein"
+msgstr "Reihenfolge Reklamation eingehend"
 
 #. module: rma
 #: code:addons/rma/models/stock_warehouse.py:0
 #, python-format
 msgid "Sequence RMA out"
-msgstr "Sequenz RMA outgoing"
+msgstr "Sequenz Reklamation ausgehend"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1961,7 +1964,7 @@ msgstr "Lieferanschrift"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr "Lieferadresse für aktuelle RMA."
+msgstr "Lieferadresse für aktuelle Reklamation."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -1977,7 +1980,7 @@ msgstr "Split"
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_split_wizard_action
 msgid "Split RMA"
-msgstr "Geteilter RMA"
+msgstr "Geteilte Reklamation"
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -2111,8 +2114,8 @@ msgid ""
 "demand because the stock move is linked to an RMA (%(name)s)."
 msgstr ""
 "Die für das Produkt '%(id)s' fertig gestellte Menge muss gleich der "
-"ursprünglichen Nachfrage sein, da die Bestandsumlagerung mit einer RMA "
-"(%(name)s) verknüpft ist."
+"ursprünglichen Nachfrage sein, da die Bestandsumlagerung mit einer "
+"Reklamation (%(name)s) verknüpft ist."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
@@ -2133,25 +2136,25 @@ msgid ""
 " specified in its linked RMA."
 msgstr ""
 "Es gibt mindestens einen Rechnungsposten, dessen Menge geringer ist als die "
-"Menge, die in der verknüpften RMA angegeben ist."
+"Menge, die in der verknüpften Reklamation angegeben ist."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot be split."
-msgstr "Diese RMA kann nicht aufgeteilt werden."
+msgstr "Diese Reklamation kann nicht aufgeteilt werden."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a replacement."
-msgstr "Diese RMA kann keinen Ersatz leisten."
+msgstr "Diese Reklamation kann keinen Ersatz leisten."
 
 #. module: rma
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "This RMA cannot perform a return."
-msgstr "Diese RMA kann keine Rücksendung durchführen."
+msgstr "Diese Reklamation kann keine Rücksendung durchführen."
 
 #. module: rma
 #: model:ir.actions.server,name:rma.rma_refund_action_server
@@ -2182,7 +2185,7 @@ msgstr "Art der aufgezeichneten Ausnahmeaktivität."
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unassigned RMAs"
-msgstr "Nicht zugewiesene RMAs"
+msgstr "Nicht zugewiesene Reklamationen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom
@@ -2210,7 +2213,7 @@ msgstr "Zähler für ungelesene Nachrichten"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
-msgstr "Ungelöste RMAs"
+msgstr "Ungelöste Reklamationen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
@@ -2270,7 +2273,8 @@ msgstr "Kommunikationsgeschichte der Website"
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_draft_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_draft_confirmation
 msgid "When a customer places an RMA, send a notification with it"
-msgstr "Wenn ein Kunde eine RMA aufgibt, senden Sie eine Benachrichtigung mit"
+msgstr ""
+"Wenn ein Kunde eine Reklamation aufgibt, senden Sie eine Benachrichtigung mit"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2278,14 +2282,15 @@ msgid ""
 "When customers themselves place an RMA from the portal, send an automatic "
 "notification acknowleging it."
 msgstr ""
-"Wenn Kunden selbst eine RMA über das Portal aufgeben, senden Sie eine "
-"automatische Benachrichtigung, die dies bestätigt."
+"Wenn Kunden selbst eine Reklamation über das Portal aufgeben, senden Sie "
+"eine automatische Benachrichtigung, die dies bestätigt."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
 msgstr ""
-"Wenn die RMA bestätigt ist, senden Sie eine automatische Informations-E-Mail."
+"Wenn die Reklamation bestätigt ist, senden Sie eine automatische "
+"Informations-E-Mail."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2293,7 +2298,7 @@ msgid ""
 "When the RMA is receive, allow to finsish it manually choosing\n"
 "                            a finalization reason."
 msgstr ""
-"Wenn die RMA eingegangen ist, können Sie sie manuell abschließen, \n"
+"Wenn die Reklamation eingegangen ist, können Sie sie manuell abschließen, \n"
 "                               indem Sie einen Abschlussgrund auswählen."
 
 #. module: rma
@@ -2301,7 +2306,7 @@ msgstr ""
 msgid ""
 "When the RMA products are received, send an automatic information email."
 msgstr ""
-"Senden Sie nach Erhalt der RMA-Produkte eine automatische "
+"Senden Sie nach Erhalt der Reklamations-Produkte eine automatische "
 "Informations-E-Mail."
 
 #. module: rma
@@ -2311,8 +2316,8 @@ msgid ""
 "When the RMA receipt is confirmed, send a confirmation email to the "
 "customer."
 msgstr ""
-"Wenn der RMA-Eingang bestätigt ist, senden Sie eine Bestätigungs-E-Mail an "
-"den Kunden."
+"Wenn der Reklamations-Eingang bestätigt ist, senden Sie eine Bestätigungs-E-"
+"Mail an den Kunden."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
@@ -2328,7 +2333,8 @@ msgstr ""
 #, python-format
 msgid "You cannot delete RMAs that are not in draft state"
 msgstr ""
-"RMAs, die sich nicht im Entwurfsstatus befinden, können nicht gelöscht werden"
+"Reklamationen, die sich nicht im Entwurfsstatus befinden, können nicht "
+"gelöscht werden"
 
 #. module: rma
 #: code:addons/rma/wizard/stock_picking_return.py:0
@@ -2337,21 +2343,23 @@ msgid ""
 "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
 "be created"
 msgstr ""
-"Sie müssen den „Kunden“ in der „Lagerkommissionierung“ angeben, von dem RMAs "
-"erstellt werden"
+"Sie müssen den „Kunden“ in der „Lagerkommissionierung“ angeben, von dem "
+"Reklamationen erstellt werden"
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_all
 msgid ""
 "the user will have access to all records of everyone in the RMA application."
 msgstr ""
-"Der Benutzer hat Zugriff auf alle Aufzeichnungen aller Personen in der RMA-"
-"Anwendung."
+"Der Benutzer hat Zugriff auf alle Aufzeichnungen aller Personen in der "
+"Reklamations-Anwendung."
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_own
 msgid "the user will have access to his own data in the RMA application."
-msgstr "Der Benutzer hat Zugriff auf seine eigenen Daten in der RMA-Anwendung."
+msgstr ""
+"Der Benutzer hat Zugriff auf seine eigenen Daten in der Reklamations-"
+"Anwendung."
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_manager
@@ -2359,7 +2367,7 @@ msgid ""
 "the user will have an access to the RMA configuration as well as statistic "
 "reports."
 msgstr ""
-"Der Benutzer hat Zugriff auf die RMA-Konfiguration sowie auf "
+"Der Benutzer hat Zugriff auf die Reklamations-Konfiguration sowie auf "
 "Statistikberichte."
 
 #. module: rma
@@ -2372,7 +2380,7 @@ msgstr "{{(object.name or '')}}"
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
-msgstr "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
+msgstr "{{object.company_id.name}} Reklamation (Ref {{object.name or 'n/a' }})"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_receipt_notification
@@ -2380,8 +2388,8 @@ msgid ""
 "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products "
 "received"
 msgstr ""
-"{{object.company_id.name}} RMA-Produkte (Ref {{object.name or 'n/a' }}) "
-"erhalten"
+"{{object.company_id.name}} Reklamations-Produkte (Ref {{object.name or 'n/a' "
+"}}) erhalten"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_draft_notification
@@ -2389,5 +2397,5 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} Ihre RMA wurde erfolgreich erstellt (Ref {{"
-"object.name or 'n/a' }})"
+"{{object.company_id.name}} Ihre Reklamation wurde erfolgreich erstellt (Ref "
+"{{object.name or 'n/a' }})"
