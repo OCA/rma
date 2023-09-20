@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-20 09:39+0000\n"
+"PO-Revision-Date: 2023-09-20 17:50+0000\n"
 "Last-Translator: jans23 <jan@suhr.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -732,7 +732,7 @@ msgstr "Erstellen Sie einen neuen Reklamations-Abschluss"
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
 msgid "Create a new RMA tag"
-msgstr "Erstellen Sie ein neues Retoure-Tag"
+msgstr "Erstellen Sie ein neues Reklamations-Stichwort"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
@@ -858,7 +858,7 @@ msgstr "Entwurf"
 #: model:mail.message.subtype,name:rma.mt_rma_draft
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_draft
 msgid "Draft RMA"
-msgstr "Retoure Entwurf"
+msgstr "Reklamations-Entwurf"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -879,7 +879,7 @@ msgstr "Email Template"
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_confirmation_template_id
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email Template confirmation for RMA"
-msgstr "E-Mail-Vorlage Bestätigung für Retoure"
+msgstr "E-Mail-Vorlage Bestätigung für Reklamation"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_mail_draft_confirmation_template_id
@@ -1408,7 +1408,7 @@ msgstr "Produktmenge"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
 msgid "Public Tag"
-msgstr "Öffentlicher Tag"
+msgstr "Öffentliches Stichwort"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
@@ -2031,22 +2031,22 @@ msgstr "Lagerregel"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__name
 msgid "Tag Name"
-msgstr "Tag Name"
+msgstr "Stichwort-Name"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_tag_name_uniq
 msgid "Tag name already exists !"
-msgstr "Tag-Name existiert bereits!"
+msgstr "Stichwort-Name existiert bereits!"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__tag_ids
 msgid "Tags"
-msgstr "Tags"
+msgstr "Stichwörter"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Tags..."
-msgstr "Tags..."
+msgstr "Stichwörter..."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
@@ -2126,7 +2126,7 @@ msgstr "Die zurückzugebende Menge ist größer als die verbleibende Menge."
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_tag__is_public
 msgid "The tag is visible in the portal view"
-msgstr "Das Tag ist in der Portalansicht sichtbar"
+msgstr "Das Stichwort ist in der Portalansicht sichtbar"
 
 #. module: rma
 #: code:addons/rma/models/account_move.py:0
