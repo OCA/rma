@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-01-30 13:45+0000\n"
+"PO-Revision-Date: 2023-09-21 18:36+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,13 +14,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: website_rma
 #: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
 #: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
 msgid "&amp;times;"
-msgstr "&amp;volte;"
+msgstr "&amp;times;"
 
 #. module: website_rma
 #: model:ir.model,name:website_rma.model_res_config_settings
@@ -219,7 +219,7 @@ msgid ""
 msgstr ""
 "se non\n"
 "                                    conosci l'ordine di vendita da cui è "
-"stato realizzato. se non\n"
+"stato realizzato.\n"
 "                                    Se conosci l'ordine di vendita, vai su "
 "di esso e fai clic sul pulsante corrispondente."
 
