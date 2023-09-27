@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-15 07:35+0000\n"
-"PO-Revision-Date: 2023-07-03 16:09+0000\n"
+"PO-Revision-Date: 2023-10-09 09:12+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/"
 ")\n"
@@ -314,7 +314,7 @@ msgstr ""
 #: field:claim.line,message_follower_ids:0
 #: field:stock.move,message_follower_ids:0
 msgid "Followers"
-msgstr "Followers"
+msgstr "Seguito da"
 
 #. module: crm_claim_rma
 #: model:crm.case.categ,name:crm_claim_rma.categ_claim13
