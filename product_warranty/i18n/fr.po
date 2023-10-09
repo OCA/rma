@@ -212,8 +212,8 @@ msgid ""
 "order) always use the product main warranty field."
 msgstr ""
 "Garantie en nombre de mois pour ce fournisseur. Uniquement pour la relation "
-"entreprise/fournisseur (commandes d'achat) ; La relation entreprise/client ("
-"commandes de vente) utilise toujours le champ de garantie de la fiche "
+"entreprise/fournisseur (commandes d'achat) ; La relation entreprise/client "
+"(commandes de vente) utilise toujours le champ de garantie de la fiche "
 "produit."
 
 #. module: product_warranty
