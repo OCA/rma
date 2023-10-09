@@ -61,11 +61,17 @@ msgstr ""
 "Se o campo estiver vazio, o endereço será o da empresa."
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__display_name
+#: model:ir.model.fields,field_description:product_warranty.field_product_template__display_name
+#: model:ir.model.fields,field_description:product_warranty.field_res_company__display_name
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
 msgid "Display Name"
 msgstr "Exibir Nome"
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__id
+#: model:ir.model.fields,field_description:product_warranty.field_product_template__id
+#: model:ir.model.fields,field_description:product_warranty.field_res_company__id
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__id
 msgid "ID"
 msgstr "ID"
@@ -108,6 +114,9 @@ msgid "Is this supplier still active, only for information."
 msgstr "Este fornecedor ainda está ativo, apenas para informações."
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo____last_update
+#: model:ir.model.fields,field_description:product_warranty.field_product_template____last_update
+#: model:ir.model.fields,field_description:product_warranty.field_res_company____last_update
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction____last_update
 msgid "Last Modified on"
 msgstr "Última modificação Feita em"

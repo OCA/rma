@@ -68,11 +68,17 @@ msgstr ""
 "compañía"
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__display_name
+#: model:ir.model.fields,field_description:product_warranty.field_product_template__display_name
+#: model:ir.model.fields,field_description:product_warranty.field_res_company__display_name
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo__id
+#: model:ir.model.fields,field_description:product_warranty.field_product_template__id
+#: model:ir.model.fields,field_description:product_warranty.field_res_company__id
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__id
 msgid "ID"
 msgstr "ID"
@@ -118,6 +124,9 @@ msgid "Is this supplier still active, only for information."
 msgstr "Indica si el proveedor todavía está activo. Sólo para información"
 
 #. module: product_warranty
+#: model:ir.model.fields,field_description:product_warranty.field_product_supplierinfo____last_update
+#: model:ir.model.fields,field_description:product_warranty.field_product_template____last_update
+#: model:ir.model.fields,field_description:product_warranty.field_res_company____last_update
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
