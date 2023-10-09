@@ -99,8 +99,8 @@ msgstr "Instruções para a devolução do produto."
 
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
-msgid "Is default"
-msgstr "É padrão"
+msgid "Is Default"
+msgstr ""
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__active_supplier
@@ -156,7 +156,6 @@ msgstr "Endereço de Devolução"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
-#: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_tree_view
 msgid "Return instructions"
 msgstr "Instruções para devolução"
 
@@ -260,3 +259,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr "Ano(s)"
+
+#~ msgid "Is default"
+#~ msgstr "É padrão"
