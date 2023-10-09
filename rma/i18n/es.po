@@ -205,8 +205,8 @@ msgid ""
 "                                <b>Paid</b>"
 msgstr ""
 "<i class=\"fa fa-fw fa-check\"/>\n"
-"                                                                      "
-"<b>Pagado</b>"
+"                                                                      <b>Pagado</"
+"b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -236,38 +236,78 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
-"times\"/> Cancelled</span>"
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
+"                                            Cancelled\n"
+"                                        </span>"
 msgstr ""
-"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
-"times\"/>Cancelado</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/> Preparation</span>"
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-times\"/>\n"
+"                                    Cancelled\n"
+"                                </span>"
 msgstr ""
-"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/>Preparación</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
-"truck\"/> Shipped</span>"
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
+"                                            Preparation\n"
+"                                        </span>"
 msgstr ""
-"<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
-"truck\"/> Enviado</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/> Partially Available</span>"
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Preparation\n"
+"                                </span>"
 msgstr ""
-"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
-"clock-o\"/>Disponible parcialmente</span>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
+"                                            Shipped\n"
+"                                        </span>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                    Shipped\n"
+"                                </span>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
+"                                            Partially Available\n"
+"                                        </span>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Partially Available\n"
+"                                </span>"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -1816,7 +1856,8 @@ msgstr "Enviar información automática de RMA al cliente"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA products reception notification to customer"
-msgstr "Enviar notificación automática de recepción de productos RMA al cliente"
+msgstr ""
+"Enviar notificación automática de recepción de productos RMA al cliente"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2295,6 +2336,34 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Su RMA se ha creado con éxito (Ref {{object.name "
 "or 'n/a' }})"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-times\"/> Cancelled</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-times\"/>Cancelado</span>"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "clock-o\"/> Preparation</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "clock-o\"/>Preparación</span>"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-truck\"/> Shipped</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-truck\"/> Enviado</span>"
+
+#~ msgid ""
+#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-clock-o\"/> Partially Available</span>"
+#~ msgstr ""
+#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "fa-clock-o\"/>Disponible parcialmente</span>"
 
 #~ msgid "Followers (Channels)"
 #~ msgstr "Seguidores (Canales)"
