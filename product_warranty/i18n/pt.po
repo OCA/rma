@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_warranty
+# 	* product_warranty
 #
 msgid ""
 msgstr ""
@@ -53,7 +53,9 @@ msgstr "Dia(s)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_res_company__crm_return_address_id
-msgid "Default address where the customers has to send back the returned product. If empty, the address is the company address."
+msgid ""
+"Default address where the customers has to send back the returned product. "
+"If empty, the address is the company address."
 msgstr ""
 "Endereço padrão em que os clientes devem entregar o produto a ser devolvido. "
 "Se o campo estiver vazio, o endereço será o da empresa."
@@ -70,7 +72,9 @@ msgstr "ID"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_return_instruction__is_default
-msgid "If is default, will be use to set the default value in supplier info's. Be careful to have only one default."
+msgid ""
+"If is default, will be use to set the default value in supplier info's. Be "
+"careful to have only one default."
 msgstr ""
 "Se for o padrão, será usado para definir o valor padrão nas informações do "
 "fornecedor. Cuidado para ter apenas um padrão."
@@ -200,12 +204,15 @@ msgstr "Tipo de Garantia"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_duration
-msgid "Warranty in month for this product/supplier relation. Only for company/supplier relation (purchase order) ; the  customer/company relation (sale order) always use the product main warranty field."
+msgid ""
+"Warranty in month for this product/supplier relation. Only for company/"
+"supplier relation (purchase order) ; the  customer/company relation (sale "
+"order) always use the product main warranty field."
 msgstr ""
 "Garantia em meses para esta relação produto / fornecedor. Somente para "
-"relação de empresa / fornecedor (encomenda de compra); a relação do cliente /"
-" empresa (encomenda de venda) usa sempre o campo principal de garantia do "
-"produto."
+"relação de empresa / fornecedor (encomenda de compra); a relação do "
+"cliente / empresa (encomenda de venda) usa sempre o campo principal de "
+"garantia do produto."
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_supplierinfo_warranty_form_view
@@ -219,21 +226,29 @@ msgstr "Semana(s)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_other_address
-msgid "Where the customer has to send back the product(s) if warranty return is set to 'other'."
+msgid ""
+"Where the customer has to send back the product(s) if warranty return is set "
+"to 'other'."
 msgstr ""
 "Onde o cliente deve devolver o(s) produto(s) se a devolução da garantia "
 "estiver definida como 'outro'."
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_address
-msgid "Where the goods should be returned  (computed field based on other infos.)"
+msgid ""
+"Where the goods should be returned  (computed field based on other infos.)"
 msgstr ""
 "Onde as mercadorias devem ser devolvidas (campo calculado com base noutras "
 "informações)"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__warranty_return_partner
-msgid "Who is in charge of the warranty return treatment toward the end customer. Company will use the current company delivery or default address and so on for supplier and brand manufacturer. Doesn't necessarily mean that the warranty to be applied is the one of the return partner (ie: can be returned to the company and be under the brand warranty)."
+msgid ""
+"Who is in charge of the warranty return treatment toward the end customer. "
+"Company will use the current company delivery or default address and so on "
+"for supplier and brand manufacturer. Doesn't necessarily mean that the "
+"warranty to be applied is the one of the return partner (ie: can be returned "
+"to the company and be under the brand warranty)."
 msgstr ""
 "Quem é responsável pelo tratamento da devolução em garantia para o cliente "
 "final. A empresa usará o endereço predefinido ou atual da empresa e assim "
