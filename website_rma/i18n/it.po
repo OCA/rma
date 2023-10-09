@@ -61,30 +61,6 @@ msgid "Description"
 msgstr "Descrizione"
 
 #. module: website_rma
-#: model:ir.model.fields,field_description:website_rma.field_ir_model__display_name
-#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:website_rma.field_rma__display_name
-#: model:ir.model.fields,field_description:website_rma.field_website__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: website_rma
-#: model:ir.model.fields,field_description:website_rma.field_ir_model__id
-#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__id
-#: model:ir.model.fields,field_description:website_rma.field_rma__id
-#: model:ir.model.fields,field_description:website_rma.field_website__id
-msgid "ID"
-msgstr "ID"
-
-#. module: website_rma
-#: model:ir.model.fields,field_description:website_rma.field_ir_model____last_update
-#: model:ir.model.fields,field_description:website_rma.field_res_config_settings____last_update
-#: model:ir.model.fields,field_description:website_rma.field_rma____last_update
-#: model:ir.model.fields,field_description:website_rma.field_website____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: website_rma
 #: model:ir.model,name:website_rma.model_ir_model
 msgid "Models"
 msgstr "Modelli"
@@ -201,8 +177,10 @@ msgstr "qui"
 #: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
 msgid ""
 "if you do not\n"
-"                                    know the sales order from which it was made.\n"
-"                                    If you know the sales order, go to it and click on the corresponding button."
+"                                    know the sales order from which it was "
+"made.\n"
+"                                    If you know the sales order, go to it "
+"and click on the corresponding button."
 msgstr ""
 "se non\n"
 "                                    conosci l'ordine di vendita da cui è "
@@ -214,8 +192,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
 msgid ""
 "if you do not\n"
-"                                    know the sales order from which it was made. If you know\n"
-"                                    the sales order, go to it and click on the corresponding button."
+"                                    know the sales order from which it was "
+"made. If you know\n"
+"                                    the sales order, go to it and click on "
+"the corresponding button."
 msgstr ""
 "se non\n"
 "                                    conosci l'ordine di vendita da cui è "
@@ -227,3 +207,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
 msgid "page"
 msgstr "Pagina"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"

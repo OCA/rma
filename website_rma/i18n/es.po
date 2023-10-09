@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: website_rma
-#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
 #: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
 msgid "&amp;times;"
 msgstr "&amp;times;"
@@ -141,13 +141,13 @@ msgstr ""
 "la página de solicitud de RMA."
 
 #. module: website_rma
-#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
 #: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
 msgid "Thanks!"
 msgstr "¡Gracias!"
 
 #. module: website_rma
-#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
 #: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
 msgid "We will get back to you shortly."
 msgstr "Le contestaremos en breve."
@@ -164,7 +164,7 @@ msgid "You can request an RMA"
 msgstr "Puede solicitar"
 
 #. module: website_rma
-#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
 #: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
 msgid "Your request has been sent successfully."
 msgstr "Su solicitud ha sido enviada satisfactoriamente."
