@@ -211,8 +211,14 @@ msgid "Description"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_stock_move__display_name
 msgid "Display Name"
 msgstr "Exibir Nome"
 
@@ -231,8 +237,14 @@ msgid "Full page RMA creation"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__id
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma_sale.field_rma__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_sale.field_stock_move__id
 msgid "ID"
 msgstr "ID"
 
@@ -242,8 +254,14 @@ msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_res_company____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_rma____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
+#: model:ir.model.fields,field_description:rma_sale.field_stock_move____last_update
 msgid "Last Modified on"
 msgstr "Última modificação Feita em"
 
