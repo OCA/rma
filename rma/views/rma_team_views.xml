@@ -59,7 +59,7 @@
                                             >
                                                 <div class="o_kanban_record_top">
                                                     <img
-                                                        t-att-src="kanban_image('res.users', 'image_small', record.id.raw_value)"
+                                                        t-att-src="kanban_image('res.users', 'avatar_128', record.id.raw_value)"
                                                         height="40"
                                                         width="40"
                                                         class="oe_avatar oe_kanban_avatar_smallbox mb0"
