@@ -204,8 +204,8 @@ msgid ""
 "                                <b>Paid</b>"
 msgstr ""
 "<i class=\"fa fa-fw fa-check\"/>\n"
-"                                                                       "
-"<b>Pagado</b>"
+"                                                                       <b>Pagado</"
+"b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -214,8 +214,8 @@ msgid ""
 "                                <b>Waiting Payment</b>"
 msgstr ""
 "<i class=\"fa fa-fw fa-clock-o\"/>\n"
-"                                                                          "
-"<b>Esperando Pago</b>"
+"                                                                          <b>Esperando "
+"Pago</b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -245,8 +245,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Cancelado\n"
 "                                        </span>"
 
@@ -273,8 +273,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparación\n"
 "                                        </span>"
 
@@ -301,8 +301,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Enviado\n"
 "                                        </span>"
 
@@ -329,8 +329,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Disponible Parcialmente\n"
 "                                        </span>"
 
@@ -1906,7 +1906,8 @@ msgstr "Enviar información automática de RMA al cliente"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic RMA products reception notification to customer"
-msgstr "Enviar notificación automática de recepción de productos RMA al cliente"
+msgstr ""
+"Enviar notificación automática de recepción de productos RMA al cliente"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
