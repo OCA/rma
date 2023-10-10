@@ -36,8 +36,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Objet de l'e-mail:</b> %(subject)s<br/><br/><b>Corps de l'e-mail:</b><br/"
-">%(body)s"
+"<b>Objet de l'e-mail:</b> %(subject)s<br/><br/><b>Corps de l'e-mail:</b><br/>"
+"%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -158,7 +158,8 @@ msgid ""
 "                    </strong>\n"
 "                    on\n"
 "                    <t t-out=\"object.company_id.name\"></t>\n"
-"                    . Our team will check it and will validate it as soon as possible.\n"
+"                    . Our team will check it and will validate it as soon as "
+"possible.\n"
 "                    <br>\n"
 "                    <br>\n"
 "                    Do not hesitate to contact us if you have any question.\n"
@@ -192,7 +193,9 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
 "\"Télécharger\"/>"
@@ -218,8 +221,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\""
-" title=\"Download\"/>"
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Télécharger\"/>"
@@ -227,8 +230,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
-"title=\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
 "\"Télécharger\"/>"
@@ -237,13 +240,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Cancelled\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Annulé\n"
 "                                        </span>"
 
@@ -264,13 +268,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparation\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Préparation\n"
 "                                        </span>"
 
@@ -291,13 +296,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Shipped\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Expédié\n"
 "                                        </span>"
 
@@ -318,13 +324,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Partially Available\n"
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Partiellement disponible\n"
 "                                        </span>"
 
@@ -1010,8 +1017,8 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr ""
 
 #. module: rma
@@ -1202,8 +1209,7 @@ msgstr ""
 
 #. module: rma
 #. odoo-python
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
-#: code:addons/rma/models/rma.py:0 code:addons/rma/models/rma.py:0
+#: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "New"
 msgstr ""
@@ -1312,8 +1318,8 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
 
@@ -1328,7 +1334,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 
 #. module: rma
@@ -1735,10 +1742,10 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
-"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>)"
-" has been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
+"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
+"been created."
 msgstr ""
 
 #. module: rma
@@ -1802,8 +1809,8 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> has been created."
 msgstr ""
 
 #. module: rma
@@ -1944,8 +1951,8 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
+"a> has been created."
 msgstr ""
 
 #. module: rma
@@ -2025,9 +2032,9 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
 
 #. module: rma
@@ -2072,8 +2079,8 @@ msgstr ""
 #: code:addons/rma/models/account_move.py:0
 #, python-format
 msgid ""
-"There is at least one invoice lines whose quantity is less than the quantity"
-" specified in its linked RMA."
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
 msgstr ""
 
 #. module: rma
@@ -2233,8 +2240,7 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
 msgid ""
-"When the RMA receipt is confirmed, send a confirmation email to the "
-"customer."
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 
 #. module: rma
