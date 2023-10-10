@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* rma
+# 	* rma
 #
 msgid ""
 msgstr ""
@@ -30,17 +30,21 @@ msgstr "${object.company_id.name} Retouren (Ref ${object.name or 'n/a' })"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_receipt_notification
-msgid "${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products received"
+msgid ""
+"${object.company_id.name} RMA (Ref ${object.name or 'n/a' }) products "
+"received"
 msgstr ""
 "${object.company_id.name} Retouren (Ref ${object.name or 'n/a' }) Produkte "
 "erhalten"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_draft_notification
-msgid "${object.company_id.name} Your RMA has been succesfully created (Ref ${object.name or 'n/a' })"
+msgid ""
+"${object.company_id.name} Your RMA has been succesfully created (Ref "
+"${object.name or 'n/a' })"
 msgstr ""
-"${object.company_id.name} Ihre Retoure wurde erfolgreich erstellt (Ref ${"
-"object.name or 'n/a' })"
+"${object.company_id.name} Ihre Retoure wurde erfolgreich erstellt (Ref "
+"${object.name or 'n/a' })"
 
 #. module: rma
 #: code:addons/rma/models/rma_team.py:46
@@ -50,14 +54,16 @@ msgstr "%s (Kopie)"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
-msgid "<div style=\"margin: 0px; padding: 0px;\">\n"
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
 "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "    Dear ${object.partner_id.name}\n"
 "    % if object.partner_id.parent_id:\n"
 "        (${object.partner_id.parent_id.name})\n"
 "    % endif\n"
 "    <br/><br/>\n"
-"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id.name}.\n"
+"    Here is the RMA <strong>${object.name}</strong> from ${object.company_id."
+"name}.\n"
 "    <br/><br/>\n"
 "    Do not hesitate to contact us if you have any question.\n"
 "</p>\n"
@@ -81,7 +87,8 @@ msgstr ""
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
-msgid "<div style=\"margin: 0px; padding: 0px;\">\n"
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
 "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "    Dear ${object.partner_id.name}\n"
 "    % if object.partner_id.parent_id:\n"
@@ -113,7 +120,8 @@ msgstr ""
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
-msgid "<div style=\"margin: 0px; padding: 0px;\">\n"
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
 "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "    Dear ${object.partner_id.name}\n"
 "    % if object.partner_id.parent_id:\n"
@@ -136,8 +144,8 @@ msgstr ""
 "        (${object.partner_id.parent_id.name})\n"
 "    % endif\n"
 "    <br/><br/>\n"
-"    Sie haben Ihre Retoure erfolgreich erstellt <strong>${object."
-"name}</strong>\n"
+"    Sie haben Ihre Retoure erfolgreich erstellt <strong>${object.name}</"
+"strong>\n"
 "    von ${object.company_id.name}. Unser Team wird sie prüfen und so "
 "schnell\n"
 "    wie möglich bestätigen.\n"
@@ -150,7 +158,9 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #, fuzzy
-msgid "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
@@ -167,49 +177,63 @@ msgstr "<i class=\"fa fa-fw fa-clock-o\"/> <b>Erwarte Zahlung</b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title=\"Download\"/>"
+msgid ""
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
+"\"Download\"/>"
 msgstr ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
 "\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-times\"/> Cancelled</span>"
+msgid ""
+"<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw fa-"
 "times\"/> Abgebrochen</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Preparation</span>"
+msgid ""
+"<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Preparation</span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Vorbereitung</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-truck\"/> Shipped</span>"
+msgid ""
+"<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
+"truck\"/> Shipped</span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw fa-"
 "truck\"/> Versandt</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
-msgid "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-clock-o\"/> Partially Available</span>"
+msgid ""
+"<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Partially Available</span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw fa-"
 "clock-o\"/> Teilweise verfügbar</span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Die hier eingestellten Werte "
 "sind unternehmensspezifisch.\" groups=\"base.group_multi_company\"/>"
@@ -337,7 +361,9 @@ msgstr "<strong>Status:</strong>"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_defaults
-msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
 msgstr ""
 
 #. module: rma
@@ -505,8 +531,7 @@ msgid "Confirm"
 msgstr "Bestätigen"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-#: selection:rma,state:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
 msgid "Confirmed"
 msgstr "Bestätigt"
 
@@ -630,8 +655,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-#: selection:rma,state:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
 msgid "Draft"
 msgstr ""
 
@@ -644,7 +668,8 @@ msgstr "Entwurf Retoure"
 #. module: rma
 #: code:addons/rma/models/rma.py:1184
 #, python-format
-msgid "E-mail subject: %s\n"
+msgid ""
+"E-mail subject: %s\n"
 "\n"
 "E-mail body:\n"
 "%s"
@@ -747,7 +772,9 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_thread_id
-msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr ""
 
 #. module: rma
@@ -770,7 +797,9 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__active
-msgid "If the active field is set to false, it will allow you to hide the RMA Team without removing it."
+msgid ""
+"If the active field is set to false, it will allow you to hide the RMA Team "
+"without removing it."
 msgstr ""
 
 #. module: rma
@@ -858,7 +887,8 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid "Manage RMA tags to better classify them for tracking and analysis purposes."
+msgid ""
+"Manage RMA tags to better classify them for tracking and analysis purposes."
 msgstr ""
 
 #. module: rma
@@ -893,8 +923,7 @@ msgid "Name"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/models/rma.py:31
-#: code:addons/rma/models/rma.py:507
+#: code:addons/rma/models/rma.py:31 code:addons/rma/models/rma.py:507
 #: code:addons/rma/models/rma.py:1187
 #, python-format
 msgid "New"
@@ -969,7 +998,10 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
-msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
 msgstr ""
 
 #. module: rma
@@ -1014,7 +1046,10 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_parent_model_id
-msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
 msgstr ""
 
 #. module: rma
@@ -1029,11 +1064,12 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_contact
-msgid "Policy to post a message on the document using the mailgateway.\n"
+msgid ""
+"Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
-""
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 
 #. module: rma
@@ -1079,8 +1115,7 @@ msgid "Quantity"
 msgstr ""
 
 #. module: rma
-#: code:addons/rma/wizard/rma_delivery.py:49
-#: sql_constraint:rma.split.wizard:0
+#: code:addons/rma/wizard/rma_delivery.py:49 sql_constraint:rma.split.wizard:0
 #, python-format
 msgid "Quantity must be greater than 0."
 msgstr ""
@@ -1093,7 +1128,9 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:871
 #, python-format
-msgid "Quantity to extract cannot be greater than remaining delivery quantity (%s %s)"
+msgid ""
+"Quantity to extract cannot be greater than remaining delivery quantity (%s "
+"%s)"
 msgstr ""
 
 #. module: rma
@@ -1304,8 +1341,7 @@ msgid "Receipt"
 msgstr "Empfang"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-#: selection:rma,state:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_search selection:rma,state:0
 msgid "Received"
 msgstr "Empfangen"
 
@@ -1383,13 +1419,20 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:1094
 #, python-format
-msgid "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a>) has been created."
+msgid ""
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%d"
+"\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+"\"%d\">%s</a>) has been created."
 msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/rma.py:1105
 #, python-format
-msgid "Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not create a new move, but one of the previously created moves was updated with this data."
+msgid ""
+"Replacement:<br/>Product <a href=\"#\" data-oe-model=\"product.product\" "
+"data-oe-id=\"%d\">%s</a><br/>Quantity %f %s<br/>This replacement did not "
+"create a new move, but one of the previously created moves was updated with "
+"this data."
 msgstr ""
 
 #. module: rma
@@ -1434,7 +1477,9 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:1055
 #, python-format
-msgid "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a> has been created."
+msgid ""
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
+"a> has been created."
 msgstr ""
 
 #. module: rma
@@ -1566,7 +1611,9 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/rma.py:956
 #, python-format
-msgid "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been created."
+msgid ""
+"Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%d\">%s</a> has been "
+"created."
 msgstr ""
 
 #. module: rma
@@ -1584,7 +1631,8 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_state
-msgid "Status based on activities\n"
+msgid ""
+"Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
@@ -1643,23 +1691,34 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_model_id
-msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_name
-msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
-msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
+msgid ""
+"The owner of records created upon receiving emails on this alias. If this "
+"field is not set the system will attempt to find the right owner based on "
+"the sender (From) address, or will use the Administrator account if no "
+"system user is found for that address."
 msgstr ""
 
 #. module: rma
 #: code:addons/rma/models/stock_move.py:64
 #, python-format
-msgid "The quantity done for the product '%s' must be equal to its initial demand because the stock move is linked to an RMA (%s)."
+msgid ""
+"The quantity done for the product '%s' must be equal to its initial demand "
+"because the stock move is linked to an RMA (%s)."
 msgstr ""
 
 #. module: rma
@@ -1676,7 +1735,9 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/models/account_invoice.py:27
 #, python-format
-msgid "There is at least one invoice lines whose quantity is less than the quantity specified in its linked RMA."
+msgid ""
+"There is at least one invoice lines whose quantity is less than the quantity "
+"specified in its linked RMA."
 msgstr ""
 
 #. module: rma
@@ -1823,7 +1884,9 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "When customers themselves place an RMA from the portal, send an automatic notification acknowleging it."
+msgid ""
+"When customers themselves place an RMA from the portal, send an automatic "
+"notification acknowleging it."
 msgstr ""
 
 #. module: rma
@@ -1833,19 +1896,22 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "When the RMA products are received, send an automatic information email."
+msgid ""
+"When the RMA products are received, send an automatic information email."
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_receipt_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_receipt_confirmation
-msgid "When the RMA receipt is confirmed, send a confirmation email to the customer."
+msgid ""
+"When the RMA receipt is confirmed, send a confirmation email to the customer."
 msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_confirmation
-msgid "When the delivery is confirmed, send a confirmation email to the customer."
+msgid ""
+"When the delivery is confirmed, send a confirmation email to the customer."
 msgstr ""
 
 #. module: rma
@@ -1857,12 +1923,15 @@ msgstr ""
 #. module: rma
 #: code:addons/rma/wizard/stock_picking_return.py:55
 #, python-format
-msgid "You must specify the 'Customer' in the 'Stock Picking' from which RMAs will be created"
+msgid ""
+"You must specify the 'Customer' in the 'Stock Picking' from which RMAs will "
+"be created"
 msgstr ""
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_user_all
-msgid "the user will have access to all records of everyone in the RMA application."
+msgid ""
+"the user will have access to all records of everyone in the RMA application."
 msgstr ""
 
 #. module: rma
@@ -1872,5 +1941,7 @@ msgstr ""
 
 #. module: rma
 #: model:res.groups,comment:rma.rma_group_manager
-msgid "the user will have an access to the RMA configuration as well as statistic reports."
+msgid ""
+"the user will have an access to the RMA configuration as well as statistic "
+"reports."
 msgstr ""
