@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: product_warranty.es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-21 15:06+0000\n"
-"PO-Revision-Date: 2023-10-09 07:41+0000\n"
+"PO-Revision-Date: 2023-10-15 19:36+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Domatix Technologies\n"
 "Language: es\n"
@@ -104,7 +104,7 @@ msgstr "Instrucciones para la devolución del producto."
 #. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__is_default
 msgid "Is Default"
-msgstr ""
+msgstr "Es por defecto"
 
 #. module: product_warranty
 #: model:ir.model.fields,help:product_warranty.field_product_supplierinfo__active_supplier
