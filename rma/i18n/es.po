@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-09 08:07+0000\n"
-"PO-Revision-Date: 2023-10-09 07:41+0000\n"
+"PO-Revision-Date: 2023-10-15 19:36+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -242,6 +242,11 @@ msgid ""
 "                                            Cancelled\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-times\"/>"
+"\n"
+"                                            Cancelado\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -251,6 +256,10 @@ msgid ""
 "                                    Cancelled\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-times\"/>\n"
+"                                    Cancelado\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -261,6 +270,11 @@ msgid ""
 "                                            Preparation\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\""
+"/>\n"
+"                                            Preparación\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -270,6 +284,10 @@ msgid ""
 "                                    Preparation\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Preparación\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -280,6 +298,11 @@ msgid ""
 "                                            Shipped\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/>"
+"\n"
+"                                            Enviado\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -289,6 +312,10 @@ msgid ""
 "                                    Shipped\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                    Enviado\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -299,6 +326,11 @@ msgid ""
 "                                            Partially Available\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\""
+"/>\n"
+"                                            Disponible Parcialmente\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -308,6 +340,10 @@ msgid ""
 "                                    Partially Available\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Disponible Parcialmente\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
