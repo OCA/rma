@@ -11,7 +11,6 @@ class TestRmaSaleMrp(SavepointCase):
         super().setUpClass()
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
-        cls.sale_order = cls.env["sale.order"]
         cls.product_kit = cls.product_product.create(
             {"name": "Product test 1", "type": "consu"}
         )
@@ -44,12 +43,7 @@ class TestRmaSaleMrp(SavepointCase):
             {"name": "Product test 2", "type": "product"}
         )
         cls.partner = cls.res_partner.create({"name": "Partner test"})
-        order_form = Form(cls.sale_order)
-        order_form.partner_id = cls.partner
-        with order_form.order_line.new() as line_form:
-            line_form.product_id = cls.product_kit
-            line_form.product_uom_qty = 5
-        cls.sale_order = order_form.save()
+        cls.sale_order = cls._create_sale_order(5)
         cls.sale_order.action_confirm()
         # Maybe other modules create additional lines in the create
         # method in sale.order model, so let's find the correct line.
@@ -70,6 +64,15 @@ class TestRmaSaleMrp(SavepointCase):
         for line in cls.backorder.move_lines:
             line.quantity_done = line.product_uom_qty
         cls.backorder.button_validate()
+
+    @classmethod
+    def _create_sale_order(cls, qty):
+        order_form = Form(cls.env["sale.order"])
+        order_form.partner_id = cls.partner
+        with order_form.order_line.new() as line_form:
+            line_form.product_id = cls.product_kit
+            line_form.product_uom_qty = qty
+        return order_form.save()
 
     def test_create_rma_from_so(self):
         order = self.sale_order
@@ -150,3 +153,51 @@ class TestRmaSaleMrp(SavepointCase):
         wizard.line_ids.quantity = 1
         with self.assertRaises(ValidationError):
             wizard.create_and_open_rma()
+
+    def _do_picking(self, picking, set_qty_done=True, qty=False):
+        if set_qty_done:
+            for line in picking.move_lines:
+                line.quantity_done = qty or line.product_uom_qty
+
+        wiz = picking.button_validate()
+        if wiz is True:
+            return wiz
+        wiz = Form(self.env[wiz["res_model"]].with_context(wiz["context"])).save()
+        wiz.process()
+        return picking.backorder_ids
+
+    def test_qty_delivered(self):
+        order = self._create_sale_order(1)
+        order.action_confirm()
+        self._do_picking(order.picking_ids)
+        self.assertEqual(order.order_line.qty_delivered, 1)
+
+        wizard_id = order.action_create_rma()["res_id"]
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+
+        rmas = wizard.create_rma()
+        rmas.write({"operation_id": self.env.ref("rma.rma_operation_replace").id})
+        rmas.operation_id.write(
+            {
+                "create_refund_timing": "update_sale_delivered_qty",
+                "create_receipt_timing": "on_confirm",
+                "create_return_timing": "on_confirm",
+            }
+        )
+        rmas.action_confirm()
+        rmas[0].delivery_move_ids.quantity_done = rmas[
+            0
+        ].delivery_move_ids.product_uom_qty
+        backorder = self._do_picking(rmas[0].delivery_move_ids.picking_id, False)
+        self.assertEqual(order.order_line.qty_delivered, 1)
+        self.assertEqual(backorder.move_lines, rmas[1].delivery_move_ids)
+        self._do_picking(backorder)
+        self.assertEqual(order.order_line.qty_delivered, 2)
+        rmas[0].reception_move_ids.quantity_done = rmas[
+            0
+        ].reception_move_ids.product_uom_qty
+        self._do_picking(rmas[0].reception_move_ids.picking_id, False)
+        self.assertEqual(order.order_line.qty_delivered, 1)
+        order.order_line._compute_qty_delivered()
+        self._do_picking(rmas[1].reception_move_ids.picking_id)
+        self.assertEqual(order.order_line.qty_delivered, 1)

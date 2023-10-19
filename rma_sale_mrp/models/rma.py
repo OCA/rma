@@ -77,3 +77,11 @@ class Rma(models.Model):
                 )
             )
         return super().action_draft()
+
+    def _prepare_procurement_values(
+        self, warehouse=None, scheduled_date=None, group=None
+    ):
+        values = super()._prepare_procurement_values(warehouse, scheduled_date, group)
+        if self.move_id.bom_line_id:
+            values["bom_line_id"] = self.move_id.bom_line_id.id
+        return values
