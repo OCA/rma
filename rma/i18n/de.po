@@ -1058,9 +1058,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 "Wenn diese Option aktiviert ist, weisen einige Nachrichten einen "
@@ -1871,12 +1869,6 @@ msgid "Rma Count"
 msgstr "Anzahl Reklamationen"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "SMS-Zustellungsfehler"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
 msgid "Scheduled Date"
 msgstr "Geplantes Datum"
@@ -2407,3 +2399,6 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Ihre Reklamation wurde erfolgreich erstellt (Ref "
 "{{object.name or 'n/a' }})"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS-Zustellungsfehler"
