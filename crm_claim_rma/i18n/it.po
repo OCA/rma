@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rma (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-15 07:35+0000\n"
-"PO-Revision-Date: 2023-10-09 09:12+0000\n"
+"PO-Revision-Date: 2023-10-31 09:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-rma-8-0/language/it/"
 ")\n"
@@ -902,7 +902,7 @@ msgstr ""
 #. module: crm_claim_rma
 #: field:claim.line,message_summary:0 field:stock.move,message_summary:0
 msgid "Summary"
-msgstr "Periodo Iva"
+msgstr "Riepilogo"
 
 #. module: crm_claim_rma
 #: selection:claim.line,applicable_guarantee:0
