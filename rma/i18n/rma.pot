@@ -1321,7 +1321,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:rma.action_rma_finalization
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_finalization_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_list
 msgid "RMA Finalization Reasons"
 msgstr ""
 
@@ -1399,7 +1398,6 @@ msgstr ""
 #: model:ir.model,name:rma.model_rma_tag
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_list
 msgid "RMA Tags"
 msgstr ""
 
