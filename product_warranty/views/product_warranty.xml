@@ -5,7 +5,7 @@
         <field name="name">product.return.instructions.tree</field>
         <field name="model">return.instruction</field>
         <field name="arch" type="xml">
-            <tree string="Return instructions">
+            <tree>
                 <field name="name" />
                 <field name="instructions" />
                 <field name="is_default" />
