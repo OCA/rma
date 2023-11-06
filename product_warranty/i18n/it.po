@@ -166,7 +166,6 @@ msgstr "Indirizzo reso"
 
 #. module: product_warranty
 #: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_form_view
-#: model_terms:ir.ui.view,arch_db:product_warranty.product_return_instructions_tree_view
 msgid "Return instructions"
 msgstr "Istruzioni reso"
 
