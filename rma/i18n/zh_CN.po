@@ -884,9 +884,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -1329,7 +1327,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:rma.action_rma_finalization
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_finalization_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_list
 msgid "RMA Finalization Reasons"
 msgstr ""
 
@@ -1407,7 +1404,6 @@ msgstr ""
 #: model:ir.model,name:rma.model_rma_tag
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
-#: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_list
 msgid "RMA Tags"
 msgstr ""
 
@@ -1660,12 +1656,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
-msgstr ""
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: rma
