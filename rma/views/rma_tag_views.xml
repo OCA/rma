@@ -37,7 +37,7 @@
         <field name="model">rma.tag</field>
         <field eval="6" name="priority" />
         <field name="arch" type="xml">
-            <tree string="RMA Tags">
+            <tree>
                 <field name="name" />
                 <field name="is_public" />
                 <field name="active" />
