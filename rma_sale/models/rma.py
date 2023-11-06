@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -82,12 +83,57 @@ class Rma(models.Model):
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
         res = super()._onchange_partner_id()
-        self.order_id = False
+        if not self.partner_id or not self.order_id.filtered_domain(
+            [("partner_id", "child_of", self.partner_id.commercial_partner_id.id)]
+        ):
+            self.order_id = False
         return res
 
     @api.onchange("order_id")
     def _onchange_order_id(self):
         self.product_id = self.picking_id = False
+        if self.order_id:
+            self.partner_id = self.order_id.partner_id
+            self.partner_invoice_id = self.order_id.partner_invoice_id
+            self.partner_shipping_id = self.order_id.partner_shipping_id
+            self.procurement_group_id = self.order_id.procurement_group_id
+
+    @api.onchange("order_id", "product_id")
+    def _onchange_order_id_product_id(self):
+        if not self.order_id or not self.product_id:
+            self.picking_id = self.move_id = False
+            return
+
+        allowed_moves = self.allowed_picking_ids.filtered(
+            lambda p: self.product_id in p.move_lines.product_id
+        ).move_lines
+
+        if not allowed_moves:
+            self.picking_id = self.move_id = False
+            return
+
+        last_move = allowed_moves.sorted(
+            key=lambda m: m.picking_id.date_done, reverse=True
+        )[0]
+        self.picking_id = last_move.picking_id
+        self.move_id = last_move
+
+    @api.onchange("picking_id")
+    def _onchange_picking_id(self):
+        if not self.picking_id:
+            super()._onchange_picking_id()
+            return
+
+        if not self.move_id or not self.product_id:
+            self.move_id = False
+            return
+
+        if self.move_id.ids in self.picking_id.move_lines.ids:
+            return
+
+        self.move_id = self.picking_id.move_lines.filtered(
+            lambda m: m.product_id == self.product_id
+        )
 
     def _prepare_refund(self, invoice_form, origin):
         """Inject salesman from sales order (if any)"""

@@ -1,9 +1,10 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, SavepointCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestRmaSaleMrp(SavepointCase):
     @classmethod
     def setUpClass(cls):
