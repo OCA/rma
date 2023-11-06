@@ -3,7 +3,7 @@
 
 {
     "name": "Product Warranty",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Generic Modules/Product",
     "author": "Akretion, Vauxoo, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
