@@ -117,10 +117,23 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
         # Method helper to filter chained moves
 
-        def destination_moves(_move):
-            return _move.mapped("move_dest_ids").filtered(
+        def _get_chained_moves(_moves, done_moves=None):
+            moves = _moves.browse()
+            done_moves = done_moves or _moves.browse()
+            for move in _moves:
+                if move.location_dest_id.usage == "customer":
+                    moves |= move.returned_move_ids
+                else:
+                    moves |= move.move_dest_ids
+            done_moves |= _moves
+            moves = moves.filtered(
                 lambda r: r.state in ["partially_available", "assigned", "done"]
             )
+            if not moves:
+                return moves
+            moves -= done_moves
+            moves |= _get_chained_moves(moves, done_moves)
+            return moves
 
         product = self.product_id
         if self.product_id.type not in ["product", "consu"]:
@@ -133,21 +146,13 @@ class SaleOrderLine(models.Model):
                 # to return. When a product is re-delivered it should be
                 # allowed to open an RMA again on it.
                 qty = move.product_uom_qty
-                qty_returned = 0
-                move_dest = destination_moves(move)
-                # With the return of the return of the return we could have an
-                # infinite loop, so we should avoid it dropping already explored
-                # move_dest_ids
-                visited_moves = move + move_dest
-                while move_dest:
-                    qty_returned -= sum(move_dest.mapped("product_uom_qty"))
-                    move_dest = destination_moves(move_dest) - visited_moves
-                    if move_dest:
-                        visited_moves += move_dest
-                        qty += sum(move_dest.mapped("product_uom_qty"))
-                        move_dest = destination_moves(move_dest) - visited_moves
+                for _move in _get_chained_moves(move):
+                    factor = 1
+                    if _move.location_dest_id.usage != "customer":
+                        factor = -1
+                    qty += factor * _move.product_uom_qty
                 # If by chance we get a negative qty we should ignore it
-                qty = max(0, sum((qty, qty_returned)))
+                qty = max(0, qty)
                 data.append(
                     {
                         "product": move.product_id,
