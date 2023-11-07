@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form, SavepointCase
@@ -91,11 +92,18 @@ class TestRmaSale(SavepointCase):
             {"login": "test_refund_with_so", "name": "Test"}
         )
         order.user_id = user.id
+        order.analytic_account_id = self.env["account.analytic.account"].create(
+            {"name": "Test Account"}
+        )
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(rma.refund_id.user_id, user)
+        self.assertEqual(
+            rma.refund_id.invoice_line_ids.analytic_account_id,
+            order.analytic_account_id,
+        )
 
     @users("partner@rma")
     def test_create_rma_from_so_portal_user(self):
