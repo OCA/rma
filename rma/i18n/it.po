@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-31 09:40+0000\n"
+"PO-Revision-Date: 2023-11-22 15:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1846,7 +1846,7 @@ msgstr "Indirizzo di spedizione per questo RMA."
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
 msgid "Source Document"
-msgstr "Documento di Origine"
+msgstr "Documento di origine"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_split_wizard_view_form2
