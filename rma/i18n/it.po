@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-06 15:36+0000\n"
+"PO-Revision-Date: 2023-12-20 14:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -35,6 +35,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
+"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/"
+">%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -62,6 +64,28 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spettabile\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
+"                    </t>\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    di seguito la RMA\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong>\n"
+"                    from\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
+"                    .\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    Non esitate a contattarci in caso di dubbi.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
@@ -89,6 +113,28 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spettabile\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
+"                    </t>\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    I prodotti per la sua RMA\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong>\n"
+"                    from\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
+"                    sono stati ricevuti nel nostro magazzino.\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    Non esitate a contattarci in caso di dubbi.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
@@ -117,6 +163,29 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spettabile\n"
+"                    <t t-out=\"object.partner_id.name\"></t>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                        <t t-out=\"object.partner_id.parent_id.name\"></t>\n"
+"                    </t>\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    la sua RMA è stato correttamnte inserita\n"
+"                    <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong>\n"
+"                    on\n"
+"                    <t t-out=\"object.company_id.name\"></t>\n"
+"                    . Il nostro team la controllerà e validerà quanto prima."
+"\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    Non esistate a contattarci in caso di dubbi.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -172,6 +241,11 @@ msgid ""
 "                                            Cancelled\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-times\"/>"
+"\n"
+"                                            Annullata\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -181,6 +255,10 @@ msgid ""
 "                                    Cancelled\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-times\"/>\n"
+"                                    Annullata\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -191,6 +269,11 @@ msgid ""
 "                                            Preparation\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\""
+"/>\n"
+"                                            Preparazione\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -200,6 +283,10 @@ msgid ""
 "                                    Preparation\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Preparazione\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -210,6 +297,11 @@ msgid ""
 "                                            Shipped\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/>"
+"\n"
+"                                            Spedita\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -219,6 +311,10 @@ msgid ""
 "                                    Shipped\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-truck\"/>\n"
+"                                    Spedita\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -229,6 +325,11 @@ msgid ""
 "                                            Partially Available\n"
 "                                        </span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\""
+"/>\n"
+"                                            Parzialmente disponibile\n"
+"                                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -238,6 +339,10 @@ msgid ""
 "                                    Partially Available\n"
 "                                </span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                    Parzialmente disponibile\n"
+"                                </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -697,12 +802,12 @@ msgstr "Consegna"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty
 msgid "Delivered Qty"
-msgstr ""
+msgstr "Q.tà consegnata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
 msgid "Delivered Qty Done"
-msgstr ""
+msgstr "Quantità consegnata fatta"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -891,7 +996,7 @@ msgstr "Raggruppa resi RMA per cliente e magazzino."
 #: model:ir.model.fields,field_description:rma.field_rma__has_message
 #: model:ir.model.fields,field_description:rma.field_rma_team__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Ha un messaggio"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__id
@@ -1165,7 +1270,7 @@ msgstr "Numero di errori"
 #: model:ir.model.fields,help:rma.field_rma__message_needaction_counter
 #: model:ir.model.fields,help:rma.field_rma_team__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Numero di messaggi che richiedono un'azione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error_counter
@@ -1313,6 +1418,8 @@ msgid ""
 "Quantity to extract cannot be greater than remaining delivery quantity "
 "(%(remaining_qty)s %(product_uom)s)"
 msgstr ""
+"La quantità da estrarre non può essere maggiore della quantità consegna "
+"rimanente (%(remaining_qty)s %(product_uom)s)"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
@@ -1375,7 +1482,7 @@ msgstr "Wizard Consegna RMA"
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_draft_notification
 msgid "RMA Draft Notification"
-msgstr ""
+msgstr "Noifica bozza RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_finalization_form
@@ -1446,7 +1553,7 @@ msgstr "E-mail di conferma ricevuta RMA"
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_receipt_notification
 msgid "RMA Receipt Notification"
-msgstr ""
+msgstr "Notifica ricevuta RMA"
 
 #. module: rma
 #. odoo-python
@@ -1605,7 +1712,7 @@ msgstr "Rimborso"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
 msgid "Refund Line"
-msgstr ""
+msgstr "Riga rimborso"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
@@ -1659,6 +1766,10 @@ msgid ""
 "\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
 "been created."
 msgstr ""
+"Sostituzione: Movimento <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (prelievo <a href=\"#\" data-oe-model="
+"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"creato."
 
 #. module: rma
 #. odoo-python
@@ -1670,6 +1781,10 @@ msgid ""
 "replacement did not create a new move, but one of the previously created "
 "moves was updated with this data."
 msgstr ""
+"Sostituzione:<br/>Prodotto <a href=\"#\" data-oe-model=\"product.product\" "
+"data-oe-id=\"%(id)d\">%(name)s</a><br/>Quantità %(qty)s %(uom)s<br/>Questa "
+"sostituzione non crea un nuovo movimento, ma uno dei movimenti creati in "
+"precedenza è stato aggiornato con questa quantità."
 
 #. module: rma
 #: model:ir.ui.menu,name:rma.rma_reporting_menu
@@ -1702,7 +1817,7 @@ msgstr "Utente responsabile"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__location_id
 msgid "Return Location"
-msgstr ""
+msgstr "Ubicazione di reso"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
@@ -1724,6 +1839,8 @@ msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
 "%(name)s</a> has been created."
 msgstr ""
+"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\""
+">%(name)s</a> creato."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -1743,7 +1860,7 @@ msgstr "Conteggio Rma"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
 msgid "Rma Location"
-msgstr ""
+msgstr "Ubicazione RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1867,6 +1984,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\""
+">%(name)s</a> creata."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -1928,7 +2047,7 @@ msgstr "Etichette..."
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
 msgid "Team Leader"
-msgstr "Team Leader"
+msgstr "Team leader"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
@@ -1988,6 +2107,9 @@ msgid ""
 "The quantity done for the product '%(id)s' must be equal to its initial "
 "demand because the stock move is linked to an RMA (%(name)s)."
 msgstr ""
+"La quantità completata per il prodotto '%(id)s' deve essere uguale alla sua "
+"richiesta iniziale perché il movimento di magazzino è legato ad una RMA "
+"(%(name)s)."
 
 #. module: rma
 #. odoo-python
@@ -2093,7 +2215,7 @@ msgstr "Urgente"
 #. module: rma
 #: model:ir.model,name:rma.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Utente"
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_all
@@ -2230,12 +2352,12 @@ msgstr "l'utente avrà accesso alla configurazione RMA e ai report statistici."
 #: model:mail.template,report_name:rma.mail_template_rma_notification
 #: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
 msgid "{{(object.name or '')}}"
-msgstr ""
+msgstr "{{(object.name or '')}}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
-msgstr ""
+msgstr "{{object.company_id.name}} RMA (rif. {{object.name or 'n/a' }})"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_receipt_notification
@@ -2243,6 +2365,8 @@ msgid ""
 "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products "
 "received"
 msgstr ""
+"Prodotti ricevuti per RMA (rif. {{object.name or 'n/a' }}) di {{object."
+"company_id.name}}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_draft_notification
@@ -2250,6 +2374,8 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
+"{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. {{"
+"object.name or 'n/a' }})"
 
 #~ msgid "${(object.name or '')}"
 #~ msgstr "${(object.name or '')}"
