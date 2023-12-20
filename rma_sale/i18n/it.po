@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-29 08:33+0000\n"
+"PO-Revision-Date: 2023-12-20 15:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -78,7 +78,7 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid "<span>RMA</span>"
-msgstr "<span>RMA</span>"
+msgstr "<span>Richiesta reso</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
@@ -376,12 +376,12 @@ msgstr "Ordine di vendita"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr "Procedura guidata riga ordine di vendita Rma"
+msgstr "Procedura guidata RMA riga ordine di vendita"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr "Procedura guidata ordine di vendita Rma"
+msgstr "Procedura guidata RMA ordine di vendita"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
