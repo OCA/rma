@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-06 15:36+0000\n"
+"PO-Revision-Date: 2023-12-20 15:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -61,7 +61,7 @@ msgstr "(object._get_report_base_filename())"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid "<b>E-mail subject:</b> %s<br/><br/><b>E-mail body:</b><br/>%s"
-msgstr "<b>Soggetto E-mail:</b> %s<br/><br/><b>Corpo E-mail:</b><br/>%s"
+msgstr "<b>Soggetto e-mail:</b> %s<br/><br/><b>Corpo e-mail:</b><br/>%s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -1944,7 +1944,7 @@ msgstr "Etichette..."
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__user_id
 msgid "Team Leader"
-msgstr "Team Leader"
+msgstr "Team leader"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
