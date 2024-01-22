@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-27 16:36+0000\n"
+"PO-Revision-Date: 2024-01-25 16:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1085,7 +1085,7 @@ msgstr "Indirizzo di fatturazione e spedizione:"
 #: model:ir.model.fields,field_description:rma.field_rma__message_is_follower
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_is_follower
 msgid "Is Follower"
-msgstr "Sta seguendo"
+msgstr "Segue"
 
 #. module: rma
 #: model:ir.model,name:rma.model_account_move
@@ -1865,7 +1865,7 @@ msgstr "Ubicazione RMA"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
 msgid "Scheduled Date"
-msgstr "Data programmata"
+msgstr "Data schedulata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__access_token
