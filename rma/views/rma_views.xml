@@ -30,13 +30,13 @@
                 <filter
                     string="Unresolved RMAs"
                     name="undone_rma"
-                    domain="[('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                    domain="[('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled', 'finished'])]"
                     help="RMAs yet to be fully processed"
                 />
                 <filter
                     string="Late RMAs"
                     name="late_rma"
-                    domain="[('deadline', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled'])]"
+                    domain="[('deadline', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['refunded', 'returned', 'replaced', 'locked', 'cancelled', 'finished'])]"
                     help="RMAs which deadline has passed"
                 />
                 <separator />
