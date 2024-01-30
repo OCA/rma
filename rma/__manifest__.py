@@ -10,7 +10,7 @@
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
     "author": "Tecnativa, Odoo Community Association (OCA)",
-    "maintainers": ["pedrobaeza"],
+    "maintainers": ["pedrobaeza", "chienandalu"],
     "license": "AGPL-3",
     "depends": ["stock_account"],
     "data": [
