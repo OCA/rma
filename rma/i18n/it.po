@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-25 16:37+0000\n"
+"PO-Revision-Date: 2024-04-03 12:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1662,7 +1662,7 @@ msgstr "Team leader"
 #: model:ir.model.fields,field_description:rma.field_rma_team__member_ids
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
-msgstr "Membri del Team"
+msgstr "Membri del team"
 
 #. module: rma
 #: sql_constraint:rma.operation:0
