@@ -134,6 +134,9 @@ Known issues / Roadmap
 * As soon as the picking is selected, the user should select the move,
   but perhaps stock.move _rec_name could be improved to better show what
   the product of that move is.
+* Add RMA reception and/or RMA delivery on several steps - 2 or 3 - like
+  normal receptions/deliveries. It should be a separate option inside the
+  warehouse definition.
 
 Bug Tracker
 ===========
@@ -165,6 +168,7 @@ Contributors
 
 * Chafique Delli <chafique.delli@akretion.com>
 * Giovanni Serra - Ooops <giovanni@ooops404.com>
+* Michael Tietz (MT Software) <mtietz@mt-software.de>
 
 Maintainers
 ~~~~~~~~~~~
