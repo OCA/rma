@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="rma_view_search" model="ir.ui.view">
@@ -202,7 +203,7 @@
                             string="Receipt"
                             class="oe_stat_button"
                             icon="fa-truck"
-                            attrs="{'invisible': [('reception_move_id', '=', False)]}"
+                            attrs="{'invisible': [('reception_move_ids', '=', False)]}"
                         >
                         </button>
                         <button
@@ -319,7 +320,7 @@
                         </page>
                     </notebook>
                     <field name="sent" invisible="1" />
-                    <field name="reception_move_id" invisible="1" />
+                    <field name="reception_move_ids" invisible="1" />
                     <field name="refund_id" invisible="1" />
                     <field name="can_be_refunded" invisible="1" />
                     <field name="can_be_returned" invisible="1" />

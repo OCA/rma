@@ -162,15 +162,27 @@ class Rma(models.Model):
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
-            move = self.reception_move_id
-            if (
-                move
-                and float_compare(
-                    self.product_uom_qty,
-                    move.product_uom_qty,
-                    precision_rounding=move.product_uom.rounding,
-                )
-                == 0
-            ):
-                line_form.sale_line_ids.add(line)
+            analytic_account = line.order_id.analytic_account_id
+            for move in self.reception_move_ids:
+                if (
+                    float_compare(
+                        self.product_uom_qty,
+                        move.product_uom_qty,
+                        precision_rounding=move.product_uom.rounding,
+                    )
+                    == 0
+                ):
+                    line_form.sale_line_ids.add(line)
+            if analytic_account:
+                line_form.analytic_account_id = analytic_account
         return res
+
+    def _prepare_procurement_group_values(self):
+        values = super()._prepare_procurement_group_values()
+        if not self.env.context.get("ignore_rma_sale_order") and self.order_id:
+            values["sale_id"] = self.order_id.id
+        return values
+
+    def _create_delivery_procurement_group(self):
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super()._create_delivery_procurement_group()
