@@ -7,3 +7,4 @@
 - Giovanni Serra - Ooops \<<giovanni@ooops404.com>\>
 - [APSL-Nagarro](https://www.apsl.tech):
   - Antoni Marroig \<<amarroig@apsl.net>\>
+- Michael Tietz (MT Software) <mtietz@mt-software.de>
