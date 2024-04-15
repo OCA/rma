@@ -27,7 +27,7 @@ class ResPartner(models.Model):
 
     def action_view_rma(self):
         self.ensure_one()
-        action = self.sudo().env.ref("rma.rma_action").read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id("rma.rma_action")
         rma = self.rma_ids
         if len(rma) == 1:
             action.update(

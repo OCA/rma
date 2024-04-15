@@ -1,24 +1,20 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, TransactionCase, new_test_user, users
+from odoo.tests import Form, new_test_user, users
+from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
+
+from .. import hooks
 
 
-class TestRma(TransactionCase):
+class TestRma(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
         cls.user_rma = new_test_user(
             cls.env,
             login="user_rma",
@@ -72,6 +68,7 @@ class TestRma(TransactionCase):
             {"name": "[Test] It's out of warranty. To be scrapped"}
         )
         cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
+        cls.warehouse = cls.env.ref("stock.warehouse0")
         # Ensure grouping
         cls.env.company.rma_return_grouping = True
 
@@ -95,7 +92,7 @@ class TestRma(TransactionCase):
         rma = self._create_rma(partner, product, qty, location)
         rma.action_confirm()
         rma.reception_move_id.quantity = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id.picking_id.button_validate()
         return rma
 
     def _create_delivery(self):
@@ -132,6 +129,49 @@ class TestRma(TransactionCase):
 
 
 class TestRmaCase(TestRma):
+    def test_post_init_hook(self):
+        warehouse = self.env["stock.warehouse"].create(
+            {
+                "name": "Test warehouse",
+                "code": "code",
+                "company_id": self.env.company.id,
+            }
+        )
+        hooks.post_init_hook(self.env)
+        self.assertTrue(warehouse.rma_in_type_id)
+        self.assertEqual(
+            warehouse.rma_in_type_id.default_location_dest_id, warehouse.rma_loc_id
+        )
+        self.assertEqual(
+            warehouse.rma_out_type_id.default_location_src_id, warehouse.rma_loc_id
+        )
+        self.assertTrue(warehouse.rma_loc_id)
+        self.assertTrue(warehouse.rma_in_route_id)
+        self.assertTrue(warehouse.rma_out_route_id)
+
+    def test_rma_replace_pick_ship(self):
+        self.warehouse.write({"delivery_steps": "pick_ship"})
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        rma.reception_move_id.quantity = 1
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.reception_move_id.picking_id.state, "done")
+        self.assertEqual(rma.state, "received")
+        res = rma.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.product_uom_qty = rma.product_uom_qty
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma.delivery_picking_count, 2)
+        out_pickings = rma.mapped("delivery_move_ids.picking_id")
+        self.assertIn(
+            self.warehouse.pick_type_id, out_pickings.mapped("picking_type_id")
+        )
+        self.assertIn(
+            self.warehouse.out_type_id, out_pickings.mapped("picking_type_id")
+        )
+
     def test_computed(self):
         # If partner changes, the invoice address is set
         rma = self.env["rma"].new()
@@ -169,7 +209,7 @@ class TestRmaCase(TestRma):
             move.product_id = product_2
             move.product_uom_qty = 15
         picking = picking_form.save()
-        picking._action_done()
+        picking.button_validate()
         rma.picking_id = picking
         rma.move_id = picking.move_ids
         self.assertEqual(rma.product_id, product_2)
@@ -207,13 +247,18 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.state, "confirmed")
         rma.reception_move_id.quantity = 9
         with self.assertRaises(ValidationError):
-            rma.reception_move_id.picking_id._action_done()
+            res = rma.reception_move_id.picking_id.button_validate()
+            wizard = (
+                self.env[res["res_model"]].with_context(**res["context"]).create({})
+            )
+            wizard.process()
         rma.reception_move_id.quantity = 10
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
         self.assertEqual(rma.reception_move_id.quantity, 10)
         self.assertEqual(rma.state, "received")
 
+    @mute_logger("odoo.models.unlink")
     def test_cancel(self):
         # cancel a draft RMA
         rma = self._create_rma(self.partner, self.product)
@@ -333,7 +378,7 @@ class TestRmaCase(TestRma):
         # line of refund_1
         self.assertEqual(len(refund_1.invoice_line_ids), 3)
         self.assertEqual(
-            refund_1.invoice_line_ids.mapped("rma_id"),
+            refund_1.invoice_line_ids.rma_id,
             (rma_1 | rma_2 | rma_3),
         )
         self.assertEqual(
@@ -524,6 +569,13 @@ class TestRmaCase(TestRma):
         all_rmas = rma_1 | rma_2 | rma_3 | rma_4
         self.assertEqual(all_rmas.mapped("state"), ["received"] * 4)
         self.assertEqual(all_rmas.mapped("can_be_returned"), [True] * 4)
+        all_in_pickings = all_rmas.mapped("reception_move_id.picking_id")
+        self.assertEqual(
+            all_in_pickings.mapped("picking_type_id"), self.warehouse.rma_in_type_id
+        )
+        self.assertEqual(
+            all_in_pickings.mapped("location_dest_id"), self.warehouse.rma_loc_id
+        )
         # Mass return of those four RMAs
         delivery_wizard = (
             self.env["rma.delivery.wizard"]
@@ -534,6 +586,10 @@ class TestRmaCase(TestRma):
         # Two pickings were created
         pick_1 = (rma_1 | rma_2 | rma_3).mapped("delivery_move_ids.picking_id")
         pick_2 = rma_4.delivery_move_ids.picking_id
+        self.assertEqual(pick_1.picking_type_id, self.warehouse.rma_out_type_id)
+        self.assertEqual(pick_1.location_id, self.warehouse.rma_loc_id)
+        self.assertEqual(pick_2.picking_type_id, self.warehouse.rma_out_type_id)
+        self.assertEqual(pick_2.location_id, self.warehouse.rma_loc_id)
         self.assertEqual(len(pick_1), 1)
         self.assertEqual(len(pick_2), 1)
         self.assertNotEqual(pick_1, pick_2)
@@ -549,7 +605,7 @@ class TestRmaCase(TestRma):
         # line of picking_1
         self.assertEqual(len(pick_1.move_ids), 3)
         self.assertEqual(
-            pick_1.move_ids.mapped("rma_id"),
+            pick_1.move_ids.rma_id,
             (rma_1 | rma_2 | rma_3),
         )
         self.assertEqual(
@@ -620,14 +676,14 @@ class TestRmaCase(TestRma):
         origin_moves = origin_delivery.move_ids
         self.assertTrue(origin_moves[0].rma_ids)
         self.assertTrue(origin_moves[1].rma_ids)
-        rmas = origin_moves.mapped("rma_ids")
+        rmas = origin_moves.rma_ids
         self.assertEqual(rmas.mapped("state"), ["confirmed"] * 2)
         # Each reception move is linked one of the generated RMAs
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         reception_moves = reception.move_ids
         self.assertTrue(reception_moves[0].rma_receiver_ids)
         self.assertTrue(reception_moves[1].rma_receiver_ids)
-        self.assertEqual(reception_moves.mapped("rma_receiver_ids"), rmas)
+        self.assertEqual(reception_moves.rma_receiver_ids, rmas)
         # Validate the reception picking to set rmas to 'received' state
         reception_moves[0].quantity = reception_moves[0].product_uom_qty
         reception_moves[1].quantity = reception_moves[1].product_uom_qty
@@ -645,7 +701,7 @@ class TestRmaCase(TestRma):
         rma = rma_form.save()
         rma.action_confirm()
         rma.reception_move_id.quantity = 10
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id.picking_id.button_validate()
         # Return quantity 4 of the same product to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -686,6 +742,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.move_id.quantity, 10)
         self.assertEqual(new_rma.reception_move_id.quantity, 10)
 
+    @mute_logger("odoo.models.unlink")
     def test_rma_to_receive_on_delete_invoice(self):
         rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
         rma.action_refund()
