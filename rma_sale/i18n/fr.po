@@ -78,7 +78,8 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
-msgid "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
+msgid ""
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
 
 #. module: rma_sale
@@ -362,6 +363,11 @@ msgid "Requested operation"
 msgstr "Demande d'opération"
 
 #. module: rma_sale
+#: model:ir.model,name:rma_sale.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -411,11 +417,6 @@ msgstr "Afficher la demande RMA du portail sur une seule page"
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
 msgstr "Demande RMA d'une seule page"
-
-#. module: rma_sale
-#: model:ir.model,name:rma_sale.model_stock_move
-msgid "Stock Move"
-msgstr "mouvement de stock"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -494,3 +495,6 @@ msgid ""
 msgstr ""
 "Vous êtes sur le point d'effectuer une demande RMA. Notre équipe le traitera "
 "et vous parviendra une fois validé. Garde en tête que:"
+
+#~ msgid "Stock Move"
+#~ msgstr "mouvement de stock"

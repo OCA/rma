@@ -356,6 +356,11 @@ msgid "Requested operation"
 msgstr "Operação Requisitada"
 
 #. module: rma_sale
+#: model:ir.model,name:rma_sale.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -404,11 +409,6 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
-msgstr ""
-
-#. module: rma_sale
-#: model:ir.model,name:rma_sale.model_stock_move
-msgid "Stock Move"
 msgstr ""
 
 #. module: rma_sale
