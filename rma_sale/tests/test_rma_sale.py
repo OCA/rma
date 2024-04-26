@@ -73,8 +73,8 @@ class TestRmaSale(TestRmaSaleBase):
         rma_form.location_id = self.sale_order.warehouse_id.rma_loc_id
         rma = rma_form.save()
         rma.action_confirm()
-        self.assertTrue(rma.reception_move_ids)
-        self.assertFalse(rma.reception_move_ids.origin_returned_move_id)
+        self.assertTrue(rma.reception_move_id)
+        self.assertFalse(rma.reception_move_id.origin_returned_move_id)
 
     def test_create_rma_from_so(self):
         order = self.sale_order
@@ -89,11 +89,11 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(rma.product_uom, self.order_line.product_uom)
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
-            rma.reception_move_ids.origin_returned_move_id,
+            rma.reception_move_id.origin_returned_move_id,
             self.order_out_picking.move_lines,
         )
         self.assertEqual(
-            rma.reception_move_ids.picking_id + self.order_out_picking,
+            rma.reception_move_id.picking_id + self.order_out_picking,
             order.picking_ids,
         )
         user = self.env["res.users"].create(
@@ -102,8 +102,8 @@ class TestRmaSale(TestRmaSaleBase):
         order.user_id = user.id
         # Receive the RMA
         rma.action_confirm()
-        rma.reception_move_ids.quantity_done = rma.product_uom_qty
-        rma.reception_move_ids.picking_id._action_done()
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id._action_done()
         rma.action_refund()
         self.assertEqual(self.order_line.qty_delivered, 0)
         self.assertEqual(self.order_line.qty_invoiced, -5)
@@ -153,8 +153,8 @@ class TestRmaSale(TestRmaSaleBase):
         """An RMA of a product that had an RMA in the past should be possible"""
         wizard = self._rma_sale_wizard(self.sale_order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        rma.reception_move_ids.quantity_done = rma.product_uom_qty
-        rma.reception_move_ids.picking_id._action_done()
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id._action_done()
         wizard = self._rma_sale_wizard(self.sale_order)
         self.assertEqual(
             wizard.line_ids.quantity,

@@ -17,7 +17,12 @@ class StockMove(models.Model):
         copy=False,
     )
     # RMAs linked to the incoming movement from client
-    rma_receiver_ids = fields.Many2many(comodel_name="rma", string="RMA Receiver")
+    rma_receiver_ids = fields.One2many(
+        comodel_name="rma",
+        inverse_name="reception_move_id",
+        string="RMA receivers",
+        copy=False,
+    )
     # RMA that create the out move
     rma_id = fields.Many2one(
         comodel_name="rma",

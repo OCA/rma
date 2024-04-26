@@ -162,17 +162,18 @@ class Rma(models.Model):
         if line:
             line_form.discount = line.discount
             line_form.sequence = line.sequence
+            move = self.reception_move_id
+            if (
+                move
+                and float_compare(
+                    self.product_uom_qty,
+                    move.product_uom_qty,
+                    precision_rounding=move.product_uom.rounding,
+                )
+                == 0
+            ):
+                line_form.sale_line_ids.add(line)
             analytic_account = line.order_id.analytic_account_id
-            for move in self.reception_move_ids:
-                if (
-                    float_compare(
-                        self.product_uom_qty,
-                        move.product_uom_qty,
-                        precision_rounding=move.product_uom.rounding,
-                    )
-                    == 0
-                ):
-                    line_form.sale_line_ids.add(line)
             if analytic_account:
                 line_form.analytic_account_id = analytic_account
         return res

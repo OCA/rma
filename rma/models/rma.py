@@ -230,14 +230,10 @@ class Rma(models.Model):
         compute="_compute_warehouse_id",
         store=True,
     )
-    reception_move_ids = fields.Many2many(
-        "stock.move",
+    reception_move_id = fields.Many2one(
+        comodel_name="stock.move",
         string="Reception move",
         copy=False,
-    )
-    # Keep for backwards compatibility
-    reception_move_id = fields.Many2one(
-        "stock.move", "Reception move", compute="_compute_reception_move"
     )
     # Refund fields
     refund_id = fields.Many2one(
@@ -312,11 +308,6 @@ class Rma(models.Model):
     def _compute_delivery_picking_count(self):
         for rma in self:
             rma.delivery_picking_count = len(rma.delivery_move_ids.picking_id)
-
-    @api.depends("reception_move_ids")
-    def _compute_reception_move(self):
-        for rma in self:
-            rma.reception_move_id = rma.reception_move_ids[:1]
 
     @api.depends(
         "delivery_move_ids",
@@ -766,7 +757,7 @@ class Rma(models.Model):
         if not self:
             return
         self._create_receptions()
-        self.reception_move_ids.picking_id.action_assign()
+        self.reception_move_id.picking_id.action_assign()
         self.write({"state": "confirmed"})
         self._add_message_subscribe_partner()
         self._send_confirmation_email()
@@ -895,7 +886,7 @@ class Rma(models.Model):
 
     def action_cancel(self):
         """Invoked when 'Cancel' button in rma form view is clicked."""
-        self.reception_move_ids._action_cancel()
+        self.reception_move_id._action_cancel()
         self.write({"state": "cancelled"})
 
     def action_draft(self):
@@ -943,7 +934,7 @@ class Rma(models.Model):
 
     def action_view_receipt(self):
         """Invoked when 'Receipt' smart button in rma form view is clicked."""
-        return self.action_view_pickings(self.reception_move_ids.picking_id)
+        return self.action_view_pickings(self.reception_move_id.picking_id)
 
     def action_view_refund(self):
         """Invoked when 'Refund' smart button in rma form view is clicked."""
@@ -1084,7 +1075,7 @@ class Rma(models.Model):
                 "product_uom_qty": qty,
                 "product_uom": uom.id,
                 "state": "received",
-                "reception_move_ids": [(6, 0, self.reception_move_ids.ids)],
+                "reception_move_id": self.reception_move_id.id,
                 "origin_split_rma_id": self.id,
             }
         )
@@ -1196,7 +1187,7 @@ class Rma(models.Model):
         )
         values.update(
             {
-                "move_orig_ids": [(6, 0, self.reception_move_ids.ids)],
+                "move_orig_ids": [(6, 0, self.reception_move_id.ids)],
             }
         )
         return values

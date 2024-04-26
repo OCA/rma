@@ -128,7 +128,7 @@ class ReturnPicking(models.TransientModel):
             vals_list = self._prepare_rma_vals_list()
             rmas = self.env["rma"].create(vals_list)
             rmas.action_confirm()
-            picking = rmas.reception_move_ids.picking_id
+            picking = rmas.reception_move_id.picking_id
             picking = picking and picking[0] or picking
             ctx = dict(self.env.context)
             ctx.update(

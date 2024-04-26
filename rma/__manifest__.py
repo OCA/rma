@@ -1,5 +1,4 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
-# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Return Merchandise Authorization Management",
