@@ -147,6 +147,23 @@ class TestRma(TransactionCase):
 
 
 class TestRmaCase(TestRma):
+    def test_rma_replace_pick_ship(self):
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.write({"delivery_steps": "pick_ship"})
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        rma.reception_move_id.quantity_done = 1
+        rma.reception_move_id.picking_id._action_done()
+        self.assertEqual(rma.reception_move_id.picking_id.state, "done")
+        self.assertEqual(rma.state, "received")
+        res = rma.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.product_uom_qty = rma.product_uom_qty
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma.delivery_picking_count, 2)
+
     def test_onchange(self):
         rma_form = Form(self.env["rma"])
         # If partner changes, the invoice address is set
