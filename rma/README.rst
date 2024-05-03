@@ -17,25 +17,25 @@ Return Merchandise Authorization Management
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/16.0/rma
+    :target: https://github.com/OCA/rma/tree/17.0/rma
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-16-0/rma-16-0-rma
+    :target: https://translation.odoo-community.org/projects/rma-17-0/rma-17-0-rma
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you to manage `Return Merchandise Authorization (RMA)
-<https://en.wikipedia.org/wiki/Return_merchandise_authorization>`_.
+This module allows you to manage `Return Merchandise Authorization
+(RMA) <https://en.wikipedia.org/wiki/Return_merchandise_authorization>`__.
 RMA documents can be created from scratch, from a delivery order or from
 an incoming email. Product receptions and returning delivery operations
 of the RMA module are fully integrated with the Receipts and Deliveries
 Operations of Odoo inventory core module. It also allows you to generate
-refunds in the same way as Odoo generates it.
-Besides, you have full integration of the RMA documents in the customer portal.
+refunds in the same way as Odoo generates it. Besides, you have full
+integration of the RMA documents in the customer portal.
 
 **Table of contents**
 
@@ -47,23 +47,24 @@ Configuration
 
 If you want RMAs to be created from incoming emails, you need to:
 
-#. Go to *Settings > General Settings*.
-#. Check 'External Email Servers' checkbox under *Discuss* section.
-#. Set an 'alias domain' and an incoming server.
-#. Go to *RMA > Configuration > RMA Team* and select a team or create a new
-   one.
-#. Go to 'Email' tab and set an 'Email Alias'.
+1. Go to *Settings > General Settings*.
+2. Check 'External Email Servers' checkbox under *Discuss* section.
+3. Set an 'alias domain' and an incoming server.
+4. Go to *RMA > Configuration > RMA Team* and select a team or create a
+   new one.
+5. Go to 'Email' tab and set an 'Email Alias'.
 
 If you want to manually finish RMAs, you need to:
 
-#. Go to *Settings > Inventory*.
-#. Set *Finish RMAs manually* checkbox on.
+1. Go to *Settings > Inventory*.
+2. Set *Finish RMAs manually* checkbox on.
 
-By default, returns to customer are grouped by shipping address, warehouse and company.
-If you want to avoid this grouping you can:
+By default, returns to customer are grouped by shipping address,
+warehouse and company. If you want to avoid this grouping you can:
 
-#. Go to *Settings > Inventory*.
-#. Set *Group RMA returns by customer address and warehouse* checkbox off.
+1. Go to *Settings > Inventory*.
+2. Set *Group RMA returns by customer address and warehouse* checkbox
+   off.
 
 The users will still be able to group those pickings from the wizard.
 
@@ -72,68 +73,73 @@ Usage
 
 To use this module, you need to:
 
-#. Go to *RMA > Orders* and create a new RMA.
-#. Select a partner, an invoice address, select a product
-   (or select a picking and a move instead), write a quantity, fill the rest
-   of the form and click on 'confirm' button in the status bar.
-#. You will see an smart button labeled 'Receipt'. Click on that button to see
-   the reception operation form.
-#. If everything is right, validate the operation and go back to the RMA to
-   see it in a 'received' state.
-#. Now you are able to generate a refund, generate a delivery order to return
-   to the customer the same product or another product as a replacement, split
-   the RMA by extracting a part of the remaining quantity to another RMA,
-   preview the RMA in the website. All of these operations can be done by
-   clicking on the buttons in the status bar.
+1. Go to *RMA > Orders* and create a new RMA.
+2. Select a partner, an invoice address, select a product (or select a
+   picking and a move instead), write a quantity, fill the rest of the
+   form and click on 'confirm' button in the status bar.
+3. You will see an smart button labeled 'Receipt'. Click on that button
+   to see the reception operation form.
+4. If everything is right, validate the operation and go back to the RMA
+   to see it in a 'received' state.
+5. Now you are able to generate a refund, generate a delivery order to
+   return to the customer the same product or another product as a
+   replacement, split the RMA by extracting a part of the remaining
+   quantity to another RMA, preview the RMA in the website. All of these
+   operations can be done by clicking on the buttons in the status bar.
 
-   * If you click on 'Refund' button, a refund will be created, and it will be
-     accessible via the smart button labeled Refund. The RMA will be set
-     automatically to 'Refunded' state when the refund is validated.
-   * If you click on 'Replace' or 'Return to customer' button instead,
-     a popup wizard will guide you to create a Delivery order to the client
-     and this order will be accessible via the smart button labeled Delivery.
-     The RMA will be set automatically to 'Replaced' or 'Returned' state when
-     the RMA quantity is equal or lower than the quantity in done delivery
-     orders linked to it.
-#. You can also finish the RMA without further ado. To do so click on the *Finish*
-   button. A wizard will ask you for the reason from a selection of preconfigured ones.
-   Be sure to configure them in advance on *RMA > Configuration > Finalization Reasons*.
-   Once the RMA is finished, it will be set to that state and the reason will be
+   -  If you click on 'Refund' button, a refund will be created, and it
+      will be accessible via the smart button labeled Refund. The RMA
+      will be set automatically to 'Refunded' state when the refund is
+      validated.
+   -  If you click on 'Replace' or 'Return to customer' button instead,
+      a popup wizard will guide you to create a Delivery order to the
+      client and this order will be accessible via the smart button
+      labeled Delivery. The RMA will be set automatically to 'Replaced'
+      or 'Returned' state when the RMA quantity is equal or lower than
+      the quantity in done delivery orders linked to it.
+
+6. You can also finish the RMA without further ado. To do so click on
+   the *Finish* button. A wizard will ask you for the reason from a
+   selection of preconfigured ones. Be sure to configure them in advance
+   on *RMA > Configuration > Finalization Reasons*. Once the RMA is
+   finished, it will be set to that state and the reason will be
    registered.
 
 An RMA can also be created from a return of a delivery order:
 
-#. Select a delivery order and click on 'Return' button to create a return.
-#. Check "Create RMAs" checkbox in the returning wizard, select the RMA
+1. Select a delivery order and click on 'Return' button to create a
+   return.
+2. Check "Create RMAs" checkbox in the returning wizard, select the RMA
    stock location and click on 'Return' button.
-#. An RMA will be created for each product returned in the previous step.
-   Every RMA will be in confirmed state and they will
-   be linked to the returning operation generated previously.
+3. An RMA will be created for each product returned in the previous
+   step. Every RMA will be in confirmed state and they will be linked to
+   the returning operation generated previously.
 
 There are Optional RMA Teams that can be used for:
 
-  - Organize RMAs in sections.
-  - Subscribe users to notifications.
-  - Create RMAs from incoming mail to special aliases (See configuration
-    section).
+   -  Organize RMAs in sections.
+   -  Subscribe users to notifications.
+   -  Create RMAs from incoming mail to special aliases (See
+      configuration section).
 
 To create an RMA Team (RMA Responsible user level required):
 
-  #. Go to *RMA > Configuration > RMA Teams*
-  #. Create a new team and assign a name, a responsible and members.
-  #. Subscribe users to notifications, that can be of these subtypes:
+   1. Go to *RMA > Configuration > RMA Teams*
+   2. Create a new team and assign a name, a responsible and members.
+   3. Subscribe users to notifications, that can be of these subtypes:
 
-     - RMA draft. When a new RMA is created.
-     - Notes, Debates, Activities. As in standard Odoo.
-  #. In the list view, use the cross handle to sort RMA Teams. The top team
-     will be the default one if no team is set.
+      -  RMA draft. When a new RMA is created.
+      -  Notes, Debates, Activities. As in standard Odoo.
+
+   4. In the list view, use the cross handle to sort RMA Teams. The top
+      team will be the default one if no team is set.
 
 Known issues / Roadmap
 ======================
 
-* As soon as the picking is selected, the user should select the move,
-  but perhaps stock.move _rec_name could be improved to better show what
-  the product of that move is.
+-  As soon as the picking is selected, the user should select the move,
+   but perhaps stock.move \_rec_name could be improved to better show
+   what the product of that move is.
 
 Bug Tracker
 ===========
@@ -141,7 +147,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -149,25 +155,25 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Tecnativa <https://www.tecnativa.com>`_:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Ernesto Tejeda
-  * Pedro M. Baeza
-  * David Vidal
-  * Víctor Martínez
+   -  Ernesto Tejeda
+   -  Pedro M. Baeza
+   -  David Vidal
+   -  Víctor Martínez
 
-* Chafique Delli <chafique.delli@akretion.com>
-* Giovanni Serra - Ooops <giovanni@ooops404.com>
+-  Chafique Delli <chafique.delli@akretion.com>
+-  Giovanni Serra - Ooops <giovanni@ooops404.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -190,6 +196,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-pedrobaeza| |maintainer-chienandalu| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/16.0/rma>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/17.0/rma>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

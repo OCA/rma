@@ -555,7 +555,7 @@ class Rma(models.Model):
 
     def _compute_access_url(self):
         for record in self:
-            record.access_url = "/my/rmas/{}".format(record.id)
+            record.access_url = f"/my/rmas/{record.id}"
 
     # Constrains methods (@api.constrains)
     @api.constrains(
@@ -1017,7 +1017,7 @@ class Rma(models.Model):
         ).create_returns()
         picking_id = picking_action["res_id"]
         picking = self.env["stock.picking"].browse(picking_id)
-        picking.origin = "{} ({})".format(self.name, picking.origin)
+        picking.origin = f"{self.name} ({picking.origin})"
         move = picking.move_ids
         move.priority = self.priority
         return move
@@ -1052,7 +1052,9 @@ class Rma(models.Model):
                         or self.product_id.with_context(
                             lang=self.partner_id.lang or "en_US"
                         ).display_name,
-                        "location_id": self.partner_shipping_id.property_stock_customer.id,
+                        "location_id": (
+                            self.partner_shipping_id.property_stock_customer.id
+                        ),
                         "location_dest_id": self.location_id.id,
                         "product_uom_qty": self.product_uom_qty,
                     },
