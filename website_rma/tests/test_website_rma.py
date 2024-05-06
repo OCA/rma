@@ -1,9 +1,10 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import Form, HttpCase
+from odoo.tests.common import Form, HttpCase, tagged
 
 
+@tagged("-at_install", "post_install")
 class TestWebsiteRma(HttpCase):
     def setUp(self):
         super().setUp()
@@ -31,7 +32,7 @@ class TestWebsiteRma(HttpCase):
             move.product_uom_qty = 10
         picking = picking_form.save()
         picking.action_confirm()
-        picking.move_lines.quantity_done = 10
+        picking.move_ids.quantity_done = 10
         picking.button_validate()
 
     def test_website_form_request_rma(self):
