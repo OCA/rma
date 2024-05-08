@@ -87,8 +87,8 @@ To use this module, you need to:
    quantity to another RMA, preview the RMA in the website. All of these
    operations can be done by clicking on the buttons in the status bar.
 
-   -  If you click on 'Refund' button, a refund will be created, and it
-      will be accessible via the smart button labeled Refund. The RMA
+   -  If you click on 'To Refund' button, a refund will be created, and
+      it will be accessible via the smart button labeled Refund. The RMA
       will be set automatically to 'Refunded' state when the refund is
       validated.
    -  If you click on 'Replace' or 'Return to customer' button instead,
@@ -171,6 +171,9 @@ Contributors
 
 -  Chafique Delli <chafique.delli@akretion.com>
 -  Giovanni Serra - Ooops <giovanni@ooops404.com>
+-  `APSL-Nagarro <https://www.apsl.tech>`__:
+
+   -  Antoni Marroig <amarroig@apsl.net>
 
 Maintainers
 -----------

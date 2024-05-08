@@ -14,7 +14,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-reply"
-                    attrs="{'invisible': [('rma_count', '=', 0)]}"
+                    invisible="rma_count == 0"
                     groups="rma.rma_group_user_own"
                 >
                     <field name="rma_count" widget="statinfo" string="RMA" />
