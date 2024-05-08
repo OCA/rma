@@ -85,6 +85,8 @@ class TestRma(TransactionCase):
             vals["product_uom_qty"] = qty
         if location:
             vals["location_id"] = location.id
+
+        vals["user_id"] = self.env.user.id
         return self.env["rma"].create(vals)
 
     def _create_confirm_receive(
@@ -92,7 +94,7 @@ class TestRma(TransactionCase):
     ):
         rma = self._create_rma(partner, product, qty, location)
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.quantity = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
         return rma
 
@@ -107,7 +109,7 @@ class TestRma(TransactionCase):
             limit=1,
         )
         picking_form = Form(
-            recordp=self.env["stock.picking"].with_context(
+            record=self.env["stock.picking"].with_context(
                 default_picking_type_id=picking_type.id
             ),
             view="stock.view_picking_form",
@@ -124,7 +126,7 @@ class TestRma(TransactionCase):
         picking = picking_form.save()
         picking.action_confirm()
         for move in picking.move_ids:
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
         picking.button_validate()
         return picking
 
@@ -157,7 +159,7 @@ class TestRmaCase(TestRma):
             limit=1,
         )
         picking_form = Form(
-            recordp=self.env["stock.picking"].with_context(
+            record=self.env["stock.picking"].with_context(
                 default_picking_type_id=outgoing_picking_type.id
             ),
             view="stock.view_picking_form",
@@ -203,13 +205,13 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.reception_move_id.product_uom_qty, 10)
         self.assertEqual(rma.reception_move_id.product_uom, rma.product_uom)
         self.assertEqual(rma.state, "confirmed")
-        rma.reception_move_id.quantity_done = 9
+        rma.reception_move_id.quantity = 9
         with self.assertRaises(ValidationError):
             rma.reception_move_id.picking_id._action_done()
-        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.quantity = 10
         rma.reception_move_id.picking_id._action_done()
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
-        self.assertEqual(rma.reception_move_id.quantity_done, 10)
+        self.assertEqual(rma.reception_move_id.quantity, 10)
         self.assertEqual(rma.state, "received")
 
     def test_cancel(self):
@@ -386,8 +388,6 @@ class TestRmaCase(TestRma):
         self.assertTrue(rma.can_be_replaced)
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
-        self.assertEqual(rma.delivered_qty_done, 0)
-        self.assertEqual(rma.remaining_qty_to_done, 10)
         first_move = rma.delivery_move_ids
         picking = first_move.picking_id
         # Replace again with another product with the remaining quantity
@@ -413,18 +413,13 @@ class TestRmaCase(TestRma):
         self.assertTrue(picking.state, "waiting")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
-        self.assertEqual(rma.delivered_qty_done, 0)
-        self.assertEqual(rma.remaining_qty_to_done, 10)
         # remaining_qty is 0 but rma is not set to 'replaced' until
-        # remaining_qty_to_done is less than or equal to 0
-        first_move.quantity_done = 2
-        second_move.quantity_done = 8
+        first_move.quantity = 2
+        second_move.quantity = 8
         picking.button_validate()
         self.assertEqual(picking.state, "done")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
-        self.assertEqual(rma.delivered_qty_done, 10)
-        self.assertEqual(rma.remaining_qty_to_done, 0)
         # The RMA is now in 'replaced' state
         self.assertEqual(rma.state, "replaced")
         self.assertFalse(rma.can_be_refunded)
@@ -457,18 +452,14 @@ class TestRmaCase(TestRma):
         self.assertTrue(rma.can_be_returned)
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
-        self.assertEqual(rma.delivered_qty_done, 0)
-        self.assertEqual(rma.remaining_qty_to_done, 10)
         first_move = rma.delivery_move_ids
         picking = first_move.picking_id
         # Validate the picking
-        first_move.quantity_done = 2
+        first_move.quantity = 2
         picking.button_validate()
         self.assertEqual(picking.state, "done")
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
-        self.assertEqual(rma.delivered_qty_done, 2)
-        self.assertEqual(rma.remaining_qty_to_done, 8)
         # Return the remaining quantity to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -479,21 +470,16 @@ class TestRmaCase(TestRma):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         second_move = rma.delivery_move_ids - first_move
-        second_move.quantity_done = 8
+        second_move.quantity = 8
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
-        self.assertEqual(rma.delivered_qty_done, 2)
-        self.assertEqual(rma.remaining_qty_to_done, 8)
         self.assertEqual(rma.state, "waiting_return")
         # remaining_qty is 0 but rma is not set to 'returned' until
-        # remaining_qty_to_done is less than or equal to 0
         picking_2 = second_move.picking_id
         picking_2.button_validate()
         self.assertEqual(picking_2.state, "done")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
-        self.assertEqual(rma.delivered_qty_done, 10)
-        self.assertEqual(rma.remaining_qty_to_done, 0)
         # The RMA is now in 'returned' state
         self.assertEqual(rma.state, "returned")
         self.assertFalse(rma.can_be_refunded)
@@ -579,7 +565,7 @@ class TestRmaCase(TestRma):
             self.assertEqual(rma.product_id, rma.delivery_move_ids.product_id)
             self.assertEqual(rma.product_uom_qty, rma.delivery_move_ids.product_uom_qty)
             self.assertEqual(rma.product_uom, rma.delivery_move_ids.product_uom)
-            rma.delivery_move_ids.quantity_done = rma.product_uom_qty
+            rma.delivery_move_ids.quantity = rma.product_uom_qty
         pick_1.button_validate()
         pick_2.button_validate()
         self.assertEqual(all_rmas.mapped("state"), ["returned"] * 4)
@@ -643,8 +629,8 @@ class TestRmaCase(TestRma):
         self.assertTrue(reception_moves[1].rma_receiver_ids)
         self.assertEqual(reception_moves.mapped("rma_receiver_ids"), rmas)
         # Validate the reception picking to set rmas to 'received' state
-        reception_moves[0].quantity_done = reception_moves[0].product_uom_qty
-        reception_moves[1].quantity_done = reception_moves[1].product_uom_qty
+        reception_moves[0].quantity = reception_moves[0].product_uom_qty
+        reception_moves[1].quantity = reception_moves[1].product_uom_qty
         reception.button_validate()
         self.assertEqual(rmas.mapped("state"), ["received"] * 2)
 
@@ -658,7 +644,7 @@ class TestRmaCase(TestRma):
         )
         rma = rma_form.save()
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.quantity = 10
         rma.reception_move_id.picking_id._action_done()
         # Return quantity 4 of the same product to the customer
         delivery_form = Form(
@@ -670,7 +656,7 @@ class TestRmaCase(TestRma):
         delivery_form.product_uom_qty = 4
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
-        rma.delivery_move_ids.quantity_done = 4
+        rma.delivery_move_ids.quantity = 4
         rma.delivery_move_ids.picking_id.button_validate()
         self.assertEqual(rma.state, "waiting_return")
         # Extract the remaining quantity to another RMA
@@ -690,8 +676,6 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.origin_split_rma_id, rma)
         self.assertEqual(new_rma.delivered_qty, 0)
         self.assertEqual(new_rma.remaining_qty, 6)
-        self.assertEqual(new_rma.delivered_qty_done, 0)
-        self.assertEqual(new_rma.remaining_qty_to_done, 6)
         self.assertEqual(new_rma.state, "received")
         self.assertTrue(new_rma.can_be_refunded)
         self.assertTrue(new_rma.can_be_returned)
@@ -699,8 +683,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.move_id, rma.move_id)
         self.assertEqual(new_rma.reception_move_id, rma.reception_move_id)
         self.assertEqual(new_rma.product_uom_qty + rma.product_uom_qty, 10)
-        self.assertEqual(new_rma.move_id.quantity_done, 10)
-        self.assertEqual(new_rma.reception_move_id.quantity_done, 10)
+        self.assertEqual(new_rma.move_id.quantity, 10)
+        self.assertEqual(new_rma.reception_move_id.quantity, 10)
 
     def test_rma_to_receive_on_delete_invoice(self):
         rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
@@ -763,7 +747,7 @@ class TestRmaCase(TestRma):
         )
         # Now we'll confirm the incoming goods picking and the automatic
         # reception notification should be sent
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.quantity = rma.product_uom_qty
         rma.reception_move_id.picking_id.button_validate()
         mail_receipt = (
             self.env["mail.message"].search([("partner_ids", "in", self.partner.ids)])

@@ -41,8 +41,7 @@
         <field
             name="subject"
         >{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})</field>
-        <field name="report_template" ref="report_rma_action" />
-        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="report_template_ids" eval="[(4, ref('rma.report_rma_action'))]" />
         <field name="lang">{{object.partner_id.lang}}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
@@ -78,8 +77,7 @@
         <field
             name="subject"
         >{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products received</field>
-        <field name="report_template" ref="report_rma_action" />
-        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="report_template_ids" eval="[(4, ref('rma.report_rma_action'))]" />
         <field name="lang">{{object.partner_id.lang}}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">
@@ -114,8 +112,7 @@
         <field
             name="subject"
         >{{object.company_id.name}} Your RMA has been succesfully created (Ref {{object.name or 'n/a' }})</field>
-        <field name="report_template" ref="report_rma_action" />
-        <field name="report_name">{{(object.name or '')}}</field>
+        <field name="report_template_ids" eval="[(4, ref('rma.report_rma_action'))]" />
         <field name="lang">{{object.partner_id.lang}}</field>
         <field name="auto_delete" eval="True" />
         <field name="body_html" type="html">

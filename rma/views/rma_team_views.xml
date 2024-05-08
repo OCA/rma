@@ -10,7 +10,7 @@
                 <field name="name" />
                 <field name="user_id" />
                 <field name="company_id" groups="base.group_multi_company" />
-                <field name="company_id" invisible="1" />
+                <field name="company_id" column_invisible="1" />
             </tree>
         </field>
     </record>
@@ -81,11 +81,7 @@
                                 </kanban>
                             </field>
                         </page>
-                        <page
-                            name="emails"
-                            string="Email"
-                            attrs="{'invisible': [('alias_domain', '=', False)]}"
-                        >
+                        <page name="emails" string="Email" invisible="not alias_domain">
                             <group name="group_alias">
                                 <label for="alias_name" string="Email Alias" />
                                 <div name="alias_def">

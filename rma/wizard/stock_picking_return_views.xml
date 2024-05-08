@@ -12,7 +12,7 @@
                 <group name="group_rma">
                     <field
                         name="create_rma"
-                        attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"
+                        invisible="picking_type_code != 'outgoing'"
                     />
                     <field name="rma_location_ids" invisible="1" />
                     <field name="picking_id" invisible="1" />

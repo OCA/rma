@@ -35,60 +35,37 @@ class Rma(models.Model):
     sent = fields.Boolean()
     name = fields.Char(
         index=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         copy=False,
         default=lambda self: _("New"),
     )
     origin = fields.Char(
         string="Source Document",
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
         help="Reference of the document that generated this RMA.",
     )
     date = fields.Datetime(
         default=fields.Datetime.now,
         index=True,
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
-    deadline = fields.Date(
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
-    )
+    deadline = fields.Date()
     user_id = fields.Many2one(
         comodel_name="res.users",
         string="Responsible",
         index=True,
         tracking=True,
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
     )
     team_id = fields.Many2one(
         comodel_name="rma.team",
         string="RMA team",
         index=True,
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
         compute="_compute_team_id",
         store=True,
-        readonly=False,
     )
     tag_ids = fields.Many2many(comodel_name="rma.tag", string="Tags")
     finalization_id = fields.Many2one(
         string="Finalization Reason",
         comodel_name="rma.finalization",
         copy=False,
-        readonly=True,
         domain=(
             "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
         ),
@@ -97,16 +74,10 @@ class Rma(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company,
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
     )
     partner_id = fields.Many2one(
         string="Customer",
         comodel_name="res.partner",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         index=True,
         tracking=True,
     )
@@ -143,8 +114,6 @@ class Rma(models.Model):
             "    ('partner_id', 'child_of', commercial_partner_id),"
             "]"
         ),
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     move_id = fields.Many2one(
         comodel_name="stock.move",
@@ -187,18 +156,10 @@ class Rma(models.Model):
     procurement_group_id = fields.Many2one(
         comodel_name="procurement.group",
         string="Procurement group",
-        readonly=True,
-        states={
-            "draft": [("readonly", False)],
-            "confirmed": [("readonly", False)],
-            "received": [("readonly", False)],
-        },
     )
     priority = fields.Selection(
         selection=PROCUREMENT_PRIORITIES,
         default="1",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     operation_id = fields.Many2one(
         comodel_name="rma.operation",
@@ -222,12 +183,7 @@ class Rma(models.Model):
         copy=False,
         tracking=True,
     )
-    description = fields.Html(
-        states={
-            "locked": [("readonly", True)],
-            "cancelled": [("readonly", True)],
-        },
-    )
+    description = fields.Html()
     # Reception fields
     location_id = fields.Many2one(
         comodel_name="stock.location",
@@ -249,12 +205,10 @@ class Rma(models.Model):
     # Refund fields
     refund_id = fields.Many2one(
         comodel_name="account.move",
-        readonly=True,
         copy=False,
     )
     refund_line_id = fields.Many2one(
         comodel_name="account.move.line",
-        readonly=True,
         copy=False,
     )
     can_be_refunded = fields.Boolean(compute="_compute_can_be_refunded")
@@ -263,7 +217,6 @@ class Rma(models.Model):
         comodel_name="stock.move",
         inverse_name="rma_id",
         string="Delivery reservation",
-        readonly=True,
         copy=False,
     )
     delivery_picking_count = fields.Integer(
@@ -274,11 +227,6 @@ class Rma(models.Model):
         digits="Product Unit of Measure",
         compute="_compute_delivered_qty",
         store=True,
-    )
-    delivered_qty_done = fields.Float(
-        digits="Product Unit of Measure",
-        compute="_compute_delivered_qty",
-        compute_sudo=True,
     )
     can_be_returned = fields.Boolean(
         compute="_compute_can_be_returned",
@@ -297,11 +245,6 @@ class Rma(models.Model):
         digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
     )
-    remaining_qty_to_done = fields.Float(
-        string="Remaining delivered qty to done",
-        digits="Product Unit of Measure",
-        compute="_compute_remaining_qty",
-    )
     uom_category_id = fields.Many2one(
         related="product_id.uom_id.category_id", string="Category UoM"
     )
@@ -312,7 +255,6 @@ class Rma(models.Model):
     origin_split_rma_id = fields.Many2one(
         comodel_name="rma",
         string="Extracted from",
-        readonly=True,
         copy=False,
     )
 
@@ -335,8 +277,7 @@ class Rma(models.Model):
         "delivery_move_ids.state",
         "delivery_move_ids.scrapped",
         "delivery_move_ids.product_uom_qty",
-        "delivery_move_ids.reserved_availability",
-        "delivery_move_ids.quantity_done",
+        "delivery_move_ids.quantity",
         "delivery_move_ids.product_uom",
         "product_uom",
     )
@@ -355,29 +296,21 @@ class Rma(models.Model):
         """
         for record in self:
             delivered_qty = 0.0
-            delivered_qty_done = 0.0
             for move in record.delivery_move_ids.filtered(
                 lambda r: r.state != "cancel" and not r.scrapped
             ):
-                if move.quantity_done:
-                    quantity_done = move.product_uom._compute_quantity(
-                        move.quantity_done, record.product_uom
+                if move.quantity:
+                    quantity = move.product_uom._compute_quantity(
+                        move.quantity, record.product_uom
                     )
-                    if move.state == "done":
-                        delivered_qty_done += quantity_done
-                    delivered_qty += quantity_done
-                elif move.reserved_availability:
-                    delivered_qty += move.product_uom._compute_quantity(
-                        move.reserved_availability, record.product_uom
-                    )
+                    delivered_qty += quantity
                 elif move.product_uom_qty:
                     delivered_qty += move.product_uom._compute_quantity(
                         move.product_uom_qty, record.product_uom
                     )
             record.delivered_qty = delivered_qty
-            record.delivered_qty_done = delivered_qty_done
 
-    @api.depends("product_uom_qty", "delivered_qty", "delivered_qty_done")
+    @api.depends("product_uom_qty", "delivered_qty")
     def _compute_remaining_qty(self):
         """Compute 'remaining_qty' and 'remaining_qty_to_done' fields.
 
@@ -392,7 +325,6 @@ class Rma(models.Model):
         """
         for r in self:
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
-            r.remaining_qty_to_done = r.product_uom_qty - r.delivered_qty_done
 
     @api.depends(
         "state",
@@ -443,7 +375,7 @@ class Rma(models.Model):
                 and rma.remaining_qty > 0
             )
 
-    @api.depends("product_uom_qty", "state", "remaining_qty", "remaining_qty_to_done")
+    @api.depends("product_uom_qty", "state", "remaining_qty")
     def _compute_can_be_split(self):
         """Compute 'can_be_split'. This field controls the
         visibility of 'Split' button in the rma form view and
@@ -460,10 +392,10 @@ class Rma(models.Model):
             else:
                 r.can_be_split = False
 
-    @api.depends("remaining_qty_to_done", "state")
+    @api.depends("state")
     def _compute_can_be_locked(self):
         for r in self:
-            r.can_be_locked = r.remaining_qty_to_done > 0 and r.state in [
+            r.can_be_locked = r.remaining_qty > 0 and r.state in [
                 "received",
                 "waiting_return",
                 "waiting_replacement",
@@ -612,34 +544,41 @@ class Rma(models.Model):
     def _send_draft_email(self):
         """Send customer notifications they place the RMA from the portal"""
         for rma in self.filtered("company_id.send_rma_draft_confirmation"):
-            rma_template_id = rma.company_id.rma_mail_draft_confirmation_template_id.id
             rma.with_context(
                 force_send=True,
                 mark_rma_as_sent=True,
-                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
-            ).message_post_with_template(rma_template_id)
+            ).message_post_with_source(
+                rma.company_id.rma_mail_draft_confirmation_template_id.get_external_id()[
+                    rma.company_id.rma_mail_draft_confirmation_template_id.id
+                ],
+                subtype_xmlid="rma.mt_rma_notification",
+            )
 
     def _send_confirmation_email(self):
         """Auto send notifications"""
         for rma in self.filtered(lambda p: p.company_id.send_rma_confirmation):
-            rma_template_id = rma.company_id.rma_mail_confirmation_template_id.id
             rma.with_context(
                 force_send=True,
                 mark_rma_as_sent=True,
-                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
-            ).message_post_with_template(rma_template_id)
+            ).message_post_with_source(
+                rma.company_id.rma_mail_confirmation_template_id.get_external_id()[
+                    rma.company_id.rma_mail_confirmation_template_id.id
+                ],
+                subtype_xmlid="rma.mt_rma_notification",
+            )
 
     def _send_receipt_confirmation_email(self):
         """Send customer notifications when the products are received"""
         for rma in self.filtered("company_id.send_rma_receipt_confirmation"):
-            rma_template_id = (
-                rma.company_id.rma_mail_receipt_confirmation_template_id.id
-            )
             rma.with_context(
                 force_send=True,
                 mark_rma_as_sent=True,
-                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
-            ).message_post_with_template(rma_template_id)
+            ).message_post_with_source(
+                rma.company_id.rma_mail_receipt_confirmation_template_id.get_external_id()[
+                    rma.company_id.rma_mail_receipt_confirmation_template_id.id
+                ],
+                subtype_xmlid="rma.mt_rma_notification",
+            )
 
     # Action methods
     def action_rma_send(self):
@@ -682,6 +621,7 @@ class Rma(models.Model):
                 reception_move = self._create_receptions_from_picking()
             else:
                 reception_move = self._create_receptions_from_product()
+            reception_move.picked = True
             self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
             self._add_message_subscribe_partner()
             self._send_confirmation_email()
@@ -703,10 +643,10 @@ class Rma(models.Model):
                     (0, 0, rma._prepare_refund_line_vals())
                 )
             refund = self.env["account.move"].sudo().create(refund_vals)
-            refund.with_user(self.env.uid).message_post_with_view(
+            refund.with_user(self.env.uid).message_post_with_source(
                 "mail.message_origin_link",
-                values={"self": refund, "origin": rmas},
-                subtype_id=self.env.ref("mail.mt_note").id,
+                render_values={"self": refund, "origin": rmas},
+                subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
             )
             for line in refund.invoice_line_ids:
                 line.rma_id.write(
@@ -1027,10 +967,10 @@ class Rma(models.Model):
         picking = self.env["stock.picking"].create(self._prepare_picking_vals())
         picking.action_confirm()
         picking.action_assign()
-        picking.message_post_with_view(
+        picking.message_post_with_source(
             "mail.message_origin_link",
-            values={"self": picking, "origin": self},
-            subtype_id=self.env.ref("mail.mt_note").id,
+            render_values={"self": picking, "origin": self},
+            subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
         )
         return picking.move_ids
 
@@ -1068,7 +1008,7 @@ class Rma(models.Model):
         self._ensure_can_be_split()
         self._ensure_qty_to_extract(qty, uom)
         self.product_uom_qty -= uom._compute_quantity(qty, self.product_uom)
-        if self.remaining_qty_to_done <= 0:
+        if self.remaining_qty <= 0:
             if self.state == "waiting_return":
                 self.state = "returned"
             elif self.state == "waiting_replacement":
@@ -1083,10 +1023,10 @@ class Rma(models.Model):
                 "origin_split_rma_id": self.id,
             }
         )
-        extracted_rma.message_post_with_view(
+        extracted_rma.message_post_with_source(
             "mail.message_origin_link",
-            values={"self": extracted_rma, "origin": self},
-            subtype_id=self.env.ref("mail.mt_note").id,
+            render_values={"self": extracted_rma, "origin": self},
+            subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
         )
         self.message_post(
             body=_(
@@ -1175,10 +1115,10 @@ class Rma(models.Model):
                 )
             picking.action_confirm()
             picking.action_assign()
-            picking.message_post_with_view(
+            picking.message_post_with_source(
                 "mail.message_origin_link",
-                values={"self": picking, "origin": rmas},
-                subtype_id=self.env.ref("mail.mt_note").id,
+                render_values={"self": picking, "origin": rmas},
+                subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
             )
         rmas_to_return.write({"state": "waiting_return"})
 
@@ -1234,7 +1174,7 @@ class Rma(models.Model):
                 % (
                     {
                         "move_id": new_move.id,
-                        "move_name": new_move.name_get()[0][1],
+                        "move_name": new_move.display_name,
                         "picking_id": new_move.picking_id.id,
                         "picking_name": new_move.picking_id.name,
                     }
@@ -1427,10 +1367,7 @@ class Rma(models.Model):
         [stock.move]._action_cancel
         """
         rma = self.filtered(
-            lambda r: (
-                r.state == "waiting_replacement"
-                and 0 >= r.remaining_qty_to_done == r.remaining_qty
-            )
+            lambda r: (r.state == "waiting_replacement" and 0 >= r.remaining_qty)
         )
         if rma:
             rma.write({"state": "replaced"})
@@ -1438,7 +1375,7 @@ class Rma(models.Model):
     def update_returned_state(self):
         """Invoked by [stock.move]._action_done"""
         rma = self.filtered(
-            lambda r: (r.state == "waiting_return" and r.remaining_qty_to_done <= 0)
+            lambda r: (r.state == "waiting_return" and r.remaining_qty <= 0)
         )
         if rma:
             rma.write({"state": "returned"})

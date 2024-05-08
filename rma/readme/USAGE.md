@@ -14,7 +14,7 @@ To use this module, you need to:
     quantity to another RMA, preview the RMA in the website. All of
     these operations can be done by clicking on the buttons in the
     status bar.
-    - If you click on 'Refund' button, a refund will be created, and it
+    - If you click on 'To Refund' button, a refund will be created, and it
       will be accessible via the smart button labeled Refund. The RMA
       will be set automatically to 'Refunded' state when the refund is
       validated.
