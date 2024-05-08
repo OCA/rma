@@ -1,12 +1,8 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import SUPERUSER_ID, api
 
-
-def post_init_hook(cr, registry):
-    env = api.Environment(cr, SUPERUSER_ID, {})
-
+def post_init_hook(env):
     def _get_next_picking_type_color():
         """Choose the next available color for the operation types."""
         stock_picking_type = env["stock.picking.type"]
