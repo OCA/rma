@@ -1029,6 +1029,7 @@ class Rma(models.Model):
         """
         self.ensure_one()
         invoice_form.partner_id = self.partner_invoice_id
+        invoice_form.invoice_date = fields.Date.context_today(self)
         # Avoid set partner default value
         invoice_form.invoice_payment_term_id = self.env["account.payment.term"]
 

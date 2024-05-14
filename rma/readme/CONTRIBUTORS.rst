@@ -6,3 +6,6 @@
 
 * Chafique Delli <chafique.delli@akretion.com>
 * Giovanni Serra - Ooops <giovanni@ooops404.com>
+* `Nuobit <https://www.nuobit.com>`_:
+
+  * Frank Cespedes <fcespedes@nuobit.com>
