@@ -35,8 +35,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/"
-">%(body)s"
+"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/>"
+"%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -178,8 +178,8 @@ msgstr ""
 "                    </strong>\n"
 "                    on\n"
 "                    <t t-out=\"object.company_id.name\"></t>\n"
-"                    . Il nostro team la controllerà e validerà quanto prima."
-"\n"
+"                    . Il nostro team la controllerà e validerà quanto "
+"prima.\n"
 "                    <br>\n"
 "                    <br>\n"
 "                    Non esistate a contattarci in caso di dubbi.\n"
@@ -242,8 +242,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Annullata\n"
 "                                        </span>"
 
@@ -270,8 +270,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparazione\n"
 "                                        </span>"
 
@@ -298,8 +298,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Spedita\n"
 "                                        </span>"
 
@@ -326,8 +326,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Parzialmente disponibile\n"
 "                                        </span>"
 
@@ -343,15 +343,6 @@ msgstr ""
 "                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                    Parzialmente disponibile\n"
 "                                </span>"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
-"specifici per azienda.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -540,14 +531,34 @@ msgid "Alias Contact Security"
 msgstr "Alias contatto sicurezza"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_domain_id
+msgid "Alias Domain"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_domain
+msgid "Alias Domain Name"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_full_name
+msgid "Alias Email"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_name
 msgid "Alias Name"
 msgstr "Nome alias"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma_team__alias_domain
-msgid "Alias domain"
-msgstr "Dominio alias"
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_status
+msgid "Alias Status"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_status
+msgid "Alias status assessed on the last message received."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_model_id
@@ -805,11 +816,6 @@ msgid "Delivered Qty"
 msgstr "Q.tà consegnata"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
-msgid "Delivered Qty Done"
-msgstr "Quantità consegnata fatta"
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Delivery"
 msgstr "Consegna"
@@ -860,6 +866,7 @@ msgid "Email"
 msgstr "E-mail"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_email
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Email Alias"
 msgstr "Alias email"
@@ -886,6 +893,11 @@ msgstr "Modello di email di notifica della bozza per RMA"
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
 msgid "Email Template receipt confirmation for RMA"
 msgstr "Modello di email di conferma della ricezione per RMA"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_team__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_confirmation_template_id
@@ -1037,7 +1049,9 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
+#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
+#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -1098,18 +1112,6 @@ msgid "Journal Item"
 msgstr "Movimento contabile"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_finalization____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_operation____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_split_wizard____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_tag____last_update
-#: model:ir.model.fields,field_description:rma.field_rma_team____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__write_uid
@@ -1139,6 +1141,11 @@ msgid "Late RMAs"
 msgstr "RMA in ritardo"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_team__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__location_id
 msgid "Location"
 msgstr "Ubicazione"
@@ -1152,12 +1159,6 @@ msgstr "Blocca"
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__locked
 msgid "Locked"
 msgstr "Bloccato"
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_main_attachment_id
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Allegato principale"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
@@ -1310,11 +1311,6 @@ msgid "Other Information"
 msgstr "Altre informazioni"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma_team__alias_user_id
-msgid "Owner"
-msgstr "Proprietario"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_parent_model_id
 msgid "Parent Model"
 msgstr "Modello padre"
@@ -1453,11 +1449,6 @@ msgid "RMA Code"
 msgstr "Codice RMA"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Confirmation Email"
-msgstr "Email di Conferma RMA"
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "RMA Date"
 msgstr "Data RMA"
@@ -1517,11 +1508,6 @@ msgid "RMA Location"
 msgstr "Ubicazione RMA"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Manual Finalization"
-msgstr "Chiusura manuale RMA"
-
-#. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 #: model:mail.template,name:rma.mail_template_rma_notification
@@ -1544,11 +1530,6 @@ msgstr "Ordini RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
 msgstr "Tipo RMA in uscita"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Receipt Confirmation Email"
-msgstr "E-mail di conferma ricevuta RMA"
 
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_receipt_notification
@@ -1609,11 +1590,6 @@ msgstr "Notifiche automatiche ai clienti RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Conteggio RMA"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA draft notification Email"
-msgstr "E-mail di notifica bozza RMA"
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
@@ -1730,11 +1706,6 @@ msgid "Remaining delivered qty"
 msgstr "Quantità da consegnare rimanenti"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
-msgid "Remaining delivered qty to done"
-msgstr "Quantità consegnata rimanente da fare"
-
-#. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
 msgstr "Riparazione"
@@ -1839,8 +1810,8 @@ msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
 "%(name)s</a> has been created."
 msgstr ""
-"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\""
-">%(name)s</a> creato."
+"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> creato."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -1861,6 +1832,12 @@ msgstr "Conteggio Rma"
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
 msgid "Rma Location"
 msgstr "Ubicazione RMA"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
+#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Errore consegna SMS"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1984,8 +1961,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\""
-">%(name)s</a> creata."
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> creata."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2084,20 +2061,6 @@ msgid ""
 msgstr ""
 "Il nome dell'alias email, ad es. 'lavori' se vuoi ricevere email per "
 "<lavori@example.odoo.com>"
-
-#. module: rma
-#: model:ir.model.fields,help:rma.field_rma_team__alias_user_id
-msgid ""
-"The owner of records created upon receiving emails on this alias. If this "
-"field is not set the system will attempt to find the right owner based on "
-"the sender (From) address, or will use the Administrator account if no "
-"system user is found for that address."
-msgstr ""
-"Il proprietario dei record creati dopo aver ricevuto email con questo alias. "
-"Se questo campo non è impostato il sistema tenterà di trovare il "
-"proprietario corretto in base all'indirizzo del mittente (Da) oppure "
-"utilizzerà l'account amministratore se non viene trovato alcun utente di "
-"sistema per quell'indirizzo."
 
 #. module: rma
 #. odoo-python
@@ -2228,6 +2191,11 @@ msgid "User: Own Documents Only"
 msgstr "Utente: solo i propri documenti"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
 msgid "Waiting for replacement"
 msgstr "In attesa di sostituzione"
@@ -2279,11 +2247,9 @@ msgstr "Quando l'RMA è confermato, inviare un'e-mail informativa automatica."
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid ""
-"When the RMA is receive, allow to finsish it manually choosing\n"
-"                            a finalization reason."
+"When the RMA is receive, allow to finsish it manually choosing a "
+"finalization reason."
 msgstr ""
-"Quando si riceve l'RMA, permetti di chiuderlo manualmente scegliendo\n"
-"                            un motivo per la chiusura."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2348,13 +2314,6 @@ msgid ""
 msgstr "l'utente avrà accesso alla configurazione RMA e ai report statistici."
 
 #. module: rma
-#: model:mail.template,report_name:rma.mail_template_rma_draft_notification
-#: model:mail.template,report_name:rma.mail_template_rma_notification
-#: model:mail.template,report_name:rma.mail_template_rma_receipt_notification
-msgid "{{(object.name or '')}}"
-msgstr "{{(object.name or '')}}"
-
-#. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_notification
 msgid "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }})"
 msgstr "{{object.company_id.name}} RMA (rif. {{object.name or 'n/a' }})"
@@ -2374,8 +2333,67 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. {{"
-"object.name or 'n/a' }})"
+"{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. "
+"{{object.name or 'n/a' }})"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui "
+#~ "sono specifici per azienda.\" groups=\"base.group_multi_company\"/>"
+
+#~ msgid "Alias domain"
+#~ msgstr "Dominio alias"
+
+#~ msgid "Delivered Qty Done"
+#~ msgstr "Quantità consegnata fatta"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Allegato principale"
+
+#~ msgid "Owner"
+#~ msgstr "Proprietario"
+
+#~ msgid "RMA Confirmation Email"
+#~ msgstr "Email di Conferma RMA"
+
+#~ msgid "RMA Manual Finalization"
+#~ msgstr "Chiusura manuale RMA"
+
+#~ msgid "RMA Receipt Confirmation Email"
+#~ msgstr "E-mail di conferma ricevuta RMA"
+
+#~ msgid "RMA draft notification Email"
+#~ msgstr "E-mail di notifica bozza RMA"
+
+#~ msgid "Remaining delivered qty to done"
+#~ msgstr "Quantità consegnata rimanente da fare"
+
+#~ msgid ""
+#~ "The owner of records created upon receiving emails on this alias. If this "
+#~ "field is not set the system will attempt to find the right owner based on "
+#~ "the sender (From) address, or will use the Administrator account if no "
+#~ "system user is found for that address."
+#~ msgstr ""
+#~ "Il proprietario dei record creati dopo aver ricevuto email con questo "
+#~ "alias. Se questo campo non è impostato il sistema tenterà di trovare il "
+#~ "proprietario corretto in base all'indirizzo del mittente (Da) oppure "
+#~ "utilizzerà l'account amministratore se non viene trovato alcun utente di "
+#~ "sistema per quell'indirizzo."
+
+#~ msgid ""
+#~ "When the RMA is receive, allow to finsish it manually choosing\n"
+#~ "                            a finalization reason."
+#~ msgstr ""
+#~ "Quando si riceve l'RMA, permetti di chiuderlo manualmente scegliendo\n"
+#~ "                            un motivo per la chiusura."
+
+#~ msgid "{{(object.name or '')}}"
+#~ msgstr "{{(object.name or '')}}"
 
 #~ msgid "${(object.name or '')}"
 #~ msgstr "${(object.name or '')}"
@@ -2583,9 +2601,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
 #~ "a> è stato creato."
-
-#~ msgid "SMS Delivery error"
-#~ msgstr "Errore consegna SMS"
 
 #, python-format
 #~ msgid ""
