@@ -108,9 +108,9 @@
                     </div>
                     <div t-if="doc.product_id" class="col-auto mw-100 mb-2">
                         <strong>Quantity:</strong>
-                        <p class="m-0" t-field="doc.product_uom_qty">
+                        <p class="m-0">
                             <span t-field="doc.product_uom_qty" />
-                            <span t-field="doc.uom_id" groups="uom.group_uom" />
+                            <span t-field="doc.product_uom" groups="uom.group_uom" />
                         </p>
                     </div>
                     <div t-if="doc.delivered_qty" class="col-auto mw-100 mb-2">
