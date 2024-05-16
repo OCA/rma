@@ -58,7 +58,7 @@
                                 <t t-if="kit_rma.product_id">
                                     <span t-field="kit_rma.product_uom_qty" />
                                     <span
-                                        t-field="kit_rma.uom_id"
+                                        t-field="kit_rma.product_uom"
                                         groups="uom.group_uom"
                                     />
                                 </t>
