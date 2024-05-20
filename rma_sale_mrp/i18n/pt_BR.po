@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-03-15 08:45+0000\n"
-"Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>\n"
+"PO-Revision-Date: 2024-05-20 16:34+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
@@ -171,7 +172,7 @@ msgstr "ID"
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Entrada Diária"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_my_rmas
@@ -286,7 +287,7 @@ msgstr "Assistente do Pedido de Venda RMA"
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Ordem de Vendas"
 
 #. module: rma_sale_mrp
 #: model:ir.model,name:rma_sale_mrp.model_sale_order_line
@@ -300,6 +301,8 @@ msgid ""
 "The kit corresponding to the product %s can't be put in the RMA. Either all "
 "or some of the components where already put in another RMA"
 msgstr ""
+"O kit correspondente ao produto %s não pode ser colocado na RMA. Todos ou "
+"alguns dos componentes já foram colocados em outro RMA"
 
 #. module: rma_sale_mrp
 #: code:addons/rma_sale_mrp/models/rma.py:0
@@ -308,6 +311,9 @@ msgid ""
 "To avoid kit quantities inconsistencies it is not possible to convert to "
 "draft a cancelled RMA. You should do a new one from the sales order."
 msgstr ""
+"Para evitar inconsistências nas quantidades dos kits, não é possível "
+"converter em rascunho um RMA cancelado. Você deve fazer um novo a partir do "
+"pedido de venda."
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
