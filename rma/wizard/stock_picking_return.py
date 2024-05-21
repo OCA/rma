@@ -76,12 +76,14 @@ class ReturnPicking(models.TransientModel):
     def _prepare_rma_values(self):
         partner, partner_invoice, partner_shipping = self._prepare_rma_partner_values()
         origin = self.picking_id.name
-        group = self.env["rma"]._create_procurement_group(
+        group_vals = self.env["rma"]._prepare_procurement_group_values()
+        group_vals.update(
             {
                 "partner_id": partner_shipping.id,
                 "name": origin,
             }
         )
+        group = self.env["procurement.group"].create(group_vals)
         return {
             "user_id": self.env.user.id,
             "partner_id": partner.id,
