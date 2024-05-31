@@ -9,3 +9,5 @@
 - Cyril Gaudin \<<cyril.gaudin@camptocamp.com>\>
 - Bima Jati Wijaya \<<bimajatiwijaya@gmail.com>\>
 - Serpent Consulting Services Pvt. Ltd. \<<support@serpentcs.com>\>
+- [APSL-Nagarro](https://www.apsl.tech):
+  - Antoni Marroig \<<amarroig@apsl.net>\>
