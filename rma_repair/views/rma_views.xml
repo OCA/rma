@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 APSL-Nagarro Antoni Marroig
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_view_form" model="ir.ui.view">
+        <field name="name">rma.view.form</field>
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm']" position="before">
+                <button
+                    type="object"
+                    string="Create Repair Order"
+                    name="action_create_repair_order"
+                    invisible="state != 'received' or repair_id"
+                    class="oe_highlight"
+                    data-hotkey="q"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_view_receipt']" position="before">
+                <field name="repair_id" readonly="1" invisible="1" />
+                <button
+                    class="oe_stat_button"
+                    name="action_view_rma_repair_order"
+                    type="object"
+                    icon="fa-wrench"
+                    invisible="not repair_id"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Repair order</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
