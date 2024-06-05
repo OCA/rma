@@ -111,11 +111,6 @@ msgid "Is this supplier still active, only for information."
 msgstr "Ce fournisseur est-il toujours actif, à titre d'information."
 
 #. module: product_warranty
-#: model:ir.model.fields,field_description:product_warranty.field_return_instruction____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: product_warranty
 #: model:ir.model.fields,field_description:product_warranty.field_return_instruction__write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
@@ -264,3 +259,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:product_warranty.selection__product_template__warranty_type__year
 msgid "Year(s)"
 msgstr "Année(s)"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
