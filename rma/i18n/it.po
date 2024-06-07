@@ -35,8 +35,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/"
-">%(body)s"
+"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/>"
+"%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -178,8 +178,8 @@ msgstr ""
 "                    </strong>\n"
 "                    on\n"
 "                    <t t-out=\"object.company_id.name\"></t>\n"
-"                    . Il nostro team la controllerà e validerà quanto prima."
-"\n"
+"                    . Il nostro team la controllerà e validerà quanto "
+"prima.\n"
 "                    <br>\n"
 "                    <br>\n"
 "                    Non esistate a contattarci in caso di dubbi.\n"
@@ -242,8 +242,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-danger label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-times\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-times\"/"
+">\n"
 "                                            Annullata\n"
 "                                        </span>"
 
@@ -270,8 +270,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-info label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Preparazione\n"
 "                                        </span>"
 
@@ -298,8 +298,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-success label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-truck\"/>"
-"\n"
+"                                            <i class=\"fa fa-fw fa-truck\"/"
+">\n"
 "                                            Spedita\n"
 "                                        </span>"
 
@@ -326,8 +326,8 @@ msgid ""
 "                                        </span>"
 msgstr ""
 "<span class=\"badge badge-warning label-text-align\">\n"
-"                                            <i class=\"fa fa-fw fa-clock-o\""
-"/>\n"
+"                                            <i class=\"fa fa-fw fa-clock-o\"/"
+">\n"
 "                                            Parzialmente disponibile\n"
 "                                        </span>"
 
@@ -1616,9 +1616,19 @@ msgid "RMA draft notification Email"
 msgstr "E-mail di notifica bozza RMA"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
+msgid "RMA in Route"
+msgstr ""
+
+#. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
 msgstr "RMA in stato bozza"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
+msgid "RMA out Route"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1825,6 +1835,11 @@ msgid "Return Picking"
 msgstr "Prelievo di reso"
 
 #. module: rma
+#: model:ir.model,name:rma.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
 #: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1839,13 +1854,20 @@ msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
 "%(name)s</a> has been created."
 msgstr ""
-"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\""
-">%(name)s</a> creato."
+"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> creato."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
 msgid "Returned"
 msgstr "Restituito"
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/wizard/stock_picking_return.py:0
+#, python-format
+msgid "Returned Picking"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
@@ -1984,8 +2006,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\""
-">%(name)s</a> creata."
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> creata."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2374,8 +2396,8 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. {{"
-"object.name or 'n/a' }})"
+"{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. "
+"{{object.name or 'n/a' }})"
 
 #~ msgid "${(object.name or '')}"
 #~ msgstr "${(object.name or '')}"

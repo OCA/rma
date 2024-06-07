@@ -1609,9 +1609,19 @@ msgid "RMA draft notification Email"
 msgstr "Email de notification brouillon RMA"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
+msgid "RMA in Route"
+msgstr ""
+
+#. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
 msgstr "RMA au statut brouillon"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
+msgid "RMA out Route"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1819,6 +1829,11 @@ msgid "Return Picking"
 msgstr "Ordres de retour"
 
 #. module: rma
+#: model:ir.model,name:rma.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
 #: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1833,13 +1848,20 @@ msgid ""
 "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
 "%(name)s</a> has been created."
 msgstr ""
-"Retour : <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\""
-">%(name)s</a> a été créé."
+"Retour : <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> a été créé."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
 msgid "Returned"
 msgstr "Retourné"
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/wizard/stock_picking_return.py:0
+#, python-format
+msgid "Returned Picking"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
@@ -1980,8 +2002,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Division : <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\""
-">%(name)s</a> a été créé."
+"Division : <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
+"%(name)s</a> a été créé."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2259,7 +2281,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "When the RMA is confirmed, send an automatic information email."
-msgstr "Quand la RMA est confirmée, envoyer un email d'information automatique."
+msgstr ""
+"Quand la RMA est confirmée, envoyer un email d'information automatique."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2361,5 +2384,5 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} Votre RMA a été crée avec succès(Ref {{"
-"object.name or 'n/a' }})"
+"{{object.company_id.name}} Votre RMA a été crée avec succès(Ref {{object."
+"name or 'n/a' }})"

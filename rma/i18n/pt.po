@@ -1495,9 +1495,19 @@ msgid "RMA draft notification Email"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
+msgid "RMA in Route"
+msgstr ""
+
+#. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
 msgstr "RMA em estado de rascunho"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
+msgid "RMA out Route"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1696,6 +1706,11 @@ msgid "Return Picking"
 msgstr "Operação de Devolução"
 
 #. module: rma
+#: model:ir.model,name:rma.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
 #: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1715,6 +1730,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
 msgid "Returned"
 msgstr "Devolvido"
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/wizard/stock_picking_return.py:0
+#, python-format
+msgid "Returned Picking"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
