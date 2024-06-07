@@ -1,12 +1,13 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2023 Tecnativa - Pedro M. Baeza
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
-from collections import Counter
+from collections import defaultdict
+from itertools import groupby
 
 from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, ValidationError
-from odoo.tests import Form
 from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
@@ -317,18 +318,8 @@ class Rma(models.Model):
     )
 
     def _compute_delivery_picking_count(self):
-        # It is enough to count the moves to know how many pickings
-        # there are because there will be a unique move linked to the
-        # same picking and the same rma.
-        rma_data = self.env["stock.move"].read_group(
-            [("rma_id", "in", self.ids)],
-            ["rma_id", "picking_id"],
-            ["rma_id", "picking_id"],
-            lazy=False,
-        )
-        mapped_data = Counter(map(lambda r: r["rma_id"][0], rma_data))
-        for record in self:
-            record.delivery_picking_count = mapped_data.get(record.id, 0)
+        for rma in self:
+            rma.delivery_picking_count = len(rma.delivery_move_ids.picking_id)
 
     @api.depends(
         "delivery_move_ids",
@@ -670,21 +661,85 @@ class Rma(models.Model):
         }
 
     def _add_message_subscribe_partner(self):
+        self.ensure_one()
         if self.partner_id and self.partner_id not in self.message_partner_ids:
             self.message_subscribe([self.partner_id.id])
 
+    def _product_is_storable(self, product=None):
+        product = product or self.product_id
+        return product.type in ["product", "consu"]
+
+    def _prepare_procurement_group_vals(self):
+        return {
+            "move_type": "direct",
+            "partner_id": self and self.partner_shipping_id.id or False,
+            "name": self and ", ".join(self.mapped("name")) or False,
+        }
+
+    def _prepare_common_procurement_vals(
+        self, warehouse=None, scheduled_date=None, group=None
+    ):
+        self.ensure_one()
+        group = group or self.procurement_group_id
+        if not group:
+            group = self.env["procurement.group"].create(
+                self._prepare_procurement_group_vals()
+            )
+        return {
+            "company_id": self.company_id,
+            "group_id": group,
+            "date_planned": scheduled_date or fields.Datetime.now(),
+            "warehouse_id": warehouse or self.warehouse_id,
+            "partner_id": group.partner_id.id,
+            "priority": self.priority,
+        }
+
+    def _prepare_reception_procurement_vals(self, group=None):
+        """This method is used only for reception and a specific RMA IN route."""
+        vals = self._prepare_common_procurement_vals(group=group)
+        vals["route_ids"] = self.warehouse_id.rma_in_route_id
+        vals["rma_receiver_ids"] = [(6, 0, self.ids)]
+        if self.move_id:
+            vals["origin_returned_move_id"] = self.move_id.id
+        return vals
+
+    def _prepare_reception_procurements(self):
+        procurements = []
+        group_model = self.env["procurement.group"]
+        for rma in self:
+            if not rma._product_is_storable():
+                continue
+            group = rma.procurement_group_id
+            if not group:
+                group = group_model.create(rma._prepare_procurement_group_vals())
+            procurements.append(
+                group_model.Procurement(
+                    rma.product_id,
+                    rma.product_uom_qty,
+                    rma.product_uom,
+                    rma.location_id,
+                    rma.product_id.display_name,
+                    group.name,
+                    rma.company_id,
+                    rma._prepare_reception_procurement_vals(group),
+                )
+            )
+        return procurements
+
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
-        self.ensure_one()
         self._ensure_required_fields()
-        if self.state == "draft":
-            if self.picking_id:
-                reception_move = self._create_receptions_from_picking()
-            else:
-                reception_move = self._create_receptions_from_product()
-            self.write({"reception_move_id": reception_move.id, "state": "confirmed"})
-            self._add_message_subscribe_partner()
-            self._send_confirmation_email()
+        self = self.filtered(lambda rma: rma.state == "draft")
+        if not self:
+            return
+        procurements = self._prepare_reception_procurements()
+        if procurements:
+            self.env["procurement.group"].run(procurements)
+        self.reception_move_id.picking_id.action_assign()
+        self.write({"state": "confirmed"})
+        for rma in self:
+            rma._add_message_subscribe_partner()
+        self._send_confirmation_email()
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked
@@ -723,11 +778,8 @@ class Rma(models.Model):
         self._ensure_can_be_replaced()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["name"] = "Replace product(s)"
         action["context"] = dict(self.env.context)
@@ -746,11 +798,8 @@ class Rma(models.Model):
         self._ensure_can_be_returned()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("rma.rma_delivery_wizard_action")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma.rma_delivery_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(
@@ -766,11 +815,8 @@ class Rma(models.Model):
         self._ensure_can_be_split()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("rma.rma_split_wizard_action")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma.rma_split_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
@@ -782,11 +828,8 @@ class Rma(models.Model):
         self._ensure_can_be_returned()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("rma.rma_finalization_wizard_action")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma.rma_finalization_wizard_action"
         )
         action["context"] = dict(self.env.context)
         action["context"].update(active_id=self.id, active_ids=self.ids)
@@ -794,7 +837,7 @@ class Rma(models.Model):
 
     def action_cancel(self):
         """Invoked when 'Cancel' button in rma form view is clicked."""
-        self.mapped("reception_move_id")._action_cancel()
+        self.reception_move_id._action_cancel()
         self.write({"state": "cancelled"})
 
     def action_draft(self):
@@ -819,24 +862,27 @@ class Rma(models.Model):
             "url": self.get_portal_url(),
         }
 
-    def action_view_receipt(self):
-        """Invoked when 'Receipt' smart button in rma form view is clicked."""
+    def _action_view_pickings(self, pickings):
         self.ensure_one()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_picking_tree_all"
         )
-        action.update(
-            res_id=self.reception_move_id.picking_id.id,
-            view_mode="form",
-            view_id=False,
-            views=False,
-        )
+        if len(pickings) > 1:
+            action["domain"] = [("id", "in", pickings.ids)]
+        elif pickings:
+            action.update(
+                res_id=pickings.id,
+                view_mode="form",
+                view_id=False,
+                views=False,
+            )
         return action
+
+    def action_view_receipt(self):
+        """Invoked when 'Receipt' smart button in rma form view is clicked."""
+        return self._action_view_pickings(self.mapped("reception_move_id.picking_id"))
 
     def action_view_refund(self):
         """Invoked when 'Refund' smart button in rma form view is clicked."""
@@ -853,23 +899,7 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        action = (
-            self.env.ref("stock.action_picking_tree_all")
-            .sudo()
-            .with_context(active_id=self.id)
-            .read()[0]
-        )
-        picking = self.delivery_move_ids.mapped("picking_id")
-        if len(picking) > 1:
-            action["domain"] = [("id", "in", picking.ids)]
-        elif picking:
-            action.update(
-                res_id=picking.id,
-                view_mode="form",
-                view_id=False,
-                views=False,
-            )
-        return action
+        return self._action_view_pickings(self.mapped("delivery_move_ids.picking_id"))
 
     # Validation business methods
     def _ensure_required_fields(self):
@@ -985,81 +1015,6 @@ class Rma(models.Model):
                 )
             )
 
-    # Reception business methods
-    def _create_receptions_from_picking(self):
-        self.ensure_one()
-        stock_return_picking_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_ids=self.picking_id.ids,
-                active_id=self.picking_id.id,
-                active_model="stock.picking",
-            )
-        )
-        return_wizard = stock_return_picking_form.save()
-        if self.location_id:
-            return_wizard.location_id = self.location_id
-        return_wizard.product_return_moves.filtered(
-            lambda r: r.move_id != self.move_id
-        ).unlink()
-        return_line = return_wizard.product_return_moves
-        return_line.update(
-            {
-                "quantity": self.product_uom_qty,
-                # The to_refund field is now True by default, which isn't right in the
-                # RMA creation context
-                "to_refund": False,
-            }
-        )
-        # set_rma_picking_type is to override the copy() method of stock
-        # picking and change the default picking type to rma picking type.
-        picking_action = return_wizard.with_context(
-            set_rma_picking_type=True
-        ).create_returns()
-        picking_id = picking_action["res_id"]
-        picking = self.env["stock.picking"].browse(picking_id)
-        picking.origin = "{} ({})".format(self.name, picking.origin)
-        move = picking.move_ids
-        move.priority = self.priority
-        return move
-
-    def _create_receptions_from_product(self):
-        self.ensure_one()
-        picking = self.env["stock.picking"].create(self._prepare_picking_vals())
-        picking.action_confirm()
-        picking.action_assign()
-        picking.message_post_with_view(
-            "mail.message_origin_link",
-            values={"self": picking, "origin": self},
-            subtype_id=self.env.ref("mail.mt_note").id,
-        )
-        return picking.move_ids
-
-    def _prepare_picking_vals(self):
-        return {
-            "picking_type_id": self.warehouse_id.rma_in_type_id.id,
-            "origin": self.name,
-            "partner_id": self.partner_shipping_id.id,
-            "location_id": self.partner_shipping_id.property_stock_customer.id,
-            "location_dest_id": self.location_id.id,
-            "move_ids": [
-                (
-                    0,
-                    0,
-                    {
-                        "product_id": self.product_id.id,
-                        # same text as origin move or product text in partner lang
-                        "name": self.move_id.name
-                        or self.product_id.with_context(
-                            lang=self.partner_id.lang or "en_US"
-                        ).display_name,
-                        "location_id": self.partner_shipping_id.property_stock_customer.id,
-                        "location_dest_id": self.location_id.id,
-                        "product_uom_qty": self.product_uom_qty,
-                    },
-                )
-            ],
-        }
-
     # Extract business methods
     def extract_quantity(self, qty, uom):
         self.ensure_one()
@@ -1133,44 +1088,100 @@ class Rma(models.Model):
             "rma_id": self.id,
         }
 
-    # Returning business methods
-    def create_return(self, scheduled_date, qty=None, uom=None):
-        """Intended to be invoked by the delivery wizard"""
+    def _delivery_should_be_grouped(self):
+        """Checks if the rmas should be grouped for the delivery process"""
         group_returns = self.env.company.rma_return_grouping
         if "rma_return_grouping" in self.env.context:
             group_returns = self.env.context.get("rma_return_grouping")
+        return group_returns
+
+    def _delivery_group_key(self):
+        """Returns a key by which the rmas should be grouped for the delivery process"""
+        self.ensure_one()
+        return (self.partner_shipping_id.id, self.company_id.id, self.warehouse_id.id)
+
+    def _group_delivery_if_needed(self):
+        """Groups the given rmas by the returned key from _delivery_group_key
+        by setting the procurement_group_id on the each rma if there is not yet on set"""
+        if not self._delivery_should_be_grouped():
+            return
+        grouped_rmas = groupby(
+            sorted(self, key=lambda rma: rma._delivery_group_key()),
+            key=lambda rma: [rma._delivery_group_key()],
+        )
+        for _group, rmas in grouped_rmas:
+            rmas = (
+                self.browse()
+                .concat(*list(rmas))
+                .filtered(lambda rma: not rma.procurement_group_id)
+            )
+            if not rmas:
+                continue
+            proc_group = self.env["procurement.group"].create(
+                rmas._prepare_procurement_group_vals()
+            )
+            rmas.write({"procurement_group_id": proc_group.id})
+
+    def _prepare_delivery_procurement_vals(self, scheduled_date=None):
+        """This method is used only for Delivery (not replace). It is important to set
+        RMA Out route."""
+        vals = self._prepare_common_procurement_vals(scheduled_date=scheduled_date)
+        vals["rma_id"] = self.id
+        vals["route_ids"] = self.warehouse_id.rma_out_route_id
+        vals["move_orig_ids"] = [(6, 0, self.reception_move_id.ids)]
+        return vals
+
+    def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
+        self._group_delivery_if_needed()
+        procurements = []
+        group_model = self.env["procurement.group"]
+        for rma in self:
+            if not rma.procurement_group_id:
+                rma.procurement_group_id = group_model.create(
+                    rma._prepare_procurement_group_vals()
+                )
+
+            vals = rma._prepare_delivery_procurement_vals(scheduled_date)
+            group = vals.get("group_id")
+            procurements.append(
+                group_model.Procurement(
+                    rma.product_id,
+                    qty or rma.product_uom_qty,
+                    uom or rma.product_uom,
+                    rma.partner_shipping_id.property_stock_customer,
+                    rma.product_id.display_name,
+                    group.name,
+                    rma.company_id,
+                    vals,
+                )
+            )
+        return procurements
+
+    # Returning business methods
+    def create_return(self, scheduled_date, qty=None, uom=None):
+        """Intended to be invoked by the delivery wizard"""
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
-        group_dict = {}
-        rmas_to_return = self.filtered("can_be_returned")
-        for record in rmas_to_return:
-            key = (
-                record.partner_shipping_id.id,
-                record.company_id.id,
-                record.warehouse_id,
+        rmas_to_return = self.filtered(
+            lambda rma: rma.can_be_returned and rma._product_is_storable()
+        )
+        procurements = rmas_to_return._prepare_delivery_procurements(
+            scheduled_date, qty, uom
+        )
+        if procurements:
+            self.env["procurement.group"].run(procurements)
+        pickings = defaultdict(lambda: self.browse())
+        for rma in rmas_to_return:
+            picking = rma.delivery_move_ids.picking_id.sorted("id", reverse=True)[0]
+            pickings[picking] |= rma
+            rma.message_post(
+                body=_(
+                    'Return: <a href="#" data-oe-model="stock.picking" '
+                    'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                )
+                % ({"id": picking.id, "name": picking.name})
             )
-            group_dict.setdefault(key, self.env["rma"])
-            group_dict[key] |= record
-        if group_returns:
-            grouped_rmas = group_dict.values()
-        else:
-            grouped_rmas = rmas_to_return
-        for rmas in grouped_rmas:
-            origin = ", ".join(rmas.mapped("name"))
-            picking_vals = rmas[0]._prepare_returning_picking_vals(origin)
-            for rma in rmas:
-                picking_vals["move_ids"].append(
-                    (0, 0, rma._prepare_returning_move_vals(scheduled_date, qty, uom))
-                )
-            picking = self.env["stock.picking"].create(picking_vals)
-            for rma in rmas:
-                rma.message_post(
-                    body=_(
-                        'Return: <a href="#" data-oe-model="stock.picking" '
-                        'data-oe-id="%(id)d">%(name)s</a> has been created.'
-                    )
-                    % ({"id": picking.id, "name": picking.name})
-                )
+        for picking, rmas in pickings.items():
             picking.action_confirm()
             picking.action_assign()
             picking.message_post_with_view(
@@ -1180,42 +1191,53 @@ class Rma(models.Model):
             )
         rmas_to_return.write({"state": "waiting_return"})
 
-    def _prepare_returning_picking_vals(self, origin=None):
-        self.ensure_one()
-        return {
-            "picking_type_id": self.warehouse_id.rma_out_type_id.id,
-            "location_id": self.location_id.id,
-            "location_dest_id": self.reception_move_id.location_id.id,
-            "origin": origin or self.name,
-            "partner_id": self.partner_shipping_id.id,
-            "company_id": self.company_id.id,
-            "move_ids": [],
-        }
+    def _prepare_replace_procurement_vals(self, warehouse=None, scheduled_date=None):
+        """This method is used only for Replace (not Delivery). We do not use any
+        specific route here."""
+        vals = self._prepare_common_procurement_vals(warehouse, scheduled_date)
+        vals["rma_id"] = self.id
+        return vals
 
-    def _prepare_returning_move_vals(self, scheduled_date, quantity=None, uom=None):
-        self.ensure_one()
-        return {
-            "product_id": self.product_id.id,
-            "name": self.product_id.with_context(
-                lang=self.partner_shipping_id.lang or "en_US"
-            ).display_name,
-            "product_uom_qty": quantity or self.product_uom_qty,
-            "product_uom": uom and uom.id or self.product_uom.id,
-            "location_id": self.location_id.id,
-            "location_dest_id": self.reception_move_id.location_id.id,
-            "date": scheduled_date,
-            "rma_id": self.id,
-            "move_orig_ids": [(4, self.reception_move_id.id)],
-            "company_id": self.company_id.id,
-        }
+    def _prepare_replace_procurements(
+        self, warehouse, scheduled_date, product, qty, uom
+    ):
+        procurements = []
+        group_model = self.env["procurement.group"]
+        for rma in self:
+            if not rma._product_is_storable(product):
+                continue
+
+            if not rma.procurement_group_id:
+                rma.procurement_group_id = group_model.create(
+                    rma._prepare_procurement_group_vals()
+                )
+
+            vals = rma._prepare_replace_procurement_vals(warehouse, scheduled_date)
+            group = vals.get("group_id")
+            procurements.append(
+                group_model.Procurement(
+                    product,
+                    qty,
+                    uom,
+                    rma.partner_shipping_id.property_stock_customer,
+                    product.display_name,
+                    group.name,
+                    rma.company_id,
+                    vals,
+                )
+            )
+        return procurements
 
     # Replacing business methods
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
         """Intended to be invoked by the delivery wizard"""
-        self.ensure_one()
         self._ensure_can_be_replaced()
         moves_before = self.delivery_move_ids
-        self._action_launch_stock_rule(scheduled_date, warehouse, product, qty, uom)
+        procurements = self._prepare_replace_procurements(
+            warehouse, scheduled_date, product, qty, uom
+        )
+        if procurements:
+            self.env["procurement.group"].run(procurements)
         new_moves = self.delivery_move_ids - moves_before
         body = ""
         # The product replacement could explode into several moves like in the case of
@@ -1239,6 +1261,12 @@ class Rma(models.Model):
                 )
                 + "\n"
             )
+        for rma in self:
+            rma._add_replace_message(body, qty, uom)
+        self.write({"state": "waiting_replacement"})
+
+    def _add_replace_message(self, body, qty, uom):
+        self.ensure_one()
         self.message_post(
             body=body
             or _(
@@ -1251,74 +1279,13 @@ class Rma(models.Model):
             )
             % (
                 {
-                    "id": product.id,
-                    "name": product.display_name,
+                    "id": self.id,
+                    "name": self.display_name,
                     "qty": qty,
                     "uom": uom.name,
                 }
             )
         )
-        if self.state != "waiting_replacement":
-            self.state = "waiting_replacement"
-
-    def _action_launch_stock_rule(
-        self,
-        scheduled_date,
-        warehouse,
-        product,
-        qty,
-        uom,
-    ):
-        """Creates a delivery picking and launch stock rule. It is invoked by:
-        rma.create_replace
-        """
-        self.ensure_one()
-        if self.product_id.type not in ("consu", "product"):
-            return
-        if not self.procurement_group_id:
-            self.procurement_group_id = (
-                self.env["procurement.group"]
-                .create(
-                    {
-                        "name": self.name,
-                        "move_type": "direct",
-                        "partner_id": self.partner_shipping_id.id,
-                    }
-                )
-                .id
-            )
-        values = self._prepare_procurement_values(
-            self.procurement_group_id, scheduled_date, warehouse
-        )
-        procurement = self.env["procurement.group"].Procurement(
-            product,
-            qty,
-            uom,
-            self.partner_shipping_id.property_stock_customer,
-            self.product_id.display_name,
-            self.procurement_group_id.name,
-            self.company_id,
-            values,
-        )
-        self.env["procurement.group"].run([procurement])
-        return True
-
-    def _prepare_procurement_values(
-        self,
-        group_id,
-        scheduled_date,
-        warehouse,
-    ):
-        self.ensure_one()
-        return {
-            "company_id": self.company_id,
-            "group_id": group_id,
-            "date_planned": scheduled_date,
-            "warehouse_id": warehouse,
-            "partner_id": self.partner_shipping_id.id,
-            "rma_id": self.id,
-            "priority": self.priority,
-        }
 
     # Mail business methods
     def _creation_subtype(self):
