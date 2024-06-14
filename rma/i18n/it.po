@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-03 12:43+0000\n"
+"PO-Revision-Date: 2024-06-14 17:41+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1618,7 +1618,7 @@ msgstr "E-mail di notifica bozza RMA"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
 msgid "RMA in Route"
-msgstr ""
+msgstr "RMA in rotta"
 
 #. module: rma
 #: model:mail.message.subtype,description:rma.mt_rma_draft
@@ -1628,7 +1628,7 @@ msgstr "RMA in stato bozza"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
 msgid "RMA out Route"
-msgstr ""
+msgstr "RMA fuori rotta"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
@@ -1837,7 +1837,7 @@ msgstr "Prelievo di reso"
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Riga prelievo di reso"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
@@ -1867,7 +1867,7 @@ msgstr "Restituito"
 #: code:addons/rma/wizard/stock_picking_return.py:0
 #, python-format
 msgid "Returned Picking"
-msgstr ""
+msgstr "Prelievo reso"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
