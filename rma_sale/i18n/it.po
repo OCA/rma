@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-31 18:38+0000\n"
+"PO-Revision-Date: 2024-06-14 17:41+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -366,7 +366,7 @@ msgstr "Operazioni richieste"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Prelievo di reso"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
