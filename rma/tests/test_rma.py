@@ -4,6 +4,7 @@
 
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, TransactionCase, new_test_user, users
+from odoo.tools import mute_logger
 
 from .. import hooks
 
@@ -761,6 +762,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.move_id.quantity_done, 10)
         self.assertEqual(new_rma.reception_move_id.quantity_done, 10)
 
+    @mute_logger("odoo.models.unlink")
     def test_rma_to_receive_on_delete_invoice(self):
         rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
         rma.action_refund()
