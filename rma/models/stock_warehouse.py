@@ -123,12 +123,13 @@ class StockWarehouse(models.Model):
 
     def _get_picking_type_update_values(self):
         data = super()._get_picking_type_update_values()
-        data.update(
-            {
-                "rma_in_type_id": {"default_location_dest_id": self.rma_loc_id.id},
-                "rma_out_type_id": {"default_location_src_id": self.rma_loc_id.id},
-            }
-        )
+        picking_types = {
+            "rma_in_type_id": {"default_location_dest_id": self.rma_loc_id.id},
+            "rma_out_type_id": {"default_location_src_id": self.rma_loc_id.id},
+        }
+        if self.env.context.get("rma_post_init_hook"):
+            return picking_types
+        data.update(picking_types)
         return data
 
     def _create_or_update_sequences_and_picking_types(self):
