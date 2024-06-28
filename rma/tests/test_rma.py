@@ -76,7 +76,6 @@ class TestRma(TransactionCase):
             {"name": "[Test] It's out of warranty. To be scrapped"}
         )
         cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
-        cls.env.ref("stock.group_stock_multi_locations").users |= cls.env.user
         cls.warehouse = cls.env.ref("stock.warehouse0")
         # Ensure grouping
         cls.env.company.rma_return_grouping = True
