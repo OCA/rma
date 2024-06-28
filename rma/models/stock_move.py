@@ -4,6 +4,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -60,7 +61,18 @@ class StockMove(models.Model):
         """
         for move in self.filtered(lambda r: r.state not in ("done", "cancel")):
             rma_receiver = move.sudo().rma_receiver_ids
-            if rma_receiver and move.quantity_done != rma_receiver.product_uom_qty:
+            qty_prec = self.env["decimal.precision"].precision_get(
+                "Product Unit of Measure"
+            )
+            if (
+                rma_receiver
+                and float_compare(
+                    move.quantity_done,
+                    rma_receiver.product_uom_qty,
+                    precision_digits=qty_prec,
+                )
+                != 0
+            ):
                 raise ValidationError(
                     _(
                         "The quantity done for the product '%(id)s' must "

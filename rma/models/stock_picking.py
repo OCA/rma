@@ -31,7 +31,7 @@ class StockPicking(models.Model):
     def action_view_rma(self):
         self.ensure_one()
         action = self.env["ir.actions.act_window"]._for_xml_id("rma.rma_action")
-        rma = self.move_lines.mapped("rma_ids")
+        rma = self.move_ids.rma_ids
         if len(rma) == 1:
             action.update(
                 res_id=rma.id,
