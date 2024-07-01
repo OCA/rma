@@ -75,6 +75,9 @@ Known issues / Roadmap
   decimal numbers. It would be good to have a component that allows
   that and at the same time keeps the constraint of not allowing a
   number greater than the order line product quantity.
+* Add RMA reception and/or RMA delivery on several steps - 2 or 3 - like
+  normal receptions/deliveries. It should be a separate option inside the
+  warehouse definition.
 
 Bug Tracker
 ===========
