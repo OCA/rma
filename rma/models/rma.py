@@ -1219,7 +1219,9 @@ class Rma(models.Model):
 
     def _prepare_outgoing_procurement_vals(self, warehouse=None, scheduled_date=None):
         values = self._prepare_common_procurement_vals(warehouse, scheduled_date)
-        values.update({"rma_id": self.id})
+        values.update(
+            {"rma_id": self.id, "route_ids": self.warehouse_id.rma_out_route_id}
+        )
         return values
 
     def _prepare_delivery_procurement_vals(self, scheduled_date=None):

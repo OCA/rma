@@ -555,6 +555,13 @@ class TestRmaCase(TestRma):
         self.assertEqual(len(pick_1), 1)
         self.assertEqual(len(pick_2), 1)
         self.assertNotEqual(pick_1, pick_2)
+        self.assertEqual(pick_1.picking_type_id, self.warehouse.rma_out_type_id)
+        self.assertEqual(pick_1.location_id, self.warehouse.rma_loc_id)
+        self.assertEqual(pick_2.picking_type_id, self.warehouse.rma_out_type_id)
+        self.assertEqual(pick_2.location_id, self.warehouse.rma_loc_id)
+        self.assertEqual(len(pick_1), 1)
+        self.assertEqual(len(pick_2), 1)
+        self.assertNotEqual(pick_1, pick_2)
         self.assertEqual((pick_1 | pick_2).mapped("state"), ["assigned"] * 2)
         # One picking per partner
         self.assertNotEqual(pick_1.partner_id, pick_2.partner_id)
