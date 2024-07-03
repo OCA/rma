@@ -1,8 +1,9 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, SavepointCase, new_test_user, users
+from odoo.tests import Form, SavepointCase, new_test_user, tagged, users
 
 
 class TestRma(SavepointCase):
@@ -141,6 +142,7 @@ class TestRma(SavepointCase):
         return picking
 
 
+@tagged("post_install", "-at_install")
 class TestRmaCase(TestRma):
     def test_onchange(self):
         rma_form = Form(self.env["rma"])

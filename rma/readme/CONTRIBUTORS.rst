@@ -9,3 +9,4 @@
 * `Nuobit <https://www.nuobit.com>`_:
 
   * Frank Cespedes <fcespedes@nuobit.com>
+* Michael Tietz (MT Software) <mtietz@mt-software.de>

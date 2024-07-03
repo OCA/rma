@@ -120,3 +120,13 @@ class Rma(models.Model):
             analytic_account = line.order_id.analytic_account_id
             if analytic_account:
                 line_form.analytic_account_id = analytic_account
+
+    def _prepare_common_procurement_group_vals(self):
+        values = super()._prepare_common_procurement_group_vals()
+        if not self.env.context.get("ignore_rma_sale_order") and self.order_id:
+            values["sale_id"] = self.order_id.id
+        return values
+
+    def _create_delivery_procurement_group(self):
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super()._create_delivery_procurement_group()
