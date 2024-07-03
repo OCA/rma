@@ -163,3 +163,13 @@ class Rma(models.Model):
             ):
                 vals["sale_line_ids"] = [(4, line.id)]
         return vals
+
+    def _prepare_common_procurement_group_vals(self):
+        values = super()._prepare_common_procurement_group_vals()
+        if not self.env.context.get("ignore_rma_sale_order") and self.order_id:
+            values["sale_id"] = self.order_id.id
+        return values
+
+    def _create_delivery_procurement_group(self):
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super()._create_delivery_procurement_group()
