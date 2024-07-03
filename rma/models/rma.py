@@ -779,7 +779,32 @@ class Rma(models.Model):
         procurements = self._prepare_reception_procurements()
         self._run_procurements(procurements)
 
+    def _post_process_create_reception__link_to_origin(self):
+        for return_move in self.reception_move_id:
+            origin_move = return_move.origin_returned_move_id
+            move_orig_to_link = origin_move.move_dest_ids.returned_move_ids
+            move_orig_to_link |= origin_move
+            origin_move_dest = origin_move.move_dest_ids.filtered(
+                lambda m: m.state not in ("cancel")
+            )
+            move_orig_to_link |= origin_move_dest.move_orig_ids.filtered(
+                lambda m: m.state not in ("cancel")
+            )
+            move_dest_to_link = origin_move.move_orig_ids.returned_move_ids
+            move_dest_orig = origin_move.returned_move_ids.move_orig_ids.filtered(
+                lambda m: m.state not in ("cancel")
+            )
+            move_dest_to_link |= move_dest_orig.move_dest_ids.filtered(
+                lambda m: m.state not in ("cancel")
+            )
+            write_vals = {
+                "move_orig_ids": [(4, m.id) for m in move_orig_to_link],
+                "move_dest_ids": [(4, m.id) for m in move_dest_to_link],
+            }
+            return_move.write(write_vals)
+
     def _post_process_create_receptions(self):
+        self._post_process_create_reception__link_to_origin()
         pickings = self.reception_move_id.picking_id
         pickings.action_assign()
 
