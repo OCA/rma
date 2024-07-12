@@ -25,6 +25,7 @@ class CustomerPortal(CustomerPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
         order_obj = request.env["sale.order"]
+        order_line_obj = request.env["sale.order.line"]
         wizard_obj = request.env["sale.order.rma.wizard"].sudo()
         wizard_line_field_types = {
             f: d["type"] for f, d in wizard_obj.line_ids.fields_get().items()
@@ -48,6 +49,9 @@ class CustomerPortal(CustomerPortal):
             # description values
             except ValueError:
                 custom_vals.update({name: value})
+        for vals in mapped_vals.values():
+            sale_line = order_line_obj.browse(vals.get("sale_line_id")).sudo()
+            vals["allowed_quantity"] = sale_line.qty_delivered
         # If no operation is filled, no RMA will be created
         line_vals = [
             (0, 0, vals) for vals in mapped_vals.values() if vals.get("operation_id")
