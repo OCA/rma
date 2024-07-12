@@ -1,10 +1,13 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022-2025 Tecnativa - Víctor Martínez
+# Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from markupsafe import Markup
 
 from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare
 
 
 class SaleOrderRmaWizard(models.TransientModel):
@@ -52,6 +55,7 @@ class SaleOrderRmaWizard(models.TransientModel):
     custom_description = fields.Text(
         help="Values coming from portal RMA request form custom fields",
     )
+    is_return_all = fields.Boolean(string="Return All?", default=True)
 
     def create_rma(self, from_portal=False):
         self.ensure_one()
@@ -132,7 +136,11 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     quantity = fields.Float(
         digits="Product Unit of Measure",
         required=True,
+        compute="_compute_quantity",
+        store=True,
+        readonly=False,
     )
+    allowed_quantity = fields.Float(digits="Product Unit of Measure", readonly=True)
     uom_id = fields.Many2one(
         comodel_name="uom.uom",
         string="Unit of Measure",
@@ -159,6 +167,14 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         comodel_name="sale.order.line",
     )
     description = fields.Text()
+
+    @api.depends("wizard_id.is_return_all", "allowed_quantity")
+    def _compute_quantity(self):
+        for rec in self:
+            if not rec.wizard_id.is_return_all:
+                rec.quantity = 0
+            else:
+                rec.quantity = rec.allowed_quantity
 
     @api.depends("wizard_id.operation_id")
     def _compute_operation_id(self):
@@ -200,6 +216,26 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
                 lambda x: x.state == "done"
             )
+
+    @api.constrains("quantity", "allowed_quantity")
+    def _check_quantity(self):
+        precision = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        for rec in self:
+            if (
+                float_compare(
+                    rec.quantity, rec.allowed_quantity, precision_digits=precision
+                )
+                == 1
+            ):
+                raise ValidationError(
+                    _(
+                        "You can't exceed the allowed quantity for returning product "
+                        "%(product)s.",
+                        product=rec.product_id.display_name,
+                    )
+                )
 
     def _prepare_rma_values(self):
         self.ensure_one()
