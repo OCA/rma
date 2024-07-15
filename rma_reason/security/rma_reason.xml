@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Raumschmiede GmbH
+     Copyright 2024 BCIM
+     Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.model.access" id="rma_reason_access_rma_user">
+        <field name="name">rma.reason access rma user</field>
+        <field name="model_id" ref="model_rma_reason" />
+        <field name="group_id" ref="rma.rma_group_user_own" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record model="ir.model.access" id="rma_reason_access_rma_manager">
+        <field name="name">rma.reason access rma manager</field>
+        <field name="model_id" ref="model_rma_reason" />
+        <field name="group_id" ref="rma.rma_group_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <!-- Multi-Company Rules -->
+    <record id="rma_reason_rule_multi_company" model="ir.rule">
+        <field name="name">RMA reason multi-company</field>
+        <field name="model_id" ref="model_rma_reason" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+    </record>
+</odoo>

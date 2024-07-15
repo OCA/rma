@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Raumschmiede GmbH
+     Copyright 2024 BCIM
+     Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+
+    <record model="rma.reason" id="rma_reason_defective_product">
+        <field name="name">Defective Product</field>
+        <field
+            name="description"
+        >The item is malfunctioning or has a defect that affects its intended use.</field>
+    </record>
+
+    <record model="rma.reason" id="rma_reason_wrong_item_shipped">
+        <field name="name">Wrong Item Shipped</field>
+        <field
+            name="description"
+        >The customer received a different product than what they ordered.</field>
+    </record>
+
+    <record model="rma.reason" id="rma_reason_damaged_in_transit">
+        <field name="name">Damaged in Transit</field>
+        <field
+            name="description"
+        >The product was damaged during shipping and is not in usable condition upon arrival.</field>
+    </record>
+
+    <record model="rma.reason" id="rma_reason_unwanted_changed_mind">
+        <field name="name">Unwanted/Changed Mind</field>
+        <field
+            name="description"
+        >The customer no longer wants the item or changed their mind after purchasing it.</field>
+    </record>
+
+    <record model="rma.reason" id="rma_reason_not_as_described">
+        <field name="name">Product Not as Described</field>
+        <field
+            name="description"
+        >The item does not match the description or specifications provided by the seller, leading to customer dissatisfaction.</field>
+    </record>
+
+</odoo>
