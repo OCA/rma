@@ -4,22 +4,24 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Rma Reason",
+    "name": "Rma Sale Reason",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "Raumschmiede GmbH,BCIM,ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
-    "depends": ["rma"],
+    "depends": ["rma_sale", "rma_reason"],
     "maintainers": ["sbejaoui"],
     "data": [
-        "security/rma_reason.xml",
-        "views/rma.xml",
-        "views/rma_reason.xml",
-        "views/res_config_settings.xml",
+        "wizards/sale_order_rma_wizard.xml",
         "views/rma_portal_templates.xml",
-        "wizards/stock_return_picking.xml",
     ],
-    "demo": [
-        "demo/rma_reason.xml",
-    ],
+    "demo": [],
+    "assets": {
+        "web.assets_frontend": [
+            "/rma_sale_reason/static/src/js/rma_portal_form.js",
+        ],
+        "web.assets_tests": [
+            "/rma_sale_reason/static/src/tests/*.js",
+        ],
+    },
 }

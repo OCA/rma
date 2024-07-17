@@ -132,4 +132,5 @@ odoo.define("rma_sale.animation", function (require) {
             $(ev.currentTarget).addClass("bg-primary").addClass("text-primary");
         },
     });
+    return publicWidget;
 });

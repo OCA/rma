@@ -1,6 +1,6 @@
-==========
-Rma Reason
-==========
+===============
+Rma Sale Reason
+===============
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -17,10 +17,10 @@ Rma Reason
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/16.0/rma_reason
+    :target: https://github.com/OCA/rma/tree/16.0/rma_sale_reason
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-16-0/rma-16-0-rma_reason
+    :target: https://translation.odoo-community.org/projects/rma-16-0/rma-16-0-rma_sale_reason
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
     :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=16.0
@@ -28,38 +28,26 @@ Rma Reason
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Specifying the RMA reason when creating an RMA order is crucial for
-effective inventory management, quality control, and customer service.
-It helps categorize returned items accurately, identify recurring
-product issues, and improve overall product quality. This data enables
-customer service to address issues more effectively and enhances the
-customer experience.
+Getting the information as soon as possible is crucial for any business.
+That's why, when creating an RMA order from a sales order, it's more
+efficient to give the salesperson the possibility to record the return
+reason instead of waiting for the RMA team to do it when they process
+the order. This ensures accurate recording of customer issues and
+improves data accuracy.
 
-This addon allows RMA managers to pre-configure possible reasons users
-can specify when creating the RMA order.
-
-In a multi-company setup, each company can define its own reasons and
-choose to make the reason mandatory or optional.
+This addon is an extension of the rma_sale and rma_reason addons. It
+allows salespersons to specify the return reason when creating the RMA
+order from the sales order.
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Configuration
-=============
-
-To configure this module, you need to:
-
--  Go to **Inventory > Settings > Settings** and select whether the
-   reason is mandatory or not.
--  Go to **RMA > Settings > RMA Reasons** and create the RMA reasons for
-   your company.
-
 Usage
 =====
 
-When creating an RMA, select the reason for the return.
+When creating an RMA from a sale order select the reason for the return.
 
 Bug Tracker
 ===========
@@ -67,7 +55,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_reason%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_sale_reason%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -108,6 +96,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sbejaoui| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/16.0/rma_reason>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/16.0/rma_sale_reason>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

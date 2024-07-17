@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <template
+        id="sale_rma_request_form"
+        name="My RMA"
+        inherit_id="rma_sale.sale_rma_request_form"
+    >
+        <xpath expr="//t[@t-set='operations']" position="before">
+
+        <t t-set="reasons" t-value="sale_order.env['rma.reason'].search([])" />
+
+            <input
+                type="hidden"
+                name="is_rma_reason_required"
+                t-att-value="'1' if sale_order.company_id.is_rma_reason_required else '0'"
+            />
+        </xpath>
+        <xpath expr="//th[@name='operation']" position="before">
+            <th class="text-start">Reason</th>
+        </xpath>
+        <xpath expr="//td[@name='operation']" position="before">
+        <td class="text-start">
+            <select
+                    t-attf-name="#{data_index}-reason_id"
+                    class="form-control rma-reason"
+                >
+                <option value="">---</option>
+                <t t-foreach="reasons" t-as="reason">
+                    <option t-att-value="reason.id">
+                        <t t-out="reason.name" />
+                    </option>
+                </t>
+            </select>
+
+        </td>
+                </xpath>
+
+    </template>
+</odoo>
