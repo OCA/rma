@@ -8,3 +8,5 @@
 - [APSL-Nagarro](https://www.apsl.tech):
   - Antoni Marroig \<<amarroig@apsl.net>\>
 - Michael Tietz (MT Software) <mtietz@mt-software.de>
+- Jacques-Etienne Baudoux - BCIM <je@bcim.be>
+- Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
