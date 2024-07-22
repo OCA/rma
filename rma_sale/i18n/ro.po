@@ -80,8 +80,8 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
-"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"Retur\" title=\"Retur"
-"\"/>"
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"Retur\" "
+"title=\"Retur\"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -356,6 +356,7 @@ msgstr "Cereri retur"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__operation_id
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Requested operation"
 msgstr "Operație solicitată"

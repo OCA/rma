@@ -26,6 +26,7 @@ class TestRmaSaleBase(TransactionCase):
         )
         cls.report_model = cls.env["ir.actions.report"]
         cls.rma_operation_model = cls.env["rma.operation"]
+        cls.operation = cls.env.ref("rma.rma_operation_replace")
         cls._partner_portal_wizard(cls, cls.partner)
 
     def _create_sale_order(self, products):
@@ -47,7 +48,9 @@ class TestRmaSaleBase(TransactionCase):
 
     def _rma_sale_wizard(self, order):
         wizard_id = order.action_create_rma()["res_id"]
-        return self.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard.operation_id = self.operation
+        return wizard
 
 
 class TestRmaSale(TestRmaSaleBase):
@@ -95,6 +98,7 @@ class TestRmaSale(TestRmaSaleBase):
             "product_id": self.product_1.id,
             "product_uom_qty": 5,
             "location_id": self.sale_order.warehouse_id.rma_loc_id.id,
+            "operation_id": self.operation.id,
         }
         rma = self.env["rma"].create(rma_vals)
         rma.action_confirm()
