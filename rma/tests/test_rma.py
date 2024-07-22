@@ -79,8 +79,11 @@ class TestRma(TransactionCase):
         cls.warehouse = cls.env.ref("stock.warehouse0")
         # Ensure grouping
         cls.env.company.rma_return_grouping = True
+        cls.operation = cls.env.ref("rma.rma_operation_replace")
 
-    def _create_rma(self, partner=None, product=None, qty=None, location=None):
+    def _create_rma(
+        self, partner=None, product=None, qty=None, location=None, operation=None
+    ):
         vals = {}
         if partner:
             vals["partner_id"] = partner.id
@@ -90,12 +93,16 @@ class TestRma(TransactionCase):
             vals["product_uom_qty"] = qty
         if location:
             vals["location_id"] = location.id
+        if operation:
+            vals["operation_id"] = operation.id
+        elif operation is None:
+            vals["operation_id"] = self.operation.id
         return self.env["rma"].create(vals)
 
     def _create_confirm_receive(
-        self, partner=None, product=None, qty=None, location=None
+        self, partner=None, product=None, qty=None, location=None, operation=None
     ):
-        rma = self._create_rma(partner, product, qty, location)
+        rma = self._create_rma(partner, product, qty, location, operation)
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
@@ -227,19 +234,26 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.product_uom, self.product.uom_id)
 
     def test_ensure_required_fields_on_confirm(self):
-        rma = self._create_rma()
+        rma = self._create_rma(operation=False)
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
         self.assertEqual(
             e.exception.args[0],
-            "Required field(s):\nCustomer\nShipping Address\nInvoice Address\nProduct",
+            "Required field(s):\nCustomer\nShipping Address\nInvoice Address\nProduct"
+            "\nRequested operation",
         )
         rma.partner_id = self.partner.id
         with self.assertRaises(ValidationError) as e:
             rma.action_confirm()
-        self.assertEqual(e.exception.args[0], "Required field(s):\nProduct")
+        self.assertEqual(
+            e.exception.args[0], "Required field(s):\nProduct\nRequested operation"
+        )
         rma.product_id = self.product.id
         rma.location_id = self.rma_loc.id
+        with self.assertRaises(ValidationError) as e:
+            rma.action_confirm()
+        self.assertEqual(e.exception.args[0], "Required field(s):\nRequested operation")
+        rma.operation_id = self.operation
         rma.action_confirm()
         self.assertEqual(rma.state, "confirmed")
 
@@ -687,6 +701,7 @@ class TestRmaCase(TestRma):
             )
         )
         stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
         return_wizard = stock_return_picking_form.save()
         picking_action = return_wizard.create_returns()
         # Each origin move is linked to a different RMA
@@ -715,6 +730,7 @@ class TestRmaCase(TestRma):
         rma_form.move_id = origin_delivery.move_ids.filtered(
             lambda r: r.product_id == self.product
         )
+        rma_form.operation_id = self.operation
         rma = rma_form.save()
         rma.action_confirm()
         rma.reception_move_id.quantity_done = 10
