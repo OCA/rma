@@ -424,7 +424,10 @@ class Rma(models.Model):
                 "received",
                 "waiting_replacement",
                 "replaced",
-            ]
+            ] or (
+                r.state == "confirmed"
+                and r.operation_id.create_replacement_at_confirmation
+            )
 
     @api.depends("state", "remaining_qty")
     def _compute_can_be_finished(self):
@@ -740,6 +743,14 @@ class Rma(models.Model):
         for rma in self:
             rma._add_message_subscribe_partner()
         self._send_confirmation_email()
+        if self.operation_id.create_replacement_at_confirmation:
+            return self.create_replace(
+                fields.Datetime.now(),
+                self.warehouse_id,
+                self.product_id,
+                self.product_uom_qty,
+                self.product_uom,
+            )
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked

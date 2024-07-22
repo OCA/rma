@@ -9,6 +9,9 @@ class RmaOperation(models.Model):
     _description = "RMA requested operation"
 
     active = fields.Boolean(default=True)
+    create_replacement_at_confirmation = fields.Boolean(
+        help="Create the replacement picking upon confirmation."
+    )
     name = fields.Char(required=True, translate=True)
 
     _sql_constraints = [

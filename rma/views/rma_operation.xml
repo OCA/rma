@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="rma_operation_form_view">
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field
+                            name="create_replacement_at_confirmation"
+                            widget="boolean_toggle"
+                        />
+                        <field name="active" widget="boolean_toggle" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rma_operation_search_view">
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rma_operation_tree_view">
+        <field name="model">rma.operation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="active" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="rma_operation_act_window">
+        <field name="name">Operations</field>
+        <field name="res_model">rma.operation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="rma_operation_menu">
+        <field name="name">Operations</field>
+        <field name="parent_id" ref="rma_configuration_menu" />
+        <field name="action" ref="rma_operation_act_window" />
+        <field name="sequence" eval="16" />
+    </record>
+
+</odoo>

@@ -832,3 +832,20 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def test_confirm_and_replace(self):
+        operation = self.env.ref("rma.rma_operation_replace")
+        operation.create_replacement_at_confirmation = True
+        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma.operation_id = operation
+        rma.action_confirm()
+        self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")
+        self.assertEqual(rma.reception_move_id.product_id, rma.product_id)
+        self.assertEqual(rma.reception_move_id.product_uom_qty, 10)
+        self.assertEqual(rma.reception_move_id.product_uom, rma.product_uom)
+        self.assertEqual(rma.state, "waiting_replacement")
+        self.assertEqual(rma.delivery_picking_count, 1)
+        delivery_move = rma.delivery_move_ids
+        self.assertEqual(delivery_move.product_id, rma.product_id)
+        self.assertEqual(delivery_move.product_uom_qty, 10)
+        self.assertEqual(rma.reception_move_id.product_uom, rma.product_uom)
