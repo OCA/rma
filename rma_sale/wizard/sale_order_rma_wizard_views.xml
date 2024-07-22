@@ -12,6 +12,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
+                    <field name="operation_id" />
                     <field name="line_ids" nolabel="1" colspan="2">
                         <tree editable="bottom">
                             <field name="order_id" invisible="1" />
@@ -30,7 +31,10 @@
                                 options="{'no_create': True}"
                                 required="1"
                             />
-                            <field name="operation_id" />
+                            <field
+                                name="operation_id"
+                                attrs="{'required': [('quantity', '>', 0)]}"
+                            />
                         </tree>
                     </field>
                 </group>

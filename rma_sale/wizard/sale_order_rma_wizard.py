@@ -18,6 +18,10 @@ class SaleOrderRmaWizard(models.TransientModel):
         )
         return [("id", "child_of", rma_loc.ids)]
 
+    operation_id = fields.Many2one(
+        comodel_name="rma.operation",
+        string="Requested operation",
+    )
     order_id = fields.Many2one(
         comodel_name="sale.order",
         default=lambda self: self.env.context.get("active_id", False),
@@ -145,11 +149,20 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     operation_id = fields.Many2one(
         comodel_name="rma.operation",
         string="Requested operation",
+        compute="_compute_operation_id",
+        store=True,
+        readonly=False,
     )
     sale_line_id = fields.Many2one(
         comodel_name="sale.order.line",
     )
     description = fields.Text()
+
+    @api.depends("wizard_id.operation_id")
+    def _compute_operation_id(self):
+        for rec in self:
+            if rec.wizard_id.operation_id:
+                rec.operation_id = rec.wizard_id.operation_id
 
     @api.onchange("product_id")
     def onchange_product_id(self):
