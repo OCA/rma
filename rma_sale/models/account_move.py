@@ -11,14 +11,14 @@ class AccountMove(models.Model):
         """If this a refund linked to an RMA, undo the linking of the reception move for
         having proper quantities and status.
         """
-        for rma in self.env["rma"].search([("refund_id", "in", self.ids)]):
+        for rma in self.env["rma"].sudo().search([("refund_id", "in", self.ids)]):
             if rma.sale_line_id:
                 rma._unlink_refund_with_reception_move()
         return super().button_cancel()
 
     def button_draft(self):
         """Relink the reception move when passing the refund again to draft."""
-        for rma in self.env["rma"].search([("refund_id", "in", self.ids)]):
+        for rma in self.env["rma"].sudo().search([("refund_id", "in", self.ids)]):
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
         return super().button_draft()
