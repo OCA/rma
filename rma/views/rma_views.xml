@@ -155,6 +155,13 @@
                         class="btn-primary"
                     />
                     <button
+                        name="action_create_receipt"
+                        type="object"
+                        string="Create Receipt"
+                        invisible="not show_create_receipt"
+                        class="btn-primary"
+                    />
+                    <button
                         type="object"
                         string="To Refund"
                         name="action_refund"

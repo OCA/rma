@@ -17,16 +17,46 @@ class RmaOperation(models.Model):
 
     active = fields.Boolean(default=True)
     name = fields.Char(required=True, translate=True)
+    color = fields.Integer()
+    count_rma_draft = fields.Integer(compute="_compute_count_rma")
+    count_rma_awaiting_action = fields.Integer(compute="_compute_count_rma")
+    count_rma_processed = fields.Integer(compute="_compute_count_rma")
+    action_create_receipt = fields.Selection(
+        [
+            ("manual_on_confirm", "Manually on Confirm"),
+            ("automatic_on_confirm", "Automatically on Confirm"),
+        ],
+        string="Create Receipt",
+        default="automatic_on_confirm",
+        help="Define how the receipt action should be handled.",
+    )
+    action_create_delivery = fields.Selection(
+        [
+            ("manual_on_confirm", "Manually on Confirm"),
+            ("automatic_on_confirm", "Automatically on Confirm"),
+            ("manual_after_receipt", "Manually After Receipt"),
+            ("automatic_after_receipt", "Automatically After Receipt"),
+        ],
+        string="Delivery Action",
+        help="Define how the delivery action should be handled.",
+        default="manual_after_receipt",
+    )
+    action_create_refund = fields.Selection(
+        [
+            ("manual_on_confirm", "Manually on Confirm"),
+            ("automatic_on_confirm", "Automatically on Confirm"),
+            ("manual_after_receipt", "Manually After Receipt"),
+            ("automatic_after_receipt", "Automatically After Receipt"),
+        ],
+        string="Refund Action",
+        default="manual_after_receipt",
+        help="Define how the refund action should be handled.",
+    )
     prevent_delivery_grouping = fields.Boolean(
         string="Do not group deliveries",
         help="If enabled, RMAs using this operation will NOT be grouped into a "
         "single delivery picking, even if the company setting allows grouping.",
     )
-    color = fields.Integer()
-    count_rma_draft = fields.Integer(compute="_compute_count_rma")
-    count_rma_awaiting_action = fields.Integer(compute="_compute_count_rma")
-    count_rma_processed = fields.Integer(compute="_compute_count_rma")
-
     _sql_constraints = [
         ("name_uniq", "unique (name)", "That operation name already exists !"),
     ]
