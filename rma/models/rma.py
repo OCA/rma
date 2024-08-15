@@ -317,6 +317,55 @@ class Rma(models.Model):
         copy=False,
     )
 
+    show_create_receipt = fields.Boolean(
+        string="Show Create Receipt Button", compute="_compute_show_create_receipt"
+    )
+    show_create_return = fields.Boolean(
+        string="Show Create Return Button", compute="_compute_show_create_return"
+    )
+    show_create_replace = fields.Boolean(
+        string="Show Create replace Button", compute="_compute_show_create_replace"
+    )
+    show_create_refund = fields.Boolean(
+        string="Show Create refund Button", compute="_compute_show_refund_replace"
+    )
+
+    @api.depends("operation_id.action_create_receipt", "state", "reception_move_id")
+    def _compute_show_create_receipt(self):
+        for rec in self:
+            rec.show_create_receipt = (
+                not rec.reception_move_id
+                and rec.operation_id.action_create_receipt == "manual_on_confirm"
+                and rec.state == "confirmed"
+            )
+
+    @api.depends("operation_id.action_create_delivery", "can_be_returned")
+    def _compute_show_create_return(self):
+        for rec in self:
+            rec.show_create_return = (
+                rec.operation_id.action_create_delivery
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_returned
+            )
+
+    @api.depends("operation_id.action_create_delivery", "can_be_replaced")
+    def _compute_show_create_replace(self):
+        for rec in self:
+            rec.show_create_replace = (
+                rec.operation_id.action_create_delivery
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_replaced
+            )
+
+    @api.depends("operation_id.action_create_refund", "can_be_refunded")
+    def _compute_show_refund_replace(self):
+        for rec in self:
+            rec.show_create_refund = (
+                rec.operation_id.action_create_refund
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_refunded
+            )
+
     def _compute_delivery_picking_count(self):
         for rma in self:
             rma.delivery_picking_count = len(rma.delivery_move_ids.picking_id)
@@ -394,9 +443,17 @@ class Rma(models.Model):
         an rma can be refunded. It is used in rma.action_refund method.
         """
         for record in self:
-            record.can_be_refunded = record.state == "received"
+            record.can_be_refunded = (
+                record.operation_id.action_create_refund
+                in ("manual_after_receipt", "automatic_after_receipt")
+                and record.state == "received"
+            ) or (
+                record.operation_id.action_create_refund
+                in ("manual_on_confirm", "automatic_on_confirm")
+                and record.state == "confirmed"
+            )
 
-    @api.depends("remaining_qty", "state")
+    @api.depends("remaining_qty", "state", "operation_id.action_create_delivery")
     def _compute_can_be_returned(self):
         """Compute 'can_be_returned'. This field controls the visibility
         of the 'Return to customer' button in the rma form
@@ -406,8 +463,17 @@ class Rma(models.Model):
         rma._ensure_can_be_returned.
         """
         for r in self:
-            r.can_be_returned = (
-                r.state in ["received", "waiting_return"] and r.remaining_qty > 0
+            r.can_be_returned = r.remaining_qty > 0 and (
+                (
+                    r.operation_id.action_create_delivery
+                    in ("manual_after_receipt", "automatic_after_receipt")
+                    and r.state in ["received", "waiting_return"]
+                )
+                or (
+                    r.operation_id.action_create_delivery
+                    in ("manual_on_confirm", "automatic_on_confirm")
+                    and r.state == "confirmed"
+                )
             )
 
     @api.depends("state")
@@ -420,11 +486,20 @@ class Rma(models.Model):
         rma._ensure_can_be_replaced.
         """
         for r in self:
-            r.can_be_replaced = r.state in [
-                "received",
-                "waiting_replacement",
-                "replaced",
-            ]
+            r.can_be_replaced = (
+                r.operation_id.action_create_delivery
+                in ("manual_after_receipt", "automatic_after_receipt")
+                and r.state
+                in [
+                    "received",
+                    "waiting_replacement",
+                    "replaced",
+                ]
+            ) or (
+                r.operation_id.action_create_delivery
+                in ("manual_on_confirm", "automatic_on_confirm")
+                and r.state == "confirmed"
+            )
 
     @api.depends("state", "remaining_qty")
     def _compute_can_be_finished(self):
@@ -726,20 +801,47 @@ class Rma(models.Model):
             )
         return procurements
 
+    def _create_receipt(self):
+        procurements = self._prepare_reception_procurements()
+        if procurements:
+            self.env["procurement.group"].run(procurements)
+        self.reception_move_id.picking_id.action_assign()
+
+    def action_create_receipt(self):
+        self.ensure_one()
+        self._create_receipt()
+        self.ensure_one()
+        return {
+            "name": _("Receipt"),
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "stock.picking",
+            "views": [[False, "form"]],
+            "res_id": self.reception_move_id.picking_id.id,
+        }
+
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
         self._ensure_required_fields()
         self = self.filtered(lambda rma: rma.state == "draft")
         if not self:
             return
-        procurements = self._prepare_reception_procurements()
-        if procurements:
-            self.env["procurement.group"].run(procurements)
-        self.reception_move_id.picking_id.action_assign()
         self.write({"state": "confirmed"})
         for rma in self:
             rma._add_message_subscribe_partner()
         self._send_confirmation_email()
+        for rec in self:
+            if rec.operation_id.action_create_receipt == "automatic_on_confirm":
+                rec._create_receipt()
+            if rec.operation_id.action_create_delivery == "automatic_on_confirm":
+                rec.with_context(
+                    rma_return_grouping=rec.env.company.rma_return_grouping
+                ).create_return(
+                    fields.Datetime.now(), rec.product_uom_qty, rec.product_uom
+                )
+            if rec.operation_id.action_create_refund == "automatic_on_confirm":
+                rec.action_refund()
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked
@@ -1376,6 +1478,15 @@ class Rma(models.Model):
         """
         self.write({"state": "received"})
         self._send_receipt_confirmation_email()
+        for rec in self:
+            if rec.operation_id.action_create_delivery == "automatic_after_receipt":
+                rec.with_context(
+                    rma_return_grouping=rec.env.company.rma_return_grouping
+                ).create_return(
+                    fields.Datetime.now(), rec.product_uom_qty, rec.product_uom
+                )
+            if rec.operation_id.action_create_refund == "automatic_after_receipt":
+                rec.action_refund()
 
     def update_received_state(self):
         """Invoked by:

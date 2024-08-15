@@ -137,24 +137,31 @@
                         class="btn-primary"
                     />
                     <button
+                        name="action_create_receipt"
+                        type="object"
+                        string="Create Receipt"
+                        attrs="{'invisible': [('show_create_receipt', '=', False)]}"
+                        class="btn-primary"
+                    />
+                    <button
                         type="object"
                         string="To Refund"
                         name="action_refund"
-                        attrs="{'invisible': [('can_be_refunded', '=', False)]}"
+                        attrs="{'invisible': [('show_create_refund', '=', False)]}"
                         class="btn-primary"
                     />
                     <button
                         type="object"
                         string="Replace"
                         name="action_replace"
-                        attrs="{'invisible': [('can_be_replaced', '=', False)]}"
+                        attrs="{'invisible': [('show_create_replace', '=', False)]}"
                         class="btn-primary"
                     />
                     <button
                         type="object"
                         string="Return to customer"
                         name="action_return"
-                        attrs="{'invisible': [('can_be_returned', '=', False)]}"
+                        attrs="{'invisible': [('show_create_return', '=', False)]}"
                         class="btn-primary"
                     />
                     <button
@@ -341,9 +348,10 @@
                     <field name="sent" invisible="1" />
                     <field name="reception_move_id" invisible="1" />
                     <field name="refund_id" invisible="1" />
-                    <field name="can_be_refunded" invisible="1" />
-                    <field name="can_be_returned" invisible="1" />
-                    <field name="can_be_replaced" invisible="1" />
+                    <field name="show_create_receipt" invisible="1" />
+                    <field name="show_create_refund" invisible="1" />
+                    <field name="show_create_return" invisible="1" />
+                    <field name="show_create_replace" invisible="1" />
                     <field name="can_be_split" invisible="1" />
                     <field name="can_be_locked" invisible="1" />
                     <field name="can_be_finished" invisible="1" />
