@@ -121,11 +121,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -147,17 +147,17 @@ msgid ""
 "<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-label=\"Descarregar"
-"\" title=\"Descarregar\"/>"
+"<i class=\"fa fa-pencil-square-o mr-1\" role=\"img\" aria-"
+"label=\"Descarregar\" title=\"Descarregar\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Descarregar\" title="
-"\"Descarregar\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Descarregar\" "
+"title=\"Descarregar\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1160,6 +1160,11 @@ msgid "Number of messages with delivery error"
 msgstr "Número de Mensagens com Erro de Entrega"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
+msgid "Operation"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1650,10 +1655,10 @@ msgstr "Substituído"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
-"been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"has been created."
 msgstr ""
 
 #. module: rma
@@ -1674,6 +1679,7 @@ msgstr "Comunicando"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
 msgid "Requested operation"
 msgstr "Operação Solicitada"
 
@@ -1722,8 +1728,8 @@ msgstr "Devolver ao cliente"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
 
 #. module: rma
@@ -2314,9 +2320,9 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-#~ "\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-"
-#~ "oe-id=\"%d\">%s</a>) has been created."
+#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+#~ "id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" "
+#~ "data-oe-id=\"%d\">%s</a>) has been created."
 #~ msgstr ""
 #~ "Substituição: Movimentação <a href=\"#\" data-oe-model=\"stock.move\" "
 #~ "data-oe-id=\"%d\">%s</a> (A Coleta <a href=\"#\" data-oe-model=\"stock."
@@ -2329,18 +2335,18 @@ msgstr ""
 #~ "create a new move, but one of the previously created moves was updated "
 #~ "with this data."
 #~ msgstr ""
-#~ "Substituição:<br/> Produto <a href=\"#\" data-oe-model=\"product.product"
-#~ "\" data-oe-id=\"%d\">%s</a><br/> Quantidade %f%s<br/> Essa substituição "
-#~ "não criou uma nova movimentação, mas uma das movimentos criadas "
-#~ "anteriormente foi atualizada com esses dados."
+#~ "Substituição:<br/> Produto <a href=\"#\" data-oe-model=\"product."
+#~ "product\" data-oe-id=\"%d\">%s</a><br/> Quantidade %f%s<br/> Essa "
+#~ "substituição não criou uma nova movimentação, mas uma das movimentos "
+#~ "criadas anteriormente foi atualizada com esses dados."
 
 #, python-format
 #~ msgid ""
-#~ "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">"
-#~ "%s</a> has been created."
+#~ "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+#~ "id=\"%d\">%s</a> has been created."
 #~ msgstr ""
-#~ "Devolução: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
-#~ "\">%s</a> foi criada."
+#~ "Devolução: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+#~ "id=\"%d\">%s</a> foi criada."
 
 #, python-format
 #~ msgid ""

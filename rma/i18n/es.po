@@ -191,11 +191,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Descargar\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Descargar\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -229,11 +229,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Descargar\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Descargar\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1286,6 +1286,11 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con error de envío"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
+msgid "Operation"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1779,10 +1784,10 @@ msgstr "Reemplazado"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
-"been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"has been created."
 msgstr ""
 "Reemplazo: El movimiento <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
 "id=\"%(move_id)d\">%(move_name)s</a> (Orden de entrega <a href=\"#\" data-oe-"
@@ -1811,6 +1816,7 @@ msgstr "Informes"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
 msgid "Requested operation"
 msgstr "Operación solicitada"
 
@@ -1859,11 +1865,11 @@ msgstr "Devolver al cliente"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
-"Devolución: La orden de entrega <a href=\"#\" data-oe-model=\"stock.picking"
-"\" data-oe-id=\"%(id)d\">%(name)s</a> ha sido creada."
+"Devolución: La orden de entrega <a href=\"#\" data-oe-model=\"stock."
+"picking\" data-oe-id=\"%(id)d\">%(name)s</a> ha sido creada."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -2014,8 +2020,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"División: El RMA <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> ha sido creado."
+"División: El RMA <a href=\"#\" data-oe-model=\"rma\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> ha sido creado."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2112,8 +2118,9 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"El nombre de este seudónimo de correo electrónico. Por ejemplo, \"trabajos"
-"\", si lo que quiere es obtener los correos para <trabajos@example.odoo.com>"
+"El nombre de este seudónimo de correo electrónico. Por ejemplo, "
+"\"trabajos\", si lo que quiere es obtener los correos para <trabajos@example."
+"odoo.com>"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_user_id

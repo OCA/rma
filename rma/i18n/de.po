@@ -123,11 +123,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -159,11 +159,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1219,6 +1219,11 @@ msgid "Number of messages with delivery error"
 msgstr "Anzahl der Nachrichten mit Zustellfehler"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
+msgid "Operation"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1711,15 +1716,15 @@ msgstr "Ersetzt"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
-"been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"has been created."
 msgstr ""
-"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) wurde "
-"erstellt.."
+"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) "
+"wurde erstellt.."
 
 #. module: rma
 #. odoo-python
@@ -1743,6 +1748,7 @@ msgstr "Berichte"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
 msgid "Requested operation"
 msgstr "Angeforderter Vorgang"
 
@@ -1791,11 +1797,11 @@ msgstr "Zurück zum Kunden"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
-"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d"
-"\">%(name)s</a> wurde erstellt."
+"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> wurde erstellt."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -2381,8 +2387,8 @@ msgstr ""
 #~ "                <p style=\"box-sizing:border-box;margin: 0px; padding: "
 #~ "0px; font-size: 13px;\">\n"
 #~ "                    Sehr geehrte/r\n"
-#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
-#~ "\"true\"></t>\n"
+#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-"
 #~ "group-active=\"true\">\n"
 #~ "                        <t t-out=\"object.partner_id.parent_id.name\" "
@@ -2393,12 +2399,12 @@ msgstr ""
 #~ "                    Hiermit übermitteln wie Ihnen unseren RMA Auftrag\n"
 #~ "                    <strong style=\"box-sizing:border-box;font-weight:500;"
 #~ "\">\n"
-#~ "                        <t t-out=\"object.name\" data-oe-t-inline=\"true"
-#~ "\"></t>\n"
+#~ "                        <t t-out=\"object.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    </strong>\n"
 #~ "                    von\n"
-#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
-#~ "\"true\"></t>\n"
+#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    .\n"
 #~ "                    <br>\n"
 #~ "                    <br>\n"
@@ -2489,8 +2495,8 @@ msgstr ""
 #~ "                <p style=\"box-sizing:border-box;margin: 0px; padding: "
 #~ "0px; font-size: 13px;\">\n"
 #~ "                    Sehr geehrte/r\n"
-#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-inline="
-#~ "\"true\"></t>\n"
+#~ "                    <t t-out=\"object.partner_id.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    <t t-if=\"object.partner_id.parent_id\" data-oe-t-"
 #~ "group-active=\"true\">\n"
 #~ "                        <t t-out=\"object.partner_id.parent_id.name\" "
@@ -2502,12 +2508,12 @@ msgstr ""
 #~ "eingebracht.\n"
 #~ "                    <strong style=\"box-sizing:border-box;font-weight:500;"
 #~ "\">\n"
-#~ "                        <t t-out=\"object.name\" data-oe-t-inline=\"true"
-#~ "\"></t>\n"
+#~ "                        <t t-out=\"object.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    </strong>\n"
 #~ "                    für\n"
-#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-inline="
-#~ "\"true\"></t>\n"
+#~ "                    <t t-out=\"object.company_id.name\" data-oe-t-"
+#~ "inline=\"true\"></t>\n"
 #~ "                    . Unser Team wird die Anfrage bearbeiten uns sich so "
 #~ "bald wie möglich bei Ihnen melden.\n"
 #~ "                    <br>\n"
