@@ -128,14 +128,12 @@ class TestRmaSaleMrp(TestRmaSaleBase):
         self.assertEqual(rma.refund_id.invoice_line_ids.product_id, self.product_kit)
         rma.refund_id.action_post()
         # We can still return another kit
-        wizard_id = order.action_create_rma()["res_id"]
-        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard = self._rma_sale_wizard(order)
         self.assertEqual(wizard.line_ids.quantity, 1)
         wizard.create_and_open_rma()
         # Now we open the wizard again and try to force the RMA qty wich should
         # be 0 at this time
-        wizard_id = order.action_create_rma()["res_id"]
-        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard = self._rma_sale_wizard(order)
         self.assertEqual(wizard.line_ids.quantity, 0)
         wizard.line_ids.quantity = 1
         with self.assertRaises(ValidationError):

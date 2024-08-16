@@ -11,6 +11,20 @@ from odoo.tools import float_compare
 class ReturnPickingLine(models.TransientModel):
     _inherit = "stock.return.picking.line"
 
+    rma_operation_id = fields.Many2one(
+        comodel_name="rma.operation",
+        string="Operation",
+        compute="_compute_rma_operation_id",
+        store=True,
+        readonly=False,
+    )
+
+    @api.depends("wizard_id.rma_operation_id")
+    def _compute_rma_operation_id(self):
+        for rec in self:
+            if rec.wizard_id.rma_operation_id:
+                rec.rma_operation_id = rec.wizard_id.rma_operation_id
+
     def _prepare_rma_vals(self):
         self.ensure_one()
         return {
@@ -19,6 +33,7 @@ class ReturnPickingLine(models.TransientModel):
             "product_uom_qty": self.quantity,
             "product_uom": self.product_id.uom_id.id,
             "location_id": self.wizard_id.location_id.id or self.move_id.location_id.id,
+            "operation_id": self.rma_operation_id.id,
         }
 
 
@@ -29,6 +44,10 @@ class ReturnPicking(models.TransientModel):
     picking_type_code = fields.Selection(related="picking_id.picking_type_id.code")
     rma_location_ids = fields.Many2many(
         comodel_name="stock.location", compute="_compute_rma_location_id"
+    )
+    rma_operation_id = fields.Many2one(
+        comodel_name="rma.operation",
+        string="Requested operation",
     )
     # Expand domain for RMAs
     location_id = fields.Many2one(
