@@ -1137,6 +1137,11 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
+msgid "Operation"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1639,6 +1644,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
 msgid "Requested operation"
 msgstr ""
 
