@@ -19,3 +19,8 @@ class RmaReason(models.Model):
         readonly=True,
         default=lambda self: self.env.company,
     )
+    allowed_operation_ids = fields.Many2many(
+        comodel_name="rma.operation",
+        string="Operations",
+        help="List of RMA operations that are allowed when this reason is selected.",
+    )

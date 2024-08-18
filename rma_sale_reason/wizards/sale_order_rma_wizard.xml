@@ -11,16 +11,27 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='operation_id']" position="before">
                 <field name="reason_id" />
+                <field name="operation_domain" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="attributes">
+                <attribute name="domain">operation_domain</attribute>
             </xpath>
             <xpath
                 expr="//field[@name='line_ids']//field[@name='operation_id']"
                 position="before"
             >
                 <field name="is_rma_reason_required" invisible="True" />
+                <field name="operation_domain" invisible="1" />
                 <field
                     name="reason_id"
                     attrs="{'required': [('is_rma_reason_required', '=', True), ('quantity', '>', 0)]}"
                 />
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']//field[@name='operation_id']"
+                position="attributes"
+            >
+                <attribute name="domain">operation_domain</attribute>
             </xpath>
         </field>
     </record>

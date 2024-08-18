@@ -16,6 +16,13 @@
                     attrs="{'column_invisible': [('parent.create_rma', '=', False)], 'required': [('is_rma_reason_required', '=', True), ('parent.create_rma', '=', True), ('quantity', '>', 0)]}"
                 />
                 <field name="is_rma_reason_required" invisible="1" />
+                <field name="rma_operation_domain" invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='product_return_moves']//tree//field[@name='rma_operation_id']"
+                position="attributes"
+            >
+                <attribute name="domain">rma_operation_domain</attribute>
             </xpath>
             <xpath
                 expr="//group[@name='group_rma']//field[@name='rma_operation_id']"
@@ -25,7 +32,15 @@
                     name="rma_reason_id"
                     attrs="{'invisible': [('create_rma', '=', False)]}"
                 />
+                <field name="rma_operation_domain" invisible="1" />
             </xpath>
+            <xpath
+                expr="//group[@name='group_rma']//field[@name='rma_operation_id']"
+                position="attributes"
+            >
+                <attribute name="domain">rma_operation_domain</attribute>
+            </xpath>
+
         </field>
     </record>
 

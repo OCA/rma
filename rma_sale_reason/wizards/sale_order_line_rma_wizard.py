@@ -19,6 +19,17 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     is_rma_reason_required = fields.Boolean(
         related="order_id.company_id.is_rma_reason_required"
     )
+    operation_domain = fields.Binary(compute="_compute_operation_domain")
+
+    @api.depends("reason_id")
+    def _compute_operation_domain(self):
+        for rec in self:
+            if rec.reason_id and rec.reason_id.allowed_operation_ids:
+                rec.operation_domain = [
+                    ("id", "in", rec.reason_id.allowed_operation_ids.ids)
+                ]
+            else:
+                rec.operation_domain = []
 
     @api.depends("wizard_id.reason_id")
     def _compute_reason_id(self):
