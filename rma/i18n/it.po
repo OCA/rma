@@ -35,8 +35,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/>"
-"%(body)s"
+"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/"
+">%(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -190,11 +190,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -226,11 +226,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -1049,9 +1049,7 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -1742,14 +1740,14 @@ msgstr "Sostituito"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
-"been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"has been created."
 msgstr ""
 "Sostituzione: Movimento <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (prelievo <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"id=\"%(move_id)d\">%(move_name)s</a> (prelievo <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
 "creato."
 
 #. module: rma
@@ -1822,11 +1820,11 @@ msgstr "Rendi al cliente"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
-"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> creato."
+"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> creato."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -1854,12 +1852,6 @@ msgstr "Conteggio Rma"
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
 msgid "Rma Location"
 msgstr "Ubicazione RMA"
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1983,8 +1975,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> creata."
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> creata."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2360,6 +2352,9 @@ msgstr ""
 "{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. "
 "{{object.name or 'n/a' }})"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
+
 #~ msgid ""
 #~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
 #~ "company-specific.\" groups=\"base.group_multi_company\"/>"
@@ -2598,9 +2593,9 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-#~ "\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-"
-#~ "oe-id=\"%d\">%s</a>) has been created."
+#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+#~ "id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" "
+#~ "data-oe-id=\"%d\">%s</a>) has been created."
 #~ msgstr ""
 #~ "Sostituzione: Il trasferimento <a href=\"#\" data-oe-model=\"stock.move\" "
 #~ "data-oe-id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock."
@@ -2613,15 +2608,15 @@ msgstr ""
 #~ "create a new move, but one of the previously created moves was updated "
 #~ "with this data."
 #~ msgstr ""
-#~ "Sostituzione:<br/>Il prodotto<a href=\"#\" data-oe-model=\"product.product"
-#~ "\" data-oe-id=\"%d\">%s</a><br/>Quantità%f %s<br/>Questo prodotto non ha "
-#~ "generato un nuovo trasferimento, ma uno dei trasferimenti già creati è "
-#~ "stato aggiornato con questi dati."
+#~ "Sostituzione:<br/>Il prodotto<a href=\"#\" data-oe-model=\"product."
+#~ "product\" data-oe-id=\"%d\">%s</a><br/>Quantità%f %s<br/>Questo prodotto "
+#~ "non ha generato un nuovo trasferimento, ma uno dei trasferimenti già "
+#~ "creati è stato aggiornato con questi dati."
 
 #, python-format
 #~ msgid ""
-#~ "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">"
-#~ "%s</a> has been created."
+#~ "Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+#~ "id=\"%d\">%s</a> has been created."
 #~ msgstr ""
 #~ "Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
 #~ "a> è stato creato."

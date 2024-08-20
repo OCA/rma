@@ -122,11 +122,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Descarcă\" title="
-"\"Descarcă\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Descarcă\" "
+"title=\"Descarcă\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -158,11 +158,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Download\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Descarcă\" title="
-"\"Descarcă\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Descarcă\" "
+"title=\"Descarcă\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -939,9 +939,7 @@ msgstr "Dacă este bifat, mesajele noi necesită atenție."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__message_has_error
-#: model:ir.model.fields,help:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,help:rma.field_rma_team__message_has_error
-#: model:ir.model.fields,help:rma.field_rma_team__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Dacă este bifat, unele mesaje au o eroare de livrare."
 
@@ -1619,10 +1617,10 @@ msgstr "Înlocuit"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-"\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-model="
-"\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) has "
-"been created."
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
+"has been created."
 msgstr ""
 
 #. module: rma
@@ -1691,8 +1689,8 @@ msgstr "Retur către client"
 #: code:addons/rma/models/rma.py:0
 #, python-format
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">"
-"%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+"id=\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
 
 #. module: rma
@@ -1720,12 +1718,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_location_ids
 msgid "Rma Location"
-msgstr ""
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
-#: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: rma
@@ -2308,10 +2300,10 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-#~ "\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" data-"
-#~ "oe-id=\"%d\">%s</a>) has been created."
+#~ "Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+#~ "id=\"%d\">%s</a> (Picking <a href=\"#\" data-oe-model=\"stock.picking\" "
+#~ "data-oe-id=\"%d\">%s</a>) has been created."
 #~ msgstr ""
-#~ "Înlocuire: Mișcarea <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id="
-#~ "\"%d\">%s</a> (Transfer <a href=\"#\" data-oe-model=\"stock.picking\" "
+#~ "Înlocuire: Mișcarea <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
+#~ "id=\"%d\">%s</a> (Transfer <a href=\"#\" data-oe-model=\"stock.picking\" "
 #~ "data-oe-id=\"%d\">%s</a>) a fost creat."
