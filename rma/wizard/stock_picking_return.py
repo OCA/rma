@@ -80,10 +80,6 @@ class ReturnPicking(models.TransientModel):
     def _prepare_rma_vals(self):
         partner, partner_invoice, partner_shipping = self._prepare_rma_partner_values()
         origin = self.picking_id.name
-        vals = self.env["rma"]._prepare_procurement_group_vals()
-        vals["partner_id"] = partner_shipping.id
-        vals["name"] = origin
-        group = self.env["procurement.group"].create(vals)
         return {
             "user_id": self.env.user.id,
             "partner_id": partner.id,
@@ -92,7 +88,6 @@ class ReturnPicking(models.TransientModel):
             "origin": origin,
             "picking_id": self.picking_id.id,
             "company_id": self.company_id.id,
-            "procurement_group_id": group.id,
         }
 
     def _prepare_rma_vals_list(self):
@@ -129,6 +124,10 @@ class ReturnPicking(models.TransientModel):
                 )
             vals_list = self._prepare_rma_vals_list()
             rmas = self.env["rma"].create(vals_list)
+            proc_group_vals = rmas[:1]._prepare_procurement_group_vals()
+            proc_group_vals["name"] = self.picking_id.name
+            proc_group = self.env["procurement.group"].create(proc_group_vals)
+            rmas.write({"procurement_group_id": proc_group.id})
             rmas.action_confirm()
             picking = rmas.reception_move_id.picking_id
             picking = picking and picking[0] or picking
