@@ -233,3 +233,51 @@ class TestRmaOperation(TestRma):
         rma.reception_move_id.picking_id._action_done()
         self.assertEqual(rma.state, "received")
         self.assertFalse(rma.delivery_move_ids)
+
+    def test_14(self):
+        """if the refund action is not ment to update quantity, return picking line
+        to_refund field should be False"""
+        self.operation.action_create_refund = "manual_after_receipt"
+        origin_delivery = self._create_delivery()
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=origin_delivery.ids,
+                active_id=origin_delivery.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        return_wizard = stock_return_picking_form.save()
+        return_line = return_wizard.product_return_moves.filtered(
+            lambda m, p=self.product: m.product_id == p
+        )
+        self.assertEqual(return_line.rma_operation_id, self.operation)
+        picking_action = return_wizard.create_returns()
+        reception = self.env["stock.picking"].browse(picking_action["res_id"])
+        move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
+        self.assertFalse(move.to_refund)
+
+    def test_15(self):
+        """if the refund action is ment to update quantity, return picking line
+        to_refund field should be True"""
+        self.operation.action_create_refund = "update_quantity"
+        origin_delivery = self._create_delivery()
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=origin_delivery.ids,
+                active_id=origin_delivery.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        return_wizard = stock_return_picking_form.save()
+        return_line = return_wizard.product_return_moves.filtered(
+            lambda m, p=self.product: m.product_id == p
+        )
+        self.assertEqual(return_line.rma_operation_id, self.operation)
+        picking_action = return_wizard.create_returns()
+        reception = self.env["stock.picking"].browse(picking_action["res_id"])
+        move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
+        self.assertTrue(move.to_refund)
