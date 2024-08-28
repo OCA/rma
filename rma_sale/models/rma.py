@@ -176,6 +176,27 @@ class Rma(models.Model):
             scheduled_date=scheduled_date, qty=qty, uom=uom
         )
 
+    def _prepare_delivery_procurement_vals(self, scheduled_date=None):
+        vals = super()._prepare_delivery_procurement_vals(scheduled_date=scheduled_date)
+        if (
+            self.move_id
+            and self.move_id.sale_line_id
+            and self.operation_id.action_create_refund == "update_quantity"
+        ):
+            vals["sale_line_id"] = self.move_id.sale_line_id.id
+        return vals
+
+    def _prepare_reception_procurement_vals(self, group=None):
+        """This method is used only for reception and a specific RMA IN route."""
+        vals = super()._prepare_reception_procurement_vals(group=group)
+        if (
+            self.move_id
+            and self.move_id.sale_line_id
+            and self.operation_id.action_create_refund == "update_quantity"
+        ):
+            vals["sale_line_id"] = self.move_id.sale_line_id.id
+        return vals
+
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
         # When the procurement group has the sale id set it will propagate to the
         # pickings. This is inconvenient for this operation as when we confirm the
