@@ -701,6 +701,7 @@ class Rma(models.Model):
         vals["rma_receiver_ids"] = [(6, 0, self.ids)]
         if self.move_id:
             vals["origin_returned_move_id"] = self.move_id.id
+            vals["move_orig_ids"] = [(6, 0, self.move_id.ids)]
         return vals
 
     def _prepare_reception_procurements(self):
