@@ -36,6 +36,7 @@ class RmaOperation(models.Model):
             ("automatic_on_confirm", "Automatically on Confirm"),
             ("manual_after_receipt", "Manually After Receipt"),
             ("automatic_after_receipt", "Automatically After Receipt"),
+            ("update_quantity", "Update Quantities"),
         ],
         string="Refund Action",
         default="manual_after_receipt",

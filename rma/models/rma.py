@@ -774,6 +774,7 @@ class Rma(models.Model):
         vals = self._prepare_common_procurement_vals(group=group)
         vals["route_ids"] = self.warehouse_id.rma_in_route_id
         vals["rma_receiver_ids"] = [(6, 0, self.ids)]
+        vals["to_refund"] = self.operation_id.action_create_refund == "update_quantity"
         if self.move_id:
             vals["origin_returned_move_id"] = self.move_id.id
         return vals
