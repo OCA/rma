@@ -104,7 +104,10 @@ class StockMove(models.Model):
         """The main use is that launched delivery RMAs doesn't merge
         two moves if they are linked to a different RMAs.
         """
-        return super()._prepare_merge_moves_distinct_fields() + ["rma_id"]
+        return super()._prepare_merge_moves_distinct_fields() + [
+            "rma_id",
+            "rma_receiver_ids",
+        ]
 
     def _prepare_move_split_vals(self, qty):
         """Intended to the backport of picking linked to RMAs propagates the

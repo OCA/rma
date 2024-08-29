@@ -663,6 +663,10 @@ class Rma(models.Model):
         self = self.filtered(lambda rma: rma.state == "draft")
         if not self:
             return
+        if not self.procurement_group_id:
+            self.procurement_group_id = self.env["procurement.group"].create(
+                self._prepare_procurement_group_vals()
+            )
         procurements = self._prepare_reception_procurements()
         if procurements:
             self.env["procurement.group"].run(procurements)
@@ -1051,11 +1055,7 @@ class Rma(models.Model):
             key=lambda rma: [rma._delivery_group_key()],
         )
         for _group, rmas in grouped_rmas:
-            rmas = (
-                self.browse()
-                .concat(*list(rmas))
-                .filtered(lambda rma: not rma.procurement_group_id)
-            )
+            rmas = self.browse().concat(*list(rmas))
             if not rmas:
                 continue
             proc_group = self.env["procurement.group"].create(
