@@ -293,6 +293,13 @@
                                 force_save="1"
                                 readonly="picking_id or state != 'draft'"
                             />
+                            <field
+                                name="return_product_id"
+                                force_save="1"
+                                readonly="picking_id or state != 'draft'"
+                                invisible="not different_return_product"
+                                required="different_return_product"
+                            />
                             <field name="uom_category_id" invisible="1" />
                             <label for="product_uom_qty" />
                             <div class="o_row">

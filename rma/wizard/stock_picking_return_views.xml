@@ -14,6 +14,13 @@
                     required="parent.create_rma and quantity>0"
                     column_invisible="not parent.create_rma"
                 />
+                <field
+                    name="return_product_id"
+                    column_invisible="not parent.create_rma"
+                    invisible="not different_return_product"
+                    required="different_return_product"
+                />
+                <field name="different_return_product" invisible="1" />
             </xpath>
             <field name="product_return_moves" position="before">
                 <group name="group_rma">
