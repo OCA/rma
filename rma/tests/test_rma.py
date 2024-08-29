@@ -926,3 +926,18 @@ class TestRmaCase(TestRma):
         self.assertEqual(
             rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
         )
+
+    def test_same_procurement_group_for_reception_and_delivery(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        self.assertTrue(rma.procurement_group_id)
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="return",
+            )
+        )
+        delivery_form.product_uom_qty = 2
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        self.assertEqual(rma.delivery_move_ids.group_id, rma.procurement_group_id)
+        self.assertEqual(rma.delivery_move_ids.group_id, rma.reception_move_id.group_id)
