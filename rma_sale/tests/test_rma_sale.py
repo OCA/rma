@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command
+from odoo.exceptions import ValidationError
 from odoo.tests import Form, new_test_user
 from odoo.tests.common import users
 from odoo.tools import mute_logger
@@ -260,7 +261,7 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(order_line.qty_delivered, 5)
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
+        self.assertFalse(rma.reception_move_id.sale_line_id)
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
@@ -276,7 +277,6 @@ class TestRmaSale(TestRmaSaleBase):
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
-        rma.action_confirm()
         self.assertFalse(rma.can_be_refunded)
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
@@ -304,3 +304,27 @@ class TestRmaSale(TestRmaSaleBase):
         rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
         self.assertEqual(len(rmas.reception_move_id.group_id), 1)
         self.assertEqual(len(rmas.reception_move_id.picking_id), 1)
+
+    def test_return_different_product(self):
+        self.operation.action_create_delivery = False
+        self.operation.different_return_product = True
+        self.operation.action_create_refund = "update_quantity"
+        order = self.sale_order
+        order_line = order.order_line
+        self.assertEqual(order_line.qty_delivered, 5)
+        wizard = self._rma_sale_wizard(order)
+        with self.assertRaises(
+            ValidationError, msg="Complete the replacement information"
+        ):
+            rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        return_product = self.product_product.create(
+            {"name": "return Product test 1", "type": "product"}
+        )
+        wizard.line_ids.return_product_id = return_product
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
+        self.assertEqual(rma.reception_move_id.product_id, return_product)
+        self.assertFalse(rma.can_be_refunded)
+        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id.picking_id._action_done()
+        self.assertEqual(order.order_line.qty_delivered, 5)
