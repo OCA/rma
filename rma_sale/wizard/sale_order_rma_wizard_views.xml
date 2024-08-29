@@ -28,6 +28,12 @@
                                 required="1"
                             />
                             <field name="operation_id" required="quantity>0" />
+                            <field
+                                name="return_product_id"
+                                invisible="not different_return_product"
+                                required="different_return_product"
+                            />
+                            <field name="different_return_product" invisible="1" />
                         </list>
                     </field>
                 </group>

@@ -2,7 +2,6 @@
 <!-- Copyright 2024 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="rma_operation_form_view">
         <field name="model">rma.operation</field>
         <field name="arch" type="xml">
@@ -15,21 +14,22 @@
                     <group string="Settings" name="settings">
                         <group>
                             <field name="action_create_receipt" />
-
                         </group>
-                        <group />
                         <group>
-                        <field name="action_create_delivery" />
-
+                            <field
+                                name="different_return_product"
+                                widget="boolean_toggle"
+                                attrs="{'invisible': [('action_create_receipt', '=', False)]}"
+                            />
+                        </group>
+                        <group>
+                            <field name="action_create_delivery" />
                         </group>
                         <group />
                         <group>
                             <field name="action_create_refund" />
-
                         </group>
                         <group />
-
-
                     </group>
                 </sheet>
             </form>
@@ -72,5 +72,4 @@
         <field name="action" ref="rma_operation_act_window" />
         <field name="sequence" eval="16" />
     </record>
-
 </odoo>
