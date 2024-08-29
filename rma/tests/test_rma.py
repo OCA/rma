@@ -32,6 +32,9 @@ class TestRma(BaseCommon):
         cls.product = cls.product_product.create(
             {"name": "Product test 1", "type": "consu", "is_storable": True}
         )
+        cls.product_2 = cls.product_product.create(
+            {"name": "Product test 2", "type": "product"}
+        )
         cls.account_receiv = cls.env["account.account"].create(
             {
                 "name": "Receivable",
@@ -935,3 +938,11 @@ class TestRmaCase(TestRma):
         rma = self._receive_and_replace(self.partner, self.product, 2, self.rma_loc)
         self.assertEqual(rma.reception_move_id.picking_type_id, rma_in_type)
         self.assertEqual(rma.delivery_move_ids.picking_type_id, rma_out_type)
+
+    def test_grouping_reception_enabled(self):
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma_2 = self._create_rma(self.partner, self.product_2, 10, self.rma_loc)
+        (rma_1 | rma_2).action_confirm()
+        self.assertEqual(
+            rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
+        )
