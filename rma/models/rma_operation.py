@@ -19,6 +19,10 @@ class RmaOperation(models.Model):
         default="automatic_on_confirm",
         help="Define how the receipt action should be handled.",
     )
+    different_return_product = fields.Boolean(
+        help="If checked, allows the return of a product different from the one "
+        "originally ordered. Used if the delivery is created automatically",
+    )
     action_create_delivery = fields.Selection(
         [
             ("manual_on_confirm", "Manually on Confirm"),

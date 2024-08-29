@@ -272,6 +272,11 @@
                                 force_save="1"
                                 attrs="{'readonly': ['|', ('picking_id', '!=', False), ('state', '!=', 'draft')]}"
                             />
+                            <field
+                                name="return_product_id"
+                                force_save="1"
+                                attrs="{'readonly': ['|', ('picking_id', '!=', False), ('state', '!=', 'draft')], 'invisible': [('different_return_product', '=', False)], 'required': [('different_return_product', '=', True)]}"
+                            />
                             <field name="uom_category_id" invisible="1" />
                             <label for="product_uom_qty" />
                             <div class="o_row">
@@ -352,6 +357,7 @@
                     <field name="show_create_refund" invisible="1" />
                     <field name="show_create_return" invisible="1" />
                     <field name="show_create_replace" invisible="1" />
+                    <field name="different_return_product" invisible="1" />
                     <field name="can_be_split" invisible="1" />
                     <field name="can_be_locked" invisible="1" />
                     <field name="can_be_finished" invisible="1" />

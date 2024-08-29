@@ -17,7 +17,13 @@
                             <field name="action_create_receipt" />
 
                         </group>
-                        <group />
+                        <group>
+                            <field
+                                name="different_return_product"
+                                widget="boolean_toggle"
+                                attrs="{'invisible': [('action_create_receipt', '=', False)]}"
+                            />
+                        </group>
                         <group>
                         <field name="action_create_delivery" />
 

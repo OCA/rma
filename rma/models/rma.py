@@ -329,6 +329,14 @@ class Rma(models.Model):
     show_create_refund = fields.Boolean(
         string="Show Create refund Button", compute="_compute_show_refund_replace"
     )
+    return_product_id = fields.Many2one(
+        "product.product",
+        help="Product to be returned if it's different from the originally delivered "
+        "item.",
+    )
+    different_return_product = fields.Boolean(
+        related="operation_id.different_return_product"
+    )
 
     @api.depends("operation_id.action_create_receipt", "state", "reception_move_id")
     def _compute_show_create_receipt(self):
@@ -788,13 +796,24 @@ class Rma(models.Model):
             group = rma.procurement_group_id
             if not group:
                 group = group_model.create(rma._prepare_procurement_group_vals())
+            product = self.product_id
+            if self.different_return_product:
+                if not self.return_product_id:
+                    raise ValidationError(
+                        _(
+                            "The selected operation requires a return product different"
+                            " from the originally delivered item. Please select the "
+                            "product to return."
+                        )
+                    )
+                product = self.return_product_id
             procurements.append(
                 group_model.Procurement(
-                    rma.product_id,
+                    product,
                     rma.product_uom_qty,
                     rma.product_uom,
                     rma.location_id,
-                    rma.product_id.display_name,
+                    product.display_name,
                     group.name,
                     rma.company_id,
                     rma._prepare_reception_procurement_vals(group),
