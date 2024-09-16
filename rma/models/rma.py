@@ -785,6 +785,8 @@ class Rma(models.Model):
         vals["to_refund"] = self.operation_id.action_create_refund == "update_quantity"
         if self.move_id:
             vals["origin_returned_move_id"] = self.move_id.id
+            if not self.operation_id.different_return_product:
+                vals["move_orig_ids"] = [(6, 0, self.move_id.ids)]
         return vals
 
     def _prepare_reception_procurements(self):
