@@ -11,6 +11,9 @@ class TestRmaSaleLot(TestRmaSaleBase):
         cls.product = cls.env["product.product"].create(
             {"name": "test_product", "type": "product", "tracking": "lot"}
         )
+        cls.product2 = cls.env["product.product"].create(
+            {"name": "test_product 2", "type": "product", "tracking": "lot"}
+        )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
         )
@@ -64,3 +67,23 @@ class TestRmaSaleLot(TestRmaSaleBase):
         rma_2 = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_2.product_uom_qty, 1)
+
+    def test_return_different_product(self):
+        self.operation.different_return_product = True
+        wizard = self._rma_sale_wizard(self.sale_order)
+        line_1 = wizard.line_ids.filtered(
+            lambda line, lot=self.lot_1: line.lot_id == lot
+        )
+        line_2 = wizard.line_ids.filtered(
+            lambda line, lot=self.lot_2: line.lot_id == lot
+        )
+        line_1.return_product_id = self.product2
+        line_2.return_product_id = self.product2
+        self.assertEqual(line_1.quantity, 1)
+        self.assertEqual(line_2.quantity, 2)
+        line_2.quantity = 1
+        rma = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
+        self.assertTrue(rma.exists())
+        self.assertTrue(rma.reception_move_id.exists())
+        self.assertFalse(rma.lot_id)
+        self.assertFalse(rma.reception_move_id.restrict_lot_id)

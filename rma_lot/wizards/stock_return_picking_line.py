@@ -9,6 +9,8 @@ class StockReturnPickingLine(models.TransientModel):
     _inherit = "stock.return.picking.line"
 
     def _prepare_rma_vals(self):
+        self.ensure_one()
         vals = super()._prepare_rma_vals()
-        vals.update({"lot_id": self.lot_id.id})
+        if not self.rma_operation_id.different_return_product:
+            vals.update({"lot_id": self.lot_id.id})
         return vals

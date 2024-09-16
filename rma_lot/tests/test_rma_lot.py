@@ -14,6 +14,9 @@ class TestRMALot(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {"name": "test_product", "type": "product", "tracking": "lot"}
         )
+        cls.product2 = cls.env["product.product"].create(
+            {"name": "test_product 2", "type": "product", "tracking": "lot"}
+        )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
         )
@@ -101,3 +104,34 @@ class TestRMALot(TransactionCase):
         self.assertEqual(rma_form.product_id, self.product)
         rma_form.product_id = self.env.ref("product.product_product_4")
         self.assertFalse(rma_form.lot_id)
+
+    def test_different_return_product(self):
+        """if the return product is different than the rma product, the lot can't be set
+        on the reception move neither on the rma"""
+        self.operation.different_return_product = True
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=self.picking.ids,
+                active_id=self.picking.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        with self.assertRaises(
+            AssertionError, msg="return_product_id is a required field"
+        ):
+            stock_return_picking_form.save()
+        with stock_return_picking_form.product_return_moves.edit(0) as return_line:
+            return_line.return_product_id = self.product2
+        with stock_return_picking_form.product_return_moves.edit(1) as return_line:
+            return_line.return_product_id = self.product2
+        return_wizard = stock_return_picking_form.save()
+        self.assertEqual(len(return_wizard.product_return_moves), 2)
+        return_wizard.create_returns()
+        self.assertEqual(self.picking.rma_count, 2)
+        rmas = self.picking.move_ids.rma_ids
+        self.assertTrue(rmas.exists())
+        self.assertTrue(rmas.reception_move_id.exists())
+        self.assertFalse(rmas.lot_id)
+        self.assertFalse(rmas.reception_move_id.restrict_lot_id)

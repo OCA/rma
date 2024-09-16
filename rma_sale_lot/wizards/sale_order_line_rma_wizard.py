@@ -19,5 +19,6 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     def _prepare_rma_values(self):
         self.ensure_one()
         values = super()._prepare_rma_values()
-        values["lot_id"] = self.lot_id.id
+        if not self.operation_id.different_return_product:
+            values["lot_id"] = self.lot_id.id
         return values
