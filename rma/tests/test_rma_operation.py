@@ -76,7 +76,7 @@ class TestRmaOperation(TestRma):
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.can_be_replaced)
         rma.action_confirm()
-        self.assertEqual(rma.state, "waiting_return")
+        self.assertEqual(rma.state, "waiting_replacement")
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.show_create_return)
         self.assertFalse(rma.can_be_replaced)
@@ -128,10 +128,10 @@ class TestRmaOperation(TestRma):
         rma.reception_move_id.picking_id._action_done()
         self.assertEqual(rma.delivery_move_ids.product_id, self.product)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 10)
-        self.assertEqual(rma.state, "waiting_return")
+        self.assertEqual(rma.state, "waiting_replacement")
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.show_create_return)
-        self.assertFalse(rma.can_be_replaced)
+        self.assertTrue(rma.can_be_replaced)
         self.assertFalse(rma.show_create_replace)
 
     def test_07(self):
@@ -155,7 +155,7 @@ class TestRmaOperation(TestRma):
         rma.action_confirm()
         self.assertEqual(rma.delivery_move_ids.product_id, rma.product_id)
         self.assertEqual(rma.reception_move_id.product_id, rma.return_product_id)
-        self.assertEqual(rma.state, "waiting_return")
+        self.assertEqual(rma.state, "waiting_replacement")
 
     def test_08(self):
         """test refund, manually after confirm"""
@@ -287,3 +287,18 @@ class TestRmaOperation(TestRma):
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
         self.assertTrue(move.to_refund)
+
+    def test_rma_replace_pick_ship(self):
+        self.operation.action_create_delivery = "automatic_on_confirm"
+        self.warehouse.write({"delivery_steps": "pick_ship"})
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(rma.state, "waiting_replacement")
+        out_pickings = rma.mapped("delivery_move_ids.picking_id")
+        self.assertEqual(rma.delivery_picking_count, 2)
+        self.assertIn(
+            self.warehouse.pick_type_id, out_pickings.mapped("picking_type_id")
+        )
+        self.assertIn(
+            self.warehouse.out_type_id, out_pickings.mapped("picking_type_id")
+        )

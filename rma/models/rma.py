@@ -857,8 +857,12 @@ class Rma(models.Model):
             if rec.operation_id.action_create_delivery == "automatic_on_confirm":
                 rec.with_context(
                     rma_return_grouping=rec.env.company.rma_return_grouping
-                ).create_return(
-                    fields.Datetime.now(), rec.product_uom_qty, rec.product_uom
+                ).create_replace(
+                    fields.Datetime.now(),
+                    self.warehouse_id,
+                    self.product_id,
+                    rec.product_uom_qty,
+                    rec.product_uom,
                 )
             if rec.operation_id.action_create_refund == "automatic_on_confirm":
                 rec.action_refund()
@@ -1502,9 +1506,14 @@ class Rma(models.Model):
             if rec.operation_id.action_create_delivery == "automatic_after_receipt":
                 rec.with_context(
                     rma_return_grouping=rec.env.company.rma_return_grouping
-                ).create_return(
-                    fields.Datetime.now(), rec.product_uom_qty, rec.product_uom
+                ).create_replace(
+                    fields.Datetime.now(),
+                    self.warehouse_id,
+                    self.product_id,
+                    rec.product_uom_qty,
+                    rec.product_uom,
                 )
+
             if rec.operation_id.action_create_refund == "automatic_after_receipt":
                 rec.action_refund()
 
