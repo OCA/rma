@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-18 10:06+0000\n"
+"PO-Revision-Date: 2024-09-23 16:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1655,7 +1655,7 @@ msgstr "Motivo"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__name
 msgid "Reason Name"
-msgstr "Nome Motivo"
+msgstr "Nome causale"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
