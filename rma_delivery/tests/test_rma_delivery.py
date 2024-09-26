@@ -5,7 +5,7 @@ from odoo.tests import Form
 from odoo.addons.rma.tests.test_rma import TestRma
 
 
-class TestRmaDelivery(TestRma):
+class TestRmaDeliveryBase(TestRma):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -46,6 +46,8 @@ class TestRmaDelivery(TestRma):
         delivery_wizard.action_deliver()
         return rma.delivery_move_ids.picking_id
 
+
+class TestRmaDelivery(TestRmaDeliveryBase):
     def test_01_fixed_method(self):
         """Fixed method. RMA gets the company default carrier"""
         # Return picking
