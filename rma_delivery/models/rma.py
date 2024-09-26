@@ -32,12 +32,20 @@ class Rma(models.Model):
         )
         return res
 
-    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
-        existing_pickings = self.delivery_move_ids.mapped("picking_id")
-        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
-        new_pickings = self.delivery_move_ids.mapped("picking_id") - existing_pickings
-        for picking in new_pickings:
+    def _set_carrier(self, pickings):
+        for picking in pickings:
             picking.carrier_id = self._get_default_carrier_id(
                 picking.company_id, picking.partner_id
             )
+
+    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
+        existing_pickings = self.delivery_move_ids.picking_id
+        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
+        self._set_carrier(self.delivery_move_ids.picking_id - existing_pickings)
+        return res
+
+    def create_return(self, scheduled_date, qty=None, uom=None):
+        existing_pickings = self.delivery_move_ids.picking_id
+        res = super().create_return(scheduled_date, qty=qty, uom=uom)
+        self._set_carrier(self.delivery_move_ids.picking_id - existing_pickings)
         return res
