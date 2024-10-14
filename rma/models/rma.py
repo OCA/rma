@@ -861,8 +861,8 @@ class Rma(models.Model):
                     rma_return_grouping=rec.env.company.rma_return_grouping
                 ).create_replace(
                     fields.Datetime.now(),
-                    self.warehouse_id,
-                    self.product_id,
+                    rec.warehouse_id,
+                    rec.product_id,
                     rec.product_uom_qty,
                     rec.product_uom,
                 )
@@ -1510,8 +1510,8 @@ class Rma(models.Model):
                     rma_return_grouping=rec.env.company.rma_return_grouping
                 ).create_replace(
                     fields.Datetime.now(),
-                    self.warehouse_id,
-                    self.product_id,
+                    rec.warehouse_id,
+                    rec.product_id,
                     rec.product_uom_qty,
                     rec.product_uom,
                 )
