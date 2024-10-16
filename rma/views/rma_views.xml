@@ -9,8 +9,25 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name" />
+                <field name="origin" />
                 <field name="user_id" />
                 <field name="tag_ids" />
+                <filter
+                    string="Awaiting Action"
+                    name="waiting_action"
+                    domain="[('state', 'in', ['waiting_return', 'waiting_replacement', 'confirmed'])]"
+                />
+                <filter
+                    string="Processed"
+                    name="processed"
+                    domain="[('state', 'in', ['received', 'refunded', 'replaced', 'finished'])]"
+                />
+                <filter
+                    string="Closed"
+                    name="closed"
+                    domain="[('state', 'in', ['locked', 'cancelled'])]"
+                />
+                <separator />
                 <filter
                     name="draft_filter"
                     string="Draft"
