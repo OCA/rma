@@ -421,4 +421,16 @@
     <record id="rma_orders_menu" model="ir.ui.menu">
         <field name="action" ref="rma_action" />
     </record>
+
+    <record id="action_rma_form" model="ir.actions.act_window">
+            <field name="name">New RMA</field>
+            <field name="res_model">rma</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="context">{
+                    'search_operation_id': [active_id],
+                    'default_operation_id': active_id,
+            }
+            </field>
+        </record>
 </odoo>
