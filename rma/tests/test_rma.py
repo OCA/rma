@@ -38,6 +38,9 @@ class TestRma(TransactionCase):
         cls.product = cls.product_product.create(
             {"name": "Product test 1", "type": "product"}
         )
+        cls.product_2 = cls.product_product.create(
+            {"name": "Product test 2", "type": "product"}
+        )
         cls.account_receiv = cls.env["account.account"].create(
             {
                 "name": "Receivable",
@@ -691,6 +694,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(4, len(all_rmas.delivery_move_ids.picking_id))
 
     def test_rma_from_picking_return(self):
+        self.env.company.rma_reception_grouping = True
         # Create a return from a delivery picking
         origin_delivery = self._create_delivery()
         stock_return_picking_form = Form(
@@ -848,3 +852,23 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def test_grouping_reception_disabled(self):
+        self.env.company.rma_reception_grouping = False
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma_2 = self._create_rma(self.partner, self.product_2, 10, self.rma_loc)
+        (rma_1 | rma_2).action_confirm()
+        self.assertTrue(rma_1.reception_move_id.picking_id)
+        self.assertTrue(rma_2.reception_move_id.picking_id)
+        self.assertNotEqual(
+            rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
+        )
+
+    def test_grouping_reception_enabled(self):
+        self.env.company.rma_reception_grouping = True
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma_2 = self._create_rma(self.partner, self.product_2, 10, self.rma_loc)
+        (rma_1 | rma_2).action_confirm()
+        self.assertEqual(
+            rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
+        )

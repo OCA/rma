@@ -11,6 +11,9 @@ class ResConfigSettings(models.TransientModel):
         help="Allow to finish an RMA without returning back a product or refunding",
         implied_group="rma.group_rma_manual_finalization",
     )
+    rma_reception_grouping = fields.Boolean(
+        related="company_id.rma_reception_grouping", readonly=False
+    )
     rma_return_grouping = fields.Boolean(
         related="company_id.rma_return_grouping",
         readonly=False,

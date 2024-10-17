@@ -26,6 +26,9 @@ class ResCompany(models.Model):
         except ValueError:
             return False
 
+    rma_reception_grouping = fields.Boolean(
+        string="Group RMA receptions", default=False
+    )
     rma_return_grouping = fields.Boolean(
         string="Group RMA returns by customer address and warehouse",
         default=True,

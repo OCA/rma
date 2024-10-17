@@ -88,8 +88,7 @@ class SaleOrderRmaWizard(models.TransientModel):
         rma = self.create_rma()
         if not rma:
             return
-        for rec in rma:
-            rec.action_confirm()
+        rma.action_confirm()
         action = self.sudo().env.ref("rma.rma_action").read()[0]
         if len(rma) > 1:
             action["domain"] = [("id", "in", rma.ids)]
