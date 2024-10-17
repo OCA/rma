@@ -10,6 +10,7 @@
             <search>
                 <field name="name" />
                 <field name="user_id" />
+                <field name="product_id" />
                 <field name="tag_ids" />
                 <filter
                     name="draft_filter"
