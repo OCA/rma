@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-23 16:06+0000\n"
+"PO-Revision-Date: 2024-10-17 15:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -590,7 +590,7 @@ msgstr "Avatar"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Awaiting Action"
-msgstr ""
+msgstr "In attesa dell'azione"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
@@ -654,7 +654,7 @@ msgstr "Fai click per aggiungere un nuovo RMA."
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Closed"
-msgstr ""
+msgstr "Chiuso"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
@@ -1388,7 +1388,7 @@ msgstr "Priorità"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Processed"
-msgstr ""
+msgstr "Elaborato"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
@@ -1854,7 +1854,7 @@ msgstr "Ubicazione di reso"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Return Merchandise Authorization Management"
-msgstr ""
+msgstr "Gestione autorizzazione merce resa"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
@@ -1998,7 +1998,7 @@ msgstr "Imposta a bozza"
 #: model:ir.actions.act_window,name:rma.action_rma_config_settings
 #: model:ir.ui.menu,name:rma.menu_rma_general_settings
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
