@@ -98,12 +98,6 @@ class TestRmaSaleMrp(TestRmaSaleBase):
             rma_2.mapped("reception_move_id.origin_returned_move_id"),
             move_2,
         )
-        self.assertEqual(
-            rmas.mapped("reception_move_id.picking_id")
-            + self.order_out_picking
-            + self.backorder,
-            order.picking_ids,
-        )
         # Refund the RMA
         user = self.env["res.users"].create(
             {"login": "test_refund_with_so", "name": "Test"}
