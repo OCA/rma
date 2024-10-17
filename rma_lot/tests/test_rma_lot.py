@@ -93,3 +93,11 @@ class TestRMALot(TransactionCase):
         self.assertEqual(rma_lot_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.state, "assigned")
         self.assertEqual(rma_lot_2.reception_move_id.move_line_ids.lot_id, self.lot_2)
+
+    def test_rma_form(self):
+        rma_form = Form(self.env["rma"])
+        self.assertFalse(rma_form.product_id)
+        rma_form.lot_id = self.lot_1
+        self.assertEqual(rma_form.product_id, self.product)
+        rma_form.product_id = self.env.ref("product.product_product_4")
+        self.assertFalse(rma_form.lot_id)
