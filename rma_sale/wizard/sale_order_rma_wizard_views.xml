@@ -35,6 +35,11 @@
                                 name="operation_id"
                                 attrs="{'required': [('quantity', '>', 0)]}"
                             />
+                                <field
+                                name="return_product_id"
+                                attrs="{'invisible': [('different_return_product', '=', False)], 'required': [('different_return_product', '=', True)]}"
+                            />
+                            <field name="different_return_product" invisible="1" />
                         </tree>
                     </field>
                 </group>
