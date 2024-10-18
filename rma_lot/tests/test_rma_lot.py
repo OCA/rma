@@ -51,7 +51,7 @@ class TestRMALot(TransactionCase):
         )
         cls.picking.action_confirm()
         cls.picking.action_assign()
-        cls.picking.action_set_quantities_to_reservation()
+        cls.picking.move_ids.picked = True
         cls.picking._action_done()
         cls.operation = cls.env.ref("rma.rma_operation_replace")
 
@@ -77,7 +77,6 @@ class TestRMALot(TransactionCase):
             )
         )
         stock_return_picking_form.create_rma = True
-        stock_return_picking_form.rma_operation_id = self.operation
         return_wizard = stock_return_picking_form.save()
         self.assertEqual(len(return_wizard.product_return_moves), 2)
         return_wizard.create_returns()
