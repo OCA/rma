@@ -20,20 +20,20 @@ msgstr ""
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-o"
-"\"/> Draft</span>"
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-"
+"o\"/> Draft</span>"
 msgstr ""
-"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-o"
-"\"/>Borrador</span>"
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-"
+"o\"/>Borrador</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
 msgid ""
-"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-times"
-"\"/> Cancelled</span>"
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
 msgstr ""
-"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-times"
-"\"/>Cancelado</span>"
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-"
+"times\"/>Cancelado</span>"
 
 #. module: rma_sale_mrp
 #: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
@@ -192,6 +192,16 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lot_id
+msgid "Lot/Serial Number"
+msgstr ""
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lots_visible
+msgid "Lots Visible"
+msgstr ""
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__move_id
