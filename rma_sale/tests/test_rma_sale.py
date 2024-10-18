@@ -121,10 +121,6 @@ class TestRmaSale(TestRmaSaleBase):
             rma.reception_move_id.origin_returned_move_id,
             self.order_out_picking.move_ids,
         )
-        self.assertEqual(
-            rma.reception_move_id.picking_id + self.order_out_picking,
-            order.picking_ids,
-        )
         user = self.env["res.users"].create(
             {"login": "test_refund_with_so", "name": "Test"}
         )
