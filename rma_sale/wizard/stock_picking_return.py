@@ -17,8 +17,8 @@ class ReturnPicking(models.TransientModel):
             sale_order.partner_shipping_id,
         )
 
-    def _prepare_rma_values(self):
-        vals = super()._prepare_rma_values()
+    def _prepare_rma_vals(self):
+        vals = super()._prepare_rma_vals()
         sale_order = self.picking_id.sale_id
         if sale_order:
             vals.update(
