@@ -31,6 +31,7 @@ class SaleOrder(models.Model):
         return {
             "product_id": data["product"].id,
             "quantity": data["quantity"],
+            "allowed_quantity": data["quantity"],
             "sale_line_id": data["sale_line_id"].id,
             "uom_id": data["uom"].id,
             "picking_id": data["picking"] and data["picking"].id,

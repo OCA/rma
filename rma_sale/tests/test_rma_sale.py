@@ -163,6 +163,7 @@ class TestRmaSale(TestRmaSaleBase):
                     "product_id": order.order_line.product_id.id,
                     "sale_line_id": order.order_line.id,
                     "quantity": order.order_line.product_uom_qty,
+                    "allowed_quantity": order.order_line.qty_delivered,
                     "uom_id": order.order_line.product_uom.id,
                     "picking_id": order.picking_ids[0].id,
                     "operation_id": operation.id,
