@@ -157,6 +157,14 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         comodel_name="sale.order.line",
     )
     description = fields.Text()
+    return_product_id = fields.Many2one(
+        "product.product",
+        help="Product to be returned if it's different from the originally delivered "
+        "item.",
+    )
+    different_return_product = fields.Boolean(
+        related="operation_id.different_return_product"
+    )
 
     @api.depends("wizard_id.operation_id")
     def _compute_operation_id(self):
@@ -223,4 +231,5 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             "product_uom": self.uom_id.id,
             "operation_id": self.operation_id.id,
             "description": description,
+            "return_product_id": self.return_product_id.id,
         }

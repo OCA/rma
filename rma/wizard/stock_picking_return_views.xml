@@ -13,6 +13,11 @@
                     name="rma_operation_id"
                     attrs="{'column_invisible': [('parent.create_rma', '=', False)], 'required': [('parent.create_rma', '=', True), ('quantity', '>', 0)]}"
                 />
+                <field
+                    name="return_product_id"
+                    attrs="{'column_invisible': [('parent.create_rma', '=', False)], 'invisible': [('different_return_product', '=', False)], 'required': [('different_return_product', '=', True)]}"
+                />
+                    <field name="different_return_product" invisible="1" />
             </xpath>
             <field name="product_return_moves" position="before">
                 <group name="group_rma">
