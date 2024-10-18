@@ -1,0 +1,1 @@
+odoo-addon-rma-delivery @ git+https://github.com/OCA/rma.git@refs/pull/424/head#subdirectory=setup/rma_delivery
