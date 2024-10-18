@@ -1,0 +1,1 @@
+odoo-addon-stock_picking_return_lot @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1745/head#subdirectory=stock_picking_return_lot

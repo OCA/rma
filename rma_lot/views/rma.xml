@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="rma_form_view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delivered_qty']" position="before">
+                <field name="lots_visible" invisible="True" />
+                <field
+                    name="lot_id"
+                    groups="stock.group_production_lot"
+                    invisible="not lots_visible"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rma_search_view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="lot_id" groups="stock.group_production_lot" />
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rma_tree_view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="lot_id" groups="stock.group_production_lot" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
