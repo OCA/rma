@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class Rma(models.Model):
-
     _inherit = "rma"
 
     lot_id = fields.Many2one(
