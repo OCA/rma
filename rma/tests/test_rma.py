@@ -848,3 +848,33 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def _create_return_wizard(self, picking):
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=picking.ids,
+                active_id=picking.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        return stock_return_picking_form.save()
+
+    def test_partial_return(self):
+        origin_delivery = self._create_delivery()
+        return_wizard = self._create_return_wizard(origin_delivery)
+        return_line = return_wizard.product_return_moves.filtered(
+            lambda m, p=self.product: m.product_id == p
+        )
+        self.assertEqual(return_line.quantity, 10)
+        return_line.quantity = 5
+        picking_action = return_wizard.create_returns()
+        reception = self.env["stock.picking"].browse(picking_action["res_id"])
+        move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
+        self.assertEqual(move.product_qty, 5)
+        return_wizard = self._create_return_wizard(origin_delivery)
+        return_line = return_wizard.product_return_moves.filtered(
+            lambda m, p=self.product: m.product_id == p
+        )
+        self.assertEqual(return_line.quantity, 5)
