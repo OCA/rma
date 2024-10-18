@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <template id="portal_rma_page" name="My RMA" inherit_id="rma.portal_rma_page">
+
+        <xpath expr="//div[@id='product_information']" position="inside">
+            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                <div t-if="rma.reason_id" class="row mb-2 mb-sm-1">
+                    <div class="col-12 col-sm-4">
+                        <strong>Reason</strong>
+                    </div>
+                    <div class="col-12 col-sm-8">
+                        <span t-field="rma.reason_id" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

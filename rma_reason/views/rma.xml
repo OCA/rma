@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Raumschmiede GmbH
+     Copyright 2024 BCIM
+     Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="rma_form_view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='operation_id']" position="before">
+                <field name="is_rma_reason_required" invisible="True" />
+                <field
+                    name="reason_id"
+                    attrs="{'required': [('is_rma_reason_required', '=', True)]}"
+                />
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="after">
+                <field name="operation_domain" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="attributes">
+                <attribute name="domain">operation_domain</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rma_search_view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="reason_id" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
