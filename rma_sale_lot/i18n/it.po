@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_sale_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-10-21 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: rma_sale_lot
+#: model:ir.model.fields,field_description:rma_sale_lot.field_sale_order_line_rma_wizard__lot_id
+msgid "Lot/Serial Number"
+msgstr "Numero di lotto/serie"
+
+#. module: rma_sale_lot
+#: model:ir.model.fields,field_description:rma_sale_lot.field_sale_order_line_rma_wizard__lots_visible
+msgid "Lots Visible"
+msgstr "Lotti visibili"
+
+#. module: rma_sale_lot
+#: model:ir.model,name:rma_sale_lot.model_sale_order_line_rma_wizard
+msgid "Sale Order Line Rma Wizard"
+msgstr "Procedura guidata RMA riga ordine di vendita"
+
+#. module: rma_sale_lot
+#: model:ir.model,name:rma_sale_lot.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: rma_sale_lot
+#: model:ir.model,name:rma_sale_lot.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Riga ordine di vendita"
