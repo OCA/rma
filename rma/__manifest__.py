@@ -35,6 +35,7 @@
         "views/stock_picking_views.xml",
         "views/stock_warehouse_views.xml",
         "views/res_config_settings_views.xml",
+        "views/rma_operation.xml",
     ],
     "post_init_hook": "post_init_hook",
     "application": True,

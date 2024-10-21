@@ -18,6 +18,14 @@ class ReturnPickingLine(models.TransientModel):
         store=True,
         readonly=False,
     )
+    return_product_id = fields.Many2one(
+        "product.product",
+        help="Product to be returned if it's different from the originally delivered "
+        "item.",
+    )
+    different_return_product = fields.Boolean(
+        related="rma_operation_id.different_return_product"
+    )
 
     @api.depends("wizard_id.rma_operation_id")
     def _compute_rma_operation_id(self):
@@ -34,6 +42,7 @@ class ReturnPickingLine(models.TransientModel):
             "product_uom": self.product_id.uom_id.id,
             "location_id": self.wizard_id.location_id.id or self.move_id.location_id.id,
             "operation_id": self.rma_operation_id.id,
+            "return_product_id": self.return_product_id.id,
         }
 
 
