@@ -28,6 +28,13 @@ class TestRmaSaleBase(TransactionCase):
         cls.rma_operation_model = cls.env["rma.operation"]
         cls.operation = cls.env.ref("rma.rma_operation_replace")
         cls._partner_portal_wizard(cls, cls.partner)
+        cls.wh = cls.env.ref("stock.warehouse0")
+        cls.env["stock.quant"]._update_available_quantity(
+            cls.product_1, cls.wh.lot_stock_id, 20
+        )
+        cls.env["stock.quant"]._update_available_quantity(
+            cls.product_2, cls.wh.lot_stock_id, 20
+        )
 
     def _create_sale_order(self, products):
         order_form = Form(self.so_model)
@@ -222,3 +229,25 @@ class TestRmaSale(TestRmaSaleBase):
         res = str(res[0])
         self.assertRegex(res, self.sale_order.name)
         self.assertRegex(res, operation.name)
+
+    def test_grouping_reception_disabled(self):
+        self.env.company.rma_reception_grouping = False
+        sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 3]])
+        sale_order.action_confirm()
+        sale_order.picking_ids.action_set_quantities_to_reservation()
+        sale_order.picking_ids.button_validate()
+        wizard = self._rma_sale_wizard(sale_order)
+        rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
+        self.assertEqual(len(rmas.reception_move_id.group_id), 2)
+        self.assertEqual(len(rmas.reception_move_id.picking_id), 2)
+
+    def test_grouping_reception_enabled(self):
+        self.env.company.rma_reception_grouping = True
+        sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 3]])
+        sale_order.action_confirm()
+        sale_order.picking_ids.action_set_quantities_to_reservation()
+        sale_order.picking_ids.button_validate()
+        wizard = self._rma_sale_wizard(sale_order)
+        rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
+        self.assertEqual(len(rmas.reception_move_id.group_id), 1)
+        self.assertEqual(len(rmas.reception_move_id.picking_id), 1)
