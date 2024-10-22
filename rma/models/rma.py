@@ -1193,10 +1193,11 @@ class Rma(models.Model):
         rmas_to_return.write({"state": "waiting_return"})
 
     def _prepare_replace_procurement_vals(self, warehouse=None, scheduled_date=None):
-        """This method is used only for Replace (not Delivery). We do not use any
-        specific route here."""
+        """This method is used only for Replace (not Delivery)."""
         vals = self._prepare_common_procurement_vals(warehouse, scheduled_date)
         vals["rma_id"] = self.id
+        if self.warehouse_id.rma_out_replace_route_id:
+            vals["route_ids"] = self.warehouse_id.rma_out_replace_route_id
         return vals
 
     def _prepare_replace_procurements(

@@ -2,6 +2,7 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, TransactionCase, new_test_user, users
 from odoo.tools import mute_logger
@@ -106,6 +107,20 @@ class TestRma(TransactionCase):
         rma.action_confirm()
         rma.reception_move_id.quantity_done = rma.product_uom_qty
         rma.reception_move_id.picking_id._action_done()
+        return rma
+
+    def _receive_and_replace(self, partner, product, qty, location):
+        rma = self._create_confirm_receive(partner, product, qty, location)
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="replace",
+            )
+        )
+        delivery_form.product_id = rma.product_id
+        delivery_form.product_uom_qty = qty
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
         return rma
 
     def _create_delivery(self):
@@ -848,3 +863,53 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def test_replace_picking_type(self):
+        """
+        Test that by default, the replace operation uses the default delivery route,
+        meaning the warehouse's default delivery picking type is applied.
+
+        RMA replacement orders are not separated from regular deliveries, and both use
+        the same picking type.
+        """
+        rma = self._receive_and_replace(self.partner, self.product, 2, self.rma_loc)
+        rma_in_type = self.warehouse.rma_in_type_id
+        out_type = self.warehouse.out_type_id
+        self.assertEqual(rma.reception_move_id.picking_type_id, rma_in_type)
+        self.assertEqual(rma.delivery_move_ids.picking_type_id, out_type)
+
+    def test_replace_picking_type_custom_picking_type(self):
+        """
+        Test that when configured to use a custom route, the replace operation uses a
+        custom picking type, separating RMA replacement orders from regular deliveries.
+
+        The custom picking type is applied specifically for RMA replacements, instead
+        of the default delivery picking type.
+        """
+        rma_in_type = self.warehouse.rma_in_type_id
+        rma_out_type = self.warehouse.rma_out_type_id
+        route = self.env["stock.route"].create(
+            {
+                "name": "RMA OUT replace",
+                "active": True,
+                "sequence": 100,
+                "product_selectable": True,
+                "rule_ids": [
+                    Command.create(
+                        {
+                            "name": "RMA OUT",
+                            "action": "pull",
+                            "picking_type_id": rma_out_type.id,
+                            "location_src_id": self.warehouse.lot_stock_id.id,
+                            "location_dest_id": self.env.ref(
+                                "stock.stock_location_customers"
+                            ).id,
+                        },
+                    )
+                ],
+            }
+        )
+        self.warehouse.rma_out_replace_route_id = route
+        rma = self._receive_and_replace(self.partner, self.product, 2, self.rma_loc)
+        self.assertEqual(rma.reception_move_id.picking_type_id, rma_in_type)
+        self.assertEqual(rma.delivery_move_ids.picking_type_id, rma_out_type)

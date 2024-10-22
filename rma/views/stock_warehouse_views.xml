@@ -11,6 +11,10 @@
             <xpath expr="//field[@name='out_type_id']/..">
                 <field name="rma_in_type_id" groups="rma.rma_group_user_own" />
                 <field name="rma_out_type_id" groups="rma.rma_group_user_own" />
+                <field
+                    name="rma_out_replace_route_id"
+                    groups="rma.rma_group_user_own"
+                />
             </xpath>
         </field>
     </record>
