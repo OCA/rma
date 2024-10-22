@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <data>
+        <record id="rma.model_rma" model="ir.model">
+            <field
+                name="website_form_default_field_id"
+                ref="rma.field_rma__description"
+            />
+            <field name="website_form_access">True</field>
+            <field name="website_form_label">Request RMA</field>
+        </record>
+    </data>
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>rma</value>
+        <value
+            eval="[
+            'partner_id',
+            'product_id',
+            'product_uom_qty',
+            'product_uom',
+            'operation_id',
+            'description',
+            'state',
+        ]"
+        />
+    </function>
+</odoo>

@@ -1,0 +1,218 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_rma
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-31 18:39+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "&amp;times;"
+msgstr "&amp;volte;"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni di configurazione"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_user_id
+msgid "Default Responsible"
+msgstr "Responsabile predefinito"
+
+#. module: website_rma
+#: model:ir.model.fields,field_description:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,field_description:website_rma.field_website__rma_default_team_id
+msgid "Default Team"
+msgstr "Team predefinito"
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_user_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_user_id
+msgid ""
+"Default responsible for new leads created through the 'Request RMA' form."
+msgstr ""
+"Responsabile predefinito per i nuovi lead creati tramite il modulo "
+"\"Richiesta RMA\"."
+
+#. module: website_rma
+#: model:ir.model.fields,help:website_rma.field_res_config_settings__rma_default_team_id
+#: model:ir.model.fields,help:website_rma.field_website__rma_default_team_id
+msgid "Default team for new RMAs created through the 'Request RMA' form."
+msgstr ""
+"Team predefinito per nuovi RMA create tramite il modulo \"Richiesta RMA\"."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_ir_model
+msgid "Models"
+msgstr "Modelli"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Operation"
+msgstr "Operazione"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Our team will process it an will reach you once it's validated."
+msgstr ""
+"Il nostro team lo elaborerà e ti arriverà una volta che è stato convalidato."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_rma
+msgid "RMA"
+msgstr "RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Responsible"
+msgstr "Responsabile RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "RMA Team"
+msgstr "Team RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+msgid "Request"
+msgstr "Richiesta"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Request RMA"
+msgstr "Richiesta RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Request RMA Form"
+msgstr "Richiesta Modello RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "Return Merchandise Authorization (RMA)"
+msgstr "Autorizzazione Reso Merce (RMA)"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the"
+msgstr ""
+"Impostare il team RMA predefinito e il responsabile RMA delle RMA create da"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid ""
+"Set the default RMA Team and RMA responsible of the RMAs created from the "
+"Request RMA page."
+msgstr ""
+"Impostare il team RMA predefinito e il responsabile RMA delle RMA create "
+"dalla pagina Richiesta RMA."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Thanks!"
+msgstr "Grazie!"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "We will get back to you shortly."
+msgstr "Vi risponderemo al più presto."
+
+#. module: website_rma
+#: model:ir.model,name:website_rma.model_website
+msgid "Website"
+msgstr "Sito web"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "You can request an RMA"
+msgstr "Puoi richiedere un RMA"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.request_rma_thanks_page_view
+#: model_terms:website.page,arch_db:website_rma.request_rma_thanks_page
+msgid "Your request has been sent successfully."
+msgstr "La tua richiesta è stata inviata con successo."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid "here"
+msgstr "qui"
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.contact_us_request_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was "
+"made.\n"
+"                                    If you know the sales order, go to it "
+"and click on the corresponding button."
+msgstr ""
+"se non\n"
+"                                    conosci l'ordine di vendita da cui è "
+"stato realizzato.\n"
+"                                    Se conosci l'ordine di vendita, vai su "
+"di esso e fai clic sul pulsante corrispondente."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.portal_my_home_rma
+msgid ""
+"if you do not\n"
+"                                    know the sales order from which it was "
+"made. If you know\n"
+"                                    the sales order, go to it and click on "
+"the corresponding button."
+msgstr ""
+"se non\n"
+"                                    conosci l'ordine di vendita da cui è "
+"stato realizzato. se non\n"
+"                                    Se conosci l'ordine di vendita, vai su "
+"di esso e fai clic sul pulsante corrispondente."
+
+#. module: website_rma
+#: model_terms:ir.ui.view,arch_db:website_rma.res_config_settings_view_form
+msgid "page"
+msgstr "Pagina"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
