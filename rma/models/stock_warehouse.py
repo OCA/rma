@@ -30,6 +30,7 @@ class StockWarehouse(models.Model):
     )
     rma_in_route_id = fields.Many2one("stock.route", "RMA in Route")
     rma_out_route_id = fields.Many2one("stock.route", "RMA out Route")
+    rma_out_replace_route_id = fields.Many2one("stock.route", "RMA out Replace Route")
 
     def _get_rma_location_values(self, vals, code=False):
         """this method is intended to be used by 'create' method
