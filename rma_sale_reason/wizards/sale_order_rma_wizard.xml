@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Raumschmiede GmbH
+     Copyright 2024 BCIM
+     Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="sale_order_rma_wizard_form_view">
+        <field name="model">sale.order.rma.wizard</field>
+        <field name="inherit_id" ref="rma_sale.sale_order_rma_wizard_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='operation_id']" position="before">
+                <field name="reason_id" />
+                <field name="operation_domain" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="attributes">
+                <attribute name="domain">operation_domain</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']//field[@name='operation_id']"
+                position="before"
+            >
+                <field name="is_rma_reason_required" invisible="True" />
+                <field name="operation_domain" invisible="1" />
+                <field
+                    name="reason_id"
+                    attrs="{'required': [('is_rma_reason_required', '=', True), ('quantity', '>', 0)]}"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']//field[@name='operation_id']"
+                position="attributes"
+            >
+                <attribute name="domain">operation_domain</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
