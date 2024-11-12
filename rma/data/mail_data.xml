@@ -31,7 +31,6 @@
         <field name="relation_field">team_id</field>
     </record>
 
-
     <!--RMA email template -->
     <record id="mail_template_rma_notification" model="mail.template">
         <field name="name">RMA Notification</field>
@@ -50,14 +49,14 @@
                     Dear
                     <t t-out="object.partner_id.name" />
                     <t t-if="object.partner_id.parent_id">
-                        <t t-out="object.partner_id.parent_id.name" />
-                    </t>
+                    <t t-out="object.partner_id.parent_id.name" />
+                </t>
                     <br />
                     <br />
                     Here is the RMA
                     <strong>
-                        <t t-out="object.name" />
-                    </strong>
+                    <t t-out="object.name" />
+                </strong>
                     from
                     <t t-out="object.company_id.name" />
                     .
@@ -86,14 +85,14 @@
                     Dear
                     <t t-out="object.partner_id.name" />
                     <t t-if="object.partner_id.parent_id">
-                        <t t-out="object.partner_id.parent_id.name" />
-                    </t>
+                    <t t-out="object.partner_id.parent_id.name" />
+                </t>
                     <br />
                     <br />
                     The products for your RMA
                     <strong>
-                        <t t-out="object.name" />
-                    </strong>
+                    <t t-out="object.name" />
+                </strong>
                     from
                     <t t-out="object.company_id.name" />
                     have been received in our warehouse.
@@ -121,14 +120,14 @@
                     Dear
                     <t t-out="object.partner_id.name" />
                     <t t-if="object.partner_id.parent_id">
-                        <t t-out="object.partner_id.parent_id.name" />
-                    </t>
+                    <t t-out="object.partner_id.parent_id.name" />
+                </t>
                     <br />
                     <br />
                     You've succesfully placed your RMA
                     <strong>
-                        <t t-out="object.name" />
-                    </strong>
+                    <t t-out="object.name" />
+                </strong>
                     on
                     <t t-out="object.company_id.name" />
                     . Our team will check it and will validate it as soon as possible.

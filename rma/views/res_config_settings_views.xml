@@ -12,42 +12,39 @@
                     title="Finish RMAs manually"
                     help=" When the RMA is receive, allow to finsish it manually choosing a finalization reason."
                 >
-                        <field name="group_rma_manual_finalization" />
+                    <field name="group_rma_manual_finalization" />
                 </setting>
                 <setting
                     title="Values set here are company-specific."
                     help="Group RMA returns by customer and warehouse."
                 >
-                        <field name="rma_return_grouping" />
+                    <field name="rma_return_grouping" />
                 </setting>
                 <setting
                     title="Send automatic RMA info to customer"
                     help="When the RMA is confirmed, send an automatic information email."
                 >
-                        <field name="send_rma_confirmation" />
-                        <div class="row mt16" invisible="not send_rma_confirmation">
-                            <label
+                    <field name="send_rma_confirmation" />
+                    <div class="row mt16" invisible="not send_rma_confirmation">
+                        <label
                             for="rma_mail_confirmation_template_id"
                             string="Email Template"
                             class="col-lg-4 o_light_label"
                         />
-                            <field
+                        <field
                             name="rma_mail_confirmation_template_id"
                             class="oe_inline"
                             required="send_rma_confirmation"
                             context="{'default_model': 'rma'}"
                         />
-                        </div>
+                    </div>
                 </setting>
                 <setting
                     title="Send automatic RMA products reception notification to customer"
                     help="When the RMA products are received, send an automatic information email."
                 >
-                        <field name="send_rma_receipt_confirmation" />
-                        <div
-                        class="row mt16"
-                        invisible="not send_rma_receipt_confirmation"
-                    >
+                    <field name="send_rma_receipt_confirmation" />
+                    <div class="row mt16" invisible="not send_rma_receipt_confirmation">
                         <label
                             for="rma_mail_receipt_confirmation_template_id"
                             string="Email Template"
@@ -60,29 +57,26 @@
                             required="send_rma_receipt_confirmation"
                             context="{'default_model': 'rma'}"
                         />
-                        </div>
+                    </div>
                 </setting>
                 <setting
                     title="Send automatic notification when the customer places an RMA"
                     help="When customers themselves place an RMA from the portal, send an automatic notification acknowleging it."
                 >
-                        <field name="send_rma_draft_confirmation" />
-                        <div
-                        class="row mt16"
-                        invisible="not send_rma_draft_confirmation"
-                    >
-                            <label
+                    <field name="send_rma_draft_confirmation" />
+                    <div class="row mt16" invisible="not send_rma_draft_confirmation">
+                        <label
                             for="rma_mail_draft_confirmation_template_id"
                             string="Email Template"
                             class="col-lg-4 o_light_label"
                         />
-                            <field
+                        <field
                             name="rma_mail_draft_confirmation_template_id"
                             class="oe_inline"
                             required="send_rma_draft_confirmation"
                             context="{'default_model': 'rma'}"
                         />
-                        </div>
+                    </div>
                 </setting>
             </xpath>
         </field>

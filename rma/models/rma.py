@@ -1303,7 +1303,7 @@ class Rma(models.Model):
     # Reporting business methods
     def _get_report_base_filename(self):
         self.ensure_one()
-        return "RMA Report - %s" % self.name
+        return f"RMA Report - {self.name}"
 
     # Other business methods
 
