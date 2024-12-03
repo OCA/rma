@@ -580,7 +580,7 @@ class Rma(models.Model):
         ctx = {
             "default_model": "rma",
             "default_subtype_id": self.env.ref("rma.mt_rma_notification").id,
-            "default_res_id": self.ids[0],
+            "default_res_ids": self.ids,
             "default_use_template": bool(template),
             "default_template_id": template and template.id or False,
             "default_composition_mode": "comment",
