@@ -302,3 +302,16 @@ class TestRmaOperation(TestRma):
         self.assertIn(
             self.warehouse.out_type_id, out_pickings.mapped("picking_type_id")
         )
+
+    def test_16(self):
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(rma.reception_move_id.state, "assigned")
+        self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")
+
+    def test_17(self):
+        self.operation.auto_confirm_reception = True
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(rma.reception_move_id.state, "done")
+        self.assertEqual(rma.reception_move_id.picking_id.state, "done")

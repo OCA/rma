@@ -760,6 +760,9 @@ class Rma(models.Model):
         if procurements:
             self.env["procurement.group"].run(procurements)
         self.reception_move_id.picking_id.action_assign()
+        if self.operation_id.auto_confirm_reception:
+            self.reception_move_id._set_quantities_to_reservation()
+            self.reception_move_id._action_done()
 
     def action_create_receipt(self):
         self.ensure_one()

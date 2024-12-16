@@ -18,7 +18,10 @@
                         <group>
                             <field
                                 name="different_return_product"
-                                widget="boolean_toggle"
+                                invisible="not action_create_receipt"
+                            />
+                            <field
+                                name="auto_confirm_reception"
                                 invisible="not action_create_receipt"
                             />
                         </group>
