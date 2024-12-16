@@ -18,7 +18,10 @@
                         <group>
                             <field
                                 name="different_return_product"
-                                widget="boolean_toggle"
+                                attrs="{'invisible': [('action_create_receipt', '=', False)]}"
+                            />
+                            <field
+                                name="auto_confirm_reception"
                                 attrs="{'invisible': [('action_create_receipt', '=', False)]}"
                             />
                         </group>

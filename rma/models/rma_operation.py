@@ -34,6 +34,10 @@ class RmaOperation(models.Model):
         help="If checked, allows the return of a product different from the one "
         "originally ordered. Used if the delivery is created automatically",
     )
+    auto_confirm_reception = fields.Boolean(
+        help="Enable this option to automatically confirm the reception when the RMA is"
+        " confirmed."
+    )
     action_create_delivery = fields.Selection(
         [
             ("manual_on_confirm", "Manually on Confirm"),
