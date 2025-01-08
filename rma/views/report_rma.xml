@@ -95,31 +95,42 @@
                         </p>
                     </div>
                 </div>
-                <div class="row mt32 mb32" id="product_information">
-                    <div t-if="doc.picking_id" class="col-auto mw-100 mb-2">
-                        <strong>Origin delivery:</strong>
-                        <p class="m-0" t-field="doc.picking_id" />
-                    </div>
-                    <div t-if="doc.move_id" class="col-auto mw-100 mb-2">
-                        <strong>Move:</strong>
-                        <p class="m-0" t-field="doc.move_id" />
-                    </div>
-                    <div t-if="doc.product_id" class="col-auto mw-100 mb-2">
-                        <strong>Product:</strong>
-                        <p class="m-0" t-field="doc.product_id" />
-                    </div>
-                    <div t-if="doc.product_id" class="col-auto mw-100 mb-2">
-                        <strong>Quantity:</strong>
-                        <p class="m-0">
-                            <span t-field="doc.product_uom_qty" />
-                            <span t-field="doc.product_uom" groups="uom.group_uom" />
-                        </p>
-                    </div>
-                    <div t-if="doc.delivered_qty" class="col-auto mw-100 mb-2">
-                        <strong>Delivered qty:</strong>
-                        <p class="m-0" t-field="doc.delivered_qty" />
-                    </div>
-                </div>
+                <table class="table table-sm o_main_table table-borderless mt-4">
+                    <tbody>
+                        <tr t-if="doc.picking_id" name="tr_picking">
+                            <td>Origin delivery</td>
+                            <td><span t-field="doc.picking_id" /></td>
+                        </tr>
+                        <tr>
+                            <td>Product</td>
+                            <td><span t-field="doc.product_id" /></td>
+                        </tr>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>
+                                <span t-field="doc.product_uom_qty" />
+                                <span
+                                    t-field="doc.product_uom"
+                                    groups="uom.group_uom"
+                                />
+                            </td>
+                        </tr>
+                        <tr t-if="doc.delivered_qty">
+                            <td>Delivered Quantity</td>
+                            <td>
+                                <span t-field="doc.delivered_qty" />
+                                <span
+                                    t-field="doc.product_uom"
+                                    groups="uom.group_uom"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Requested operation</td>
+                            <td><span t-field="doc.operation_id" /></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div t-if="doc.description">
                     <strong>RMA Note:</strong>
                     <p t-out="doc.description" />
