@@ -90,19 +90,9 @@ msgid "<span>RMA</span>"
 msgstr "<span>RMA</span>"
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
-msgid "<strong>Requested operation:</strong>"
-msgstr "<strong>Operación solicitada:</strong>"
-
-#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Requested operation</strong>"
 msgstr "<strong>Operación solicitada:</strong>"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
-msgid "<strong>Sale order:</strong>"
-msgstr "<strong>Orden de venta:</strong>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
@@ -391,6 +381,11 @@ msgid "Sale Order Rma Wizard"
 msgstr "Asistente de Orden de Venta - RMA"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
+msgid "Sale order"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
 msgid "Sales Order"
 msgstr "Orden de Venta"
@@ -495,6 +490,12 @@ msgid ""
 msgstr ""
 "Va a realizar una petición de RMA. Nuestro equipo la procesará y se pondrá "
 "en contacto con usted una vez validad. Tenga en cuenta que:"
+
+#~ msgid "<strong>Requested operation:</strong>"
+#~ msgstr "<strong>Operación solicitada:</strong>"
+
+#~ msgid "<strong>Sale order:</strong>"
+#~ msgstr "<strong>Orden de venta:</strong>"
 
 #~ msgid "Stock Move"
 #~ msgstr "Movimiento de existencias"
