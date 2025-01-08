@@ -89,19 +89,9 @@ msgid "<span>RMA</span>"
 msgstr "<span>Retur</span>"
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
-msgid "<strong>Requested operation:</strong>"
-msgstr "<strong>Operație solicitată:</strong>"
-
-#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Requested operation</strong>"
 msgstr "<strong>Operație solicitată</strong>"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
-msgid "<strong>Sale order:</strong>"
-msgstr "<strong>Comandă vânzare:</strong>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
@@ -388,6 +378,11 @@ msgid "Sale Order Rma Wizard"
 msgstr "Comanda vânzare asistent retur"
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
+msgid "Sale order"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
 msgid "Sales Order"
 msgstr "Comandă vânzare"
@@ -487,6 +482,12 @@ msgid ""
 msgstr ""
 "Sunteți pe cale să efectuați o solicitare de retur. Echipa noastră o va "
 "procesa odată ce va fi validată. Ține minte că:"
+
+#~ msgid "<strong>Requested operation:</strong>"
+#~ msgstr "<strong>Operație solicitată:</strong>"
+
+#~ msgid "<strong>Sale order:</strong>"
+#~ msgstr "<strong>Comandă vânzare:</strong>"
 
 #~ msgid "Stock Move"
 #~ msgstr "Mișcare stoc"
