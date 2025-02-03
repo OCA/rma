@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import SUPERUSER_ID, _, api, fields, models
@@ -145,7 +146,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         string="Delivery order",
         domain="[('id', 'in', allowed_picking_ids)]",
     )
-    move_id = fields.Many2one(comodel_name="stock.move", compute="_compute_move_id")
+    move_id = fields.Many2one(comodel_name="stock.move")
     operation_id = fields.Many2one(
         comodel_name="rma.operation",
         string="Requested operation",
@@ -168,21 +169,6 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     def onchange_product_id(self):
         self.picking_id = False
         self.uom_id = self.product_id.uom_id
-
-    @api.depends("picking_id")
-    def _compute_move_id(self):
-        for record in self:
-            move_id = False
-            if record.picking_id:
-                move_id = record.picking_id.move_ids.filtered(
-                    lambda r: (
-                        r.sale_line_id == record.sale_line_id
-                        and r.sale_line_id.product_id == record.product_id
-                        and r.sale_line_id.order_id == record.order_id
-                        and r.state == "done"
-                    )
-                )
-            record.move_id = move_id
 
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):

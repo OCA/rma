@@ -20,13 +20,14 @@ class SaleOrderLine(models.Model):
                 ("move_id.scrapped", "=", False),
             ],
             ["qty_done:sum"],
-            ["product_id", "lot_id"],
+            ["product_id", "lot_id", "move_id"],
             lazy=False,
         ):
+            move_id = group.get("move_id")[0] if group.get("move_id") else False
             lot_id = group.get("lot_id")[0] if group.get("lot_id") else False
             product_id = group.get("product_id")[0]
             qty_done = group.get("qty_done")
-            res[(product_id, lot_id)] += qty_done
+            res[(product_id, move_id, lot_id)] += qty_done
         return res
 
     def prepare_sale_rma_data(self):
@@ -38,19 +39,16 @@ class SaleOrderLine(models.Model):
         moves = self.get_delivery_move()
         data = []
         qty_done_by_product_lot = self._get_qty_done_by_product_lot(moves)
-        for (product_id, lot_id), qty_done in qty_done_by_product_lot.items():
+        for (product_id, move_id, lot_id), qty_done in qty_done_by_product_lot.items():
             data.append(
-                self._prepare_sale_rma_data_line(moves, product_id, lot_id, qty_done)
+                self._prepare_sale_rma_data_line(move_id, product_id, lot_id, qty_done)
             )
         return data
 
-    def _prepare_sale_rma_data_line(self, moves, product_id, lot_id, qty_done):
-        moves = moves.move_line_ids.filtered(
-            lambda ml, p_id=product_id, l_id=lot_id: ml.product_id.id == p_id
-            and ml.lot_id.id == l_id
-        ).move_id
+    def _prepare_sale_rma_data_line(self, move_id, product_id, lot_id, qty_done):
+        move = self.env["stock.move"].browse(move_id)
         quantity = qty_done
-        for returned_move in moves.returned_move_ids.filtered(
+        for returned_move in move.returned_move_ids.filtered(
             lambda r: r.state in ["partially_available", "assigned", "done"]
         ):
             if (
@@ -63,13 +61,14 @@ class SaleOrderLine(models.Model):
                 elif returned_move.state == "done":
                     quantity -= returned_move.product_qty
         quantity = float_round(
-            quantity, precision_rounding=moves.product_id.uom_id.rounding
+            quantity, precision_rounding=move.product_id.uom_id.rounding
         )
         return {
-            "product": moves.product_id,
+            "product": move.product_id,
             "quantity": quantity,
-            "uom": moves.product_uom,
-            "picking": moves.picking_id[0],
+            "uom": move.product_uom,
+            "picking": move.picking_id,
             "sale_line_id": self,
             "lot_id": lot_id,
+            "move": move,
         }
