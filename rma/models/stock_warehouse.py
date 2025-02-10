@@ -2,7 +2,7 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class StockWarehouse(models.Model):
@@ -19,17 +19,24 @@ class StockWarehouse(models.Model):
     rma_in_type_id = fields.Many2one(
         comodel_name="stock.picking.type",
         string="RMA In Type",
+        check_company=True,
+        copy=False,
     )
     rma_out_type_id = fields.Many2one(
         comodel_name="stock.picking.type",
         string="RMA Out Type",
+        check_company=True,
+        copy=False,
     )
     rma_loc_id = fields.Many2one(
-        comodel_name="stock.location",
-        string="RMA Location",
+        comodel_name="stock.location", string="RMA Location", check_company=True
     )
-    rma_in_route_id = fields.Many2one("stock.route", "RMA in Route")
-    rma_out_route_id = fields.Many2one("stock.route", "RMA out Route")
+    rma_in_route_id = fields.Many2one(
+        "stock.route", "RMA in Route", ondelete="restrict", copy=False
+    )
+    rma_out_route_id = fields.Many2one(
+        "stock.route", "RMA out Route", ondelete="restrict", copy=False
+    )
 
     def _get_rma_location_values(self, vals, code=False):
         """this method is intended to be used by 'create' method
@@ -49,7 +56,6 @@ class StockWarehouse(models.Model):
         return {
             "name": view_location.name,
             "active": True,
-            "return_location": True,
             "usage": "internal",
             "company_id": company_id,
             "location_id": self.env.ref("rma.stock_location_rma").id,
@@ -63,17 +69,19 @@ class StockWarehouse(models.Model):
 
     def _get_sequence_values(self, name=False, code=False):
         values = super()._get_sequence_values(name=name, code=code)
+        name = name if name else self.name
+        code = code if code else self.code
         values.update(
             {
                 "rma_in_type_id": {
-                    "name": self.name + " " + _("Sequence RMA in"),
-                    "prefix": self.code + "/RMA/IN/",
+                    "name": name + " " + self.env._("Sequence RMA in"),
+                    "prefix": code + "/RMA/IN/",
                     "padding": 5,
                     "company_id": self.company_id.id,
                 },
                 "rma_out_type_id": {
-                    "name": self.name + " " + _("Sequence RMA out"),
-                    "prefix": self.code + "/RMA/OUT/",
+                    "name": name + " " + self.env._("Sequence RMA out"),
+                    "prefix": code + "/RMA/OUT/",
                     "padding": 5,
                     "company_id": self.company_id.id,
                 },
@@ -96,23 +104,21 @@ class StockWarehouse(models.Model):
         data.update(
             {
                 "rma_in_type_id": {
-                    "name": _("RMA Receipts"),
+                    "name": self.env._("RMA Receipts"),
                     "code": "incoming",
                     "use_create_lots": False,
                     "use_existing_lots": True,
-                    "default_location_src_id": False,
                     "default_location_dest_id": self.rma_loc_id.id,
                     "sequence": max_sequence + 1,
                     "sequence_code": "RMA/IN",
                     "company_id": self.company_id.id,
                 },
                 "rma_out_type_id": {
-                    "name": _("RMA Delivery Orders"),
+                    "name": self.env._("RMA Delivery Orders"),
                     "code": "outgoing",
                     "use_create_lots": False,
                     "use_existing_lots": True,
                     "default_location_src_id": self.rma_loc_id.id,
-                    "default_location_dest_id": False,
                     "sequence": max_sequence + 2,
                     "sequence_code": "RMA/OUT",
                     "company_id": self.company_id.id,

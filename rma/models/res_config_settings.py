@@ -21,6 +21,7 @@ class ResConfigSettings(models.TransientModel):
     )
     rma_mail_confirmation_template_id = fields.Many2one(
         related="company_id.rma_mail_confirmation_template_id",
+        domain="[('model', '=', 'rma')]",
         readonly=False,
     )
     send_rma_receipt_confirmation = fields.Boolean(
@@ -29,6 +30,7 @@ class ResConfigSettings(models.TransientModel):
     )
     rma_mail_receipt_confirmation_template_id = fields.Many2one(
         related="company_id.rma_mail_receipt_confirmation_template_id",
+        domain="[('model', '=', 'rma')]",
         readonly=False,
     )
     send_rma_draft_confirmation = fields.Boolean(
@@ -37,5 +39,6 @@ class ResConfigSettings(models.TransientModel):
     )
     rma_mail_draft_confirmation_template_id = fields.Many2one(
         related="company_id.rma_mail_draft_confirmation_template_id",
+        domain="[('model', '=', 'rma')]",
         readonly=False,
     )

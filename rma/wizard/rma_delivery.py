@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -40,7 +40,7 @@ class RmaReDeliveryWizard(models.TransientModel):
         self.ensure_one()
         rma_ids = self.env.context.get("active_ids")
         if len(rma_ids) == 1 and self.product_uom_qty <= 0:
-            raise ValidationError(_("Quantity must be greater than 0."))
+            raise ValidationError(self.env._("Quantity must be greater than 0."))
 
     @api.model
     def default_get(self, fields_list):

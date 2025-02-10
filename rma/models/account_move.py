@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
@@ -33,7 +33,7 @@ class AccountMove(models.Model):
         """
         if self._check_rma_invoice_lines_qty():
             raise ValidationError(
-                _(
+                self.env._(
                     "There is at least one invoice lines whose quantity is "
                     "less than the quantity specified in its linked RMA."
                 )

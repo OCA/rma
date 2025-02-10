@@ -3,7 +3,7 @@
 
 import ast
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class RmaTeam(models.Model):
@@ -40,18 +40,17 @@ class RmaTeam(models.Model):
     )
 
     def copy(self, default=None):
-        self.ensure_one()
-        if default is None:
-            default = {}
-        if not default.get("name"):
-            default["name"] = _("%s (copy)") % self.name
-        team = super().copy(default)
-        for follower in self.message_follower_ids:
-            team.message_subscribe(
-                partner_ids=follower.partner_id.ids,
-                subtype_ids=follower.subtype_ids.ids,
-            )
-        return team
+        default = dict(default or {})
+        new_teams = super().copy(default)
+        for old_team, new_team in zip(self, new_teams, strict=False):
+            if not default.get("name"):
+                new_team.name = self.env._("%s (copy)") % old_team.name
+            for follower in old_team.message_follower_ids:
+                new_team.message_subscribe(
+                    partner_ids=follower.partner_id.ids,
+                    subtype_ids=follower.subtype_ids.ids,
+                )
+        return new_teams
 
     def _alias_get_creation_values(self):
         values = super()._alias_get_creation_values()

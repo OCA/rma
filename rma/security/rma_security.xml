@@ -71,25 +71,19 @@
         <field name="name">RMA multi-company</field>
         <field name="model_id" ref="model_rma" />
         <field name="global" eval="True" />
-        <field
-            name="domain_force"
-        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
     </record>
     <record id="rma_team_rule_multi_company" model="ir.rule">
         <field name="name">RMA team multi-company</field>
         <field name="model_id" ref="model_rma_team" />
         <field name="global" eval="True" />
-        <field
-            name="domain_force"
-        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
     </record>
     <record id="rma_finalization_comp_rule" model="ir.rule">
         <field name="name">RMA Finalization Reason multi-company</field>
         <field name="model_id" ref="model_rma_finalization" />
         <field name="global" eval="True" />
-        <field
-            name="domain_force"
-        > ['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
     </record>
     <!-- Allow to refund RMAs -->
     <record id="rma_account_move_personal_rule" model="ir.rule">

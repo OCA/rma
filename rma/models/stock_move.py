@@ -2,7 +2,7 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
@@ -72,7 +72,7 @@ class StockMove(models.Model):
                 != 0
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "The quantity done for the product '%(id)s' must "
                         "be equal to its initial demand because the "
                         "stock move is linked to an RMA (%(name)s)."

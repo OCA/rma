@@ -1,5 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
-# Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2022-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, exceptions, http
@@ -17,9 +17,7 @@ class PortalRma(CustomerPortal):
         if "rma_count" in counters:
             rma_model = request.env["rma"]
             rma_count = (
-                rma_model.search_count([])
-                if rma_model.check_access_rights("read", raise_exception=False)
-                else 0
+                rma_model.search_count([]) if rma_model.has_access("read") else 0
             )
             values["rma_count"] = rma_count
         return values
@@ -43,7 +41,7 @@ class PortalRma(CustomerPortal):
         values = self._prepare_portal_layout_values()
         rma_obj = request.env["rma"]
         # Avoid error if the user does not have access.
-        if not rma_obj.check_access_rights("read", raise_exception=False):
+        if not rma_obj.has_access("read"):
             return request.redirect("/my")
         domain = self._get_filter_domain(kw)
         searchbar_sortings = {
@@ -137,8 +135,7 @@ class PortalRma(CustomerPortal):
         picking = request.env["stock.picking"].browse([picking_id])
         picking_sudo = picking.sudo()
         try:
-            picking.check_access_rights("read")
-            picking.check_access_rule("read")
+            picking.check_access("read")
         except exceptions.AccessError:
             if not access_token or not consteq(rma.access_token, access_token):
                 raise

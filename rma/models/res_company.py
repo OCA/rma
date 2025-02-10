@@ -2,7 +2,7 @@
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
@@ -79,7 +79,7 @@ class ResCompany(models.Model):
             .sudo()
             .create(
                 {
-                    "name": _("RMA Code"),
+                    "name": self.env._("RMA Code"),
                     "prefix": "RMA",
                     "code": "rma",
                     "padding": 4,

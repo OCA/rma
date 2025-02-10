@@ -45,11 +45,11 @@
         <field name="model">rma.finalization</field>
         <field eval="6" name="priority" />
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="company_id" invisible="1" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="action_rma_finalization" model="ir.actions.act_window">

@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class RmaReSplitWizard(models.TransientModel):
@@ -60,7 +60,7 @@ class RmaReSplitWizard(models.TransientModel):
             self.product_uom_qty, self.product_uom
         )
         return {
-            "name": _("Extracted RMA"),
+            "name": self.env._("Extracted RMA"),
             "type": "ir.actions.act_window",
             "view_type": "form",
             "view_mode": "form",

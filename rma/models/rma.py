@@ -9,7 +9,7 @@ from itertools import groupby
 
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tools import html2plaintext
 
@@ -40,7 +40,7 @@ class Rma(models.Model):
     name = fields.Char(
         index=True,
         copy=False,
-        default=lambda self: _("New"),
+        default=lambda self: self.env._("New"),
     )
     origin = fields.Char(
         string="Source Document",
@@ -314,9 +314,7 @@ class Rma(models.Model):
         for r in self:
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
 
-    @api.depends(
-        "state",
-    )
+    @api.depends("state")
     def _compute_can_be_refunded(self):
         """Compute 'can_be_refunded'. This field controls the visibility
         of 'Refund' button in the rma form view and determinates if
@@ -497,7 +495,7 @@ class Rma(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get("name", _("New")) == _("New"):
+            if vals.get("name", self.env._("New")) == self.env._("New"):
                 ir_sequence = self.env["ir.sequence"]
                 if "company_id" in vals:
                     ir_sequence = ir_sequence.with_company(vals["company_id"])
@@ -514,18 +512,19 @@ class Rma(models.Model):
         return rmas
 
     def copy(self, default=None):
-        team = super().copy(default)
-        for follower in self.message_follower_ids:
-            team.message_subscribe(
-                partner_ids=follower.partner_id.ids,
-                subtype_ids=follower.subtype_ids.ids,
-            )
-        return team
+        new_rmas = super().copy(default)
+        for old_rma, new_rma in zip(self, new_rmas, strict=False):
+            for follower in old_rma.message_follower_ids:
+                new_rma.message_subscribe(
+                    partner_ids=follower.partner_id.ids,
+                    subtype_ids=follower.subtype_ids.ids,
+                )
+        return new_rmas
 
     def unlink(self):
         if self.filtered(lambda r: r.state != "draft"):
             raise ValidationError(
-                _("You cannot delete RMAs that are not in draft state")
+                self.env._("You cannot delete RMAs that are not in draft state")
             )
         return super().unlink()
 
@@ -601,10 +600,6 @@ class Rma(models.Model):
         if self.partner_id and self.partner_id not in self.message_partner_ids:
             self.message_subscribe([self.partner_id.id])
 
-    def _product_is_storable(self, product=None):
-        product = product or self.product_id
-        return product.type in ["product", "consu"]
-
     def _prepare_procurement_group_vals(self):
         return {
             "move_type": "direct",
@@ -643,7 +638,7 @@ class Rma(models.Model):
         procurements = []
         group_model = self.env["procurement.group"]
         for rma in self:
-            if not rma._product_is_storable():
+            if not rma.product_id.is_storable:
                 continue
             group = rma.procurement_group_id
             if not group:
@@ -824,7 +819,7 @@ class Rma(models.Model):
         """Invoked when 'Refund' smart button in rma form view is clicked."""
         self.ensure_one()
         return {
-            "name": _("Refund"),
+            "name": self.env._("Refund"),
             "type": "ir.actions.act_window",
             "view_type": "form",
             "view_mode": "form",
@@ -873,7 +868,7 @@ class Rma(models.Model):
                 )
                 desc += f"\n{field_record.field_description}"
             if desc:
-                raise ValidationError(_("Required field(s):%s") % desc)
+                raise ValidationError(self.env._("Required field(s):%s") % desc)
 
     def _ensure_can_be_returned(self):
         """This method is intended to be invoked after user click on
@@ -888,9 +883,11 @@ class Rma(models.Model):
         """
         if len(self) == 1:
             if not self.can_be_returned:
-                raise ValidationError(_("This RMA cannot perform a return."))
+                raise ValidationError(self.env._("This RMA cannot perform a return."))
         elif not self.filtered("can_be_returned"):
-            raise ValidationError(_("None of the selected RMAs can perform a return."))
+            raise ValidationError(
+                self.env._("None of the selected RMAs can perform a return.")
+            )
 
     def _ensure_can_be_replaced(self):
         """This method is intended to be invoked after user click on
@@ -903,10 +900,12 @@ class Rma(models.Model):
         """
         if len(self) == 1:
             if not self.can_be_replaced:
-                raise ValidationError(_("This RMA cannot perform a replacement."))
+                raise ValidationError(
+                    self.env._("This RMA cannot perform a replacement.")
+                )
         elif not self.filtered("can_be_replaced"):
             raise ValidationError(
-                _("None of the selected RMAs can perform a replacement.")
+                self.env._("None of the selected RMAs can perform a replacement.")
             )
 
     def _ensure_can_be_split(self):
@@ -917,7 +916,7 @@ class Rma(models.Model):
         """
         self.ensure_one()
         if not self.can_be_split:
-            raise ValidationError(_("This RMA cannot be split."))
+            raise ValidationError(self.env._("This RMA cannot be split."))
 
     def _ensure_qty_to_return(self, qty=None, uom=None):
         """This method is intended to be invoked after confirm the wizard.
@@ -928,7 +927,9 @@ class Rma(models.Model):
                 qty = uom._compute_quantity(qty, self.product_uom)
             if qty > self.remaining_qty:
                 raise ValidationError(
-                    _("The quantity to return is greater than " "remaining quantity.")
+                    self.env._(
+                        "The quantity to return is greater than " "remaining quantity."
+                    )
                 )
 
     def _ensure_qty_to_extract(self, qty, uom):
@@ -940,7 +941,7 @@ class Rma(models.Model):
             to_split_uom_qty = uom._compute_quantity(qty, self.product_uom)
         if to_split_uom_qty > self.remaining_qty:
             raise ValidationError(
-                _(
+                self.env._(
                     "Quantity to extract cannot be greater than remaining"
                     " delivery quantity (%(remaining_qty)s %(product_uom)s)"
                 )
@@ -980,7 +981,7 @@ class Rma(models.Model):
         )
         self.message_post(
             body=Markup(
-                _(
+                self.env._(
                     'Split: <a href="#" data-oe-model="rma" '
                     'data-oe-id="%(id)d">%(name)s</a> has been created.'
                 )
@@ -1103,7 +1104,7 @@ class Rma(models.Model):
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
         rmas_to_return = self.filtered(
-            lambda rma: rma.can_be_returned and rma._product_is_storable()
+            lambda rma: rma.can_be_returned and rma.product_id.is_storable
         )
         procurements = rmas_to_return._prepare_delivery_procurements(
             scheduled_date, qty, uom
@@ -1116,7 +1117,7 @@ class Rma(models.Model):
             pickings[picking] |= rma
             rma.message_post(
                 body=Markup(
-                    _(
+                    self.env._(
                         'Return: <a href="#" data-oe-model="stock.picking" '
                         'data-oe-id="%(id)d">%(name)s</a> has been created.'
                     )
@@ -1146,7 +1147,7 @@ class Rma(models.Model):
         procurements = []
         group_model = self.env["procurement.group"]
         for rma in self:
-            if not rma._product_is_storable(product):
+            if not product.is_storable:
                 continue
 
             if not rma.procurement_group_id:
@@ -1186,7 +1187,7 @@ class Rma(models.Model):
         # MRP BoM Kits
         for new_move in new_moves:
             body += Markup(
-                _(
+                self.env._(
                     'Replacement: Move <a href="#" data-oe-model="stock.move"'
                     ' data-oe-id="%(move_id)d">%(move_name)s</a> (Picking <a'
                     ' href="#" data-oe-model="stock.picking"'
@@ -1212,7 +1213,7 @@ class Rma(models.Model):
         self.message_post(
             body=body
             or Markup(
-                _(
+                self.env._(
                     "Replacement:<br/>"
                     'Product <a href="#" data-oe-model="product.product" '
                     'data-oe-id="%(id)d">%(name)s</a><br/>'
@@ -1255,14 +1256,14 @@ class Rma(models.Model):
             custom_values = {}
         subject = msg_dict.get("subject", "")
         body = html2plaintext(msg_dict.get("body", ""))
-        desc = _(
+        desc = self.env._(
             "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail"
             " body:</b><br/>%(body)s"
         ) % ({"subject": subject, "body": body})
         defaults = {
             "description": desc,
-            "name": _("New"),
-            "origin": _("Incoming e-mail"),
+            "name": self.env._("New"),
+            "origin": self.env._("Incoming e-mail"),
         }
         if msg_dict.get("author_id"):
             partner = self.env["res.partner"].browse(msg_dict.get("author_id"))
@@ -1298,7 +1299,7 @@ class Rma(models.Model):
         try:
             for record in self.filtered("partner_id"):
                 record._message_add_suggested_recipient(
-                    recipients, partner=record.partner_id, reason=_("Customer")
+                    recipients, partner=record.partner_id, reason=self.env._("Customer")
                 )
         except AccessError as e:  # no read access rights
             _logger.debug(e)
@@ -1307,7 +1308,7 @@ class Rma(models.Model):
     # Reporting business methods
     def _get_report_base_filename(self):
         self.ensure_one()
-        return "RMA Report - %s" % self.name
+        return f"RMA Report - {self.name}"
 
     # Other business methods
 
