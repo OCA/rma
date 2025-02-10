@@ -414,9 +414,9 @@
                                 <div class="d-lg-inline-block">
                                     Date:
                                     <span
-                                        class="text-muted"
-                                        t-field="refund.invoice_date"
-                                    />
+                                    class="text-muted"
+                                    t-field="refund.invoice_date"
+                                />
                                 </div>
                             </div>
                             <span
@@ -466,9 +466,9 @@
                                         <div class="d-lg-inline-block">
                                             Date:
                                             <span
-                                                class="text-muted"
-                                                t-field="picking.date"
-                                            />
+                                            class="text-muted"
+                                            t-field="picking.date"
+                                        />
                                         </div>
                                     </div>
                                     <t t-if="picking.state == 'done'">

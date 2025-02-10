@@ -222,8 +222,7 @@
                             class="oe_stat_button"
                             icon="fa-truck"
                             invisible="not reception_move_id"
-                        >
-                        </button>
+                        />
                         <button
                             type="object"
                             name="action_view_delivery"
@@ -244,8 +243,7 @@
                             class="oe_stat_button"
                             icon="fa-pencil-square-o"
                             invisible="not refund_id"
-                        >
-                        </button>
+                        />
                     </div>
                     <div class="oe_title">
                         <h1>
