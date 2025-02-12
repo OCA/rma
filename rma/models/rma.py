@@ -306,16 +306,10 @@ class Rma(models.Model):
 
     @api.depends("product_uom_qty", "delivered_qty")
     def _compute_remaining_qty(self):
-        """Compute 'remaining_qty' and 'remaining_qty_to_done' fields.
+        """Compute 'remaining_qty' field.
 
         remaining_qty: is used to set a default quantity of replacing
         or returning of product to the customer.
-
-        remaining_qty_to_done: the aim of this field to control when the
-        RMA cam be set to 'delivered' state. An RMA with
-        remaining_qty_to_done <= 0 can be set to 'delivery'. It is used
-        in stock.move._action_done method of stock.move and
-        rma.extract_quantity.
         """
         for r in self:
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
@@ -380,7 +374,7 @@ class Rma(models.Model):
         for r in self:
             if r.product_uom_qty > 1 and (
                 (r.state == "waiting_return" and r.remaining_qty > 0)
-                or (r.state == "waiting_replacement" and r.remaining_qty_to_done > 0)
+                or (r.state == "waiting_replacement" and r.remaining_qty > 0)
             ):
                 r.can_be_split = True
             else:
