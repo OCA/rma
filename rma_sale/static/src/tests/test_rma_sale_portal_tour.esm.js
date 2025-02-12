@@ -1,4 +1,3 @@
-/** @odoo-module */
 /* Copyright 2021 Tecnativa - David Vidal
    Copyright 2025 Tecnativa - Víctor Martínez
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
@@ -10,35 +9,38 @@ registry.category("web_tour.tours").add("rma_sale_portal", {
     steps: () => [
         {
             content: "Open the test sale order",
-            trigger: 'a:containsExact("Test Sale RMA SO")',
+            trigger: 'a:contains("Test Sale RMA SO")',
+            run: "click",
         },
         {
             content: "Open the RMA request pop-up",
             trigger: 'a:contains("Request RMAs")',
+            run: "click",
         },
         {
             content:
                 "Submit button is disabled until we set quanity and requested operation",
-            trigger: "button[type='submit'][disabled] .fa-check",
+            trigger: "button[type='submit'][disabled]",
         },
         {
             content: "Return 1 unit for the first row",
             trigger: "input[name='0-quantity']",
-            run: "text 1",
+            run: "edit 1",
         },
         {
             content: "Select the operation",
             trigger: "select[name='0-operation_id']",
-            run: "text Replace",
+            run: "select 1",
         },
         {
             content: "Write some comments",
             trigger: "textarea[name='0-description']",
-            run: "text I'd like to change this product",
+            run: "edit I'd like to change this product",
         },
         {
             content: "Unfold the Delivery Address picker",
             trigger: "button:contains('Choose a delivery address')",
+            run: "click",
         },
         {
             content: "Choose another address",
@@ -48,15 +50,11 @@ registry.category("web_tour.tours").add("rma_sale_portal", {
         {
             content: "Submit the RMA",
             trigger: "button[type='submit']",
+            run: "click",
         },
         {
             content: "We're redirected to the new draft RMA",
             trigger: "h5:contains('RMA Order')",
-        },
-        {
-            content: "We're redirected to the new draft RMA",
-            trigger: "h5:contains('RMA Order')",
-            isCheck: true,
         },
     ],
 });

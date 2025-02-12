@@ -3,8 +3,10 @@
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form
+from odoo import Command
+from odoo.tests import Form, new_test_user
 from odoo.tests.common import users
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -18,10 +20,10 @@ class TestRmaSaleBase(BaseCommon):
         cls.so_model = cls.env["sale.order"]
 
         cls.product_1 = cls.product_product.create(
-            {"name": "Product test 1", "type": "product"}
+            {"name": "Product test 1", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.product_product.create(
-            {"name": "Product test 2", "type": "product"}
+            {"name": "Product test 2", "type": "consu", "is_storable": True}
         )
         cls.partner = cls.res_partner.create(
             {"name": "Partner test", "email": "partner@rma"}
@@ -110,6 +112,7 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertTrue(rma.reception_move_id)
         self.assertFalse(rma.reception_move_id.origin_returned_move_id)
 
+    @mute_logger("odoo.models.unlink")
     def test_create_rma_from_so(self):
         order = self.sale_order
         wizard = self._rma_sale_wizard(order)
@@ -130,9 +133,7 @@ class TestRmaSale(TestRmaSaleBase):
             rma.reception_move_id.picking_id + self.order_out_picking,
             order.picking_ids,
         )
-        user = self.env["res.users"].create(
-            {"login": "test_refund_with_so", "name": "Test"}
-        )
+        user = new_test_user(self.env, login="test_refund_with_so")
         order.user_id = user.id
         # Receive the RMA
         rma.action_confirm()
@@ -161,9 +162,7 @@ class TestRmaSale(TestRmaSaleBase):
         )
         operation = self.rma_operation_model.sudo().search([], limit=1)
         line_vals = [
-            (
-                0,
-                0,
+            Command.create(
                 {
                     "product_id": order.order_line.product_id.id,
                     "sale_line_id": order.order_line.id,

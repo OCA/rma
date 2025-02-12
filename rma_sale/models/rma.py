@@ -14,7 +14,7 @@ class Rma(models.Model):
         string="Sale Order",
         domain="["
         "    ('partner_id', 'child_of', commercial_partner_id),"
-        "    ('state', 'in', ['sale', 'done']),"
+        "    ('state', '=', 'sale'),"
         "]",
         store=True,
         readonly=False,

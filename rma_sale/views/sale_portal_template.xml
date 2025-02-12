@@ -21,7 +21,7 @@
                 t-att-class="not single_page_mode and 'modal-body'"
                 id="modal-body-request-rma"
             >
-                <div class="alert alert-info mb-2 mb-sm-1 oe_structure" role="alert">
+                <div class="alert alert-info mb-2 mb-sm-1" role="alert">
                     <span>
                     You're about to perform an RMA request. Our team will process it an will reach you once it's validated. Keep in mind that:
                     <ul>
@@ -99,7 +99,7 @@
                     </thead>
                     <tbody class="request-rma-tbody">
                         <t t-foreach="data_list" t-as="data">
-                            <t t-if="data['quantity'] &gt; 0 and data['picking']">
+                            <t t-if="data['picking']">
                                 <tr>
                                     <td class="text-start">
                                         <span t-out="data['product'].display_name" />
@@ -205,32 +205,30 @@
     >
         <xpath expr="//div[@id='sale_order_sidebar_button']" position="inside">
             <div
-                t-if="sale_order.state in ['sale', 'done']"
+                t-if="sale_order.state == 'sale'"
                 class="d-flex gap-2 flex-lg-column flex-xl-row flex-wrap"
                 id="request_rma_button"
             >
-                <div class="flex-grow-1">
-                    <t t-if="sale_order.company_id.show_full_page_sale_rma">
-                        <a
-                            role="button"
-                            class="btn btn-secondary o_print_btn d-block"
-                            t-attf-href="/my/requestrma/#{sale_order.id}"
-                        >
-                            <i class="fa fa-reply" /> Request RMAs
-                        </a>
-                    </t>
-                    <t t-else="">
-                        <a
-                            role="button"
-                            class="btn btn-secondary o_print_btn d-block"
-                            href="#"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modal-request-rma"
-                        >
-                            <i class="fa fa-reply" /> Request RMAs
-                        </a>
-                    </t>
-                </div>
+                <t t-if="sale_order.company_id.show_full_page_sale_rma">
+                    <a
+                        role="button"
+                        class="btn btn-light o_print_btn flex-grow-1"
+                        t-attf-href="/my/requestrma/#{sale_order.id}"
+                    >
+                        <i class="fa fa-reply me-1" /> Request RMAs
+                    </a>
+                </t>
+                <t t-else="">
+                    <a
+                        role="button"
+                        class="btn btn-light o_print_btn flex-grow-1"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal-request-rma"
+                    >
+                        <i class="fa fa-reply me-1" /> Request RMAs
+                    </a>
+                </t>
             </div>
         </xpath>
         <xpath expr="//div[@id='modaldecline']" position="after">
@@ -251,12 +249,12 @@
         name="Show RMAs"
         inherit_id="sale.sale_order_portal_content"
     >
-        <xpath expr="//div[@id='introduction']//h2" position="inside">
+        <xpath expr="//div[@id='introduction']//h2" position="after">
             <span t-if="sale_order.rma_count" class="float-end">
                 <a
                     role="button"
                     t-attf-href="/my/rmas?sale_id=#{sale_order.id}"
-                    class="btn btn-sm btn-secondary"
+                    class="btn btn-sm btn-light"
                 >
                     <span class="fa fa-reply" role="img" aria-label="RMA" title="RMA" />
                     <span t-out="sale_order.rma_count" />
@@ -290,26 +288,20 @@
     <!-- Request RMA single view. When the website is installed, we can customize it adding blocks -->
     <template id="request_rma_single_page" name="Request RMA (single page)">
         <t t-call="portal.portal_layout">
-            <t t-call="portal.portal_record_layout">
-                <t t-set="card_header">
-                    <h5 class="mb-0">
-                        <span>
-                            RMA request for order <t t-out="sale_order.name" />
-                        </span>
-                    </h5>
-                </t>
-                <t t-set="card_body">
-                    <div class="oe_structure" id="sale_rma_request_top_hook" />
-                    <div id="request_form">
-                        <div class="row">
-                            <t t-call="rma_sale.sale_rma_request_form">
-                                <t t-set="single_page_mode" t-value="True" />
-                            </t>
-                        </div>
-                    </div>
-                    <div class="oe_structure" id="sale_rma_request_bottom_hook" />
-                </t>
-            </t>
+            <h5 class="mb-0">
+                <span>
+                    RMA request for order <t t-out="sale_order.name" />
+                </span>
+            </h5>
+            <div id="sale_rma_request_top_hook" />
+            <div id="request_form">
+                <div class="row">
+                    <t t-call="rma_sale.sale_rma_request_form">
+                        <t t-set="single_page_mode" t-value="True" />
+                    </t>
+                </div>
+            </div>
+            <div id="sale_rma_request_bottom_hook" />
         </t>
     </template>
     <!-- This way we can go back to the origin sale order easily -->

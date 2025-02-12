@@ -1,9 +1,11 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2025 Tecnativa - Víctor Martínez
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_is_zero
 
 
 class SaleOrder(models.Model):
@@ -38,13 +40,13 @@ class SaleOrder(models.Model):
 
     def action_create_rma(self):
         self.ensure_one()
-        if self.state not in ["sale", "done"]:
+        if self.state != "sale":
             raise ValidationError(
-                _("You may only create RMAs from a " "confirmed or done sale order.")
+                _("You may only create RMAs from a confirmed sale order.")
             )
         wizard_obj = self.env["sale.order.rma.wizard"]
         line_vals = [
-            (0, 0, self._prepare_rma_wizard_line_vals(data))
+            Command.create(self._prepare_rma_wizard_line_vals(data))
             for data in self.get_delivery_rma_data()
         ]
         wizard = wizard_obj.with_context(active_id=self.id).create(
@@ -77,9 +79,12 @@ class SaleOrder(models.Model):
 
     def get_delivery_rma_data(self):
         self.ensure_one()
+        qty_dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         data = []
         for line in self.order_line:
-            data += line.prepare_sale_rma_data()
+            for data_line in line.prepare_sale_rma_data():
+                if not float_is_zero(data_line["quantity"], precision_digits=qty_dp):
+                    data.append(data_line)
         return data
 
     @api.depends("rma_ids.refund_id")
@@ -138,7 +143,7 @@ class SaleOrderLine(models.Model):
             return moves
 
         product = self.product_id
-        if self.product_id.type not in ["product", "consu"]:
+        if self.product_id.type != "consu":
             return {}
         moves = self.get_delivery_move()
         data = []
