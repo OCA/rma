@@ -1,10 +1,13 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 from collections import defaultdict
 from itertools import groupby
+
+from markupsafe import Markup
 
 from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, ValidationError
@@ -981,11 +984,13 @@ class Rma(models.Model):
             subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
         )
         self.message_post(
-            body=_(
-                'Split: <a href="#" data-oe-model="rma" '
-                'data-oe-id="%(id)d">%(name)s</a> has been created.'
+            body=Markup(
+                _(
+                    'Split: <a href="#" data-oe-model="rma" '
+                    'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                )
+                % ({"id": extracted_rma.id, "name": extracted_rma.name})
             )
-            % ({"id": extracted_rma.id, "name": extracted_rma.name})
         )
         return extracted_rma
 
@@ -1115,11 +1120,13 @@ class Rma(models.Model):
             picking = rma.delivery_move_ids.picking_id.sorted("id", reverse=True)[0]
             pickings[picking] |= rma
             rma.message_post(
-                body=_(
-                    'Return: <a href="#" data-oe-model="stock.picking" '
-                    'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                body=Markup(
+                    _(
+                        'Return: <a href="#" data-oe-model="stock.picking" '
+                        'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                    )
+                    % ({"id": picking.id, "name": picking.name})
                 )
-                % ({"id": picking.id, "name": picking.name})
             )
         for picking, rmas in pickings.items():
             picking.action_confirm()
@@ -1183,7 +1190,7 @@ class Rma(models.Model):
         # The product replacement could explode into several moves like in the case of
         # MRP BoM Kits
         for new_move in new_moves:
-            body += (
+            body += Markup(
                 _(
                     'Replacement: Move <a href="#" data-oe-model="stock.move"'
                     ' data-oe-id="%(move_id)d">%(move_name)s</a> (Picking <a'
@@ -1209,21 +1216,23 @@ class Rma(models.Model):
         self.ensure_one()
         self.message_post(
             body=body
-            or _(
-                "Replacement:<br/>"
-                'Product <a href="#" data-oe-model="product.product" '
-                'data-oe-id="%(id)d">%(name)s</a><br/>'
-                "Quantity %(qty)s %(uom)s<br/>"
-                "This replacement did not create a new move, but one of "
-                "the previously created moves was updated with this data."
-            )
-            % (
-                {
-                    "id": self.id,
-                    "name": self.display_name,
-                    "qty": qty,
-                    "uom": uom.name,
-                }
+            or Markup(
+                _(
+                    "Replacement:<br/>"
+                    'Product <a href="#" data-oe-model="product.product" '
+                    'data-oe-id="%(id)d">%(name)s</a><br/>'
+                    "Quantity %(qty)s %(uom)s<br/>"
+                    "This replacement did not create a new move, but one of "
+                    "the previously created moves was updated with this data."
+                )
+                % (
+                    {
+                        "id": self.product_id.id,
+                        "name": self.product_id.display_name,
+                        "qty": qty,
+                        "uom": uom.name,
+                    }
+                )
             )
         )
 
