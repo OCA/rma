@@ -2,7 +2,7 @@
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, http
+from odoo import Command, _, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 
@@ -50,7 +50,9 @@ class CustomerPortal(CustomerPortal):
                 custom_vals.update({name: value})
         # If no operation is filled, no RMA will be created
         line_vals = [
-            (0, 0, vals) for vals in mapped_vals.values() if vals.get("operation_id")
+            Command.create(vals)
+            for vals in mapped_vals.values()
+            if vals.get("operation_id")
         ]
         # Create wizard an generate rmas
         order = order_obj.browse(order_id).sudo()

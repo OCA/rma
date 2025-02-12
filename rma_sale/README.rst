@@ -17,21 +17,21 @@ Return Merchandise Authorization Management - Link with Sales
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/16.0/rma_sale
+    :target: https://github.com/OCA/rma/tree/18.0/rma_sale
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-16-0/rma-16-0-rma_sale
+    :target: https://translation.odoo-community.org/projects/rma-18-0/rma-18-0-rma_sale
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you to link a sales order to an RMA.
-This can be done by creating an RMA from scratch and selecting the sales
-order, creating one or more RMAs from a sales order form view or from a sales
-order web portal page.
+This module allows you to link a sales order to an RMA. This can be done
+by creating an RMA from scratch and selecting the sales order, creating
+one or more RMAs from a sales order form view or from a sales order web
+portal page.
 
 **Table of contents**
 
@@ -43,28 +43,29 @@ Usage
 
 To use this module, you need to:
 
-#. Go to *RMA > Orders* and create a new RMA.
-#. Select a sales order to be linked to the RMA if you want.
-#. Now you can do the rest of the instructions described in the
-   *readme* of the rma module.
+1. Go to *RMA > Orders* and create a new RMA.
+2. Select a sales order to be linked to the RMA if you want.
+3. Now you can do the rest of the instructions described in the *readme*
+   of the rma module.
 
 If you want to create one or more RMAs from a sale order:
 
-#. Go to *Sales > Orders > Orders*.
-#. Create a new sales order or select an existing one.
-#. If the sales order is in 'Sales Order' state you can see in the status bar
-   a button labeled 'Create RMA', click it and a wizard will appear.
-#. Modify the data at your convenience and click on 'Accept' button.
-#. As many RMAs as lines with quantity greater than zero will be created.
-   Those RMAs will be linked to the sales order.
+1. Go to *Sales > Orders > Orders*.
+2. Create a new sales order or select an existing one.
+3. If the sales order is in 'Sales Order' state you can see in the
+   status bar a button labeled 'Create RMA', click it and a wizard will
+   appear.
+4. Modify the data at your convenience and click on 'Accept' button.
+5. As many RMAs as lines with quantity greater than zero will be
+   created. Those RMAs will be linked to the sales order.
 
 The customer can also create RMAs from a sales order portal page:
 
-#. Go to a confirmed sales order portal page.
-#. In the left sidebar you can see a button named 'Request RMAs'.
-#. By clicking on this button a popup will appear to allow you to define
+1. Go to a confirmed sales order portal page.
+2. In the left sidebar you can see a button named 'Request RMAs'.
+3. By clicking on this button a popup will appear to allow you to define
    the quantity per product and delivery order line.
-#. Click on the 'Request RMAs' button and RMAs will be created linked to
+4. Click on the 'Request RMAs' button and RMAs will be created linked to
    the sales order.
 
 Single page RMA request:
@@ -77,11 +78,11 @@ Single page RMA request:
 Known issues / Roadmap
 ======================
 
-* When you try to request an RMA from a Sales Order in the portal,
-  a popup appears and the inputs for the quantity doesn't allow
-  decimal numbers. It would be good to have a component that allows
-  that and at the same time keeps the constraint of not allowing a
-  number greater than the order line product quantity.
+-  When you try to request an RMA from a Sales Order in the portal, a
+   popup appears and the inputs for the quantity doesn't allow decimal
+   numbers. It would be good to have a component that allows that and at
+   the same time keeps the constraint of not allowing a number greater
+   than the order line product quantity.
 
 Bug Tracker
 ===========
@@ -89,7 +90,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_sale%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_sale%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -97,25 +98,25 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Tecnativa <https://www.tecnativa.com>`_:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Ernesto Tejeda
-  * Pedro M. Baeza
-  * David Vidal
-  * Víctor Martínez
+   -  Ernesto Tejeda
+   -  Pedro M. Baeza
+   -  David Vidal
+   -  Víctor Martínez
 
-* Chafique Delli <chafique.delli@akretion.com>
-* Giovanni Serra - Ooops <giovanni@ooops404.com>
+-  Chafique Delli <chafique.delli@akretion.com>
+-  Giovanni Serra - Ooops <giovanni@ooops404.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -135,6 +136,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-chienandalu| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/16.0/rma_sale>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/18.0/rma_sale>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
