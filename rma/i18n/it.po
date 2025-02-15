@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-23 16:06+0000\n"
+"PO-Revision-Date: 2025-02-15 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -62,6 +62,28 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spettabile\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    di seguito la RMA\n"
+"                    <strong>\n"
+"                    <t t-out=\"object.name\"/>\n"
+"                </strong>\n"
+"                    da\n"
+"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    .\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Non esiti a contattarci per ulteriori chiarimenti.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_receipt_notification
@@ -89,6 +111,28 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spettabile\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    I prodotti per la sua RMA\n"
+"                    <strong>\n"
+"                    <t t-out=\"object.name\"/>\n"
+"                </strong>\n"
+"                    da\n"
+"                    <t t-out=\"object.company_id.name\"/>\n"
+"                    sono stati ricevuti dal nostro magazzino.\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Non esiti a contattarci per ulteriori chiarimenti.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_draft_notification
@@ -117,6 +161,29 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Spetabile\n"
+"                    <t t-out=\"object.partner_id.name\"/>\n"
+"                    <t t-if=\"object.partner_id.parent_id\">\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </t>\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    La RMA è stata inserita correttamente\n"
+"                    <strong>\n"
+"                    <t t-out=\"object.name\"/>\n"
+"                </strong>\n"
+"                    su\n"
+"                    <t t-out=\"object.company_id.name\"/>.\n"
+"                    Il nostro team la controllerà e la validerà il prima "
+"possibile.\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    Non esitate a contattarci per ulteriori chiarimenti.\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -133,6 +200,8 @@ msgid ""
 "<i class=\"fa fa-envelope me-1\" role=\"img\" aria-label=\"Email\" "
 "title=\"Email\"/>"
 msgstr ""
+"<i class=\"fa fa-envelope me-1\" role=\"img\" aria-label=\"Email\" title=\"E-"
+"mail\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -140,6 +209,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-check\"/>\n"
 "                        <b>Paid</b>"
 msgstr ""
+"<i class=\"fa fa-fw fa-check\"/>\n"
+"                        <b>Pagata</b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -147,6 +218,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                        <b>Waiting Payment</b>"
 msgstr ""
+"<i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                        <b>In attesa di pagamento</b>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -187,6 +260,10 @@ msgid ""
 "                            Cancelled\n"
 "                        </span>"
 msgstr ""
+"<span class=\"badge badge-danger label-text-align\">\n"
+"                            <i class=\"fa fa-fw fa-times\"/>\n"
+"                            Annullata\n"
+"                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -209,6 +286,10 @@ msgid ""
 "                            Preparation\n"
 "                        </span>"
 msgstr ""
+"<span class=\"badge badge-info label-text-align\">\n"
+"                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                            Preparazione\n"
+"                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -231,6 +312,10 @@ msgid ""
 "                            Shipped\n"
 "                        </span>"
 msgstr ""
+"<span class=\"badge badge-success label-text-align\">\n"
+"                            <i class=\"fa fa-fw fa-truck\"/>\n"
+"                            Spedita\n"
+"                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -253,6 +338,10 @@ msgid ""
 "                            Partially Available\n"
 "                        </span>"
 msgstr ""
+"<span class=\"badge badge-warning label-text-align\">\n"
+"                            <i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                            Parzialmente disponibile\n"
+"                        </span>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -260,6 +349,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
+"specifici per azienda.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -493,7 +584,7 @@ msgstr "Avatar"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Awaiting Action"
-msgstr ""
+msgstr "In attesa dell'azione"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
@@ -557,7 +648,7 @@ msgstr "Fai click per aggiungere un nuovo RMA."
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Closed"
-msgstr ""
+msgstr "Chiusa"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
@@ -718,7 +809,7 @@ msgstr "Q.tà consegnata"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Delivered Quantity"
-msgstr ""
+msgstr "Quantità consegnata"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -1181,7 +1272,7 @@ msgstr "Numero di messaggi con errore di consegna"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
 msgid "Operation"
-msgstr ""
+msgstr "Operazione"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
@@ -1207,7 +1298,7 @@ msgstr "Origine consegna"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Origin delivery"
-msgstr ""
+msgstr "Origine consegna"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__move_id
@@ -1278,7 +1369,7 @@ msgstr "Priorità"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Processed"
-msgstr ""
+msgstr "Elaborata"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
@@ -1365,7 +1456,7 @@ msgstr "Codice RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Confirmation Email"
-msgstr ""
+msgstr "Email di Conferma RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1428,7 +1519,7 @@ msgstr "Ubicazione RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Manual Finalization"
-msgstr ""
+msgstr "Chiusura manuale RMA"
 
 #. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
@@ -1457,7 +1548,7 @@ msgstr "Tipo RMA in uscita"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA Receipt Confirmation Email"
-msgstr ""
+msgstr "E-mail di conferma ricevuta RMA"
 
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_receipt_notification
@@ -1521,7 +1612,7 @@ msgstr "Conteggio RMA"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "RMA draft notification Email"
-msgstr ""
+msgstr "Bozza e-mail di notifica RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
@@ -1728,7 +1819,7 @@ msgstr "Utente responsabile"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Return Merchandise Authorization Management"
-msgstr ""
+msgstr "Gestione autorizzazione reso merce"
 
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
@@ -1782,7 +1873,7 @@ msgstr "Conteggio Rma"
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_sms_error
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Errore consegna SMS"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -1869,7 +1960,7 @@ msgstr "Imposta a bozza"
 #: model:ir.actions.act_window,name:rma.action_rma_config_settings
 #: model:ir.ui.menu,name:rma.menu_rma_general_settings
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -2186,6 +2277,8 @@ msgid ""
 "When the RMA is receive, allow to finsish it manually choosing\n"
 "                                    a finalization reason."
 msgstr ""
+"Quando si riceve l'RMA, permette di chiuderlo manualmente scegliendo\n"
+"                                    un motivo per la chiusura."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
