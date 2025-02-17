@@ -49,6 +49,8 @@ class TestRmaSaleLot(TestRmaSaleBase):
         self.assertEqual(rma_1.reception_move_id.restrict_lot_id, self.lot_1)
         self.assertEqual(rma_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_2.product_uom_qty, 1)
+        self.assertEqual(rma_1.reception_move_id.move_line_ids.lot_id, self.lot_1)
+        self.assertEqual(rma_2.reception_move_id.move_line_ids.lot_id, self.lot_2)
 
     def test_full_return_after_partial_return(self):
         self.test_partial_return()
