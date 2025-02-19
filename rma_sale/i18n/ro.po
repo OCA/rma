@@ -482,12 +482,3 @@ msgid ""
 msgstr ""
 "Sunteți pe cale să efectuați o solicitare de retur. Echipa noastră o va "
 "procesa odată ce va fi validată. Ține minte că:"
-
-#~ msgid "<strong>Requested operation:</strong>"
-#~ msgstr "<strong>Operație solicitată:</strong>"
-
-#~ msgid "<strong>Sale order:</strong>"
-#~ msgstr "<strong>Comandă vânzare:</strong>"
-
-#~ msgid "Stock Move"
-#~ msgstr "Mișcare stoc"

@@ -491,12 +491,3 @@ msgid ""
 msgstr ""
 "Vous êtes sur le point d'effectuer une demande RMA. Notre équipe le traitera "
 "et vous parviendra une fois validé. Garde en tête que:"
-
-#~ msgid "<strong>Requested operation:</strong>"
-#~ msgstr "<strong>Opération demandée:</strong>"
-
-#~ msgid "<strong>Sale order:</strong>"
-#~ msgstr "<strong>Bon de commande:</strong>"
-
-#~ msgid "Stock Move"
-#~ msgstr "mouvement de stock"

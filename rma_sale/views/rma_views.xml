@@ -11,7 +11,7 @@
                 <field
                     name="order_id"
                     options="{'no_create': True}"
-                    attrs="{'readonly': [('state', '!=', 'draft')]}"
+                    readonly="state!='draft'"
                 />
             </field>
             <sheet>

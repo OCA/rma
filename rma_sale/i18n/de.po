@@ -495,12 +495,3 @@ msgid ""
 msgstr ""
 "Sie sind dabei, eine RMA-Anfrage durchzuführen. Unser Team wird es "
 "bearbeiten und Sie erreichen, sobald es validiert ist. Denk daran, dass:"
-
-#~ msgid "<strong>Requested operation:</strong>"
-#~ msgstr "<strong>Angeforderte Operation:</strong>"
-
-#~ msgid "<strong>Sale order:</strong>"
-#~ msgstr "<strong>Verkaufsauftrag:</strong>"
-
-#~ msgid "Stock Move"
-#~ msgstr "Lagerbewegung"

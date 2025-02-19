@@ -1,16 +1,13 @@
 /** @odoo-module */
 /* Copyright 2021 Tecnativa - David Vidal
+   Copyright 2025 Tecnativa - Víctor Martínez
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
-import tour from "web_tour.tour";
+import {registry} from "@web/core/registry";
 
-tour.register(
-    "rma_sale_portal",
-    {
-        test: true,
-        url: "/my/orders",
-    },
-    [
+registry.category("web_tour.tours").add("rma_sale_portal", {
+    url: "/my/orders",
+    steps: () => [
         {
             content: "Open the test sale order",
             trigger: 'a:containsExact("Test Sale RMA SO")',
@@ -22,7 +19,7 @@ tour.register(
         {
             content:
                 "Submit button is disabled until we set quanity and requested operation",
-            trigger: "button[type='submit'][disabled]",
+            trigger: "button[type='submit'][disabled] .fa-check",
         },
         {
             content: "Return 1 unit for the first row",
@@ -59,6 +56,7 @@ tour.register(
         {
             content: "We're redirected to the new draft RMA",
             trigger: "h5:contains('RMA Order')",
+            isCheck: true,
         },
-    ]
-);
+    ],
+});
