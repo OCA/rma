@@ -15,7 +15,7 @@
                     class="btn-close"
                     aria-label="Close"
                     data-bs-dismiss="modal"
-                >&amp;times;</button>
+                />
             </header>
             <main
                 t-att-class="not single_page_mode and 'modal-body'"
@@ -202,36 +202,35 @@
         name="Request RMA"
         inherit_id="sale.sale_order_portal_template"
     >
-        <xpath
-            expr="//div[hasclass('o_portal_sale_sidebar')]//div[hasclass('o_download_pdf')]/.."
-            position="after"
-        >
-            <li
+        <xpath expr="//div[@id='sale_order_sidebar_button']" position="inside">
+            <div
                 t-if="sale_order.state in ['sale', 'done']"
-                class="list-group-item flex-grow-1"
-                id="li-request-rma"
+                class="d-flex gap-2 flex-lg-column flex-xl-row flex-wrap"
+                id="request_rma_button"
             >
-            <t t-if="sale_order.company_id.show_full_page_sale_rma">
-                <a
-                        role="button"
-                        class="btn btn-secondary btn-block mb8"
-                        t-attf-href="/my/requestrma/#{sale_order.id}"
-                    >
-                    <i class="fa fa-reply" /> Request RMAs
-                </a>
-            </t>
-            <t t-else="">
-                <a
-                        role="button"
-                        class="btn btn-secondary btn-block mb8"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal-request-rma"
-                    >
-                    <i class="fa fa-reply" /> Request RMAs
-                </a>
-            </t>
-            </li>
+                <div class="flex-grow-1">
+                    <t t-if="sale_order.company_id.show_full_page_sale_rma">
+                        <a
+                            role="button"
+                            class="btn btn-secondary o_print_btn d-block"
+                            t-attf-href="/my/requestrma/#{sale_order.id}"
+                        >
+                            <i class="fa fa-reply" /> Request RMAs
+                        </a>
+                    </t>
+                    <t t-else="">
+                        <a
+                            role="button"
+                            class="btn btn-secondary o_print_btn d-block"
+                            href="#"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal-request-rma"
+                        >
+                            <i class="fa fa-reply" /> Request RMAs
+                        </a>
+                    </t>
+                </div>
+            </div>
         </xpath>
         <xpath expr="//div[@id='modaldecline']" position="after">
             <div
@@ -251,7 +250,7 @@
         name="Show RMAs"
         inherit_id="sale.sale_order_portal_content"
     >
-        <xpath expr="//div[@id='introduction']/h2[hasclass('my-0')]" position="inside">
+        <xpath expr="//div[@id='introduction']//h2" position="inside">
             <span t-if="sale_order.rma_count" class="float-end">
                 <a
                     role="button"

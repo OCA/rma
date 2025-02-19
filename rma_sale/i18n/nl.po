@@ -478,6 +478,3 @@ msgid ""
 msgstr ""
 "U staat op het punt een RMA verzoek in te dienen. Ons team zal de aanvraag "
 "verwerken. Let op dat:"
-
-#~ msgid "Stock Move"
-#~ msgstr "Voorraad aanpassing"

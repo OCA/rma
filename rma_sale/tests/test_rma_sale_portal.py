@@ -1,19 +1,19 @@
 # Copyright 2023 Tecnativa - David Vidal
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from markupsafe import Markup
 
-from odoo import Command
-from odoo.tests import HttpCase, tagged
+from odoo.tests import HttpCase, new_test_user, tagged
 
 from .test_rma_sale import TestRmaSaleBase
 
 
-@tagged("-at-install", "post-install")
+@tagged("-at_install", "post_install")
 class TestRmaSalePortal(TestRmaSaleBase, HttpCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale_order = cls._create_sale_order(cls, [[cls.product_1, 5]])
+        cls.sale_order = cls._create_sale_order([[cls.product_1, 5]])
         # So we can click it in the tour
         cls.sale_order.name = "Test Sale RMA SO"
         cls.sale_order.action_confirm()
@@ -23,7 +23,7 @@ class TestRmaSalePortal(TestRmaSaleBase, HttpCase):
             lambda r: r.product_id == cls.product_1
         )
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_ids.quantity_done = 5
+        cls.order_out_picking.move_ids.quantity = 5
         cls.order_out_picking.button_validate()
         # Let's create some companion contacts
         cls.partner_company = cls.res_partner.create(
@@ -37,19 +37,8 @@ class TestRmaSalePortal(TestRmaSaleBase, HttpCase):
             }
         )
         cls.partner.parent_id = cls.partner_company
-        # Create our portal user
-        cls.user_portal = (
-            cls.env["res.users"]
-            .with_context(no_reset_password=True)
-            .create(
-                {
-                    "login": "rma_portal",
-                    "password": "rma_portal",
-                    "partner_id": cls.partner.id,
-                    "groups_id": [Command.set([cls.env.ref("base.group_portal").id])],
-                }
-            )
-        )
+        user = new_test_user(cls.env, login="rma_portal", groups="base.group_portal")
+        cls.sale_order.message_subscribe(partner_ids=user.partner_id.ids)
 
     def test_rma_sale_portal(self):
         self.start_tour("/", "rma_sale_portal", login="rma_portal")

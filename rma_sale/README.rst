@@ -67,6 +67,13 @@ The customer can also create RMAs from a sales order portal page:
 #. Click on the 'Request RMAs' button and RMAs will be created linked to
    the sales order.
 
+Single page RMA request:
+
+1. Go to Sales > Configuration > Settings
+2. Check the 'Single page RMA request' box.
+3. On a sales order in the portal, clicking on 'Request RMAs' button
+   will open a new page (not a popup).
+
 Known issues / Roadmap
 ======================
 

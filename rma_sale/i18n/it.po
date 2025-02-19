@@ -487,12 +487,3 @@ msgid ""
 msgstr ""
 "Stai per eseguire una richiesta RMA. Il nostro team lo elaborerà e ti "
 "arriverà una volta convalidato. Tieni presente che:"
-
-#~ msgid "<strong>Requested operation:</strong>"
-#~ msgstr "<strong>Operazione richiesta:</strong>"
-
-#~ msgid "<strong>Sale order:</strong>"
-#~ msgstr "<strong>Ordine di vendita:</strong>"
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimento di magazzino"

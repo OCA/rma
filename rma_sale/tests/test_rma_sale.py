@@ -1,13 +1,15 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
-# Copyright 2022 Tecnativa - Víctor Martínez
+# Copyright 2022-2025 Tecnativa - Víctor Martínez
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form
 from odoo.tests.common import users
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestRmaSaleBase(TransactionCase):
+
+class TestRmaSaleBase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -27,29 +29,32 @@ class TestRmaSaleBase(TransactionCase):
         cls.report_model = cls.env["ir.actions.report"]
         cls.rma_operation_model = cls.env["rma.operation"]
         cls.operation = cls.env.ref("rma.rma_operation_replace")
-        cls._partner_portal_wizard(cls, cls.partner)
+        cls._partner_portal_wizard(cls.partner)
 
-    def _create_sale_order(self, products):
-        order_form = Form(self.so_model)
-        order_form.partner_id = self.partner
+    @classmethod
+    def _create_sale_order(cls, products):
+        order_form = Form(cls.so_model)
+        order_form.partner_id = cls.partner
         for product_info in products:
             with order_form.order_line.new() as line_form:
                 line_form.product_id = product_info[0]
                 line_form.product_uom_qty = product_info[1]
         return order_form.save()
 
-    def _partner_portal_wizard(self, partner):
+    @classmethod
+    def _partner_portal_wizard(cls, partner):
         wizard_all = (
-            self.env["portal.wizard"]
+            cls.env["portal.wizard"]
             .with_context(**{"active_ids": [partner.id]})
             .create({})
         )
         wizard_all.user_ids.action_grant_access()
 
-    def _rma_sale_wizard(self, order):
+    @classmethod
+    def _rma_sale_wizard(cls, order):
         wizard_id = order.action_create_rma()["res_id"]
-        wizard = self.env["sale.order.rma.wizard"].browse(wizard_id)
-        wizard.operation_id = self.operation
+        wizard = cls.env["sale.order.rma.wizard"].browse(wizard_id)
+        wizard.operation_id = cls.operation
         return wizard
 
 
@@ -57,7 +62,7 @@ class TestRmaSale(TestRmaSaleBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale_order = cls._create_sale_order(cls, [[cls.product_1, 5]])
+        cls.sale_order = cls._create_sale_order([[cls.product_1, 5]])
         cls.sale_order.action_confirm()
         # Maybe other modules create additional lines in the create
         # method in sale.order model, so let's find the correct line.
@@ -65,7 +70,7 @@ class TestRmaSale(TestRmaSaleBase):
             lambda r: r.product_id == cls.product_1
         )
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_ids.quantity_done = 5
+        cls.order_out_picking.move_ids.quantity = 5
         cls.order_out_picking.button_validate()
 
     def test_rma_sale_computes_onchange(self):
@@ -131,8 +136,8 @@ class TestRmaSale(TestRmaSaleBase):
         order.user_id = user.id
         # Receive the RMA
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
         # Refund the RMA
         rma.action_refund()
         self.assertEqual(self.order_line.qty_delivered, 0)
@@ -184,8 +189,8 @@ class TestRmaSale(TestRmaSaleBase):
         """An RMA of a product that had an RMA in the past should be possible"""
         wizard = self._rma_sale_wizard(self.sale_order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
         wizard = self._rma_sale_wizard(self.sale_order)
         self.assertEqual(
             wizard.line_ids.quantity,
@@ -202,8 +207,8 @@ class TestRmaSale(TestRmaSaleBase):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
-        picking.move_ids.quantity_done = rma.product_uom_qty
-        picking._action_done()
+        picking.move_ids.quantity = rma.product_uom_qty
+        picking.button_validate()
         # The product is returned to the customer, so we should be able to make
         # another RMA in the future
         wizard = self._rma_sale_wizard(self.sale_order)

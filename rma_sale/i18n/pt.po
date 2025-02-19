@@ -490,12 +490,3 @@ msgid ""
 msgstr ""
 "Você está prestes a realizar um pedido de RMA. A nossa equipa irá processá-"
 "lo e entrará em contacto assim que for validado. Tenha presente que:"
-
-#~ msgid "<strong>Requested operation:</strong>"
-#~ msgstr "<strong>Operação Requerida:</strong>"
-
-#~ msgid "<strong>Sale order:</strong>"
-#~ msgstr "<strong>Encomenda de Venda:</strong>"
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimento de Stock"
