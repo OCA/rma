@@ -60,7 +60,7 @@ class CustomerPortal(CustomerPortal):
         if custom_vals:
             custom_description = r"<br \>---<br \>"
             custom_description += r"<br \>".join(
-                ["{}: {}".format(x, y) for x, y in custom_vals.items()]
+                [f"{x}: {y}" for x, y in custom_vals.items()]
             )
         wizard = wizard_obj.with_context(active_id=order_id).create(
             {
