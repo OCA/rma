@@ -111,6 +111,22 @@ class TestRmaSale(TestRmaSaleBase):
         rma.action_confirm()
         self.assertTrue(rma.reception_move_id)
         self.assertFalse(rma.reception_move_id.origin_returned_move_id)
+        # Receive the product
+        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
+        # Now do a replacement for testing the issue of a new SO line created for P2
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids, rma_delivery_type="replace"
+            )
+        )
+        delivery_form.product_id = self.product_2
+        delivery_form.product_uom_qty = 5
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        rma.delivery_move_ids.quantity = rma.product_uom_qty
+        rma.delivery_move_ids.picking_id.button_validate()
+        self.assertEqual(len(self.sale_order.order_line), 1)
 
     @mute_logger("odoo.models.unlink")
     def test_create_rma_from_so(self):

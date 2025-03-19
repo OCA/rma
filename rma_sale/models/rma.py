@@ -175,3 +175,14 @@ class Rma(models.Model):
         return super()._prepare_delivery_procurements(
             scheduled_date=scheduled_date, qty=qty, uom=uom
         )
+
+    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
+        # When the procurement group has the sale id set it will propagate to the
+        # pickings. This is inconvenient for this operation as when we confirm the
+        # customer delivery a new order line will be created with the replaced option
+        # which will be set for invoicing.
+        moves_before = self.delivery_move_ids
+        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
+        new_moves = self.delivery_move_ids - moves_before
+        new_moves.picking_id.sale_id = False
+        return res
