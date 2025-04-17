@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,27 +16,19 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/controllers/sale_portal.py:0
-#, python-format
 msgid " (Portal)"
 msgstr ""
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " has been created."
 msgstr ""
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " have been created."
-msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
-msgid "&amp;times;"
 msgstr ""
 
 #. module: rma_sale
@@ -46,7 +38,7 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "<i class=\"fa fa-reply\"/> Request RMAs"
+msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
 msgstr ""
 
 #. module: rma_sale
@@ -161,7 +153,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
-#, python-format
 msgid "Create RMA"
 msgstr ""
 
@@ -236,12 +227,6 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_account_move
 msgid "Journal Entry"
-msgstr ""
-
-#. module: rma_sale
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: rma_sale
@@ -452,8 +437,7 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
-#, python-format
-msgid "You may only create RMAs from a confirmed or done sale order."
+msgid "You may only create RMAs from a confirmed sale order."
 msgstr ""
 
 #. module: rma_sale
