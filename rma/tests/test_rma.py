@@ -1,8 +1,11 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from unittest import mock
 
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, SavepointCase, new_test_user, users
+
+from odoo.addons.stock.models.stock_rule import StockRule
 
 
 class TestRma(SavepointCase):
@@ -797,3 +800,75 @@ class TestRmaCase(TestRma):
         )
         self.assertTrue(rma.name in mail_receipt.subject)
         self.assertTrue("products received" in mail_receipt.subject)
+
+    def test_rma_address_changed_no_group(self):
+        origin_delivery = self._create_delivery()
+        rma_form = Form(self.env["rma"])
+        rma_form.partner_id = self.partner
+        rma_form.partner_shipping_id = self.partner_shipping
+        rma_form.picking_id = origin_delivery
+        rma_form.move_id = origin_delivery.move_lines.filtered(
+            lambda r: r.product_id == self.product
+        )
+        rma = rma_form.save()
+        rma.action_confirm()
+        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.picking_id._action_done()
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="replace",
+            )
+        )
+        delivery_form.product_id = self.product
+        delivery_form.product_uom_qty = 1
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+
+        in_pick = rma.reception_move_id.picking_id
+        out_pick = rma.delivery_move_ids.picking_id
+        self.assertNotEqual(origin_delivery.partner_id, in_pick.partner_id)
+        self.assertEqual(in_pick.partner_id, rma.partner_shipping_id)
+        self.assertEqual(out_pick.partner_id, rma.partner_shipping_id)
+
+    @mock.patch.object(StockRule, "_get_custom_move_fields")
+    def test_rma_address_changed_with_group(self, mocked):
+        mocked.return_value = [
+            "rma_id",
+            "origin_returned_move_id",
+            "move_orig_ids",
+            "rma_receiver_ids",
+            "partner_id",
+        ]
+        origin_delivery = self._create_delivery()
+        origin_delivery.group_id = self.env["procurement.group"].create(
+            {"name": "Test Group", "partner_id": self.partner.id}
+        )
+        rma_form = Form(self.env["rma"])
+        rma_form.partner_id = self.partner
+        rma_form.partner_shipping_id = self.partner_shipping
+        rma_form.picking_id = origin_delivery
+        rma_form.procurement_group_id = origin_delivery.group_id
+        rma_form.move_id = origin_delivery.move_lines.filtered(
+            lambda r: r.product_id == self.product
+        )
+        rma = rma_form.save()
+        rma.action_confirm()
+        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.picking_id._action_done()
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="replace",
+            )
+        )
+        delivery_form.product_id = self.product
+        delivery_form.product_uom_qty = 1
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+
+        in_pick = rma.reception_move_id.picking_id
+        out_pick = rma.delivery_move_ids.picking_id
+        self.assertNotEqual(origin_delivery.partner_id, in_pick.partner_id)
+        self.assertEqual(in_pick.partner_id, rma.partner_shipping_id)
+        self.assertEqual(out_pick.partner_id, rma.partner_shipping_id)
