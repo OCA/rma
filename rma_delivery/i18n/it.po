@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-06-04 09:26+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__customer_method
+msgid "Customer method"
+msgstr "Metodo cliente"
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__mixed_method
+msgid "Customer method (fallback to fixed)"
+msgstr "Metodo cliente (fallback da sistemare)"
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_delivery_method
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_fixed_delivery_method
+msgid "Default RMA delivery method"
+msgstr "Metodo predefinito consegna RMA"
+
+#. module: rma_delivery
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
+msgid "Fixed method"
+msgstr "Metodo fisso"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_rma
+msgid "RMA"
+msgstr "RMA"
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_delivery_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_delivery_strategy
+msgid "RMA delivery method strategy"
+msgstr "Strategia metodo consegna RMA"
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "RMA delivery strategy"
+msgstr "Strategia consegna RMA"
