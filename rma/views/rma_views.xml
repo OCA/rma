@@ -13,6 +13,7 @@
                 <field name="user_id" />
                 <field name="product_id" />
                 <field name="tag_ids" />
+                <field name="partner_id" />
                 <filter
                     string="Awaiting Action"
                     name="waiting_action"
