@@ -315,3 +315,21 @@ class TestRmaOperation(TestRma):
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.state, "done")
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
+
+    def test_manual_finish_if_no_required_action_flag(self):
+        self.operation.action_create_receipt = False
+        self.operation.action_create_delivery = False
+        self.operation.action_create_refund = False
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertFalse(rma.requires_action)
+        self.assertEqual(rma.state, "confirmed")
+        rma.action_finish()
+        self.assertEqual(rma.state, "finished")
+        self.operation.action_create_receipt = "manual_on_confirm"
+        rma2 = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        rma2.action_confirm()
+        self.assertTrue(rma2.requires_action)
+        self.assertEqual(rma2.state, "confirmed")
+        with self.assertRaises(ValidationError):
+            rma2.action_finish()
