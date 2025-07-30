@@ -124,8 +124,8 @@ class PortalRma(CustomerPortal):
             )
         except exceptions.AccessError:
             return request.redirect("/my")
-        report_sudo = request.env.ref("stock.action_report_delivery").sudo()
-        pdf = report_sudo._render_qweb_pdf(report_sudo, res_ids=picking_sudo.ids)[0]
+        report_sudo = request.env['ir.actions.report'].sudo()
+        pdf = report_sudo._render_qweb_pdf("stock.action_report_delivery", picking_sudo.ids)[0]
         pdfhttpheaders = [
             ("Content-Type", "application/pdf"),
             ("Content-Length", len(pdf)),

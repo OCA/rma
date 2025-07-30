@@ -154,7 +154,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\">\n"
+"<span class=\"badge text-bg-danger label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-times\"/"
 ">\n"
 "                                            Cancelled\n"
@@ -164,7 +164,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\">\n"
+"<span class=\"badge text-bg-danger label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-times\"/>\n"
 "                                    Cancelled\n"
 "                                </span>"
@@ -173,7 +173,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\">\n"
+"<span class=\"badge text-bg-info label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-clock-o\"/"
 ">\n"
 "                                            Preparation\n"
@@ -183,7 +183,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\">\n"
+"<span class=\"badge text-bg-info label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                    Preparation\n"
 "                                </span>"
@@ -192,7 +192,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-success label-text-align\">\n"
+"<span class=\"badge text-bg-success label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-truck\"/"
 ">\n"
 "                                            Shipped\n"
@@ -202,7 +202,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-success label-text-align\">\n"
+"<span class=\"badge text-bg-success label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-truck\"/>\n"
 "                                    Shipped\n"
 "                                </span>"
@@ -211,7 +211,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\">\n"
+"<span class=\"badge text-bg-warning label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-clock-o\"/"
 ">\n"
 "                                            Partially Available\n"
@@ -221,17 +221,10 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\">\n"
+"<span class=\"badge text-bg-warning label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                    Partially Available\n"
 "                                </span>"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
 
 #. module: rma
@@ -270,8 +263,23 @@ msgid "<strong>Deadline</strong>"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Delivered qty:</strong>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Delivered quantity</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Move:</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Origin delivery:</strong>"
 msgstr ""
 
 #. module: rma
@@ -290,8 +298,18 @@ msgid "<strong>Origin</strong>"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Product:</strong>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Product</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Quantity:</strong>"
 msgstr ""
 
 #. module: rma
@@ -462,11 +480,6 @@ msgid "Avatar"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Awaiting Action"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
 msgid "Can Be Finished"
 msgstr ""
@@ -523,11 +536,6 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:rma.rma_action
 #: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Closed"
 msgstr ""
 
 #. module: rma
@@ -683,11 +691,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty
 msgid "Delivered Qty"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
-msgid "Delivered Quantity"
 msgstr ""
 
 #. module: rma
@@ -1142,11 +1145,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
-msgid "Operation"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1162,11 +1160,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__picking_id
 msgid "Origin Delivery"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
-msgid "Origin delivery"
 msgstr ""
 
 #. module: rma
@@ -1228,11 +1221,6 @@ msgid "Priority"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Processed"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
 msgid "Procurement group"
 msgstr ""
@@ -1240,7 +1228,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_id
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Product"
 msgstr ""
 
@@ -1257,7 +1244,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Quantity"
 msgstr ""
 
@@ -1296,7 +1282,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma
 #: model:ir.module.category,name:rma.rma_module_category
 #: model:ir.ui.menu,name:rma.rma_menu
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
 #: model_terms:ir.ui.view,arch_db:rma.view_picking_form
 msgid "RMA"
@@ -1313,11 +1298,6 @@ msgstr ""
 #: code:addons/rma/models/res_company.py:0
 #, python-format
 msgid "RMA Code"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Confirmation Email"
 msgstr ""
 
 #. module: rma
@@ -1380,11 +1360,6 @@ msgid "RMA Location"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Manual Finalization"
-msgstr ""
-
-#. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 #: model:mail.template,name:rma.mail_template_rma_notification
@@ -1406,11 +1381,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Receipt Confirmation Email"
 msgstr ""
 
 #. module: rma
@@ -1471,11 +1441,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_count
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA draft notification Email"
 msgstr ""
 
 #. module: rma
@@ -1653,8 +1618,6 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Requested operation"
 msgstr ""
 
@@ -1679,11 +1642,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__location_id
 msgid "Return Location"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Return Merchandise Authorization Management"
 msgstr ""
 
 #. module: rma
@@ -1819,12 +1777,6 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Set to draft"
-msgstr ""
-
-#. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_config_settings
-#: model:ir.ui.menu,name:rma.menu_rma_general_settings
-msgid "Settings"
 msgstr ""
 
 #. module: rma
@@ -2080,6 +2032,11 @@ msgid "User: Own Documents Only"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
 msgid "Waiting for replacement"
 msgstr ""
@@ -2129,8 +2086,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid ""
-"When the RMA is receive, allow to finsish it manually choosing\n"
-"                                    a finalization reason."
+"When the RMA is receive, allow to finsish it manually choosing a "
+"finalization reason."
 msgstr ""
 
 #. module: rma

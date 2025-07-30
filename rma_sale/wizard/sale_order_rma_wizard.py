@@ -1,8 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
-# Copyright 2022-2025 Tecnativa - Víctor Martínez
+# Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
-from markupsafe import Markup
 
 from odoo import SUPERUSER_ID, _, api, fields, models
 
@@ -67,13 +65,14 @@ class SaleOrderRmaWizard(models.TransientModel):
         )
         rma = rma_model.create(val_list)
         if from_portal:
-            rma._add_message_subscribe_partner()
+            for r in rma:
+                r._add_message_subscribe_partner()
         # post messages
         msg_list = [
             '<a href="#" data-oe-model="rma" data-oe-id="%d">%s</a>' % (r.id, r.name)
             for r in rma
         ]
-        msg = Markup(", ".join(msg_list))
+        msg = ", ".join(msg_list)
         if len(msg_list) == 1:
             self.order_id.message_post(body=_(msg + " has been created."))
         elif len(msg_list) > 1:
@@ -90,8 +89,9 @@ class SaleOrderRmaWizard(models.TransientModel):
         rma = self.create_rma()
         if not rma:
             return
-        rma.action_confirm()
-        action = self.env["ir.actions.act_window"]._for_xml_id("rma.rma_action")
+        for rec in rma:
+            rec.action_confirm()
+        action = self.sudo().env.ref("rma.rma_action").read()[0]
         if len(rma) > 1:
             action["domain"] = [("id", "in", rma.ids)]
         elif rma:
@@ -176,7 +176,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             move_id = False
             if record.picking_id:
                 move_id = record.picking_id.move_ids.filtered(
-                    lambda r, record=record: (
+                    lambda r: (
                         r.sale_line_id == record.sale_line_id
                         and r.sale_line_id.product_id == record.product_id
                         and r.sale_line_id.order_id == record.order_id
@@ -188,13 +188,14 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):
         for record in self:
-            record.allowed_product_ids = record.order_id.order_line.product_id
+            product_ids = record.order_id.order_line.mapped("product_id.id")
+            record.allowed_product_ids = product_ids
 
     @api.depends("product_id")
     def _compute_allowed_picking_ids(self):
         for record in self:
             line = record.order_id.order_line.filtered(
-                lambda r, record=record: r.product_id == record.product_id
+                lambda r: r.product_id == record.product_id
             )
             record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
                 lambda x: x.state == "done"

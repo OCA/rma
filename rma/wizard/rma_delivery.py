@@ -47,11 +47,13 @@ class RmaReDeliveryWizard(models.TransientModel):
         res = super().default_get(fields_list)
         rma_ids = self.env.context.get("active_ids")
         rma = self.env["rma"].browse(rma_ids)
-        warehouse_id = (
-            self.env["stock.warehouse"]
-            .search([("company_id", "=", rma[0].company_id.id)], limit=1)
-            .id
-        )
+        warehouse_id = False
+        if len(rma) > 0:
+            warehouse_id = (
+                self.env["stock.warehouse"]
+                .search([("company_id", "=", rma[0].company_id.id)], limit=1)
+                .id
+            )
         delivery_type = self.env.context.get("rma_delivery_type")
         product_id = False
         if len(rma) == 1 and delivery_type == "return":

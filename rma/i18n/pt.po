@@ -162,7 +162,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\">\n"
+"<span class=\"badge text-bg-danger label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-times\"/"
 ">\n"
 "                                            Cancelled\n"
@@ -172,7 +172,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-danger label-text-align\">\n"
+"<span class=\"badge text-bg-danger label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-times\"/>\n"
 "                                    Cancelled\n"
 "                                </span>"
@@ -181,7 +181,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\">\n"
+"<span class=\"badge text-bg-info label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-clock-o\"/"
 ">\n"
 "                                            Preparation\n"
@@ -191,7 +191,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-info label-text-align\">\n"
+"<span class=\"badge text-bg-info label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                    Preparation\n"
 "                                </span>"
@@ -200,7 +200,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-success label-text-align\">\n"
+"<span class=\"badge text-bg-success label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-truck\"/"
 ">\n"
 "                                            Shipped\n"
@@ -210,7 +210,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-success label-text-align\">\n"
+"<span class=\"badge text-bg-success label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-truck\"/>\n"
 "                                    Shipped\n"
 "                                </span>"
@@ -219,7 +219,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\">\n"
+"<span class=\"badge text-bg-warning label-text-align\">\n"
 "                                            <i class=\"fa fa-fw fa-clock-o\"/"
 ">\n"
 "                                            Partially Available\n"
@@ -229,20 +229,11 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
-"<span class=\"badge badge-warning label-text-align\">\n"
+"<span class=\"badge text-bg-warning label-text-align\">\n"
 "                                    <i class=\"fa fa-fw fa-clock-o\"/>\n"
 "                                    Partially Available\n"
 "                                </span>"
 msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Estes valores são específicos "
-"por empresa.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -280,9 +271,24 @@ msgid "<strong>Deadline</strong>"
 msgstr "<strong>Prazo Final</strong>"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Delivered qty:</strong>"
+msgstr "<strong>Quantidade Enviada:</strong>"
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Delivered quantity</strong>"
 msgstr "<strong>Quantidade Enviada</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Move:</strong>"
+msgstr "<strong>Movimentação:</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Origin delivery:</strong>"
+msgstr "<strong> Origem da Entrega: </strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -300,9 +306,19 @@ msgid "<strong>Origin</strong>"
 msgstr "<strong>Origem</strong>"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Product:</strong>"
+msgstr "<strong>Produto:</strong>"
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Product</strong>"
 msgstr "<strong>Produto</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
+msgid "<strong>Quantity:</strong>"
+msgstr "<strong>Quantidade:</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -474,11 +490,6 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Awaiting Action"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
 msgid "Can Be Finished"
 msgstr ""
@@ -536,11 +547,6 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
 msgstr "Clique para adicionar uma nova RMA."
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Closed"
-msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
@@ -695,11 +701,6 @@ msgstr "Entrega"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty
 msgid "Delivered Qty"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
-msgid "Delivered Quantity"
 msgstr ""
 
 #. module: rma
@@ -1158,11 +1159,6 @@ msgid "Number of messages with delivery error"
 msgstr "Número de Mensagens com Erro de Entrega"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
-msgid "Operation"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_team__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
@@ -1182,11 +1178,6 @@ msgstr "Pedidos"
 #: model:ir.model.fields,field_description:rma.field_rma__picking_id
 msgid "Origin Delivery"
 msgstr "Origem da Entrega"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
-msgid "Origin delivery"
-msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__move_id
@@ -1255,11 +1246,6 @@ msgid "Priority"
 msgstr "Prioridade"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Processed"
-msgstr ""
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
 msgid "Procurement group"
 msgstr "Grupo de Aprovisionamento"
@@ -1267,7 +1253,6 @@ msgstr "Grupo de Aprovisionamento"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_id
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Product"
 msgstr "Produto"
 
@@ -1284,7 +1269,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Quantity"
 msgstr "Quantidade"
 
@@ -1323,7 +1307,6 @@ msgstr "Quantidade a extrair para uma nova RMA."
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma
 #: model:ir.module.category,name:rma.rma_module_category
 #: model:ir.ui.menu,name:rma.rma_menu
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
 #: model_terms:ir.ui.view,arch_db:rma.view_picking_form
 msgid "RMA"
@@ -1341,11 +1324,6 @@ msgstr "RMA #"
 #, python-format
 msgid "RMA Code"
 msgstr "Código RMA"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Confirmation Email"
-msgstr "E-mail de Confirmação da RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1407,11 +1385,6 @@ msgid "RMA Location"
 msgstr "Localização RMA"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Manual Finalization"
-msgstr ""
-
-#. module: rma
 #: model:mail.message.subtype,name:rma.mt_rma_notification
 #: model:mail.message.subtype,name:rma.mt_rma_team_rma_notification
 #: model:mail.template,name:rma.mail_template_rma_notification
@@ -1434,11 +1407,6 @@ msgstr "Pedidos RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
 msgstr "Tipo Saída RMA"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA Receipt Confirmation Email"
-msgstr ""
 
 #. module: rma
 #: model:mail.template,name:rma.mail_template_rma_receipt_notification
@@ -1499,11 +1467,6 @@ msgstr "Notificações automáticas a clientes de RMA"
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Contagem de RMA"
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "RMA draft notification Email"
-msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_route_id
@@ -1680,8 +1643,6 @@ msgstr "Comunicando"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
-#: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
-#: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Requested operation"
 msgstr "Operação Solicitada"
 
@@ -1706,11 +1667,6 @@ msgstr "Utilizador Responsável"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__location_id
 msgid "Return Location"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Return Merchandise Authorization Management"
 msgstr ""
 
 #. module: rma
@@ -1847,12 +1803,6 @@ msgstr "Sequência de Saída RMA"
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Set to draft"
 msgstr "Definir como Rascunho"
-
-#. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_config_settings
-#: model:ir.ui.menu,name:rma.menu_rma_general_settings
-msgid "Settings"
-msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -2118,6 +2068,11 @@ msgid "User: Own Documents Only"
 msgstr "Utilizador: Apenas os Seus Documentos"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
 msgid "Waiting for replacement"
 msgstr "À espera de substituição"
@@ -2167,8 +2122,8 @@ msgstr "Quando a RMA é confirmada, enviar um e-mail automático de informação
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid ""
-"When the RMA is receive, allow to finsish it manually choosing\n"
-"                                    a finalization reason."
+"When the RMA is receive, allow to finsish it manually choosing a "
+"finalization reason."
 msgstr ""
 
 #. module: rma
@@ -2251,20 +2206,12 @@ msgid ""
 "{{object.name or 'n/a' }})"
 msgstr ""
 
-#~ msgid "<strong>Delivered qty:</strong>"
-#~ msgstr "<strong>Quantidade Enviada:</strong>"
-
-#~ msgid "<strong>Move:</strong>"
-#~ msgstr "<strong>Movimentação:</strong>"
-
-#~ msgid "<strong>Origin delivery:</strong>"
-#~ msgstr "<strong> Origem da Entrega: </strong>"
-
-#~ msgid "<strong>Product:</strong>"
-#~ msgstr "<strong>Produto:</strong>"
-
-#~ msgid "<strong>Quantity:</strong>"
-#~ msgstr "<strong>Quantidade:</strong>"
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Estes valores são "
+#~ "específicos por empresa.\" groups=\"base.group_multi_company\"/>"
 
 #~ msgid "Alias domain"
 #~ msgstr "Domínio do Alias"
@@ -2277,6 +2224,9 @@ msgstr ""
 
 #~ msgid "Owner"
 #~ msgstr "Proprietário"
+
+#~ msgid "RMA Confirmation Email"
+#~ msgstr "E-mail de Confirmação da RMA"
 
 #~ msgid "Remaining delivered qty to done"
 #~ msgstr "Qtd. restante entregue a fazer"
@@ -2300,31 +2250,31 @@ msgstr ""
 #~ msgstr "${object.company_id.name} RMA (Refª ${object.name or 'n/a' })"
 
 #~ msgid ""
-#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-danger label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-times\"/> Cancelled</span>"
 #~ msgstr ""
-#~ "<span class=\"badge badge-danger label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-danger label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-times\"/> Cancelado</span>"
 
 #~ msgid ""
-#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "<span class=\"badge text-bg-info label-text-align\"><i class=\"fa fa-fw fa-"
 #~ "clock-o\"/> Preparation</span>"
 #~ msgstr ""
-#~ "<span class=\"badge badge-info label-text-align\"><i class=\"fa fa-fw fa-"
+#~ "<span class=\"badge text-bg-info label-text-align\"><i class=\"fa fa-fw fa-"
 #~ "clock-o\"/> Preparação</span>"
 
 #~ msgid ""
-#~ "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-success label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-truck\"/> Shipped</span>"
 #~ msgstr ""
-#~ "<span class=\"badge badge-success label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-success label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-truck\"/> Expedido</span>"
 
 #~ msgid ""
-#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-warning label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-clock-o\"/> Partially Available</span>"
 #~ msgstr ""
-#~ "<span class=\"badge badge-warning label-text-align\"><i class=\"fa fa-fw "
+#~ "<span class=\"badge text-bg-warning label-text-align\"><i class=\"fa fa-fw "
 #~ "fa-clock-o\"/> Parcialmente Disponível</span>"
 
 #~ msgid "Delivered qty"

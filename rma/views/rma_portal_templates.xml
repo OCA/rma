@@ -73,7 +73,7 @@
                                 <span t-field="rma.product_uom_qty" />
                             </td>
                             <td class="d-none d-md-table-cell tx_status">
-                                <span class="badge badge-pill badge-secondary">
+                                <span class="badge badge-pill text-bg-secondary">
                                     <span t-field="rma.state" />
                                 </span>
                             </td>
@@ -179,7 +179,7 @@
                                         <img
                                             t-else=""
                                             class="rounded-circle mt-1 o_portal_contact_img"
-                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            src="/web/static/img/user_menu_avatar.png"
                                             alt="Contact"
                                         />
                                     </div>
@@ -210,7 +210,7 @@
                                         <img
                                             t-else=""
                                             class="rounded-circle mt-1 o_portal_contact_img"
-                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            src="/web/static/img/user_menu_avatar.png"
                                             alt="Contact"
                                         />
                                     </div>
@@ -238,7 +238,7 @@
                                         <img
                                             t-else=""
                                             class="rounded-circle mt-1 o_portal_contact_img"
-                                            src="/web/static/src/img/user_menu_avatar.png"
+                                            src="/web/static/img/user_menu_avatar.png"
                                             alt="Contact"
                                         />
                                     </div>
@@ -360,19 +360,19 @@
                                 </div>
                             </div>
                             <t t-if="picking.state == 'done'">
-                                <span class="badge badge-success label-text-align">
+                                <span class="badge text-bg-success label-text-align">
                                     <i class="fa fa-fw fa-truck" />
                                     Shipped
                                 </span>
                             </t>
                             <t t-if="picking.state == 'partially_available'">
-                                <span class="badge badge-warning label-text-align">
+                                <span class="badge text-bg-warning label-text-align">
                                     <i class="fa fa-fw fa-clock-o" />
                                     Partially Available
                                 </span>
                             </t>
                             <t t-if="picking.state == 'cancel'">
-                                <span class="badge badge-danger label-text-align">
+                                <span class="badge text-bg-danger label-text-align">
                                     <i class="fa fa-fw fa-times" />
                                     Cancelled
                                 </span>
@@ -380,7 +380,7 @@
                             <t
                                 t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
                             >
-                                <span class="badge badge-info label-text-align">
+                                <span class="badge text-bg-info label-text-align">
                                     <i class="fa fa-fw fa-clock-o" />
                                     Preparation
                                 </span>
@@ -473,7 +473,7 @@
                                     </div>
                                     <t t-if="picking.state == 'done'">
                                         <span
-                                            class="badge badge-success label-text-align"
+                                            class="badge text-bg-success label-text-align"
                                         >
                                             <i class="fa fa-fw fa-truck" />
                                             Shipped
@@ -481,7 +481,7 @@
                                     </t>
                                     <t t-if="picking.state == 'partially_available'">
                                         <span
-                                            class="badge badge-warning label-text-align"
+                                            class="badge text-bg-warning label-text-align"
                                         >
                                             <i class="fa fa-fw fa-clock-o" />
                                             Partially Available
@@ -489,7 +489,7 @@
                                     </t>
                                     <t t-if="picking.state == 'cancel'">
                                         <span
-                                            class="badge badge-danger label-text-align"
+                                            class="badge text-bg-danger label-text-align"
                                         >
                                             <i class="fa fa-fw fa-times" />
                                             Cancelled
@@ -498,7 +498,7 @@
                                     <t
                                         t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
                                     >
-                                        <span class="badge badge-info label-text-align">
+                                        <span class="badge text-bg-info label-text-align">
                                             <i class="fa fa-fw fa-clock-o" />
                                             Preparation
                                         </span>
