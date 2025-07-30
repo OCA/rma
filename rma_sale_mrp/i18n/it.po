@@ -1,0 +1,352 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_sale_mrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-10-21 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid ""
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-"
+"o\"/> Draft</span>"
+msgstr ""
+"<span class=\"badge bg-info label-text-align\"><i class=\"fa fa-fw fa-clock-"
+"o\"/> Bozza</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid ""
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-"
+"times\"/> Cancelled</span>"
+msgstr ""
+"<span class=\"badge label-text-align bg-danger\"><i class=\"fa fa-fw fa-"
+"times\"/> Annullata</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid ""
+"<span class=\"label-text-align badge bg-warning\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> Waiting</span>"
+msgstr ""
+"<span class=\"label-text-align badge bg-warning\"><i class=\"fa fa-fw fa-"
+"clock-o\"/> In attesa</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>Product</span>"
+msgstr "<span>Prodotto</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>Quantity</span>"
+msgstr "<span>Quantità</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>RMA</span>"
+msgstr "<span>RMA</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<span>State</span>"
+msgstr "<span>Stato</span>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong class=\"d-block mb-1\">Related Kit Components RMAs</strong>"
+msgstr ""
+"<strong class=\"d-block mb-1\">Componenti relativi della confezione delle "
+"richieste reso</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong class=\"d-block mt32 mb-1\">Kit information</strong>"
+msgstr "<strong class=\"d-block mt32 mb-1\">Informazioni confezione</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid "<strong><i class=\"fa fa-th-large text-info\"/> Kit Quantity</strong>"
+msgstr ""
+"<strong><i class=\"fa fa-th-large text-info\"/> Quantità confezione</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_rma_page
+msgid "<strong><i class=\"fa fa-th-large text-info\"/> Kit</strong>"
+msgstr "<strong><i class=\"fa fa-th-large text-info\"/> Confezione</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong>Kit Quantity:</strong>"
+msgstr "<strong>Quantità confezione:</strong>"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.report_rma_document
+msgid "<strong>Kit:</strong>"
+msgstr "<strong>Confezione:</strong>"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__allowed_picking_ids
+msgid "Allowed Picking"
+msgstr "Trasferimento consentito"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__allowed_product_ids
+msgid "Allowed Product"
+msgstr "Prodotto consentito"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_category_id
+msgid "Category"
+msgstr "Categoria"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_rma_wizard__component_line_ids
+msgid "Component Lines"
+msgstr "Righe componente"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+"Le conversioni tra unità di misura possono avvenire solo se appartengono "
+"alla stessa categoria. La conversione verrà effettuata in base alle "
+"proporzioni."
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__picking_id
+msgid "Delivery order"
+msgstr "Ordine di consegna"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__description
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__id
+msgid "ID"
+msgstr "ID"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_account_move
+msgid "Journal Entry"
+msgstr "Registrazione contabile"
+
+#. module: rma_sale_mrp
+#: model_terms:ir.ui.view,arch_db:rma_sale_mrp.portal_my_rmas
+msgid "Kit"
+msgstr "Confezione"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__kit_qty_done
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__kit_qty_done
+msgid "Kit Qty Done"
+msgstr "Quantità confezione completata"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__kit_qty
+msgid "Kit quantity"
+msgstr "Quantità confezione"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lot_id
+msgid "Lot/Serial Number"
+msgstr "Numero di lotto/serie"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lots_visible
+msgid "Lots Visible"
+msgstr "Lotti visibili"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__move_id
+msgid "Move"
+msgstr "Movimento"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__order_id
+msgid "Order"
+msgstr "Ordine"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__per_kit_quantity
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__per_kit_quantity
+msgid "Per Kit Quantity"
+msgstr "Quantità per confezione"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__phantom_bom_product
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__phantom_bom_product
+msgid "Phantom Bom Product"
+msgstr "Prodotto DiBa fantasma"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard__phantom_kit_line
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__phantom_kit_line
+msgid "Phantom Kit Line"
+msgstr "Riga confezione fantasma"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__product_id
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__quantity
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_rma
+msgid "RMA"
+msgstr "RMA"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__phantom_bom_product
+msgid "Related kit product"
+msgstr "Prodotto confezione relativa"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__operation_id
+msgid "Requested operation"
+msgstr "Operazione richiesta"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_rma__rma_kit_register
+msgid "Rma Kit Register"
+msgstr "Registro confezione RMA"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__sale_line_id
+msgid "Sale Line"
+msgstr "Riga di vendita"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order_line_rma_wizard
+msgid "Sale Order Line Rma Wizard"
+msgstr "Procedura guidata RMA riga ordine di vendita"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order_rma_wizard
+msgid "Sale Order Rma Wizard"
+msgstr "Procedura guidata RMA ordine di vendita"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Riga ordine di vendita"
+
+#. module: rma_sale_mrp
+#. odoo-python
+#: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:0
+#, python-format
+msgid ""
+"The kit corresponding to the product %s can't be put in the RMA. Either all "
+"or some of the components where already put in another RMA"
+msgstr ""
+"La confezione corrispondente al prodotto %s non può essere inserito un una "
+"RMA. Tuttio qualcuno dei componenti sono già stati inseriti in un'altra RMA"
+
+#. module: rma_sale_mrp
+#. odoo-python
+#: code:addons/rma_sale_mrp/models/rma.py:0
+#, python-format
+msgid ""
+"To avoid kit quantities inconsistencies it is not possible to convert to "
+"draft a cancelled RMA. You should do a new one from the sales order."
+msgstr ""
+"Per evitare l'inconsistenza delle quantità delle confezioni non è possibile "
+"convertire a bozza di una RMA annullata. Bisogna crearne una nuova "
+"dall'ordine di vendita."
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,help:rma_sale_mrp.field_rma__kit_qty
+msgid ""
+"To how many kits this components corresponds to. Used mainly for refunding "
+"the right quantity"
+msgstr ""
+"A quante confezioni corrispondono questi componenti. Utilizzato "
+"principalmente per rifornire la quantità corretta"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__uom_id
+msgid "Unit of Measure"
+msgstr "Unità di misura"
+
+#. module: rma_sale_mrp
+#: model:ir.model,name:rma_sale_mrp.model_sale_order_line_rma_wizard_component
+msgid "Used to hide kit components in the wizards"
+msgstr ""
+"Utilizzato per nascondere i componenti confezione nelle procedure guidate"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard__kit_qty_done
+#: model:ir.model.fields,help:rma_sale_mrp.field_sale_order_line_rma_wizard_component__kit_qty_done
+msgid "Used to inform kit qty used in the rma. Will be useful to refund"
+msgstr ""
+"Utilizzato per dare informazioni sulle quantitò confezione utilizzate nelle "
+"RMA. Verrà utilizzata per la reintegrazione"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__wizard_id
+msgid "Wizard"
+msgstr "Procedura guidata"
+
+#. module: rma_sale_mrp
+#. odoo-python
+#: code:addons/rma_sale_mrp/models/rma.py:0
+#, python-format
+msgid "You can't refund a kit in wich some RMAs aren't received"
+msgstr ""
+"Non è possibile rifornire una confezione nella quale non sono state ricevute "
+"RMA"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="sale_order_rma_wizard_form_view" model="ir.ui.view">
+        <field name="inherit_id" ref="rma_sale.sale_order_rma_wizard_form_view" />
+        <field name="model">sale.order.rma.wizard</field>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='order_id']" position="after">
+                <field name="phantom_kit_line" invisible="1" />
+            </xpath>
+            <xpath expr="//tree/field[@name='picking_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('phantom_kit_line', '=', True)], 'required': [('phantom_kit_line', '=', False)]}</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="required" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="sale_order_portal_template"
+        name="Request RMA MRP"
+        inherit_id="rma_sale.sale_rma_request_form"
+    >
+        <xpath expr="//input[@t-attf-name='#{data_index}-product_id']" position="after">
+            <input
+                type="hidden"
+                t-if="data.get('phantom_bom_product')"
+                t-attf-name="#{data_index}-phantom_bom_product"
+                t-att-value="data['phantom_bom_product'].id"
+            />
+            <input
+                type="hidden"
+                t-if="data.get('per_kit_quantity')"
+                t-attf-name="#{data_index}-per_kit_quantity"
+                t-att-value="data['per_kit_quantity']"
+            />
+            <input
+                type="hidden"
+                t-if="data.get('phantom_kit_line')"
+                t-attf-name="#{data_index}-phantom_kit_line"
+                t-att-value="1"
+            />
+        </xpath>
+        <!-- The component lines are splitted on the wizard so we should set the quantity properly -->
+        <xpath
+            expr="//input[@t-attf-name='#{data_index}-quantity']"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-value"
+            >data.get('phantom_bom_product') and data['quantity'] or 0</attribute>
+        </xpath>
+        <!-- TODO: We could give a clue about what's to be returned, with readonly detailed lines -->
+        <xpath
+            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data['quantity'] &gt; 0 and data['picking']&quot;]/tr"
+            position="attributes"
+        >
+            <attribute
+                name="t-attf-class"
+            >#{data.get('phantom_bom_product') and 'd-none'}</attribute>
+        </xpath>
+        <xpath
+            expr="//tbody[hasclass('request-rma-tbody')]//t[@t-if=&quot;data['quantity'] &gt; 0 and data['picking']&quot;]"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >data['quantity'] &gt; 0 and (data['picking'] or data.get('phantom_kit_line'))</attribute>
+        </xpath>
+        <xpath
+            expr="//select[@t-attf-name='#{data_index}-operation_id']/option"
+            position="attributes"
+        >
+            <attribute name="t-if">not data.get('phantom_bom_product')</attribute>
+        </xpath>
+    </template>
+    <template id="portal_rma_page" name="RMA Kits" inherit_id="rma.portal_rma_page">
+        <xpath expr="//div[@t-if='rma.sudo().product_id']" position="before">
+            <t t-if="rma.sudo().phantom_bom_product">
+                <div class="row mb-2 mb-sm-1">
+                    <div class="col-12 col-sm-4">
+                        <strong><i class="fa fa-th-large text-info" /> Kit</strong>
+                    </div>
+                    <div class="col-12 col-sm-8">
+                        <span t-esc="rma.sudo().phantom_bom_product.display_name" />
+                    </div>
+                </div>
+                <div class="row mb-2 mb-sm-1">
+                    <div class="col-12 col-sm-4">
+                        <strong><i
+                                class="fa fa-th-large text-info"
+                            /> Kit Quantity</strong>
+                    </div>
+                    <div class="col-12 col-sm-8">
+                        <span t-esc="rma.kit_qty" />
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//section[@id='reception_section']" position="before">
+            <section
+                t-if="rma.sudo().phantom_bom_product"
+                id="kits_sections"
+                style="page-break-inside: auto;"
+                class="mt32"
+            >
+                <strong class="d-block mb-1">Related Kit Components RMAs</strong>
+                <t
+                    t-set="related_kit_rmas"
+                    t-value="rma.search([('rma_kit_register', '=', rma.rma_kit_register), ('id', '!=', rma.id)])"
+                />
+                <t t-foreach="related_kit_rmas" t-as="kit_rma">
+                    <a
+                        class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between py-2 px-3"
+                        t-att-href="kit_rma.get_portal_url()"
+                        t-att-title="kit_rma.name"
+                    >
+                        <div>
+                            <i class="fa-reply me-1 fa" role="img" />
+                            <span t-esc="kit_rma.name" class="me-lg-3" />
+                            <div class="d-lg-inline-block"><span
+                                    t-field="kit_rma.sudo().product_id.display_name"
+                                /> (<span t-field="kit_rma.product_uom_qty" />)</div>
+                        </div>
+                        <t
+                            t-if="kit_rma.state in ['confirmed', 'received', 'returned', 'replaced', 'locked', 'refunded']"
+                        >
+                            <span class="badge label-text-align bg-success"><i
+                                    class="fa fa-fw fa-reply"
+                                /> <span t-field="kit_rma.state" /></span>
+                        </t>
+                        <t
+                            t-if="kit_rma.state in ['waiting_return', 'waiting_replacement']"
+                        >
+                            <span class="label-text-align badge bg-warning"><i
+                                    class="fa fa-fw fa-clock-o"
+                                /> Waiting</span>
+                        </t>
+                        <t t-if="kit_rma.state == 'cancelled'">
+                            <span class="badge label-text-align bg-danger"><i
+                                    class="fa fa-fw fa-times"
+                                /> Cancelled</span>
+                        </t>
+                        <t t-if="kit_rma.state == 'draft'">
+                            <span class="badge bg-info label-text-align"><i
+                                    class="fa fa-fw fa-clock-o"
+                                /> Draft</span>
+                        </t>
+                    </a>
+                </t>
+            </section>
+        </xpath>
+    </template>
+    <template
+        id="portal_my_rmas"
+        name="My RMA Orders MRP"
+        inherit_id="rma.portal_my_rmas"
+    >
+        <xpath expr="//th[@name='th_product']" position="after">
+            <th name="th_kit">Kit</th>
+        </xpath>
+        <xpath expr="//td[@name='td_product']" position="after">
+            <td name="td_kit">
+                <t t-if="rma.sudo().phantom_bom_product">
+                    <i class="fa fa-th-large text-info" /> <span
+                        t-esc="rma.sudo().phantom_bom_product.display_name"
+                    />
+                    <span> (<t t-esc="rma.kit_qty" />)</span>
+                </t>
+            </td>
+        </xpath>
+    </template>
+</odoo>
