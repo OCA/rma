@@ -37,6 +37,7 @@ class TestProductLotWarranty(common.TransactionCase):
     def test_productlot_no_product(self):
         # stock.lot "product_id" is required=True
         # In Odoo 18, trying to create a lot without product should raise an error
+        error_raised = False
         try:
             lot = self.env["stock.lot"].create(
                 {
@@ -47,15 +48,19 @@ class TestProductLotWarranty(common.TransactionCase):
             )
             # Force the constraint check if create doesn't raise immediately
             lot.flush_recordset()
-            self.fail("Creating a lot without product should raise an error")
         except (ValidationError, IntegrityError):
             # Expected behavior - constraint violation
-            pass
+            error_raised = True
+
+        self.assertTrue(
+            error_raised, "Creating a lot without product should raise an error"
+        )
 
     @mute_logger("odoo.sql_db")
     def test_productlot_no_warranty_type(self):
         # product.template "warranty_type" is required=True if warranty is installed
         # In Odoo 18, this should raise an error when warranty_type is False/None
+        error_raised = False
         try:
             product = self.env["product.product"].create(
                 {
@@ -66,12 +71,14 @@ class TestProductLotWarranty(common.TransactionCase):
             )
             # Force the constraint check if create doesn't raise immediately
             product.flush_recordset()
-            self.fail(
-                "Creating a product without warranty_type should raise an error"
-            )
         except (ValidationError, IntegrityError):
             # Expected behavior - constraint violation
-            pass
+            error_raised = True
+
+        self.assertTrue(
+            error_raised,
+            "Creating a product without warranty_type should raise an error",
+        )
 
     def test_productlot_no_warranty(self):
         product2 = self.env["product.product"].create(
