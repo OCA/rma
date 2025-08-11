@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from datetime import datetime, timedelta
 
-import psycopg2
-
+from odoo.exceptions import ValidationError
 from odoo.tests import common
+from odoo.tools import mute_logger
 
 
 class TestProductLotWarranty(common.TransactionCase):
@@ -31,23 +31,31 @@ class TestProductLotWarranty(common.TransactionCase):
             (datetime.now() + timedelta(days=5)).date(),
         )
 
+    @mute_logger("odoo.sql_db")
     def test_productlot_no_product(self):
         # stock.lot "product_id" is required=True
-        with self.assertRaises(psycopg2.IntegrityError):
-            self.env["stock.lot"].create(
-                {"product_id": False, "company_id": self.company1.id}
+        # In Odoo 18, trying to create a lot without product should raise an error
+        with self.assertRaises((ValidationError, ValueError)):
+            lot = self.env["stock.lot"].create(
+                {"product_id": False, "company_id": self.company1.id, "name": "test_lot"}
             )
+            # Force the constraint check if create doesn't raise immediately
+            lot.flush_recordset()
 
+    @mute_logger("odoo.sql_db")
     def test_productlot_no_warranty_type(self):
-        # product.template "warranty_type" is required=True
-        with self.assertRaises(psycopg2.IntegrityError):
-            self.env["product.product"].create(
+        # product.template "warranty_type" is required=True if warranty module is installed
+        # In Odoo 18, this should raise an error when warranty_type is False/None
+        with self.assertRaises((ValidationError, ValueError)):
+            product = self.env["product.product"].create(
                 {
                     "name": "TestProduct",
                     "warranty_type": False,
                     "warranty": 5,
                 }
             )
+            # Force the constraint check if create doesn't raise immediately
+            product.flush_recordset()
 
     def test_productlot_no_warranty(self):
         product2 = self.env["product.product"].create(
