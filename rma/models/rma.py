@@ -1031,10 +1031,11 @@ class Rma(models.Model):
 
     def _delivery_should_be_grouped(self):
         """Checks if the rmas should be grouped for the delivery process"""
-        group_returns = self.env.company.rma_return_grouping
+        if any(self.operation_id.mapped("prevent_delivery_grouping")):
+            return False
         if "rma_return_grouping" in self.env.context:
-            group_returns = self.env.context.get("rma_return_grouping")
-        return group_returns
+            return bool(self.env.context.get("rma_return_grouping"))
+        return self.env.company.rma_return_grouping
 
     def _delivery_group_key(self):
         """Returns a key by which the rmas should be grouped for the delivery process"""

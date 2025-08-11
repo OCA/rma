@@ -18,5 +18,8 @@ warehouse and company. If you want to avoid this grouping you can:
 1.  Go to *Settings \> Inventory*.
 2.  Set *Group RMA returns by customer address and warehouse* checkbox
     off.
+3. **To make exceptions for specific operations (regardless of the global setting):**
+    1. Go to **RMA / Configuration / Operations**.
+    2. Enable **Do not group deliveries** on the desired operation.
 
 The users will still be able to group those pickings from the wizard.

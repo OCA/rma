@@ -76,6 +76,12 @@ class TestRma(BaseCommon):
         # Ensure grouping
         cls.env.company.rma_return_grouping = True
         cls.operation = cls.env.ref("rma.rma_operation_replace")
+        cls.operation_no_group = cls.operation.copy(
+            {
+                "name": f"{cls.operation.name} (no group)",
+                "prevent_delivery_grouping": True,
+            }
+        )
 
     def _create_rma(
         self, partner=None, product=None, qty=None, location=None, operation=None
