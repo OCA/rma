@@ -12,9 +12,13 @@ class ProductSupplierInfo(models.Model):
     @api.model
     def _get_default_instructions(self):
         """Get selected lines to add to exchange"""
-        return self.env["return.instruction"].search(
-            [("is_default", "=", True)], limit=1
-        )
+        try:
+            return self.env["return.instruction"].search(
+                [("is_default", "=", True)], limit=1
+            )
+        except Exception:
+            # During module installation, the return_instruction table may not exist yet
+            return False
 
     warranty_duration = fields.Float(
         "Period",
