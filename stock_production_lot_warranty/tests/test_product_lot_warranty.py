@@ -22,7 +22,7 @@ class TestProductLotWarranty(common.TransactionCase):
         )
 
     def test_productlot_warranty(self):
-        production_lot = self.env["stock.production.lot"].create(
+        production_lot = self.env["stock.lot"].create(
             {"product_id": self.product1.id, "company_id": self.company1.id}
         )
         production_lot._onchange_product_id()
@@ -32,9 +32,9 @@ class TestProductLotWarranty(common.TransactionCase):
         )
 
     def test_productlot_no_product(self):
-        # s.p.lot "product_id" is required=True
+        # stock.lot "product_id" is required=True
         with self.assertRaises(psycopg2.IntegrityError):
-            self.env["stock.production.lot"].create(
+            self.env["stock.lot"].create(
                 {"product_id": False, "company_id": self.company1.id}
             )
 
@@ -57,14 +57,14 @@ class TestProductLotWarranty(common.TransactionCase):
                 "warranty": 0,
             }
         )
-        production_lot = self.env["stock.production.lot"].create(
+        production_lot = self.env["stock.lot"].create(
             {"product_id": product2.id, "company_id": self.company1.id}
         )
         production_lot._onchange_product_id()
         self.assertFalse(production_lot.warranty_exp_date)
 
     def test_get_warranty_exp_date(self):
-        production_lot = self.env["stock.production.lot"].create(
+        production_lot = self.env["stock.lot"].create(
             {"product_id": self.product1.id, "company_id": self.company1.id}
         )
         timestamp = datetime.now() - timedelta(days=3)
