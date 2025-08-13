@@ -27,6 +27,16 @@ class Rma(models.Model):
         vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
+    def _prepare_common_procurement_vals(
+        self, warehouse=None, scheduled_date=None, group=None
+    ):
+        vals = super()._prepare_common_procurement_vals(
+            warehouse=warehouse, scheduled_date=scheduled_date, group=group
+        )
+        if self.operation_id.deliver_same_lot:
+            vals["restrict_lot_id"] = self.lot_id.id
+        return vals
+
     @api.depends("move_id", "lot_id")
     def _compute_product_id(self):
         res = super()._compute_product_id()
