@@ -60,6 +60,7 @@ class TestRMALot(BaseCommon):
         cls.picking.action_assign()
         cls.picking.button_validate()
         cls.operation = cls.env.ref("rma.rma_operation_replace")
+        cls.operation.action_create_delivery = "automatic_on_confirm"
 
     @classmethod
     def create_return_wiz(cls):
@@ -90,6 +91,7 @@ class TestRMALot(BaseCommon):
         self.assertTrue(rma_lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.state, "assigned")
+        return rma_lot_1, rma_lot_2
 
     def test_rma_form(self):
         rma_form = Form(self.env["rma"])
@@ -98,3 +100,15 @@ class TestRMALot(BaseCommon):
         self.assertEqual(rma_form.product_id, self.product)
         rma_form.product_id = self.env.ref("product.product_product_4")
         self.assertFalse(rma_form.lot_id)
+
+    def test_deliver_same_lot_as_received(self):
+        self.operation.deliver_same_lot = True
+        rma_lot_1, rma_lot_2 = self.test_00()
+        self.assertEqual(rma_lot_1.delivery_move_ids.restrict_lot_id, self.lot_1)
+        self.assertEqual(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
+
+    def test_deliver_different_lot_as_received(self):
+        self.operation.deliver_same_lot = False
+        rma_lot_1, rma_lot_2 = self.test_00()
+        self.assertFalse(rma_lot_1.delivery_move_ids.restrict_lot_id)
+        self.assertFalse(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
