@@ -2,7 +2,6 @@
 <!-- Copyright 2024 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="rma_operation_kanban" model="ir.ui.view">
         <field name="model">rma.operation</field>
         <field name="arch" type="xml">
@@ -36,12 +35,14 @@
                                     class="o_kanban_manage_button_section"
                                     t-if="!selection_mode"
                                 >
-                                    <a class="o_kanban_manage_toggle_button" href="#"><i
+                                    <a class="o_kanban_manage_toggle_button" href="#">
+                                        <i
                                             class="fa fa-ellipsis-v"
                                             role="img"
                                             aria-label="Manage"
                                             title="Manage"
-                                        /></a>
+                                        />
+                                    </a>
                                 </div>
                             </div>
                             <div
@@ -184,5 +185,4 @@
         sequence="0"
         name="Overview"
     />
-
 </odoo>

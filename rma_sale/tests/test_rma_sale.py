@@ -32,7 +32,7 @@ class TestRmaSaleBase(BaseCommon):
         cls.report_model = cls.env["ir.actions.report"]
         cls.rma_operation_model = cls.env["rma.operation"]
         cls.operation = cls.env.ref("rma.rma_operation_replace")
-        cls._partner_portal_wizard(cls, cls.partner)
+        cls._partner_portal_wizard(cls.partner)
         cls.wh = cls.env.ref("stock.warehouse0")
         cls.env["stock.quant"]._update_available_quantity(
             cls.product_1, cls.wh.lot_stock_id, 20

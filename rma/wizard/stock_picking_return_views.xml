@@ -16,7 +16,9 @@
                 />
                 <field
                     name="return_product_id"
-                    attrs="{'column_invisible': [('parent.create_rma', '=', False)], 'invisible': [('different_return_product', '=', False)], 'required': [('different_return_product', '=', True), ('quantity', '>', 0)]}"
+                    column_invisible="not parent.create_rma"
+                    invisible="not different_return_product"
+                    required="different_return_product and quantity>0"
                 />
                 <field name="different_return_product" invisible="1" />
             </xpath>
