@@ -1,12 +1,15 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo.tests import tagged
+
 from .test_rma import TestRma
 
 PROCESSED_STATES = ["received", "refunded", "replaced", "finished"]
 AWAITING_ACTION_STATES = ["waiting_return", "waiting_replacement", "confirmed"]
 
 
+@tagged("-at_install", "post_install")
 class TestRmaDashboard(TestRma):
     def test_0(self):
         operation_replace = self.env.ref("rma.rma_operation_replace")

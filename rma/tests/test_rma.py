@@ -5,7 +5,7 @@
 
 from odoo import Command
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, new_test_user, users
+from odoo.tests import Form, new_test_user, tagged, users
 from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -13,6 +13,7 @@ from odoo.addons.base.tests.common import BaseCommon
 from .. import hooks
 
 
+@tagged("-at_install", "post_install")
 class TestRma(BaseCommon):
     @classmethod
     def setUpClass(cls):
@@ -33,7 +34,7 @@ class TestRma(BaseCommon):
             {"name": "Product test 1", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.product_product.create(
-            {"name": "Product test 2", "type": "product"}
+            {"name": "Product test 2", "type": "consu", "is_storable": True}
         )
         cls.account_receiv = cls.env["account.account"].create(
             {
@@ -102,7 +103,7 @@ class TestRma(BaseCommon):
     ):
         rma = self._create_rma(partner, product, qty, location, operation)
         rma.action_confirm()
-        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
         rma.reception_move_id.picking_id.button_validate()
         return rma
 

@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2020 Tecnativa - Ernesto Tejeda
 # Copyright 2022-2025 Tecnativa - Víctor Martínez
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
@@ -262,8 +263,8 @@ class TestRmaSale(TestRmaSaleBase):
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertFalse(rma.reception_move_id.sale_line_id)
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
 
     def test_no_manual_refund_quantity_impact(self):
@@ -277,8 +278,8 @@ class TestRmaSale(TestRmaSaleBase):
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
         self.assertFalse(rma.can_be_refunded)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 0)
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -290,8 +291,8 @@ class TestRmaSale(TestRmaSaleBase):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
-        picking.move_ids.quantity_done = rma.product_uom_qty
-        picking._action_done()
+        picking.move_ids._set_quantity_done(rma.product_uom_qty)
+        picking.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
 
     def test_return_different_product(self):
@@ -307,21 +308,20 @@ class TestRmaSale(TestRmaSaleBase):
         ):
             rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         return_product = self.product_product.create(
-            {"name": "return Product test 1", "type": "product"}
+            {"name": "return Product test 1", "type": "consu"}
         )
         wizard.line_ids.return_product_id = return_product
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
         self.assertEqual(rma.reception_move_id.product_id, return_product)
         self.assertFalse(rma.can_be_refunded)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
 
     def test_grouping_reception(self):
         sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 3]])
         sale_order.action_confirm()
-        sale_order.picking_ids.action_set_quantities_to_reservation()
         sale_order.picking_ids.button_validate()
         wizard = self._rma_sale_wizard(sale_order)
         rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
