@@ -67,7 +67,8 @@ class SaleOrderRmaWizard(models.TransientModel):
         )
         rma = rma_model.create(val_list)
         if from_portal:
-            rma._add_message_subscribe_partner()
+            for r in rma:
+                r._add_message_subscribe_partner()
         # post messages
         msg_list = [
             '<a href="#" data-oe-model="rma" data-oe-id="%d">%s</a>' % (r.id, r.name)
