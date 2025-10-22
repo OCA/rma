@@ -90,10 +90,13 @@
                 <table class="table table-sm" id="request-rma-table">
                     <thead class="bg-100">
                         <tr>
-                            <th class="text-start">Product</th>
-                            <th class="text-end">Quantity</th>
-                            <th class="text-start">Delivery</th>
-                            <th class="text-start">Requested operation</th>
+                            <th class="text-start" name="th_product">Product</th>
+                            <th class="text-end" name="th_quantity">Quantity</th>
+                            <th class="text-start" name="th_delivery">Delivery</th>
+                            <th
+                                class="text-start"
+                                name="th_operation"
+                            >Requested operation</th>
                             <th name="portal_rma_button_desc" />
                         </tr>
                     </thead>
@@ -101,7 +104,7 @@
                         <t t-foreach="data_list" t-as="data">
                             <t t-if="data['picking']">
                                 <tr>
-                                    <td class="text-start">
+                                    <td class="text-start" name="td_product">
                                         <span t-out="data['product'].display_name" />
                                         <input
                                             type="hidden"
@@ -115,7 +118,7 @@
                                             t-att-value="data['sale_line_id'].id"
                                         />
                                     </td>
-                                    <td class="text-end">
+                                    <td class="text-end" name="td_quantity">
                                         <div id="delivery-rma-qty">
                                             <input
                                                 type="number"
@@ -138,7 +141,7 @@
                                             />
                                         </div>
                                     </td>
-                                    <td class="text-start">
+                                    <td class="text-start" name="td_delivery">
                                         <span
                                             t-out="data['picking'] and data['picking'].name"
                                         />
@@ -148,7 +151,7 @@
                                             t-att-value="data['picking'] and data['picking'].id"
                                         />
                                     </td>
-                                    <td class="text-start">
+                                    <td class="text-start" name="td_operation">
                                         <select
                                             t-attf-name="#{data_index}-operation_id"
                                             class="form-control rma-operation"
