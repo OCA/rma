@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockReturnPickingLine(models.TransientModel):
-
     _inherit = "stock.return.picking.line"
 
     def _prepare_rma_vals(self):
