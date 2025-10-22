@@ -7,11 +7,10 @@
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='delivered_qty']" position="before">
-                <field name="lots_visible" invisible="True" />
                 <field
                     name="lot_id"
                     groups="stock.group_production_lot"
-                    attrs="{'invisible': [('lots_visible', '=', False)]}"
+                    invisible="not lots_visible"
                 />
             </xpath>
         </field>

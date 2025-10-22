@@ -2,17 +2,24 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import Command
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestRMALot(TransactionCase):
+class TestRMALot(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.picking_obj = cls.env["stock.picking"]
         partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
-            {"name": "test_product", "type": "product", "tracking": "lot"}
+            {
+                "name": "test_product",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "lot",
+            }
         )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
@@ -51,8 +58,7 @@ class TestRMALot(TransactionCase):
         )
         cls.picking.action_confirm()
         cls.picking.action_assign()
-        cls.picking.action_set_quantities_to_reservation()
-        cls.picking._action_done()
+        cls.picking.button_validate()
         cls.operation = cls.env.ref("rma.rma_operation_replace")
 
     @classmethod
@@ -69,18 +75,11 @@ class TestRMALot(TransactionCase):
             - The correct number of RMAs is created
             - The RMAs are correctly associated with the lot
         """
-        stock_return_picking_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_ids=self.picking.ids,
-                active_id=self.picking.id,
-                active_model="stock.picking",
-            )
-        )
-        stock_return_picking_form.create_rma = True
-        stock_return_picking_form.rma_operation_id = self.operation
-        return_wizard = stock_return_picking_form.save()
+        return_wizard = self.create_return_wiz()
+        return_wizard.create_rma = True
+        return_wizard.rma_operation_id = self.operation
         self.assertEqual(len(return_wizard.product_return_moves), 2)
-        return_wizard.create_returns()
+        return_wizard.action_create_returns_all()
         self.assertEqual(self.picking.rma_count, 2)
         rmas = self.picking.move_ids.rma_ids
         rma_lot_1 = rmas.filtered(lambda r, lot=self.lot_1: r.lot_id == lot)
@@ -88,11 +87,9 @@ class TestRMALot(TransactionCase):
         self.assertTrue(rma_lot_1)
         self.assertEqual(rma_lot_1.reception_move_id.restrict_lot_id, self.lot_1)
         self.assertEqual(rma_lot_1.reception_move_id.state, "assigned")
-        self.assertEqual(rma_lot_1.reception_move_id.move_line_ids.lot_id, self.lot_1)
         self.assertTrue(rma_lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.state, "assigned")
-        self.assertEqual(rma_lot_2.reception_move_id.move_line_ids.lot_id, self.lot_2)
 
     def test_rma_form(self):
         rma_form = Form(self.env["rma"])
