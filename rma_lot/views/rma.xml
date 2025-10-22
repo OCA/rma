@@ -2,7 +2,6 @@
 <!-- Copyright 2024 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="rma_form_view">
         <field name="model">rma</field>
         <field name="inherit_id" ref="rma.rma_view_form" />
@@ -37,5 +36,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
