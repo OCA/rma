@@ -5,7 +5,6 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     def _prepare_rma_wizard_line_vals(self, data):

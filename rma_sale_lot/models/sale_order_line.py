@@ -8,7 +8,6 @@ from odoo.tools.float_utils import float_round
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     def _get_qty_done_by_product_lot(self, moves):
@@ -19,14 +18,14 @@ class SaleOrderLine(models.Model):
                 ("state", "=", "done"),
                 ("move_id.scrapped", "=", False),
             ],
-            ["qty_done:sum"],
+            ["quantity:sum"],
             ["product_id", "lot_id"],
             lazy=False,
         ):
             lot_id = group.get("lot_id")[0] if group.get("lot_id") else False
             product_id = group.get("product_id")[0]
-            qty_done = group.get("qty_done")
-            res[(product_id, lot_id)] += qty_done
+            quantity = group.get("quantity")
+            res[(product_id, lot_id)] += quantity
         return res
 
     def prepare_sale_rma_data(self):
@@ -59,7 +58,7 @@ class SaleOrderLine(models.Model):
                 or not lot_id
             ):
                 if returned_move.state in ("partially_available", "assigned"):
-                    quantity -= sum(returned_move.move_line_ids.mapped("reserved_qty"))
+                    quantity -= sum(returned_move.move_line_ids.mapped("quantity"))
                 elif returned_move.state == "done":
                     quantity -= returned_move.product_qty
         quantity = float_round(

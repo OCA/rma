@@ -1,15 +1,23 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo.tests import tagged
+
 from odoo.addons.rma_sale.tests.test_rma_sale import TestRmaSaleBase
 
 
+@tagged("-at_install", "post_install")
 class TestRmaSaleLot(TestRmaSaleBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "test_product", "type": "product", "tracking": "lot"}
+            {
+                "name": "test_product",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "lot",
+            }
         )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
@@ -24,12 +32,12 @@ class TestRmaSaleLot(TestRmaSaleBase):
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, stock_location, 2, lot_id=cls.lot_2
         )
-        cls.sale_order = cls._create_sale_order(cls, [[cls.product, 3]])
+        cls.sale_order = cls._create_sale_order([[cls.product, 3]])
         cls.sale_order.action_confirm()
         cls.order_line = cls.sale_order.order_line
         cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.action_set_quantities_to_reservation()
-        cls.order_out_picking._action_done()
+        cls.order_out_picking.move_ids.quantity = 3
+        cls.order_out_picking.button_validate()
         cls.operation = cls.env.ref("rma.rma_operation_replace")
 
     def test_partial_return(self):

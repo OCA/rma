@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class SaleOrderLineRmaWizard(models.TransientModel):
-
     _inherit = "sale.order.line.rma.wizard"
 
     lot_id = fields.Many2one(comodel_name="stock.lot", string="Lot/Serial Number")
