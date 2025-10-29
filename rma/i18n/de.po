@@ -262,6 +262,21 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
+msgid "<span>Awaiting action</span>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
+msgid "<span>Draft</span>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
+msgid "<span>Processed</span>"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong class=\"d-block mb-1\">Delivery</strong>"
 msgstr "<strong class=\"d-block mb-1\">Lieferung</strong>"
@@ -458,6 +473,11 @@ msgid "Aliased Model"
 msgstr "Aliased Model"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
+msgid "All"
+msgstr ""
+
+#. module: rma
 #: model:res.groups,name:rma.group_rma_manual_finalization
 msgid "Allow RMA manual finalization"
 msgstr "Erlauben Sie den manuellen RMA-Abschluss"
@@ -493,6 +513,9 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma_operation.py:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Awaiting Action"
 msgstr ""
@@ -562,6 +585,11 @@ msgid "Closed"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__color
+msgid "Color"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__color
 msgid "Color Index"
 msgstr "Farbindex"
@@ -595,6 +623,7 @@ msgstr "Konfigurationseinstellungen"
 
 #. module: rma
 #: model:ir.ui.menu,name:rma.rma_configuration_menu
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "Configuration"
 msgstr "Konfiguration"
 
@@ -626,9 +655,31 @@ msgstr ""
 "Kategorie gehören. Die Umrechnung erfolgt anhand der Verhältnisse."
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_awaiting_action
+msgid "Count Rma Awaiting Action"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_draft
+msgid "Count Rma Draft"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_processed
+msgid "Count Rma Processed"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
 msgid "Create RMAs"
 msgstr "Erstellen Sie RMAs"
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_dashboard_action
+msgid ""
+"Create a new RMA\n"
+"                operation"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_finalization
@@ -760,7 +811,10 @@ msgid "Do not group deliveries"
 msgstr ""
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma_operation.py:0
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__draft
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Draft"
 msgstr "Entwurf"
@@ -1136,8 +1190,14 @@ msgstr "Name"
 #. module: rma
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "New"
 msgstr "Neu"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_form
+msgid "New RMA"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__activity_date_deadline
@@ -1237,6 +1297,11 @@ msgid "Other Information"
 msgstr "Andere Informationen"
 
 #. module: rma
+#: model:ir.ui.menu,name:rma.rma_dashboard_menu
+msgid "Overview"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_parent_model_id
 msgid "Parent Model"
 msgstr "übergeordnetes Modell"
@@ -1293,6 +1358,9 @@ msgid "Priority"
 msgstr "Priorität"
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma_operation.py:0
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Processed"
 msgstr ""
@@ -1470,6 +1538,11 @@ msgstr "RMA-Bestellungen"
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_type_id
 msgid "RMA Out Type"
 msgstr "RMA-Out-Typ"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_dashboard_action
+msgid "RMA Overview"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -1999,6 +2072,14 @@ msgid "That operation name already exists !"
 msgstr "Dieser Vorgangsname existiert bereits!"
 
 #. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_dashboard_action
+msgid ""
+"The RMA operation system allows you to configure each return\n"
+"                operation\n"
+"                with specific settings that will adjust its behavior."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_tag__active
 msgid "The active field allows you to hide the category without removing it."
 msgstr ""
@@ -2147,6 +2228,11 @@ msgstr "Benutzer: Alle Dokumente"
 #: model:res.groups,name:rma.rma_group_user_own
 msgid "User: Own Documents Only"
 msgstr "Benutzer: Nur eigene Dokumente"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
+msgid "View"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__waiting_replacement
