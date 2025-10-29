@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-10 15:06+0000\n"
+"PO-Revision-Date: 2025-10-29 22:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: rma_sale
 #. odoo-python
@@ -42,7 +42,7 @@ msgstr "<i class=\"fa fa-check\"/> Richiesta RMA"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
-msgstr ""
+msgstr "<i class=\"fa fa-reply me-1\"/> Richiedi RMA"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -208,7 +208,7 @@ msgstr "Descrizione"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__different_return_product
 msgid "Different Return Product"
-msgstr ""
+msgstr "Prodotto reso diverso"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
@@ -244,12 +244,14 @@ msgid ""
 "If checked, allows the return of a product different from the one originally "
 "ordered. Used if the delivery is created automatically"
 msgstr ""
+"Se selezionata, consente il reso di un prodotto diverso da quello originale "
+"ordinato. Utilizzato se la consegna è creata automaticamente"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
-"Se nessuna operazione richiesta è impostata, l'RMA non sarà completato "
+"Se nessuna operazione richiesta è impostata, l'RMA non sarà completata "
 "correttamente"
 
 #. module: rma_sale
@@ -307,6 +309,7 @@ msgstr "Prodotto"
 msgid ""
 "Product to be returned if it's different from the originally delivered item."
 msgstr ""
+"Prodotto da rendere se è diverso dall'oggetto consegnato originariamente."
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
@@ -365,7 +368,7 @@ msgstr "Prelievo di reso"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__return_product_id
 msgid "Return Product"
-msgstr ""
+msgstr "Prodotto reso"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
@@ -484,7 +487,7 @@ msgstr "Puoi inviare un messaggio in ogni RMA inviato"
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 msgid "You may only create RMAs from a confirmed sale order."
-msgstr ""
+msgstr "Si possono creare RMA solo da ordini confermati."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
