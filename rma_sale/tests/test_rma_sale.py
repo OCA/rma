@@ -263,8 +263,8 @@ class TestRmaSale(TestRmaSaleBase):
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertFalse(rma.reception_move_id.sale_line_id)
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
 
     def test_no_manual_refund_quantity_impact(self):
@@ -278,8 +278,8 @@ class TestRmaSale(TestRmaSaleBase):
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
         self.assertFalse(rma.can_be_refunded)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 0)
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -291,8 +291,8 @@ class TestRmaSale(TestRmaSaleBase):
         delivery_wizard = delivery_form.save()
         delivery_wizard.action_deliver()
         picking = rma.delivery_move_ids.picking_id
-        picking.move_ids.quantity_done = rma.product_uom_qty
-        picking._action_done()
+        picking.move_ids._set_quantity_done(rma.product_uom_qty)
+        picking.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
 
     def test_grouping_reception(self):
@@ -318,13 +318,13 @@ class TestRmaSale(TestRmaSaleBase):
         ):
             rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         return_product = self.product_product.create(
-            {"name": "return Product test 1", "type": "product"}
+            {"name": "return Product test 1", "type": "consu", "is_storable": True}
         )
         wizard.line_ids.return_product_id = return_product
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.reception_move_id.sale_line_id, order_line)
         self.assertEqual(rma.reception_move_id.product_id, return_product)
         self.assertFalse(rma.can_be_refunded)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
