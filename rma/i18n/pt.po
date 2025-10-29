@@ -488,6 +488,24 @@ msgid "Attachment Count"
 msgstr "Número de Anexos"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__auto_confirm_reception
+msgid "Auto Confirm Reception"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__automatic_after_receipt
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_refund__automatic_after_receipt
+msgid "Automatically After Receipt"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__automatic_on_confirm
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_receipt__automatic_on_confirm
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_refund__automatic_on_confirm
+msgid "Automatically on Confirm"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Avatar"
 msgstr "Avatar"
@@ -653,6 +671,12 @@ msgid "Create RMAs"
 msgstr "Criar RMAs"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__action_create_receipt
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Create Receipt"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_dashboard_action
 msgid ""
 "Create a new RMA\n"
@@ -736,6 +760,21 @@ msgid "Default Values"
 msgstr "Valores Padrão"
 
 #. module: rma
+#: model:ir.model.fields,help:rma.field_rma_operation__action_create_delivery
+msgid "Define how the delivery action should be handled."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_operation__action_create_receipt
+msgid "Define how the receipt action should be handled."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_operation__action_create_refund
+msgid "Define how the refund action should be handled."
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
 msgid "Deliver"
 msgstr "Entrega"
@@ -756,6 +795,11 @@ msgid "Delivery"
 msgstr "Envio"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__action_create_delivery
+msgid "Delivery Action"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivery_picking_count
 msgid "Delivery count"
 msgstr "Contagem de Envios"
@@ -770,6 +814,13 @@ msgstr "Reserva de Envio"
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "Description"
 msgstr "Descrição"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__different_return_product
+#: model:ir.model.fields,field_description:rma.field_rma_operation__different_return_product
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__different_return_product
+msgid "Different Return Product"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__display_name
@@ -858,6 +909,13 @@ msgstr ""
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
 msgid "Email sent to the customer when they place an RMA from the portal"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma_operation__auto_confirm_reception
+msgid ""
+"Enable this option to automatically confirm the reception when the RMA is "
+"confirmed."
 msgstr ""
 
 #. module: rma
@@ -980,6 +1038,15 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_exception_icon
 msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__different_return_product
+#: model:ir.model.fields,help:rma.field_rma_operation__different_return_product
+#: model:ir.model.fields,help:rma.field_stock_return_picking_line__different_return_product
+msgid ""
+"If checked, allows the return of a product different from the one originally "
+"ordered. Used if the delivery is created automatically"
 msgstr ""
 
 #. module: rma
@@ -1127,6 +1194,19 @@ msgid "Manager"
 msgstr "Gestor"
 
 #. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__manual_after_receipt
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_refund__manual_after_receipt
+msgid "Manually After Receipt"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__manual_on_confirm
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_receipt__manual_on_confirm
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_refund__manual_on_confirm
+msgid "Manually on Confirm"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__message_has_error
 #: model:ir.model.fields,field_description:rma.field_rma_team__message_has_error
 msgid "Message Delivery error"
@@ -1223,6 +1303,12 @@ msgstr "Número de Mensagens com Erro de Entrega"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__rma_operation_id
 msgid "Operation"
+msgstr ""
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_operation_act_window
+#: model:ir.ui.menu,name:rma.rma_operation_menu
+msgid "Operations"
 msgstr ""
 
 #. module: rma
@@ -1346,6 +1432,13 @@ msgstr "Produto"
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom_qty
 msgid "Product qty"
 msgstr "Quantidade de Produto"
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_rma__return_product_id
+#: model:ir.model.fields,help:rma.field_stock_return_picking_line__return_product_id
+msgid ""
+"Product to be returned if it's different from the originally delivered item."
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__is_public
@@ -1645,6 +1738,8 @@ msgid "Reason Name"
 msgstr ""
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Receipt"
 msgstr "Recebimento"
@@ -1678,6 +1773,11 @@ msgstr "Referência do documento que gerou este RMA."
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Refund"
 msgstr "Reembolso"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_operation__action_create_refund
+msgid "Refund Action"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__refund_line_id
@@ -1783,6 +1883,12 @@ msgstr "Operação de Devolução"
 #. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking_line
 msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__return_product_id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__return_product_id
+msgid "Return Product"
 msgstr ""
 
 #. module: rma
@@ -1904,6 +2010,7 @@ msgstr "Definir como Rascunho"
 #. module: rma
 #: model:ir.actions.act_window,name:rma.action_rma_config_settings
 #: model:ir.ui.menu,name:rma.menu_rma_general_settings
+#: model_terms:ir.ui.view,arch_db:rma.rma_operation_form_view
 msgid "Settings"
 msgstr ""
 
@@ -1921,6 +2028,26 @@ msgstr "Endereço de Envio"
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
 msgstr "Endereço de envio para a RMA atual."
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__show_create_receipt
+msgid "Show Create Receipt Button"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__show_create_return
+msgid "Show Create Return Button"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__show_create_refund
+msgid "Show Create refund Button"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__show_create_replace
+msgid "Show Create replace Button"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -2066,6 +2193,14 @@ msgid "The quantity to return is greater than remaining quantity."
 msgstr "A quantidade a retornar é maior que a quantidade restante."
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
+msgid ""
+"The selected operation requires a return product different from the "
+"originally delivered item. Please select the product to return."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_tag__is_public
 msgid "The tag is visible in the portal view"
 msgstr ""
@@ -2149,6 +2284,11 @@ msgstr "RMAs não resolvidos"
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
 msgid "UoM"
 msgstr "Unidade de Medida"
+
+#. module: rma
+#: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_refund__update_quantity
+msgid "Update Quantities"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__priority__1
