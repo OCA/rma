@@ -19,28 +19,20 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/controllers/sale_portal.py:0
-#, python-format
 msgid " (Portal)"
 msgstr " (Portale)"
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " has been created."
 msgstr " è stato creato."
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " have been created."
 msgstr " è stato creato."
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
-msgid "&amp;times;"
-msgstr "&amp;volte;"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -49,8 +41,8 @@ msgstr "<i class=\"fa fa-check\"/> Richiesta RMA"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "<i class=\"fa fa-reply\"/> Request RMAs"
-msgstr "<i class=\"fa fa-reply\"/> Richiesta RMA"
+msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -173,7 +165,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
-#, python-format
 msgid "Create RMA"
 msgstr "Crea RMA"
 
@@ -215,6 +206,11 @@ msgid "Description"
 msgstr "Descrizione"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__different_return_product
+msgid "Different Return Product"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
 msgid "Display Name"
@@ -243,6 +239,13 @@ msgid "ID"
 msgstr "ID"
 
 #. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__different_return_product
+msgid ""
+"If checked, allows the return of a product different from the one originally "
+"ordered. Used if the delivery is created automatically"
+msgstr ""
+
+#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
@@ -253,12 +256,6 @@ msgstr ""
 #: model:ir.model,name:rma_sale.model_account_move
 msgid "Journal Entry"
 msgstr "Registrazione contabile"
-
-#. module: rma_sale
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_uid
@@ -304,6 +301,12 @@ msgstr "Origine movimento"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Product"
 msgstr "Prodotto"
+
+#. module: rma_sale
+#: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__return_product_id
+msgid ""
+"Product to be returned if it's different from the originally delivered item."
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
@@ -358,6 +361,11 @@ msgstr "Operazioni richieste"
 #: model:ir.model,name:rma_sale.model_stock_return_picking
 msgid "Return Picking"
 msgstr "Prelievo di reso"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__return_product_id
+msgid "Return Product"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
@@ -475,9 +483,8 @@ msgstr "Puoi inviare un messaggio in ogni RMA inviato"
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
-#, python-format
-msgid "You may only create RMAs from a confirmed or done sale order."
-msgstr "Puoi creare RMA solo da un ordine di vendita confermato o concluso."
+msgid "You may only create RMAs from a confirmed sale order."
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -487,3 +494,16 @@ msgid ""
 msgstr ""
 "Stai per eseguire una richiesta RMA. Il nostro team lo elaborerà e ti "
 "arriverà una volta convalidato. Tieni presente che:"
+
+#~ msgid "&amp;times;"
+#~ msgstr "&amp;volte;"
+
+#~ msgid "<i class=\"fa fa-reply\"/> Request RMAs"
+#~ msgstr "<i class=\"fa fa-reply\"/> Richiesta RMA"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#, python-format
+#~ msgid "You may only create RMAs from a confirmed or done sale order."
+#~ msgstr "Puoi creare RMA solo da un ordine di vendita confermato o concluso."
