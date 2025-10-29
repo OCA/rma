@@ -3,11 +3,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import Form
+from odoo.tests import Form, tagged
 
 from .test_rma import TestRma
 
 
+@tagged("-at_install", "post_install")
 class TestRmaOperation(TestRma):
     def test_01(self):
         """
@@ -100,7 +101,8 @@ class TestRmaOperation(TestRma):
         self.assertFalse(rma.show_create_return)
         self.assertFalse(rma.can_be_replaced)
         self.assertFalse(rma.show_create_replace)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         rma.reception_move_id.picking_id._action_done()
         self.assertEqual(rma.state, "received")
         self.assertTrue(rma.can_be_returned)
@@ -124,8 +126,8 @@ class TestRmaOperation(TestRma):
         self.assertFalse(rma.can_be_replaced)
         self.assertFalse(rma.show_create_replace)
         self.assertFalse(rma.delivery_move_ids)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.delivery_move_ids.product_id, self.product)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 10)
         self.assertEqual(rma.state, "waiting_replacement")
@@ -150,7 +152,7 @@ class TestRmaOperation(TestRma):
         ):
             rma.action_confirm()
         rma.return_product_id = self.product_product.create(
-            {"name": "return Product test 1", "type": "product"}
+            {"name": "return Product test 1", "type": "consu"}
         )
         rma.action_confirm()
         self.assertEqual(rma.delivery_move_ids.product_id, rma.product_id)
@@ -174,8 +176,8 @@ class TestRmaOperation(TestRma):
         self.assertEqual(rma.state, "confirmed")
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.show_create_refund)
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.state, "received")
         self.assertTrue(rma.can_be_refunded)
         self.assertTrue(rma.show_create_refund)
@@ -196,8 +198,8 @@ class TestRmaOperation(TestRma):
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
         self.assertEqual(rma.state, "confirmed")
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.state, "refunded")
         self.assertTrue(rma.refund_id)
         self.assertFalse(rma.can_be_refunded)
@@ -235,8 +237,8 @@ class TestRmaOperation(TestRma):
         self.operation.action_create_refund = False
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
-        rma.reception_move_id.quantity_done = rma.product_uom_qty
-        rma.reception_move_id.picking_id._action_done()
+        rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
+        rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.state, "received")
         self.assertFalse(rma.delivery_move_ids)
 
@@ -259,7 +261,8 @@ class TestRmaOperation(TestRma):
             lambda m, p=self.product: m.product_id == p
         )
         self.assertEqual(return_line.rma_operation_id, self.operation)
-        picking_action = return_wizard.create_returns()
+        return_line.quantity = return_line.move_id.product_uom_qty
+        picking_action = return_wizard.action_create_returns()
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
         self.assertFalse(move.to_refund)
@@ -283,7 +286,8 @@ class TestRmaOperation(TestRma):
             lambda m, p=self.product: m.product_id == p
         )
         self.assertEqual(return_line.rma_operation_id, self.operation)
-        picking_action = return_wizard.create_returns()
+        return_line.quantity = return_line.move_id.product_uom_qty
+        picking_action = return_wizard.action_create_returns()
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
         self.assertTrue(move.to_refund)
@@ -294,13 +298,31 @@ class TestRmaOperation(TestRma):
         rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
         rma.action_confirm()
         self.assertEqual(rma.state, "waiting_replacement")
-        out_pickings = rma.mapped("delivery_move_ids.picking_id")
-        self.assertEqual(rma.delivery_picking_count, 2)
+        pickings = rma.mapped("delivery_move_ids.picking_id")
+        self.assertEqual(rma.delivery_picking_count, 1)
+        self.assertIn(self.warehouse.pick_type_id, pickings.picking_type_id)
+        pick_move = rma.delivery_move_ids.filtered(
+            lambda m: m.picking_type_id == self.warehouse.pick_type_id
+        )
+        self.assertTrue(pick_move, "Expected a move on the pick picking.")
+        pick_move._set_quantity_done(rma.product_uom_qty)
+        pickings.button_validate()
+        ship_picking = pick_move.move_dest_ids.picking_id
+        self.assertTrue(
+            ship_picking, "Ship picking should be created after validating the Pick."
+        )
+        self.assertEqual(
+            ship_picking.picking_type_id,
+            self.warehouse.out_type_id,
+            "The chained picking should be the Delivery (Output -> Customer).",
+        )
+        all_out_pickings = pickings | ship_picking
+        self.assertEqual(len(all_out_pickings), 2)
         self.assertIn(
-            self.warehouse.pick_type_id, out_pickings.mapped("picking_type_id")
+            self.warehouse.pick_type_id, all_out_pickings.mapped("picking_type_id")
         )
         self.assertIn(
-            self.warehouse.out_type_id, out_pickings.mapped("picking_type_id")
+            self.warehouse.out_type_id, all_out_pickings.mapped("picking_type_id")
         )
 
     def test_16(self):

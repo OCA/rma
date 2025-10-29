@@ -51,20 +51,20 @@
     <record model="ir.ui.view" id="rma_operation_tree_view">
         <field name="model">rma.operation</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="action_create_receipt" />
                 <field name="action_create_delivery" />
                 <field name="action_create_refund" />
                 <field name="active" widget="boolean_toggle" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record model="ir.actions.act_window" id="rma_operation_act_window">
         <field name="name">Operations</field>
         <field name="res_model">rma.operation</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
