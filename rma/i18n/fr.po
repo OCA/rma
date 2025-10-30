@@ -1116,6 +1116,13 @@ msgid "Incoming e-mail"
 msgstr "E-mail entrant"
 
 #. module: rma
+#: model:ir.model.fields,help:rma.field_rma__manual_finish_allowed
+msgid ""
+"Indicates whether this RMA can be manually finished, without requiring "
+"further processing such as a receipt, delivery, or refund."
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
 msgid "Invoice Address"
 msgstr "Adresse de facturation"
@@ -1221,6 +1228,11 @@ msgstr "Gérer les autorisations de retour de marchandise (RMA)."
 #: model:res.groups,name:rma.rma_group_manager
 msgid "Manager"
 msgstr "Responsable"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__manual_finish_allowed
+msgid "Manual Finish Allowed"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__manual_after_receipt
@@ -2229,6 +2241,12 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 msgid "The quantity to return is greater than remaining quantity."
 msgstr "La quantité à retourner est supérieure à la quantité restante."
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
+msgid "The reception must be done before finishing this rma"
+msgstr ""
 
 #. module: rma
 #. odoo-python
