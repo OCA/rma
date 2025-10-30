@@ -1715,6 +1715,11 @@ msgid "RMA in draft state"
 msgstr "RMA en estado borrador"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_replace_route_id
+msgid "RMA out Replace Route"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
 msgid "RMA out Route"
 msgstr ""

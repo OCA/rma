@@ -1024,7 +1024,8 @@ msgstr "l'Email sarà inviata al cliente una volta ricevuti i prodotti RMA."
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
 msgid "Email sent to the customer when they place an RMA from the portal"
-msgstr "l'Email sarà inviata al cliente quando si inserisce una RMA dal portale"
+msgstr ""
+"l'Email sarà inviata al cliente quando si inserisce una RMA dal portale"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_operation__auto_confirm_reception
@@ -1809,6 +1810,11 @@ msgstr "RMA in rotta"
 #: model:mail.message.subtype,description:rma.mt_rma_draft
 msgid "RMA in draft state"
 msgstr "RMA in stato bozza"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_replace_route_id
+msgid "RMA out Replace Route"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
