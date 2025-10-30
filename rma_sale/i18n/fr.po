@@ -112,6 +112,11 @@ msgid "Allowed Product"
 msgstr "Produit autorisé"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_quantity
+msgid "Allowed Quantity"
+msgstr ""
+
+#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr "Annuler"
@@ -357,6 +362,11 @@ msgid "Requested operation"
 msgstr "Demande d'opération"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__is_return_all
+msgid "Return All?"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_return_picking
 msgid "Return Picking"
 msgstr ""
@@ -481,6 +491,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "You can send a message in every RMA sent"
 msgstr "Vous pouvez envoyer un message dans chaque RMA envoyé"
+
+#. module: rma_sale
+#. odoo-python
+#: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
+msgid ""
+"You can't exceed the allowed quantity for returning product %(product)s."
+msgstr ""
 
 #. module: rma_sale
 #. odoo-python
