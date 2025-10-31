@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-29 22:43+0000\n"
+"PO-Revision-Date: 2025-10-31 11:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -115,7 +115,7 @@ msgstr "Prodotto consentito"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_quantity
 msgid "Allowed Quantity"
-msgstr ""
+msgstr "Quantità consentita"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
@@ -368,7 +368,7 @@ msgstr "Operazioni richieste"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__is_return_all
 msgid "Return All?"
-msgstr ""
+msgstr "Rendere tutto?"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_return_picking
@@ -499,6 +499,7 @@ msgstr "Puoi inviare un messaggio in ogni RMA inviato"
 msgid ""
 "You can't exceed the allowed quantity for returning product %(product)s."
 msgstr ""
+"Non si può superare la quantità consentita per il prodotto reso %(product)s."
 
 #. module: rma_sale
 #. odoo-python
