@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-29 22:43+0000\n"
+"PO-Revision-Date: 2025-10-31 11:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1221,6 +1221,8 @@ msgid ""
 "Indicates whether this RMA can be manually finished, without requiring "
 "further processing such as a receipt, delivery, or refund."
 msgstr ""
+"Indica se questa RMA può essere completata manualmente, senza richiedere "
+"ulteriori elaborazioni quali ricevuta, consegna o rimborso."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__partner_invoice_id
@@ -1332,7 +1334,7 @@ msgstr "Supervisore"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__manual_finish_allowed
 msgid "Manual Finish Allowed"
-msgstr ""
+msgstr "Chiusura manuale consentita"
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma_operation__action_create_delivery__manual_after_receipt
@@ -1826,7 +1828,7 @@ msgstr "RMA in stato bozza"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_replace_route_id
 msgid "RMA out Replace Route"
-msgstr ""
+msgstr "Percorso riparazione uscita RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
@@ -2365,7 +2367,7 @@ msgstr "La quantità da restituire è maggiore della quantità restante."
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "The reception must be done before finishing this rma"
-msgstr ""
+msgstr "La ricezione deve essere eseguita prima di chiudere questa RMA"
 
 #. module: rma
 #. odoo-python
