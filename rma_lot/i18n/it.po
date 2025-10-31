@@ -22,6 +22,7 @@ msgid "Deliver Same Lot/Serial as Received"
 msgstr "Consegna lo stesso lotto/seriale ricevuto"
 
 #. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__domain_lot_id
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__domain_lot_id
 msgid "Domain Lot"
 msgstr "Lotto dominio"
