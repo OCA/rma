@@ -328,3 +328,85 @@ class TestRmaSale(TestRmaSaleBase):
         rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
+
+    def test_reception_grouped_even_from_different_sale_order(self):
+        """
+        ensure that RMAs linked to different sale orders are grouped and the procurement
+        group is not linked to any of the so
+        """
+        sale_order1 = self._create_sale_order([[self.product_1, 5]])
+        sale_order1.action_confirm()
+        sale_order1.picking_ids.move_ids.quantity = 5
+        sale_order1.picking_ids.button_validate()
+        rma1 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_order1.order_line.move_ids.id,
+                "order_id": sale_order1.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        sale_order2 = self._create_sale_order([[self.product_1, 5]])
+        sale_order2.action_confirm()
+        sale_order2.picking_ids.move_ids.quantity = 5
+        sale_order2.picking_ids.button_validate()
+        rma2 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_order2.order_line.move_ids.id,
+                "order_id": sale_order2.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        (rma1 + rma2).action_confirm()
+
+        self.assertEqual(
+            rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
+        )
+        self.assertFalse(rma1.procurement_group_id.sale_id)
+
+    def test_reception_grouped_from_same_sale_order(self):
+        """
+        ensure that RMAs linked to same sale orders are grouped and the procurement
+        group is linked to the so
+        """
+        sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 5]])
+        sale_order.action_confirm()
+        sale_order.picking_ids.move_ids.quantity = 5
+        sale_order.picking_ids.button_validate()
+        sale_line1 = sale_order.order_line.filtered(
+            lambda sol: sol.product_id == self.product_1
+        )
+        sale_line2 = sale_order.order_line.filtered(
+            lambda sol: sol.product_id == self.product_2
+        )
+        rma1 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_line1.move_ids.id,
+                "order_id": sale_order.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        rma2 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_2.id,
+                "product_uom_qty": 5,
+                "move_id": sale_line2.move_ids.id,
+                "order_id": sale_order.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        (rma1 + rma2).action_confirm()
+
+        self.assertEqual(
+            rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
+        )
+        self.assertEqual(rma1.procurement_group_id.sale_id, sale_order)
