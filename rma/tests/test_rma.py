@@ -1006,3 +1006,8 @@ class TestRmaCase(TestRma):
         self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
+
+    def test_copy_operation(self):
+        operation = self.env.ref("rma.rma_operation_refund")
+        new_operation = operation.copy()
+        self.assertEqual(new_operation.name, "Refund (copy)")

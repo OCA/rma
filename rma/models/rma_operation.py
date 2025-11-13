@@ -165,3 +165,8 @@ class RmaOperation(models.Model):
         self.ensure_one()
         name = self.display_name
         return self._get_action(name, domain=[("operation_id", "=", self.id)])
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {}, name=_("%s (copy)", self.name))
+        return super().copy(default)
