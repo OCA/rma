@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_operation_form_view" model="ir.ui.view">
+        <field name="model">rma.operation</field>
+        <field name="inherit_id" ref="rma.rma_operation_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='settings']" position="inside">
+                <group invisible="not action_create_receipt">
+                    <field name="restocking_fee_type" />
+                </group>
+                <group invisible="not action_create_receipt">
+                    <field
+                        name="restocking_fee_amount"
+                        required="restocking_fee_type"
+                        invisible="not restocking_fee_type"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

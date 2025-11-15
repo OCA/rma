@@ -1,0 +1,140 @@
+# Copyright 2025 ACSONE SA/NV
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo.exceptions import ValidationError
+
+from odoo.addons.rma_sale.tests.test_rma_sale import TestRmaSaleBase
+
+
+class TestRmaSaleStockRestockingFeeInvoicing(TestRmaSaleBase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sale_order = cls._create_sale_order([[cls.product_1, 5]])
+        cls.sale_order.action_confirm()
+        cls.order_line = cls.sale_order.order_line.filtered(
+            lambda r: r.product_id == cls.product_1
+        )
+        cls.order_out_picking = cls.sale_order.picking_ids
+        cls.order_out_picking.move_ids.quantity = 5
+        cls.order_out_picking.button_validate()
+        cls.product_restocking_fee = cls.env.ref(
+            "sale_stock_restocking_fee_invoicing.product_restocking_fee"
+        )
+
+    def _create_receive_rma(self):
+        wizard = self._rma_sale_wizard(self.sale_order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertTrue(rma.reception_move_id)
+        self.assertTrue(rma.reception_move_id.charge_restocking_fee)
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.reception_move_id.state, "done")
+        return rma
+
+    def test_0(self):
+        """ensure restocking_fee_type enforces correct constraints on amount and
+        percentage"""
+        with self.assertRaisesRegex(
+            ValidationError, "Restocking fee amount must be greater than zero"
+        ):
+            self.operation.restocking_fee_type = "fixed"
+        with self.assertRaisesRegex(
+            ValidationError, "Restocking fee amount must be greater than zero"
+        ):
+            self.operation.restocking_fee_type = "percent"
+
+        with self.assertRaisesRegex(
+            ValidationError, "Restocking fee percentage cannot exceed 100%"
+        ):
+            self.operation.write(
+                {"restocking_fee_type": "percent", "restocking_fee_amount": 105}
+            )
+
+    def test_1(self):
+        """no restocking fee is applied when restocking_fee_type is not set"""
+        self.assertFalse(self.operation.restocking_fee_type)
+        wizard = self._rma_sale_wizard(self.sale_order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertTrue(rma.reception_move_id)
+        self.assertFalse(rma.reception_move_id.charge_restocking_fee)
+        self.assertFalse(rma.manual_restocking_fee_invoice_needed)
+
+    def test_2(self):
+        """a restocking fee must not be added to the sale order when refund strategy
+        is not 'update_quantity'"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "fixed", "restocking_fee_amount": 5.5}
+        )
+        self._create_receive_rma()
+        self.assertEqual(len(self.sale_order.order_line), 1)
+
+    def test_3(self):
+        """when refund strategy is 'update_quantity' and fee type is fixed,
+        a restocking fee line is added with the correct amount, fixed case"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "fixed", "restocking_fee_amount": 5.5}
+        )
+        self.operation.action_create_refund = "update_quantity"
+        self._create_receive_rma()
+        self.assertEqual(len(self.sale_order.order_line), 2)
+        restocking_fee_line = self.sale_order.order_line.filtered(
+            lambda line: line.product_id == self.product_restocking_fee
+        )
+        self.assertTrue(restocking_fee_line)
+        self.assertEqual(restocking_fee_line.price_subtotal, 5.5)
+
+    def test_4(self):
+        """when refund strategy is 'update_quantity' and fee type is percentage-based,
+        the fee line is added using the sale line subtotal"""
+        self.sale_order.order_line.price_unit = 300
+        self.assertEqual(self.sale_order.order_line.price_subtotal, 1500)  # 5 * 300
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "percent", "restocking_fee_amount": 80}
+        )
+        self.operation.action_create_refund = "update_quantity"
+        self._create_receive_rma()
+        self.assertEqual(len(self.sale_order.order_line), 2)
+        restocking_fee_line = self.sale_order.order_line.filtered(
+            lambda line: line.product_id == self.product_restocking_fee
+        )
+        self.assertTrue(restocking_fee_line)
+        self.assertEqual(restocking_fee_line.price_subtotal, 1200)  # 1500*0.8
+
+    def test_5(self):
+        """when refund strategy is 'manual_after_receipt' and fee type is fixed,
+        a restocking fee invoice is created with the correct amount, fixed case"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "fixed", "restocking_fee_amount": 5.5}
+        )
+        self.operation.action_create_refund = "manual_after_receipt"
+        rma = self._create_receive_rma()
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        invoice = rma.restocking_fee_invoice_id
+        self.assertTrue(invoice)
+        action = rma.action_view_restocking_fee_invoice()
+        self.assertEqual(action.get("res_id"), invoice.id)
+        self.assertEqual(len(invoice.invoice_line_ids), 1)
+        self.assertEqual(invoice.invoice_line_ids.price_subtotal, 5.5)
+
+    def test_6(self):
+        """when refund strategy is 'manual_after_receipt' and fee type is
+        percentage-based, the fee invoice uses the correct percentage of the
+        product price"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.product_1.lst_price = 300
+        self.operation.write(
+            {"restocking_fee_type": "percent", "restocking_fee_amount": 80}
+        )
+        self.operation.action_create_refund = "manual_after_receipt"
+        rma = self._create_receive_rma()
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        invoice = rma.restocking_fee_invoice_id
+        self.assertTrue(invoice)
+        action = rma.action_view_restocking_fee_invoice()
+        self.assertEqual(action.get("res_id"), invoice.id)
+        self.assertEqual(len(invoice.invoice_line_ids), 1)
+        self.assertEqual(invoice.invoice_line_ids.price_subtotal, 240)  # 300*0.8
