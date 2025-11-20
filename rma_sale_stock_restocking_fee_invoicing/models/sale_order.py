@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         rma = stock_move.rma_receiver_ids
         if not rma:
             return vals
-        vals["price_unit"] = rma.operation_id._get_restocking_fee_amount(
+        vals["price_unit"] = rma._get_restocking_fee_amount(
             stock_move.sale_line_id.price_subtotal
         )
         return vals

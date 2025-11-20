@@ -22,11 +22,15 @@ class TestRmaSaleStockRestockingFeeInvoicing(TestRmaSaleBase):
             "sale_stock_restocking_fee_invoicing.product_restocking_fee"
         )
 
-    def _create_receive_rma(self):
+    def _create_rma(self):
         wizard = self._rma_sale_wizard(self.sale_order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertTrue(rma.reception_move_id)
         self.assertTrue(rma.reception_move_id.charge_restocking_fee)
+        return rma
+
+    def _create_receive_rma(self):
+        rma = self._create_rma()
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.reception_move_id.state, "done")
         return rma
@@ -138,3 +142,40 @@ class TestRmaSaleStockRestockingFeeInvoicing(TestRmaSaleBase):
         self.assertEqual(action.get("res_id"), invoice.id)
         self.assertEqual(len(invoice.invoice_line_ids), 1)
         self.assertEqual(invoice.invoice_line_ids.price_subtotal, 240)  # 300*0.8
+
+    def test_7(self):
+        """update_quantity, custom restocking fee"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "fixed", "restocking_fee_amount": 5.5}
+        )
+        self.operation.action_create_refund = "update_quantity"
+        rma = self._create_rma()
+        rma.write({"restocking_fee_type": "fixed", "restocking_fee_amount": 12.5})
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.reception_move_id.state, "done")
+        self.assertEqual(len(self.sale_order.order_line), 2)
+        restocking_fee_line = self.sale_order.order_line.filtered(
+            lambda line: line.product_id == self.product_restocking_fee
+        )
+        self.assertTrue(restocking_fee_line)
+        self.assertEqual(restocking_fee_line.price_subtotal, 12.5)
+
+    def test_8(self):
+        """invoice manual_after_receipt, custom restocking fee"""
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        self.operation.write(
+            {"restocking_fee_type": "fixed", "restocking_fee_amount": 5.5}
+        )
+        self.operation.action_create_refund = "manual_after_receipt"
+        rma = self._create_rma()
+        rma.write({"restocking_fee_type": "fixed", "restocking_fee_amount": 12.5})
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.reception_move_id.state, "done")
+        self.assertEqual(len(self.sale_order.order_line), 1)
+        invoice = rma.restocking_fee_invoice_id
+        self.assertTrue(invoice)
+        action = rma.action_view_restocking_fee_invoice()
+        self.assertEqual(action.get("res_id"), invoice.id)
+        self.assertEqual(len(invoice.invoice_line_ids), 1)
+        self.assertEqual(invoice.invoice_line_ids.price_subtotal, 12.5)

@@ -6,7 +6,8 @@ from odoo.exceptions import ValidationError
 
 
 class Rma(models.Model):
-    _inherit = "rma"
+    _name = "rma"
+    _inherit = ["rma", "restocking.fee.mixin"]
 
     restocking_fee_invoice_id = fields.Many2one(
         comodel_name="account.move", readonly=True
@@ -14,11 +15,35 @@ class Rma(models.Model):
     manual_restocking_fee_invoice_needed = fields.Boolean(
         compute="_compute_manual_restocking_fee_invoice_needed"
     )
+    restocking_fee_type = fields.Selection(
+        compute="_compute_restocking_fee", store=True, readonly=False
+    )
+    restocking_fee_amount = fields.Float(
+        compute="_compute_restocking_fee", store=True, readonly=False
+    )
+    restocking_fee_visibility = fields.Boolean(
+        compute="_compute_restocking_fee_visibility"
+    )
+
+    @api.depends("operation_id")
+    def _compute_restocking_fee(self):
+        for rec in self:
+            rec.update(
+                {
+                    "restocking_fee_type": rec.operation_id.restocking_fee_type,
+                    "restocking_fee_amount": rec.operation_id.restocking_fee_amount,
+                }
+            )
+
+    @api.depends("operation_id")
+    def _compute_restocking_fee_visibility(self):
+        for rec in self:
+            rec.restocking_fee_visibility = bool(rec.action_create_receipt)
 
     @api.depends(
         "operation_id.action_create_receipt",
         "operation_id.action_create_refund",
-        "operation_id.restocking_fee_type",
+        "restocking_fee_type",
         "restocking_fee_invoice_id",
     )
     def _compute_manual_restocking_fee_invoice_needed(self):
@@ -27,12 +52,12 @@ class Rma(models.Model):
                 not rec.restocking_fee_invoice_id
                 and rec.operation_id.action_create_receipt
                 and rec.operation_id.action_create_refund != "update_quantity"
-                and rec.operation_id.restocking_fee_type
+                and rec.restocking_fee_type
             )
 
     def _prepare_reception_procurement_vals(self, group=None):
         vals = super()._prepare_reception_procurement_vals(group=group)
-        vals["charge_restocking_fee"] = bool(self.operation_id.restocking_fee_type)
+        vals["charge_restocking_fee"] = bool(self.restocking_fee_type)
         return vals
 
     def update_received_state_on_reception(self):
@@ -87,9 +112,7 @@ class Rma(models.Model):
             "quantity": 1,
             "product_uom_id": product_id.uom_id.id,
             "product_id": product_id.id,
-            "price_unit": self.operation_id._get_restocking_fee_amount(
-                self.product_id.lst_price
-            ),
+            "price_unit": self._get_restocking_fee_amount(self.product_id.lst_price),
         }
 
     def action_view_restocking_fee_invoice(self):
