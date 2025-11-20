@@ -112,7 +112,11 @@ class Rma(models.Model):
             "quantity": 1,
             "product_uom_id": product_id.uom_id.id,
             "product_id": product_id.id,
-            "price_unit": self._get_restocking_fee_amount(self.product_id.lst_price),
+            "price_unit": self._get_restocking_fee_amount(
+                self.sale_line_id.price_subtotal
+                if self.sale_line_id
+                else self.product_id.lst_price
+            ),
         }
 
     def action_view_restocking_fee_invoice(self):

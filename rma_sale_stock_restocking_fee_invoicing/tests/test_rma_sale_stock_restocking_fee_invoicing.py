@@ -134,7 +134,17 @@ class TestRmaSaleStockRestockingFeeInvoicing(TestRmaSaleBase):
             {"restocking_fee_type": "percent", "restocking_fee_amount": 80}
         )
         self.operation.action_create_refund = "manual_after_receipt"
-        rma = self._create_receive_rma()
+        rma = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "operation_id": self.operation.id,
+            }
+        )
+        rma.action_confirm()
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.reception_move_id.state, "done")
         self.assertEqual(len(self.sale_order.order_line), 1)
         invoice = rma.restocking_fee_invoice_id
         self.assertTrue(invoice)
