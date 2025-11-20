@@ -60,11 +60,6 @@ class Rma(models.Model):
         vals["charge_restocking_fee"] = bool(self.restocking_fee_type)
         return vals
 
-    def update_received_state_on_reception(self):
-        res = super().update_received_state_on_reception()
-        self._create_restocking_fee_invoice()
-        return res
-
     def _create_restocking_fee_invoice(self):
         for rec in self:
             if not rec.manual_restocking_fee_invoice_needed:
