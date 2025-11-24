@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 04:40+0000\n"
-"PO-Revision-Date: 2023-09-07 17:37+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2025-11-24 07:40+0000\n"
+"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: rma_sale
 #. odoo-python
@@ -43,7 +43,7 @@ msgstr "<i class=\"fa fa-check\"/> Solicitar RMAs"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
 msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
-msgstr ""
+msgstr "<i class=\"fa fa-reply me-1\"/> Solicitar RMAs"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -116,7 +116,7 @@ msgstr "Producto Permitido"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_quantity
 msgid "Allowed Quantity"
-msgstr ""
+msgstr "Cantidad permitida"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
@@ -214,7 +214,7 @@ msgstr "Descripción"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__different_return_product
 msgid "Different Return Product"
-msgstr ""
+msgstr "Producto de devolución diferente"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
@@ -250,6 +250,8 @@ msgid ""
 "If checked, allows the return of a product different from the one originally "
 "ordered. Used if the delivery is created automatically"
 msgstr ""
+"Si está marcado, permite la devolución de un producto diferente al "
+"solicitado originalmente. Se utiliza si la entrega se crea automáticamente"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -312,6 +314,8 @@ msgstr "Producto"
 msgid ""
 "Product to be returned if it's different from the originally delivered item."
 msgstr ""
+"El producto debe devolverse si es diferente al artículo entregado "
+"originalmente."
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
@@ -365,17 +369,17 @@ msgstr "Operación solicitada"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__is_return_all
 msgid "Return All?"
-msgstr ""
+msgstr "¿Devolver todo?"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Albarán de devolución"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__return_product_id
 msgid "Return Product"
-msgstr ""
+msgstr "Producto de devolución"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
@@ -401,7 +405,7 @@ msgstr "Asistente de Orden de Venta - RMA"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
-msgstr ""
+msgstr "Pedido de venta"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
@@ -499,12 +503,13 @@ msgstr "Puede mandar un mensaje en cada RMA enviado"
 msgid ""
 "You can't exceed the allowed quantity for returning product %(product)s."
 msgstr ""
+"No puede superar la cantidad permitida para devolver el producto %(product)s."
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 msgid "You may only create RMAs from a confirmed sale order."
-msgstr ""
+msgstr "Solo se pueden crear RMA a partir de un pedido de venta confirmado."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
