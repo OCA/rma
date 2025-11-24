@@ -33,11 +33,3 @@ class RestockingFeeMixin(models.AbstractModel):
                     raise ValidationError(
                         _("Restocking fee percentage cannot exceed 100%.")
                     )
-
-    def _get_restocking_fee_amount(self, price_subtotal):
-        self.ensure_one()
-        if not self.restocking_fee_type:
-            return 0
-        if self.restocking_fee_type == "fixed":
-            return self.restocking_fee_amount
-        return price_subtotal * (self.restocking_fee_amount / 100)
