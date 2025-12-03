@@ -12,6 +12,7 @@
     />
     <menuitem
         id="rma_configuration_menu"
+        groups="rma_group_manager"
         parent="rma_menu"
         name="Configuration"
         sequence="30"
