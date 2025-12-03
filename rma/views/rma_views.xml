@@ -118,7 +118,11 @@
                 <field name="product_uom" groups="uom.group_uom" />
                 <field name="date" />
                 <field name="deadline" />
-                <field name="finalization_id" optional="hide" />
+                <field
+                    name="finalization_id"
+                    optional="hide"
+                    groups="rma.group_rma_manual_finalization"
+                />
                 <field name="state" />
             </list>
         </field>
