@@ -25,13 +25,6 @@ class Rma(models.Model):
             delivery_method = partner_method
         return delivery_method
 
-    def _prepare_returning_picking(self, picking_form, origin=None):
-        res = super()._prepare_returning_picking(picking_form, origin)
-        picking_form.carrier_id = self._get_default_carrier_id(
-            picking_form.company_id, picking_form.partner_id
-        )
-        return res
-
     def _set_carrier(self, pickings):
         for picking in pickings:
             picking.carrier_id = self._get_default_carrier_id(
