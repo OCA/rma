@@ -1259,6 +1259,13 @@ class Rma(models.Model):
         vals["move_orig_ids"] = [(6, 0, self.reception_move_id.ids)]
         return vals
 
+    def _get_location_final(self):
+        """Similar to the _get_location_final() method in sale_stock.
+        The method represents the location_final_id field that will be defined
+        when run procurements; the location_dest_id field in stock move is a compute."""
+        self.ensure_one()
+        return self.partner_shipping_id.property_stock_customer
+
     def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
         self._assign_delivery_procurement_group()
         procurements = []
@@ -1276,7 +1283,7 @@ class Rma(models.Model):
                     rma.product_id,
                     qty or rma.product_uom_qty,
                     uom or rma.product_uom,
-                    rma.partner_shipping_id.property_stock_customer,
+                    rma._get_location_final(),
                     rma.product_id.display_name,
                     group.name,
                     rma.company_id,
@@ -1350,7 +1357,7 @@ class Rma(models.Model):
                     product,
                     qty,
                     uom,
-                    rma.partner_shipping_id.property_stock_customer,
+                    rma._get_location_final(),
                     product.display_name,
                     group.name,
                     rma.company_id,
