@@ -102,6 +102,7 @@ class StockWarehouse(models.Model):
 
     def _get_picking_type_create_values(self, max_sequence):
         data, next_sequence = super()._get_picking_type_create_values(max_sequence)
+        customer_loc, supplier_loc = self._get_partner_locations()
         data.update(
             {
                 "rma_in_type_id": {
@@ -109,6 +110,7 @@ class StockWarehouse(models.Model):
                     "code": "incoming",
                     "use_create_lots": False,
                     "use_existing_lots": True,
+                    "default_location_src_id": customer_loc.id,
                     "default_location_dest_id": self.rma_loc_id.id,
                     "sequence": max_sequence + 1,
                     "sequence_code": "RMA/IN",
@@ -120,6 +122,7 @@ class StockWarehouse(models.Model):
                     "use_create_lots": False,
                     "use_existing_lots": True,
                     "default_location_src_id": self.rma_loc_id.id,
+                    "default_location_dest_id": customer_loc.id,
                     "sequence": max_sequence + 2,
                     "sequence_code": "RMA/OUT",
                     "company_id": self.company_id.id,
