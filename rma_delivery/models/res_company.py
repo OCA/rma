@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - David Vidal
+# Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
@@ -20,4 +21,18 @@ class Company(models.Model):
     rma_fixed_delivery_method = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Default RMA delivery method",
+    )
+    rma_reception_strategy = fields.Selection(
+        selection=[
+            ("fixed_method", "Fixed method"),
+            ("customer_method", "Customer method"),
+            ("mixed_method", "Customer method (fallback to fixed)"),
+            ("rma_method", "RMA method"),
+        ],
+        string="RMA reception method strategy",
+        default="mixed_method",
+    )
+    rma_fixed_reception_strategy = fields.Many2one(
+        comodel_name="delivery.carrier",
+        string="Default RMA reception method",
     )

@@ -8,8 +8,11 @@ class StockMove(models.Model):
 
     def _get_new_picking_values(self):
         vals = super()._get_new_picking_values()
+        carrier = self.env["delivery.carrier"]
         if self.rma_id:
             carrier = self.rma_id[0]._get_carrier()
-            if carrier and any(rule.propagate_carrier for rule in self.rule_id):
-                vals["carrier_id"] = carrier.id
+        elif self.rma_receiver_ids:
+            carrier = self.rma_receiver_ids[0]._get_reception_carrier()
+        if carrier and any(rule.propagate_carrier for rule in self.rule_id):
+            vals["carrier_id"] = carrier.id
         return vals
