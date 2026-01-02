@@ -24,7 +24,7 @@
                         </div>
                         <div
                             class="content-group"
-                            attrs="{'invisible': [('rma_delivery_strategy', '=', 'customer_method')]}"
+                            attrs="{'invisible': [('rma_delivery_strategy', 'in', ('customer_method', 'rma_method'))]}"
                         >
                             <label for="rma_fixed_delivery_method" />
                             <div class="mt16">
@@ -37,7 +37,6 @@
                         </div>
                     </div>
                 </div>
-
             </xpath>
         </field>
     </record>

@@ -1,10 +1,17 @@
 # Copyright 2022 Tecnativa - David Vidal
+# Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import models
+from odoo import fields, models
 
 
 class Rma(models.Model):
     _inherit = "rma"
+
+    carrier_id = fields.Many2one(
+        comodel_name="delivery.carrier",
+        string="Carrier",
+    )
+    rma_delivery_strategy = fields.Selection(related="company_id.rma_delivery_strategy")
 
     def _get_default_carrier_id(self, company, partner):
         """Gather the company option for default carrier on RMA returns. We could
@@ -25,27 +32,11 @@ class Rma(models.Model):
             delivery_method = partner_method
         return delivery_method
 
-    def _prepare_returning_picking(self, picking_form, origin=None):
-        res = super()._prepare_returning_picking(picking_form, origin)
-        picking_form.carrier_id = self._get_default_carrier_id(
-            picking_form.company_id, picking_form.partner_id
-        )
-        return res
-
-    def _set_carrier(self, pickings):
-        for picking in pickings:
-            picking.carrier_id = self._get_default_carrier_id(
-                picking.company_id, picking.partner_id
+    def _get_carrier(self):
+        self.ensure_one()
+        if self.rma_delivery_strategy == "rma_method":
+            return self.carrier_id
+        else:
+            return self._get_default_carrier_id(
+                self.company_id, self.partner_shipping_id
             )
-
-    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
-        existing_pickings = self.delivery_move_ids.picking_id
-        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
-        self._set_carrier(self.delivery_move_ids.picking_id - existing_pickings)
-        return res
-
-    def create_return(self, scheduled_date, qty=None, uom=None):
-        existing_pickings = self.delivery_move_ids.picking_id
-        res = super().create_return(scheduled_date, qty=qty, uom=uom)
-        self._set_carrier(self.delivery_move_ids.picking_id - existing_pickings)
-        return res
