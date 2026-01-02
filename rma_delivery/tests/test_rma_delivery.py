@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - David Vidal
+# Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.tests import Form
 
@@ -143,3 +144,19 @@ class TestRmaDelivery(TestRmaDeliveryBase):
             self.carrier,
             "The carrier isn't the one set in the company as default",
         )
+
+    def test_04_rma_method(self):
+        self.company.rma_delivery_strategy = "rma_method"
+        rma = self._create_confirm_receive(
+            self.partner_shipping, self.product, 1, self.rma_loc
+        )
+        rma.carrier_id = self.carrier
+        picking = self._return_to_customer(rma)
+        self.assertEqual(picking.carrier_id, self.carrier)
+        # Replace picking
+        rma = self._create_confirm_receive(
+            self.partner_shipping, self.product, 1, self.rma_loc
+        )
+        rma.carrier_id = self.carrier
+        picking = self._return_to_customer(rma, "replace")
+        self.assertEqual(picking.carrier_id, self.carrier)

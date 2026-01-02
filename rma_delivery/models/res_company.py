@@ -12,6 +12,7 @@ class Company(models.Model):
             ("fixed_method", "Fixed method"),
             ("customer_method", "Customer method"),
             ("mixed_method", "Customer method (fallback to fixed)"),
+            ("rma_method", "RMA method"),
         ],
         string="RMA delivery method strategy",
         default="mixed_method",

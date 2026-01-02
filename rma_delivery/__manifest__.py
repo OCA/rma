@@ -11,5 +11,8 @@
     "maintainers": ["chienandalu"],
     "license": "AGPL-3",
     "depends": ["rma", "delivery"],
-    "data": ["views/res_config_settings_views.xml"],
+    "data": [
+        "views/res_config_settings_views.xml",
+        "views/rma_views.xml",
+    ],
 }
