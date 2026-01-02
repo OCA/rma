@@ -31,6 +31,7 @@ class TestRmaDeliveryBase(TestRma):
         cls.partner.property_delivery_carrier_id = cls.carrier_customer
         cls.partner_shipping.property_delivery_carrier_id = False
         cls.company.rma_fixed_delivery_method = cls.carrier
+        cls.company.rma_fixed_reception_strategy = cls.carrier
 
     def _return_to_customer(self, rma, delivery_type="return"):
         """Helper to return the rma"""
@@ -160,3 +161,47 @@ class TestRmaDelivery(TestRmaDeliveryBase):
         rma.carrier_id = self.carrier
         picking = self._return_to_customer(rma, "replace")
         self.assertEqual(picking.carrier_id, self.carrier)
+
+    def test_reception_01_fixed_method(self):
+        self.company.rma_reception_strategy = "fixed_method"
+        rma = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(rma.reception_move_id.picking_id.carrier_id, self.carrier)
+
+    def test_reception_02_customer_method(self):
+        self.company.rma_reception_strategy = "customer_method"
+        rma = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(
+            rma.reception_move_id.picking_id.carrier_id,
+            self.carrier_customer,
+        )
+        carrier_2 = self.env["delivery.carrier"].create(
+            {"name": "Test delivery method", "product_id": self.carrier_product.id}
+        )
+        self.partner_shipping.property_delivery_carrier_id = carrier_2
+        rma2 = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma2.action_confirm()
+        self.assertEqual(
+            rma2.reception_move_id.picking_id.carrier_id,
+            carrier_2,
+        )
+
+    def test_reception_03_mixed_method(self):
+        self.company.rma_reception_strategy = "mixed_method"
+        rma = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma.action_confirm()
+        self.assertEqual(
+            rma.reception_move_id.picking_id.carrier_id, self.carrier_customer
+        )
+        self.partner.property_delivery_carrier_id = False
+        rma2 = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma2.action_confirm()
+        self.assertEqual(rma2.reception_move_id.picking_id.carrier_id, self.carrier)
+
+    def test_reception_04_rma_method(self):
+        self.company.rma_reception_strategy = "rma_method"
+        rma = self._create_rma(self.partner_shipping, self.product, 1, self.rma_loc)
+        rma.reception_carrier_id = self.carrier
+        rma.action_confirm()
+        self.assertEqual(rma.reception_move_id.picking_id.carrier_id, self.carrier)
