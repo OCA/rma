@@ -36,6 +36,33 @@
                             </div>
                         </div>
                     </div>
+                    <div class="o_setting_right_pane">
+                        <label for="rma_reception_strategy" />
+                        <div class="text-muted">
+                            RMA reception strategy
+                        </div>
+                        <div class="content-group">
+                            <div class="mt16">
+                                <field
+                                    name="rma_reception_strategy"
+                                    class="o_light_label"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="content-group"
+                            attrs="{'invisible': [('rma_reception_strategy', 'in', ('customer_method', 'rma_method'))]}"
+                        >
+                            <label for="rma_fixed_reception_strategy" />
+                            <div class="mt16">
+                                <field
+                                    name="rma_fixed_reception_strategy"
+                                    class="o_light_label"
+                                    widget="selection"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </xpath>
         </field>

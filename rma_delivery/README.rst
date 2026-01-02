@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==================================================================
 Return Merchandise Authorization Management - Link with deliveries
 ==================================================================
@@ -17,7 +13,7 @@ Return Merchandise Authorization Management - Link with deliveries
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
@@ -33,7 +29,7 @@ Return Merchandise Authorization Management - Link with deliveries
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module extends the functionality of the RMA module to allow to choose a default
-behavior for the shipping method used on the RMA returns to the customer.
+behavior for the shipping method used on the RMA receipt/returns to the customer.
 
 **Table of contents**
 
@@ -55,6 +51,17 @@ To configure RMAs shipping strategy for your company:
    - Mixed method: the method will be the one configured on the partner, otherwise
      the fixed one will be chosen.
    - RMA method: the method will be configured in each RMA.
+
+
+#. Choose an *RMA reception method strategy*.
+#. There are 4 possibilities:
+
+   - Fixed method: the method will always be the same. Select it on the field *Default RMA delivery method*
+     (or leave it empty for no delivery method at all).
+   - Customer method: the method will be the one configured on the partner.
+   - Mixed method: the method will be the one configured on the partner, otherwise
+     the fixed one will be chosen.
+
 
 Usage
 =====
