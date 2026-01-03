@@ -742,6 +742,18 @@ class Rma(models.Model):
                 default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
             ).message_post_with_template(rma_template_id)
 
+    def _send_delivery_confirmation_email(self):
+        """Send customer notifications when the products are delivered"""
+        for rma in self.filtered("company_id.send_rma_delivery_confirmation"):
+            rma_template_id = (
+                rma.company_id.rma_mail_delivery_confirmation_template_id.id
+            )
+            rma.with_context(
+                force_send=True,
+                mark_rma_as_sent=True,
+                default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
+            ).message_post_with_template(rma_template_id)
+
     # Action methods
     def action_rma_send(self):
         self.ensure_one()
@@ -1601,6 +1613,7 @@ class Rma(models.Model):
         )
         if rma:
             rma.write({"state": "replaced"})
+            rma._send_delivery_confirmation_email()
 
     def update_returned_state(self):
         """Invoked by [stock.move]._action_done"""
@@ -1609,6 +1622,7 @@ class Rma(models.Model):
         )
         if rma:
             rma.write({"state": "returned"})
+            rma._send_delivery_confirmation_email()
 
     def _delivery_group_key(self):
         warnings.warn(

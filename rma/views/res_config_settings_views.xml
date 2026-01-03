@@ -162,6 +162,44 @@
                         </div>
                     </div>
                 </div>
+                <div
+                            class="col-12 col-lg-6 o_setting_box"
+                            title="Send automatic RMA products delivery notification to customer"
+                        >
+                    <div class="o_setting_left_pane">
+                        <field name="send_rma_delivery_confirmation" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                                    for="send_rma_delivery_confirmation"
+                                    string="RMA delivery notification Email"
+                                />
+                        <span
+                                    class="fa fa-lg fa-building-o"
+                                    title="Values set here are company-specific."
+                                    groups="base.group_multi_company"
+                                />
+                        <div class="text-muted">
+                            When RMA repaired product or replaced product is delivered to the customer, send an automatic notification acknowleging it.
+                        </div>
+                        <div
+                                    class="row mt16"
+                                    attrs="{'invisible': [('send_rma_delivery_confirmation', '=', False)]}"
+                                >
+                            <label
+                                        for="rma_mail_delivery_confirmation_template_id"
+                                        string="Email Template"
+                                        class="col-lg-4 o_light_label"
+                                    />
+                            <field
+                                        name="rma_mail_delivery_confirmation_template_id"
+                                        class="oe_inline"
+                                        attrs="{'required': [('send_rma_delivery_confirmation', '=', True)]}"
+                                        context="{'default_model': 'rma'}"
+                                    />
+                        </div>
+                    </div>
+                </div>
                 </div>
                 </div>
             </xpath>

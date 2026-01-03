@@ -985,3 +985,20 @@ class TestRmaCase(TestRma):
         self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
+
+    def test_send_delivery_notification(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.env.ref("stock.stock_location_stock"), 10
+        )
+        self.env.company.send_rma_delivery_confirmation = True
+        rma = self._receive_and_replace(self.partner, self.product, 1, self.rma_loc)
+        messages = rma.message_ids
+        rma.delivery_move_ids.quantity_done = 1
+        rma.delivery_move_ids.picking_id.button_validate()
+        self.assertEqual(rma.delivery_move_ids.picking_id.state, "done")
+        self.assertEqual(rma.state, "replaced")
+        new_messages = rma.message_ids - messages
+        self.assertTrue(
+            new_messages,
+            "No message was posted on the RMA after delivery validation",
+        )
