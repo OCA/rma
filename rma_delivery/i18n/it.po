@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-04 09:26+0000\n"
+"PO-Revision-Date: 2026-01-08 16:56+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__carrier_id
 msgid "Carrier"
-msgstr ""
+msgstr "Vettore"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_res_company
@@ -33,11 +33,13 @@ msgstr "Impostazioni configurazione"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__customer_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__customer_method
 msgid "Customer method"
 msgstr "Metodo cliente"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__mixed_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__mixed_method
 msgid "Customer method (fallback to fixed)"
 msgstr "Metodo cliente (fallback da sistemare)"
 
@@ -48,7 +50,14 @@ msgid "Default RMA delivery method"
 msgstr "Metodo predefinito consegna RMA"
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_fixed_reception_strategy
+msgid "Default RMA reception method"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__fixed_method
 msgid "Fixed method"
 msgstr "Metodo fisso"
 
@@ -71,10 +80,28 @@ msgstr "Strategia consegna RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__rma_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__rma_method
 msgid "RMA method"
+msgstr "Metodo RMA"
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_reception_strategy
+msgid "RMA reception method strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "RMA reception strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__reception_carrier_id
+msgid "Reception Carrier"
 msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
