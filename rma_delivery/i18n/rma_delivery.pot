@@ -30,11 +30,13 @@ msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__customer_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__customer_method
 msgid "Customer method"
 msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__mixed_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__mixed_method
 msgid "Customer method (fallback to fixed)"
 msgstr ""
 
@@ -45,7 +47,14 @@ msgid "Default RMA delivery method"
 msgstr ""
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_fixed_reception_strategy
+msgid "Default RMA reception method"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__fixed_method
 msgid "Fixed method"
 msgstr ""
 
@@ -68,7 +77,25 @@ msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__rma_method
+#: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__rma_method
 msgid "RMA method"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_reception_strategy
+msgid "RMA reception method strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "RMA reception strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__reception_carrier_id
+msgid "Reception Carrier"
 msgstr ""
 
 #. module: rma_delivery
