@@ -3,14 +3,14 @@
 {
     "name": "Return Merchandise Authorization Management - Link with deliveries",
     "summary": "Allow to choose a default delivery carrier for returns",
-    "version": "16.0.1.1.0",
+    "version": "18.0.1.0.0",
     "development_status": "Beta",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["chienandalu"],
     "license": "AGPL-3",
-    "depends": ["rma", "delivery"],
+    "depends": ["rma", "stock_delivery"],
     "data": [
         "views/res_config_settings_views.xml",
         "views/rma_views.xml",
