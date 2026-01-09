@@ -14,7 +14,7 @@ class TestRmaDeliveryBase(TestRma):
             {"name": "Delivery product test 1", "type": "service"}
         )
         cls.replace_product = cls.product_product.create(
-            {"name": "Replace product test 1", "type": "product"}
+            {"name": "Replace product test 1", "type": "consu", "is_storable": True}
         )
         cls.carrier = cls.env["delivery.carrier"].create(
             {
