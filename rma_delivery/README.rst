@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==================================================================
 Return Merchandise Authorization Management - Link with deliveries
 ==================================================================
@@ -17,23 +13,24 @@ Return Merchandise Authorization Management - Link with deliveries
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
-    :target: https://github.com/OCA/rma/tree/16.0/rma_delivery
+    :target: https://github.com/OCA/rma/tree/18.0/rma_delivery
     :alt: OCA/rma
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rma-16-0/rma-16-0-rma_delivery
+    :target: https://translation.odoo-community.org/projects/rma-18-0/rma-18-0-rma_delivery
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/rma&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module extends the functionality of the RMA module to allow to choose a default
-behavior for the shipping method used on the RMA receipt/returns to the customer.
+This module extends the functionality of the RMA module to allow to
+choose a default behavior for the shipping method used on the RMA
+receipt/returns to the customer.
 
 **Table of contents**
 
@@ -45,37 +42,39 @@ Configuration
 
 To configure RMAs shipping strategy for your company:
 
-#. Go to *Inventory > Configuration > Settings*
-#. Choose an *RMA delivery method strategy*.
-#. There are 4 possibilities:
+1. Go to *Inventory > Configuration > Settings*
+2. Choose an *RMA delivery method strategy*.
+3. There are 4 possibilities:
 
-   - Fixed method: the method will always be the same. Select it on the field *Default RMA delivery method*
-     (or leave it empty for no delivery method at all).
-   - Customer method: the method will be the one configured on the partner.
-   - Mixed method: the method will be the one configured on the partner, otherwise
-     the fixed one will be chosen.
-   - RMA method: the method will be configured in each RMA.
+   -  Fixed method: the method will always be the same. Select it on the
+      field *Default RMA delivery method* (or leave it empty for no
+      delivery method at all).
+   -  Customer method: the method will be the one configured on the
+      partner.
+   -  Mixed method: the method will be the one configured on the
+      partner, otherwise the fixed one will be chosen.
+   -  RMA method: the method will be configured in each RMA.
 
+4. Choose an *RMA reception method strategy*.
+5. There are 4 possibilities:
 
-#. Choose an *RMA reception method strategy*.
-#. There are 4 possibilities:
-
-   - Fixed method: the method will always be the same. Select it on the field *Default RMA delivery method*
-     (or leave it empty for no delivery method at all).
-   - Customer method: the method will be the one configured on the partner.
-   - Mixed method: the method will be the one configured on the partner, otherwise
-     the fixed one will be chosen.
-
+   -  Fixed method: the method will always be the same. Select it on the
+      field *Default RMA delivery method* (or leave it empty for no
+      delivery method at all).
+   -  Customer method: the method will be the one configured on the
+      partner.
+   -  Mixed method: the method will be the one configured on the
+      partner, otherwise the fixed one will be chosen.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to a RMA which has received quantities.
-#. Return it to the customer.
-#. Depending on your company configuration, the return picking will get one or another
-   carrier.
+1. Go to a RMA which has received quantities.
+2. Return it to the customer.
+3. Depending on your company configuration, the return picking will get
+   one or another carrier.
 
 Bug Tracker
 ===========
@@ -83,7 +82,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rma/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_delivery%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rma/issues/new?body=module:%20rma_delivery%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -91,22 +90,22 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Tecnativa <https://www.tecnativa.com>`_:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * David Vidal
-  * Víctor Martínez
+   -  David Vidal
+   -  Víctor Martínez
 
-* Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
+-  Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -126,6 +125,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-chienandalu| 
 
-This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/16.0/rma_delivery>`_ project on GitHub.
+This module is part of the `OCA/rma <https://github.com/OCA/rma/tree/18.0/rma_delivery>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
