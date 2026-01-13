@@ -344,6 +344,7 @@ class Rma(models.Model):
         "without requiring further processing such as a receipt, "
         "delivery, or refund.",
     )
+    receipt_confirmation_email_sent = fields.Boolean(default=False)
 
     @api.depends("operation_id", "reception_move_id.state")
     def _compute_manual_finish_allowed(self):
@@ -741,6 +742,7 @@ class Rma(models.Model):
                 mark_rma_as_sent=True,
                 default_subtype_id=self.env.ref("rma.mt_rma_notification").id,
             ).message_post_with_template(rma_template_id)
+            rma.receipt_confirmation_email_sent = True
 
     # Action methods
     def action_rma_send(self):
@@ -1561,7 +1563,7 @@ class Rma(models.Model):
         Here we can attach methods to trigger when the customer products
         are received on the RMA location, such as automatic notifications
         """
-        self.write({"state": "received"})
+        self.filtered(lambda r: r.state == "confirmed").write({"state": "received"})
         self._send_receipt_confirmation_email()
         for rec in self:
             if rec.operation_id.action_create_delivery == "automatic_after_receipt":

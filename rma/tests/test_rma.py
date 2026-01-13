@@ -985,3 +985,14 @@ class TestRmaCase(TestRma):
         self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
+
+    def test_send_rma_receipt_notification(self):
+        self.env.company.send_rma_receipt_confirmation = True
+        self.operation.action_create_receipt = "automatic_on_confirm"
+        self.operation.action_create_delivery = "automatic_on_confirm"
+        self.partner.email = "partner@email.com"
+        rma = self._create_confirm_receive(
+            self.partner, self.product, 1, self.rma_loc, self.operation
+        )
+        self.assertTrue(rma.state, "waiting_replacement")
+        self.assertTrue(rma.receipt_confirmation_email_sent)
