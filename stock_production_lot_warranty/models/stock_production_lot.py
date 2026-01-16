@@ -10,7 +10,7 @@ DELTA_TYPES = ("day", "week", "month", "year")
 
 
 class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+    _inherit = "stock.lot"
 
     warranty_exp_date = fields.Date(string="Warranty Expiration Date")
 
