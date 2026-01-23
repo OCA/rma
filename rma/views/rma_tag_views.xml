@@ -19,7 +19,7 @@
         </field>
     </record>
     <record id="view_rma_tag_form" model="ir.ui.view">
-        <field name="name">Rma Tags</field>
+        <field name="name">Tags</field>
         <field name="model">rma.tag</field>
         <field name="arch" type="xml">
             <form string="RMA Tag">
@@ -33,7 +33,7 @@
         </field>
     </record>
     <record id="view_rma_tag_list" model="ir.ui.view">
-        <field name="name">RMA Tags</field>
+        <field name="name">Tags</field>
         <field name="model">rma.tag</field>
         <field eval="6" name="priority" />
         <field name="arch" type="xml">
@@ -45,21 +45,21 @@
         </field>
     </record>
     <record id="action_rma_tag" model="ir.actions.act_window">
-        <field name="name">RMA Tags</field>
+        <field name="name">Tags</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">rma.tag</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-            Create a new RMA tag
+            Create a new tag
             </p>
             <p>
-            Manage RMA tags to better classify them for tracking and analysis purposes.
+            Manage tags to better classify them for tracking and analysis purposes.
             </p>
         </field>
     </record>
     <menuitem
         id="rma_configuration_rma_tag_menu"
-        name="RMA Tags"
+        name="Tags"
         parent="rma_configuration_menu"
         action="action_rma_tag"
     />

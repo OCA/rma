@@ -1702,7 +1702,7 @@ msgstr ""
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
-msgid "RMA team"
+msgid "Teams"
 msgstr ""
 
 #. module: rma

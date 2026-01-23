@@ -1725,8 +1725,8 @@ msgstr "Devolução RMA"
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
-msgid "RMA team"
-msgstr "Equipa RMA"
+msgid "Teams"
+msgstr "Equipas"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids

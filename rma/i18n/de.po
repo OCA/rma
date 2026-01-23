@@ -713,8 +713,8 @@ msgstr "Erstellen Sie einen neuen RMA-Abschluss"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid "Create a new RMA tag"
-msgstr "Erstellen Sie ein neues RMA-Tag"
+msgid "Create a new tag"
+msgstr "Erstellen Sie ein neues Tag"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
@@ -1221,9 +1221,9 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
 msgid ""
-"Manage RMA tags to better classify them for tracking and analysis purposes."
+"Manage tags to better classify them for tracking and analysis purposes."
 msgstr ""
-"Verwalten Sie RMA-Tags, um sie für Nachverfolgungs- und Analysezwecke besser "
+"Verwalten Sie Tags, um sie für Nachverfolgungs- und Analysezwecke besser "
 "zu klassifizieren."
 
 #. module: rma
@@ -1694,8 +1694,8 @@ msgstr "RMA-Tags"
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
-msgid "RMA Team"
-msgstr "RMA-Team"
+msgid "Teams"
+msgstr "Teams"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id

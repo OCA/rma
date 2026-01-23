@@ -1625,7 +1625,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
-msgid "RMA Team"
+msgid "Teams"
 msgstr ""
 
 #. module: rma

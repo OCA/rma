@@ -713,8 +713,8 @@ msgstr "Créer une nouvelle finalisation RMA"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid "Create a new RMA tag"
-msgstr "Créer une nouvelle étiquette RMA"
+msgid "Create a new tag"
+msgstr "Créer une nouvelle étiquette"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
@@ -1215,9 +1215,9 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
 msgid ""
-"Manage RMA tags to better classify them for tracking and analysis purposes."
+"Manage tags to better classify them for tracking and analysis purposes."
 msgstr ""
-"Gérez les étiquettes RMA pour mieux les classer à des fins de suivi et "
+"Gérez les étiquettes pour mieux les classer à des fins de suivi et "
 "d'analyse."
 
 #. module: rma
@@ -1746,8 +1746,8 @@ msgstr "Retour RMA"
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
-msgid "RMA team"
-msgstr "Équipe RMA"
+msgid "Teams"
+msgstr "Équipes"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids

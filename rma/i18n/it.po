@@ -805,8 +805,8 @@ msgstr "Crea una nuova chiusura RMA"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid "Create a new RMA tag"
-msgstr "Crea una nuova etichetta RMA"
+msgid "Create a new tag"
+msgstr "Crea una nuova etichetta"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__create_uid
@@ -1317,9 +1317,9 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
 msgid ""
-"Manage RMA tags to better classify them for tracking and analysis purposes."
+"Manage tags to better classify them for tracking and analysis purposes."
 msgstr ""
-"Gestisci i tag RMA per classificarli meglio ai fini del monitoraggio e "
+"Gestisci i tag per classificarli meglio ai fini del monitoraggio e "
 "dell'analisi."
 
 #. module: rma
@@ -1791,8 +1791,8 @@ msgstr "Etichette RMA"
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
-msgid "RMA Team"
-msgstr "Team RMA"
+msgid "Teams"
+msgstr "Teams"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
