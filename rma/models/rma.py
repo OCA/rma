@@ -394,7 +394,7 @@ class Rma(models.Model):
         for r in self:
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
 
-    @api.depends("state")
+    @api.depends("state", "operation_id", "operation_id.action_create_refund")
     def _compute_can_be_refunded(self):
         """Compute 'can_be_refunded'. This field controls the visibility
         of 'Refund' button in the rma form view and determinates if
@@ -411,7 +411,9 @@ class Rma(models.Model):
                 and record.state == "confirmed"
             )
 
-    @api.depends("remaining_qty", "state", "operation_id.action_create_delivery")
+    @api.depends(
+        "remaining_qty", "state", "operation_id", "operation_id.action_create_delivery"
+    )
     def _compute_can_be_returned(self):
         """Compute 'can_be_returned'. This field controls the visibility
         of the 'Return to customer' button in the rma form
@@ -434,7 +436,7 @@ class Rma(models.Model):
                 )
             )
 
-    @api.depends("state")
+    @api.depends("state", "operation_id", "operation_id.action_create_delivery")
     def _compute_can_be_replaced(self):
         """Compute 'can_be_replaced'. This field controls the visibility
         of 'Replace' button in the rma form
