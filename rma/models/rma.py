@@ -432,7 +432,7 @@ class Rma(models.Model):
                 or (
                     r.operation_id.action_create_delivery
                     in ("manual_on_confirm", "automatic_on_confirm")
-                    and r.state == "confirmed"
+                    and r.state in ("confirmed", "received")
                 )
             )
 
@@ -458,7 +458,7 @@ class Rma(models.Model):
             ) or (
                 r.operation_id.action_create_delivery
                 in ("manual_on_confirm", "automatic_on_confirm")
-                and r.state == "confirmed"
+                and r.state in ("confirmed", "received")
             )
 
     @api.depends("state", "remaining_qty", "manual_finish_allowed")
