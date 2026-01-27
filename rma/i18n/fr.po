@@ -594,9 +594,13 @@ msgstr "Catégorie UdM"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
-#: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
 msgstr "Cliquez pour ajouter un nouveau RMA."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_team_action
+msgid "Click to add a new team."
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1213,17 +1217,15 @@ msgstr ""
 "suivi et d’analyse."
 
 #. module: rma
-#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid ""
-"Manage tags to better classify them for tracking and analysis purposes."
-msgstr ""
-"Gérez les étiquettes pour mieux les classer à des fins de suivi et "
-"d'analyse."
-
-#. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
 msgid "Manage Return Merchandise Authorizations (RMAs)."
 msgstr "Gérer les autorisations de retour de marchandise (RMA)."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Manage tags to better classify them for tracking and analysis purposes."
+msgstr ""
+"Gérez les étiquettes pour mieux les classer à des fins de suivi et d'analyse."
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -1499,8 +1501,8 @@ msgstr "Quantité à retourner"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Quantity to extract cannot be greater than remaining delivery quantity "
-"(%(remaining_qty)s %(product_uom)s)"
+"Quantity to extract cannot be greater than remaining delivery quantity (%"
+"(remaining_qty)s %(product_uom)s)"
 msgstr ""
 "La quantité à retourner ne peut pas être supérieure à la quantité restante à "
 "livrer (%(remaining_qty)s %(product_uom)s)"
@@ -1665,9 +1667,7 @@ msgid "RMA Tag"
 msgstr "Étiquette RMA"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model,name:rma.model_rma_tag
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "RMA Tags"
 msgstr "Étiquettes RMA"
@@ -1675,7 +1675,6 @@ msgstr "Étiquettes RMA"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_team
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
 msgstr "Équipe RMA"
@@ -1744,10 +1743,9 @@ msgid "RMA return"
 msgstr "Retour RMA"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
-msgid "Teams"
-msgstr "Équipes"
+msgid "RMA team"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids
@@ -1864,8 +1862,8 @@ msgstr "Remplacé"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%"
+"(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
 "model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
 "has been created."
 msgstr ""
@@ -1949,11 +1947,11 @@ msgstr "Retourner au client"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> has been created."
 msgstr ""
-"Retour : <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> a été créé."
+"Retour : <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%"
+"(id)d\">%(name)s</a> a été créé."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -2124,8 +2122,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Division : <a href=\"#\" data-oe-model=\"rma\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> a été créé."
+"Division : <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> a été créé."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2174,7 +2172,9 @@ msgid "Tag name already exists !"
 msgstr "Le nom de l'étiquette existe déjà !"
 
 #. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 msgid "Tags"
 msgstr "Étiquettes"
 
@@ -2193,6 +2193,12 @@ msgstr "Chef d'équipe"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
 msgstr "Membres"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_team_action
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
+msgid "Teams"
+msgstr "Équipes"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
@@ -2510,8 +2516,8 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} Votre RMA a été crée avec succès(Ref {{object."
-"name or 'n/a' }})"
+"{{object.company_id.name}} Votre RMA a été crée avec succès(Ref "
+"{{object.name or 'n/a' }})"
 
 #~ msgid ""
 #~ "<div style=\"margin: 0px; padding: 0px;\">\n"

@@ -34,8 +34,8 @@ msgstr "(object._get_report_base_filename())"
 msgid ""
 "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail body:</b><br/>%(body)s"
 msgstr ""
-"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/"
-">%(body)s"
+"<b>Soggetto e-mail:</b> %(subject)s<br/><br/><b>Corpo e-mail:</b><br/>%"
+"(body)s"
 
 #. module: rma
 #: model:mail.template,body_html:rma.mail_template_rma_notification
@@ -192,8 +192,8 @@ msgid ""
 "<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" title="
-"\"Scarica\"/>"
+"<i class=\"fa fa-download\" role=\"img\" aria-label=\"Download\" "
+"title=\"Scarica\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -237,8 +237,8 @@ msgid ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 msgstr ""
-"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" title="
-"\"Scarica\"/>"
+"<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
+"title=\"Scarica\"/>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -683,9 +683,13 @@ msgstr "Categoria UdM"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
-#: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
 msgstr "Fai click per aggiungere un nuovo RMA."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_team_action
+msgid "Click to add a new team."
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1315,17 +1319,16 @@ msgstr ""
 "di tracciamento e analisi."
 
 #. module: rma
-#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid ""
-"Manage tags to better classify them for tracking and analysis purposes."
-msgstr ""
-"Gestisci i tag per classificarli meglio ai fini del monitoraggio e "
-"dell'analisi."
-
-#. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
 msgid "Manage Return Merchandise Authorizations (RMAs)."
 msgstr "Gestisci Autorizzazioni Reso Merce (RMA)."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Manage tags to better classify them for tracking and analysis purposes."
+msgstr ""
+"Gestisci i tag per classificarli meglio ai fini del monitoraggio e "
+"dell'analisi."
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -1613,8 +1616,8 @@ msgstr "Quantità da prelevare"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Quantity to extract cannot be greater than remaining delivery quantity "
-"(%(remaining_qty)s %(product_uom)s)"
+"Quantity to extract cannot be greater than remaining delivery quantity (%"
+"(remaining_qty)s %(product_uom)s)"
 msgstr ""
 "La quantità da estrarre non può essere maggiore della quantità consegna "
 "rimanente (%(remaining_qty)s %(product_uom)s)"
@@ -1779,9 +1782,7 @@ msgid "RMA Tag"
 msgstr "Etichetta RMA"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model,name:rma.model_rma_tag
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "RMA Tags"
 msgstr "Etichette RMA"
@@ -1789,10 +1790,9 @@ msgstr "Etichette RMA"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_team
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
-msgid "Teams"
-msgstr "Teams"
+msgid "RMA Team"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
@@ -1857,7 +1857,6 @@ msgid "RMA return"
 msgstr "Reso RMA"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
 msgid "RMA team"
 msgstr "Team RMA"
@@ -1977,8 +1976,8 @@ msgstr "Sostituito"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%"
+"(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
 "model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
 "has been created."
 msgstr ""
@@ -2062,11 +2061,11 @@ msgstr "Rendi al cliente"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> has been created."
 msgstr ""
-"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> creato."
+"Reso: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> creato."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -2235,8 +2234,8 @@ msgid ""
 "Split: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%(name)s</"
 "a> has been created."
 msgstr ""
-"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> creata."
+"Divisione: <a href=\"#\" data-oe-model=\"rma\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> creata."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__state
@@ -2285,7 +2284,9 @@ msgid "Tag name already exists !"
 msgstr "Il nome etichetta esiste già!"
 
 #. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 msgid "Tags"
 msgstr "Etichette"
 
@@ -2304,6 +2305,12 @@ msgstr "Team leader"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
 msgstr "Membri del team"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_team_action
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
+msgid "Teams"
+msgstr "Teams"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
@@ -2355,8 +2362,8 @@ msgid ""
 "demand because the stock move is linked to an RMA (%(name)s)."
 msgstr ""
 "La quantità completata per il prodotto '%(id)s' deve essere uguale alla sua "
-"richiesta iniziale perché il movimento di magazzino è legato ad una RMA "
-"(%(name)s)."
+"richiesta iniziale perché il movimento di magazzino è legato ad una RMA (%"
+"(name)s)."
 
 #. module: rma
 #. odoo-python
@@ -2624,8 +2631,8 @@ msgid ""
 "{{object.company_id.name}} RMA (Ref {{object.name or 'n/a' }}) products "
 "received"
 msgstr ""
-"Prodotti ricevuti per RMA (rif. {{object.name or 'n/a' }}) di {{object."
-"company_id.name}}"
+"Prodotti ricevuti per RMA (rif. {{object.name or 'n/a' }}) di "
+"{{object.company_id.name}}"
 
 #. module: rma
 #: model:mail.template,subject:rma.mail_template_rma_draft_notification

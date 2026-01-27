@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-04-05 07:26+0000\n"
-"Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde."
-"com>\n"
+"Last-Translator: Nikolaus Weingartmair "
+"<nikolaus.weingartmair@grueneerde.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -594,9 +594,13 @@ msgstr "Kategorie UoM"
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
-#: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
 msgstr "Klicken Sie hier, um eine neue RMA hinzuzufügen."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_team_action
+msgid "Click to add a new team."
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1219,17 +1223,16 @@ msgstr ""
 "Analysezwecke besser zu klassifizieren."
 
 #. module: rma
-#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid ""
-"Manage tags to better classify them for tracking and analysis purposes."
-msgstr ""
-"Verwalten Sie Tags, um sie für Nachverfolgungs- und Analysezwecke besser "
-"zu klassifizieren."
-
-#. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
 msgid "Manage Return Merchandise Authorizations (RMAs)."
 msgstr "Verwalten Sie Warenrücksendegenehmigungen (RMAs)."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Manage tags to better classify them for tracking and analysis purposes."
+msgstr ""
+"Verwalten Sie Tags, um sie für Nachverfolgungs- und Analysezwecke besser zu "
+"klassifizieren."
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -1516,8 +1519,8 @@ msgstr "Zu extrahierende Menge"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Quantity to extract cannot be greater than remaining delivery quantity "
-"(%(remaining_qty)s %(product_uom)s)"
+"Quantity to extract cannot be greater than remaining delivery quantity (%"
+"(remaining_qty)s %(product_uom)s)"
 msgstr ""
 "Die zu entnehmende Menge darf nicht größer als die verbleibende Liefermenge "
 "sein (%(remaining_qty)s%(product_uom)s)"
@@ -1682,9 +1685,7 @@ msgid "RMA Tag"
 msgstr "RMA Tag"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model,name:rma.model_rma_tag
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "RMA Tags"
 msgstr "RMA-Tags"
@@ -1692,10 +1693,9 @@ msgstr "RMA-Tags"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_team
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
-msgid "Teams"
-msgstr "Teams"
+msgid "RMA Team"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
@@ -1760,7 +1760,6 @@ msgid "RMA return"
 msgstr "RMA-Rückgabe"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
 msgid "RMA team"
 msgstr "RMA-Team"
@@ -1880,13 +1879,13 @@ msgstr "Ersetzt"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%"
+"(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
 "model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
 "has been created."
 msgstr ""
-"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"Ersatz: Buchung <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%"
+"(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
 "model=\"stock.picking\" data-oe-id=\"%(picking_id)d\">%(picking_name)s</a>) "
 "wurde erstellt.."
 
@@ -1965,11 +1964,11 @@ msgstr "Zurück zum Kunden"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> has been created."
 msgstr ""
-"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> wurde erstellt."
+"Rückgabe: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%"
+"(id)d\">%(name)s</a> wurde erstellt."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__returned
@@ -2191,7 +2190,9 @@ msgid "Tag name already exists !"
 msgstr "Tag-Name existiert bereits!"
 
 #. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 msgid "Tags"
 msgstr "Tags"
 
@@ -2210,6 +2211,12 @@ msgstr "Teamleiter"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
 msgstr "Teammitglieder"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_team_action
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
+msgid "Teams"
+msgstr "Teams"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
@@ -2249,8 +2256,8 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"Der Name des E-Mail-Alias, z. „Jobs“, wenn Sie E-Mails für <jobs@example."
-"odoo.com> abfangen möchten"
+"Der Name des E-Mail-Alias, z. „Jobs“, wenn Sie E-Mails für "
+"<jobs@example.odoo.com> abfangen möchten"
 
 #. module: rma
 #. odoo-python
@@ -2260,8 +2267,8 @@ msgid ""
 "demand because the stock move is linked to an RMA (%(name)s)."
 msgstr ""
 "Die für das Produkt '%(id)s' fertig gestellte Menge muss gleich der "
-"ursprünglichen Nachfrage sein, da die Bestandsumlagerung mit einer RMA "
-"(%(name)s) verknüpft ist."
+"ursprünglichen Nachfrage sein, da die Bestandsumlagerung mit einer RMA (%"
+"(name)s) verknüpft ist."
 
 #. module: rma
 #. odoo-python
@@ -2540,8 +2547,8 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
-"{{object.company_id.name}} Ihre RMA wurde erfolgreich erstellt (Ref {{object."
-"name or 'n/a' }})"
+"{{object.company_id.name}} Ihre RMA wurde erfolgreich erstellt (Ref "
+"{{object.name or 'n/a' }})"
 
 #~ msgid ""
 #~ "<i class=\"fa fa-fw fa-check\"/>\n"

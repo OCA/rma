@@ -574,9 +574,13 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
-#: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new RMA."
 msgstr "Clique para adicionar uma nova RMA."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.rma_team_action
+msgid "Click to add a new team."
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -691,7 +695,7 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid "Create a new RMA tag"
+msgid "Create a new tag"
 msgstr ""
 
 #. module: rma
@@ -1186,15 +1190,14 @@ msgid ""
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
-msgid ""
-"Manage RMA tags to better classify them for tracking and analysis purposes."
-msgstr ""
-
-#. module: rma
 #: model:ir.module.category,description:rma.rma_module_category
 msgid "Manage Return Merchandise Authorizations (RMAs)."
 msgstr "Gerir Autorizações de Devolução de Mercadoria (RMAs)."
+
+#. module: rma
+#: model_terms:ir.actions.act_window,help:rma.action_rma_tag
+msgid "Manage tags to better classify them for tracking and analysis purposes."
+msgstr ""
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -1481,8 +1484,8 @@ msgstr "Quantidade a extrair"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Quantity to extract cannot be greater than remaining delivery quantity "
-"(%(remaining_qty)s %(product_uom)s)"
+"Quantity to extract cannot be greater than remaining delivery quantity (%"
+"(remaining_qty)s %(product_uom)s)"
 msgstr ""
 
 #. module: rma
@@ -1645,9 +1648,7 @@ msgid "RMA Tag"
 msgstr ""
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model,name:rma.model_rma_tag
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_tag_view_search
 msgid "RMA Tags"
 msgstr ""
@@ -1655,7 +1656,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model,name:rma.model_rma_team
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
-#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
 msgstr "Equipa RMA"
@@ -1723,10 +1723,9 @@ msgid "RMA return"
 msgstr "Devolução RMA"
 
 #. module: rma
-#: model:ir.actions.act_window,name:rma.rma_team_action
 #: model:ir.model.fields,field_description:rma.field_rma__team_id
-msgid "Teams"
-msgstr "Equipas"
+msgid "RMA team"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_ids
@@ -1843,8 +1842,8 @@ msgstr "Substituído"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-"
-"id=\"%(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
+"Replacement: Move <a href=\"#\" data-oe-model=\"stock.move\" data-oe-id=\"%"
+"(move_id)d\">%(move_name)s</a> (Picking <a href=\"#\" data-oe-"
 "model=\"stock.picking\" data-oe-id=\"%(picking_id)d\"> %(picking_name)s</a>) "
 "has been created."
 msgstr ""
@@ -1920,8 +1919,8 @@ msgstr "Devolver ao cliente"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid ""
-"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+"Return: <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%(id)d\">%"
+"(name)s</a> has been created."
 msgstr ""
 
 #. module: rma
@@ -2138,7 +2137,9 @@ msgid "Tag name already exists !"
 msgstr ""
 
 #. module: rma
+#: model:ir.actions.act_window,name:rma.action_rma_tag
 #: model:ir.model.fields,field_description:rma.field_rma__tag_ids
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_tag_menu
 msgid "Tags"
 msgstr ""
 
@@ -2157,6 +2158,12 @@ msgstr "Líder da Equipa"
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Team Members"
 msgstr "Membros da Equipa"
+
+#. module: rma
+#: model:ir.actions.act_window,name:rma.rma_team_action
+#: model:ir.ui.menu,name:rma.rma_configuration_rma_team_menu
+msgid "Teams"
+msgstr "Equipas"
 
 #. module: rma
 #: model:ir.model.constraint,message:rma.constraint_rma_operation_name_uniq
