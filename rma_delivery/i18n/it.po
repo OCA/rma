@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-08 16:56+0000\n"
+"PO-Revision-Date: 2026-01-28 18:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__carrier_id
@@ -53,7 +53,7 @@ msgstr "Metodo predefinito consegna RMA"
 #: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_reception_strategy
 #: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_fixed_reception_strategy
 msgid "Default RMA reception method"
-msgstr ""
+msgstr "Metodo ricezione RMA predefinito"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
@@ -89,17 +89,17 @@ msgstr "Metodo RMA"
 #: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_reception_strategy
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_reception_strategy
 msgid "RMA reception method strategy"
-msgstr ""
+msgstr "Strategia metodo ricevimento RMA"
 
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "RMA reception strategy"
-msgstr ""
+msgstr "Strategia ricevimento RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__reception_carrier_id
 msgid "Reception Carrier"
-msgstr ""
+msgstr "Corriere ricevimento"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_move
