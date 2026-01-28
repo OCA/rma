@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-11 10:42+0000\n"
+"PO-Revision-Date: 2026-01-28 18:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: rma
 #. odoo-python
@@ -689,7 +689,7 @@ msgstr "Fai click per aggiungere un nuovo RMA."
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_team_action
 msgid "Click to add a new team."
-msgstr ""
+msgstr "Fare clic per aggiungere un nuovo team."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
@@ -1792,7 +1792,7 @@ msgstr "Etichette RMA"
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
-msgstr ""
+msgstr "Team RMA"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
