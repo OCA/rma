@@ -1403,6 +1403,12 @@ class Rma(models.Model):
             )
         for rma in self:
             rma._add_replace_message(body, qty, uom)
+        for picking in new_moves.picking_id:
+            picking.message_post_with_source(
+                "mail.message_origin_link",
+                render_values={"self": picking, "origin": self},
+                subtype_id=self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note"),
+            )
         self.write({"state": "waiting_replacement"})
 
     def _add_replace_message(self, body, qty, uom):
