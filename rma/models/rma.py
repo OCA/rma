@@ -345,7 +345,10 @@ class Rma(models.Model):
 
     def _compute_delivery_picking_count(self):
         for rma in self:
-            rma.delivery_picking_count = len(rma.delivery_move_ids.picking_id)
+            moves = rma.delivery_move_ids | self.env["stock.move"].browse(
+                rma.delivery_move_ids._rollup_move_dests()
+            )
+            rma.delivery_picking_count = len(moves.picking_id)
 
     @api.depends(
         "delivery_move_ids",
@@ -1006,7 +1009,10 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        return self._action_view_pickings(self.mapped("delivery_move_ids.picking_id"))
+        moves = self.delivery_move_ids | self.env["stock.move"].browse(
+            self.delivery_move_ids._rollup_move_dests()
+        )
+        return self._action_view_pickings(moves.mapped("picking_id"))
 
     # Validation business methods
     def _ensure_required_fields(self):

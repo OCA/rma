@@ -227,7 +227,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(out_picking.picking_type_id, self.warehouse.pick_type_id)
         next_transfer = out_picking._get_next_transfers()
         self.assertEqual(next_transfer.picking_type_id, self.warehouse.out_type_id)
-        self.assertEqual(rma.delivery_picking_count, 1)
+        self.assertEqual(rma.delivery_picking_count, 2)
 
     def test_rma_replace_pick_pack_ship(self):
         self.warehouse.write({"delivery_steps": "pick_pack_ship"})
@@ -257,7 +257,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(
             next_transfer_extra.picking_type_id, self.warehouse.out_type_id
         )
-        self.assertEqual(rma.delivery_picking_count, 1)
+        # 3 pickings: out_picking + next_transfer + next_transfer_extra
+        self.assertEqual(rma.delivery_picking_count, 3)
 
     def test_computed(self):
         # If partner changes, the invoice address is set
