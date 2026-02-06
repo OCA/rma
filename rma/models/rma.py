@@ -408,7 +408,7 @@ class Rma(models.Model):
             ) or (
                 record.operation_id.action_create_refund
                 in ("manual_on_confirm", "automatic_on_confirm")
-                and record.state == "confirmed"
+                and record.state in ("confirmed", "received")
             )
 
     @api.depends(
