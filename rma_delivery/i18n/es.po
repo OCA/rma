@@ -88,6 +88,7 @@ msgstr "Método RMA"
 #: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_reception_strategy
 #: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_reception_strategy
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_reception_strategy
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__rma_reception_strategy
 msgid "RMA reception method strategy"
 msgstr "Estrategia del método de recepción de RMA"
 
@@ -98,8 +99,19 @@ msgstr "Estrategia de recepción de RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__reception_carrier_id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__reception_carrier_id
 msgid "Reception Carrier"
 msgstr "Transportista de recepción"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_stock_return_picking
+msgid "Return Picking"
+msgstr "Albarán de devolución"
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr "Línea de albarán de devolución"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_move

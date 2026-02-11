@@ -205,3 +205,31 @@ class TestRmaDelivery(TestRmaDeliveryBase):
         rma.reception_carrier_id = self.carrier
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.picking_id.carrier_id, self.carrier)
+
+    def test_reception_04_rma_method_picking_return(self):
+        self.company.rma_reception_strategy = "rma_method"
+        origin_delivery = self._create_delivery()
+        origin_delivery.carrier_id = self.carrier
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=origin_delivery.ids,
+                active_id=origin_delivery.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        self.assertEqual(stock_return_picking_form.reception_carrier_id, self.carrier)
+        stock_return_picking_form.reception_carrier_id = self.carrier_customer
+        return_wizard = stock_return_picking_form.save()
+        for move in origin_delivery.move_ids_without_package:
+            return_wizard.product_return_moves.filtered(
+                lambda x, move=move: x.move_id == move
+            ).quantity = move.quantity
+        picking_action = return_wizard.action_create_returns()
+        reception = self.env["stock.picking"].browse(picking_action["res_id"])
+        self.assertEqual(reception.carrier_id, self.carrier_customer)
+        reception_moves = reception.move_ids
+        self.assertTrue(reception_moves.rma_receiver_ids)
+        rma = reception_moves.rma_receiver_ids
+        self.assertEqual(rma.reception_carrier_id, self.carrier_customer)
