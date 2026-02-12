@@ -20,7 +20,6 @@
                     invisible="not different_return_product"
                     required="different_return_product and quantity>0"
                 />
-                <field name="different_return_product" invisible="1" />
             </xpath>
             <field name="product_return_moves" position="before">
                 <group name="group_rma">
