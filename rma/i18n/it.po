@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-28 18:09+0000\n"
+"PO-Revision-Date: 2026-02-17 09:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -684,7 +684,7 @@ msgstr "Categoria UdM"
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
 msgid "Click to add a new RMA."
-msgstr "Fai click per aggiungere un nuovo RMA."
+msgstr "Fai click per aggiungere una nuova RMA."
 
 #. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_team_action
@@ -1017,20 +1017,21 @@ msgstr "Dominio e-mail es 'example.com' in 'odoo@example.com'"
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_confirmation_template_id
 msgid "Email sent to the customer once the RMA is confirmed."
 msgstr ""
-"l' Email sarà inviata al cliente una volta che l'RMA è stata confermato."
+"l'e-mail sarà inviata al cliente una volta che l'RMA è stata confermata."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_receipt_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_receipt_confirmation_template_id
 msgid "Email sent to the customer once the RMA products are received."
-msgstr "l'Email sarà inviata al cliente una volta ricevuti i prodotti RMA."
+msgstr ""
+"l'e-mail sarà inviata al cliente una volta ricevuti i prodotti dell'RMA."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_company__rma_mail_draft_confirmation_template_id
 #: model:ir.model.fields,help:rma.field_res_config_settings__rma_mail_draft_confirmation_template_id
 msgid "Email sent to the customer when they place an RMA from the portal"
 msgstr ""
-"l'Email sarà inviata al cliente quando si inserisce una RMA dal portale"
+"l'e-mail sarà inviata al cliente quando si inserisce una RMA dal portale"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_operation__auto_confirm_reception
@@ -1625,7 +1626,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_split_wizard__product_uom_qty
 msgid "Quantity to extract to a new RMA."
-msgstr "Quantità da prelevare in un nuovo RMA."
+msgstr "Quantità da prelevare in una nuova RMA."
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_action
@@ -1938,7 +1939,7 @@ msgstr "Riga rimborso"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_invoice_id
 msgid "Refund address for current RMA."
-msgstr "Indirizzo di rimborso per questo RMA."
+msgstr "Indirizzo di rimborso per questa RMA."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
@@ -2086,7 +2087,7 @@ msgstr "RMA"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
-msgstr "Conteggio Rma"
+msgstr "Conteggio RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -2130,7 +2131,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Send automatic notification when the customer places an RMA"
-msgstr "Invia una notifica automatica quando il cliente inserisce un RMA"
+msgstr "Invia una notifica automatica quando il cliente inserisce una RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
@@ -2189,7 +2190,7 @@ msgstr "Indirizzo di spedizione"
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr "Indirizzo di spedizione per questo RMA."
+msgstr "Indirizzo di spedizione per questa RMA."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__show_create_receipt
@@ -2449,7 +2450,7 @@ msgstr "Tipo di attività eccezione sul record."
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unassigned RMAs"
-msgstr "RMA non assegnati"
+msgstr "RMA non assegnate"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__product_uom
@@ -2465,7 +2466,7 @@ msgstr "Sblocca"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Unresolved RMAs"
-msgstr "RMA non completati"
+msgstr "RMA non completate"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_uom
@@ -2535,7 +2536,7 @@ msgstr "Storico comunicazioni sito web"
 #: model:ir.model.fields,help:rma.field_res_company__send_rma_draft_confirmation
 #: model:ir.model.fields,help:rma.field_res_config_settings__send_rma_draft_confirmation
 msgid "When a customer places an RMA, send a notification with it"
-msgstr "Quando un cliente inserisce un RMA, invia una notifica con esso"
+msgstr "Quando un cliente inserisce una RMA, invia una notifica con essa"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
@@ -2557,7 +2558,7 @@ msgid ""
 "When the RMA is receive, allow to finsish it manually choosing\n"
 "                                    a finalization reason."
 msgstr ""
-"Quando si riceve l'RMA, permette di chiuderlo manualmente scegliendo\n"
+"Quando si riceve l'RMA, permette di chiuderla manualmente scegliendo\n"
 "                                    un motivo per la chiusura."
 
 #. module: rma
