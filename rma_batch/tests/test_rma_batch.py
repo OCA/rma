@@ -113,6 +113,19 @@ class TestRmaBatch(TransactionCase):
         self.assertEqual(rma.team_id, self.team)
         self.assertEqual(rma.tag_ids, self.tag1)
 
+    def test_change_location_on_batch_propagates_to_rmas(self):
+        """check that changing the location on a draft batch updates
+        the location on the associated RMAs"""
+        warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", self.env.company.id)], limit=1
+        )
+        rma_location = warehouse.rma_loc_id
+        batch = self._create_batch([(self.product, 5), (self.product2, 3)])
+        self.assertEqual(batch.state, "draft")
+        batch.location_id = rma_location
+        for rma in batch.rma_ids:
+            self.assertEqual(rma.location_id, rma_location)
+
     def test_unlink_forbidden_when_non_draft_rma(self):
         """ensure that a batch can't be deleted if it contains any RMA
         not in draft state"""

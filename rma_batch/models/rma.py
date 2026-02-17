@@ -62,13 +62,15 @@ class Rma(models.Model):
                 rec.team_id = rec.batch_id.team_id
         return res
 
-    @api.depends("picking_id", "product_id", "company_id", "batch_id")
+    @api.depends("picking_id", "product_id", "company_id", "batch_id.location_id")
     def _compute_location_id(self):
         """Override to consider RMA Batch location"""
         super()._compute_location_id()
         # Apply RMA Batch location if set
         for record in self:
-            if record.batch_id and record.batch_id.location_id:
+            if record.state != "draft":
+                continue
+            if record.batch_id.location_id:
                 record.location_id = record.batch_id.location_id
 
         return
