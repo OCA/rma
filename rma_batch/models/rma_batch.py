@@ -9,6 +9,7 @@ class RmaBatch(models.Model):
     _name = "rma.batch"
     _description = "RMA Batch"
     _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "date desc, id desc"
 
     name = fields.Char(
         string="Reference",
