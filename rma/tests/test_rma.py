@@ -74,9 +74,34 @@ class TestRma(BaseCommon):
         )
         cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        # Operation data
+        cls.operation_replace = cls.env["rma.operation"].create(
+            {
+                "name": "Test replace",
+                "action_create_receipt": "automatic_on_confirm",
+                "action_create_delivery": "manual_after_receipt",
+                "action_create_refund": False,
+            }
+        )
+        cls.operation_return = cls.env["rma.operation"].create(
+            {
+                "name": "Test return",
+                "action_create_receipt": "automatic_on_confirm",
+                "action_create_delivery": "manual_after_receipt",
+                "action_create_refund": False,
+            }
+        )
+        cls.operation_refund = cls.env["rma.operation"].create(
+            {
+                "name": "Test refund",
+                "action_create_receipt": "automatic_on_confirm",
+                "action_create_delivery": False,
+                "action_create_refund": "manual_after_receipt",
+            }
+        )
         # Ensure grouping
         cls.env.company.rma_return_grouping = True
-        cls.operation = cls.env.ref("rma.rma_operation_replace")
+        cls.operation = cls.operation_replace
         cls.operation_no_group = cls.operation.copy(
             {
                 "name": f"{cls.operation.name} (no group)",
@@ -84,8 +109,9 @@ class TestRma(BaseCommon):
             }
         )
 
+    @classmethod
     def _create_rma(
-        self, partner=None, product=None, qty=None, location=None, operation=None
+        cls, partner=None, product=None, qty=None, location=None, operation=None
     ):
         vals = {}
         if partner:
@@ -99,9 +125,9 @@ class TestRma(BaseCommon):
         if operation:
             vals["operation_id"] = operation.id
         elif operation is None:
-            vals["operation_id"] = self.operation.id
-        vals["user_id"] = self.env.user.id
-        return self.env["rma"].create(vals)
+            vals["operation_id"] = cls.operation.id
+        vals["user_id"] = cls.env.user.id
+        return cls.env["rma"].create(vals)
 
     def _create_confirm_receive(
         self, partner=None, product=None, qty=None, location=None, operation=None
@@ -367,11 +393,13 @@ class TestRmaCase(TestRma):
     @users("__system__", "user_rma")
     @mute_logger("odoo.models.unlink")
     def test_action_refund(self):
-        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        rma = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc, self.operation_refund
+        )
         self.assertEqual(rma.state, "received")
         self.assertTrue(rma.can_be_refunded)
-        self.assertTrue(rma.can_be_returned)
-        self.assertTrue(rma.can_be_replaced)
+        self.assertFalse(rma.can_be_returned)
+        self.assertFalse(rma.can_be_replaced)
         rma.action_refund()
         self.assertEqual(rma.refund_id.move_type, "out_refund")
         self.assertEqual(rma.refund_id.state, "draft")
@@ -404,18 +432,20 @@ class TestRmaCase(TestRma):
     def test_mass_refund(self):
         # Create, confirm and receive rma_1
         rma_1 = self._create_confirm_receive(
-            self.partner, self.product, 10, self.rma_loc
+            self.partner, self.product, 10, self.rma_loc, self.operation_refund
         )
         # create, confirm and receive 3 more RMAs
         # rma_2: Same partner and same product as rma_1
         rma_2 = self._create_confirm_receive(
-            self.partner, self.product, 15, self.rma_loc
+            self.partner, self.product, 15, self.rma_loc, self.operation_refund
         )
         # rma_3: Same partner and different product than rma_1
         product = self.product_product.create(
             {"name": "Product 2 test", "type": "consu", "is_storable": True}
         )
-        rma_3 = self._create_confirm_receive(self.partner, product, 20, self.rma_loc)
+        rma_3 = self._create_confirm_receive(
+            self.partner, product, 20, self.rma_loc, self.operation_refund
+        )
         # rma_4: Different partner and same product as rma_1
         partner = self.res_partner.create(
             {
@@ -424,7 +454,9 @@ class TestRmaCase(TestRma):
                 "company_id": self.company.id,
             }
         )
-        rma_4 = self._create_confirm_receive(partner, product, 25, self.rma_loc)
+        rma_4 = self._create_confirm_receive(
+            partner, product, 25, self.rma_loc, self.operation_refund
+        )
         # all rmas are ready to refund
         all_rmas = rma_1 | rma_2 | rma_3 | rma_4
         self.assertEqual(all_rmas.mapped("state"), ["received"] * 4)
@@ -814,7 +846,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.delivered_qty, 0)
         self.assertEqual(new_rma.remaining_qty, 6)
         self.assertEqual(new_rma.state, "received")
-        self.assertTrue(new_rma.can_be_refunded)
+        self.assertFalse(new_rma.can_be_refunded)
         self.assertTrue(new_rma.can_be_returned)
         self.assertTrue(new_rma.can_be_replaced)
         self.assertEqual(new_rma.move_id, rma.move_id)
@@ -825,15 +857,17 @@ class TestRmaCase(TestRma):
 
     @mute_logger("odoo.models.unlink")
     def test_rma_to_receive_on_delete_invoice(self):
-        rma = self._create_confirm_receive(self.partner, self.product, 10, self.rma_loc)
+        rma = self._create_confirm_receive(
+            self.partner, self.product, 10, self.rma_loc, self.operation_refund
+        )
         rma.action_refund()
         self.assertEqual(rma.state, "refunded")
         rma.refund_id.unlink()
         self.assertFalse(rma.refund_id)
         self.assertEqual(rma.state, "received")
         self.assertTrue(rma.can_be_refunded)
-        self.assertTrue(rma.can_be_returned)
-        self.assertTrue(rma.can_be_replaced)
+        self.assertFalse(rma.can_be_returned)
+        self.assertFalse(rma.can_be_replaced)
 
     def test_rma_picking_type_default_values(self):
         warehouse = self.env["stock.warehouse"].create(
