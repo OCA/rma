@@ -9,29 +9,22 @@ from odoo.tests import Form, new_test_user
 from odoo.tests.common import users
 from odoo.tools import mute_logger
 
-from odoo.addons.base.tests.common import BaseCommon
+from odoo.addons.rma.tests.test_rma import TestRma
 
 
-class TestRmaSaleBase(BaseCommon):
+class TestRmaSaleBase(TestRma):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.res_partner = cls.env["res.partner"]
-        cls.product_product = cls.env["product.product"]
         cls.so_model = cls.env["sale.order"]
-
         cls.product_1 = cls.product_product.create(
             {"name": "Product test 1", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.product_product.create(
             {"name": "Product test 2", "type": "consu", "is_storable": True}
         )
-        cls.partner = cls.res_partner.create(
-            {"name": "Partner test", "email": "partner@rma"}
-        )
+        cls.partner.email = "partner@rma"
         cls.report_model = cls.env["ir.actions.report"]
-        cls.rma_operation_model = cls.env["rma.operation"]
-        cls.operation = cls.env.ref("rma.rma_operation_replace")
         cls._partner_portal_wizard(cls.partner)
         cls.wh = cls.env.ref("stock.warehouse0")
         cls.env["stock.quant"]._update_available_quantity(
@@ -138,6 +131,7 @@ class TestRmaSale(TestRmaSaleBase):
 
     @mute_logger("odoo.models.unlink")
     def test_create_rma_from_so(self):
+        self.operation.action_create_refund = "manual_after_receipt"
         order = self.sale_order
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
@@ -184,7 +178,6 @@ class TestRmaSale(TestRmaSaleBase):
         wizard_obj = (
             self.env["sale.order.rma.wizard"].sudo().with_context(active_id=order.id)
         )
-        operation = self.rma_operation_model.sudo().search([], limit=1)
         line_vals = [
             Command.create(
                 {
@@ -194,7 +187,7 @@ class TestRmaSale(TestRmaSaleBase):
                     "allowed_quantity": order.order_line.qty_delivered,
                     "uom_id": order.order_line.product_uom.id,
                     "picking_id": order.picking_ids[0].id,
-                    "operation_id": operation.id,
+                    "operation_id": self.operation.id,
                 },
             )
         ]
@@ -245,12 +238,11 @@ class TestRmaSale(TestRmaSaleBase):
     def test_report_rma(self):
         wizard = self._rma_sale_wizard(self.sale_order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        operation = self.rma_operation_model.sudo().search([], limit=1)
-        rma.operation_id = operation.id
+        rma.operation_id = self.operation_replace
         res = self.env["ir.actions.report"]._render_qweb_html("rma.report_rma", rma.ids)
         res = str(res[0])
         self.assertRegex(res, self.sale_order.name)
-        self.assertRegex(res, operation.name)
+        self.assertRegex(res, self.operation_replace.name)
 
     def test_manual_refund_no_quantity_impact(self):
         """If the operation is meant for a manual refund, the delivered quantity
