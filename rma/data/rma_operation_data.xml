@@ -2,11 +2,14 @@
 <data noupdate="1">
     <record id="rma_operation_replace" model="rma.operation">
         <field name="name">Replace</field>
+        <field name="action_create_refund" />
     </record>
     <record id="rma_operation_return" model="rma.operation">
         <field name="name">Repair</field>
+        <field name="action_create_refund" />
     </record>
     <record id="rma_operation_refund" model="rma.operation">
         <field name="name">Refund</field>
+        <field name="action_create_delivery" />
     </record>
 </data>
