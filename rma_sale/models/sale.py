@@ -128,19 +128,20 @@ class SaleOrderLine(models.Model):
         def _get_chained_moves(_moves, done_moves=None):
             moves = _moves.browse()
             done_moves = done_moves or _moves.browse()
+            moves_to_parse = moves
             for move in _moves:
-                if move.location_dest_id.usage == "customer":
-                    moves |= move.returned_move_ids
-                else:
-                    moves |= move.move_dest_ids
+                if move._is_outgoing() or move._is_incoming():
+                    moves |= move
+                # Parse next moves
+                moves_to_parse |= move.move_dest_ids | move.returned_move_ids
             done_moves |= _moves
             moves = moves.filtered(
                 lambda r: r.state in ["partially_available", "assigned", "done"]
             )
-            if not moves:
+            if not moves_to_parse:
                 return moves
-            moves -= done_moves
-            moves |= _get_chained_moves(moves, done_moves)
+            moves_to_parse -= done_moves
+            moves |= _get_chained_moves(moves_to_parse, done_moves)
             return moves
 
         product = self.product_id
@@ -153,10 +154,10 @@ class SaleOrderLine(models.Model):
                 # Look for chained moves to check how many items we can allow
                 # to return. When a product is re-delivered it should be
                 # allowed to open an RMA again on it.
-                qty = move.product_uom_qty
+                qty = 0
                 for _move in _get_chained_moves(move):
                     factor = 1
-                    if _move.location_dest_id.usage != "customer":
+                    if _move._is_incoming():
                         factor = -1
                     qty += factor * _move.product_uom_qty
                 # If by chance we get a negative qty we should ignore it
