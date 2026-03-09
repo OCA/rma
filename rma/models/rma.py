@@ -707,6 +707,10 @@ class Rma(models.Model):
             "context": ctx,
         }
 
+    def _product_is_storable(self, product=None):
+        product = product or self.product_id
+        return product.type == "consu"
+
     def _add_message_subscribe_partner(self):
         self.ensure_one()
         if self.partner_id and self.partner_id not in self.message_partner_ids:
@@ -753,7 +757,7 @@ class Rma(models.Model):
         procurements = []
         group_model = self.env["procurement.group"]
         for rma in self:
-            if not rma.product_id.is_storable:
+            if not rma._product_is_storable():
                 continue
             group = rma.procurement_group_id
             if not group:
@@ -1300,7 +1304,7 @@ class Rma(models.Model):
         self._ensure_can_be_returned()
         self._ensure_qty_to_return(qty, uom)
         rmas_to_return = self.filtered(
-            lambda rma: rma.can_be_returned and rma.product_id.is_storable
+            lambda rma: rma.can_be_returned and rma._product_is_storable()
         )
         procurements = rmas_to_return._prepare_delivery_procurements(
             scheduled_date, qty, uom
@@ -1344,7 +1348,7 @@ class Rma(models.Model):
         procurements = []
         group_model = self.env["procurement.group"]
         for rma in self:
-            if not product.is_storable:
+            if not rma._product_is_storable():
                 continue
 
             if not rma.procurement_group_id:
