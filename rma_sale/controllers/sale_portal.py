@@ -51,7 +51,7 @@ class CustomerPortal(CustomerPortal):
                 custom_vals.update({name: value})
         for vals in mapped_vals.values():
             sale_line = order_line_obj.browse(vals.get("sale_line_id")).sudo()
-            vals["allowed_quantity"] = sale_line.qty_delivered
+            vals["allowed_quantity"] = sale_line._get_rma_allowed_quantity(vals)
         # If no operation is filled, no RMA will be created
         line_vals = [
             Command.create(vals)

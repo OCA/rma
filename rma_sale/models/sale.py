@@ -181,3 +181,7 @@ class SaleOrderLine(models.Model):
                 }
             )
         return data
+
+    def _get_rma_allowed_quantity(self, vals=None):
+        self.ensure_one()
+        return self.qty_delivered
