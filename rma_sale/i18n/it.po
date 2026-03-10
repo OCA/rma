@@ -60,15 +60,6 @@ msgid "<option value=\"\">---</option>"
 msgstr "<option value=\"\">---</option>"
 
 #. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
-"specifici per azienda.\" groups=\"base.group_multi_company\"/>"
-
-#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
@@ -464,6 +455,11 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid ""
 "When we hit the RMA request button from the portal sale page, open in a "
 "single page instead of a popup."
@@ -515,6 +511,13 @@ msgid ""
 msgstr ""
 "Stai per eseguire una richiesta RMA. Il nostro team lo elaborerà e ti "
 "arriverà una volta convalidato. Tieni presente che:"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui "
+#~ "sono specifici per azienda.\" groups=\"base.group_multi_company\"/>"
 
 #~ msgid "&amp;times;"
 #~ msgstr "&amp;volte;"
