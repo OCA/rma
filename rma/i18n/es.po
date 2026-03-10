@@ -346,15 +346,6 @@ msgstr ""
 "                        </span>"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores establecidos aquí "
-"son específicos de la compañía.\" groups=\"base.group_multi_company\"/>"
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "<span>Awaiting action</span>"
 msgstr "<span>En espera de acción</span>"
@@ -2500,6 +2491,11 @@ msgid "User: Own Documents Only"
 msgstr "Usuario: Solo mostrar documentos propios"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "View"
 msgstr "Ver"
@@ -2647,6 +2643,14 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Su RMA se ha creado con éxito (Ref {{object.name "
 "or 'n/a' }})"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Los valores establecidos "
+#~ "aquí son específicos de la compañía.\" "
+#~ "groups=\"base.group_multi_company\"/>"
 
 #~ msgid ""
 #~ "<div style=\"margin: 0px; padding: 0px;\">\n"

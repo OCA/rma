@@ -232,13 +232,6 @@ msgid ""
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "<span>Awaiting action</span>"
 msgstr ""
@@ -2305,6 +2298,11 @@ msgstr ""
 #. module: rma
 #: model:res.groups,name:rma.rma_group_user_own
 msgid "User: Own Documents Only"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
 msgstr ""
 
 #. module: rma

@@ -345,15 +345,6 @@ msgstr ""
 "                        </span>"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
-"specifici per azienda.\" groups=\"base.group_multi_company\"/>"
-
-#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "<span>Awaiting action</span>"
 msgstr "<span>In attesa di azione</span>"
@@ -2499,6 +2490,11 @@ msgid "User: Own Documents Only"
 msgstr "Utente: solo i propri documenti"
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr "I valori impostati qui sono specifici per azienda."
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
 msgid "View"
 msgstr "Vista"
@@ -2643,6 +2639,13 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} La vostra RMA è stata creata con successo (rif. "
 "{{object.name or 'n/a' }})"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui "
+#~ "sono specifici per azienda.\" groups=\"base.group_multi_company\"/>"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "Errore consegna SMS"
@@ -2891,9 +2894,6 @@ msgstr ""
 
 #~ msgid "Rma Location"
 #~ msgstr "Ubicazione RMA"
-
-#~ msgid "Values set here are company-specific."
-#~ msgstr "I valori impostati qui sono specifici per azienda."
 
 #~ msgid ""
 #~ "When the RMA is receive, allow to finsish it manually choosing a "
