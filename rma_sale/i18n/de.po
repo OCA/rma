@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2023-04-05 07:26+0000\n"
-"Last-Translator: Nikolaus Weingartmair <nikolaus.weingartmair@grueneerde."
-"com>\n"
+"Last-Translator: Nikolaus Weingartmair "
+"<nikolaus.weingartmair@grueneerde.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -59,15 +59,6 @@ msgstr "<i class=\"fa fa-truck\"/> Wähle eine Lieferadresse"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<option value=\"\">---</option>"
 msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Diese Werte sind "
-"unternehmensspezifisch.\" groups=\"base.group_multi_company\"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -464,6 +455,11 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
+msgid "Values set here are company-specific."
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid ""
 "When we hit the RMA request button from the portal sale page, open in a "
 "single page instead of a popup."
@@ -517,6 +513,13 @@ msgid ""
 msgstr ""
 "Sie sind dabei, eine RMA-Anfrage durchzuführen. Unser Team wird es "
 "bearbeiten und Sie erreichen, sobald es validiert ist. Denk daran, dass:"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
+#~ "company-specific.\" groups=\"base.group_multi_company\"/>"
+#~ msgstr ""
+#~ "<span class=\"fa fa-lg fa-building-o\" title=\"Diese Werte sind "
+#~ "unternehmensspezifisch.\" groups=\"base.group_multi_company\"/>"
 
 #~ msgid "&amp;times;"
 #~ msgstr "&amp;times;"
