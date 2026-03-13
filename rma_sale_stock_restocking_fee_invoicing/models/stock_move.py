@@ -9,6 +9,11 @@ class StockMove(models.Model):
 
     def _action_done(self, cancel_backorder=False):
         res = super()._action_done(cancel_backorder=cancel_backorder)
-        move_done = self.filtered(lambda r: r.state == "done").sudo()
-        move_done.sudo().mapped("rma_receiver_ids")._create_restocking_fee_invoice()
+        chargeable_moves = self.filtered(
+            lambda r: r.state == "done" and r._is_restocking_fee_chargeable()
+        ).sudo()
+        # Find the related RMAs by going back to the first move of the chain
+        chargeable_moves.sudo().mapped(
+            "first_move_id.rma_receiver_ids"
+        )._create_restocking_fee_invoice()
         return res

@@ -10,7 +10,11 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "maintainers": ["sbejaoui"],
     "website": "https://github.com/OCA/rma",
-    "depends": ["sale_stock_restocking_fee_invoicing", "rma_sale"],
+    "depends": [
+        "sale_stock_restocking_fee_invoicing",
+        "rma_sale",
+        "stock_move_propagate_first_move",
+    ],
     "data": ["views/rma_operation.xml", "views/rma.xml"],
     "demo": [],
 }

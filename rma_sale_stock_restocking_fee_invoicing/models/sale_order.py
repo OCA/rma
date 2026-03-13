@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
 
     def _get_restocking_fee_line_value(self, stock_move):
         vals = super()._get_restocking_fee_line_value(stock_move)
-        rma = stock_move.rma_receiver_ids
+        rma = stock_move.mapped("first_move_id.rma_receiver_ids")
         if not rma:
             return vals
         vals["price_unit"] = rma._get_restocking_fee_amount()
