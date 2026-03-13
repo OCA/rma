@@ -1,1 +1,2 @@
 odoo-addon-sale-stock-restocking-fee-invoicing @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2150/head#subdirectory=sale_stock_restocking_fee_invoicing
+odoo-addon-stock-move-propagate-first-move @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2270/head#subdirectory=stock_move_propagate_first_move
