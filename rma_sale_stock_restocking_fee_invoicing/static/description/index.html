@@ -374,7 +374,9 @@ ul.auto-toc {
 <tt class="docutils literal">sale_stock_restocking_fee_invoicing</tt> by allowing:</p>
 <ul class="simple">
 <li>Fixed or percentage-based restocking fees.</li>
-<li>Automatic fee application during RMA receipt.</li>
+<li>Restocking fees configurable on the RMA operation or directly on the
+RMA itself.</li>
+<li>Automatic fee application at last step of RMA receipt.</li>
 <li>Integration with different refund strategies:<ul>
 <li>Update sale order quantity.</li>
 <li>Manual refund after receipt.</li>
@@ -408,7 +410,9 @@ ul.auto-toc {
 <p>RMAs often involve administrative and logistic processing costs when
 goods are returned. Depending on the company policy and the nature of
 the return, these costs may be passed on to the customer as a
-<em>restocking fee</em>.</p>
+<em>restocking fee</em>. These restocking fees can be fixed before the customer
+returns the product (in case of a late return demand for eg) or decided
+in the middle of the return process (if the product is damaged for eg).</p>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-2">Configuration</a></h1>
@@ -428,6 +432,9 @@ used.</li>
 </ul>
 </li>
 </ol>
+<p>It is also possible to add, remove or change restocking fees directly on
+the RMA, as soon as the last move of the return moves is not validated
+yet.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-3">Usage</a></h1>
@@ -443,7 +450,8 @@ used.</li>
 <h3><a class="toc-backref" href="#toc-entry-5">1. Update Quantity Strategy</a></h3>
 <p>If the RMA operation “Refund Action” is “Update Quantities”:</p>
 <ul class="simple">
-<li>A restocking fee sale order line is automatically added at reception.</li>
+<li>A restocking fee sale order line is automatically added when the last
+move of the reception chain is validated.</li>
 <li>The fee value depends on the selected fee type.</li>
 </ul>
 </div>
@@ -452,7 +460,8 @@ used.</li>
 <p>If the RMA operation uses “Refund Action” is different than “Update
 Quantities”</p>
 <ul class="simple">
-<li>A restocking fee invoice is automatically created at reception.</li>
+<li>A restocking fee invoice is automatically created when the last move
+of the reception chain is validated.</li>
 </ul>
 </div>
 </div>

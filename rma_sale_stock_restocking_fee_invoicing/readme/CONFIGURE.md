@@ -8,3 +8,6 @@ To enable and configure restocking fees for RMAs:
 4. Set the **Restocking Fee Amount**:
    - If *fixed*: monetary amount.
    - If *percentage*: value between 0 and 100.
+
+It is also possible to add, remove or change restocking fees directly on the RMA, as soon as the
+last move of the return moves is not validated yet.

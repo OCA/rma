@@ -31,12 +31,14 @@ Rma Sale Stock Restocking Fee Invoicing
 This module extends the standard RMA flow and the behavior of
 ``sale_stock_restocking_fee_invoicing`` by allowing:
 
--  Fixed or percentage-based restocking fees.
--  Automatic fee application during RMA receipt.
--  Integration with different refund strategies:
+- Fixed or percentage-based restocking fees.
+- Restocking fees configurable on the RMA operation or directly on the
+  RMA itself.
+- Automatic fee application at last step of RMA receipt.
+- Integration with different refund strategies:
 
-   -  Update sale order quantity.
-   -  Manual refund after receipt.
+  - Update sale order quantity.
+  - Manual refund after receipt.
 
 **Table of contents**
 
@@ -49,7 +51,9 @@ Use Cases / Context
 RMAs often involve administrative and logistic processing costs when
 goods are returned. Depending on the company policy and the nature of
 the return, these costs may be passed on to the customer as a
-*restocking fee*.
+*restocking fee*. These restocking fees can be fixed before the customer
+returns the product (in case of a late return demand for eg) or decided
+in the middle of the return process (if the product is damaged for eg).
 
 Configuration
 =============
@@ -60,14 +64,18 @@ To enable and configure restocking fees for RMAs:
 2. Open the RMA operation for which restocking fees should apply.
 3. Set **Restocking Fee Type**:
 
-   -  **Fixed Amount**: A fixed amount will be added or invoiced.
-   -  **Percentage**: A percentage of the original sale line subtotal is
-      used.
+   - **Fixed Amount**: A fixed amount will be added or invoiced.
+   - **Percentage**: A percentage of the original sale line subtotal is
+     used.
 
 4. Set the **Restocking Fee Amount**:
 
-   -  If *fixed*: monetary amount.
-   -  If *percentage*: value between 0 and 100.
+   - If *fixed*: monetary amount.
+   - If *percentage*: value between 0 and 100.
+
+It is also possible to add, remove or change restocking fees directly on
+the RMA, as soon as the last move of the return moves is not validated
+yet.
 
 Usage
 =====
@@ -86,8 +94,9 @@ The RMA operation determines how the fee will be applied:
 
 If the RMA operation "Refund Action" is "Update Quantities":
 
--  A restocking fee sale order line is automatically added at reception.
--  The fee value depends on the selected fee type.
+- A restocking fee sale order line is automatically added when the last
+  move of the reception chain is validated.
+- The fee value depends on the selected fee type.
 
 2. Manual Refund Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +104,8 @@ If the RMA operation "Refund Action" is "Update Quantities":
 If the RMA operation uses "Refund Action" is different than "Update
 Quantities"
 
--  A restocking fee invoice is automatically created at reception.
+- A restocking fee invoice is automatically created when the last move
+  of the reception chain is validated.
 
 Bug Tracker
 ===========
@@ -118,8 +128,8 @@ Authors
 Contributors
 ------------
 
--  Souheil Bejaoui - ACSONE SA/NV souheil.bejaoui@acsone.eu
--  Marie Lejeune - ACSONE SA/NV marie.lejeune@acsone.eu
+- Souheil Bejaoui - ACSONE SA/NV souheil.bejaoui@acsone.eu
+- Marie Lejeune - ACSONE SA/NV marie.lejeune@acsone.eu
 
 Maintainers
 -----------

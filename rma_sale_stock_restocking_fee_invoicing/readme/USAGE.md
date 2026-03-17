@@ -8,9 +8,9 @@ The RMA operation determines how the fee will be applied:
 
 ### 1. Update Quantity Strategy
 If the RMA operation "Refund Action" is "Update Quantities":
-- A restocking fee sale order line is automatically added at reception.
+- A restocking fee sale order line is automatically added when the last move of the reception chain is validated.
 - The fee value depends on the selected fee type.
 
 ### 2. Manual Refund Strategy
 If the RMA operation uses "Refund Action" is different than "Update Quantities"
-- A restocking fee invoice is automatically created at reception.
+- A restocking fee invoice is automatically created when the last move of the reception chain is validated.
