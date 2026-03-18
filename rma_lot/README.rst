@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =======
 Rma Lot
 =======
@@ -17,7 +13,7 @@ Rma Lot
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
@@ -86,8 +82,8 @@ Authors
 Contributors
 ------------
 
-- Jacques-Etienne Baudoux - BCIM je@bcim.be
-- Souheil Bejaoui - ACSONE SA/NV souheil.bejaoui@acsone.eu
+-  Jacques-Etienne Baudoux - BCIM je@bcim.be
+-  Souheil Bejaoui - ACSONE SA/NV souheil.bejaoui@acsone.eu
 
 Maintainers
 -----------
