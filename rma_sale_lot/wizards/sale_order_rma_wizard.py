@@ -4,6 +4,17 @@
 from odoo import api, fields, models
 
 
+class SaleOrderRmaWizard(models.TransientModel):
+    _inherit = "sale.order.rma.wizard"
+
+    lots_visible = fields.Boolean(compute="_compute_lots_visible")
+
+    @api.depends("line_ids.lots_visible")
+    def _compute_lots_visible(self):
+        for rec in self:
+            rec.lots_visible = any(line.lots_visible for line in rec.line_ids)
+
+
 class SaleOrderLineRmaWizard(models.TransientModel):
     _inherit = "sale.order.line.rma.wizard"
 

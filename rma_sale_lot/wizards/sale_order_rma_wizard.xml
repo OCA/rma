@@ -11,6 +11,7 @@
                     name="lot_id"
                     groups="stock.group_production_lot"
                     invisible="not lots_visible"
+                    column_invisible="not parent.lots_visible"
                 />
             </xpath>
         </field>

@@ -5,7 +5,7 @@
     "name": "Rma Sale Lot",
     "summary": """
         Manage sale returns with lot.""",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
