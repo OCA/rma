@@ -16,6 +16,8 @@ from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
 
+RECEIVED_STATES = ["received"]
+
 _logger = logging.getLogger(__name__)
 
 
@@ -400,15 +402,16 @@ class Rma(models.Model):
         of 'Refund' button in the rma form view and determinates if
         an rma can be refunded. It is used in rma.action_refund method.
         """
+        states_to_check = RECEIVED_STATES + ["confirmed"]
         for record in self:
             record.can_be_refunded = (
                 record.operation_id.action_create_refund
                 in ("manual_after_receipt", "automatic_after_receipt")
-                and record.state == "received"
+                and record.state in RECEIVED_STATES
             ) or (
                 record.operation_id.action_create_refund
                 in ("manual_on_confirm", "automatic_on_confirm")
-                and record.state in ("confirmed", "received")
+                and record.state in states_to_check
             )
 
     @api.depends(
@@ -422,17 +425,19 @@ class Rma(models.Model):
         rma._compute_can_be_split
         rma._ensure_can_be_returned.
         """
+        states_to_check_1 = RECEIVED_STATES + ["waiting_return"]
+        states_to_check_2 = RECEIVED_STATES + ["confirmed"]
         for r in self:
             r.can_be_returned = r.remaining_qty > 0 and (
                 (
                     r.operation_id.action_create_delivery
                     in ("manual_after_receipt", "automatic_after_receipt")
-                    and r.state in ["received", "waiting_return"]
+                    and r.state in states_to_check_1
                 )
                 or (
                     r.operation_id.action_create_delivery
                     in ("manual_on_confirm", "automatic_on_confirm")
-                    and r.state in ("confirmed", "received")
+                    and r.state in states_to_check_2
                 )
             )
 
@@ -445,20 +450,17 @@ class Rma(models.Model):
         rma._compute_can_be_split
         rma._ensure_can_be_replaced.
         """
+        states_to_check_1 = RECEIVED_STATES + ["waiting_replacement", "replaced"]
+        states_to_check_2 = RECEIVED_STATES + ["confirmed"]
         for r in self:
             r.can_be_replaced = (
                 r.operation_id.action_create_delivery
                 in ("manual_after_receipt", "automatic_after_receipt")
-                and r.state
-                in [
-                    "received",
-                    "waiting_replacement",
-                    "replaced",
-                ]
+                and r.state in states_to_check_1
             ) or (
                 r.operation_id.action_create_delivery
                 in ("manual_on_confirm", "automatic_on_confirm")
-                and r.state in ("confirmed", "received")
+                and r.state in states_to_check_2
             )
 
     @api.depends("state", "remaining_qty", "manual_finish_allowed")
@@ -467,10 +469,10 @@ class Rma(models.Model):
         # - It's in a transitional state AND there is still quantity to process
         # OR
         # - It's not already finished AND no further action is required
+        states_to_check = RECEIVED_STATES + ["waiting_replacement", "waiting_return"]
         for rma in self:
             rma.can_be_finished = (
-                rma.state in {"received", "waiting_replacement", "waiting_return"}
-                and rma.remaining_qty > 0
+                rma.state in states_to_check and rma.remaining_qty > 0
             ) or (rma.state != "finished" and not rma.manual_finish_allowed)
 
     @api.depends("product_uom_qty", "state", "remaining_qty")
