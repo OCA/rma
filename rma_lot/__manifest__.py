@@ -10,6 +10,10 @@
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
     "depends": ["rma", "stock_picking_return_lot"],
-    "data": ["views/rma_operation.xml", "views/rma.xml"],
+    "data": [
+        "views/rma_operation.xml",
+        "views/rma.xml",
+        "views/rma_portal_template.xml",
+    ],
     "demo": [],
 }

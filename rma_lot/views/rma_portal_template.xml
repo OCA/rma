@@ -1,0 +1,21 @@
+<odoo>
+    <template id="portal_rma_page_lot" inherit_id="rma.portal_rma_page">
+        <xpath expr="//div[@t-if='rma.product_uom_qty']" position="before">
+            <div t-if="rma.lot_id" class="row mb-2 mb-sm-1">
+                <div class="col-12 col-sm-4">
+                    <strong
+                        t-if="rma.product_id.tracking=='lot'"
+                        name="strong_tracking_lot"
+                    >Lot</strong>
+                    <strong
+                        t-else=""
+                        name="strong_tracking_serial"
+                    >Serial Number</strong>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <span t-field="rma.lot_id" />
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
