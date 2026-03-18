@@ -70,5 +70,7 @@ class SaleOrderLine(models.Model):
             "uom": moves.product_uom,
             "picking": moves.picking_id[0],
             "sale_line_id": self,
-            "lot_id": lot_id,
+            "lot_id": self.env["stock.lot"].browse(lot_id),
+            "product_tracking": moves.product_id.tracking,
+            "lots_visible": moves.product_id.tracking != "none",
         }

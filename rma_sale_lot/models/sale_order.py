@@ -9,5 +9,6 @@ class SaleOrder(models.Model):
 
     def _prepare_rma_wizard_line_vals(self, data):
         vals = super()._prepare_rma_wizard_line_vals(data)
-        vals["lot_id"] = data.get("lot_id")
+        if data.get("lot_id"):
+            vals["lot_id"] = data.get("lot_id").id
         return vals

@@ -10,6 +10,9 @@
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
     "depends": ["rma_lot", "rma_sale"],
-    "data": ["wizards/sale_order_rma_wizard.xml"],
+    "data": [
+        "views/sale_portal_template.xml",
+        "wizards/sale_order_rma_wizard.xml",
+    ],
     "demo": [],
 }
