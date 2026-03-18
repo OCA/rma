@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-03-18 14:29+0000\n"
+"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma_operation__deliver_same_lot
+msgid "Deliver Same Lot/Serial as Received"
+msgstr "Devolver mismo Número de lote/serie recibido"
+
+#. module: rma_lot
+#: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
+msgid ""
+"If enabled, the replacement or delivery product will use the exact "
+"lot/serial number received from the customer. Disable if a different lot or "
+"serial number should be assigned."
+msgstr ""
+
+#. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
+msgid "Lot/Serial Number"
+msgstr "Número de lote/serie"
+
+#. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__lots_visible
+msgid "Lots Visible"
+msgstr ""
+
+#. module: rma_lot
+#: model:ir.model,name:rma_lot.model_rma
+msgid "RMA"
+msgstr "RMA"
+
+#. module: rma_lot
+#: model:ir.model,name:rma_lot.model_rma_operation
+msgid "RMA requested operation"
+msgstr "Operación de RMA solicitada"
+
+#. module: rma_lot
+#: model:ir.model,name:rma_lot.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr "Línea de albarán de devolución"
