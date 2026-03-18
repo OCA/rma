@@ -176,7 +176,7 @@
                                     </td>
                                 </tr>
                                 <tr class="collapse" t-attf-id="comment-#{data_index}">
-                                    <td colspan="5">
+                                    <td colspan="99">
                                         <textarea
                                             class="form-control o_website_form_input"
                                             t-attf-name="#{data_index}-description"
