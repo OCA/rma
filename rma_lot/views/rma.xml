@@ -7,8 +7,24 @@
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='delivered_qty']" position="before">
+                <label
+                    for="lot_id"
+                    string="Lot"
+                    invisible="not lots_visible or product_tracking != 'lot'"
+                />
+                <label
+                    for="lot_id"
+                    string="Serial Number"
+                    invisible="not lots_visible or product_tracking != 'serial'"
+                />
+                <label
+                    for="lot_id"
+                    string="Lot/Serial Number"
+                    invisible="not lots_visible or product_id"
+                />
                 <field
                     name="lot_id"
+                    nolabel="1"
                     groups="stock.group_production_lot"
                     invisible="not lots_visible"
                 />

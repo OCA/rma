@@ -19,6 +19,11 @@ msgid "Deliver Same Lot/Serial as Received"
 msgstr ""
 
 #. module: rma_lot
+#: model:ir.model.fields,help:rma_lot.field_rma__product_tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
 msgid ""
 "If enabled, the replacement or delivery product will use the exact "
@@ -27,7 +32,14 @@ msgid ""
 msgstr ""
 
 #. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+msgid "Lot"
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 msgid "Lot/Serial Number"
 msgstr ""
 
@@ -49,4 +61,15 @@ msgstr ""
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+msgid "Serial Number"
+msgstr ""
+
+#. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
+msgid "Tracking"
 msgstr ""
