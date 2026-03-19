@@ -22,15 +22,27 @@ msgid "Deliver Same Lot/Serial as Received"
 msgstr "Devolver mismo Número de lote/serie recibido"
 
 #. module: rma_lot
+#: model:ir.model.fields,help:rma_lot.field_rma__product_tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
 msgid ""
-"If enabled, the replacement or delivery product will use the exact "
-"lot/serial number received from the customer. Disable if a different lot or "
+"If enabled, the replacement or delivery product will use the exact lot/"
+"serial number received from the customer. Disable if a different lot or "
 "serial number should be assigned."
 msgstr ""
 
 #. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+msgid "Lot"
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 msgid "Lot/Serial Number"
 msgstr "Número de lote/serie"
 
@@ -53,3 +65,14 @@ msgstr "Operación de RMA solicitada"
 #: model:ir.model,name:rma_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
 msgstr "Línea de albarán de devolución"
+
+#. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+msgid "Serial Number"
+msgstr ""
+
+#. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
+msgid "Tracking"
+msgstr ""

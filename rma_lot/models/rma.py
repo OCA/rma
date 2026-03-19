@@ -15,6 +15,7 @@ class Rma(models.Model):
         store=True,
         readonly=False,
     )
+    product_tracking = fields.Selection(related="product_id.tracking")
     lots_visible = fields.Boolean(compute="_compute_lots_visible")
 
     @api.depends("product_id.tracking")
