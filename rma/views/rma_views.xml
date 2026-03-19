@@ -124,6 +124,11 @@
                     groups="rma.group_rma_manual_finalization"
                 />
                 <field name="state" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
             </list>
         </field>
     </record>
