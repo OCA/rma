@@ -17,7 +17,13 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: rma_sale_lot
+#: model_terms:ir.ui.view,arch_db:rma_sale_lot.sale_rma_lot_request_form
+msgid "Lot"
+msgstr ""
+
+#. module: rma_sale_lot
 #: model:ir.model.fields,field_description:rma_sale_lot.field_sale_order_line_rma_wizard__lot_id
+#: model_terms:ir.ui.view,arch_db:rma_sale_lot.sale_rma_lot_request_form
 msgid "Lot/Serial Number"
 msgstr "Número de lote/serie"
 
@@ -46,3 +52,8 @@ msgstr "Pedido de venta"
 #: model:ir.model,name:rma_sale_lot.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
+
+#. module: rma_sale_lot
+#: model_terms:ir.ui.view,arch_db:rma_sale_lot.sale_rma_lot_request_form
+msgid "Serial Number"
+msgstr ""
