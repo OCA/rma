@@ -3,38 +3,12 @@
 
 from odoo.exceptions import ValidationError
 
-from odoo.addons.rma_sale.tests.test_rma_sale import TestRmaSaleBase
+from .common import TestRmaSaleStockRestockingFeeInvoicingCommon
 
 
-class TestRmaSaleStockRestockingFeeInvoicing(TestRmaSaleBase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.sale_order = cls._create_sale_order([[cls.product_1, 5]])
-        cls.sale_order.action_confirm()
-        cls.order_line = cls.sale_order.order_line.filtered(
-            lambda r: r.product_id == cls.product_1
-        )
-        cls.order_out_picking = cls.sale_order.picking_ids
-        cls.order_out_picking.move_ids.quantity = 5
-        cls.order_out_picking.button_validate()
-        cls.product_restocking_fee = cls.env.ref(
-            "sale_stock_restocking_fee_invoicing.product_restocking_fee"
-        )
-
-    def _create_rma(self):
-        wizard = self._rma_sale_wizard(self.sale_order)
-        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        self.assertTrue(rma.reception_move_id)
-        self.assertTrue(rma.reception_move_id.charge_restocking_fee)
-        return rma
-
-    def _create_receive_rma(self):
-        rma = self._create_rma()
-        rma.reception_move_id.picking_id.button_validate()
-        self.assertEqual(rma.reception_move_id.state, "done")
-        return rma
-
+class TestRmaSaleStockRestockingFeeInvoicing(
+    TestRmaSaleStockRestockingFeeInvoicingCommon
+):
     def test_0(self):
         """ensure restocking_fee_type enforces correct constraints on amount and
         percentage"""

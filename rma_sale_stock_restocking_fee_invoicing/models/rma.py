@@ -136,3 +136,28 @@ class Rma(models.Model):
         else:
             price_unit = self.product_id.lst_price
         return (price_unit * (self.restocking_fee_amount / 100)) * self.product_uom_qty
+
+    def _get_related_moves(self):
+        """
+        Get all chained moves from the reception move
+        """
+        res_moves = self.mapped("reception_move_id")
+        done_moves = self.env["stock.move"]
+        moves_to_parse = res_moves
+        while moves_to_parse:
+            next_moves = moves_to_parse.mapped("move_dest_ids")
+            res_moves |= next_moves
+            done_moves |= moves_to_parse
+            moves_to_parse = next_moves - done_moves
+        return res_moves
+
+    def write(self, vals):
+        """
+        Be able to propagate restocking fees on all moves of the chain
+        even if added once the reception move is already created.
+        """
+        res = super().write(vals)
+        if "restocking_fee_type" in vals:
+            moves = self._get_related_moves()
+            moves.charge_restocking_fee = bool(vals["restocking_fee_type"])
+        return res
