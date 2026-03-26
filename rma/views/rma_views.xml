@@ -352,7 +352,10 @@
                                 name="origin"
                                 readonly="state in ['locked', 'cancelled']"
                             />
-                            <field name="operation_id" />
+                            <field
+                                name="operation_id"
+                                readonly="state in ['refunded', 'returned', 'replaced', 'finished', 'locked', 'cancelled']"
+                            />
                             <field
                                 name="finalization_id"
                                 readonly="1"
