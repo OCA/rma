@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-21 10:06+0000\n"
+"PO-Revision-Date: 2026-03-26 08:14+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma_operation__deliver_same_lot
 msgid "Deliver Same Lot/Serial as Received"
-msgstr ""
+msgstr "Consegna lo stesso lotto/seriale ricevuto"
 
 #. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma__product_tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "Assicura la tracciabilità di un prodotto stoccabile nel magazzino."
 
 #. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
@@ -33,12 +33,15 @@ msgid ""
 "serial number received from the customer. Disable if a different lot or "
 "serial number should be assigned."
 msgstr ""
+"Se abilitata, il prodotto sostitutivo o da consegnare utilizzerà esattamente "
+"il numero di lotto/serie ricevuto dal cliente. Disattivare questa opzione se "
+"si desidera assegnare un numero di lotto o serie diverso."
 
 #. module: rma_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 msgid "Lot"
-msgstr ""
+msgstr "Lotto"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
@@ -59,7 +62,7 @@ msgstr "RMA"
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_rma_operation
 msgid "RMA requested operation"
-msgstr ""
+msgstr "Operazione richiesta RMA"
 
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_stock_return_picking_line
@@ -70,9 +73,9 @@ msgstr "Riga prelievo di reso"
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 msgid "Serial Number"
-msgstr ""
+msgstr "Numero seriale"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Tracciamento"
