@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-28 18:09+0000\n"
+"PO-Revision-Date: 2026-03-26 08:14+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -106,12 +106,12 @@ msgstr "Corriere ricevimento"
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Prelievo di reso"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Riga prelievo di reso"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_move
