@@ -169,6 +169,7 @@ class Rma(models.Model):
     operation_id = fields.Many2one(
         comodel_name="rma.operation",
         string="Requested operation",
+        tracking=True,
     )
     state = fields.Selection(
         [
