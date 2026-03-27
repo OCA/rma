@@ -157,7 +157,7 @@ class SaleOrderLine(models.Model):
                 qty = 0
                 for _move in _get_chained_moves(move):
                     factor = 1
-                    if _move._is_incoming():
+                    if _move._is_incoming() and not _move._is_outgoing():
                         factor = -1
                     qty += factor * _move.product_uom_qty
                 # If by chance we get a negative qty we should ignore it
