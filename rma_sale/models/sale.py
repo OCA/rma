@@ -113,7 +113,7 @@ class SaleOrderLine(models.Model):
                 self == r.sale_line_id
                 and r.state == "done"
                 and not r.scrapped
-                and r.location_dest_id.usage == "customer"
+                and r._is_outgoing()
                 and (
                     not r.origin_returned_move_id
                     or (r.origin_returned_move_id and r.to_refund)
