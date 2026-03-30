@@ -76,6 +76,19 @@ class TestRmaSale(TestRmaSaleBase):
         cls.order_out_picking.move_ids.quantity = 5
         cls.order_out_picking.button_validate()
 
+    def test_sale_order_line_get_delivery_move(self):
+        # Example of a use case: sale order with a partner from existing res.company
+        self.order_out_picking.move_ids.write(
+            {
+                "location_dest_id": self.env.ref(
+                    "stock.stock_location_inter_company"
+                ).id,
+            }
+        )
+        self.assertIn(
+            self.order_out_picking.move_ids, self.order_line.get_delivery_move()
+        )
+
     def test_rma_sale_computes_onchange(self):
         rma = self.env["rma"].new()
         # No m2m values when everything is selectable
