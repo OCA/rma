@@ -41,7 +41,10 @@ class Rma(models.Model):
         vals = super()._prepare_common_procurement_vals(
             warehouse=warehouse, scheduled_date=scheduled_date, group=group
         )
-        if self.operation_id.deliver_same_lot:
+        replace_lot = self.env.context.get("rma_replace_lot_id")
+        if replace_lot:
+            vals["restrict_lot_id"] = replace_lot.id
+        elif self.operation_id.deliver_same_lot:
             vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
