@@ -22,6 +22,14 @@ class TestRMALot(BaseCommon):
                 "tracking": "lot",
             }
         )
+        cls.product_extra = cls.env["product.product"].create(
+            {
+                "name": "test_product extra",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "lot",
+            }
+        )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
         )
@@ -31,11 +39,17 @@ class TestRMALot(BaseCommon):
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.lot_extra = cls.env["stock.lot"].create(
+            {"name": "000003", "product_id": cls.product_extra.id}
+        )
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 1, lot_id=cls.lot_1
         )
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 2, lot_id=cls.lot_2
+        )
+        cls.env["stock.quant"]._update_available_quantity(
+            cls.product_extra, cls.stock_location, 1, lot_id=cls.lot_extra
         )
         cls.picking = cls.picking_obj.create(
             {
@@ -201,3 +215,21 @@ class TestRMALot(BaseCommon):
         rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
         self.assertFalse(rma_lot_1.delivery_move_ids.restrict_lot_id)
         self.assertFalse(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
+
+    def test_replace_wizard_lot_change(self):
+        self.operation.action_create_delivery = "manual_after_receipt"
+        rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
+        reception_picking = rma_lot_1.reception_move_id.picking_id
+        reception_picking.button_validate()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_1.state, "received")
+        self.assertEqual(rma_lot_2.state, "received")
+        res = rma_lot_1.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product_extra
+        wizard_form.lot_id = self.lot_extra
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_1.state, "waiting_replacement")
+        self.assertEqual(rma_lot_1.delivery_move_ids.product_id, self.product_extra)
+        self.assertEqual(rma_lot_1.delivery_move_ids.restrict_lot_id, self.lot_extra)

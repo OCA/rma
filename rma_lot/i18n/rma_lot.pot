@@ -19,7 +19,13 @@ msgid "Deliver Same Lot/Serial as Received"
 msgstr ""
 
 #. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__domain_lot_id
+msgid "Domain Lot"
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma__product_tracking
+#: model:ir.model.fields,help:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
 msgstr ""
 
@@ -34,12 +40,15 @@ msgstr ""
 #. module: rma_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Lot"
 msgstr ""
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
+#: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__lot_id
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Lot/Serial Number"
 msgstr ""
 
@@ -51,6 +60,11 @@ msgstr ""
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_rma
 msgid "RMA"
+msgstr ""
+
+#. module: rma_lot
+#: model:ir.model,name:rma_lot.model_rma_delivery_wizard
+msgid "RMA Delivery Wizard"
 msgstr ""
 
 #. module: rma_lot
@@ -66,10 +80,12 @@ msgstr ""
 #. module: rma_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
+#: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Serial Number"
 msgstr ""
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
+#: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Tracking"
 msgstr ""
