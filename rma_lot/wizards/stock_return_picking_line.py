@@ -9,5 +9,9 @@ class StockReturnPickingLine(models.TransientModel):
 
     def _prepare_rma_vals(self):
         vals = super()._prepare_rma_vals()
-        vals.update({"lot_id": self.lot_id.id})
+        lot = self.lot_id
+        vals["lot_id"] = lot.id
+        if not self.move_id.restrict_lot_id:
+            smls = self.move_id.move_line_ids.filtered(lambda x: x.lot_id == lot)
+            vals["product_uom_qty"] = sum(smls.mapped("quantity"))
         return vals

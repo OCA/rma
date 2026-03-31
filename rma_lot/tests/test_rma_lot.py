@@ -13,7 +13,7 @@ class TestRMALot(BaseCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.picking_obj = cls.env["stock.picking"]
-        partner = cls.env["res.partner"].create({"name": "Test"})
+        cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test_product",
@@ -28,21 +28,21 @@ class TestRMALot(BaseCommon):
         cls.lot_2 = cls.env["stock.lot"].create(
             {"name": "000002", "product_id": cls.product.id}
         )
-        picking_type_out = cls.env.ref("stock.picking_type_out")
-        stock_location = cls.env.ref("stock.stock_location_stock")
-        customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.env["stock.quant"]._update_available_quantity(
-            cls.product, stock_location, 1, lot_id=cls.lot_1
+            cls.product, cls.stock_location, 1, lot_id=cls.lot_1
         )
         cls.env["stock.quant"]._update_available_quantity(
-            cls.product, stock_location, 2, lot_id=cls.lot_2
+            cls.product, cls.stock_location, 2, lot_id=cls.lot_2
         )
         cls.picking = cls.picking_obj.create(
             {
-                "partner_id": partner.id,
-                "picking_type_id": picking_type_out.id,
-                "location_id": stock_location.id,
-                "location_dest_id": customer_location.id,
+                "partner_id": cls.partner.id,
+                "picking_type_id": cls.picking_type_out.id,
+                "location_id": cls.stock_location.id,
+                "location_dest_id": cls.customer_location.id,
                 "move_ids": [
                     Command.create(
                         {
@@ -50,8 +50,8 @@ class TestRMALot(BaseCommon):
                             "product_id": cls.product.id,
                             "product_uom_qty": 3,
                             "product_uom": cls.product.uom_id.id,
-                            "location_id": stock_location.id,
-                            "location_dest_id": customer_location.id,
+                            "location_id": cls.stock_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     )
                 ],
@@ -64,12 +64,31 @@ class TestRMALot(BaseCommon):
         cls.operation.action_create_delivery = "automatic_on_confirm"
 
     @classmethod
-    def create_return_wiz(cls):
+    def create_return_wiz(cls, picking):
         return (
             cls.env["stock.return.picking"]
-            .with_context(active_id=cls.picking.id, active_model="stock.picking")
+            .with_context(active_id=picking.id, active_model="stock.picking")
             .create({"create_rma": True})
         )
+
+    def _create_rmas(self, picking, lot_1, lot_2):
+        """
+        Check the process of creating RMAs when returning products tracked by lot
+            - The correct number of RMAs is created
+            - The RMAs are correctly associated with the lot
+        """
+        return_wizard = self.create_return_wiz(picking)
+        return_wizard.create_rma = True
+        return_wizard.rma_operation_id = self.operation
+        self.assertEqual(len(return_wizard.product_return_moves), 2)
+        return_wizard.action_create_returns_all()
+        self.assertEqual(picking.rma_count, 2)
+        rmas = picking.move_ids.rma_ids
+        rma_lot_1 = rmas.filtered(lambda r, lot=lot_1: r.lot_id == lot)
+        self.assertTrue(rma_lot_1)
+        rma_lot_2 = rmas.filtered(lambda r, lot=lot_2: r.lot_id == lot)
+        self.assertTrue(rma_lot_2)
+        return rma_lot_1, rma_lot_2
 
     def test_00(self):
         """
@@ -77,22 +96,70 @@ class TestRMALot(BaseCommon):
             - The correct number of RMAs is created
             - The RMAs are correctly associated with the lot
         """
-        return_wizard = self.create_return_wiz()
-        return_wizard.create_rma = True
-        return_wizard.rma_operation_id = self.operation
-        self.assertEqual(len(return_wizard.product_return_moves), 2)
-        return_wizard.action_create_returns_all()
-        self.assertEqual(self.picking.rma_count, 2)
-        rmas = self.picking.move_ids.rma_ids
-        rma_lot_1 = rmas.filtered(lambda r, lot=self.lot_1: r.lot_id == lot)
-        rma_lot_2 = rmas.filtered(lambda r, lot=self.lot_2: r.lot_id == lot)
-        self.assertTrue(rma_lot_1)
+        rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
+        self.assertEqual(rma_lot_1.product_uom_qty, 1)
         self.assertEqual(rma_lot_1.reception_move_id.restrict_lot_id, self.lot_1)
         self.assertEqual(rma_lot_1.reception_move_id.state, "assigned")
-        self.assertTrue(rma_lot_2)
+        self.assertEqual(rma_lot_2.product_uom_qty, 2)
         self.assertEqual(rma_lot_2.reception_move_id.restrict_lot_id, self.lot_2)
         self.assertEqual(rma_lot_2.reception_move_id.state, "assigned")
-        return rma_lot_1, rma_lot_2
+
+    def test_01(self):
+        lot_3 = self.env["stock.lot"].create(
+            {"name": "000003", "product_id": self.product.id}
+        )
+        lot_4 = self.env["stock.lot"].create(
+            {"name": "000004", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_3
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 2, lot_id=lot_4
+        )
+        picking = self.picking_obj.create(
+            {
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "move_ids": [
+                    Command.create(
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom_qty": 1,
+                            "product_uom": self.product.uom_id.id,
+                            "location_id": self.stock_location.id,
+                            "location_dest_id": self.customer_location.id,
+                            "restrict_lot_id": lot_3.id,
+                        },
+                    ),
+                    Command.create(
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom_qty": 2,
+                            "product_uom": self.product.uom_id.id,
+                            "location_id": self.stock_location.id,
+                            "location_dest_id": self.customer_location.id,
+                            "restrict_lot_id": lot_4.id,
+                        },
+                    ),
+                ],
+            }
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+        rma_lot_3, rma_lot_4 = self._create_rmas(picking, lot_3, lot_4)
+        self.assertEqual(rma_lot_3.product_uom_qty, 1)
+        self.assertEqual(rma_lot_3.reception_move_id.restrict_lot_id, lot_3)
+        self.assertEqual(rma_lot_3.reception_move_id.state, "assigned")
+        self.assertEqual(rma_lot_4.product_uom_qty, 2)
+        self.assertEqual(rma_lot_4.reception_move_id.restrict_lot_id, lot_4)
+        self.assertEqual(rma_lot_4.reception_move_id.state, "assigned")
 
     def test_rma_form(self):
         rma_form = Form(self.env["rma"])
@@ -104,7 +171,7 @@ class TestRMALot(BaseCommon):
 
     def test_deliver_same_lot_as_received(self):
         self.operation.deliver_same_lot = True
-        rma_lot_1, rma_lot_2 = self.test_00()
+        rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
         self.assertEqual(rma_lot_1.delivery_move_ids.restrict_lot_id, self.lot_1)
         self.assertEqual(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
 
@@ -112,18 +179,9 @@ class TestRMALot(BaseCommon):
     def test_deliver_same_lot_as_received_extra(self):
         self.operation.deliver_same_lot = True
         self.operation.action_create_delivery = "manual_after_receipt"
-        rma_lot_1, rma_lot_2 = self.test_00()
-        # TODO: This shouldn't be necessary
-        rma_lot_1.product_uom_qty = 1
-        rma_lot_1.reception_move_id.move_line_ids.filtered(
-            lambda x: x.lot_id == self.lot_2
-        ).unlink()
+        rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
         reception_picking = rma_lot_1.reception_move_id.picking_id
-        wiz_act = reception_picking.button_validate()
-        wiz = Form(
-            self.env[wiz_act["res_model"]].with_context(**wiz_act["context"])
-        ).save()
-        wiz.process()
+        reception_picking.button_validate()
         self.assertEqual(reception_picking.state, "done")
         self.assertEqual(rma_lot_1.state, "received")
         self.assertEqual(rma_lot_2.state, "received")
@@ -140,6 +198,6 @@ class TestRMALot(BaseCommon):
 
     def test_deliver_different_lot_as_received(self):
         self.operation.deliver_same_lot = False
-        rma_lot_1, rma_lot_2 = self.test_00()
+        rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
         self.assertFalse(rma_lot_1.delivery_move_ids.restrict_lot_id)
         self.assertFalse(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
