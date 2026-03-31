@@ -1,8 +1,9 @@
 # Copyright 2020 Iryna Vyshnevska Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import Form
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -106,6 +107,36 @@ class TestRMALot(BaseCommon):
         rma_lot_1, rma_lot_2 = self.test_00()
         self.assertEqual(rma_lot_1.delivery_move_ids.restrict_lot_id, self.lot_1)
         self.assertEqual(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
+
+    @mute_logger("odoo.models.unlink")
+    def test_deliver_same_lot_as_received_extra(self):
+        self.operation.deliver_same_lot = True
+        self.operation.action_create_delivery = "manual_after_receipt"
+        rma_lot_1, rma_lot_2 = self.test_00()
+        # TODO: This shouldn't be necessary
+        rma_lot_1.product_uom_qty = 1
+        rma_lot_1.reception_move_id.move_line_ids.filtered(
+            lambda x: x.lot_id == self.lot_2
+        ).unlink()
+        reception_picking = rma_lot_1.reception_move_id.picking_id
+        wiz_act = reception_picking.button_validate()
+        wiz = Form(
+            self.env[wiz_act["res_model"]].with_context(**wiz_act["context"])
+        ).save()
+        wiz.process()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_1.state, "received")
+        self.assertEqual(rma_lot_2.state, "received")
+        rma_lot_1.lot_id = self.lot_2
+        rma_lot_1.create_return(
+            fields.Datetime.now(),
+            rma_lot_1.product_uom_qty,
+            rma_lot_1.product_uom,
+        )
+        delivery_picking = rma_lot_1.delivery_move_ids.picking_id
+        self.assertEqual(delivery_picking.state, "assigned")
+        delivery_picking.button_validate()
+        self.assertEqual(delivery_picking.state, "done")
 
     def test_deliver_different_lot_as_received(self):
         self.operation.deliver_same_lot = False
