@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-03-18 14:29+0000\n"
+"PO-Revision-Date: 2026-04-01 11:45+0000\n"
 "Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -45,7 +45,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Lot"
-msgstr ""
+msgstr "Lote"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
@@ -85,7 +85,7 @@ msgstr "Línea de albarán de devolución"
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Serial Number"
-msgstr ""
+msgstr "Número de serie"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
