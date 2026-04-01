@@ -14,11 +14,9 @@
                     name="action_view_repair_rma"
                     type="object"
                     icon="fa-rotate-left"
-                    attrs="{'invisible': [('rma_ids', '=', False)]}"
+                    attrs="{'invisible': [('rma_count', '=', 0)]}"
                 >
-                    <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_text">RMA</span>
-                    </div>
+                    <field string="RMA" name="rma_count" widget="statinfo" />
                 </button>
             </xpath>
         </field>
