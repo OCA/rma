@@ -25,7 +25,7 @@
                 <group name="group_rma">
                     <field
                         name="create_rma"
-                        invisible="picking_type_code != 'outgoing'"
+                        invisible="picking_type_code not in ('outgoing', 'dropship')"
                     />
                     <field name="rma_operation_id" invisible="not create_rma" />
                 </group>

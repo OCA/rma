@@ -37,6 +37,12 @@ class ReturnPickingLine(models.TransientModel):
     def _prepare_rma_vals(self):
         self.ensure_one()
         warehouse = self.move_id.picking_id.picking_type_id.warehouse_id
+        if not warehouse:
+            # Dropship compatibility
+            warehouse = self.env["stock.warehouse"].search(
+                [("company_id", "=", self.move_id.picking_id.company_id.id)],
+                limit=1,
+            )
         return {
             "move_id": self.move_id.id,
             "product_id": self.move_id.product_id.id,
