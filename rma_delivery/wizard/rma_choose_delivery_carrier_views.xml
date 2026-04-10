@@ -17,6 +17,11 @@
                         widget="radio"
                         options="{'horizontal': true}"
                     />
+                    <!-- It is important to include the rma_id field in the view so that
+                    the partner_id field—which is a dependency of available_carrier_ids—
+                    is properly set.
+                    !-->
+                    <field name="rma_id" invisible="1" />
                     <field name="carrier_id" />
                 </group>
                 <footer>
