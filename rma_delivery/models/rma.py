@@ -1,24 +1,43 @@
 # Copyright 2022 Tecnativa - David Vidal
 # Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class Rma(models.Model):
     _inherit = "rma"
 
+    available_carrier_ids = fields.Many2many(
+        comodel_name="delivery.carrier",
+        compute="_compute_available_carrier_ids",
+    )
     carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Carrier",
+        domain="[('id', 'in', available_carrier_ids)]",
     )
     rma_delivery_strategy = fields.Selection(related="company_id.rma_delivery_strategy")
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Reception Carrier",
+        domain="[('id', 'in', available_carrier_ids)]",
     )
     rma_reception_strategy = fields.Selection(
         related="company_id.rma_reception_strategy"
     )
+
+    @api.depends("partner_shipping_id", "product_id", "product_uom_qty")
+    def _compute_available_carrier_ids(self):
+        carrier_model = self.env["delivery.carrier"]
+        for item in self:
+            carriers = carrier_model.search(
+                carrier_model._check_company_domain(item.company_id)
+            )
+            item.available_carrier_ids = (
+                carriers.available_carriers_rma(item.partner_shipping_id, item)
+                if item.partner_shipping_id
+                else carriers
+            )
 
     def _get_default_carrier_id(self, company, partner):
         """Gather the company option for default carrier on RMA returns. We could

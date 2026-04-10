@@ -17,9 +17,15 @@ class ReturnPickingLine(models.TransientModel):
 class ReturnPicking(models.TransientModel):
     _inherit = "stock.return.picking"
 
+    partner_id = fields.Many2one(related="picking_id.partner_id")
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Reception Carrier",
+        domain="[('id', 'in', available_reception_carrier_ids)]",
+    )
+    available_reception_carrier_ids = fields.Many2many(
+        comodel_name="delivery.carrier",
+        compute="_compute_available_reception_carrier_ids",
     )
     rma_reception_strategy = fields.Selection(
         related="picking_id.company_id.rma_reception_strategy"
@@ -33,3 +39,16 @@ class ReturnPicking(models.TransientModel):
             if picking.company_id.rma_reception_strategy == "rma_method":
                 res["reception_carrier_id"] = picking.carrier_id.id
         return res
+
+    @api.depends("partner_id")
+    def _compute_available_reception_carrier_ids(self):
+        carrier_model = self.env["delivery.carrier"]
+        for item in self:
+            carriers = carrier_model.search(
+                carrier_model._check_company_domain(item.company_id)
+            )
+            item.available_reception_carrier_ids = (
+                carriers.available_carriers_picking(item.partner_id, item.picking_id)
+                if item.partner_id
+                else carriers
+            )

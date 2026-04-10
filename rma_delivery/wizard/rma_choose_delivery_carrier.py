@@ -12,6 +12,8 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
         comodel_name="rma",
         default=lambda self: self.env.context.get("active_id", False),
     )
+    company_id = fields.Many2one(related="rma_id.company_id")
+    partner_id = fields.Many2one(related="rma_id.partner_shipping_id")
     carrier_type = fields.Selection(
         [
             ("reception", "Reception"),
@@ -20,8 +22,15 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
         default="reception",
         readonly=True,
     )
+    available_carrier_ids = fields.Many2many(
+        comodel_name="delivery.carrier",
+        compute="_compute_available_carrier_ids",
+    )
     carrier_id = fields.Many2one(
-        comodel_name="delivery.carrier", string="Carrier", required=True
+        comodel_name="delivery.carrier",
+        string="Carrier",
+        required=True,
+        domain="[('id', 'in', available_carrier_ids)]",
     )
 
     @api.model
@@ -38,6 +47,19 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
             )
             res.update(carrier_type=carrier_type, carrier_id=carrier.id)
         return res
+
+    @api.depends("partner_id")
+    def _compute_available_carrier_ids(self):
+        carrier_model = self.env["delivery.carrier"]
+        for item in self:
+            carriers = carrier_model.search(
+                carrier_model._check_company_domain(item.company_id)
+            )
+            item.available_carrier_ids = (
+                carriers.available_carriers_rma(item.partner_id, item.rma_id)
+                if item.partner_id
+                else carriers
+            )
 
     def _get_pending_moves(self):
         rma = self.rma_id
