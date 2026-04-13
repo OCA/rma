@@ -218,6 +218,9 @@ class Rma(models.Model):
         copy=False,
     )
     can_be_refunded = fields.Boolean(compute="_compute_can_be_refunded")
+    # RMAs that were created from a rma
+    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count")
+    can_be_new_rma = fields.Boolean(compute="_compute_can_be_new_rma")
     # Delivery fields
     delivery_move_ids = fields.One2many(
         comodel_name="stock.move",
@@ -413,6 +416,23 @@ class Rma(models.Model):
                 record.operation_id.action_create_refund
                 in ("manual_on_confirm", "automatic_on_confirm")
                 and record.state in ("confirmed", "received")
+            )
+
+    @api.depends("delivery_move_ids.rma_ids")
+    def _compute_rma_count(self):
+        for item in self:
+            rmas = item.delivery_move_ids.mapped("rma_ids")
+            item.rma_count = len(rmas)
+
+    @api.depends("company_id", "state", "delivery_move_ids.rma_ids")
+    def _compute_can_be_new_rma(self):
+        for item in self:
+            item.can_be_new_rma = bool(
+                item.state in ("returned", "replaced")
+                and item.company_id.rma_new_rma_button_from_rma
+                and item.delivery_move_ids
+                and all(m.state == "done" for m in item.delivery_move_ids)
+                and not any(m.rma_ids for m in item.delivery_move_ids)
             )
 
     @api.depends(
@@ -684,6 +704,27 @@ class Rma(models.Model):
             )
 
     # Action methods
+    def action_create_rma(self):
+        self.ensure_one()
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma.rma_create_rma_action"
+        )
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action["context"] = dict(self.env.context)
+        action["context"].update(
+            active_model=self._name, active_id=self.id, active_ids=self.ids
+        )
+        return action
+
+    def action_view_rma(self):
+        self.ensure_one()
+        rma = self.delivery_move_ids.mapped("rma_ids")
+        action = rma._get_records_action()
+        # reset context to show all related rma without default filters
+        action["context"] = {}
+        return action
+
     def action_rma_send(self):
         self.ensure_one()
         template = self.env.ref("rma.mail_template_rma_notification", False)

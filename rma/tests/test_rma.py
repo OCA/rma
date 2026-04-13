@@ -337,7 +337,7 @@ class TestRmaCase(TestRma):
         rma.action_confirm()
         self.assertEqual(rma.state, "confirmed")
 
-    def test_confirm_and_receive(self):
+    def test_confirm_and_receive_and_return(self):
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")
@@ -357,6 +357,26 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
         self.assertEqual(rma.reception_move_id.quantity, 10)
         self.assertEqual(rma.state, "received")
+        # return
+        res = rma.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        out_picking = rma.delivery_move_ids.picking_id
+        out_picking.button_validate()
+        self.assertEqual(out_picking.state, "done")
+        # new rma
+        res = rma.action_create_rma()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        new_rma = wizard.create_rma()
+        self.assertTrue(new_rma)
+        self.assertEqual(new_rma.state, "confirmed")
+        self.assertEqual(new_rma.operation_id, rma.operation_id)
+        self.assertEqual(rma.rma_count, 1)
+        res = rma.action_view_rma()
+        self.assertEqual(res["res_model"], "rma")
+        self.assertEqual(res["res_id"], new_rma.id)
 
     @mute_logger("odoo.models.unlink")
     def test_cancel(self):

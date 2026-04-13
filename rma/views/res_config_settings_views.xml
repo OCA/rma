@@ -101,6 +101,11 @@
                                 </div>
                             </div>
                         </setting>
+                        <setting
+                            help="If an RMA has been delivered (returned or replaced), a button will appear that allows you to create a new RMA to manage the delivered items"
+                        >
+                            <field name="rma_new_rma_button_from_rma" />
+                        </setting>
                     </block>
                 </app>
             </xpath>

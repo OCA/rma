@@ -24,6 +24,7 @@
         "wizard/stock_picking_return_views.xml",
         "wizard/rma_delivery_views.xml",
         "wizard/rma_finalization_wizard_views.xml",
+        "wizard/rma_rma_wizard_views.xml",
         "wizard/rma_split_views.xml",
         "views/menus.xml",
         "views/res_partner_views.xml",

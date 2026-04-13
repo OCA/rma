@@ -16,3 +16,4 @@ access_rma_finalization_manager,rma.finalization.manager,model_rma_finalization,
 access_rma_finalization_wizard_user_own,rma.finalization.wizard.user.own,model_rma_finalization_wizard,group_rma_manual_finalization,1,1,1,1
 access_account_move_rma_user,account_move rma_user,account.model_account_move,rma.rma_group_user_own,1,0,0,0
 access_account_move_line_rma_user,account_move_line rma_user,account.model_account_move_line,rma.rma_group_user_own,1,0,0,0
+access_rma_rma_wizard_user,rma.rma.wizard.user,model_rma_rma_wizard,rma.rma_group_user_own,1,1,1,1

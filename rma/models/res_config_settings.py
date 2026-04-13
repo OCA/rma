@@ -42,3 +42,7 @@ class ResConfigSettings(models.TransientModel):
         domain="[('model', '=', 'rma')]",
         readonly=False,
     )
+    rma_new_rma_button_from_rma = fields.Boolean(
+        related="company_id.rma_new_rma_button_from_rma",
+        readonly=False,
+    )

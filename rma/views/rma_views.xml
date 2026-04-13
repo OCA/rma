@@ -194,6 +194,13 @@
                     />
                     <button
                         type="object"
+                        string="Create RMA"
+                        name="action_create_rma"
+                        invisible="not can_be_new_rma"
+                        class="btn-primary"
+                    />
+                    <button
+                        type="object"
                         string="Split"
                         name="action_split"
                         invisible="not can_be_split"
@@ -261,6 +268,15 @@
                             icon="fa-pencil-square-o"
                             invisible="not refund_id"
                         />
+                        <button
+                            name="action_view_rma"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-reply"
+                            invisible="rma_count==0"
+                        >
+                            <field name="rma_count" widget="statinfo" string="RMA" />
+                        </button>
                     </div>
                     <div class="oe_title">
                         <h1>
