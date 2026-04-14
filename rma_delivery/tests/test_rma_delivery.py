@@ -205,6 +205,33 @@ class TestRmaDelivery(TestRmaDeliveryBase):
         rma.reception_carrier_id = self.carrier
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.picking_id.carrier_id, self.carrier)
+        # Change reception carrier
+        res = rma.action_open_choose_carrier_wizard()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        self.assertEqual(wizard_form.carrier_type, "reception")
+        self.assertEqual(wizard_form.carrier_id, self.carrier)
+        wizard_form.carrier_id = self.carrier_customer
+        wizard = wizard_form.save()
+        wizard.button_confirm()
+        self.assertEqual(rma.reception_carrier_id, self.carrier_customer)
+        self.assertEqual(
+            rma.reception_move_id.picking_id.carrier_id, self.carrier_customer
+        )
+        rma.reception_move_id.picking_id.button_validate()
+        rma.carrier_id = self.carrier
+        self.company.rma_delivery_strategy = "rma_method"
+        picking = self._return_to_customer(rma)
+        self.assertEqual(picking.carrier_id, self.carrier)
+        # Change delivery carrier
+        res = rma.action_open_choose_carrier_wizard()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        self.assertEqual(wizard_form.carrier_type, "delivery")
+        self.assertEqual(wizard_form.carrier_id, self.carrier)
+        wizard_form.carrier_id = self.carrier_customer
+        wizard = wizard_form.save()
+        wizard.button_confirm()
+        self.assertEqual(rma.carrier_id, self.carrier_customer)
+        self.assertEqual(picking.carrier_id, self.carrier_customer)
 
     def test_reception_04_rma_method_picking_return(self):
         self.company.rma_reception_strategy = "rma_method"

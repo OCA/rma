@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_choose_delivery_carrier_action" model="ir.actions.act_window">
+        <field name="name">Update shipping</field>
+        <field name="res_model">rma.choose.delivery.carrier</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="rma_choose_delivery_carrier_form_view" model="ir.ui.view">
+        <field name="name">rma.choose.delivery.carrier.form</field>
+        <field name="model">rma.choose.delivery.carrier</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field
+                        name="carrier_type"
+                        widget="radio"
+                        options="{'horizontal': true}"
+                    />
+                    <field name="carrier_id" />
+                </group>
+                <footer>
+                    <button
+                        name="button_confirm"
+                        string="Accept"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
