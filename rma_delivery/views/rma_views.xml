@@ -7,6 +7,14 @@
         <field name="model">rma</field>
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
+            <button name="action_lock" position="before">
+                <button
+                    type="object"
+                    string="Update carrier"
+                    name="action_open_choose_carrier_wizard"
+                    invisible="(rma_reception_strategy!='rma_method' or state  != 'confirmed') and (rma_delivery_strategy!='rma_method' or state not in ('waiting_return', 'waiting_replacement'))"
+                />
+            </button>
             <field name="procurement_group_id" position="after">
                 <field
                     name="carrier_id"

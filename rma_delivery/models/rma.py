@@ -75,3 +75,16 @@ class Rma(models.Model):
             return self._get_default_reception_carrier_id(
                 self.company_id, self.partner_shipping_id
             )
+
+    def action_open_choose_carrier_wizard(self):
+        self.ensure_one()
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "rma_delivery.rma_choose_delivery_carrier_action"
+        )
+        # Force active_id to avoid issues when coming from smart buttons
+        # in other models
+        action["context"] = dict(self.env.context)
+        action["context"].update(
+            active_model=self._name, active_id=self.id, active_ids=self.ids
+        )
+        return action
