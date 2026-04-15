@@ -5,28 +5,15 @@
         <field name="inherit_id" ref="sale.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <block name="catalog_setting_container" position="inside">
-                <div
-                    class="col-12 col-lg-6 o_setting_box"
-                    title="Show portal RMA request in a single page"
+                <setting
+                    help="When we hit the RMA request button from the portal sale page, open in a single page instead of a popup."
+                    company_specific="1"
                 >
-                    <div class="o_setting_left_pane">
-                        <field name="show_full_page_sale_rma" />
-                    </div>
-                    <div class="o_setting_right_pane">
-                        <label
-                            for="show_full_page_sale_rma"
-                            string="Single page RMA request"
-                        />
-                        <span
-                            class="fa fa-lg fa-building-o"
-                            title="Values set here are company-specific."
-                            groups="base.group_multi_company"
-                        />
-                        <div class="text-muted">
-                            When we hit the RMA request button from the portal sale page, open in a single page instead of a popup.
-                        </div>
-                    </div>
-                </div>
+                    <field
+                        name="show_full_page_sale_rma"
+                        string="Single page RMA request"
+                    />
+                </setting>
             </block>
         </field>
     </record>
