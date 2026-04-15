@@ -6,157 +6,102 @@
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
                 <app string="RMA" groups="rma.rma_group_manager" name="rma">
-                    <h2>Return Merchandise Authorization Management</h2>
-                    <div
-                        class="row mt16 o_settings_container"
-                        name="operations_setting_container"
-                    >
-                        <div
-                            class="col-12 col-lg-6 o_setting_box"
-                            title="Finish RMAs manually"
+                    <block name="rma_operations_block" title="Operations">
+                        <setting
+                            help="When the RMA is receive, allow to finsish it manually choosing a finalization reason."
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="group_rma_manual_finalization" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label
-                                    for="group_rma_manual_finalization"
-                                    string="RMA Manual Finalization"
-                                />
-                                <div class="text-muted">
-                                    When the RMA is receive, allow to finsish it manually choosing
-                                    a finalization reason.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_left_pane">
-                                <field name="rma_return_grouping" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="rma_return_grouping" />
-                                <span
-                                    class="fa fa-lg fa-building-o"
-                                    title="Values set here are company-specific."
-                                    groups="base.group_multi_company"
-                                />
-                                <div
-                                    class="text-muted"
-                                >Group RMA returns by customer and warehouse.</div>
-                            </div>
-                        </div>
-                        <div
-                            class="col-12 col-lg-6 o_setting_box"
-                            title="Send automatic RMA info to customer"
+                            <field
+                                name="group_rma_manual_finalization"
+                                string="RMA Manual Finalization"
+                            />
+                        </setting>
+                        <setting
+                            help="Group RMA returns by customer and warehouse."
+                            company_specific="1"
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="send_rma_confirmation" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label
-                                    for="send_rma_confirmation"
-                                    string="RMA Confirmation Email"
-                                />
-                                <span
-                                    class="fa fa-lg fa-building-o"
-                                    title="Values set here are company-specific."
-                                    groups="base.group_multi_company"
-                                />
-                                <div
-                                    class="text-muted"
-                                >When the RMA is confirmed, send an automatic information email.</div>
-                                <div
-                                    class="row mt16"
-                                    invisible="not send_rma_confirmation"
-                                >
+                            <field
+                                name="rma_return_grouping"
+                                title="Values set here are company-specific."
+                            />
+                        </setting>
+                    </block>
+                    <block name="rma_mail_block" title="Emails">
+                        <setting
+                            help="When the RMA is confirmed, send an automatic information email."
+                            company_specific="1"
+                        >
+                            <field
+                                name="send_rma_confirmation"
+                                string="RMA Confirmation Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_confirmation"
+                            >
+                                <div class="row mt16">
                                     <label
-                                        for="rma_mail_confirmation_template_id"
                                         string="Email Template"
+                                        for="rma_mail_confirmation_template_id"
                                         class="col-lg-4 o_light_label"
                                     />
                                     <field
                                         name="rma_mail_confirmation_template_id"
-                                        class="oe_inline"
                                         required="send_rma_confirmation"
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            class="col-12 col-lg-6 o_setting_box"
-                            title="Send automatic RMA products reception notification to customer"
+                        </setting>
+                        <setting
+                            help="When the RMA products are received, send an automatic information email."
+                            company_specific="1"
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="send_rma_receipt_confirmation" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label
-                                    for="send_rma_receipt_confirmation"
-                                    string="RMA Receipt Confirmation Email"
-                                />
-                                <span
-                                    class="fa fa-lg fa-building-o"
-                                    title="Values set here are company-specific."
-                                    groups="base.group_multi_company"
-                                />
-                                <div
-                                    class="text-muted"
-                                >When the RMA products are received, send an automatic information email.</div>
-                                <div
-                                    class="row mt16"
-                                    invisible="not send_rma_receipt_confirmation"
-                                >
+                            <field
+                                name="send_rma_receipt_confirmation"
+                                string="RMA Receipt Confirmation Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_receipt_confirmation"
+                            >
+                                <div class="row mt16">
                                     <label
-                                        for="rma_mail_receipt_confirmation_template_id"
                                         string="Email Template"
+                                        for="rma_mail_receipt_confirmation_template_id"
                                         class="col-lg-4 o_light_label"
                                     />
                                     <field
                                         name="rma_mail_receipt_confirmation_template_id"
-                                        class="oe_inline"
                                         required="send_rma_receipt_confirmation"
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            class="col-12 col-lg-6 o_setting_box"
-                            title="Send automatic notification when the customer places an RMA"
+                        </setting>
+                        <setting
+                            help="When customers themselves place an RMA from the portal, send an automatic notification acknowleging it."
+                            company_specific="1"
                         >
-                            <div class="o_setting_left_pane">
-                                <field name="send_rma_draft_confirmation" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label
-                                    for="send_rma_draft_confirmation"
-                                    string="RMA draft notification Email"
-                                />
-                                <span
-                                    class="fa fa-lg fa-building-o"
-                                    title="Values set here are company-specific."
-                                    groups="base.group_multi_company"
-                                />
-                                <div
-                                    class="text-muted"
-                                >When customers themselves place an RMA from the portal, send an automatic notification acknowleging it.</div>
-                                <div
-                                    class="row mt16"
-                                    invisible="not send_rma_draft_confirmation"
-                                >
+                            <field
+                                name="send_rma_draft_confirmation"
+                                string="RMA draft notification Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_draft_confirmation"
+                            >
+                                <div class="row mt16">
                                     <label
-                                        for="rma_mail_draft_confirmation_template_id"
                                         string="Email Template"
+                                        for="rma_mail_draft_confirmation_template_id"
                                         class="col-lg-4 o_light_label"
                                     />
                                     <field
                                         name="rma_mail_draft_confirmation_template_id"
-                                        class="oe_inline"
                                         required="send_rma_draft_confirmation"
                                     />
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </setting>
+                    </block>
                 </app>
             </xpath>
         </field>
