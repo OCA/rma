@@ -22,6 +22,17 @@ msgid "Accept"
 msgstr "Aceptar"
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__available_carrier_ids
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__available_carrier_ids
+msgid "Available Carrier"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__available_reception_carrier_ids
+msgid "Available Reception Carrier"
+msgstr ""
+
+#. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.rma_choose_delivery_carrier_form_view
 msgid "Cancel"
 msgstr "Cancelar"
@@ -43,9 +54,19 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__company_id
+msgid "Company"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__partner_id
+msgid "Contact"
+msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__create_uid
@@ -177,6 +198,21 @@ msgstr "Línea de albarán de devolución"
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__rma_id
 msgid "Rma"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__partner_id
+msgid "Shipping Address"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,help:rma_delivery.field_rma_choose_delivery_carrier__partner_id
+msgid "Shipping address for current RMA."
 msgstr ""
 
 #. module: rma_delivery
