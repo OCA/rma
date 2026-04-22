@@ -6,10 +6,10 @@
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']/list" position="inside">
-                <field name="sale_line_ids" readonly="0" invisible="1" />
+                <field name="sale_line_ids" readonly="0" column_invisible="1" />
             </xpath>
             <xpath expr="//field[@name='line_ids']/list" position="inside">
-                <field name="sale_line_ids" readonly="0" invisible="1" />
+                <field name="sale_line_ids" readonly="0" column_invisible="1" />
             </xpath>
         </field>
     </record>
