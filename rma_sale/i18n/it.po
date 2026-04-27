@@ -419,11 +419,6 @@ msgstr "Indirizzo di spedizione"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid "Show portal RMA request in a single page"
-msgstr "Mostra il portale della richiesta RMA in una singola pagina"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
 msgstr "Richiesta RMA a singola pagina"
 
@@ -452,11 +447,6 @@ msgid "Values coming from portal RMA request form custom fields"
 msgstr ""
 "Valori provenienti dai campi personalizzati del modulo di richiesta RMA del "
 "portale"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid "Values set here are company-specific."
-msgstr "I valori impostati qui sono specifici per azienda."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
@@ -511,6 +501,12 @@ msgid ""
 msgstr ""
 "Stai per eseguire una richiesta RMA. Il nostro team lo elaborerà e ti "
 "arriverà una volta convalidato. Tieni presente che:"
+
+#~ msgid "Show portal RMA request in a single page"
+#~ msgstr "Mostra il portale della richiesta RMA in una singola pagina"
+
+#~ msgid "Values set here are company-specific."
+#~ msgstr "I valori impostati qui sono specifici per azienda."
 
 #~ msgid ""
 #~ "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are "
