@@ -894,6 +894,11 @@ msgid "Email sent to the customer when they place an RMA from the portal"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid "Emails"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,help:rma.field_rma_operation__auto_confirm_reception
 msgid ""
 "Enable this option to automatically confirm the reception when the RMA is "
@@ -939,11 +944,6 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__group_rma_manual_finalization
 msgid "Finish RMA manually choosing a reason"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Finish RMAs manually"
 msgstr ""
 
 #. module: rma
@@ -1298,6 +1298,7 @@ msgstr ""
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_operation_act_window
 #: model:ir.ui.menu,name:rma.rma_operation_menu
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Operations"
 msgstr ""
 
@@ -1850,11 +1851,6 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Return Merchandise Authorization Management"
-msgstr ""
-
-#. module: rma
 #: model:ir.model,name:rma.model_stock_return_picking
 msgid "Return Picking"
 msgstr ""
@@ -1932,21 +1928,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_res_company__send_rma_draft_confirmation
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__send_rma_draft_confirmation
 msgid "Send RMA draft Confirmation"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Send automatic RMA info to customer"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Send automatic RMA products reception notification to customer"
-msgstr ""
-
-#. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
-msgid "Send automatic notification when the customer places an RMA"
 msgstr ""
 
 #. module: rma
@@ -2352,8 +2333,8 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid ""
-"When the RMA is receive, allow to finsish it manually choosing\n"
-"                                    a finalization reason."
+"When the RMA is receive, allow to finsish it manually choosing a "
+"finalization reason."
 msgstr ""
 
 #. module: rma
