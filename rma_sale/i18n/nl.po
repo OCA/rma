@@ -409,11 +409,6 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid "Show portal RMA request in a single page"
-msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
 msgstr ""
 
@@ -440,11 +435,6 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__custom_description
 msgid "Values coming from portal RMA request form custom fields"
-msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
-msgid "Values set here are company-specific."
 msgstr ""
 
 #. module: rma_sale
