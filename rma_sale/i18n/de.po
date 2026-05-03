@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-03 21:45+0000\n"
+"PO-Revision-Date: 2026-05-03 16:45+0000\n"
 "Last-Translator: jans23 <jan@suhr.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -37,7 +37,7 @@ msgstr " wurde erstellt."
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<i class=\"fa fa-check\"/> Request RMAs"
-msgstr "<i class=\"fa fa-check\"/> Anforderung RMAs"
+msgstr "<i class=\"fa fa-check\"/> Anforderung Reklamationen"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
@@ -64,12 +64,13 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
-"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"Reklamation\" "
+"title=\"Reklamation\"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid "<span>RMA</span>"
-msgstr "<span>RMA</span>"
+msgstr "<span>Reklamation</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
@@ -161,12 +162,12 @@ msgstr ""
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 msgid "Create RMA"
-msgstr "Erstelle RMA"
+msgstr "Erstelle Reklamation"
 
 #. module: rma_sale
 #: model:ir.actions.act_window,name:rma_sale.sale_order_create_rma_action
 msgid "Create RMAs"
-msgstr "Erstelle RMAs"
+msgstr "Erstelle Reklamationen"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
@@ -218,14 +219,14 @@ msgid ""
 "From the frontend sale order page go to a single RMA page creation instead "
 "of the usual popup"
 msgstr ""
-"Gehen Sie von der Verkaufsauftragsseite im Frontend zu einer einzelnen RMA-"
-"Seitenerstellung anstelle des üblichen Popups"
+"Gehen Sie von der Verkaufsauftragsseite im Frontend zu einer einzelnen "
+"Reklamation-Seitenerstellung anstelle des üblichen Popups"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_res_company__show_full_page_sale_rma
 #: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__show_full_page_sale_rma
 msgid "Full page RMA creation"
-msgstr "Ganzseitige RMA-Erstellung"
+msgstr "Ganzseitige Reklamations-Erstellung"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
@@ -247,8 +248,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "If no requested operation is set, the RMA won't be correctly fulfilled"
 msgstr ""
-"Wenn keine angeforderte Operation festgelegt ist, wird die RMA nicht korrekt "
-"ausgeführt"
+"Wenn keine angeforderte Operation festgelegt ist, wird die Reklamation nicht "
+"korrekt ausgeführt"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_account_move
@@ -318,27 +319,27 @@ msgstr "Quantität"
 #: model:ir.model,name:rma_sale.model_rma
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
 msgid "RMA"
-msgstr "RMA"
+msgstr "Reklamation"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_count
 msgid "RMA count"
-msgstr "RMA Anzahl"
+msgstr "Reklamation Anzahl"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__location_id
 msgid "RMA location"
-msgstr "RMA Ort"
+msgstr "Reklamation Ort"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.request_rma_single_page
 msgid "RMA request for order"
-msgstr "RMA-Anfrage zur Bestellung"
+msgstr "Reklamations-Anfrage zur Bestellung"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
 msgid "RMAs"
-msgstr "RMAs"
+msgstr "Reklamationen"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__refund_id
@@ -348,7 +349,7 @@ msgstr "Erstattung"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "Request RMAs"
-msgstr "Fordern Sie RMAs an"
+msgstr "Fordern Sie Reklamationen an"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__operation_id
@@ -386,12 +387,12 @@ msgstr "Verkaufsauftrag"
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr "Verkaufsauftragszeilen-RMA-Assistent"
+msgstr "Verkaufsauftragszeilen-Reklamations-Assistent"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr "Verkaufsauftrags-RMA-Assistent"
+msgstr "Verkaufsauftrags-Reklamations-Assistent"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
@@ -421,14 +422,14 @@ msgstr "Versandadresse"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
 msgid "Single page RMA request"
-msgstr "Einseitige RMA-Anfrage"
+msgstr "Einseitige Reklamations-Anfrage"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "The limit will decrease when the units in other RMAs are confirmed"
 msgstr ""
-"Das Limit verringert sich, wenn die Einheiten in anderen RMAs bestätigt "
-"werden"
+"Das Limit verringert sich, wenn die Einheiten in anderen Reklamationen "
+"bestätigt werden"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_id
@@ -442,15 +443,15 @@ msgid ""
 "returned serial numbers or a description of the issue"
 msgstr ""
 "Verwenden Sie die Schaltfläche „Kommentar“, um relevante Informationen zur "
-"RMA hinzuzufügen, z. B. zurückgegebene Seriennummern oder eine Beschreibung "
-"des Problems"
+"Reklamation hinzuzufügen, z. B. zurückgegebene Seriennummern oder eine "
+"Beschreibung des Problems"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__custom_description
 msgid "Values coming from portal RMA request form custom fields"
 msgstr ""
-"Werte, die aus benutzerdefinierten Feldern für RMA-Anforderungsformulare des "
-"Portals stammen"
+"Werte, die aus benutzerdefinierten Feldern für Reklamations-"
+"Anforderungsformulare des Portals stammen"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
@@ -458,15 +459,16 @@ msgid ""
 "When we hit the RMA request button from the portal sale page, open in a "
 "single page instead of a popup."
 msgstr ""
-"Wenn wir auf der Verkaufsseite des Portals auf die Schaltfläche „RMA-"
-"Anforderung“ klicken, wird diese auf einer einzelnen Seite statt in einem "
-"Popup geöffnet."
+"Wenn wir auf der Verkaufsseite des Portals auf die Schaltfläche „"
+"Reklamations-Anforderung“ klicken, wird diese auf einer einzelnen Seite "
+"statt in einem Popup geöffnet."
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_rma_wizard__partner_shipping_id
 msgid "Will be used to return the goods when the RMA is completed"
 msgstr ""
-"Wird verwendet, um die Waren zurückzusenden, wenn die RMA abgeschlossen ist"
+"Wird verwendet, um die Waren zurückzusenden, wenn die Reklamation "
+"abgeschlossen ist"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
@@ -484,7 +486,7 @@ msgstr ""
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "You can send a message in every RMA sent"
-msgstr "Sie können in jeder gesendeten RMA eine Nachricht senden"
+msgstr "Sie können in jeder gesendeten Reklamation eine Nachricht senden"
 
 #. module: rma_sale
 #. odoo-python
@@ -500,7 +502,7 @@ msgstr ""
 #: code:addons/rma_sale/models/sale.py:0
 msgid "You may only create RMAs from a confirmed sale order."
 msgstr ""
-"Sie können RMA-Anfragen nur auf der Grundlage eines bestätigten "
+"Sie können Reklamations-Anfragen nur auf der Grundlage eines bestätigten "
 "Verkaufsauftrags erstellen."
 
 #. module: rma_sale
@@ -509,7 +511,7 @@ msgid ""
 "You're about to perform an RMA request. Our team will process it an will "
 "reach you once it's validated. Keep in mind that:"
 msgstr ""
-"Sie sind dabei, eine RMA-Anfrage durchzuführen. Unser Team wird es "
+"Sie sind dabei, eine Reklamations-Anfrage durchzuführen. Unser Team wird es "
 "bearbeiten und Sie erreichen, sobald es validiert ist. Denk daran, dass:"
 
 #~ msgid "Show portal RMA request in a single page"
