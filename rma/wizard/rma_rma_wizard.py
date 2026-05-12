@@ -36,11 +36,15 @@ class RmaRmaWizard(models.TransientModel):
 
     def create_rma(self):
         rma = self.rma_id
-        delivery_moves = rma.delivery_move_ids.filtered(lambda x: x.state == "done")
+        delivery_moves = rma.sudo().delivery_move_ids.filtered(
+            lambda x: x.state == "done"
+        )
         pickings = delivery_moves.picking_id.filtered(lambda x: x.state == "done")
         picking = fields.first(pickings)
-        return_wizard = self.env["stock.return.picking"].create(
-            self._stock_return_picking_vals(picking)
+        return_wizard = (
+            self.env["stock.return.picking"]
+            .sudo()
+            .create(self._stock_return_picking_vals(picking))
         )
         # Call the onchange event manually to avoid using Form()
         return_wizard._onchange_create_rma()

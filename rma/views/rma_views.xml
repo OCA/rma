@@ -246,6 +246,7 @@
                             class="oe_stat_button"
                             icon="fa-truck"
                             invisible="not reception_move_id"
+                            groups="stock.group_stock_user"
                         />
                         <button
                             type="object"
@@ -253,6 +254,7 @@
                             class="oe_stat_button"
                             icon="fa-truck"
                             invisible="delivery_picking_count == 0"
+                            groups="stock.group_stock_user"
                         >
                             <field
                                 name="delivery_picking_count"
@@ -267,6 +269,7 @@
                             class="oe_stat_button"
                             icon="fa-pencil-square-o"
                             invisible="not refund_id"
+                            groups="account.group_account_invoice"
                         />
                         <button
                             name="action_view_rma"
@@ -306,6 +309,7 @@
                                 name="picking_id"
                                 options="{'no_create': True}"
                                 readonly="state != 'draft'"
+                                groups="stock.group_stock_user"
                             />
                             <field
                                 name="move_id"
@@ -313,6 +317,7 @@
                                 readonly="not picking_id or state != 'draft'"
                                 options="{'no_create': True}"
                                 force_save="1"
+                                groups="stock.group_stock_user"
                             />
                             <field
                                 name="product_id"

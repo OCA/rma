@@ -219,8 +219,12 @@ class Rma(models.Model):
     )
     can_be_refunded = fields.Boolean(compute="_compute_can_be_refunded")
     # RMAs that were created from a rma
-    rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count")
-    can_be_new_rma = fields.Boolean(compute="_compute_can_be_new_rma")
+    rma_count = fields.Integer(
+        string="RMA count", compute="_compute_rma_count", compute_sudo=True
+    )
+    can_be_new_rma = fields.Boolean(
+        compute="_compute_can_be_new_rma", compute_sudo=True
+    )
     # Delivery fields
     delivery_move_ids = fields.One2many(
         comodel_name="stock.move",
@@ -719,7 +723,7 @@ class Rma(models.Model):
 
     def action_view_rma(self):
         self.ensure_one()
-        rma = self.delivery_move_ids.mapped("rma_ids")
+        rma = self.sudo().delivery_move_ids.mapped("rma_ids")
         action = rma._get_records_action()
         # reset context to show all related rma without default filters
         action["context"] = {}
@@ -792,10 +796,11 @@ class Rma(models.Model):
         vals["route_ids"] = self.warehouse_id.rma_in_route_id
         vals["rma_receiver_ids"] = [(6, 0, self.ids)]
         vals["to_refund"] = self.operation_id.action_create_refund == "update_quantity"
-        if self.move_id:
-            vals["origin_returned_move_id"] = self.move_id.id
+        move = self.sudo().move_id
+        if move:
+            vals["origin_returned_move_id"] = move.id
             if not self.operation_id.different_return_product:
-                vals["move_orig_ids"] = [(6, 0, self.move_id.ids)]
+                vals["move_orig_ids"] = [(6, 0, move.ids)]
         return vals
 
     def _prepare_reception_procurements(self):
@@ -836,10 +841,11 @@ class Rma(models.Model):
         procurements = self._prepare_reception_procurements()
         if procurements:
             self.env["procurement.group"].run(procurements)
-        self.reception_move_id.picking_id.action_assign()
+        reception_move = self.sudo().reception_move_id
+        reception_move.picking_id.action_assign()
         if self.operation_id.auto_confirm_reception:
-            self.reception_move_id.picked = True
-            self.reception_move_id._action_done()
+            reception_move.picked = True
+            reception_move._action_done()
 
     def action_create_receipt(self):
         self.ensure_one()
@@ -1361,7 +1367,9 @@ class Rma(models.Model):
             self.env["procurement.group"].run(procurements)
         pickings = defaultdict(lambda: self.browse())
         for rma in rmas_to_return:
-            picking = rma.delivery_move_ids.picking_id.sorted("id", reverse=True)[0]
+            picking = rma.sudo().delivery_move_ids.picking_id.sorted(
+                "id", reverse=True
+            )[0]
             pickings[picking] |= rma
             rma.message_post(
                 body=Markup(
