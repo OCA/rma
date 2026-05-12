@@ -39,6 +39,7 @@ class Rma(models.Model):
     allowed_product_ids = fields.Many2many(
         comodel_name="product.product",
         compute="_compute_allowed_product_ids",
+        compute_sudo=True,
     )
     product_id = fields.Many2one(
         domain="order_id and [('id', 'in', allowed_product_ids)] or "
@@ -98,7 +99,7 @@ class Rma(models.Model):
         sales order line if applicable.
         """
         self.ensure_one()
-        move = self.reception_move_id
+        move = self.sudo().reception_move_id
         if (
             move
             and float_compare(
@@ -108,8 +109,8 @@ class Rma(models.Model):
             )
             == 0
         ):
-            self.reception_move_id.sale_line_id = self.sale_line_id.id
-            self.reception_move_id.to_refund = True
+            move.sale_line_id = self.sale_line_id.id
+            move.to_refund = True
 
     def _unlink_refund_with_reception_move(self):
         """Perform the internal operations for unlinking the RMA reception move with the
@@ -135,8 +136,9 @@ class Rma(models.Model):
     def _prepare_refund_vals(self, origin=False):
         """Inject salesman from sales order (if any)"""
         vals = super()._prepare_refund_vals(origin=origin)
-        if self.order_id:
-            vals["invoice_user_id"] = self.order_id.user_id.id
+        order = self.sudo().order_id
+        if order:
+            vals["invoice_user_id"] = order.user_id.id
         return vals
 
     def _prepare_refund_line_vals(self):
@@ -145,13 +147,13 @@ class Rma(models.Model):
         logged on the sales order, so better to let the operations not linked.
         """
         vals = super()._prepare_refund_line_vals()
-        line = self.sale_line_id
+        line = self.sudo().sale_line_id
         if line:
             vals["product_id"] = line.product_id.id
             vals["price_unit"] = line.price_unit
             vals["discount"] = line.discount
             vals["sequence"] = line.sequence
-            move = self.reception_move_id
+            move = self.sudo().reception_move_id
             if (
                 move
                 and float_compare(
@@ -181,35 +183,38 @@ class Rma(models.Model):
 
     def _prepare_delivery_procurement_vals(self, scheduled_date=None):
         vals = super()._prepare_delivery_procurement_vals(scheduled_date=scheduled_date)
+        move = self.sudo().move_id
         if (
-            self.move_id
-            and self.move_id.sale_line_id
+            move
+            and move.sale_line_id
             and self.operation_id.action_create_refund == "update_quantity"
         ):
-            vals["sale_line_id"] = self.move_id.sale_line_id.id
+            vals["sale_line_id"] = move.sale_line_id.id
         return vals
 
     def _prepare_replace_procurement_vals(self, warehouse=None, scheduled_date=None):
         vals = super()._prepare_replace_procurement_vals(
             warehouse=warehouse, scheduled_date=scheduled_date
         )
+        move = self.sudo().move_id
         if (
-            self.move_id
-            and self.move_id.sale_line_id
+            move
+            and move.sale_line_id
             and self.operation_id.action_create_refund == "update_quantity"
         ):
-            vals["sale_line_id"] = self.move_id.sale_line_id.id
+            vals["sale_line_id"] = move.sale_line_id.id
         return vals
 
     def _prepare_reception_procurement_vals(self, group=None):
         """This method is used only for reception and a specific RMA IN route."""
         vals = super()._prepare_reception_procurement_vals(group=group)
+        move = self.sudo().move_id
         if (
-            self.move_id
-            and self.move_id.sale_line_id
+            move
+            and move.sale_line_id
             and self.operation_id.action_create_refund == "update_quantity"
         ):
-            vals["sale_line_id"] = self.move_id.sale_line_id.id
+            vals["sale_line_id"] = move.sale_line_id.id
         return vals
 
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
@@ -217,8 +222,8 @@ class Rma(models.Model):
         # pickings. This is inconvenient for this operation as when we confirm the
         # customer delivery a new order line will be created with the replaced option
         # which will be set for invoicing.
-        moves_before = self.delivery_move_ids
+        moves_before = self.sudo().delivery_move_ids
         res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
-        new_moves = self.delivery_move_ids - moves_before
+        new_moves = self.sudo().delivery_move_ids - moves_before
         new_moves.picking_id.sale_id = False
         return res
