@@ -348,6 +348,11 @@ msgid ""
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.rma_rma_wizard_form_view
+msgid "Accept"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "Accept Emails From"
 msgstr ""
@@ -503,6 +508,12 @@ msgid "Awaiting Action"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_res_company__rma_new_rma_button_from_rma
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_new_rma_button_from_rma
+msgid "Button to create a new RMA from another one"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
 msgid "Can Be Finished"
 msgstr ""
@@ -510,6 +521,11 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_locked
 msgid "Can Be Locked"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__can_be_new_rma
+msgid "Can Be New Rma"
 msgstr ""
 
 #. module: rma
@@ -535,6 +551,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_finalization_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:rma.rma_redelivery_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:rma.rma_rma_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:rma.rma_split_wizard_view_form2
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Cancel"
@@ -654,6 +671,12 @@ msgid "Count Rma Processed"
 msgstr ""
 
 #. module: rma
+#: model:ir.actions.act_window,name:rma.rma_create_rma_action
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
+msgid "Create RMA"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
 msgid "Create RMAs"
 msgstr ""
@@ -687,6 +710,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_operation__create_uid
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_tag__create_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_uid
@@ -699,6 +723,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_operation__create_date
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_tag__create_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__create_date
@@ -816,6 +841,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_operation__display_name
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_tag__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
@@ -1003,6 +1029,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__id
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_operation__id
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_tag__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
@@ -1024,6 +1051,15 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__activity_exception_icon
 msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,help:rma.field_res_company__rma_new_rma_button_from_rma
+#: model:ir.model.fields,help:rma.field_res_config_settings__rma_new_rma_button_from_rma
+#: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+msgid ""
+"If an RMA has been delivered (returned or replaced), a button will appear "
+"that allows you to create a new RMA to manage the delivered items"
 msgstr ""
 
 #. module: rma
@@ -1118,6 +1154,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_operation__write_uid
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_tag__write_uid
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_uid
@@ -1130,6 +1167,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_finalization_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_operation__write_date
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_tag__write_date
 #: model:ir.model.fields,field_description:rma.field_rma_team__write_date
@@ -1471,6 +1509,7 @@ msgstr ""
 #: model:ir.module.category,name:rma.rma_module_category
 #: model:ir.ui.menu,name:rma.rma_menu
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
 #: model_terms:ir.ui.view,arch_db:rma.view_picking_form
 msgid "RMA"
@@ -1642,6 +1681,7 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_count
+#: model:ir.model.fields,field_description:rma.field_rma__rma_count
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr ""
@@ -1834,6 +1874,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__operation_id
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Requested operation"
@@ -1899,6 +1940,7 @@ msgid "Returned Picking"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__rma_id
 #: model:ir.model.fields,field_description:rma.field_rma_tag__rma_ids
 msgid "Rma"
 msgstr ""
@@ -1906,6 +1948,11 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_count
 msgid "Rma Count"
+msgstr ""
+
+#. module: rma
+#: model:ir.model,name:rma.model_rma_rma_wizard
+msgid "Rma Rma Wizard"
 msgstr ""
 
 #. module: rma
@@ -2200,6 +2247,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "This RMA cannot perform a return."
+msgstr ""
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/wizard/rma_rma_wizard.py:0
+msgid "This rma has been created from: %(rma_link)s"
 msgstr ""
 
 #. module: rma
