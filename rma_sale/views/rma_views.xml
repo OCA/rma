@@ -12,6 +12,7 @@
                     name="order_id"
                     options="{'no_create': True}"
                     readonly="state!='draft'"
+                    groups="sales_team.group_sale_salesman"
                 />
             </field>
         </field>
