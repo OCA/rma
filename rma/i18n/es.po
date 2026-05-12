@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-09 08:07+0000\n"
-"PO-Revision-Date: 2026-01-27 11:17+0000\n"
+"PO-Revision-Date: 2026-05-12 09:45+0000\n"
 "Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -468,7 +468,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_rma_wizard_form_view
 msgid "Accept"
-msgstr ""
+msgstr "Aceptar"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -630,7 +630,7 @@ msgstr "A la espera de una acción"
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_new_rma_button_from_rma
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_new_rma_button_from_rma
 msgid "Button to create a new RMA from another one"
-msgstr ""
+msgstr "Botón para crear un nuevo RMA desde otro"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
@@ -796,7 +796,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:rma.rma_create_rma_action
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Create RMA"
-msgstr ""
+msgstr "Crear RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
@@ -2444,7 +2444,7 @@ msgstr "Este RMA no puede realizar una devolución."
 #. odoo-python
 #: code:addons/rma/wizard/rma_rma_wizard.py:0
 msgid "This rma has been created from: %(rma_link)s"
-msgstr ""
+msgstr "Este rma ha sido creado desde: %(rma_link)s"
 
 #. module: rma
 #: model:ir.actions.server,name:rma.rma_refund_action_server
