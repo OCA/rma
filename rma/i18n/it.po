@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-30 10:45+0000\n"
+"PO-Revision-Date: 2026-05-13 09:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -467,7 +467,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_rma_wizard_form_view
 msgid "Accept"
-msgstr ""
+msgstr "Accetta"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
@@ -628,7 +628,7 @@ msgstr "In attesa dell'azione"
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_new_rma_button_from_rma
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_new_rma_button_from_rma
 msgid "Button to create a new RMA from another one"
-msgstr ""
+msgstr "Pulsante per creare una nuova RMA da un'altra"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_finished
@@ -643,7 +643,7 @@ msgstr "Può essere Bloccato"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_new_rma
 msgid "Can Be New Rma"
-msgstr ""
+msgstr "Può essere nuova RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_refunded
@@ -794,7 +794,7 @@ msgstr "Conteggio RMA elaborate"
 #: model:ir.actions.act_window,name:rma.rma_create_rma_action
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 msgid "Create RMA"
-msgstr ""
+msgstr "Crea RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__create_rma
@@ -1190,6 +1190,9 @@ msgid ""
 "If an RMA has been delivered (returned or replaced), a button will appear "
 "that allows you to create a new RMA to manage the delivered items"
 msgstr ""
+"Se una RMA è stata consegnata (restituita o sostituita), un pulsante "
+"apparirà per consentire di creare una nuova RMA per gestire gli elementi "
+"consegnati"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__different_return_product
@@ -1736,7 +1739,7 @@ msgstr "Motivi chiusura RMA"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_finalization_wizard
 msgid "RMA Finalization Wizard"
-msgstr "Wizard Chiusura RMA"
+msgstr "Procedura guidata chiusura RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_in_type_id
@@ -1806,7 +1809,7 @@ msgstr "Resoconto RMA"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_split_wizard
 msgid "RMA Split Wizard"
-msgstr "Wizard divisione RMA"
+msgstr "Procedura guidata divisione RMA"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.view_rma_tag_form
@@ -2121,7 +2124,7 @@ msgstr "Conteggio RMA"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_rma_wizard
 msgid "Rma Rma Wizard"
-msgstr ""
+msgstr "Procedura guidata RMA da RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -2443,7 +2446,7 @@ msgstr "Questa RMA non può eseguire un reso."
 #. odoo-python
 #: code:addons/rma/wizard/rma_rma_wizard.py:0
 msgid "This rma has been created from: %(rma_link)s"
-msgstr ""
+msgstr "Questa RMA è stata creata da: %(rma_link)s"
 
 #. module: rma
 #: model:ir.actions.server,name:rma.rma_refund_action_server
