@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-04 10:27+0000\n"
+"PO-Revision-Date: 2026-05-13 09:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -207,7 +207,7 @@ msgstr "RMA"
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma_rma_wizard
 msgid "Rma Rma Wizard"
-msgstr ""
+msgstr "Procedura guidata RMA da RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__partner_id
