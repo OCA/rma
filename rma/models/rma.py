@@ -435,7 +435,7 @@ class Rma(models.Model):
                 item.state in ("returned", "replaced")
                 and item.company_id.rma_new_rma_button_from_rma
                 and item.delivery_move_ids
-                and all(m.state == "done" for m in item.delivery_move_ids)
+                and all(m.state in ("done", "cancel") for m in item.delivery_move_ids)
                 and not any(m.rma_ids for m in item.delivery_move_ids)
             )
 
