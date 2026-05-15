@@ -336,3 +336,79 @@ class TestRmaSale(TestRmaSaleBase):
         rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
         self.assertEqual(len(rmas.reception_move_id.group_id), 1)
         self.assertEqual(len(rmas.reception_move_id.picking_id), 1)
+
+    def test_link_to_sale_order_compute_clears_sale_line(self):
+        sale_order = self._create_sale_order([[self.product_2, 3]])
+        sale_order.action_confirm()
+        wizard = self.env["rma.sale.order.link.wizard"].create(
+            {
+                "sale_order_id": self.sale_order.id,
+                "sale_line_id": self.order_line.id,
+            }
+        )
+        wizard.sale_order_id = sale_order
+        wizard._compute_sale_line_id()
+        self.assertFalse(wizard.sale_line_id)
+
+    def test_link_to_sale_order_defaults_from_rma(self):
+        rma = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "order_id": self.sale_order.id,
+                "picking_id": self.order_out_picking.id,
+                "move_id": self.order_out_picking.move_ids.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "location_id": self.sale_order.warehouse_id.rma_loc_id.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        action = rma.action_link_to_sale_order()
+        wizard = (
+            self.env[action.get("res_model")]
+            .with_context(**action.get("context"))
+            .create({})
+        )
+        self.assertEqual(wizard.rma_id, rma)
+        self.assertEqual(wizard.sale_order_id, self.sale_order)
+        self.assertEqual(wizard.sale_line_id, self.order_line)
+
+    def test_link_to_sale_order(self):
+        sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 3]])
+        sale_order.action_confirm()
+        sale_order.picking_ids.action_set_quantities_to_reservation()
+        sale_order.picking_ids.button_validate()
+        order_line = sale_order.order_line.filtered(
+            lambda line: line.product_id == self.product_2
+        )
+        move = order_line.get_delivery_move()
+        rma_vals = {
+            "partner_id": self.partner.id,
+            "product_id": self.product_1.id,
+            "product_uom_qty": 5,
+            "location_id": sale_order.warehouse_id.rma_loc_id.id,
+            "operation_id": self.operation.id,
+        }
+        rma = self.env["rma"].create(rma_vals)
+        rma.action_confirm()
+        action = rma.action_link_to_sale_order()
+        wizard = (
+            self.env[action.get("res_model")]
+            .with_context(**action.get("context"))
+            .create(
+                {
+                    "sale_order_id": sale_order.id,
+                    "sale_line_id": order_line.id,
+                }
+            )
+        )
+        self.assertEqual(wizard.rma_id, rma)
+        self.assertFalse(rma.order_id)
+        wizard.action_link_rma_to_sale_order()
+        self.assertEqual(rma.order_id, sale_order)
+        self.assertEqual(rma.sale_line_id, order_line)
+        self.assertEqual(rma.picking_id, move.picking_id)
+        self.assertEqual(rma.move_id, move)
+        self.assertEqual(rma.product_id, self.product_2)
+        self.assertEqual(rma.product_uom_qty, move.product_uom_qty)
+        self.assertEqual(rma.product_uom, move.product_uom)
