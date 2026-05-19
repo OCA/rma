@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import Command, fields
+from odoo.exceptions import UserError
 from odoo.tests import Form
 from odoo.tools import mute_logger
 
@@ -36,9 +37,16 @@ class TestRMALot(BaseCommon):
         cls.lot_2 = cls.env["stock.lot"].create(
             {"name": "000002", "product_id": cls.product.id}
         )
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.warehouse = cls.env["stock.warehouse"].search(
+            [
+                ("company_id", "=", cls.env.company.id),
+            ],
+            limit=1,
+        )
+        cls.picking_type_out = cls.warehouse.out_type_id
+        cls.stock_location = cls.warehouse.lot_stock_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.rma_location = cls.warehouse.rma_loc_id
         cls.lot_extra = cls.env["stock.lot"].create(
             {"name": "000003", "product_id": cls.product_extra.id}
         )
@@ -51,7 +59,16 @@ class TestRMALot(BaseCommon):
         cls.env["stock.quant"]._update_available_quantity(
             cls.product_extra, cls.stock_location, 1, lot_id=cls.lot_extra
         )
-        cls.picking = cls.picking_obj.create(
+        cls.picking = cls._create_picking([(cls.product.id, 3, False)])
+        cls.picking.action_confirm()
+        cls.picking.action_assign()
+        cls.picking.button_validate()
+        cls.operation = cls.env.ref("rma.rma_operation_replace")
+        cls.operation.action_create_delivery = "automatic_on_confirm"
+
+    @classmethod
+    def _create_picking(cls, moves_data):
+        return cls.env["stock.picking"].create(
             {
                 "partner_id": cls.partner.id,
                 "picking_type_id": cls.picking_type_out.id,
@@ -61,21 +78,18 @@ class TestRMALot(BaseCommon):
                     Command.create(
                         {
                             "name": cls.product.name,
-                            "product_id": cls.product.id,
-                            "product_uom_qty": 3,
+                            "product_id": m_data[0],
+                            "product_uom_qty": m_data[1],
                             "product_uom": cls.product.uom_id.id,
                             "location_id": cls.stock_location.id,
                             "location_dest_id": cls.customer_location.id,
+                            "restrict_lot_id": m_data[2],
                         },
                     )
+                    for m_data in moves_data
                 ],
             }
         )
-        cls.picking.action_confirm()
-        cls.picking.action_assign()
-        cls.picking.button_validate()
-        cls.operation = cls.env.ref("rma.rma_operation_replace")
-        cls.operation.action_create_delivery = "automatic_on_confirm"
 
     @classmethod
     def create_return_wiz(cls, picking):
@@ -131,37 +145,8 @@ class TestRMALot(BaseCommon):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.stock_location, 2, lot_id=lot_4
         )
-        picking = self.picking_obj.create(
-            {
-                "partner_id": self.partner.id,
-                "picking_type_id": self.picking_type_out.id,
-                "location_id": self.stock_location.id,
-                "location_dest_id": self.customer_location.id,
-                "move_ids": [
-                    Command.create(
-                        {
-                            "name": self.product.name,
-                            "product_id": self.product.id,
-                            "product_uom_qty": 1,
-                            "product_uom": self.product.uom_id.id,
-                            "location_id": self.stock_location.id,
-                            "location_dest_id": self.customer_location.id,
-                            "restrict_lot_id": lot_3.id,
-                        },
-                    ),
-                    Command.create(
-                        {
-                            "name": self.product.name,
-                            "product_id": self.product.id,
-                            "product_uom_qty": 2,
-                            "product_uom": self.product.uom_id.id,
-                            "location_id": self.stock_location.id,
-                            "location_dest_id": self.customer_location.id,
-                            "restrict_lot_id": lot_4.id,
-                        },
-                    ),
-                ],
-            }
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_3.id), (self.product.id, 2, lot_4.id)]
         )
         picking.action_confirm()
         picking.action_assign()
@@ -233,3 +218,202 @@ class TestRMALot(BaseCommon):
         self.assertEqual(rma_lot_1.state, "waiting_replacement")
         self.assertEqual(rma_lot_1.delivery_move_ids.product_id, self.product_extra)
         self.assertEqual(rma_lot_1.delivery_move_ids.restrict_lot_id, self.lot_extra)
+
+    def test_replace_lot_qty_check_01(self):
+        self.product.tracking = "serial"
+        self.operation.action_create_delivery = "manual_after_receipt"
+        self.warehouse.rma_out_replace_route_id = self.warehouse.rma_out_route_id
+        lot_a = self.env["stock.lot"].create(
+            {"name": "lot-a", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_a
+        )
+        lot_b = self.env["stock.lot"].create(
+            {"name": "lot-b", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_b
+        )
+        # create picking
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_a.id), (self.product.id, 1, lot_b.id)]
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+        # create rms
+        rma_lot_a, rma_lot_b = self._create_rmas(picking, lot_a, lot_b)
+        reception_picking = rma_lot_a.reception_move_id.picking_id
+        reception_picking.button_validate()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_a.state, "received")
+        self.assertEqual(rma_lot_b.state, "received")
+        res = rma_lot_a.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.lot_id = lot_a
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_a.state, "waiting_replacement")
+        delivery_picking_a = rma_lot_a.delivery_move_ids.picking_id
+        self.assertEqual(delivery_picking_a.state, "assigned")
+        delivery_picking_a.button_validate()
+        self.assertEqual(delivery_picking_a.state, "done")
+        # Move lot_b to rma_location
+        picking_lot_b_transfer = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner.id,
+                "picking_type_id": self.warehouse.in_type_id.id,
+                "location_id": lot_b.location_id.id,
+                "location_dest_id": self.rma_location.id,
+                "move_ids": [
+                    Command.create(
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom_qty": 1,
+                            "product_uom": self.product.uom_id.id,
+                            "location_id": lot_b.location_id.id,
+                            "location_dest_id": self.rma_location.id,
+                            "restrict_lot_id": lot_b.id,
+                        },
+                    )
+                ],
+            }
+        )
+        picking_lot_b_transfer.action_confirm()
+        picking_lot_b_transfer.button_validate()
+        self.assertEqual(picking_lot_b_transfer.state, "done")
+        self.assertEqual(lot_b.location_id, self.rma_location)
+        # replace rma_b (RMA/WH) with same lot
+        res = rma_lot_b.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.lot_id = lot_a
+        wizard = wizard_form.save()
+        with self.assertRaisesRegex(
+            UserError,
+            "The serial number lot-a is not available",
+        ):
+            wizard.action_deliver()
+        wizard.lot_id = lot_b
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_b.state, "waiting_replacement")
+
+    def test_replace_lot_qty_check_02(self):
+        self.product.tracking = "serial"
+        self.operation.action_create_delivery = "manual_after_receipt"
+        self.warehouse.rma_out_replace_route_id = self.warehouse.rma_out_route_id
+        lot_a = self.env["stock.lot"].create(
+            {"name": "lot-a", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_a
+        )
+        lot_b = self.env["stock.lot"].create(
+            {"name": "lot-b", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_b
+        )
+        # create picking
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_a.id), (self.product.id, 1, lot_b.id)]
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        # create rms
+        rma_lot_a, rma_lot_b = self._create_rmas(picking, lot_a, lot_b)
+        reception_picking = rma_lot_a.reception_move_id.picking_id
+        reception_picking.button_validate()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_a.state, "received")
+        self.assertEqual(rma_lot_b.state, "received")
+        res = rma_lot_a.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.lot_id = lot_a
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_a.state, "waiting_replacement")
+        delivery_picking_a = rma_lot_a.delivery_move_ids.picking_id
+        self.assertEqual(delivery_picking_a.state, "assigned")
+        delivery_picking_a.button_validate()
+        self.assertEqual(delivery_picking_a.state, "done")
+        # Create lot_c
+        lot_c = self.env["stock.lot"].create(
+            {"name": "lot-c", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_c
+        )
+        # replace rma_c (WH/Stock) with same lot
+        res = rma_lot_b.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.lot_id = lot_a
+        wizard = wizard_form.save()
+        with self.assertRaisesRegex(
+            UserError,
+            "The serial number lot-a is not available",
+        ):
+            wizard.action_deliver()
+        wizard.lot_id = lot_c
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_b.state, "waiting_replacement")
+
+    def test_return_lot_qty_check(self):
+        self.product.tracking = "serial"
+        self.operation.action_create_delivery = "manual_after_receipt"
+        lot_a = self.env["stock.lot"].create(
+            {"name": "lot-a", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_a
+        )
+        lot_b = self.env["stock.lot"].create(
+            {"name": "lot-b", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_b
+        )
+        # create picking
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_a.id), (self.product.id, 1, lot_b.id)]
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        # create rms
+        rma_lot_a, rma_lot_b = self._create_rmas(picking, lot_a, lot_b)
+        reception_picking = rma_lot_a.reception_move_id.picking_id
+        reception_picking.button_validate()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_a.state, "received")
+        self.assertEqual(rma_lot_b.state, "received")
+        # return rma_a
+        res = rma_lot_a.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_a.state, "waiting_return")
+        delivery_picking_a = rma_lot_a.delivery_move_ids.picking_id
+        self.assertEqual(delivery_picking_a.state, "assigned")
+        delivery_picking_a.button_validate()
+        self.assertEqual(delivery_picking_a.state, "done")
+        # return rma_b with same lot
+        rma_lot_b.lot_id = lot_a
+        res = rma_lot_b.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        with self.assertRaisesRegex(
+            UserError,
+            "The serial number lot-a is not available",
+        ):
+            wizard.action_deliver()
+        rma_lot_b.lot_id = lot_b
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_b.state, "waiting_return")
