@@ -2,21 +2,59 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command, api, fields, models
+from odoo.tools import float_compare
 
 
 class Rma(models.Model):
     _inherit = "rma"
 
+    domain_lot_id = fields.Binary(compute="_compute_domain_lot_id")
     lot_id = fields.Many2one(
         comodel_name="stock.lot",
         string="Lot/Serial Number",
-        domain="[('product_id', '=?', product_id)]",
+        domain="domain_lot_id",
         compute="_compute_lot_id",
         store=True,
         readonly=False,
     )
     product_tracking = fields.Selection(related="product_id.tracking")
     lots_visible = fields.Boolean(compute="_compute_lots_visible")
+
+    def _domain_lot_id_quant_domain(self):
+        """This method defines the domain that will be used to obtain the appropriate
+        stock.quant values and is useful for extending to other modules.
+        """
+        self.ensure_one()
+        return [
+            ("product_id", "=", self.product_id.id),
+            ("quantity", ">=", self.product_uom_qty),
+            ("lot_id", "!=", False),
+            ("location_id.usage", "=", "internal"),
+            ("location_id.warehouse_id", "=", self.warehouse_id.id),
+        ]
+
+    @api.depends("product_id", "product_uom_qty", "warehouse_id")
+    def _compute_domain_lot_id(self):
+        dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        for rec in self:
+            domain = []
+            if rec.product_id and rec.product_tracking != "none":
+                # Only available lots should be displayed. In pickings, the
+                # corresponding stock.quant record is selected directly, so we
+                # use the same filters that are used.
+                quants = self.env["stock.quant"].search(
+                    rec._domain_lot_id_quant_domain()
+                )
+                available_quants = quants.filtered(
+                    lambda x, qty=rec.product_uom_qty: float_compare(
+                        x.available_quantity,
+                        qty,
+                        precision_digits=dp,
+                    )
+                    >= 0
+                )
+                domain = [("id", "in", available_quants.mapped("lot_id").ids)]
+            rec.domain_lot_id = domain
 
     @api.depends("product_id.tracking")
     def _compute_lots_visible(self):
