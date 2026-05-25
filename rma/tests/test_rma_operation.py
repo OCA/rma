@@ -133,7 +133,7 @@ class TestRmaOperation(TestRma):
         self.assertEqual(rma.state, "waiting_replacement")
         self.assertFalse(rma.can_be_returned)
         self.assertFalse(rma.show_create_return)
-        self.assertTrue(rma.can_be_replaced)
+        self.assertFalse(rma.can_be_replaced)
         self.assertFalse(rma.show_create_replace)
 
     def test_07(self):

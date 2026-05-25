@@ -477,12 +477,7 @@ class Rma(models.Model):
             r.can_be_replaced = (
                 r.operation_id.action_create_delivery
                 in ("manual_after_receipt", "automatic_after_receipt")
-                and r.state
-                in [
-                    "received",
-                    "waiting_replacement",
-                    "replaced",
-                ]
+                and r.state == "received"
             ) or (
                 r.operation_id.action_create_delivery
                 in ("manual_on_confirm", "automatic_on_confirm")
