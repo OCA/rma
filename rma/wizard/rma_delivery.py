@@ -10,6 +10,10 @@ class RmaReDeliveryWizard(models.TransientModel):
     _description = "RMA Delivery Wizard"
 
     rma_count = fields.Integer()
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+    )
     type = fields.Selection(
         selection=[("replace", "Replace"), ("return", "Return to customer")],
         required=True,
@@ -28,6 +32,7 @@ class RmaReDeliveryWizard(models.TransientModel):
         comodel_name="stock.warehouse",
         string="Warehouse",
         required=True,
+        domain="[('company_id', '=', company_id)]",
     )
     uom_category_id = fields.Many2one(related="product_id.uom_id.category_id")
     rma_return_grouping = fields.Boolean(
@@ -61,6 +66,7 @@ class RmaReDeliveryWizard(models.TransientModel):
             product_uom_qty = rma.remaining_qty
         res.update(
             rma_count=len(rma),
+            company_id=rma[0].company_id.id,
             warehouse_id=warehouse_id,
             type=delivery_type,
             product_id=product_id,
