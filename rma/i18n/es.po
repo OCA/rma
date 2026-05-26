@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-09 08:07+0000\n"
-"PO-Revision-Date: 2026-05-12 09:45+0000\n"
+"PO-Revision-Date: 2026-05-26 10:46+0000\n"
 "Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -1866,12 +1866,12 @@ msgstr "RMA en estado borrador"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_replace_route_id
 msgid "RMA out Replace Route"
-msgstr ""
+msgstr "Ruta de reemplazo de RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma_out_route_id
 msgid "RMA out Route"
-msgstr ""
+msgstr "Ruta de salida de RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_stock_move__rma_receiver_ids
