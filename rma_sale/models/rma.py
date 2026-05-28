@@ -134,11 +134,19 @@ class Rma(models.Model):
         return res
 
     def _prepare_refund_vals(self, origin=False):
-        """Inject salesman from sales order (if any)"""
+        """Inject fiscal_position_id + salesman from sales order (if any)"""
         vals = super()._prepare_refund_vals(origin=origin)
         order = self.sudo().order_id
         if order:
             vals["invoice_user_id"] = order.user_id.id
+            # It is important to set the correct fiscal position for the sales order
+            # when creating the invoice, just as it is done in sale
+            vals["fiscal_position_id"] = (
+                order.fiscal_position_id
+                or order.fiscal_position_id._get_fiscal_position(
+                    self.partner_invoice_id
+                )
+            ).id
         return vals
 
     def _prepare_refund_line_vals(self):
