@@ -614,6 +614,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__company_id
+#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__company_id
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__company_id
 #: model:ir.model.fields,field_description:rma.field_rma_team__company_id
 msgid "Company"
