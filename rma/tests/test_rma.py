@@ -338,6 +338,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.state, "confirmed")
 
     def test_confirm_and_receive_and_return(self):
+        self.company.rma_new_rma_button_from_rma = True
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")

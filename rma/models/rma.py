@@ -705,6 +705,7 @@ class Rma(models.Model):
     # Action methods
     def action_create_rma(self):
         self.ensure_one()
+        self._ensure_can_be_new_rma()
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "rma.rma_create_rma_action"
         )
@@ -1093,6 +1094,15 @@ class Rma(models.Model):
                 desc += f"\n{field_record.field_description}"
             if desc:
                 raise ValidationError(self.env._("Required field(s):%s") % desc)
+
+    def _ensure_can_be_new_rma(self):
+        if len(self) == 1:
+            if not self.can_be_new_rma:
+                raise ValidationError(self.env._("This RMA cannot perform a new RMA."))
+        elif not self.filtered("can_be_new_rma"):
+            raise ValidationError(
+                self.env._("None of the selected RMAs can perform a new RMA.")
+            )
 
     def _ensure_can_be_returned(self):
         """This method is intended to be invoked after user click on
