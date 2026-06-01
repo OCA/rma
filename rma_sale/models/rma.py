@@ -137,6 +137,9 @@ class Rma(models.Model):
         """Inject fiscal_position_id + salesman from sales order (if any)"""
         vals = super()._prepare_refund_vals(origin=origin)
         order = self.sudo().order_id
+        if not order and self.move_id.rma_id:
+            # We use the RMA from which it was created
+            order = self.move_id.rma_id.sudo().order_id
         if order:
             vals["invoice_user_id"] = order.user_id.id
             # It is important to set the correct fiscal position for the sales order
@@ -156,6 +159,9 @@ class Rma(models.Model):
         """
         vals = super()._prepare_refund_line_vals()
         line = self.sudo().sale_line_id
+        if not line and self.move_id.rma_id:
+            # We use the RMA from which it was created
+            line = self.move_id.rma_id.sudo().sale_line_id
         if line:
             vals["product_id"] = line.product_id.id
             vals["price_unit"] = line.price_unit

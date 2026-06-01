@@ -143,6 +143,46 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(len(self.sale_order.order_line), 1)
 
     @mute_logger("odoo.models.unlink")
+    def test_rma_rma_refund_from_so(self):
+        self.operation.action_create_delivery = "manual_after_receipt"
+        self.operation.action_create_refund = "manual_after_receipt"
+        self.company.rma_new_rma_button_from_rma = True
+        order = self.sale_order
+        order.user_id = self.user_rma
+        wizard = self._rma_sale_wizard(order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertEqual(rma.order_id, order)
+        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma.state, "received")
+        res = rma.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        picking = rma.delivery_move_ids.picking_id
+        picking.move_ids.quantity = rma.product_uom_qty
+        picking.button_validate()
+        self.assertEqual(rma.state, "returned")
+        self.assertTrue(rma.can_be_new_rma)
+        res = rma.action_create_rma()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        rma_extra = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertFalse(rma_extra.order_id)
+        rma_extra.reception_move_id.quantity = rma_extra.product_uom_qty
+        rma_extra.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma_extra.state, "received")
+        rma_extra.action_refund()
+        self.assertEqual(rma_extra.state, "refunded")
+        self.assertTrue(rma_extra.refund_line_id.sale_line_ids)
+        self.assertEqual(rma_extra.refund_id.invoice_user_id, self.user_rma)
+        self.assertFalse(rma_extra.can_be_new_rma)
+        with self.assertRaisesRegex(
+            ValidationError, "This RMA cannot perform a new RMA."
+        ):
+            rma_extra.action_create_rma()
+
+    @mute_logger("odoo.models.unlink")
     def test_create_rma_from_so(self):
         self.operation.action_create_refund = "manual_after_receipt"
         order = self.sale_order
