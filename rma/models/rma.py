@@ -991,6 +991,7 @@ class Rma(models.Model):
     def action_cancel(self):
         """Invoked when 'Cancel' button in rma form view is clicked."""
         self.reception_move_id._action_cancel()
+        self.delivery_move_ids._action_cancel()
         self.write({"state": "cancelled"})
 
     def action_draft(self):
