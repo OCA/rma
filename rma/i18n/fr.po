@@ -1338,6 +1338,12 @@ msgstr "Type d'activité suivante"
 #. module: rma
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
+msgid "None of the selected RMAs can perform a new RMA."
+msgstr ""
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
 msgid "None of the selected RMAs can perform a replacement."
 msgstr "Aucun des RMA sélectionnés ne peut effectuer un remplacement."
 
@@ -2302,6 +2308,12 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 msgid "This RMA cannot be split."
 msgstr "La RMA ne peut pas être divisée."
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
+msgid "This RMA cannot perform a new RMA."
+msgstr ""
 
 #. module: rma
 #. odoo-python

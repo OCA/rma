@@ -1454,6 +1454,12 @@ msgstr "Nächster Aktivitätstyp"
 #. module: rma
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
+msgid "None of the selected RMAs can perform a new RMA."
+msgstr ""
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
 msgid "None of the selected RMAs can perform a replacement."
 msgstr ""
 "Keiner der ausgewählten Reklamationen kann einen Austausch durchführen."
@@ -2448,6 +2454,12 @@ msgstr ""
 #: code:addons/rma/models/rma.py:0
 msgid "This RMA cannot be split."
 msgstr "Diese Reklamation kann nicht aufgeteilt werden."
+
+#. module: rma
+#. odoo-python
+#: code:addons/rma/models/rma.py:0
+msgid "This RMA cannot perform a new RMA."
+msgstr ""
 
 #. module: rma
 #. odoo-python
