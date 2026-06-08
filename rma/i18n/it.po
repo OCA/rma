@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-13 09:45+0000\n"
+"PO-Revision-Date: 2026-06-08 16:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1444,7 +1444,7 @@ msgstr "Tipo prossima attività"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "None of the selected RMAs can perform a new RMA."
-msgstr ""
+msgstr "Nessuna delle RMA selezionate può generare una nuova RMA."
 
 #. module: rma
 #. odoo-python
@@ -2441,7 +2441,7 @@ msgstr "Questa RMA non può essere divisa."
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "This RMA cannot perform a new RMA."
-msgstr ""
+msgstr "Questa RMA non può eseguire una nuova RMA."
 
 #. module: rma
 #. odoo-python
