@@ -123,6 +123,23 @@ class StockMove(models.Model):
             res["rma_id"] = self.rma_id.id
         return res
 
+    def _get_new_picking_values(self):
+        # For reception pickings created from an RMA, if the RMA is linked to a
+        # picking_id, we don't want to lose the stock information from the return
+        # pick (Return of WH/OUT/001)
+        values = super()._get_new_picking_values()
+        if self.rma_receiver_ids and all(
+            rma.picking_id for rma in self.rma_receiver_ids
+        ):
+            origin = values["origin"]
+            pickings = self.rma_receiver_ids.picking_id
+            picking_name = self and ", ".join(pickings.mapped("name"))
+            new_origin = "{} ({})".format(
+                origin, self.env._("Return of %s") % picking_name
+            )
+            values["origin"] = new_origin
+        return values
+
 
 class StockRule(models.Model):
     _inherit = "stock.rule"

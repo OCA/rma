@@ -439,6 +439,8 @@ class TestRmaCase(TestRma):
         rma = self._create_confirm_receive(
             self.partner, self.product, 10, self.rma_loc, self.operation_refund
         )
+        reception_picking = rma.reception_move_id.picking_id
+        self.assertEqual(reception_picking.origin, rma.name)
         self.assertEqual(rma.state, "received")
         self.assertTrue(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
@@ -858,8 +860,12 @@ class TestRmaCase(TestRma):
         rma_form.operation_id = self.operation
         rma = rma_form.save()
         rma.action_confirm()
+        reception_picking = rma.reception_move_id.picking_id
+        self.assertEqual(
+            reception_picking.origin, f"{rma.name} (Return of {origin_delivery.name})"
+        )
         rma.reception_move_id.quantity = 10
-        rma.reception_move_id.picking_id.button_validate()
+        reception_picking.button_validate()
         # Return quantity 4 of the same product to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
