@@ -147,8 +147,13 @@ class TestRmaSale(TestRmaSaleBase):
         self.operation.action_create_delivery = "manual_after_receipt"
         self.operation.action_create_refund = "manual_after_receipt"
         self.company.rma_new_rma_button_from_rma = True
+        self.product_1.invoice_policy = "delivery"
         order = self.sale_order
         order.user_id = self.user_rma
+        order._create_invoices()
+        self.assertEqual(order.invoice_status, "invoiced")
+        self.assertEqual(self.order_line.qty_delivered, 5)
+        self.assertEqual(self.order_line.qty_invoiced, 5)
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.order_id, order)
@@ -183,9 +188,14 @@ class TestRmaSale(TestRmaSaleBase):
             rma_extra.action_create_rma()
 
     @mute_logger("odoo.models.unlink")
-    def test_create_rma_from_so(self):
+    def test_create_rma_from_so_with_invoice(self):
         self.operation.action_create_refund = "manual_after_receipt"
+        self.product_1.invoice_policy = "delivery"
         order = self.sale_order
+        order._create_invoices()
+        self.assertEqual(order.invoice_status, "invoiced")
+        self.assertEqual(self.order_line.qty_delivered, 5)
+        self.assertEqual(self.order_line.qty_invoiced, 5)
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.partner_id, order.partner_id)
@@ -213,17 +223,61 @@ class TestRmaSale(TestRmaSaleBase):
         # Refund the RMA
         rma.action_refund()
         self.assertEqual(self.order_line.qty_delivered, 0)
-        self.assertEqual(self.order_line.qty_invoiced, -5)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
         self.assertEqual(rma.refund_id.user_id, user)
         self.assertEqual(rma.refund_id.invoice_line_ids.sale_line_ids, self.order_line)
+        self.assertEqual(order.invoice_status, "no")
         # Cancel the refund
         rma.refund_id.button_cancel()
         self.assertEqual(self.order_line.qty_delivered, 5)
-        self.assertEqual(self.order_line.qty_invoiced, 0)
+        self.assertEqual(self.order_line.qty_invoiced, 5)
+        self.assertEqual(order.invoice_status, "invoiced")
         # And put it to draft again
         rma.refund_id.button_draft()
         self.assertEqual(self.order_line.qty_delivered, 0)
-        self.assertEqual(self.order_line.qty_invoiced, -5)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
+        self.assertEqual(order.invoice_status, "no")
+        self.assertEqual(rma.state, "refunded")
+
+    @mute_logger("odoo.models.unlink")
+    def test_create_rma_from_so_without_invoice(self):
+        self.operation.action_create_refund = "manual_after_receipt"
+        self.product_1.invoice_policy = "delivery"
+        order = self.sale_order
+        self.assertEqual(order.invoice_status, "to invoice")
+        self.assertEqual(self.order_line.qty_delivered, 5)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
+        wizard = self._rma_sale_wizard(order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertEqual(rma.partner_id, order.partner_id)
+        self.assertEqual(rma.order_id, order)
+        self.assertEqual(rma.picking_id, self.order_out_picking)
+        self.assertEqual(rma.move_id, self.order_out_picking.move_ids)
+        self.assertEqual(rma.product_id, self.product_1)
+        self.assertEqual(rma.product_uom_qty, self.order_line.product_uom_qty)
+        self.assertEqual(rma.product_uom, self.order_line.product_uom)
+        self.assertEqual(rma.state, "confirmed")
+        self.assertEqual(
+            rma.reception_move_id.origin_returned_move_id,
+            self.order_out_picking.move_ids,
+        )
+        self.assertEqual(
+            rma.reception_move_id.picking_id + self.order_out_picking,
+            order.picking_ids,
+        )
+        user = new_test_user(self.env, login="test_refund_with_so")
+        order.user_id = user.id
+        # Receive the RMA
+        rma.action_confirm()
+        rma.reception_move_id.quantity = rma.product_uom_qty
+        rma.reception_move_id.picking_id.button_validate()
+        # Refund the RMA
+        rma.action_refund()
+        self.assertEqual(self.order_line.qty_delivered, 0)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
+        self.assertFalse(rma.refund_id)
+        self.assertEqual(order.invoice_status, "no")
+        self.assertEqual(rma.state, "refunded")
 
     @users("partner@rma")
     def test_create_rma_from_so_portal_user(self):

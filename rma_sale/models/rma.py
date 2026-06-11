@@ -127,10 +127,23 @@ class Rma(models.Model):
 
         NOTE: The refund line is linked to the SO line in `_prepare_refund_line`.
         """
+        _self = self
+        # Do not generate a refund invoice if the sales line has not yet been invoiced
+        # or if it is an RMA created from another RMA with the same condition
+        not_refundable = self.filtered(
+            lambda x: (x.sale_line_id and not x.sale_line_id.invoice_lines)
+            or (
+                x.move_id.rma_id.sale_line_id
+                and not x.move_id.rma_id.sale_line_id.invoice_lines
+            )
+        )
+        self -= not_refundable
         res = super().action_refund()
-        for rma in self:
+        for rma in _self:
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
+        # These RMAs should be set to this state anyway
+        not_refundable.state = "refunded"
         return res
 
     def _prepare_refund_vals(self, origin=False):
