@@ -178,7 +178,7 @@ class Rma(models.Model):
             ("received", "Received"),
             ("waiting_return", "Waiting for return"),
             ("waiting_replacement", "Waiting for replacement"),
-            ("refunded", "Refunded"),
+            ("refunded", "Refunded/Not invoiceable"),
             ("returned", "Returned"),
             ("replaced", "Replaced"),
             ("finished", "Finished"),
