@@ -1987,8 +1987,8 @@ msgstr "Dirección de facturación de este RMA."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
-msgstr "Reembolsado"
+msgid "Refunded/Not invoiceable"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2687,6 +2687,9 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Su RMA se ha creado con éxito (Ref {{object.name "
 "or 'n/a' }})"
+
+#~ msgid "Refunded"
+#~ msgstr "Reembolsado"
 
 #~ msgid "Finish RMAs manually"
 #~ msgstr "Finalizar RMAs manualmente"

@@ -1849,8 +1849,8 @@ msgstr "Endereço de reembolso para o RMA atual."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
-msgstr "Restituído"
+msgid "Refunded/Not invoiceable"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2519,6 +2519,9 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
+
+#~ msgid "Refunded"
+#~ msgstr "Restituído"
 
 #~ msgid "<strong>Delivered qty:</strong>"
 #~ msgstr "<strong>Quantidade Enviada:</strong>"

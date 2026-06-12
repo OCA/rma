@@ -1843,8 +1843,8 @@ msgstr "Adresă ramburs pentru cererea curentă."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
-msgstr "Rambursat"
+msgid "Refunded/Not invoiceable"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2501,6 +2501,9 @@ msgid ""
 "{{object.company_id.name}} Your RMA has been succesfully created (Ref "
 "{{object.name or 'n/a' }})"
 msgstr ""
+
+#~ msgid "Refunded"
+#~ msgstr "Rambursat"
 
 #~ msgid ""
 #~ "<i class=\"fa fa-fw fa-check\"/>\n"

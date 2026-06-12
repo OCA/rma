@@ -1824,7 +1824,7 @@ msgstr ""
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
+msgid "Refunded/Not invoiceable"
 msgstr ""
 
 #. module: rma

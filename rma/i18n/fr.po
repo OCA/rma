@@ -1869,8 +1869,8 @@ msgstr "Adresse de remboursement pour cet RMA."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
-msgstr "Remboursé"
+msgid "Refunded/Not invoiceable"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2560,6 +2560,9 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Votre RMA a été crée avec succès(Ref "
 "{{object.name or 'n/a' }})"
+
+#~ msgid "Refunded"
+#~ msgstr "Remboursé"
 
 #~ msgid "Finish RMAs manually"
 #~ msgstr "Terminer RMA manuellement"

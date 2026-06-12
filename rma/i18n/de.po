@@ -1999,8 +1999,8 @@ msgstr "Rückerstattungsadresse für aktuelle Reklamation."
 
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
-msgid "Refunded"
-msgstr "Erstattet"
+msgid "Refunded/Not invoiceable"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2717,6 +2717,9 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Ihre Reklamation wurde erfolgreich erstellt (Ref "
 "{{object.name or 'n/a' }})"
+
+#~ msgid "Refunded"
+#~ msgstr "Erstattet"
 
 #~ msgid "Finish RMAs manually"
 #~ msgstr "Schließen Sie RMAs manuell ab"
