@@ -2092,6 +2092,12 @@ msgid "Return Product"
 msgstr "Producto devuelto"
 
 #. module: rma
+#. odoo-python
+#: code:addons/rma/models/stock_move.py:0
+msgid "Return of %s"
+msgstr ""
+
+#. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
 #: model:ir.model.fields.selection,name:rma.selection__rma_delivery_wizard__type__return
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
