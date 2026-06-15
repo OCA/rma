@@ -108,18 +108,8 @@ class SaleOrderLine(models.Model):
 
     def get_delivery_move(self):
         self.ensure_one()
-        return self.move_ids.filtered(
-            lambda r: (
-                self == r.sale_line_id
-                and r.state == "done"
-                and not r.scrapped
-                and r._is_outgoing()
-                and (
-                    not r.origin_returned_move_id
-                    or (r.origin_returned_move_id and r.to_refund)
-                )
-            )
-        )
+        outgoing_moves, _incoming_moves = self._get_outgoing_incoming_moves()
+        return outgoing_moves.filtered(lambda x: x.state == "done")
 
     def prepare_sale_rma_data(self):
         self.ensure_one()
