@@ -142,6 +142,9 @@ class Rma(models.Model):
         for rma in _self:
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
+            elif not rma.sale_line_id and rma.move_id.rma_id.sudo().sale_line_id:
+                # If there is no sales line, we must apply it to the original RMA
+                rma.move_id.rma_id._link_refund_with_reception_move()
         # These RMAs should be set to this state anyway
         not_refundable.state = "refunded"
         return res
