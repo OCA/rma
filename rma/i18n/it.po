@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-08 16:46+0000\n"
+"PO-Revision-Date: 2026-06-17 21:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1986,7 +1986,7 @@ msgstr "Indirizzo di rimborso per questa RMA."
 #. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__refunded
 msgid "Refunded/Not invoiceable"
-msgstr ""
+msgstr "Rimborsato/Non fatturabile"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
@@ -2093,7 +2093,7 @@ msgstr "Prodotto reso"
 #. odoo-python
 #: code:addons/rma/models/stock_move.py:0
 msgid "Return of %s"
-msgstr ""
+msgstr "Reso di %s"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_delivery_wizard_action
