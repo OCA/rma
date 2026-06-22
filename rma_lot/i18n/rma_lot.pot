@@ -39,6 +39,7 @@ msgid ""
 msgstr ""
 
 #. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_my_rmas_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
@@ -48,6 +49,7 @@ msgstr ""
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__lot_id
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_my_rmas_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Lot/Serial Number"
@@ -79,6 +81,7 @@ msgid "Return Picking Line"
 msgstr ""
 
 #. module: rma_lot
+#: model_terms:ir.ui.view,arch_db:rma_lot.portal_my_rmas_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_rma_page_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_form_view
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
