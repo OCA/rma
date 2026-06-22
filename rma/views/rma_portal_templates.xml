@@ -44,18 +44,18 @@
             <t t-if="rmas" t-call="portal.portal_table">
                 <thead>
                     <tr class="active">
-                        <th>RMA #</th>
-                        <th class='d-none d-md-table-cell'>Date</th>
+                        <th name="th_name">RMA #</th>
+                        <th name="th_date" class='d-none d-md-table-cell'>Date</th>
                         <th name="th_product">Product</th>
-                        <th class='text-right'>Quantity</th>
+                        <th name="th_product_uom_qty" class='text-right'>Quantity</th>
                         <th name="th_operation_id">Requested operation</th>
-                        <th class='d-none d-md-table-cell'>Status</th>
+                        <th name="th_state" class='d-none d-md-table-cell'>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="rmas" t-as="rma">
                         <tr>
-                            <td>
+                            <td name="td_name">
                                 <a
                                     t-att-href="rma.get_portal_url()"
                                     t-att-title="rma.name"
@@ -63,20 +63,23 @@
                                     <t t-esc="rma.name" />
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td name="td_date" class="d-none d-md-table-cell">
                                 <span t-field="rma.date" />
                             </td>
                             <!-- Portal users don't have access to unpublished products -->
                             <td name="td_product">
                                 <span t-esc="rma.sudo().product_id.display_name" />
                             </td>
-                            <td class='text-right'>
+                            <td name="td_product_uom_qty" class='text-right'>
                                 <span t-field="rma.product_uom_qty" />
                             </td>
                             <td name="td_operation_id">
                                 <span t-field="rma.operation_id" />
                             </td>
-                            <td class="d-none d-md-table-cell tx_status">
+                            <td
+                                name="td_state"
+                                class="d-none d-md-table-cell tx_status"
+                            >
                                 <span class="badge rounded-pill text-bg-info">
                                     <span t-field="rma.state" />
                                 </span>
