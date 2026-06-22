@@ -48,6 +48,7 @@
                         <th class='d-none d-md-table-cell'>Date</th>
                         <th name="th_product">Product</th>
                         <th class='text-right'>Quantity</th>
+                        <th name="th_operation_id">Requested operation</th>
                         <th class='d-none d-md-table-cell'>Status</th>
                     </tr>
                 </thead>
@@ -71,6 +72,9 @@
                             </td>
                             <td class='text-right'>
                                 <span t-field="rma.product_uom_qty" />
+                            </td>
+                            <td name="td_operation_id">
+                                <span t-field="rma.operation_id" />
                             </td>
                             <td class="d-none d-md-table-cell tx_status">
                                 <span class="badge rounded-pill text-bg-info">
@@ -284,6 +288,14 @@
                             </div>
                             <div class="col-12 col-sm-8">
                                 <span t-field="rma.origin" />
+                            </div>
+                        </div>
+                        <div t-if="rma.operation_id" class="row mb-2 mb-sm-1">
+                            <div class="col-12 col-sm-4">
+                                <strong>Requested operation</strong>
+                            </div>
+                            <div class="col-12 col-sm-8">
+                                <span t-field="rma.operation_id" />
                             </div>
                         </div>
                     </div>
