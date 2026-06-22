@@ -5,7 +5,7 @@
     "name": "Rma Lot",
     "summary": """
         Manage lot in RMA""",
-    "version": "18.0.1.3.1",
+    "version": "18.0.1.4.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
