@@ -1,4 +1,28 @@
 <odoo>
+    <template id="portal_my_rmas_lot" inherit_id="rma.portal_my_rmas">
+        <th name="th_product" position="after">
+            <th name="th_lot_id">
+                <t
+                    t-if="rmas and all(rma.product_id.tracking=='serial' for rma in rmas)"
+                >
+                    Serial Number
+                </t>
+                <t
+                    t-elif="rmas and all(rma.product_id.tracking=='lot' for rma in rmas)"
+                >
+                    Lot
+                </t>
+                <t t-else="">
+                    Lot/Serial Number
+                </t>
+            </th>
+        </th>
+        <td name="td_product" position="after">
+            <td name="td_lot_id">
+                <span t-field="rma.lot_id" />
+            </td>
+        </td>
+    </template>
     <template id="portal_rma_page_lot" inherit_id="rma.portal_rma_page">
         <xpath expr="//div[@t-if='rma.product_uom_qty']" position="before">
             <div t-if="rma.lot_id" class="row mb-2 mb-sm-1">
