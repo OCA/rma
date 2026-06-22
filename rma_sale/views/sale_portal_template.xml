@@ -277,16 +277,6 @@
                 </div>
             </div>
         </xpath>
-        <xpath expr="//div[@t-if='rma.origin']" position="after">
-            <div t-if="rma.operation_id" class="row mb-2 mb-sm-1">
-                <div class="col-12 col-sm-4">
-                    <strong>Requested operation</strong>
-                </div>
-                <div class="col-12 col-sm-8">
-                    <span t-field="rma.operation_id" />
-                </div>
-            </div>
-        </xpath>
     </template>
     <!-- Request RMA single view. When the website is installed, we can customize it adding blocks -->
     <template id="request_rma_single_page" name="Request RMA (single page)">
