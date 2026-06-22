@@ -288,7 +288,12 @@
                     <strong>Sale order</strong>
                 </div>
                 <div class="col-12 col-sm-8">
-                    <span t-field="rma.order_id" />
+                    <a
+                        t-att-href="rma.order_id.get_portal_url()"
+                        t-att-title="rma.order_id.name"
+                    >
+                        <span t-field="rma.order_id" />
+                    </a>
                 </div>
             </div>
         </xpath>
