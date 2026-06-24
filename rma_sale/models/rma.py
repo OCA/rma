@@ -47,6 +47,28 @@ class Rma(models.Model):
     )
     # Add index to this field, as we perform a search on it
     refund_id = fields.Many2one(index=True)
+    can_be_refunded_with_invoice = fields.Boolean(
+        compute="_compute_can_be_refunded_with_invoice"
+    )
+
+    @api.depends(
+        "can_be_refunded",
+        "sale_line_id",
+        "sale_line_id.invoice_lines",
+        "move_id",
+        "move_id.rma_id",
+        "move_id.rma_id.sale_line_id",
+        "move_id.rma_id.sale_line_id.invoice_lines",
+    )
+    def _compute_can_be_refunded_with_invoice(self):
+        for rec in self:
+            rec.can_be_refunded_with_invoice = bool(
+                rec.can_be_refunded
+                and (
+                    rec.sale_line_id.invoice_lines
+                    or rec.move_id.rma_id.sale_line_id.invoice_lines
+                )
+            )
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
@@ -120,33 +142,24 @@ class Rma(models.Model):
         self.reception_move_id.sale_line_id = False
         self.reception_move_id.to_refund = False
 
-    def action_refund(self):
+    def action_refund_without_invoice(self):
+        for record in self.filtered("can_be_refunded"):
+            record._action_refund_after_hook()
+
+    def _action_refund_after_hook(self):
         """As we have made a refund, the return move + the refund should be linked to
         the source sales order line, to decrease both the delivered and invoiced
         quantity.
 
         NOTE: The refund line is linked to the SO line in `_prepare_refund_line`.
         """
-        _self = self
-        # Do not generate a refund invoice if the sales line has not yet been invoiced
-        # or if it is an RMA created from another RMA with the same condition
-        not_refundable = self.filtered(
-            lambda x: (x.sale_line_id and not x.sale_line_id.invoice_lines)
-            or (
-                x.move_id.rma_id.sale_line_id
-                and not x.move_id.rma_id.sale_line_id.invoice_lines
-            )
-        )
-        self -= not_refundable
-        res = super().action_refund()
-        for rma in _self:
+        res = super()._action_refund_after_hook()
+        for rma in self.filtered(lambda x: x.state == "refunded"):
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
             elif not rma.sale_line_id and rma.move_id.rma_id.sudo().sale_line_id:
                 # If there is no sales line, we must apply it to the original RMA
                 rma.move_id.rma_id._link_refund_with_reception_move()
-        # These RMAs should be set to this state anyway
-        not_refundable.state = "refunded"
         return res
 
     def _prepare_refund_vals(self, origin=False):

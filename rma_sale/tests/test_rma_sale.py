@@ -219,7 +219,7 @@ class TestRmaSale(TestRmaSaleBase):
         rma_extra.reception_move_id.quantity = rma_extra.product_uom_qty
         rma_extra.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma_extra.state, "received")
-        rma_extra.action_refund()
+        rma_extra.action_refund_without_invoice()
         self.assertEqual(rma_extra.state, "refunded")
         self.assertFalse(rma_extra.refund_line_id)
         self.assertFalse(rma_extra.refund_id)
@@ -313,7 +313,7 @@ class TestRmaSale(TestRmaSaleBase):
         rma.reception_move_id.quantity = rma.product_uom_qty
         rma.reception_move_id.picking_id.button_validate()
         # Refund the RMA
-        rma.action_refund()
+        rma.action_refund_without_invoice()
         self.assertEqual(self.order_line.qty_delivered, 0)
         self.assertEqual(self.order_line.qty_invoiced, 0)
         self.assertFalse(rma.refund_id)

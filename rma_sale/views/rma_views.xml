@@ -7,6 +7,18 @@
         <field name="model">rma</field>
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
+            <button name="action_refund" position="attributes">
+                <attribute name="invisible">not can_be_refunded_with_invoice</attribute>
+            </button>
+            <button name="action_refund" position="after">
+                <button
+                    type="object"
+                    string="Mark To Refund"
+                    name="action_refund_without_invoice"
+                    invisible="not can_be_refunded"
+                    class="btn-primary"
+                />
+            </button>
             <field name="partner_invoice_id" position="after">
                 <field
                     name="order_id"
