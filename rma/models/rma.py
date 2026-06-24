@@ -911,9 +911,15 @@ class Rma(models.Model):
                     {
                         "refund_line_id": line.id,
                         "refund_id": refund.id,
-                        "state": "refunded",
                     }
                 )
+                line.rma_id._action_refund_after_hook()
+
+    def _action_refund_after_hook(self):
+        """This method sets the status to 'refunded' and allows you to add
+        more actions, such as for rma_sale.
+        """
+        self.state = "refunded"
 
     def action_replace(self):
         """Invoked when 'Replace' button in rma form view is clicked."""
