@@ -46,6 +46,7 @@
                     <tr class="active">
                         <th name="th_name">RMA #</th>
                         <th name="th_date" class='d-none d-md-table-cell'>Date</th>
+                        <th name="th_origin">Origin</th>
                         <th name="th_product">Product</th>
                         <th name="th_product_uom_qty" class='text-right'>Quantity</th>
                         <th name="th_operation_id">Requested operation</th>
@@ -65,6 +66,9 @@
                             </td>
                             <td name="td_date" class="d-none d-md-table-cell">
                                 <span t-field="rma.date" />
+                            </td>
+                            <td name="td_origin">
+                                <span t-field="rma.origin" />
                             </td>
                             <!-- Portal users don't have access to unpublished products -->
                             <td name="td_product">
