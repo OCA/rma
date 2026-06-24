@@ -266,6 +266,21 @@
             </span>
         </xpath>
     </template>
+    <template id="portal_my_rmas_sale" inherit_id="rma.portal_my_rmas">
+        <span t-field="rma.origin" position="before">
+            <t t-if="rma.order_id">
+                <a
+                    t-att-href="rma.order_id.get_portal_url()"
+                    t-att-title="rma.order_id.name"
+                >
+                    <span t-field="rma.order_id" />
+                </a>
+            </t>
+        </span>
+        <span t-field="rma.origin" position="attributes">
+            <attribute name="t-else">""</attribute>
+        </span>
+    </template>
     <template id="portal_rma_page" name="Show RMAs" inherit_id="rma.portal_rma_page">
         <xpath expr="//div[@t-if='rma.picking_id']" position="before">
             <div t-if="rma.order_id" class="row mb-2 mb-sm-1">
