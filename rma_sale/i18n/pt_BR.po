@@ -110,6 +110,11 @@ msgid "Allowed Quantity"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma__can_be_refunded_with_invoice
+msgid "Can Be Refunded With Invoice"
+msgstr ""
+
+#. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr "Cancelar"
@@ -263,6 +268,11 @@ msgstr "Última Atualização Feita em"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
 msgid "Lines"
 msgstr "Linhas"
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.rma_view_form
+msgid "Mark To Refund"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
