@@ -68,11 +68,6 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
-msgid "<strong>Requested operation</strong>"
-msgstr ""
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Sale order</strong>"
 msgstr ""
 
