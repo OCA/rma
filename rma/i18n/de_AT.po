@@ -321,6 +321,11 @@ msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Requested operation</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "<strong>Responsible:</strong>"
 msgstr ""
@@ -1366,6 +1371,11 @@ msgid "Orders"
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
+msgid "Origin"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__picking_id
 msgid "Origin Delivery"
 msgstr ""
@@ -1883,6 +1893,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma__operation_id
 #: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__operation_id
 #: model:ir.model.fields,field_description:rma.field_stock_return_picking__rma_operation_id
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Requested operation"
 msgstr ""
