@@ -75,11 +75,6 @@ msgstr "<span>Retur</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
-msgid "<strong>Requested operation</strong>"
-msgstr "<strong>Operație solicitată</strong>"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Sale order</strong>"
 msgstr "<strong>Comandă vânzare</strong>"
 
@@ -503,6 +498,9 @@ msgid ""
 msgstr ""
 "Sunteți pe cale să efectuați o solicitare de retur. Echipa noastră o va "
 "procesa odată ce va fi validată. Ține minte că:"
+
+#~ msgid "<strong>Requested operation</strong>"
+#~ msgstr "<strong>Operație solicitată</strong>"
 
 #~ msgid "&amp;times;"
 #~ msgstr "&amp;times;"

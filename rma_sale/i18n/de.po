@@ -74,11 +74,6 @@ msgstr "<span>Reklamation</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
-msgid "<strong>Requested operation</strong>"
-msgstr "<strong>Angeforderte Operation</strong>"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Sale order</strong>"
 msgstr "<strong>Verkaufsauftrag</strong>"
 
@@ -523,6 +518,9 @@ msgid ""
 msgstr ""
 "Sie sind dabei, eine Reklamations-Anfrage durchzuführen. Unser Team wird es "
 "bearbeiten und Sie erreichen, sobald es validiert ist. Denk daran, dass:"
+
+#~ msgid "<strong>Requested operation</strong>"
+#~ msgstr "<strong>Angeforderte Operation</strong>"
 
 #~ msgid "Show portal RMA request in a single page"
 #~ msgstr "RMA-Anfrage im Portal auf einer einzigen Seite anzeigen"

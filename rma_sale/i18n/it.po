@@ -73,11 +73,6 @@ msgstr "<span>RMA</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
-msgid "<strong>Requested operation</strong>"
-msgstr "<strong>Operazione richiesta</strong>"
-
-#. module: rma_sale
-#: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
 msgid "<strong>Sale order</strong>"
 msgstr "<strong>Ordine di vendita</strong>"
 
@@ -511,6 +506,9 @@ msgid ""
 msgstr ""
 "Stai per eseguire una richiesta RMA. Il nostro team lo elaborerà e ti "
 "arriverà una volta convalidato. Tieni presente che:"
+
+#~ msgid "<strong>Requested operation</strong>"
+#~ msgstr "<strong>Operazione richiesta</strong>"
 
 #~ msgid "Show portal RMA request in a single page"
 #~ msgstr "Mostra il portale della richiesta RMA in una singola pagina"
