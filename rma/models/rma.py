@@ -13,6 +13,7 @@ from markupsafe import Markup
 from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tools import html2plaintext
+from odoo.tools.misc import clean_context
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
 
@@ -859,6 +860,12 @@ class Rma(models.Model):
 
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
+        # It is important to "clear" the default_operation_id key from the context to
+        # prevent an attempt to set that value in the stock.move record that will be
+        # created for the operation_id field if mrp is installed.
+        self = self.with_context(  # pylint: disable=W8121
+            clean_context(self.env.context)
+        )
         self._ensure_required_fields()
         self = self.filtered(lambda rma: rma.state == "draft")
         if not self:
