@@ -199,6 +199,8 @@ class TestRmaSale(TestRmaSaleBase):
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.order_id, order)
+        rma_group = rma.procurement_group_id
+        self.assertEqual(rma_group.sale_id, order)
         rma.reception_move_id.quantity = rma.product_uom_qty
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.state, "received")
@@ -206,10 +208,13 @@ class TestRmaSale(TestRmaSaleBase):
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
         wizard = wizard_form.save()
         wizard.action_deliver()
+        self.assertNotEqual(rma.procurement_group_id, rma_group)
+        self.assertFalse(rma.procurement_group_id.sale_id)
         picking = rma.delivery_move_ids.picking_id
         picking.move_ids.quantity = rma.product_uom_qty
         picking.button_validate()
         self.assertEqual(rma.state, "returned")
+        self.assertEqual(len(order.order_line), 1)
         self.assertTrue(rma.can_be_new_rma)
         res = rma.action_create_rma()
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
@@ -550,3 +555,28 @@ class TestRmaSale(TestRmaSaleBase):
             rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
         )
         self.assertEqual(rma1.procurement_group_id.sale_id, sale_order)
+
+    def test_not_rma_return_grouping_flow(self):
+        self.company.rma_return_grouping = False
+        order = self.sale_order
+        self.assertEqual(len(order.order_line), 1)
+        wizard = self._rma_sale_wizard(order)
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        rma_group = rma.procurement_group_id
+        self.assertEqual(rma_group.sale_id, order)
+        self.assertEqual(rma.order_id, order)
+        reception_move = rma.reception_move_id
+        reception_move.picking_id.button_validate()
+        self.assertEqual(rma.state, "received")
+        res = rma.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertNotEqual(rma.procurement_group_id, rma_group)
+        self.assertFalse(rma.procurement_group_id.sale_id)
+        picking = rma.delivery_move_ids.picking_id
+        picking.button_validate()
+        self.assertEqual(rma.state, "returned")
+        self.assertFalse(rma.delivery_move_ids.sale_line_id)
+        self.assertFalse(rma.procurement_group_id.sale_id)
+        self.assertEqual(len(order.order_line), 1)
