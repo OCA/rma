@@ -260,6 +260,14 @@ class Rma(models.Model):
             vals["sale_line_id"] = move.sale_line_id.id
         return vals
 
+    def _delivery_should_be_grouped(self):
+        # It is important to always return True if there is a linked sales order
+        # so that rma creates a new procurement.group, there by preventing an extra
+        # sales order line from being automatically created once the delivery
+        # picking is done.
+        res = super()._delivery_should_be_grouped()
+        return True if self.order_id else res
+
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
         # When the procurement group has the sale id set it will propagate to the
         # pickings. This is inconvenient for this operation as when we confirm the
