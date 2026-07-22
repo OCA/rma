@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-12 09:45+0000\n"
-"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
+"PO-Revision-Date: 2026-07-22 19:46+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -90,7 +90,7 @@ msgstr "Método de cliente"
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__mixed_method
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_reception_strategy__mixed_method
 msgid "Customer method (fallback to fixed)"
-msgstr ""
+msgstr "Método del cliente (con valor fijo como alternativa)"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_fixed_delivery_method
@@ -123,7 +123,7 @@ msgstr "Método fijo"
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__write_uid
@@ -143,7 +143,7 @@ msgstr "RMA"
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma_choose_delivery_carrier
 msgid "RMA Delivery Carrier Selection Wizard"
-msgstr ""
+msgstr "Asistente de selección de transportista para la entrega de RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_res_company__rma_delivery_strategy
@@ -202,12 +202,12 @@ msgstr "Línea de albarán de devolución"
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__rma_id
 msgid "Rma"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma_rma_wizard
 msgid "Rma Rma Wizard"
-msgstr ""
+msgstr "Asistente RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__partner_id
@@ -224,7 +224,7 @@ msgstr "Métodos de envío"
 #: model:ir.model.fields,help:rma_delivery.field_rma_choose_delivery_carrier__partner_id
 #: model:ir.model.fields,help:rma_delivery.field_rma_rma_wizard__partner_shipping_id
 msgid "Shipping address for current RMA."
-msgstr ""
+msgstr "Dirección de envío para la RMA en curso."
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_move
