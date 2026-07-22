@@ -7,6 +7,14 @@
         <field name="model">rma</field>
         <field name="inherit_id" ref="rma.rma_view_form" />
         <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="action_link_to_sale_order"
+                    type="object"
+                    string="Link to sale order"
+                    attrs="{'invisible': [('move_id', '!=', False)]}"
+                />
+            </header>
             <field name="partner_invoice_id" position="after">
                 <field
                     name="order_id"

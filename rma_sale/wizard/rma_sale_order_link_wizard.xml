@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="rma_sale_order_link_wizard_form_view">
+        <field name="model">rma.sale.order.link.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Rma Sale Order Link Wizard">
+                <group>
+                    <field name="rma_id" invisible="1" />
+                    <field name="partner_id" readonly="True" />
+                    <field name="sale_order_id" />
+                </group>
+                <footer>
+                    <button
+                        name="action_link_rma_to_sale_order"
+                        string="Confirm"
+                        class="btn-primary"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

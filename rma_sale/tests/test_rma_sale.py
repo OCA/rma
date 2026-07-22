@@ -336,3 +336,24 @@ class TestRmaSale(TestRmaSaleBase):
         rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
         self.assertEqual(len(rmas.reception_move_id.group_id), 1)
         self.assertEqual(len(rmas.reception_move_id.picking_id), 1)
+
+    def test_link_to_sale_order(self):
+        rma_vals = {
+            "partner_id": self.partner.id,
+            "product_id": self.product_1.id,
+            "product_uom_qty": 5,
+            "location_id": self.sale_order.warehouse_id.rma_loc_id.id,
+            "operation_id": self.operation.id,
+        }
+        rma = self.env["rma"].create(rma_vals)
+        rma.action_confirm()
+        action = rma.action_link_to_sale_order()
+        wizard = (
+            self.env[action.get("res_model")]
+            .with_context(**action.get("context"))
+            .create({"sale_order_id": self.sale_order.id})
+        )
+        self.assertEqual(wizard.rma_id, rma)
+        self.assertFalse(rma.order_id)
+        wizard.action_link_rma_to_sale_order()
+        self.assertEqual(rma.order_id, self.sale_order)
