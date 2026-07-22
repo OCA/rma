@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-01 11:45+0000\n"
-"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
+"PO-Revision-Date: 2026-07-22 19:46+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -25,13 +25,13 @@ msgstr "Devolver mismo Número de lote/serie recibido"
 #: model:ir.model.fields,field_description:rma_lot.field_rma__domain_lot_id
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__domain_lot_id
 msgid "Domain Lot"
-msgstr ""
+msgstr "Dominio del lote"
 
 #. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma__product_tracking
 #: model:ir.model.fields,help:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "Garantiza la trazabilidad de un producto almacenable en tu almacén."
 
 #. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
@@ -40,6 +40,9 @@ msgid ""
 "serial number received from the customer. Disable if a different lot or "
 "serial number should be assigned."
 msgstr ""
+"Si se activa, el producto de sustitución o entrega utilizará exactamente el "
+"mismo lote o número de serie recibido del cliente. Desactívalo si se debe "
+"asignar un lote o número de serie diferente."
 
 #. module: rma_lot
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_my_rmas_lot
@@ -61,7 +64,7 @@ msgstr "Número de lote/serie"
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lots_visible
 msgid "Lots Visible"
-msgstr ""
+msgstr "Lotes visibles"
 
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_rma
@@ -71,7 +74,7 @@ msgstr "RMA"
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_rma_delivery_wizard
 msgid "RMA Delivery Wizard"
-msgstr ""
+msgstr "Asistente de entrega de RMA"
 
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_rma_operation
@@ -95,4 +98,4 @@ msgstr "Número de serie"
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Seguimiento"
