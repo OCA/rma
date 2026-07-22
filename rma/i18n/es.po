@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-09 08:07+0000\n"
-"PO-Revision-Date: 2026-06-12 13:47+0000\n"
-"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
+"PO-Revision-Date: 2026-07-22 19:46+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -438,7 +438,7 @@ msgstr "<strong>Nota:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Requested operation</strong>"
-msgstr ""
+msgstr "<strong>Operación solicitada</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -650,7 +650,7 @@ msgstr "Puede ser bloquedo"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_new_rma
 msgid "Can Be New Rma"
-msgstr ""
+msgstr "Puede ser una nueva RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__can_be_refunded
@@ -786,17 +786,17 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_awaiting_action
 msgid "Count Rma Awaiting Action"
-msgstr ""
+msgstr "Número de RMA pendientes de acción"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_draft
 msgid "Count Rma Draft"
-msgstr ""
+msgstr "Número de RMA en borrador"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_processed
 msgid "Count Rma Processed"
-msgstr ""
+msgstr "Número de RMA procesados"
 
 #. module: rma
 #: model:ir.actions.act_window,name:rma.rma_create_rma_action
@@ -1060,7 +1060,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Emails"
-msgstr ""
+msgstr "Emails"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_operation__auto_confirm_reception
@@ -1199,6 +1199,9 @@ msgid ""
 "If an RMA has been delivered (returned or replaced), a button will appear "
 "that allows you to create a new RMA to manage the delivered items"
 msgstr ""
+"Si una RMA ya se ha entregado, ya sea como devolución o sustitución, "
+"aparecerá un botón que permitirá crear una nueva RMA para gestionar los "
+"artículos entregados"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma__different_return_product
@@ -1449,7 +1452,7 @@ msgstr "Siguiente tipo de actividad"
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "None of the selected RMAs can perform a new RMA."
-msgstr ""
+msgstr "Ninguna de las RMA seleccionadas permite crear una nueva RMA."
 
 #. module: rma
 #. odoo-python
@@ -1523,7 +1526,7 @@ msgstr "Órdenes"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 msgid "Origin"
-msgstr ""
+msgstr "Origen"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__picking_id
@@ -1845,7 +1848,7 @@ msgstr "Etiquetas RMA"
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_team_id
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
 msgid "RMA Team"
-msgstr ""
+msgstr "Equipo RMA"
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_res_users__rma_team_id
@@ -2134,7 +2137,7 @@ msgstr "Devuelto"
 #. odoo-python
 #: code:addons/rma/wizard/stock_picking_return.py:0
 msgid "Returned Picking"
-msgstr ""
+msgstr "Transferencia devuelta"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_rma_wizard__rma_id
@@ -2150,7 +2153,7 @@ msgstr "Cantidad de RMAs"
 #. module: rma
 #: model:ir.model,name:rma.model_rma_rma_wizard
 msgid "Rma Rma Wizard"
-msgstr ""
+msgstr "Asistente RMA"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__scheduled_date
@@ -2242,22 +2245,22 @@ msgstr "Dirección de envío para el RMA en curso."
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__show_create_receipt
 msgid "Show Create Receipt Button"
-msgstr ""
+msgstr "Mostrar botón Crear recepción"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__show_create_return
 msgid "Show Create Return Button"
-msgstr ""
+msgstr "Mostrar botón Crear devolución"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__show_create_refund
 msgid "Show Create refund Button"
-msgstr ""
+msgstr "Mostrar botón Crear abono"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__show_create_replace
 msgid "Show Create replace Button"
-msgstr ""
+msgstr "Mostrar botón Crear reemplazo"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__origin
@@ -2372,6 +2375,10 @@ msgid ""
 "                operation\n"
 "                with specific settings that will adjust its behavior."
 msgstr ""
+"El sistema de operaciones de RMA permite configurar cada operación de "
+"devolución\n"
+"con ajustes específicos\n"
+"que adaptarán su comportamiento."
 
 #. module: rma
 #: model:ir.model.fields,help:rma.field_rma_tag__active
@@ -2456,7 +2463,7 @@ msgstr "Este RMA no puede ser dividido."
 #. odoo-python
 #: code:addons/rma/models/rma.py:0
 msgid "This RMA cannot perform a new RMA."
-msgstr ""
+msgstr "Esta RMA no permite crear una nueva RMA."
 
 #. module: rma
 #. odoo-python
@@ -2556,7 +2563,7 @@ msgstr "Usuario: Solo mostrar documentos propios"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 msgid "Values set here are company-specific."
-msgstr ""
+msgstr "Los valores establecidos aquí son específicos de la empresa."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_operation_kanban
@@ -2618,6 +2625,8 @@ msgid ""
 "When the RMA is receive, allow to finsish it manually choosing a "
 "finalization reason."
 msgstr ""
+"Cuando se reciba la RMA, permitirá finalizarla manualmente eligiendo un "
+"motivo de finalización."
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
