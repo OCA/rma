@@ -103,11 +103,16 @@ class StockMove(models.Model):
     def _prepare_merge_moves_distinct_fields(self):
         """The main use is that launched delivery RMAs doesn't merge
         two moves if they are linked to a different RMAs.
+        Only add the fields if they are set, to prevent an error caused
+        by a stock user without RMA permissions when confirming a picking.
         """
-        return super()._prepare_merge_moves_distinct_fields() + [
-            "rma_id",
-            "rma_receiver_ids",
-        ]
+        extra_fields = []
+        _self = self.sudo()
+        if any(move.rma_id for move in _self):
+            extra_fields.append("rma_id")
+        if any(move.rma_receiver_ids for move in _self):
+            extra_fields.append("rma_receiver_ids")
+        return super()._prepare_merge_moves_distinct_fields() + extra_fields
 
     def _prepare_move_split_vals(self, qty):
         """Intended to the backport of picking linked to RMAs propagates the
