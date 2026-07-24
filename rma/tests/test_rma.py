@@ -1092,6 +1092,25 @@ class TestRmaCase(TestRma):
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
 
+    def test_stock_user_can_confirm_picking_without_rma_acl(self):
+        picking_form = Form(
+            self.env["stock.picking"].with_context(
+                default_picking_type_id=self.warehouse_company.out_type_id.id
+            )
+        )
+        picking_form.partner_id = self.partner
+        with picking_form.move_ids_without_package.new() as move:
+            move.product_id = self.product
+            move.product_uom_qty = 1
+        picking = picking_form.save()
+        user_stock = new_test_user(
+            self.env,
+            login="test-user_stock",
+            groups="stock.group_stock_user",
+        )
+        picking.with_user(user_stock).action_confirm()
+        self.assertIn(picking.state, ("confirmed", "assigned", "waiting"))
+
     def test_copy_operation(self):
         operation = self.env.ref("rma.rma_operation_refund")
         new_operation = operation.copy()
