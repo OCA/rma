@@ -10,7 +10,7 @@ class RmaTag(models.Model):
 
     active = fields.Boolean(
         default=True,
-        help="The active field allows you to hide the category without " "removing it.",
+        help="The active field allows you to hide the category without removing it.",
     )
     name = fields.Char(
         string="Tag Name",

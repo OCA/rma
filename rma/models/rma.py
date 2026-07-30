@@ -72,9 +72,7 @@ class Rma(models.Model):
         string="Finalization Reason",
         comodel_name="rma.finalization",
         copy=False,
-        domain=(
-            "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
-        ),
+        domain=("['|', ('company_id', '=', False), ('company_id', '=', company_id)]"),
         tracking=True,
     )
     company_id = fields.Many2one(
@@ -98,9 +96,7 @@ class Rma(models.Model):
     partner_invoice_id = fields.Many2one(
         string="Invoice Address",
         comodel_name="res.partner",
-        domain=(
-            "['|', ('company_id', '=', False), ('company_id', '='," " company_id)]"
-        ),
+        domain=("['|', ('company_id', '=', False), ('company_id', '=', company_id)]"),
         help="Refund address for current RMA.",
         compute="_compute_partner_invoice_id",
         store=True,
@@ -125,10 +121,7 @@ class Rma(models.Model):
         comodel_name="stock.move",
         string="Origin move",
         domain=(
-            "["
-            "    ('picking_id', '=', picking_id),"
-            "    ('picking_id', '!=', False)"
-            "]"
+            "[    ('picking_id', '=', picking_id),    ('picking_id', '!=', False)]"
         ),
         compute="_compute_move_id",
         store=True,
@@ -1176,7 +1169,7 @@ class Rma(models.Model):
             if qty > self.remaining_qty:
                 raise ValidationError(
                     self.env._(
-                        "The quantity to return is greater than " "remaining quantity."
+                        "The quantity to return is greater than remaining quantity."
                     )
                 )
 

@@ -63,7 +63,7 @@ class ResCompany(models.Model):
         string="Email Template draft notification for RMA",
         domain="[('model', '=', 'rma')]",
         default=_default_rma_mail_draft_template,
-        help="Email sent to the customer when they place " "an RMA from the portal",
+        help="Email sent to the customer when they place an RMA from the portal",
     )
     rma_new_rma_button_from_rma = fields.Boolean(
         string="Button to create a new RMA from another one",
