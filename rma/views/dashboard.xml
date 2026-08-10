@@ -20,7 +20,7 @@
                 <field name="count_rma_processed" />
                 <templates>
                     <t t-name="menu" t-if="!selection_mode">
-                        <div class="container">
+                        <div class="container o_rma_kanban_menu">
                             <div class="row">
                                 <div class="col-6">
                                     <h5
@@ -65,22 +65,30 @@
                                 </div>
                             </div>
 
-                            <div
-                                t-if="widget.editable"
-                                class="o_kanban_card_manage_settings row"
-                            >
-                                <div class="col-8" role="menuitem" aria-haspopup="true">
-                                    <field name="color" widget="kanban_color_picker" />
-                                </div>
-                                <div class="col-4 text-end">
-                                    <a
-                                        class="dropdown-item"
+                            <t t-if="widget.editable">
+                                <div class="o_kanban_card_manage_settings row">
+                                    <div
+                                        class="col-12"
                                         role="menuitem"
-                                        type="edit"
-                                    >Configuration
-                                    </a>
+                                        aria-haspopup="true"
+                                    >
+                                        <field
+                                            name="color"
+                                            widget="kanban_color_picker"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="o_kanban_card_manage_settings row">
+                                    <div class="col-12  text-end">
+                                        <a
+                                            class="dropdown-item"
+                                            role="menuitem"
+                                            type="edit"
+                                        >Configuration
+                                        </a>
+                                    </div>
+                                </div>
+                            </t>
                         </div>
                     </t>
 

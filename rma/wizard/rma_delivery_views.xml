@@ -30,7 +30,6 @@
                                 name="product_uom"
                                 groups="uom.group_uom"
                                 required="rma_count == 1"
-                                domain="[('category_id', '=', uom_category_id)]"
                             />
                             <field name="product_uom" invisible="1" />
                         </div>

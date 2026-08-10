@@ -75,13 +75,9 @@ class StockMove(models.Model):
                     self.env._(
                         "The quantity done for the product '%(id)s' must "
                         "be equal to its initial demand because the "
-                        "stock move is linked to an RMA (%(name)s)."
-                    )
-                    % (
-                        {
-                            "id": move.product_id.name,
-                            "name": move.rma_receiver_ids.name,
-                        }
+                        "stock move is linked to an RMA (%(name)s).",
+                        id=move.product_id.name,
+                        name=move.rma_receiver_ids.name,
                     )
                 )
         res = super()._action_done(cancel_backorder=cancel_backorder)
@@ -135,7 +131,7 @@ class StockMove(models.Model):
             pickings = self.rma_receiver_ids.picking_id
             picking_name = self and ", ".join(pickings.mapped("name"))
             new_origin = "{} ({})".format(
-                origin, self.env._("Return of %s") % picking_name
+                origin, self.env._("Return of %s", picking_name)
             )
             values["origin"] = new_origin
         return values
@@ -151,5 +147,7 @@ class StockRule(models.Model):
             "origin_returned_move_id",
             "move_orig_ids",
             "rma_receiver_ids",
+            # Keep the explicit RMA value: this field defaults to True in v19.
+            "to_refund",
         ]
         return move_fields

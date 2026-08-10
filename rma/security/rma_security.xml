@@ -9,10 +9,14 @@
             name="description"
         >Manage Return Merchandise Authorizations (RMAs).</field>
     </record>
+    <record id="rma_groups_privilege" model="res.groups.privilege">
+        <field name="name">RMA</field>
+        <field name="category_id" ref="rma_module_category" />
+    </record>
     <!-- Access Groups -->
     <record id="rma_group_user_own" model="res.groups">
         <field name="name">User: Own Documents Only</field>
-        <field name="category_id" ref="rma_module_category" />
+        <field name="privilege_id" ref="rma_groups_privilege" />
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
         <field
             name="comment"
@@ -20,7 +24,7 @@
     </record>
     <record id="rma_group_user_all" model="res.groups">
         <field name="name">User: All Documents</field>
-        <field name="category_id" ref="rma_module_category" />
+        <field name="privilege_id" ref="rma_groups_privilege" />
         <field name="implied_ids" eval="[(4, ref('rma_group_user_own'))]" />
         <field
             name="comment"
@@ -31,16 +35,15 @@
         <field
             name="comment"
         >the user will have an access to the RMA configuration as well as statistic reports.</field>
-        <field name="category_id" ref="rma_module_category" />
+        <field name="privilege_id" ref="rma_groups_privilege" />
         <field name="implied_ids" eval="[(4, ref('rma_group_user_all'))]" />
         <field
-            name="users"
+            name="user_ids"
             eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
         />
     </record>
     <record id="group_rma_manual_finalization" model="res.groups">
         <field name="name">Allow RMA manual finalization</field>
-        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <!-- Record Rules -->
     <record id="rma_rule_user_own" model="ir.rule">
@@ -103,7 +106,7 @@
         <field name="groups" eval="[(4, ref('rma.rma_group_user_own'))]" />
     </record>
     <!-- New users will belong to rma_group_user_own  -->
-    <record id="base.default_user" model="res.users">
-        <field name="groups_id" eval="[(4, ref('rma_group_user_own'))]" />
+    <record id="base.default_user_group" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('rma_group_user_own'))]" />
     </record>
 </odoo>

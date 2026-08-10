@@ -44,7 +44,7 @@ class RmaTeam(models.Model):
         new_teams = super().copy(default)
         for old_team, new_team in zip(self, new_teams, strict=False):
             if not default.get("name"):
-                new_team.name = self.env._("%s (copy)") % old_team.name
+                new_team.name = self.env._("%s (copy)", old_team.name)
             for follower in old_team.message_follower_ids:
                 new_team.message_subscribe(
                     partner_ids=follower.partner_id.ids,

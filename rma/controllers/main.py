@@ -2,7 +2,7 @@
 # Copyright 2022-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, exceptions, http
+from odoo import exceptions, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.tools import consteq
@@ -45,9 +45,9 @@ class PortalRma(CustomerPortal):
             return request.redirect("/my")
         domain = self._get_filter_domain(kw)
         searchbar_sortings = {
-            "date": {"label": _("Date"), "order": "date desc"},
-            "name": {"label": _("Name"), "order": "name desc"},
-            "state": {"label": _("Status"), "order": "state"},
+            "date": {"label": request.env._("Date"), "order": "date desc"},
+            "name": {"label": request.env._("Name"), "order": "name desc"},
+            "state": {"label": request.env._("Status"), "order": "state"},
         }
         # default sort by order
         if not sortby:

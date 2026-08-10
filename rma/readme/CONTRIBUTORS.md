@@ -10,3 +10,5 @@
 - Michael Tietz (MT Software) <mtietz@mt-software.de>
 - Jacques-Etienne Baudoux - BCIM <je@bcim.be>
 - Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
+- [Studio73](https://www.studio73.es):
+  - Eugenio Micó \<<eugenio@studio73.es>\>

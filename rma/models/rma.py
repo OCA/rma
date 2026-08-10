@@ -6,13 +6,12 @@
 import logging
 import warnings
 from collections import defaultdict
-from itertools import groupby
 
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import AccessError, ValidationError
-from odoo.tools import html2plaintext
+from odoo.tools import groupby, html2plaintext
 from odoo.tools.misc import clean_context
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
@@ -152,9 +151,9 @@ class Rma(models.Model):
         store=True,
         readonly=False,
     )
-    procurement_group_id = fields.Many2one(
-        comodel_name="procurement.group",
-        string="Procurement group",
+    stock_reference_id = fields.Many2one(
+        comodel_name="stock.reference",
+        string="Stock reference",
     )
     priority = fields.Selection(
         selection=PROCUREMENT_PRIORITIES,
@@ -187,7 +186,7 @@ class Rma(models.Model):
     # Reception fields
     location_id = fields.Many2one(
         comodel_name="stock.location",
-        domain=_domain_location_id,
+        domain=lambda self: self._domain_location_id(),
         compute="_compute_location_id",
         store=True,
         readonly=False,
@@ -261,9 +260,6 @@ class Rma(models.Model):
         string="Remaining delivered qty to done",
         digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
-    )
-    uom_category_id = fields.Many2one(
-        related="product_id.uom_id.category_id", string="Category UoM"
     )
     # Split fields
     can_be_split = fields.Boolean(
@@ -364,7 +360,7 @@ class Rma(models.Model):
     @api.depends(
         "delivery_move_ids",
         "delivery_move_ids.state",
-        "delivery_move_ids.scrapped",
+        "delivery_move_ids.scrap_id",
         "delivery_move_ids.product_uom_qty",
         "delivery_move_ids.quantity",
         "delivery_move_ids.product_uom",
@@ -381,7 +377,7 @@ class Rma(models.Model):
         for record in self:
             delivered_qty = 0.0
             for move in record.delivery_move_ids.filtered(
-                lambda r: r.state != "cancel" and not r.scrapped
+                lambda r: r.state != "cancel" and not r.scrap_id
             ):
                 if move.quantity:
                     quantity = move.product_uom._compute_quantity(
@@ -397,7 +393,7 @@ class Rma(models.Model):
     @api.depends(
         "delivery_move_ids",
         "delivery_move_ids.state",
-        "delivery_move_ids.scrapped",
+        "delivery_move_ids.scrap_id",
         "delivery_move_ids.quantity",
         "delivery_move_ids.product_uom",
     )
@@ -412,7 +408,7 @@ class Rma(models.Model):
         for record in self:
             delivered_qty_done = 0.0
             for move in record.delivery_move_ids.filtered(
-                lambda r: r.state == "done" and not r.scrapped and r.quantity
+                lambda r: r.state == "done" and not r.scrap_id and r.quantity
             ):
                 quantity = move.product_uom._compute_quantity(
                     move.quantity, record.product_uom
@@ -682,12 +678,12 @@ class Rma(models.Model):
                 )
         return new_rmas
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_draft(self):
         if self.filtered(lambda r: r.state != "draft"):
             raise ValidationError(
                 self.env._("You cannot delete RMAs that are not in draft state")
             )
-        return super().unlink()
 
     def _send_draft_email(self):
         """Send customer notifications they place the RMA from the portal"""
@@ -787,34 +783,32 @@ class Rma(models.Model):
         if self.partner_id and self.partner_id not in self.message_partner_ids:
             self.message_subscribe([self.partner_id.id])
 
-    def _prepare_procurement_group_vals(self):
+    def _prepare_stock_reference_vals(self):
         return {
-            "move_type": "direct",
-            "partner_id": self and self.partner_shipping_id.id or False,
             "name": self and ", ".join(self.mapped("name")) or False,
         }
 
     def _prepare_common_procurement_vals(
-        self, warehouse=None, scheduled_date=None, group=None
+        self, warehouse=None, scheduled_date=None, reference=None
     ):
         self.ensure_one()
-        group = group or self.procurement_group_id
-        if not group:
-            group = self.env["procurement.group"].create(
-                self._prepare_procurement_group_vals()
+        reference = reference or self.stock_reference_id
+        if not reference:
+            reference = self.env["stock.reference"].create(
+                self._prepare_stock_reference_vals()
             )
         return {
             "company_id": self.company_id,
-            "group_id": group,
+            "reference_ids": reference,
             "date_planned": scheduled_date or fields.Datetime.now(),
             "warehouse_id": warehouse or self.warehouse_id,
-            "partner_id": group.partner_id.id,
+            "partner_id": self.partner_shipping_id.id,
             "priority": self.priority,
         }
 
-    def _prepare_reception_procurement_vals(self, group=None):
+    def _prepare_reception_procurement_vals(self, reference=None):
         """This method is used only for reception and a specific RMA IN route."""
-        vals = self._prepare_common_procurement_vals(group=group)
+        vals = self._prepare_common_procurement_vals(reference=reference)
         vals["route_ids"] = self.warehouse_id.rma_in_route_id
         vals["rma_receiver_ids"] = [(6, 0, self.ids)]
         vals["to_refund"] = self.operation_id.action_create_refund == "update_quantity"
@@ -827,34 +821,36 @@ class Rma(models.Model):
 
     def _prepare_reception_procurements(self):
         procurements = []
-        group_model = self.env["procurement.group"]
+        stock_rule_model = self.env["stock.rule"]
         for rma in self:
             if not rma._product_is_storable():
                 continue
-            group = rma.procurement_group_id
-            if not group:
-                group = group_model.create(rma._prepare_procurement_group_vals())
-            product = self.product_id
-            if self.different_return_product:
-                if not self.return_product_id:
+            reference = rma.stock_reference_id
+            if not reference:
+                reference = self.env["stock.reference"].create(
+                    rma._prepare_stock_reference_vals()
+                )
+            product = rma.product_id
+            if rma.different_return_product:
+                if not rma.return_product_id:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "The selected operation requires a return product different"
                             " from the originally delivered item. Please select the "
                             "product to return."
                         )
                     )
-                product = self.return_product_id
+                product = rma.return_product_id
             procurements.append(
-                group_model.Procurement(
+                stock_rule_model.Procurement(
                     product,
                     rma.product_uom_qty,
                     rma.product_uom,
                     rma.location_id,
                     product.display_name,
-                    group.name,
+                    reference.name,
                     rma.company_id,
-                    rma._prepare_reception_procurement_vals(group),
+                    rma._prepare_reception_procurement_vals(reference),
                 )
             )
         return procurements
@@ -862,7 +858,7 @@ class Rma(models.Model):
     def _create_receipt(self):
         procurements = self._prepare_reception_procurements()
         if procurements:
-            self.env["procurement.group"].run(procurements)
+            self.env["stock.rule"].run(procurements)
         reception_move = self.sudo().reception_move_id
         reception_move.picking_id.action_assign()
         if self.operation_id.auto_confirm_reception:
@@ -874,7 +870,7 @@ class Rma(models.Model):
         self._create_receipt()
         self.ensure_one()
         return {
-            "name": _("Receipt"),
+            "name": self.env._("Receipt"),
             "type": "ir.actions.act_window",
             "view_type": "form",
             "view_mode": "form",
@@ -895,7 +891,7 @@ class Rma(models.Model):
         self = self.filtered(lambda rma: rma.state == "draft")
         if not self:
             return
-        self._assign_reception_procurement_group()
+        self._assign_reception_stock_reference()
         self.write({"state": "confirmed"})
         for rma in self:
             rma._add_message_subscribe_partner()
@@ -1014,7 +1010,7 @@ class Rma(models.Model):
             and self.reception_move_id.state != "done"
         ):
             raise ValidationError(
-                _("The reception must be done before finishing this rma")
+                self.env._("The reception must be done before finishing this rma")
             )
         self._ensure_can_be_returned()
         # Force active_id to avoid issues when coming from smart buttons
@@ -1132,7 +1128,7 @@ class Rma(models.Model):
                 )
                 desc += f"\n{field_record.field_description}"
             if desc:
-                raise ValidationError(self.env._("Required field(s):%s") % desc)
+                raise ValidationError(self.env._("Required field(s):%s", desc))
 
     def _ensure_can_be_new_rma(self):
         if len(self) == 1:
@@ -1216,13 +1212,9 @@ class Rma(models.Model):
             raise ValidationError(
                 self.env._(
                     "Quantity to extract cannot be greater than remaining"
-                    " delivery quantity (%(remaining_qty)s %(product_uom)s)"
-                )
-                % (
-                    {
-                        "remaining_qty": self.remaining_qty,
-                        "product_uom": self.product_uom.name,
-                    }
+                    " delivery quantity (%(remaining_qty)s %(product_uom)s)",
+                    remaining_qty=self.remaining_qty,
+                    product_uom=self.product_uom.name,
                 )
             )
 
@@ -1256,9 +1248,10 @@ class Rma(models.Model):
             body=Markup(
                 self.env._(
                     'Split: <a href="#" data-oe-model="rma" '
-                    'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                    'data-oe-id="%(id)d">%(name)s</a> has been created.',
+                    id=extracted_rma.id,
+                    name=extracted_rma.name,
                 )
-                % ({"id": extracted_rma.id, "name": extracted_rma.name})
             )
         )
         return extracted_rma
@@ -1319,41 +1312,31 @@ class Rma(models.Model):
         self.ensure_one()
         return (self.partner_id.id, self.company_id.id, self.warehouse_id.id)
 
-    def _assign_reception_procurement_group(self):
+    def _assign_reception_stock_reference(self):
         """Groups the given rmas by the returned key from _get_reception_group_key
-        by setting the procurement_group_id on the each rma if there is not yet on
+        by setting the stock_reference_id on each RMA if there is not yet one
          set"""
-        grouped_rmas = groupby(
-            sorted(self, key=lambda rma: rma._get_reception_group_key()),
-            key=lambda rma: [rma._get_reception_group_key()],
-        )
-        for _group, rmas in grouped_rmas:
-            rmas = self.browse().concat(*list(rmas))
-            if not rmas:
-                continue
-            proc_group = self.env["procurement.group"].create(
-                rmas._prepare_procurement_group_vals()
+        grouped_rmas = groupby(self, key=lambda rma: rma._get_reception_group_key())
+        for _group, rma_group in grouped_rmas:
+            rmas = self.browse([rma.id for rma in rma_group])
+            stock_reference = self.env["stock.reference"].create(
+                rmas._prepare_stock_reference_vals()
             )
-            rmas.write({"procurement_group_id": proc_group.id})
+            rmas.write({"stock_reference_id": stock_reference.id})
 
-    def _assign_delivery_procurement_group(self):
+    def _assign_delivery_stock_reference(self):
         """Groups the given rmas by the returned key from _get_delivery_group_key
-        by setting the procurement_group_id on the each rma if there is not yet on
-        set"""
+        by setting the stock_reference_id on each RMA if there is not yet one
+         set"""
         if not self._delivery_should_be_grouped():
             return
-        grouped_rmas = groupby(
-            sorted(self, key=lambda rma: rma._get_delivery_group_key()),
-            key=lambda rma: [rma._get_delivery_group_key()],
-        )
-        for _group, rmas in grouped_rmas:
-            rmas = self.browse().concat(*list(rmas))
-            if not rmas:
-                continue
-            proc_group = self.env["procurement.group"].create(
-                rmas._prepare_procurement_group_vals()
+        grouped_rmas = groupby(self, key=lambda rma: rma._get_delivery_group_key())
+        for _group, rma_group in grouped_rmas:
+            rmas = self.browse([rma.id for rma in rma_group])
+            stock_reference = self.env["stock.reference"].create(
+                rmas._prepare_stock_reference_vals()
             )
-            rmas.write({"procurement_group_id": proc_group.id})
+            rmas.write({"stock_reference_id": stock_reference.id})
 
     def _prepare_delivery_procurement_vals(self, scheduled_date=None):
         """This method is used only for Delivery (not replace). It is important to set
@@ -1372,25 +1355,25 @@ class Rma(models.Model):
         return self.partner_shipping_id.property_stock_customer
 
     def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
-        self._assign_delivery_procurement_group()
+        self._assign_delivery_stock_reference()
         procurements = []
-        group_model = self.env["procurement.group"]
+        stock_rule_model = self.env["stock.rule"]
         for rma in self:
-            if not rma.procurement_group_id:
-                rma.procurement_group_id = group_model.create(
-                    rma._prepare_procurement_group_vals()
+            if not rma.stock_reference_id:
+                rma.stock_reference_id = self.env["stock.reference"].create(
+                    rma._prepare_stock_reference_vals()
                 )
 
             vals = rma._prepare_delivery_procurement_vals(scheduled_date)
-            group = vals.get("group_id")
+            reference = vals["reference_ids"]
             procurements.append(
-                group_model.Procurement(
+                stock_rule_model.Procurement(
                     rma.product_id,
                     qty or rma.product_uom_qty,
                     uom or rma.product_uom,
                     rma._get_location_final(),
                     rma.product_id.display_name,
-                    group.name,
+                    reference.name,
                     rma.company_id,
                     vals,
                 )
@@ -1409,7 +1392,7 @@ class Rma(models.Model):
             scheduled_date, qty, uom
         )
         if procurements:
-            self.env["procurement.group"].run(procurements)
+            self.env["stock.rule"].run(procurements)
         pickings = defaultdict(lambda: self.browse())
         for rma in rmas_to_return:
             picking = rma.sudo().delivery_move_ids.picking_id.sorted(
@@ -1420,9 +1403,10 @@ class Rma(models.Model):
                 body=Markup(
                     self.env._(
                         'Return: <a href="#" data-oe-model="stock.picking" '
-                        'data-oe-id="%(id)d">%(name)s</a> has been created.'
+                        'data-oe-id="%(id)d">%(name)s</a> has been created.',
+                        id=picking.id,
+                        name=picking.name,
                     )
-                    % ({"id": picking.id, "name": picking.name})
                 )
             )
         for picking, rmas in pickings.items():
@@ -1447,26 +1431,26 @@ class Rma(models.Model):
         self, warehouse, scheduled_date, product, qty, uom
     ):
         procurements = []
-        group_model = self.env["procurement.group"]
+        stock_rule_model = self.env["stock.rule"]
         for rma in self:
             if not rma._product_is_storable():
                 continue
 
-            if not rma.procurement_group_id:
-                rma.procurement_group_id = group_model.create(
-                    rma._prepare_procurement_group_vals()
+            if not rma.stock_reference_id:
+                rma.stock_reference_id = self.env["stock.reference"].create(
+                    rma._prepare_stock_reference_vals()
                 )
 
             vals = rma._prepare_replace_procurement_vals(warehouse, scheduled_date)
-            group = vals.get("group_id")
+            reference = vals["reference_ids"]
             procurements.append(
-                group_model.Procurement(
+                stock_rule_model.Procurement(
                     product,
                     qty,
                     uom,
                     rma._get_location_final(),
                     product.display_name,
-                    group.name,
+                    reference.name,
                     rma.company_id,
                     vals,
                 )
@@ -1482,7 +1466,7 @@ class Rma(models.Model):
             warehouse, scheduled_date, product, qty, uom
         )
         if procurements:
-            self.env["procurement.group"].run(procurements)
+            self.env["stock.rule"].run(procurements)
         new_moves = self.delivery_move_ids - moves_before
         body = ""
         # The product replacement could explode into several moves like in the case of
@@ -1494,15 +1478,11 @@ class Rma(models.Model):
                     ' data-oe-id="%(move_id)d">%(move_name)s</a> (Picking <a'
                     ' href="#" data-oe-model="stock.picking"'
                     ' data-oe-id="%(picking_id)d"> %(picking_name)s</a>) has'
-                    " been created."
-                )
-                % (
-                    {
-                        "move_id": new_move.id,
-                        "move_name": new_move.display_name,
-                        "picking_id": new_move.picking_id.id,
-                        "picking_name": new_move.picking_id.name,
-                    }
+                    " been created.",
+                    move_id=new_move.id,
+                    move_name=new_move.display_name,
+                    picking_id=new_move.picking_id.id,
+                    picking_name=new_move.picking_id.name,
                 )
                 + "\n"
             )
@@ -1527,15 +1507,11 @@ class Rma(models.Model):
                     'data-oe-id="%(id)d">%(name)s</a><br/>'
                     "Quantity %(qty)s %(uom)s<br/>"
                     "This replacement did not create a new move, but one of "
-                    "the previously created moves was updated with this data."
-                )
-                % (
-                    {
-                        "id": self.product_id.id,
-                        "name": self.product_id.display_name,
-                        "qty": qty,
-                        "uom": uom.name,
-                    }
+                    "the previously created moves was updated with this data.",
+                    id=self.product_id.id,
+                    name=self.product_id.display_name,
+                    qty=qty,
+                    uom=uom.name,
                 )
             )
         )
@@ -1566,8 +1542,10 @@ class Rma(models.Model):
         body = html2plaintext(msg_dict.get("body", ""))
         desc = self.env._(
             "<b>E-mail subject:</b> %(subject)s<br/><br/><b>E-mail"
-            " body:</b><br/>%(body)s"
-        ) % ({"subject": subject, "body": body})
+            " body:</b><br/>%(body)s",
+            subject=subject,
+            body=body,
+        )
         defaults = {
             "description": desc,
             "name": self.env._("New"),
@@ -1589,7 +1567,6 @@ class Rma(models.Model):
             rma.message_subscribe([rma.user_id.partner_id.id])
         return rma
 
-    @api.returns("mail.message", lambda value: value.id)
     def message_post(self, **kwargs):
         """Set 'sent' field to True when an email is sent from rma form
         view. This field (sent) is used to set the appropriate style to the
@@ -1602,16 +1579,16 @@ class Rma(models.Model):
         self_with_context = self.with_context(mail_post_autofollow=True)
         return super(Rma, self_with_context).message_post(**kwargs)
 
-    def _message_get_suggested_recipients(self):
-        recipients = super()._message_get_suggested_recipients()
+    def _message_add_suggested_recipients(self, force_primary_email=False):
+        suggested = super()._message_add_suggested_recipients(
+            force_primary_email=force_primary_email
+        )
         try:
             for record in self.filtered("partner_id"):
-                record._message_add_suggested_recipient(
-                    recipients, partner=record.partner_id, reason=self.env._("Customer")
-                )
+                suggested[record.id]["partners"] |= record.partner_id
         except AccessError as e:  # no read access rights
             _logger.debug(e)
-        return recipients
+        return suggested
 
     # Reporting business methods
     def _get_report_base_filename(self):
@@ -1687,8 +1664,8 @@ class Rma(models.Model):
     def _group_delivery_if_needed(self):
         warnings.warn(
             "_group_delivery_if_needed is deprecated and will be removed in the"
-            " future. Use _assign_delivery_procurement_group instead",
+            " future. Use _assign_delivery_stock_reference instead",
             category=DeprecationWarning,
             stacklevel=2,
         )
-        return self._assign_delivery_procurement_group()
+        return self._assign_delivery_stock_reference()

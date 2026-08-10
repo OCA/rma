@@ -48,21 +48,21 @@ class ResCompany(models.Model):
         comodel_name="mail.template",
         string="Email Template confirmation for RMA",
         domain="[('model', '=', 'rma')]",
-        default=_default_rma_mail_confirmation_template,
+        default=lambda self: self._default_rma_mail_confirmation_template(),
         help="Email sent to the customer once the RMA is confirmed.",
     )
     rma_mail_receipt_confirmation_template_id = fields.Many2one(
         comodel_name="mail.template",
         string="Email Template receipt confirmation for RMA",
         domain="[('model', '=', 'rma')]",
-        default=_default_rma_mail_receipt_template,
+        default=lambda self: self._default_rma_mail_receipt_template(),
         help="Email sent to the customer once the RMA products are received.",
     )
     rma_mail_draft_confirmation_template_id = fields.Many2one(
         comodel_name="mail.template",
         string="Email Template draft notification for RMA",
         domain="[('model', '=', 'rma')]",
-        default=_default_rma_mail_draft_template,
+        default=lambda self: self._default_rma_mail_draft_template(),
         help="Email sent to the customer when they place an RMA from the portal",
     )
     rma_new_rma_button_from_rma = fields.Boolean(

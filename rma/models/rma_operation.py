@@ -4,8 +4,8 @@
 from ast import literal_eval
 from collections import defaultdict
 
-from odoo import _, api, fields, models
-from odoo.osv.expression import AND
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 PROCESSED_STATES = ["received", "refunded", "replaced", "finished"]
 AWAITING_ACTION_STATES = ["waiting_return", "waiting_replacement", "confirmed"]
@@ -66,9 +66,10 @@ class RmaOperation(models.Model):
         help="If enabled, RMAs using this operation will NOT be grouped into a "
         "single delivery picking, even if the company setting allows grouping.",
     )
-    _sql_constraints = [
-        ("name_uniq", "unique (name)", "That operation name already exists !"),
-    ]
+    _name_uniq = models.Constraint(
+        "unique (name)",
+        "That operation name already exists !",
+    )
 
     @api.model
     def _get_rma_draft_domain(self):
@@ -91,21 +92,17 @@ class RmaOperation(models.Model):
             }
         )
         state_by_op = defaultdict(int)
-        for group in self.env["rma"].read_group(
-            AND([[("operation_id", "!=", False)]]),
+        for operation, state, count in self.env["rma"]._read_group(
+            Domain("operation_id", "!=", False),
             groupby=["operation_id", "state"],
-            fields=["id"],
-            lazy=False,
+            aggregates=["__count"],
         ):
-            operation_id = group.get("operation_id")[0]
-            state = group.get("state")
-            count = group.get("__count")
             if state == "draft":
-                state_by_op[(operation_id, "count_rma_draft")] += count
-            if state in PROCESSED_STATES:
-                state_by_op[(operation_id, "count_rma_processed")] += count
-            if state in AWAITING_ACTION_STATES:
-                state_by_op[(operation_id, "count_rma_awaiting_action")] += count
+                state_by_op[(operation.id, "count_rma_draft")] += count
+            elif state in PROCESSED_STATES:
+                state_by_op[(operation.id, "count_rma_processed")] += count
+            elif state in AWAITING_ACTION_STATES:
+                state_by_op[(operation.id, "count_rma_awaiting_action")] += count
         for (operation_id, field), count in state_by_op.items():
             self.browse(operation_id).update({field: count})
 
@@ -119,15 +116,15 @@ class RmaOperation(models.Model):
         action_context = literal_eval(action["context"])
         context = {**action_context, **context}
         action["context"] = context
-        action["domain"] = domain
+        action["domain"] = list(domain)
         return action
 
     def get_action_rma_tree_draft(self):
         self.ensure_one()
-        name = self.display_name + ": " + _("Draft")
+        name = self.display_name + ": " + self.env._("Draft")
         return self._get_action(
             name,
-            domain=AND(
+            domain=Domain.AND(
                 [
                     [("operation_id", "=", self.id)],
                     self._get_rma_draft_domain(),
@@ -137,10 +134,10 @@ class RmaOperation(models.Model):
 
     def get_action_rma_tree_awaiting_action(self):
         self.ensure_one()
-        name = self.display_name + ": " + _("Awaiting Action")
+        name = self.display_name + ": " + self.env._("Awaiting Action")
         return self._get_action(
             name,
-            domain=AND(
+            domain=Domain.AND(
                 [
                     [("operation_id", "=", self.id)],
                     self._get_rma_awaiting_action_domain(),
@@ -150,10 +147,10 @@ class RmaOperation(models.Model):
 
     def get_action_rma_tree_processed(self):
         self.ensure_one()
-        name = self.display_name + ": " + _("Processed")
+        name = self.display_name + ": " + self.env._("Processed")
         return self._get_action(
             name,
-            domain=AND(
+            domain=Domain.AND(
                 [
                     [("operation_id", "=", self.id)],
                     self._get_rma_processed_domain(),
@@ -168,5 +165,5 @@ class RmaOperation(models.Model):
 
     def copy(self, default=None):
         self.ensure_one()
-        default = dict(default or {}, name=_("%s (copy)", self.name))
+        default = dict(default or {}, name=self.env._("%s (copy)", self.name))
         return super().copy(default)

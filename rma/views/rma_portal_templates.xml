@@ -334,9 +334,23 @@
                             title="Download"
                         />
                         <span t-esc="picking.name" class="mr-lg-3" />
-                        <div class="d-lg-inline-block">
+                        <div
+                            t-if="picking.date_done or picking.scheduled_date"
+                            class="d-lg-inline-block"
+                        >
                             Date:
-                            <span class="text-muted" t-field="picking.date" />
+                            <span
+                            t-if="picking.state == 'done'"
+                            class="text-muted"
+                            t-field="picking.date_done"
+                            t-options="{'date_only': True}"
+                        />
+                            <span
+                            t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                            class="text-muted"
+                            t-field="picking.scheduled_date"
+                            t-options="{'date_only': True}"
+                        />
                         </div>
                     </div>
                     <t t-if="picking.state == 'done'">
@@ -437,9 +451,23 @@
                                     title="Download"
                                 />
                                 <span t-esc="picking.name" class="mr-lg-3" />
-                                <div class="d-lg-inline-block">
+                                <div
+                                    t-if="picking.date_done or picking.scheduled_date"
+                                    class="d-lg-inline-block"
+                                >
                                     Date:
-                                    <span class="text-muted" t-field="picking.date" />
+                                    <span
+                                    t-if="picking.state == 'done'"
+                                    class="text-muted"
+                                    t-field="picking.date_done"
+                                    t-options="{'date_only': True}"
+                                />
+                                    <span
+                                    t-if="picking.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                    class="text-muted"
+                                    t-field="picking.scheduled_date"
+                                    t-options="{'date_only': True}"
+                                />
                                 </div>
                             </div>
                             <t t-if="picking.state == 'done'">

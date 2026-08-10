@@ -25,6 +25,7 @@ class RmaTag(models.Model):
     color = fields.Integer(string="Color Index")
     rma_ids = fields.Many2many(comodel_name="rma")
 
-    _sql_constraints = [
-        ("name_uniq", "unique (name)", "Tag name already exists !"),
-    ]
+    _name_uniq = models.Constraint(
+        "unique (name)",
+        "Tag name already exists !",
+    )

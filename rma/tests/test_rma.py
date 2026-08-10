@@ -25,6 +25,16 @@ class TestRma(BaseCommon):
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
         cls.company = cls.env.user.company_id
+        cls.sale_journal = cls.env["account.journal"].search(
+            [("company_id", "=", cls.company.id), ("type", "=", "sale")], limit=1
+        ) or cls.env["account.journal"].create(
+            {
+                "name": "Customer Invoices",
+                "code": "INV",
+                "type": "sale",
+                "company_id": cls.company.id,
+            }
+        )
         cls.warehouse_company = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.company.id)], limit=1
         )
@@ -43,6 +53,14 @@ class TestRma(BaseCommon):
                 "reconcile": True,
             }
         )
+        cls.account_income = cls.env["account.account"].create(
+            {
+                "name": "Product Sales",
+                "code": "REV00",
+                "account_type": "income",
+            }
+        )
+        cls.company.income_account_id = cls.account_income
         cls.partner = cls.res_partner.create(
             {
                 "name": "Partner test",
@@ -72,7 +90,7 @@ class TestRma(BaseCommon):
         cls.finalization_reason_2 = cls.env["rma.finalization"].create(
             {"name": "[Test] It's out of warranty. To be scrapped"}
         )
-        cls.env.ref("rma.group_rma_manual_finalization").users |= cls.env.user
+        cls.env.ref("rma.group_rma_manual_finalization").user_ids |= cls.env.user
         cls.warehouse = cls.env.ref("stock.warehouse0")
         # Operation data
         cls.operation_replace = cls.env["rma.operation"].create(
@@ -169,10 +187,10 @@ class TestRma(BaseCommon):
             view="stock.view_picking_form",
         )
         picking_form.partner_id = self.partner
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product
             move.product_uom_qty = 10
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product_product.create(
                 {"name": "Product 2 test", "type": "consu", "is_storable": True}
             )
@@ -269,9 +287,8 @@ class TestRmaCase(TestRma):
         uom_ten = self.env["uom.uom"].create(
             {
                 "name": "Ten",
-                "category_id": self.env.ref("uom.product_uom_unit").id,
-                "factor_inv": 10,
-                "uom_type": "bigger",
+                "relative_uom_id": self.env.ref("uom.product_uom_unit").id,
+                "relative_factor": 10,
             }
         )
         product_2 = self.product_product.create(
@@ -298,7 +315,7 @@ class TestRmaCase(TestRma):
             view="stock.view_picking_form",
         )
         picking_form.partner_id = self.partner
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_2
             move.product_uom_qty = 15
         picking = picking_form.save()
@@ -452,6 +469,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.refund_line_id.product_id, rma.product_id)
         self.assertEqual(rma.refund_line_id.quantity, 10)
         self.assertEqual(rma.refund_line_id.product_uom_id, rma.product_uom)
+        self.assertEqual(rma.refund_line_id.account_id, self.account_income)
         self.assertEqual(rma.state, "refunded")
         self.assertFalse(rma.can_be_refunded)
         self.assertFalse(rma.can_be_returned)
@@ -578,6 +596,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(len(rma.delivery_move_ids.picking_id.move_ids), 1)
         self.assertEqual(rma.delivery_move_ids.product_id, product_2)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 2)
+        self.assertIn(rma.stock_reference_id, rma.delivery_move_ids.reference_ids)
         self.assertTrue(rma.delivery_move_ids.picking_id.state, "waiting")
         self.assertEqual(rma.state, "waiting_replacement")
         self.assertFalse(rma.can_be_refunded)
@@ -650,6 +669,7 @@ class TestRmaCase(TestRma):
         self.assertEqual(len(picking.move_ids), 1)
         self.assertEqual(rma.delivery_move_ids.product_id, self.product)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 2)
+        self.assertIn(rma.stock_reference_id, rma.delivery_move_ids.reference_ids)
         self.assertTrue(picking.state, "waiting")
         self.assertEqual(rma.state, "waiting_return")
         self.assertFalse(rma.can_be_refunded)
@@ -840,7 +860,7 @@ class TestRmaCase(TestRma):
         stock_return_picking_form.create_rma = True
         stock_return_picking_form.rma_operation_id = self.operation
         return_wizard = stock_return_picking_form.save()
-        for move in origin_delivery.move_ids_without_package:
+        for move in origin_delivery.move_ids:
             return_wizard.product_return_moves.filtered(
                 lambda x, move=move: x.move_id == move
             ).quantity = move.quantity
@@ -968,9 +988,9 @@ class TestRmaCase(TestRma):
         # feature that we get on `rma_sale`. We drop it after the RMA creation
         # to avoid uncontrolled side effects
         ctx = self.env.context
-        self.env.context = dict(ctx, from_portal=True)
+        self.env = self.env(context=dict(ctx, from_portal=True))
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
-        self.env.context = ctx
+        self.env = self.env(context=ctx)
         mail_draft = self.env["mail.message"].search(
             [("partner_ids", "in", self.partner.ids)]
         )
@@ -1046,13 +1066,13 @@ class TestRmaCase(TestRma):
         self.assertEqual(rma.reception_move_id.picking_type_id, rma_in_type)
         self.assertEqual(rma.delivery_move_ids.picking_type_id, rma_out_type)
 
-        def test_grouping_reception_enabled(self):
-            rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
-            rma_2 = self._create_rma(self.partner, self.product_2, 10, self.rma_loc)
-            (rma_1 | rma_2).action_confirm()
-            self.assertEqual(
-                rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
-            )
+    def test_grouping_reception_enabled(self):
+        rma_1 = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma_2 = self._create_rma(self.partner, self.product_2, 10, self.rma_loc)
+        (rma_1 | rma_2).action_confirm()
+        self.assertEqual(
+            rma_1.reception_move_id.picking_id, rma_2.reception_move_id.picking_id
+        )
 
     def test_mass_return_to_customer_grouping_exception_by_operation(self):
         """Company groups deliveries, but the operation forbids grouping
@@ -1101,10 +1121,12 @@ class TestRmaCase(TestRma):
         partner = self.res_partner.create({"name": "Partner 2 test"})
         rma3 = self._create_rma(partner, self.product, 10, self.rma_loc)
         (rma1 | rma2 | rma3).action_confirm()
-        self.assertTrue(rma1.procurement_group_id)
-        self.assertTrue(rma3.procurement_group_id)
-        self.assertEqual(rma1.procurement_group_id, rma1.procurement_group_id)
-        self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
+        self.assertTrue(rma1.stock_reference_id)
+        self.assertTrue(rma3.stock_reference_id)
+        self.assertEqual(rma1.stock_reference_id, rma2.stock_reference_id)
+        self.assertNotEqual(rma1.stock_reference_id, rma3.stock_reference_id)
+        for rma in rma1 | rma2 | rma3:
+            self.assertIn(rma.stock_reference_id, rma.reception_move_id.reference_ids)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
 
@@ -1152,3 +1174,226 @@ class TestRmaCase(TestRma):
         self.assertEqual(delivery_picking.state, "done")
         self.assertEqual(rma.delivered_qty_done, 1)
         self.assertEqual(rma.state, "returned")
+
+    def test_message_get_suggested_recipients(self):
+        self.partner.email = "customer@example.com"
+        rma = self._create_rma(partner=self.partner)
+
+        recipients = rma._message_get_suggested_recipients(reply_discussion=True)
+
+        self.assertIn(self.partner.id, [item["partner_id"] for item in recipients])
+
+    def test_secondary_actions_and_views(self):
+        rma = self._create_rma(self.partner, self.product, 3, self.rma_loc)
+        self.assertEqual(rma.action_preview()["url"], rma.get_portal_url())
+        send_action = rma.action_rma_send()
+        self.assertEqual(send_action["res_model"], "mail.compose.message")
+        self.assertEqual(send_action["context"]["default_res_ids"], rma.ids)
+
+        rma.action_confirm()
+        rma.action_confirm()  # Confirming an already confirmed RMA is a no-op.
+        receipt_action = rma.action_view_receipt()
+        self.assertEqual(receipt_action["res_id"], rma.reception_move_id.picking_id.id)
+        self.assertFalse(rma._action_view_pickings(self.env["stock.picking"])["res_id"])
+
+        other_rma = self._create_rma(self.partner, self.product_2, 1, self.rma_loc)
+        other_rma.action_confirm()
+        pickings = (rma | other_rma).reception_move_id.picking_id
+        pickings |= self._create_delivery()
+        self.assertGreater(len(pickings), 1)
+        self.assertIn("domain", rma._action_view_pickings(pickings))
+
+        rma.action_cancel()
+        rma.action_draft()
+        self.assertEqual(rma.state, "draft")
+
+        refund_rma = self._create_confirm_receive(
+            self.partner, self.product, 1, self.rma_loc, self.operation_refund
+        )
+        refund_rma.action_refund()
+        self.assertEqual(
+            refund_rma.action_view_refund()["res_id"], refund_rma.refund_id.id
+        )
+
+    def test_business_validation_branches(self):
+        rma_1 = self._create_rma(self.partner, self.product, 2, self.rma_loc)
+        rma_2 = self._create_rma(self.partner, self.product_2, 2, self.rma_loc)
+        for method_name in (
+            "_ensure_can_be_new_rma",
+            "_ensure_can_be_returned",
+            "_ensure_can_be_replaced",
+        ):
+            with self.assertRaises(ValidationError):
+                getattr(rma_1, method_name)()
+            with self.assertRaises(ValidationError):
+                getattr(rma_1 | rma_2, method_name)()
+        with self.assertRaises(ValidationError):
+            rma_1._ensure_can_be_split()
+
+        received = self._create_confirm_receive(
+            self.partner, self.product, 2, self.rma_loc
+        )
+        dozen = self.env.ref("uom.product_uom_dozen")
+        with self.assertRaises(ValidationError):
+            received._ensure_qty_to_return(1, dozen)
+        with self.assertRaises(ValidationError):
+            received._ensure_qty_to_extract(1, dozen)
+        with self.assertRaises(ValidationError):
+            received.unlink()
+
+    def test_split_action_and_replacement_extraction(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 4, self.rma_loc)
+        rma.create_replace(
+            False,
+            self.warehouse,
+            self.product,
+            1,
+            self.product.uom_id,
+        )
+        self.assertTrue(rma.can_be_split)
+        split_action = rma.action_split()
+        self.assertEqual(split_action["res_model"], "rma.split.wizard")
+        extracted = rma.extract_quantity(3, self.product.uom_id)
+        self.assertEqual(rma.state, "waiting_replacement")
+        self.assertEqual(extracted.state, "received")
+        delivery_move = rma.delivery_move_ids
+        delivery_move.quantity = 1
+        delivery_move.picking_id.button_validate()
+        self.assertEqual(rma.state, "replaced")
+
+    def test_procurement_edge_cases(self):
+        service = self.product_product.create(
+            {"name": "Non-storable RMA service", "type": "service"}
+        )
+        service_rma = self._create_rma(
+            self.partner, service, 1, self.rma_loc, self.operation
+        )
+        self.assertFalse(service_rma._prepare_reception_procurements())
+        self.assertFalse(
+            service_rma._prepare_replace_procurements(
+                self.warehouse, False, service, 1, service.uom_id
+            )
+        )
+
+        operation = self.env["rma.operation"].create(
+            {
+                "name": "Different return product",
+                "different_return_product": True,
+                "action_create_receipt": "automatic_on_confirm",
+                "action_create_delivery": "manual_after_receipt",
+            }
+        )
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc, operation)
+        with self.assertRaises(ValidationError):
+            rma._prepare_reception_procurements()
+        rma.return_product_id = self.product_2
+        procurements = rma._prepare_reception_procurements()
+        self.assertEqual(procurements[0].product_id, self.product_2)
+
+        rma.stock_reference_id = False
+        values = rma._prepare_common_procurement_vals()
+        self.assertTrue(values["reference_ids"])
+        self.assertIn("route_ids", rma._prepare_reception_procurement_vals())
+        self.assertIn("route_ids", rma._prepare_delivery_procurement_vals())
+
+    def test_mail_entry_points_and_subtypes(self):
+        self.partner.email = "incoming@example.com"
+        values = {
+            "partner_id": self.partner.id,
+            "partner_shipping_id": self.partner.id,
+            "partner_invoice_id": self.partner.id,
+            "product_id": self.product.id,
+            "location_id": self.rma_loc.id,
+            "operation_id": self.operation.id,
+            "user_id": self.env.user.id,
+        }
+        rma = self.env["rma"].message_new(
+            {
+                "subject": "Incoming RMA",
+                "body": "<p>Damaged product</p>",
+                "author_id": self.partner.id,
+                "priority": "0",
+            },
+            custom_values=values,
+        )
+        self.assertEqual(rma.partner_id, self.partner)
+        self.assertEqual(rma.priority, "0")
+        self.assertEqual(rma._creation_subtype(), self.env.ref("rma.mt_rma_draft"))
+
+        rma.action_confirm()
+        self.assertEqual(
+            rma._track_subtype({"state": "draft"}),
+            self.env.ref("rma.mt_rma_notification"),
+        )
+        rma.action_cancel()
+        rma.action_draft()
+        self.assertEqual(
+            rma._track_subtype({"state": "cancelled"}),
+            self.env.ref("rma.mt_rma_draft"),
+        )
+        rma.with_context(mark_rma_as_sent=True).message_post(body="Sent")
+        self.assertTrue(rma.sent)
+
+        empty_author = self.env["rma"].message_new(
+            {"subject": "Anonymous", "body": "Plain body"},
+            custom_values=values,
+        )
+        self.assertTrue(empty_author)
+
+    def test_deprecated_grouping_helpers(self):
+        rma = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        with self.assertWarns(DeprecationWarning):
+            self.assertEqual(rma._delivery_group_key(), rma._get_delivery_group_key())
+        with self.assertWarns(DeprecationWarning):
+            grouped = rma._group_delivery_if_needed()
+        self.assertIsNone(grouped)
+
+    def test_remaining_model_coverage_branches(self):
+        rma = self._create_rma(self.partner, self.product, 2, self.rma_loc)
+        rma.action_confirm()
+        reception_picking = rma.reception_move_id.picking_id
+        computed_rma = self.env["rma"].new({"picking_id": reception_picking.id})
+        computed_rma._compute_move_id()
+        self.assertEqual(computed_rma.move_id, reception_picking.move_ids)
+
+        received = self._create_confirm_receive(
+            self.partner, self.product, 2, self.rma_loc
+        )
+        received.with_context(
+            rma_return_grouping=False
+        )._prepare_delivery_procurements()
+        self.assertTrue(received.stock_reference_id)
+        received.stock_reference_id = False
+        received._prepare_replace_procurements(
+            self.warehouse,
+            False,
+            self.product,
+            1,
+            self.product.uom_id,
+        )
+        self.assertTrue(received.stock_reference_id)
+
+        received.create_return(False, 1, self.product.uom_id)
+        received.delivery_move_ids.quantity = 0
+        received._compute_delivered_qty()
+        self.assertEqual(received.delivered_qty, 1)
+        self.assertEqual(
+            received.action_view_delivery()["res_id"],
+            received.delivery_move_ids.picking_id.id,
+        )
+
+        draft = self._create_rma(self.partner, self.product, 1, self.rma_loc)
+        self.company.send_rma_draft_confirmation = True
+        self.company.rma_mail_draft_confirmation_template_id = self.env.ref(
+            "rma.mail_template_rma_draft_notification"
+        )
+        draft._send_draft_email()
+        self.assertTrue(draft.sent)
+        draft.action_confirm()
+        self.assertNotEqual(draft._creation_subtype(), self.env.ref("rma.mt_rma_draft"))
+        self.assertIsNotNone(draft._track_subtype({}))
+
+        anonymous = self.env["rma"].message_new(
+            {"subject": "Anonymous RMA", "body": "No custom values"}
+        )
+        self.assertEqual(anonymous.origin, "Incoming e-mail")
