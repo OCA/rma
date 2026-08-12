@@ -3,7 +3,7 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import Command, _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_is_zero
 
@@ -21,10 +21,10 @@ class SaleOrder(models.Model):
     rma_count = fields.Integer(string="RMA count", compute="_compute_rma_count")
 
     def _compute_rma_count(self):
-        rma_data = self.env["rma"].read_group(
-            [("order_id", "in", self.ids)], ["order_id"], ["order_id"]
+        rma_data = self.env["rma"]._read_group(
+            [("order_id", "in", self.ids)], ["order_id"], ["__count"]
         )
-        mapped_data = {r["order_id"][0]: r["order_id_count"] for r in rma_data}
+        mapped_data = {order.id: count for order, count in rma_data}
         for record in self:
             record.rma_count = mapped_data.get(record.id, 0)
 
@@ -43,7 +43,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.state != "sale":
             raise ValidationError(
-                _("You may only create RMAs from a confirmed sale order.")
+                self.env._("You may only create RMAs from a confirmed sale order.")
             )
         wizard_obj = self.env["sale.order.rma.wizard"]
         line_vals = [
@@ -54,7 +54,7 @@ class SaleOrder(models.Model):
             {"line_ids": line_vals, "location_id": self.warehouse_id.rma_loc_id.id}
         )
         return {
-            "name": _("Create RMA"),
+            "name": self.env._("Create RMA"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "sale.order.rma.wizard",
@@ -166,7 +166,7 @@ class SaleOrderLine(models.Model):
                 {
                     "product": product,
                     "quantity": self.qty_delivered,
-                    "uom": self.product_uom,
+                    "uom": self.product_uom_id,
                     "picking": False,
                     "sale_line_id": self,
                 }

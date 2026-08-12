@@ -16,19 +16,14 @@ class TestRmaSaleRefundFromInvoice(TestRmaSaleBase):
         super().setUpClass()
         cls.operation.action_create_refund = "manual_after_receipt"
         cls.product_1.invoice_policy = "delivery"
-        cls.product_tax = cls.env["account.tax"].search(
-            [("type_tax_use", "=", "sale"), ("company_id", "=", cls.company.id)],
-            limit=1,
+        cls.product_tax = cls.env["account.tax"].create(
+            {
+                "name": "RMA Sale Test Tax",
+                "amount": 21,
+                "type_tax_use": "sale",
+                "company_id": cls.company.id,
+            }
         )
-        if not cls.product_tax:
-            cls.product_tax = cls.env["account.tax"].create(
-                {
-                    "name": "RMA Sale Test Tax",
-                    "amount": 21,
-                    "type_tax_use": "sale",
-                    "company_id": cls.company.id,
-                }
-            )
         cls.product_1.taxes_id = [Command.set(cls.product_tax.ids)]
         cls.order = cls._create_sale_order([[cls.product_1, 5]])
         cls.order.action_confirm()
