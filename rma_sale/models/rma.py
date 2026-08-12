@@ -2,7 +2,7 @@
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.tools import float_compare
 
 
@@ -85,16 +85,20 @@ class Rma(models.Model):
             else:
                 rec.allowed_picking_ids = False  # don't populate a big list
 
-    @api.depends("order_id", "picking_id")
+    @api.depends(
+        "order_id.order_line.move_ids.state",
+        "order_id.order_line.move_ids.picking_id",
+        "picking_id.move_ids",
+    )
     def _compute_allowed_move_ids(self):
         for rec in self:
             if rec.order_id:
-                order_move = rec.order_id.order_line.mapped("move_ids")
-                rec.allowed_move_ids = order_move.filtered(
-                    lambda r: r.picking_id == self.picking_id and r.state == "done"
-                ).ids
+                allowed_moves = rec.order_id.order_line.move_ids.filtered_domain(
+                    [("picking_id", "=", rec.picking_id.id), ("state", "=", "done")]
+                )
             else:
-                rec.allowed_move_ids = self.picking_id.move_ids.ids
+                allowed_moves = rec.picking_id.move_ids
+            rec.allowed_move_ids = allowed_moves
 
     @api.depends("order_id")
     def _compute_allowed_product_ids(self):
@@ -209,13 +213,13 @@ class Rma(models.Model):
                 vals["sale_line_ids"] = [(4, line.id)]
         return vals
 
-    def _prepare_procurement_group_vals(self):
-        vals = super()._prepare_procurement_group_vals()
+    def _prepare_stock_reference_vals(self):
+        vals = super()._prepare_stock_reference_vals()
         if (
             not self.env.context.get("ignore_rma_sale_order")
             and len(self.order_id) == 1
         ):
-            vals["sale_id"] = self.order_id.id
+            vals["sale_ids"] = [Command.set(self.order_id.ids)]
         return vals
 
     def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
@@ -248,9 +252,9 @@ class Rma(models.Model):
             vals["sale_line_id"] = move.sale_line_id.id
         return vals
 
-    def _prepare_reception_procurement_vals(self, group=None):
+    def _prepare_reception_procurement_vals(self, reference=None):
         """This method is used only for reception and a specific RMA IN route."""
-        vals = super()._prepare_reception_procurement_vals(group=group)
+        vals = super()._prepare_reception_procurement_vals(reference=reference)
         move = self.sudo().move_id
         if (
             move
@@ -269,12 +273,9 @@ class Rma(models.Model):
         return True if self.order_id else res
 
     def create_replace(self, scheduled_date, warehouse, product, qty, uom):
-        # When the procurement group has the sale id set it will propagate to the
-        # pickings. This is inconvenient for this operation as when we confirm the
-        # customer delivery a new order line will be created with the replaced option
-        # which will be set for invoicing.
-        moves_before = self.sudo().delivery_move_ids
-        res = super().create_replace(scheduled_date, warehouse, product, qty, uom)
-        new_moves = self.sudo().delivery_move_ids - moves_before
-        new_moves.picking_id.sale_id = False
-        return res
+        # The reception stock reference is linked to the sale order. A replacement
+        # needs a new reference without that link; otherwise validating its picking
+        # creates an extra sale order line for the replacement product.
+        self.stock_reference_id = False
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super().create_replace(scheduled_date, warehouse, product, qty, uom)

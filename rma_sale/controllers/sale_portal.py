@@ -2,7 +2,7 @@
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import Command, _, http
+from odoo import Command, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 
@@ -81,7 +81,7 @@ class CustomerPortal(CustomerPortal):
         ) or request.env.user.has_group("base.group_public")
         rma = wizard.sudo().create_rma(from_portal=True)
         for rec in rma:
-            rec.origin += _(" (Portal)")
+            rec.origin += request.env._(" (Portal)")
         # Add the user as follower of the created RMAs so they can later view them.
         rma.message_subscribe([request.env.user.partner_id.id])
         # Subscribe the user to the notification subtype so he receives the confirmation
@@ -97,7 +97,7 @@ class CustomerPortal(CustomerPortal):
             route = (
                 order._get_share_url()
                 if user_has_group_portal
-                else "/my/rmas?sale_id=%d" % order_id
+                else f"/my/rmas?sale_id={order_id}"
             )
         return request.redirect(route)
 

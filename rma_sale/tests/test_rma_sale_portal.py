@@ -37,8 +37,12 @@ class TestRmaSalePortal(TestRmaSaleBase, HttpCase):
             }
         )
         cls.partner.parent_id = cls.partner_company
-        user = new_test_user(cls.env, login="rma_portal", groups="base.group_portal")
-        cls.sale_order.message_subscribe(partner_ids=user.partner_id.ids)
+        new_test_user(
+            cls.env,
+            login="rma_portal",
+            groups="base.group_portal",
+            partner_id=cls.partner.id,
+        )
 
     def test_rma_sale_portal(self):
         self.start_tour("/", "rma_sale_portal", login="rma_portal")

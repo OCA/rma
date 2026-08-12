@@ -199,8 +199,8 @@ class TestRmaSale(TestRmaSaleBase):
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         self.assertEqual(rma.order_id, order)
-        rma_group = rma.procurement_group_id
-        self.assertEqual(rma_group.sale_id, order)
+        rma_reference = rma.stock_reference_id
+        self.assertEqual(rma_reference.sale_ids, order)
         rma.reception_move_id.quantity = rma.product_uom_qty
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.state, "received")
@@ -208,8 +208,8 @@ class TestRmaSale(TestRmaSaleBase):
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
         wizard = wizard_form.save()
         wizard.action_deliver()
-        self.assertNotEqual(rma.procurement_group_id, rma_group)
-        self.assertFalse(rma.procurement_group_id.sale_id)
+        self.assertNotEqual(rma.stock_reference_id, rma_reference)
+        self.assertFalse(rma.stock_reference_id.sale_ids)
         picking = rma.delivery_move_ids.picking_id
         picking.move_ids.quantity = rma.product_uom_qty
         picking.button_validate()
@@ -250,16 +250,14 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(rma.move_id, self.order_out_picking.move_ids)
         self.assertEqual(rma.product_id, self.product_1)
         self.assertEqual(rma.product_uom_qty, self.order_line.product_uom_qty)
-        self.assertEqual(rma.product_uom, self.order_line.product_uom)
+        self.assertEqual(rma.product_uom, self.order_line.product_uom_id)
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
             rma.reception_move_id.origin_returned_move_id,
             self.order_out_picking.move_ids,
         )
-        self.assertEqual(
-            rma.reception_move_id.picking_id + self.order_out_picking,
-            order.picking_ids,
-        )
+        self.assertEqual(self.order_out_picking, order.picking_ids)
+        self.assertNotIn(rma.reception_move_id.picking_id, order.picking_ids)
         user = new_test_user(self.env, login="test_refund_with_so")
         order.user_id = user.id
         # Receive the RMA
@@ -301,16 +299,14 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(rma.move_id, self.order_out_picking.move_ids)
         self.assertEqual(rma.product_id, self.product_1)
         self.assertEqual(rma.product_uom_qty, self.order_line.product_uom_qty)
-        self.assertEqual(rma.product_uom, self.order_line.product_uom)
+        self.assertEqual(rma.product_uom, self.order_line.product_uom_id)
         self.assertEqual(rma.state, "confirmed")
         self.assertEqual(
             rma.reception_move_id.origin_returned_move_id,
             self.order_out_picking.move_ids,
         )
-        self.assertEqual(
-            rma.reception_move_id.picking_id + self.order_out_picking,
-            order.picking_ids,
-        )
+        self.assertEqual(self.order_out_picking, order.picking_ids)
+        self.assertNotIn(rma.reception_move_id.picking_id, order.picking_ids)
         user = new_test_user(self.env, login="test_refund_with_so")
         order.user_id = user.id
         # Receive the RMA
@@ -338,7 +334,7 @@ class TestRmaSale(TestRmaSaleBase):
                     "sale_line_id": order.order_line.id,
                     "quantity": order.order_line.product_uom_qty,
                     "allowed_quantity": order.order_line.qty_delivered,
-                    "uom_id": order.order_line.product_uom.id,
+                    "uom_id": order.order_line.product_uom_id.id,
                     "picking_id": order.picking_ids[0].id,
                     "operation_id": self.operation.id,
                 },
@@ -354,6 +350,14 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(rma.order_id, order)
         self.assertIn(order.partner_id, rma.message_partner_ids)
         self.assertEqual(order.rma_count, 1)
+
+    def test_rma_wizard_allowed_uoms(self):
+        wizard = self._rma_sale_wizard(self.sale_order)
+        self.assertEqual(
+            wizard.line_ids.allowed_uom_ids,
+            self.product_1.uom_id | self.product_1.uom_ids,
+        )
+        self.assertIn(wizard.line_ids.uom_id, wizard.line_ids.allowed_uom_ids)
 
     def test_create_recurrent_rma(self):
         """An RMA of a product that had an RMA in the past should be possible"""
@@ -447,7 +451,7 @@ class TestRmaSale(TestRmaSaleBase):
         sale_order.picking_ids.button_validate()
         wizard = self._rma_sale_wizard(sale_order)
         rmas = self.env["rma"].search(wizard.create_and_open_rma()["domain"])
-        self.assertEqual(len(rmas.reception_move_id.group_id), 1)
+        self.assertEqual(len(rmas.reception_move_id.reference_ids), 1)
         self.assertEqual(len(rmas.reception_move_id.picking_id), 1)
 
     def test_return_different_product(self):
@@ -477,7 +481,7 @@ class TestRmaSale(TestRmaSaleBase):
     def test_reception_grouped_even_from_different_sale_order(self):
         """
         ensure that RMAs linked to different sale orders are grouped and the procurement
-        group is not linked to any of the so
+        stock reference is not linked to any of the sale orders
         """
         sale_order1 = self._create_sale_order([[self.product_1, 5]])
         sale_order1.action_confirm()
@@ -512,12 +516,12 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(
             rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
         )
-        self.assertFalse(rma1.procurement_group_id.sale_id)
+        self.assertFalse(rma1.stock_reference_id.sale_ids)
 
     def test_reception_grouped_from_same_sale_order(self):
         """
         ensure that RMAs linked to same sale orders are grouped and the procurement
-        group is linked to the so
+        stock reference is linked to the sale order
         """
         sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 5]])
         sale_order.action_confirm()
@@ -554,7 +558,7 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(
             rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
         )
-        self.assertEqual(rma1.procurement_group_id.sale_id, sale_order)
+        self.assertEqual(rma1.stock_reference_id.sale_ids, sale_order)
 
     def test_not_rma_return_grouping_flow(self):
         self.company.rma_return_grouping = False
@@ -562,8 +566,8 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(len(order.order_line), 1)
         wizard = self._rma_sale_wizard(order)
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
-        rma_group = rma.procurement_group_id
-        self.assertEqual(rma_group.sale_id, order)
+        rma_reference = rma.stock_reference_id
+        self.assertEqual(rma_reference.sale_ids, order)
         self.assertEqual(rma.order_id, order)
         reception_move = rma.reception_move_id
         reception_move.picking_id.button_validate()
@@ -572,11 +576,11 @@ class TestRmaSale(TestRmaSaleBase):
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
         wizard = wizard_form.save()
         wizard.action_deliver()
-        self.assertNotEqual(rma.procurement_group_id, rma_group)
-        self.assertFalse(rma.procurement_group_id.sale_id)
+        self.assertNotEqual(rma.stock_reference_id, rma_reference)
+        self.assertFalse(rma.stock_reference_id.sale_ids)
         picking = rma.delivery_move_ids.picking_id
         picking.button_validate()
         self.assertEqual(rma.state, "returned")
         self.assertFalse(rma.delivery_move_ids.sale_line_id)
-        self.assertFalse(rma.procurement_group_id.sale_id)
+        self.assertFalse(rma.stock_reference_id.sale_ids)
         self.assertEqual(len(order.order_line), 1)

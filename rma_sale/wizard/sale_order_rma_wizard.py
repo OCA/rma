@@ -3,9 +3,11 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
+
 from markupsafe import Markup
 
-from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
@@ -39,7 +41,7 @@ class SaleOrderRmaWizard(models.TransientModel):
     location_id = fields.Many2one(
         comodel_name="stock.location",
         string="RMA location",
-        domain=_domain_location_id,
+        domain=lambda self: self._domain_location_id(),
         default=lambda r: r.order_id.warehouse_id.rma_loc_id.id,
     )
     commercial_partner_id = fields.Many2one(
@@ -65,7 +67,7 @@ class SaleOrderRmaWizard(models.TransientModel):
         lines = self.line_ids.filtered(lambda r: r.quantity > 0.0)
         val_list = [line._prepare_rma_values() for line in lines]
         rma_model = (
-            self.env["rma"].with_user(SUPERUSER_ID)
+            self.env["rma"].with_user(api.SUPERUSER_ID)
             if user_has_group_portal
             else self.env["rma"]
         )
@@ -75,14 +77,20 @@ class SaleOrderRmaWizard(models.TransientModel):
                 rma._add_message_subscribe_partner()
         # post messages
         msg_list = [
-            '<a href="#" data-oe-model="rma" data-oe-id="%d">%s</a>' % (r.id, r.name)
+            Markup('<a href="#" data-oe-model="rma" data-oe-id="{}">{}</a>').format(
+                r.id, r.name
+            )
             for r in rmas
         ]
-        msg = Markup(", ".join(msg_list))
+        msg = Markup(", ").join(msg_list)
         if len(msg_list) == 1:
-            self.order_id.message_post(body=_(msg + " has been created."))
+            self.order_id.message_post(
+                body=Markup(self.env._("%s has been created.")) % msg
+            )
         elif len(msg_list) > 1:
-            self.order_id.message_post(body=_(msg + " have been created."))
+            self.order_id.message_post(
+                body=Markup(self.env._("%s have been created.")) % msg
+            )
         for rma in rmas:
             rma.message_post_with_source(
                 "mail.message_origin_link",
@@ -130,9 +138,9 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         required=True,
         domain="[('id', 'in', allowed_product_ids)]",
     )
-    uom_category_id = fields.Many2one(
-        comodel_name="uom.category",
-        related="product_id.uom_id.category_id",
+    allowed_uom_ids = fields.Many2many(
+        comodel_name="uom.uom",
+        compute="_compute_allowed_uom_ids",
     )
     quantity = fields.Float(
         digits="Product Unit of Measure",
@@ -145,7 +153,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
     uom_id = fields.Many2one(
         comodel_name="uom.uom",
         string="Unit of Measure",
-        domain="[('category_id', '=', uom_category_id)]",
+        domain="[('id', 'in', allowed_uom_ids)]",
         required=True,
     )
     allowed_picking_ids = fields.Many2many(
@@ -185,6 +193,11 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             else:
                 rec.quantity = rec.allowed_quantity
 
+    @api.depends("product_id", "product_id.uom_id", "product_id.uom_ids")
+    def _compute_allowed_uom_ids(self):
+        for rec in self:
+            rec.allowed_uom_ids = rec.product_id.uom_id | rec.product_id.uom_ids
+
     @api.depends("wizard_id.operation_id")
     def _compute_operation_id(self):
         for rec in self:
@@ -216,15 +229,23 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         for record in self:
             record.allowed_product_ids = record.order_id.order_line.product_id
 
-    @api.depends("product_id")
+    @api.depends(
+        "product_id",
+        "order_id.order_line.product_id",
+        "order_id.order_line.move_ids.picking_id",
+        "order_id.order_line.move_ids.picking_id.state",
+    )
     def _compute_allowed_picking_ids(self):
+        pickings_by_order_product = defaultdict(lambda: self.env["stock.picking"])
+        for line in self.order_id.order_line:
+            key = (line.order_id.id, line.product_id.id)
+            done_pickings = line.move_ids.picking_id.filtered(
+                lambda picking: picking.state == "done"
+            )
+            pickings_by_order_product[key] |= done_pickings
         for record in self:
-            line = record.order_id.order_line.filtered(
-                lambda r, record=record: r.product_id == record.product_id
-            )
-            record.allowed_picking_ids = line.mapped("move_ids.picking_id").filtered(
-                lambda x: x.state == "done"
-            )
+            key = (record.order_id.id, record.product_id.id)
+            record.allowed_picking_ids = pickings_by_order_product[key]
 
     @api.constrains("quantity", "allowed_quantity")
     def _check_quantity(self):
@@ -239,7 +260,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
                 == 1
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "You can't exceed the allowed quantity for returning product "
                         "%(product)s.",
                         product=rec.product_id.display_name,
