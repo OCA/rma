@@ -7,3 +7,5 @@
 - Giovanni Serra - Ooops \<<giovanni@ooops404.com>\>
 - Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
 - Jacques-Etienne Baudoux - BCIM <je@bcim.be>
+- [Studio73](https://www.studio73.es):
+  - Eugenio Micó \<<eugenio@studio73.es>\>

@@ -11,6 +11,7 @@ registry.category("web_tour.tours").add("rma_sale_portal", {
             content: "Open the test sale order",
             trigger: 'a:contains("Test Sale RMA SO")',
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Open the RMA request pop-up",
@@ -51,6 +52,7 @@ registry.category("web_tour.tours").add("rma_sale_portal", {
             content: "Submit the RMA",
             trigger: "button[type='submit']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "We're redirected to the new draft RMA",
