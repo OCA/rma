@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_batch_form_view_inherit_reason" model="ir.ui.view">
+        <field name="name">rma.batch.form.inherit.reason</field>
+        <field name="model">rma.batch</field>
+        <field name="inherit_id" ref="rma_batch.rma_batch_form_view" />
+        <field name="arch" type="xml">
+            <field name="operation_id" position="after">
+                <field name="reason_id" readonly="state != 'draft'" />
+            </field>
+            <xpath
+                expr="//field[@name='rma_ids']/list/field[@name='operation_id']"
+                position="after"
+            >
+                <field name="reason_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
