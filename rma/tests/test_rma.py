@@ -22,6 +22,11 @@ class TestRma(BaseCommon):
             login="user_rma",
             groups="rma.rma_group_user_own,stock.group_stock_user",
         )
+        cls.user_stock = new_test_user(
+            cls.env,
+            login="user_stock",
+            groups="stock.group_stock_user",
+        )
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
         cls.company = cls.env.user.company_id
@@ -183,6 +188,28 @@ class TestRma(BaseCommon):
             move.quantity = move.product_uom_qty
         picking.button_validate()
         return picking
+
+    def _create_draft_delivery(self):
+        picking_type = self.env["stock.picking.type"].search(
+            [
+                ("code", "=", "outgoing"),
+                "|",
+                ("warehouse_id.company_id", "=", self.company.id),
+                ("warehouse_id", "=", False),
+            ],
+            limit=1,
+        )
+        picking_form = Form(
+            record=self.env["stock.picking"].with_context(
+                default_picking_type_id=picking_type.id
+            ),
+            view="stock.view_picking_form",
+        )
+        picking_form.partner_id = self.partner
+        with picking_form.move_ids_without_package.new() as move:
+            move.product_id = self.product
+            move.product_uom_qty = 10
+        return picking_form.save()
 
 
 class TestRmaCase(TestRma):
@@ -1091,6 +1118,11 @@ class TestRmaCase(TestRma):
         self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
+
+    def test_stock_user_can_confirm_picking_without_rma_acl(self):
+        picking = self._create_draft_delivery()
+        picking.with_user(self.user_stock).action_confirm()
+        self.assertIn(picking.state, ("confirmed", "assigned", "waiting"))
 
     def test_copy_operation(self):
         operation = self.env.ref("rma.rma_operation_refund")

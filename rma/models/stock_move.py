@@ -109,6 +109,12 @@ class StockMove(models.Model):
             "rma_receiver_ids",
         ]
 
+    def _merge_moves(self, merge_into=False):
+        self = self.sudo()
+        if merge_into:
+            merge_into = merge_into.sudo()
+        return super()._merge_moves(merge_into=merge_into)
+
     def _prepare_move_split_vals(self, qty):
         """Intended to the backport of picking linked to RMAs propagates the
         RMA link id.
