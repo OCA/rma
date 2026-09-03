@@ -234,6 +234,11 @@ class Rma(models.Model):
         compute="_compute_delivered_qty",
         store=True,
     )
+    delivered_qty_done = fields.Float(
+        digits="Product Unit of Measure",
+        compute="_compute_delivered_qty_done",
+        store=True,
+    )
     can_be_returned = fields.Boolean(
         compute="_compute_can_be_returned",
     )
@@ -248,6 +253,11 @@ class Rma(models.Model):
     )
     remaining_qty = fields.Float(
         string="Remaining delivered qty",
+        digits="Product Unit of Measure",
+        compute="_compute_remaining_qty",
+    )
+    remaining_qty_to_done = fields.Float(
+        string="Remaining delivered qty to done",
         digits="Product Unit of Measure",
         compute="_compute_remaining_qty",
     )
@@ -357,17 +367,12 @@ class Rma(models.Model):
         "product_uom",
     )
     def _compute_delivered_qty(self):
-        """Compute 'delivered_qty' and 'delivered_qty_done' fields.
+        """Compute 'delivered_qty' field.
 
         delivered_qty: represents the quantity delivery or to be
         delivery. For each move in delivery_move_ids the quantity done
         is taken, if it is empty the reserved quantity is taken,
         otherwise the initial demand is taken.
-
-        delivered_qty_done: represents the quantity delivered and done.
-        For each 'done' move in delivery_move_ids the quantity done is
-        taken. This field is used to control when the RMA cam be set
-        to 'delivered' state.
         """
         for record in self:
             delivered_qty = 0.0
@@ -385,7 +390,33 @@ class Rma(models.Model):
                     )
             record.delivered_qty = delivered_qty
 
-    @api.depends("product_uom_qty", "delivered_qty")
+    @api.depends(
+        "delivery_move_ids",
+        "delivery_move_ids.state",
+        "delivery_move_ids.scrapped",
+        "delivery_move_ids.quantity",
+        "delivery_move_ids.product_uom",
+    )
+    def _compute_delivered_qty_done(self):
+        """Compute 'delivered_qty_done' field.
+
+        delivered_qty_done: represents the quantity delivered and done.
+        For each 'done' move in delivery_move_ids the quantity done is
+        taken. This field is used to control when the RMA can be set
+        to 'delivered' state.
+        """
+        for record in self:
+            delivered_qty_done = 0.0
+            for move in record.delivery_move_ids.filtered(
+                lambda r: r.state == "done" and not r.scrapped and r.quantity
+            ):
+                quantity = move.product_uom._compute_quantity(
+                    move.quantity, record.product_uom
+                )
+                delivered_qty_done += quantity
+            record.delivered_qty_done = delivered_qty_done
+
+    @api.depends("product_uom_qty", "delivered_qty", "delivered_qty_done")
     def _compute_remaining_qty(self):
         """Compute 'remaining_qty' field.
 
@@ -394,6 +425,7 @@ class Rma(models.Model):
         """
         for r in self:
             r.remaining_qty = r.product_uom_qty - r.delivered_qty
+            r.remaining_qty_to_done = r.product_uom_qty - r.delivered_qty_done
 
     @api.depends(
         "state",
@@ -469,7 +501,7 @@ class Rma(models.Model):
                 and rma.remaining_qty > 0
             ) or (rma.state != "finished" and not rma.manual_finish_allowed)
 
-    @api.depends("product_uom_qty", "state", "remaining_qty")
+    @api.depends("product_uom_qty", "state", "remaining_qty", "remaining_qty_to_done")
     def _compute_can_be_split(self):
         """Compute 'can_be_split'. This field controls the
         visibility of 'Split' button in the rma form view and
@@ -486,10 +518,10 @@ class Rma(models.Model):
             else:
                 r.can_be_split = False
 
-    @api.depends("state")
+    @api.depends("remaining_qty_to_done", "state")
     def _compute_can_be_locked(self):
         for r in self:
-            r.can_be_locked = r.remaining_qty > 0 and r.state in [
+            r.can_be_locked = r.remaining_qty_to_done > 0 and r.state in [
                 "received",
                 "waiting_return",
                 "waiting_replacement",
@@ -1130,7 +1162,7 @@ class Rma(models.Model):
         self._ensure_can_be_split()
         self._ensure_qty_to_extract(qty, uom)
         self.product_uom_qty -= uom._compute_quantity(qty, self.product_uom)
-        if self.remaining_qty <= 0:
+        if self.remaining_qty_to_done <= 0:
             if self.state == "waiting_return":
                 self.state = "returned"
             elif self.state == "waiting_replacement":
@@ -1541,7 +1573,10 @@ class Rma(models.Model):
         [stock.move]._action_cancel
         """
         rma = self.filtered(
-            lambda r: (r.state == "waiting_replacement" and 0 >= r.remaining_qty)
+            lambda r: (
+                r.state == "waiting_replacement"
+                and 0 >= r.remaining_qty_to_done == r.remaining_qty
+            )
         )
         if rma:
             rma.write({"state": "replaced"})
@@ -1549,7 +1584,7 @@ class Rma(models.Model):
     def update_returned_state(self):
         """Invoked by [stock.move]._action_done"""
         rma = self.filtered(
-            lambda r: (r.state == "waiting_return" and r.remaining_qty <= 0)
+            lambda r: (r.state == "waiting_return" and r.remaining_qty_to_done <= 0)
         )
         if rma:
             rma.write({"state": "returned"})
