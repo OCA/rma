@@ -930,6 +930,11 @@ msgid "Delivered Qty"
 msgstr "gelieferte Menge"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
+msgid "Delivered Qty Done"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Delivered Quantity"
 msgstr "Gelieferte Anzahl"
@@ -2016,6 +2021,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty
 msgid "Remaining delivered qty"
 msgstr "Verbleibende Liefermenge"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
+msgid "Remaining delivered qty to done"
+msgstr ""
 
 #. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
