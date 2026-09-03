@@ -32,6 +32,17 @@
                 >
                     <field name="count_receipts" widget="statinfo" string="Return(s)" />
                 </button>
+                <button
+                    type="object"
+                    string="Refunds"
+                    name="action_view_refunds"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    invisible="not refund_ids"
+                    groups="account.group_account_invoice"
+                >
+                    <field name="count_refunds" widget="statinfo" string="Refund(s)" />
+                </button>
             </button>
         </field>
     </record>

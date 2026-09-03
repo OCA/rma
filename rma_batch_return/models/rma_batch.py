@@ -14,6 +14,13 @@ class RmaBatch(models.Model):
     receipt_ids = fields.One2many(
         comodel_name="stock.picking", inverse_name="rma_batch_id"
     )
+    refund_ids = fields.Many2many(
+        comodel_name="account.move",
+        compute="_compute_refund_ids",
+    )
+    count_refunds = fields.Integer(
+        compute="_compute_count_refunds",
+    )
     new_receipt_button_visible = fields.Boolean(
         compute="_compute_new_receipt_button_visible",
     )
@@ -21,6 +28,16 @@ class RmaBatch(models.Model):
         compute="_compute_can_be_refunded",
     )
     count_receipts = fields.Integer(compute="_compute_count_receipts")
+
+    @api.depends("rma_ids.refund_id")
+    def _compute_refund_ids(self):
+        for batch in self:
+            batch.refund_ids = batch.rma_ids.refund_id
+
+    @api.depends("refund_ids")
+    def _compute_count_refunds(self):
+        for batch in self:
+            batch.count_refunds = len(batch.refund_ids)
 
     @api.depends("receipt_ids")
     def _compute_count_receipts(self):
@@ -55,6 +72,26 @@ class RmaBatch(models.Model):
                 )
             else:
                 batch.can_be_refunded = False
+
+    def action_view_refunds(self):
+        """Invoked when 'Refunds' smart button in rma batch form view is clicked."""
+        self.ensure_one()
+        action = {
+            "name": self.env._("Refund(s)"),
+            "type": "ir.actions.act_window",
+            "res_model": "account.move",
+            "target": "current",
+        }
+        invoice_ids = self.refund_ids.ids
+        if len(invoice_ids) == 1:
+            invoice = invoice_ids[0]
+            action["res_id"] = invoice
+            action["view_mode"] = "form"
+            action["views"] = [(self.env.ref("account.view_move_form").id, "form")]
+        else:
+            action["view_mode"] = "list,form"
+            action["domain"] = [("id", "in", invoice_ids)]
+        return action
 
     def action_view_receipts(self):
         self.ensure_one()
