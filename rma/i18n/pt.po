@@ -777,6 +777,11 @@ msgid "Delivered Qty"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
+msgid "Delivered Qty Done"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Delivered Quantity"
 msgstr ""
@@ -1826,6 +1831,11 @@ msgid "Remaining delivered qty"
 msgstr "Quantidade Entregue Restante"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
+msgid "Remaining delivered qty to done"
+msgstr "Qtd. restante entregue a fazer"
+
+#. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
 msgstr "Reparar"
@@ -2535,9 +2545,6 @@ msgstr ""
 
 #~ msgid "Owner"
 #~ msgstr "Proprietário"
-
-#~ msgid "Remaining delivered qty to done"
-#~ msgstr "Qtd. restante entregue a fazer"
 
 #~ msgid ""
 #~ "The owner of records created upon receiving emails on this alias. If this "

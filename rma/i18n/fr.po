@@ -893,6 +893,11 @@ msgid "Delivered Qty"
 msgstr "Qté livrée"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
+msgid "Delivered Qty Done"
+msgstr "Quantité livrée Terminé"
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Delivered Quantity"
 msgstr ""
@@ -1941,6 +1946,11 @@ msgid "Remaining delivered qty"
 msgstr "Qté restante à livrer"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
+msgid "Remaining delivered qty to done"
+msgstr "Qté restante à livrer avant de terminer"
+
+#. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
 msgstr "Réparation"
@@ -2672,9 +2682,6 @@ msgstr ""
 #~ msgid "Alias domain"
 #~ msgstr "Domaine de l'alias"
 
-#~ msgid "Delivered Qty Done"
-#~ msgstr "Quantité livrée Terminé"
-
 #~ msgid "Last Modified on"
 #~ msgstr "Dernière Modification le"
 
@@ -2683,9 +2690,6 @@ msgstr ""
 
 #~ msgid "Owner"
 #~ msgstr "Propriétaire"
-
-#~ msgid "Remaining delivered qty to done"
-#~ msgstr "Qté restante à livrer avant de terminer"
 
 #~ msgid ""
 #~ "When the RMA is receive, allow to finsish it manually choosing\n"
