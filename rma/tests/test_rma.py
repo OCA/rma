@@ -585,6 +585,8 @@ class TestRmaCase(TestRma):
         self.assertFalse(rma.can_be_replaced)
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
+        self.assertEqual(rma.delivered_qty_done, 0)
+        self.assertEqual(rma.remaining_qty_to_done, 10)
         first_move = rma.delivery_move_ids
         picking = first_move.picking_id
         picking.action_cancel()
@@ -614,11 +616,15 @@ class TestRmaCase(TestRma):
         self.assertTrue(new_picking.state, "waiting")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
+        self.assertEqual(rma.delivered_qty_done, 0)
+        self.assertEqual(rma.remaining_qty_to_done, 10)
         second_move.quantity = 10
         new_picking.button_validate()
         self.assertEqual(new_picking.state, "done")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
+        self.assertEqual(rma.delivered_qty_done, 10)
+        self.assertEqual(rma.remaining_qty_to_done, 0)
         # The RMA is now in 'replaced' state
         self.assertEqual(rma.state, "replaced")
         self.assertFalse(rma.can_be_refunded)
@@ -651,6 +657,8 @@ class TestRmaCase(TestRma):
         self.assertTrue(rma.can_be_returned)
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
+        self.assertEqual(rma.delivered_qty_done, 0)
+        self.assertEqual(rma.remaining_qty_to_done, 10)
         first_move = rma.delivery_move_ids
         picking = first_move.picking_id
         # Validate the picking
@@ -659,6 +667,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(picking.state, "done")
         self.assertEqual(rma.delivered_qty, 2)
         self.assertEqual(rma.remaining_qty, 8)
+        self.assertEqual(rma.delivered_qty_done, 2)
+        self.assertEqual(rma.remaining_qty_to_done, 8)
         # Return the remaining quantity to the customer
         delivery_form = Form(
             self.env["rma.delivery.wizard"].with_context(
@@ -672,6 +682,8 @@ class TestRmaCase(TestRma):
         second_move.quantity = 8
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
+        self.assertEqual(rma.delivered_qty_done, 2)
+        self.assertEqual(rma.remaining_qty_to_done, 8)
         self.assertEqual(rma.state, "waiting_return")
         # remaining_qty is 0 but rma is not set to 'returned' until
         picking_2 = second_move.picking_id
@@ -679,6 +691,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(picking_2.state, "done")
         self.assertEqual(rma.delivered_qty, 10)
         self.assertEqual(rma.remaining_qty, 0)
+        self.assertEqual(rma.delivered_qty_done, 10)
+        self.assertEqual(rma.remaining_qty_to_done, 0)
         # The RMA is now in 'returned' state
         self.assertEqual(rma.state, "returned")
         self.assertFalse(rma.can_be_refunded)
@@ -896,6 +910,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.origin_split_rma_id, rma)
         self.assertEqual(new_rma.delivered_qty, 0)
         self.assertEqual(new_rma.remaining_qty, 6)
+        self.assertEqual(new_rma.delivered_qty_done, 0)
+        self.assertEqual(new_rma.remaining_qty_to_done, 6)
         self.assertEqual(new_rma.state, "received")
         self.assertFalse(new_rma.can_be_refunded)
         self.assertTrue(new_rma.can_be_returned)
@@ -1096,3 +1112,43 @@ class TestRmaCase(TestRma):
         operation = self.env.ref("rma.rma_operation_refund")
         new_operation = operation.copy()
         self.assertEqual(new_operation.name, "Refund (copy)")
+
+    def test_split_rma_returned(self):
+        rma = self._create_confirm_receive(self.partner, self.product, 2, self.rma_loc)
+        self.assertEqual(rma.state, "received")
+        delivery_form = Form(
+            self.env["rma.delivery.wizard"].with_context(
+                active_ids=rma.ids,
+                rma_delivery_type="return",
+            )
+        )
+        delivery_form.product_uom_qty = 1
+        delivery_wizard = delivery_form.save()
+        delivery_wizard.action_deliver()
+        delivery_move = rma.delivery_move_ids
+        delivery_picking = delivery_move.picking_id
+        delivery_move.quantity = 1
+        self.assertEqual(delivery_picking.state, "assigned")
+        self.assertEqual(rma.state, "waiting_return")
+        self.assertTrue(rma.can_be_split)
+        split_wizard = (
+            self.env["rma.split.wizard"]
+            .with_context(
+                active_id=rma.id,
+                active_ids=rma.ids,
+            )
+            .create({})
+        )
+        res = split_wizard.action_split()
+        rma_extra = self.env[res["res_model"]].browse(res["res_id"])
+        self.assertEqual(rma_extra.state, "received")
+        # Because the outgoing picking has not been validated yet,
+        # the original RMA must remain in Waiting for return.
+        self.assertEqual(rma.state, "waiting_return")
+        # Validate the outgoing picking after the split.
+        # This marks the delivered unit as done and changes the original
+        # RMA to Returned.
+        delivery_picking.button_validate()
+        self.assertEqual(delivery_picking.state, "done")
+        self.assertEqual(rma.delivered_qty_done, 1)
+        self.assertEqual(rma.state, "returned")
