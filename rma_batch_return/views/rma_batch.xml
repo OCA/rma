@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_batch_form_view" model="ir.ui.view">
+        <field name="model">rma.batch</field>
+        <field name="inherit_id" ref="rma_batch.rma_batch_form_view" />
+        <field name="arch" type="xml">
+            <button name="action_confirm" position="after">
+                <button
+                    name="action_create_blank_return_picking"
+                    string="Create Return"
+                    type="object"
+                    invisible="new_receipt_button_visible == False"
+                    class="btn-primary"
+                />
+                <button
+                    type="object"
+                    string="To Refund"
+                    name="action_refund"
+                    invisible="not can_be_refunded"
+                    class="btn-primary"
+                />
+            </button>
+            <button name="action_open_rma" position="after">
+                <button
+                    type="object"
+                    name="action_view_receipts"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    invisible="count_receipts == 0"
+                >
+                    <field name="count_receipts" widget="statinfo" string="Return(s)" />
+                </button>
+            </button>
+        </field>
+    </record>
+</odoo>
