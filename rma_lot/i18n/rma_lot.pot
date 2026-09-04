@@ -89,6 +89,12 @@ msgid "Serial Number"
 msgstr ""
 
 #. module: rma_lot
+#. odoo-python
+#: code:addons/rma_lot/models/rma.py:0
+msgid "The serial number %(serial)s is not available"
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Tracking"
