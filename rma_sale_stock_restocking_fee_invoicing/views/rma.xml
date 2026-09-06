@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_form_view" model="ir.ui.view">
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_refund']" position="after">
+                <button
+                    type="object"
+                    string="Invoice"
+                    name="action_view_restocking_fee_invoice"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    invisible="not restocking_fee_invoice_id"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='procurement_group_id']//parent::group//parent::group"
+                position="inside"
+            >
+                <group invisible="not restocking_fee_visibility">
+                    <field name="restocking_fee_type" />
+                </group>
+                <group invisible="not restocking_fee_visibility">
+                    <field
+                        name="restocking_fee_amount"
+                        required="restocking_fee_type"
+                        invisible="not restocking_fee_type"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

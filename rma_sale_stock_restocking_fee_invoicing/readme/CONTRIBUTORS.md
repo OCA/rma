@@ -1,0 +1,2 @@
+- Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
+- Marie Lejeune - ACSONE SA/NV <marie.lejeune@acsone.eu>
