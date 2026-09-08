@@ -59,6 +59,7 @@ class Rma(models.Model):
         rma_to_link = self.filtered(
             lambda r: not r.sale_line_id and not r.ignore_sale_auto_detect
         )
+        unlinked_rmas = self.browse()
         for rma in rma_to_link:
             if rma.order_id:
                 sale_lines = rma.order_id.order_line.filtered(
@@ -71,9 +72,11 @@ class Rma(models.Model):
 
             sale_lines = _filter_sol(sale_lines)
             sale_lines = _sort_sol(sale_lines)
-            rma._link_rma_to_sale_line(sale_lines)
+            unlinked_rmas |= rma._link_rma_to_sale_line(sale_lines)
         # Mark remaining unmatched RMAs
-        not_linked_rmas = rma_to_link.filtered(lambda r: not r.move_id)
+        not_linked_rmas = (rma_to_link | unlinked_rmas).filtered(
+            lambda r: not r.sale_line_id
+        )
         not_linked_rmas.has_sale_auto_detect_issue = True
         not_linked_rmas.sale_auto_detect_note = _(
             "No delivery move found or insufficient delivered quantity."
@@ -118,8 +121,9 @@ class Rma(models.Model):
 
     def _link_rma_to_sale_line(self, sale_lines):
         """match between rmas and sale lines"""
+        matched_rmas = self.browse()
         if not sale_lines:
-            return False
+            return matched_rmas
         sale_line_delivered_qty = self._get_sale_line_returnable_qty(sale_lines)
         rmas = self.sorted("date")
         sale_lines = sale_lines.sorted(lambda sol: (sol.order_id.date_order, sol.id))
@@ -154,11 +158,13 @@ class Rma(models.Model):
                 matched_rma._link_rma_to_delivery_move(sale_line)
                 sale_line_delivered_qty[sale_line.id] = 0.0
                 sale_index += 1
+                matched_rmas |= matched_rma
             else:
                 # rma quantity smaller than available delivered qty
                 rma._link_rma_to_delivery_move(sale_line, qty_limit=rma_qty)
                 sale_line_delivered_qty[sale_line.id] = remaining_qty - rma_qty
                 rma_index += 1
+        return matched_rmas
 
     @api.model
     def _get_sale_line_returnable_qty(self, sale_lines):
