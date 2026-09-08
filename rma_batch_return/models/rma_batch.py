@@ -66,7 +66,7 @@ class RmaBatch(models.Model):
     @api.depends("rma_ids.can_be_refunded")
     def _compute_can_be_refunded(self):
         for batch in self:
-            if batch.state == "confirmed" and batch.rma_ids:
+            if batch.rma_ids:
                 batch.can_be_refunded = all(
                     rma.can_be_refunded for rma in batch.rma_ids
                 )
