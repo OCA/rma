@@ -1107,6 +1107,17 @@ class TestRmaCase(TestRma):
         self.assertNotEqual(rma1.procurement_group_id, rma3.procurement_group_id)
         self.assertEqual(len((rma1 | rma2).reception_move_id.picking_id), 1)
         self.assertEqual(len((rma1 | rma2 | rma3).reception_move_id.picking_id), 2)
+        # test reception of 1 RMA only
+        rma1.reception_move_id.picking_id.picking_type_id.create_backorder = "always"
+        rma1.reception_move_id.quantity = rma1.product_uom_qty
+        rma2.reception_move_id.quantity = 0.0
+        rma3.reception_move_id.quantity = 0.0
+        rma1.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma1.reception_move_id.state, "done")
+        self.assertEqual(
+            rma2.reception_move_id.picking_id.backorder_id,
+            rma1.reception_move_id.picking_id,
+        )
 
     def test_copy_operation(self):
         operation = self.env.ref("rma.rma_operation_refund")
