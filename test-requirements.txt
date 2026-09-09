@@ -1,0 +1,1 @@
+odoo-addon-product-variant-base-list-price @ git+https://github.com/OCA/product-variant@refs/pull/439/head#subdirectory=product_variant_base_list_price
