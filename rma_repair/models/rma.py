@@ -62,7 +62,7 @@ class RMA(models.Model):
         return {
             "default_rma_ids": [self.id],
             "default_product_id": self.product_id.id,
-            "default_location_id": self.location_id.id,
+            "default_product_location_src_id": self.location_id.id,
             "default_partner_id": self.partner_id.id,
             "default_product_qty": self.product_uom_qty,
             "default_product_uom": self.product_uom.id,
