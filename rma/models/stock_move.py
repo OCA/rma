@@ -70,6 +70,7 @@ class StockMove(models.Model):
                     precision_digits=qty_prec,
                 )
                 != 0
+                and float_compare(move.quantity, 0, precision_digits=qty_prec != 0)
             ):
                 raise ValidationError(
                     self.env._(
