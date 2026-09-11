@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-rma"
-version = "19.0.20260623.0"
+version = "19.0.20260911.0"
 dependencies = [
     "odoo-addon-product_warranty==19.0.*",
+    "odoo-addon-rma==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
