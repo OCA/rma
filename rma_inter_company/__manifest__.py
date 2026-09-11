@@ -3,7 +3,7 @@
 
 {
     "name": "Inter Company Module for RMA",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "category": "RMA",
     "website": "https://github.com/OCA/rma",
     "author": "Tecnativa, Odoo Community Association (OCA)",
