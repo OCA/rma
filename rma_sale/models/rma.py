@@ -1,0 +1,281 @@
+# Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo import Command, api, fields, models
+from odoo.tools import float_compare
+
+
+class Rma(models.Model):
+    _inherit = "rma"
+
+    order_id = fields.Many2one(
+        comodel_name="sale.order",
+        string="Sale Order",
+        domain="["
+        "    ('partner_id', 'child_of', commercial_partner_id),"
+        "    ('state', '=', 'sale'),"
+        "]",
+        store=True,
+        readonly=False,
+        compute="_compute_order_id",
+    )
+    allowed_picking_ids = fields.Many2many(
+        comodel_name="stock.picking",
+        compute="_compute_allowed_picking_ids",
+    )
+    picking_id = fields.Many2one(
+        domain="(order_id or partner_id) and [('id', 'in', allowed_picking_ids)] or "
+        "[('state', '=', 'done'), ('picking_type_id.code', '=', 'outgoing')] "
+    )
+    allowed_move_ids = fields.Many2many(
+        comodel_name="stock.move",
+        compute="_compute_allowed_move_ids",
+    )
+    move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
+    sale_line_id = fields.Many2one(
+        related="move_id.sale_line_id",
+    )
+    allowed_product_ids = fields.Many2many(
+        comodel_name="product.product",
+        compute="_compute_allowed_product_ids",
+        compute_sudo=True,
+    )
+    product_id = fields.Many2one(
+        domain="order_id and [('id', 'in', allowed_product_ids)] or "
+        "[('type', 'in', ['consu', 'product'])]"
+    )
+    # Add index to this field, as we perform a search on it
+    refund_id = fields.Many2one(index=True)
+    can_be_refunded_with_invoice = fields.Boolean(
+        compute="_compute_can_be_refunded_with_invoice"
+    )
+
+    @api.depends(
+        "can_be_refunded",
+        "sale_line_id",
+        "sale_line_id.invoice_lines",
+        "move_id",
+        "move_id.rma_id",
+        "move_id.rma_id.sale_line_id",
+        "move_id.rma_id.sale_line_id.invoice_lines",
+    )
+    def _compute_can_be_refunded_with_invoice(self):
+        for rec in self:
+            rec.can_be_refunded_with_invoice = bool(
+                rec.can_be_refunded
+                and (
+                    rec.sale_line_id.invoice_lines
+                    or rec.move_id.rma_id.sale_line_id.invoice_lines
+                )
+            )
+
+    @api.depends("partner_id", "order_id")
+    def _compute_allowed_picking_ids(self):
+        domain = [("state", "=", "done"), ("picking_type_id.code", "=", "outgoing")]
+        for rec in self:
+            domain2 = domain.copy()
+            if rec.partner_id:
+                commercial_partner = rec.partner_id.commercial_partner_id
+                domain2.append(("partner_id", "child_of", commercial_partner.id))
+            if rec.order_id:
+                domain2.append(("sale_id", "=", rec.order_id.id))
+            if domain2 != domain:
+                rec.allowed_picking_ids = self.env["stock.picking"].search(domain2)
+            else:
+                rec.allowed_picking_ids = False  # don't populate a big list
+
+    @api.depends(
+        "order_id.order_line.move_ids.state",
+        "order_id.order_line.move_ids.picking_id",
+        "picking_id.move_ids",
+    )
+    def _compute_allowed_move_ids(self):
+        for rec in self:
+            if rec.order_id:
+                allowed_moves = rec.order_id.order_line.move_ids.filtered_domain(
+                    [("picking_id", "=", rec.picking_id.id), ("state", "=", "done")]
+                )
+            else:
+                allowed_moves = rec.picking_id.move_ids
+            rec.allowed_move_ids = allowed_moves
+
+    @api.depends("order_id")
+    def _compute_allowed_product_ids(self):
+        for rec in self:
+            if rec.order_id:
+                order_product = rec.order_id.order_line.mapped("product_id")
+                rec.allowed_product_ids = order_product.filtered(
+                    lambda r: r.type in ["consu", "product"]
+                ).ids
+            else:
+                rec.allowed_product_ids = False  # don't populate a big list
+
+    @api.depends("partner_id")
+    def _compute_order_id(self):
+        """Empty sales order when changing partner."""
+        self.order_id = False
+
+    @api.onchange("order_id")
+    def _onchange_order_id(self):
+        self.product_id = self.picking_id = False
+
+    def _link_refund_with_reception_move(self):
+        """Perform the internal operations for linking the RMA reception move with the
+        sales order line if applicable.
+        """
+        self.ensure_one()
+        move = self.sudo().reception_move_id
+        if (
+            move
+            and float_compare(
+                self.product_uom_qty,
+                move.product_uom_qty,
+                precision_rounding=move.product_uom.rounding,
+            )
+            == 0
+        ):
+            move.sale_line_id = self.sale_line_id.id
+            move.to_refund = True
+
+    def _unlink_refund_with_reception_move(self):
+        """Perform the internal operations for unlinking the RMA reception move with the
+        sales order line.
+        """
+        self.ensure_one()
+        self.reception_move_id.sale_line_id = False
+        self.reception_move_id.to_refund = False
+
+    def action_refund_without_invoice(self):
+        for record in self.filtered("can_be_refunded"):
+            record._action_refund_after_hook()
+
+    def _action_refund_after_hook(self):
+        """As we have made a refund, the return move + the refund should be linked to
+        the source sales order line, to decrease both the delivered and invoiced
+        quantity.
+
+        NOTE: The refund line is linked to the SO line in `_prepare_refund_line`.
+        """
+        res = super()._action_refund_after_hook()
+        for rma in self.filtered(lambda x: x.state == "refunded"):
+            if rma.sale_line_id:
+                rma._link_refund_with_reception_move()
+            elif not rma.sale_line_id and rma.move_id.rma_id.sudo().sale_line_id:
+                # If there is no sales line, we must apply it to the original RMA
+                rma.move_id.rma_id._link_refund_with_reception_move()
+        return res
+
+    def _prepare_refund_vals(self, origin=False):
+        """Inject fiscal_position_id + salesman from sales order (if any)"""
+        vals = super()._prepare_refund_vals(origin=origin)
+        order = self.sudo().order_id
+        if not order and self.move_id.rma_id:
+            # We use the RMA from which it was created
+            order = self.move_id.rma_id.sudo().order_id
+        if order:
+            vals["invoice_user_id"] = order.user_id.id
+            # It is important to set the correct fiscal position for the sales order
+            # when creating the invoice, just as it is done in sale
+            vals["fiscal_position_id"] = (
+                order.fiscal_position_id
+                or order.fiscal_position_id._get_fiscal_position(
+                    self.partner_invoice_id
+                )
+            ).id
+        return vals
+
+    def _prepare_refund_line_vals(self):
+        """Add line data and link to the sales order, only if the RMA is for the whole
+        move quantity. In other cases, incorrect delivered/invoiced quantities will be
+        logged on the sales order, so better to let the operations not linked.
+        """
+        vals = super()._prepare_refund_line_vals()
+        line = self.sudo().sale_line_id
+        if not line and self.move_id.rma_id:
+            # We use the RMA from which it was created
+            line = self.move_id.rma_id.sudo().sale_line_id
+        if line:
+            vals["product_id"] = line.product_id.id
+            vals["price_unit"] = line.price_unit
+            vals["discount"] = line.discount
+            vals["sequence"] = line.sequence
+            move = self.sudo().reception_move_id
+            if (
+                move
+                and float_compare(
+                    self.product_uom_qty,
+                    move.product_uom_qty,
+                    precision_rounding=move.product_uom.rounding,
+                )
+                == 0
+            ):
+                vals["sale_line_ids"] = [(4, line.id)]
+        return vals
+
+    def _prepare_stock_reference_vals(self):
+        vals = super()._prepare_stock_reference_vals()
+        if (
+            not self.env.context.get("ignore_rma_sale_order")
+            and len(self.order_id) == 1
+        ):
+            vals["sale_ids"] = [Command.set(self.order_id.ids)]
+        return vals
+
+    def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super()._prepare_delivery_procurements(
+            scheduled_date=scheduled_date, qty=qty, uom=uom
+        )
+
+    def _prepare_delivery_procurement_vals(self, scheduled_date=None):
+        vals = super()._prepare_delivery_procurement_vals(scheduled_date=scheduled_date)
+        move = self.sudo().move_id
+        if (
+            move
+            and move.sale_line_id
+            and self.operation_id.action_create_refund == "update_quantity"
+        ):
+            vals["sale_line_id"] = move.sale_line_id.id
+        return vals
+
+    def _prepare_replace_procurement_vals(self, warehouse=None, scheduled_date=None):
+        vals = super()._prepare_replace_procurement_vals(
+            warehouse=warehouse, scheduled_date=scheduled_date
+        )
+        move = self.sudo().move_id
+        if (
+            move
+            and move.sale_line_id
+            and self.operation_id.action_create_refund == "update_quantity"
+        ):
+            vals["sale_line_id"] = move.sale_line_id.id
+        return vals
+
+    def _prepare_reception_procurement_vals(self, reference=None):
+        """This method is used only for reception and a specific RMA IN route."""
+        vals = super()._prepare_reception_procurement_vals(reference=reference)
+        move = self.sudo().move_id
+        if (
+            move
+            and move.sale_line_id
+            and self.operation_id.action_create_refund == "update_quantity"
+        ):
+            vals["sale_line_id"] = move.sale_line_id.id
+        return vals
+
+    def _delivery_should_be_grouped(self):
+        # It is important to always return True if there is a linked sales order
+        # so that rma creates a new procurement.group, there by preventing an extra
+        # sales order line from being automatically created once the delivery
+        # picking is done.
+        res = super()._delivery_should_be_grouped()
+        return True if self.order_id else res
+
+    def create_replace(self, scheduled_date, warehouse, product, qty, uom):
+        # The reception stock reference is linked to the sale order. A replacement
+        # needs a new reference without that link; otherwise validating its picking
+        # creates an extra sale order line for the replacement product.
+        self.stock_reference_id = False
+        self = self.with_context(ignore_rma_sale_order=True)
+        return super().create_replace(scheduled_date, warehouse, product, qty, uom)
