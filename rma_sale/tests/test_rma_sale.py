@@ -89,6 +89,32 @@ class TestRmaSale(TestRmaSaleBase):
             self.order_out_picking.move_ids, self.order_line.get_delivery_move()
         )
 
+    def test_create_rma_from_picking(self):
+        partner_shipping = self.env["res.partner"].create(
+            {
+                "name": "Test partner shipping",
+                "parent_id": self.partner.id,
+            }
+        )
+        self.sale_order.partner_shipping_id = partner_shipping
+        return_wizard_form = Form(
+            self.env["stock.return.picking"]
+            .sudo()
+            .with_context(
+                active_id=self.order_out_picking.id,
+                active_model=self.order_out_picking._name,
+            )
+        )
+        return_wizard_form.create_rma = True
+        return_wizard_form.rma_operation_id = self.operation
+        return_wizard = return_wizard_form.save()
+        res = return_wizard.action_create_returns_all()
+        new_picking = self.env[res["res_model"]].browse(res["res_id"])
+        new_rma = new_picking.move_ids.rma_receiver_ids
+        self.assertTrue(new_rma)
+        self.assertEqual(new_rma.partner_id, self.partner)
+        self.assertEqual(new_rma.partner_shipping_id, partner_shipping)
+
     def test_rma_sale_computes_onchange(self):
         rma = self.env["rma"].new()
         # No m2m values when everything is selectable

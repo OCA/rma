@@ -23,3 +23,20 @@ class ReturnPicking(models.TransientModel):
         if sale_order:
             vals["order_id"] = sale_order.id
         return vals
+
+
+class ReturnPickingLine(models.TransientModel):
+    _inherit = "stock.return.picking.line"
+
+    def _prepare_rma_vals(self):
+        vals = super()._prepare_rma_vals()
+        # If the RMA is created from a picking order linked to a sales order, the
+        # partner data in the RMA must be correct
+        order = self.move_id.sale_line_id.order_id
+        if order:
+            vals.update(
+                partner_id=order.partner_id.id,
+                partner_shipping_id=order.partner_shipping_id.id,
+                partner_invoice_id=order.partner_invoice_id.id,
+            )
+        return vals
