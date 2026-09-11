@@ -1,0 +1,153 @@
+# Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    # RMAs that were created from the delivery move
+    rma_ids = fields.One2many(
+        comodel_name="rma",
+        inverse_name="move_id",
+        string="RMAs",
+        copy=False,
+    )
+    # RMAs linked to the incoming movement from client
+    rma_receiver_ids = fields.One2many(
+        comodel_name="rma",
+        inverse_name="reception_move_id",
+        string="RMA receivers",
+        copy=False,
+    )
+    # RMA that creates the out move
+    rma_id = fields.Many2one(
+        comodel_name="rma", string="RMA return", copy=False, index=True
+    )
+
+    def unlink(self):
+        # A stock user could have no RMA permissions, so the ids wouldn't
+        # be accessible due to record rules.
+        rma_receiver = self.sudo().rma_receiver_ids
+        rma = self.sudo().rma_id
+        res = super().unlink()
+        rma_receiver.filtered(lambda x: x.state != "cancelled").write(
+            {"state": "draft"}
+        )
+        rma.update_received_state()
+        rma.update_replaced_state()
+        return res
+
+    def _action_cancel(self):
+        res = super()._action_cancel()
+        # A stock user could have no RMA permissions, so the ids wouldn't
+        # be accessible due to record rules.
+        cancelled_moves = self.filtered(lambda r: r.state == "cancel").sudo()
+        cancelled_moves.mapped("rma_receiver_ids").write({"state": "draft"})
+        cancelled_moves.mapped("rma_id").update_received_state()
+        cancelled_moves.mapped("rma_id").update_replaced_state()
+        return res
+
+    def _action_done(self, cancel_backorder=False):
+        """Avoids to validate stock.move with less quantity than the
+        quantity in the linked receiver RMA. It also set the appropriated
+        linked RMA to 'received' or 'delivered'.
+        """
+        for move in self.filtered(lambda r: r.state not in ("done", "cancel")):
+            rma_receiver = move.sudo().rma_receiver_ids
+            qty_prec = self.env["decimal.precision"].precision_get(
+                "Product Unit of Measure"
+            )
+            if (
+                rma_receiver
+                and float_compare(
+                    move.quantity,
+                    rma_receiver.product_uom_qty,
+                    precision_digits=qty_prec,
+                )
+                != 0
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "The quantity done for the product '%(id)s' must "
+                        "be equal to its initial demand because the "
+                        "stock move is linked to an RMA (%(name)s).",
+                        id=move.product_id.name,
+                        name=move.rma_receiver_ids.name,
+                    )
+                )
+        res = super()._action_done(cancel_backorder=cancel_backorder)
+        move_done = self.filtered(lambda r: r.state == "done").sudo()
+        # Set RMAs as received. We sudo so we can grant the operation even
+        # if the stock user has no RMA permissions.
+        to_be_received = (
+            move_done.sudo()
+            .mapped("rma_receiver_ids")
+            .filtered(lambda r: r.state == "confirmed")
+        )
+        to_be_received.update_received_state_on_reception()
+        # Set RMAs as delivered
+        move_done.mapped("rma_id").update_replaced_state()
+        move_done.mapped("rma_id").update_returned_state()
+        return res
+
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        """The main use is that launched delivery RMAs doesn't merge
+        two moves if they are linked to a different RMAs.
+        """
+        return super()._prepare_merge_moves_distinct_fields() + [
+            "rma_id",
+            "rma_receiver_ids",
+        ]
+
+    def _prepare_move_split_vals(self, qty):
+        """Intended to the backport of picking linked to RMAs propagates the
+        RMA link id.
+        """
+        res = super()._prepare_move_split_vals(qty)
+        res["rma_id"] = self.sudo().rma_id.id
+        return res
+
+    def _prepare_procurement_values(self):
+        res = super()._prepare_procurement_values()
+        if self.rma_id:
+            res["rma_id"] = self.rma_id.id
+        return res
+
+    def _get_new_picking_values(self):
+        # For reception pickings created from an RMA, if the RMA is linked to a
+        # picking_id, we don't want to lose the stock information from the return
+        # pick (Return of WH/OUT/001)
+        values = super()._get_new_picking_values()
+        if self.rma_receiver_ids and all(
+            rma.picking_id for rma in self.rma_receiver_ids
+        ):
+            origin = values["origin"]
+            pickings = self.rma_receiver_ids.picking_id
+            picking_name = self and ", ".join(pickings.mapped("name"))
+            new_origin = "{} ({})".format(
+                origin, self.env._("Return of %s", picking_name)
+            )
+            values["origin"] = new_origin
+        return values
+
+
+class StockRule(models.Model):
+    _inherit = "stock.rule"
+
+    def _get_custom_move_fields(self):
+        move_fields = super()._get_custom_move_fields()
+        move_fields += [
+            "rma_id",
+            "origin_returned_move_id",
+            "move_orig_ids",
+            "rma_receiver_ids",
+            # Keep the explicit RMA value: this field defaults to True in v19.
+            "to_refund",
+        ]
+        return move_fields

@@ -1,0 +1,14 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Ernesto Tejeda
+  - Pedro M. Baeza
+  - David Vidal
+  - Víctor Martínez
+- Chafique Delli \<<chafique.delli@akretion.com>\>
+- Giovanni Serra - Ooops \<<giovanni@ooops404.com>\>
+- [APSL-Nagarro](https://www.apsl.tech):
+  - Antoni Marroig \<<amarroig@apsl.net>\>
+- Michael Tietz (MT Software) <mtietz@mt-software.de>
+- Jacques-Etienne Baudoux - BCIM <je@bcim.be>
+- Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
+- [Studio73](https://www.studio73.es):
+  - Eugenio Micó \<<eugenio@studio73.es>\>

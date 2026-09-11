@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="RMA" groups="rma.rma_group_manager" name="rma">
+                    <block name="rma_operations_block" title="Operations">
+                        <setting
+                            help="When the RMA is receive, allow to finsish it manually choosing a finalization reason."
+                        >
+                            <field
+                                name="group_rma_manual_finalization"
+                                string="RMA Manual Finalization"
+                            />
+                        </setting>
+                        <setting
+                            help="Group RMA returns by customer and warehouse."
+                            company_specific="1"
+                        >
+                            <field
+                                name="rma_return_grouping"
+                                title="Values set here are company-specific."
+                            />
+                        </setting>
+                    </block>
+                    <block name="rma_mail_block" title="Emails">
+                        <setting
+                            help="When the RMA is confirmed, send an automatic information email."
+                            company_specific="1"
+                        >
+                            <field
+                                name="send_rma_confirmation"
+                                string="RMA Confirmation Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_confirmation"
+                            >
+                                <div class="row mt16">
+                                    <label
+                                        string="Email Template"
+                                        for="rma_mail_confirmation_template_id"
+                                        class="col-lg-4 o_light_label"
+                                    />
+                                    <field
+                                        name="rma_mail_confirmation_template_id"
+                                        required="send_rma_confirmation"
+                                    />
+                                </div>
+                            </div>
+                        </setting>
+                        <setting
+                            help="When the RMA products are received, send an automatic information email."
+                            company_specific="1"
+                        >
+                            <field
+                                name="send_rma_receipt_confirmation"
+                                string="RMA Receipt Confirmation Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_receipt_confirmation"
+                            >
+                                <div class="row mt16">
+                                    <label
+                                        string="Email Template"
+                                        for="rma_mail_receipt_confirmation_template_id"
+                                        class="col-lg-4 o_light_label"
+                                    />
+                                    <field
+                                        name="rma_mail_receipt_confirmation_template_id"
+                                        required="send_rma_receipt_confirmation"
+                                    />
+                                </div>
+                            </div>
+                        </setting>
+                        <setting
+                            help="When customers themselves place an RMA from the portal, send an automatic notification acknowleging it."
+                            company_specific="1"
+                        >
+                            <field
+                                name="send_rma_draft_confirmation"
+                                string="RMA draft notification Email"
+                            />
+                            <div
+                                class="content-group"
+                                invisible="not send_rma_draft_confirmation"
+                            >
+                                <div class="row mt16">
+                                    <label
+                                        string="Email Template"
+                                        for="rma_mail_draft_confirmation_template_id"
+                                        class="col-lg-4 o_light_label"
+                                    />
+                                    <field
+                                        name="rma_mail_draft_confirmation_template_id"
+                                        required="send_rma_draft_confirmation"
+                                    />
+                                </div>
+                            </div>
+                        </setting>
+                        <setting
+                            help="If an RMA has been delivered (returned or replaced), a button will appear that allows you to create a new RMA to manage the delivered items"
+                        >
+                            <field name="rma_new_rma_button_from_rma" />
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_rma_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module' : 'rma', 'bin_size': False}</field>
+    </record>
+
+    <menuitem
+        id="menu_rma_general_settings"
+        name="Settings"
+        parent="rma_configuration_menu"
+        sequence="0"
+        action="action_rma_config_settings"
+        groups="base.group_system"
+    />
+</odoo>
