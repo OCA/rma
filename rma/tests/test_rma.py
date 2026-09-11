@@ -339,7 +339,14 @@ class TestRmaCase(TestRma):
 
     def test_confirm_and_receive_and_return(self):
         self.company.rma_new_rma_button_from_rma = True
+        partner_shipping = self.env["res.partner"].create(
+            {
+                "name": "Test partner shipping",
+                "parent_id": self.partner.id,
+            }
+        )
         rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma.partner_shipping_id = partner_shipping
         rma.action_confirm()
         self.assertEqual(rma.reception_move_id.picking_id.state, "assigned")
         self.assertEqual(rma.reception_move_id.product_id, rma.product_id)
@@ -372,6 +379,8 @@ class TestRmaCase(TestRma):
         wizard = wizard_form.save()
         new_rma = wizard.create_rma()
         self.assertTrue(new_rma)
+        self.assertEqual(new_rma.partner_id, rma.partner_id)
+        self.assertEqual(new_rma.partner_shipping_id, rma.partner_shipping_id)
         self.assertEqual(new_rma.state, "confirmed")
         self.assertEqual(new_rma.operation_id, rma.operation_id)
         self.assertEqual(rma.rma_count, 1)
