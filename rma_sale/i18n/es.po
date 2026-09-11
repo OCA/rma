@@ -373,6 +373,11 @@ msgid "Return Picking"
 msgstr "Albarán de devolución"
 
 #. module: rma_sale
+#: model:ir.model,name:rma_sale.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__return_product_id
 msgid "Return Product"
 msgstr "Producto de devolución"
