@@ -319,6 +319,7 @@ class TestRmaInterCompany(TestRmaInterCompanyBase):
         wizard_form.operation_id = operation_refund
         wizard = wizard_form.save()
         rma_b_extra = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        self.assertEqual(rma_b_extra.partner_id, rma_b.partner_id)
         self.assertEqual(rma_b_extra.state, "confirmed")
         self.assertEqual(rma_b_extra.company_id, self.company_b)
         self.assertEqual(rma_b_extra.operation_id, operation_refund)
@@ -326,6 +327,7 @@ class TestRmaInterCompany(TestRmaInterCompanyBase):
         self.assertEqual(rma_b_extra.move_id, rma_b.delivery_move_ids)
         self.assertTrue(rma_b_extra.intercompany_rma_id)
         rma_a_extra = rma_b_extra.intercompany_rma_id
+        self.assertEqual(rma_a_extra.partner_id, rma_a.partner_id)
         self.assertEqual(rma_a_extra.state, "confirmed")
         self.assertEqual(rma_a_extra.company_id, self.company_a)
         self.assertEqual(rma_a_extra.operation_id, operation_refund)
