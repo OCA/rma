@@ -249,7 +249,7 @@ class TestRmaDelivery(TestRmaDeliveryBase):
         self.assertEqual(stock_return_picking_form.reception_carrier_id, self.carrier)
         stock_return_picking_form.reception_carrier_id = self.carrier_customer
         return_wizard = stock_return_picking_form.save()
-        for move in origin_delivery.move_ids_without_package:
+        for move in origin_delivery.move_ids:
             return_wizard.product_return_moves.filtered(
                 lambda x, move=move: x.move_id == move
             ).quantity = move.quantity

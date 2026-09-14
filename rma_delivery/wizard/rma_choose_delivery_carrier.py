@@ -28,7 +28,6 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
     )
     carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Carrier",
         required=True,
         domain="[('id', 'in', available_carrier_ids)]",
     )
@@ -56,7 +55,7 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
                 carrier_model._check_company_domain(item.company_id)
             )
             item.available_carrier_ids = (
-                carriers.available_carriers_rma(item.partner_id, item.rma_id)
+                carriers.available_carriers(item.partner_id, item.rma_id)
                 if item.partner_id
                 else carriers
             )

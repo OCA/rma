@@ -20,7 +20,6 @@ class ReturnPicking(models.TransientModel):
     partner_id = fields.Many2one(related="picking_id.partner_id")
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Reception Carrier",
         domain="[('id', 'in', available_reception_carrier_ids)]",
     )
     available_reception_carrier_ids = fields.Many2many(
@@ -48,7 +47,7 @@ class ReturnPicking(models.TransientModel):
                 carrier_model._check_company_domain(item.company_id)
             )
             item.available_reception_carrier_ids = (
-                carriers.available_carriers_picking(item.partner_id, item.picking_id)
+                carriers.available_carriers(item.partner_id, item.picking_id)
                 if item.partner_id
                 else carriers
             )

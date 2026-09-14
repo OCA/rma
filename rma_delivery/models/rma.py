@@ -13,13 +13,11 @@ class Rma(models.Model):
     )
     carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Carrier",
         domain="[('id', 'in', available_carrier_ids)]",
     )
     rma_delivery_strategy = fields.Selection(related="company_id.rma_delivery_strategy")
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Reception Carrier",
         domain="[('id', 'in', available_carrier_ids)]",
     )
     rma_reception_strategy = fields.Selection(
@@ -34,7 +32,7 @@ class Rma(models.Model):
                 carrier_model._check_company_domain(item.company_id)
             )
             item.available_carrier_ids = (
-                carriers.available_carriers_rma(item.partner_shipping_id, item)
+                carriers.available_carriers(item.partner_shipping_id, item)
                 if item.partner_shipping_id
                 else carriers
             )
