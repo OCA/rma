@@ -43,7 +43,7 @@ class ReturnPickingLine(models.TransientModel):
                 [("company_id", "=", self.move_id.picking_id.company_id.id)],
                 limit=1,
             )
-        return {
+        vals = {
             "move_id": self.move_id.id,
             "product_id": self.move_id.product_id.id,
             "product_uom_qty": self.quantity,
@@ -52,6 +52,15 @@ class ReturnPickingLine(models.TransientModel):
             "operation_id": self.rma_operation_id.id,
             "return_product_id": self.return_product_id.id,
         }
+        # RMA from RMA compatibility
+        rma = self.move_id.rma_id
+        if rma:
+            vals.update(
+                partner_id=rma.partner_id.id,
+                partner_shipping_id=rma.partner_shipping_id.id,
+                partner_invoice_id=rma.partner_invoice_id.id,
+            )
+        return vals
 
 
 class ReturnPicking(models.TransientModel):
