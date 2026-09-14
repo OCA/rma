@@ -5,8 +5,11 @@ from odoo import api, fields, models
 
 
 class RmaChooseDeliveryCarrier(models.TransientModel):
+    _inherit = "rma.carrier.mixin"
     _name = "rma.choose.delivery.carrier"
     _description = "RMA Delivery Carrier Selection Wizard"
+    _rma_carrier_partner_field = "partner_id"
+    _rma_carrier_source_field = "rma_id"
 
     rma_id = fields.Many2one(
         comodel_name="rma",
@@ -22,15 +25,11 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
         default="reception",
         readonly=True,
     )
-    available_carrier_ids = fields.Many2many(
-        comodel_name="delivery.carrier",
-        compute="_compute_available_carrier_ids",
-    )
+    domain_carrier_id = fields.Binary(compute="_compute_domain_carrier_id")
     carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Carrier",
         required=True,
-        domain="[('id', 'in', available_carrier_ids)]",
+        domain="domain_carrier_id",
     )
 
     @api.model
@@ -49,17 +48,10 @@ class RmaChooseDeliveryCarrier(models.TransientModel):
         return res
 
     @api.depends("partner_id")
-    def _compute_available_carrier_ids(self):
-        carrier_model = self.env["delivery.carrier"]
+    def _compute_domain_carrier_id(self):
         for item in self:
-            carriers = carrier_model.search(
-                carrier_model._check_company_domain(item.company_id)
-            )
-            item.available_carrier_ids = (
-                carriers.available_carriers_rma(item.partner_id, item.rma_id)
-                if item.partner_id
-                else carriers
-            )
+            carriers = item._get_rma_available_carriers()
+            item.domain_carrier_id = [("id", "in", carriers.ids)]
 
     def _get_pending_moves(self):
         rma = self.rma_id

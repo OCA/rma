@@ -15,17 +15,18 @@ class ReturnPickingLine(models.TransientModel):
 
 
 class ReturnPicking(models.TransientModel):
-    _inherit = "stock.return.picking"
+    _name = "stock.return.picking"
+    _inherit = ["stock.return.picking", "rma.carrier.mixin"]
+    _rma_carrier_partner_field = "partner_id"
+    _rma_carrier_source_field = "picking_id"
 
     partner_id = fields.Many2one(related="picking_id.partner_id")
+    domain_reception_carrier_id = fields.Binary(
+        compute="_compute_domain_reception_carrier_id"
+    )
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Reception Carrier",
-        domain="[('id', 'in', available_reception_carrier_ids)]",
-    )
-    available_reception_carrier_ids = fields.Many2many(
-        comodel_name="delivery.carrier",
-        compute="_compute_available_reception_carrier_ids",
+        domain="domain_reception_carrier_id",
     )
     rma_reception_strategy = fields.Selection(
         related="picking_id.company_id.rma_reception_strategy"
@@ -41,14 +42,7 @@ class ReturnPicking(models.TransientModel):
         return res
 
     @api.depends("partner_id")
-    def _compute_available_reception_carrier_ids(self):
-        carrier_model = self.env["delivery.carrier"]
+    def _compute_domain_reception_carrier_id(self):
         for item in self:
-            carriers = carrier_model.search(
-                carrier_model._check_company_domain(item.company_id)
-            )
-            item.available_reception_carrier_ids = (
-                carriers.available_carriers_picking(item.partner_id, item.picking_id)
-                if item.partner_id
-                else carriers
-            )
+            carriers = item._get_rma_available_carriers()
+            item.domain_reception_carrier_id = [("id", "in", carriers.ids)]

@@ -5,21 +5,22 @@ from odoo import api, fields, models
 
 
 class RmaRmaWizard(models.TransientModel):
-    _inherit = "rma.rma.wizard"
+    _name = "rma.rma.wizard"
+    _inherit = ["rma.rma.wizard", "rma.carrier.mixin"]
+    _rma_carrier_partner_field = "partner_shipping_id"
+    _rma_carrier_source_field = "rma_id"
 
     company_id = fields.Many2one(related="rma_id.company_id")
     rma_reception_strategy = fields.Selection(
         related="company_id.rma_reception_strategy"
     )
     partner_shipping_id = fields.Many2one(related="rma_id.partner_shipping_id")
-    available_reception_carrier_ids = fields.Many2many(
-        comodel_name="delivery.carrier",
-        compute="_compute_available_reception_carrier_ids",
+    domain_reception_carrier_id = fields.Binary(
+        compute="_compute_domain_reception_carrier_id"
     )
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
-        string="Reception Carrier",
-        domain="[('id', 'in', available_reception_carrier_ids)]",
+        domain="domain_reception_carrier_id",
     )
 
     @api.model
@@ -32,17 +33,10 @@ class RmaRmaWizard(models.TransientModel):
         return res
 
     @api.depends("partner_shipping_id")
-    def _compute_available_reception_carrier_ids(self):
-        carrier_model = self.env["delivery.carrier"]
+    def _compute_domain_reception_carrier_id(self):
         for item in self:
-            carriers = carrier_model.search(
-                carrier_model._check_company_domain(item.company_id)
-            )
-            item.available_reception_carrier_ids = (
-                carriers.available_carriers_rma(item.partner_shipping_id, item.rma_id)
-                if item.partner_shipping_id
-                else carriers
-            )
+            carriers = item._get_rma_available_carriers()
+            item.domain_reception_carrier_id = [("id", "in", carriers.ids)]
 
     def _stock_return_picking_vals(self, picking):
         vals = super()._stock_return_picking_vals(picking)
