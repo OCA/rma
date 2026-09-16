@@ -1,0 +1,1 @@
+from . import test_rma_repair_follow_lot_location
