@@ -6,45 +6,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-09-16 13:26+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: rma_inter_company
 #: model:ir.model.fields,field_description:rma_inter_company.field_rma__intercompany_origin_rma_id
 msgid "Intercompany Origin RMA"
-msgstr ""
+msgstr "RMA origine intercompany"
 
 #. module: rma_inter_company
 #: model:ir.model.fields,field_description:rma_inter_company.field_rma__intercompany_rma_id
 msgid "Intercompany RMA"
-msgstr ""
+msgstr "RMA intercompany"
 
 #. module: rma_inter_company
 #: model:ir.model,name:rma_inter_company.model_rma
 msgid "RMA"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_inter_company
 #: model:ir.model,name:rma_inter_company.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: rma_inter_company
 #: model:ir.model,name:rma_inter_company.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: rma_inter_company
 #: model:ir.model,name:rma_inter_company.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
 
 #. module: rma_inter_company
 #: model:ir.model,name:rma_inter_company.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
