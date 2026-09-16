@@ -17,3 +17,9 @@ class RmaOperation(models.Model):
         ),
         default=30,
     )
+    return_eligibility_order = fields.Selection(
+        selection=[("older_first", "Older First"), ("recent_first", "Recent First")],
+        help="This will change the way of eligible sale orders are retrieved.",
+        required=True,
+        default="older_first",
+    )
