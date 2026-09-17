@@ -3,6 +3,7 @@
   - Pedro M. Baeza
   - David Vidal
   - Víctor Martínez
+  - Juan Carlos Oñate
 - Chafique Delli \<<chafique.delli@akretion.com>\>
 - Giovanni Serra - Ooops \<<giovanni@ooops404.com>\>
 - Souheil Bejaoui - ACSONE SA/NV <souheil.bejaoui@acsone.eu>
