@@ -3,3 +3,4 @@
 from . import test_rma_sale
 from . import test_rma_sale_portal
 from . import test_rma_sale_allowed_qty
+from . import test_rma_sale_refund_from_invoice
