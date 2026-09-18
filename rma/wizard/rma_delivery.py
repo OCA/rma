@@ -12,7 +12,6 @@ class RmaReDeliveryWizard(models.TransientModel):
     rma_count = fields.Integer()
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
     )
     type = fields.Selection(
         selection=[("replace", "Replace"), ("return", "Return to customer")],
@@ -30,7 +29,6 @@ class RmaReDeliveryWizard(models.TransientModel):
     scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now)
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse",
-        string="Warehouse",
         required=True,
         domain="[('company_id', '=', company_id)]",
     )
