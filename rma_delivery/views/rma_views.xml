@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Tecnativa - Víctor Martínez
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_view_form" model="ir.ui.view">
+        <field name="name">rma.view.form</field>
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <button name="action_lock" position="before">
+                <button
+                    type="object"
+                    string="Update carrier"
+                    name="action_open_choose_carrier_wizard"
+                    invisible="(rma_reception_strategy!='rma_method' or state  != 'confirmed') and (rma_delivery_strategy!='rma_method' or state not in ('waiting_return', 'waiting_replacement'))"
+                />
+            </button>
+            <field name="stock_reference_id" position="after">
+                <field
+                    name="carrier_id"
+                    invisible="rma_delivery_strategy!='rma_method'"
+                    readonly="not show_create_refund and not show_create_replace and not show_create_return"
+                />
+                <field
+                    name="reception_carrier_id"
+                    invisible="rma_reception_strategy!='rma_method'"
+                    readonly="state not in ['draft', 'confirmed'] or reception_move_id"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

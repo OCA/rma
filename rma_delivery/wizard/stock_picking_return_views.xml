@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_return_picking_form" model="ir.ui.view">
+        <field name="model">stock.return.picking</field>
+        <field name="inherit_id" ref="rma.view_stock_return_picking_form" />
+        <field name="arch" type="xml">
+            <field name="rma_operation_id" position="after">
+                <field
+                    name="reception_carrier_id"
+                    invisible="not create_rma or rma_reception_strategy!='rma_method'"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
