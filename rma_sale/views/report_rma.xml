@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_rma_document" inherit_id="rma.report_rma_document">
+        <xpath expr="//tr[@name='tr_picking']" position="before">
+            <tr t-if="doc.order_id" name="tr_picking">
+                <td>Sale order</td>
+                <td>
+                    <span t-field="doc.order_id" />
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

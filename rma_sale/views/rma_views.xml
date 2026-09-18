@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_view_form" model="ir.ui.view">
+        <field name="name">rma.view.form</field>
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <button name="action_refund" position="attributes">
+                <attribute name="invisible">not can_be_refunded_with_invoice</attribute>
+            </button>
+            <button name="action_refund" position="after">
+                <button
+                    type="object"
+                    string="Mark To Refund"
+                    name="action_refund_without_invoice"
+                    invisible="not can_be_refunded"
+                    class="btn-primary"
+                />
+            </button>
+            <field name="partner_invoice_id" position="after">
+                <field
+                    name="order_id"
+                    options="{'no_create': True}"
+                    readonly="state!='draft'"
+                    groups="sales_team.group_sale_salesman"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
