@@ -297,10 +297,11 @@ msgstr ""
 #: model:ir.model.fields,help:rma_batch.field_rma_batch__state
 msgid ""
 "Represents the preparation and validation progress of the RMA batch:\n"
-"- Draft: The batch is being prepared. RMAs can still be added or edited.\n"
-"- Ready: All required information for the batch and its RMAs is complete. The batch is ready to be confirmed.\n"
-"- Confirmed: The batch has been validated and all linked RMAs are confirmed.\n"
-"- Cancelled: The batch and its related RMAs are cancelled or ignored."
+"- Draft: RMAs are being prepared\n"
+"- Manual Treatment: One or more RMAs require manual matching\n"
+"- Ready: All RMAs are completed and batch is ready to be confirmed\n"
+"- Confirmed: The batch is validated and all RMAs are confirmed\n"
+"- Cancelled: The batch is cancelled"
 msgstr ""
 
 #. module: rma_batch
