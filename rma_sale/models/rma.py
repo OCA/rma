@@ -162,6 +162,14 @@ class Rma(models.Model):
                 rma.move_id.rma_id._link_refund_with_reception_move()
         return res
 
+    def _get_refund_origin_invoice_line(self, sale_line):
+        """Invoice line being rectified, only when there is a single candidate."""
+        invoice_lines = sale_line.invoice_lines.filtered(
+            lambda aml: aml.move_id.move_type == "out_invoice"
+            and aml.move_id.state == "posted"
+        )
+        return invoice_lines if len(invoice_lines) == 1 else invoice_lines.browse()
+
     def _prepare_refund_vals(self, origin=False):
         """Inject fiscal_position_id + salesman from sales order (if any)"""
         vals = super()._prepare_refund_vals(origin=origin)
@@ -179,6 +187,14 @@ class Rma(models.Model):
                     self.partner_invoice_id
                 )
             ).id
+        sale_line = self.sudo().sale_line_id or self.move_id.rma_id.sudo().sale_line_id
+        invoice = self._get_refund_origin_invoice_line(sale_line).move_id
+        if invoice:
+            # Rectify the invoice the same way the reversal wizard does: keep its
+            # journal when it is still active, and link both documents.
+            if invoice.journal_id.active:
+                vals["journal_id"] = invoice.journal_id.id
+            vals["reversed_entry_id"] = invoice.id
         return vals
 
     def _prepare_refund_line_vals(self):
@@ -196,6 +212,16 @@ class Rma(models.Model):
             vals["price_unit"] = line.price_unit
             vals["discount"] = line.discount
             vals["sequence"] = line.sequence
+            invoice_line = self._get_refund_origin_invoice_line(line)
+            if invoice_line:
+                # Duplicate the invoice line the same way core does when reversing
+                # a move, so the refund carries what was actually invoiced.
+                copied = invoice_line.with_context(
+                    include_business_fields=True
+                ).copy_data()[0]
+                for key in ("move_id", "rma_id", "quantity", "sale_line_ids"):
+                    copied.pop(key, None)
+                vals.update(copied)
             move = self.sudo().reception_move_id
             if (
                 move
