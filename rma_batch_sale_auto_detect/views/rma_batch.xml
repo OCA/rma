@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_batch_form_view" model="ir.ui.view">
+        <field name="model">rma.batch</field>
+        <field name="inherit_id" ref="rma_batch.rma_batch_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_ready']" position="before">
+                <button
+                    name="action_ready"
+                    string="Mark as Ready"
+                    type="object"
+                    class="btn-primary"
+                    invisible="state != 'manual'"
+                />
+            </xpath>
+            <xpath expr="//field[@name='rma_ids']//list" position="attributes">
+                <attribute
+                    name="decoration-danger"
+                >has_sale_auto_detect_issue</attribute>
+                <attribute
+                    name="decoration-info"
+                >not has_sale_auto_detect_issue and move_id</attribute>
+                <attribute
+                    name="decoration-warning"
+                >ignore_sale_auto_detect or return_eligibility_period_exceeded</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='rma_ids']//list//field[@name='operation_id']"
+                position="after"
+            >
+                <field name="return_eligibility_days" string="Eligibility Days" />
+                <field
+                    name="order_id"
+                    readonly="(not has_sale_auto_detect_issue and move_id) or state not in ('draft', 'manual')"
+                />
+                <field name="move_id" readonly="1" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='rma_ids']" position="attributes">
+                <attribute name="readonly">state not in ('draft', 'manual')</attribute>
+                <attribute name="context">{'ignore_onchange_order_id': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='rma_ids']//list" position="inside">
+                <field
+                    name="ignore_sale_auto_detect"
+                    string="Ignore sale link"
+                    readonly="state not in ('draft', 'manual')"
+                />
+                <field
+                    name="return_eligibility_period_exceeded"
+                    string="Outside the eligibility period"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
