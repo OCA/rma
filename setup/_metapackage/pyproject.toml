@@ -1,10 +1,11 @@
 [project]
 name = "odoo-addons-oca-rma"
-version = "18.0.20260814.0"
+version = "18.0.20260921.0"
 dependencies = [
     "odoo-addon-product_warranty==18.0.*",
     "odoo-addon-rma==18.0.*",
     "odoo-addon-rma_batch==18.0.*",
+    "odoo-addon-rma_batch_sale_auto_detect==18.0.*",
     "odoo-addon-rma_delivery==18.0.*",
     "odoo-addon-rma_inter_company==18.0.*",
     "odoo-addon-rma_lot==18.0.*",
