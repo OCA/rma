@@ -198,11 +198,6 @@ msgid "Kit quantity"
 msgstr "Quantità confezione"
 
 #. module: rma_sale_mrp
-#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
@@ -211,6 +206,11 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
+
+#. module: rma_sale_mrp
+#: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lot_id_domain
+msgid "Lot Id Domain"
+msgstr ""
 
 #. module: rma_sale_mrp
 #: model:ir.model.fields,field_description:rma_sale_mrp.field_sale_order_line_rma_wizard_component__lot_id
@@ -320,7 +320,6 @@ msgstr "Riga ordine di vendita"
 #. module: rma_sale_mrp
 #. odoo-python
 #: code:addons/rma_sale_mrp/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid ""
 "The kit corresponding to the product %s can't be put in the RMA. Either all "
 "or some of the components where already put in another RMA"
@@ -331,7 +330,6 @@ msgstr ""
 #. module: rma_sale_mrp
 #. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
-#, python-format
 msgid ""
 "To avoid kit quantities inconsistencies it is not possible to convert to "
 "draft a cancelled RMA. You should do a new one from the sales order."
@@ -376,8 +374,10 @@ msgstr "Procedura guidata"
 #. module: rma_sale_mrp
 #. odoo-python
 #: code:addons/rma_sale_mrp/models/rma.py:0
-#, python-format
 msgid "You can't refund a kit in wich some RMAs aren't received"
 msgstr ""
 "Non è possibile rifornire una confezione nella quale non sono state ricevute "
 "RMA"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
