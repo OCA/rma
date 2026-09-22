@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_rma_wizard_form_view" model="ir.ui.view">
+        <field name="model">rma.rma.wizard</field>
+        <field name="inherit_id" ref="rma.rma_rma_wizard_form_view" />
+        <field name="arch" type="xml">
+            <field name="operation_id" position="after">
+                <!-- It is important to include the rma_id field in the view so that
+                is a dependency of available_reception_carrier_ids properly set.
+                !-->
+                <field name="rma_id" invisible="1" />
+                <field
+                    name="reception_carrier_id"
+                    invisible="rma_reception_strategy!='rma_method'"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

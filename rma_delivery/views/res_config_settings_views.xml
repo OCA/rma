@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block name="operations_setting_container" position="inside">
+                <setting id="rma_delivery_strategy" title="RMA delivery strategy">
+                    <field name="rma_delivery_strategy" />
+                </setting>
+                <setting
+                    id="rma_fixed_delivery_method"
+                    invisible="rma_delivery_strategy in ('customer_method', 'rma_method')"
+                >
+                    <field name="rma_fixed_delivery_method" widget="selection" />
+                </setting>
+                <setting id="rma_reception_strategy" title="RMA reception strategy">
+                    <field name="rma_reception_strategy" />
+                </setting>
+                <setting
+                    id="rma_fixed_reception_strategy"
+                    invisible="rma_reception_strategy in ('customer_method', 'rma_method')"
+                >
+                    <field name="rma_fixed_reception_strategy" widget="selection" />
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

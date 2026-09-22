@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rma_choose_delivery_carrier,rma.choose.delivery.carrier,model_rma_choose_delivery_carrier,rma.rma_group_user_all,1,1,1,1
