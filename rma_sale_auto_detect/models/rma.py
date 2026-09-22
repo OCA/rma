@@ -119,6 +119,13 @@ class Rma(models.Model):
             lambda sol: (sol.order_id.date_order, sol.id), reverse=reverse
         )
 
+    def _prepare_new_rma_for_sale_link_values(self, qty):
+        self.ensure_one()
+        return {
+            "state": self.state,  # Bypass here the copy=False
+            "product_uom_qty": qty,
+        }
+
     def _link_rma_to_sale_line(self, sale_lines):
         """match between rmas and sale lines"""
         if not sale_lines:
@@ -150,7 +157,9 @@ class Rma(models.Model):
             elif rma_qty > remaining_qty:
                 # rma needs more than available on this sale line
                 # we copy RMA for the matched qty
-                matched_rma = rma.copy({"product_uom_qty": remaining_qty})
+                matched_rma = rma.copy(
+                    self._prepare_new_rma_for_sale_link_values(qty=remaining_qty)
+                )
                 # reduce qty on original RMA
                 rma.product_uom_qty = rma_qty - remaining_qty
                 # link the matched copy to the sale line
