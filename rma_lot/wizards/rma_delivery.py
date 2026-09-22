@@ -41,7 +41,7 @@ class RmaReDeliveryWizard(models.TransientModel):
 
     @api.depends("product_id", "product_tracking", "product_uom_qty", "warehouse_id")
     def _compute_domain_lot_id(self):
-        dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        dp = self.env["decimal.precision"].precision_get("Product Unit")
         for item in self:
             domain = []
             if item.product_id and item.product_tracking != "none":

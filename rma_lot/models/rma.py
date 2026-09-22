@@ -56,7 +56,7 @@ class Rma(models.Model):
         "state",
     )
     def _compute_domain_lot_id(self):
-        dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        dp = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self:
             domain = []
             if (
@@ -111,16 +111,16 @@ class Rma(models.Model):
                 vals["move_orig_ids"] = [Command.clear()]  # Avoid inconsistencies
         return vals
 
-    def _prepare_reception_procurement_vals(self, group=None):
-        vals = super()._prepare_reception_procurement_vals(group=group)
+    def _prepare_reception_procurement_vals(self, reference=None):
+        vals = super()._prepare_reception_procurement_vals(reference=reference)
         vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
     def _prepare_common_procurement_vals(
-        self, warehouse=None, scheduled_date=None, group=None
+        self, warehouse=None, scheduled_date=None, reference=None
     ):
         vals = super()._prepare_common_procurement_vals(
-            warehouse=warehouse, scheduled_date=scheduled_date, group=group
+            warehouse=warehouse, scheduled_date=scheduled_date, reference=reference
         )
         replace_lot = self.env.context.get("rma_replace_lot_id")
         if replace_lot:
@@ -201,9 +201,10 @@ class Rma(models.Model):
                 float_is_zero(f_qty, precision_rounding=uom.rounding)
                 for f_qty in free_qty_data
             ):
-                msg = self.env._("The serial number %(serial)s is not available") % {
-                    "serial": lot.display_name,
-                }
+                msg = self.env._(
+                    "The serial number %(serial)s is not available",
+                    serial=lot.display_name,
+                )
                 raise UserError(msg)
 
     def create_return(self, scheduled_date, qty=None, uom=None):
