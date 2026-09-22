@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_batch_return
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__can_be_refunded
+msgid "Can Be Refunded"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__count_receipts
+msgid "Count Receipts"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__count_refunds
+msgid "Count Refunds"
+msgstr ""
+
+#. module: rma_batch_return
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.rma_batch_form_view
+msgid "Create Return"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_stock_picking_type__create_rma_at_confirm
+msgid "Create Rma At Confirm"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/stock_picking_type.py:0
+msgid ""
+"If you enable RMA creation at picking validation, you need to fill in the "
+"default operation."
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__new_receipt_button_visible
+msgid "New Receipt Button Visible"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/rma_batch.py:0
+msgid "New picking created"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model,name:rma_batch_return.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model,name:rma_batch_return.model_rma_batch
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.view_picking_type_form
+msgid "RMA Batch"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__receipt_ids
+msgid "Receipt"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__receipt_group_id
+msgid "Receipt Group"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_rma_batch__refund_ids
+msgid "Refund"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/rma_batch.py:0
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.rma_batch_form_view
+msgid "Refund(s)"
+msgstr ""
+
+#. module: rma_batch_return
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.rma_batch_form_view
+msgid "Refunds"
+msgstr ""
+
+#. module: rma_batch_return
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.rma_batch_form_view
+msgid "Return(s)"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_stock_picking__rma_batch_id
+msgid "Rma Batch"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model.fields,field_description:rma_batch_return.field_stock_picking_type__rma_create_operation_id
+msgid "Rma Create Operation"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model,name:rma_batch_return.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/rma_batch.py:0
+msgid "The picking %(picking_name)s has been created!"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/rma_batch.py:0
+msgid "There is already a draft picking: %(picking_name)s"
+msgstr ""
+
+#. module: rma_batch_return
+#: model_terms:ir.ui.view,arch_db:rma_batch_return.rma_batch_form_view
+msgid "To Refund"
+msgstr ""
+
+#. module: rma_batch_return
+#: model:ir.model,name:rma_batch_return.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: rma_batch_return
+#. odoo-python
+#: code:addons/rma_batch_return/models/rma_batch.py:0
+msgid "You cannot create batch without RMAs!"
+msgstr ""
