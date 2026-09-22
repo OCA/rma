@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-rma_reason>=16.0dev,<16.1dev',
         'odoo-addon-rma_repair>=16.0dev,<16.1dev',
         'odoo-addon-rma_repair_follow_lot_location>=16.0dev,<16.1dev',
+        'odoo-addon-rma_repair_location>=16.0dev,<16.1dev',
         'odoo-addon-rma_sale>=16.0dev,<16.1dev',
         'odoo-addon-rma_sale_lot>=16.0dev,<16.1dev',
         'odoo-addon-rma_sale_mrp>=16.0dev,<16.1dev',
