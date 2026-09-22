@@ -5,7 +5,7 @@
     "name": "Rma Sale Auto Detect",
     "summary": """Automatically link RMA products to related sales orders within an
     eligibility period""",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rma",
