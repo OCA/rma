@@ -78,16 +78,16 @@ class Rma(models.Model):
                 vals["move_orig_ids"] = [Command.clear()]  # Avoid inconsistencies
         return vals
 
-    def _prepare_reception_procurement_vals(self, group=None):
-        vals = super()._prepare_reception_procurement_vals(group=group)
+    def _prepare_reception_procurement_vals(self, reference=None):
+        vals = super()._prepare_reception_procurement_vals(reference=reference)
         vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
     def _prepare_common_procurement_vals(
-        self, warehouse=None, scheduled_date=None, group=None
+        self, warehouse=None, scheduled_date=None, reference=None
     ):
         vals = super()._prepare_common_procurement_vals(
-            warehouse=warehouse, scheduled_date=scheduled_date, group=group
+            warehouse=warehouse, scheduled_date=scheduled_date, reference=reference
         )
         replace_lot = self.env.context.get("rma_replace_lot_id")
         if replace_lot:
