@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,18 +16,6 @@ msgstr ""
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.rma_choose_delivery_carrier_form_view
 msgid "Accept"
-msgstr ""
-
-#. module: rma_delivery
-#: model:ir.model.fields,field_description:rma_delivery.field_rma__available_carrier_ids
-#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__available_carrier_ids
-msgid "Available Carrier"
-msgstr ""
-
-#. module: rma_delivery
-#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__available_reception_carrier_ids
-#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__available_reception_carrier_ids
-msgid "Available Reception Carrier"
 msgstr ""
 
 #. module: rma_delivery
@@ -107,8 +95,29 @@ msgid "Delivery"
 msgstr ""
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_carrier_mixin__display_name
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_move__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking_line__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__domain_carrier_id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__domain_carrier_id
+msgid "Domain Carrier"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__domain_reception_carrier_id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__domain_reception_carrier_id
+msgid "Domain Reception Carrier"
 msgstr ""
 
 #. module: rma_delivery
@@ -118,7 +127,16 @@ msgid "Fixed method"
 msgstr ""
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__id
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_carrier_mixin__id
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_move__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking_line__id
 msgid "ID"
 msgstr ""
 
@@ -130,6 +148,11 @@ msgstr ""
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_rma_carrier_mixin
+msgid "Mixin to use RMA Carrier"
 msgstr ""
 
 #. module: rma_delivery
