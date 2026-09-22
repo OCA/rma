@@ -44,6 +44,11 @@ msgid "No delivery move found or insufficient delivered quantity."
 msgstr ""
 
 #. module: rma_sale_auto_detect
+#: model:ir.model.fields.selection,name:rma_sale_auto_detect.selection__rma_operation__return_eligibility_order__older_first
+msgid "Older First"
+msgstr ""
+
+#. module: rma_sale_auto_detect
 #: model:ir.model.fields,help:rma_sale_auto_detect.field_stock_move__rma_returnable_uom_qty
 msgid ""
 "Quantity of this delivery move still eligible to be returned through RMA"
@@ -62,6 +67,16 @@ msgstr ""
 #. module: rma_sale_auto_detect
 #: model:ir.model,name:rma_sale_auto_detect.model_rma_operation
 msgid "RMA requested operation"
+msgstr ""
+
+#. module: rma_sale_auto_detect
+#: model:ir.model.fields.selection,name:rma_sale_auto_detect.selection__rma_operation__return_eligibility_order__recent_first
+msgid "Recent First"
+msgstr ""
+
+#. module: rma_sale_auto_detect
+#: model:ir.model.fields,field_description:rma_sale_auto_detect.field_rma_operation__return_eligibility_order
+msgid "Return Eligibility Order"
 msgstr ""
 
 #. module: rma_sale_auto_detect
@@ -98,4 +113,9 @@ msgstr ""
 msgid ""
 "This return may no longer be eligible; the return eligibility period has "
 "been exceeded"
+msgstr ""
+
+#. module: rma_sale_auto_detect
+#: model:ir.model.fields,help:rma_sale_auto_detect.field_rma_operation__return_eligibility_order
+msgid "This will change the way of eligible sale orders are retrieved."
 msgstr ""
