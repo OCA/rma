@@ -11,6 +11,7 @@
                 position="inside"
             >
                 <field name="return_eligibility_days" />
+                <field name="return_eligibility_order" />
             </xpath>
         </field>
     </record>

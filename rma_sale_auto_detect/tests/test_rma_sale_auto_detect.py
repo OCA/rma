@@ -292,3 +292,29 @@ class TestRmaSaleAutoDetect(TestRmaSaleAutoDetectBase):
         self.assertEqual(rma.state, "draft")
         self.assertFalse(rma.has_sale_auto_detect_issue)
         self.assertFalse(rma.sale_auto_detect_note)
+
+    def test_sale_order_reversed(self):
+        """
+        Create several sale orders
+        Set the RMA operation to retrieve more recent sale orders first
+
+        """
+        self.operation.return_eligibility_order = "recent_first"
+        sale_order = self._create_and_confirm_sale_order(
+            self.partner, [(self.product, 5), (self.product2, 6)], 30
+        )
+        sale_order2 = self._create_and_confirm_sale_order(
+            self.partner, [(self.product, 5), (self.product2, 6)], 28
+        )
+        self._process_picking(sale_order.picking_ids, self.product, 5)
+        self._process_picking(sale_order.picking_ids, self.product2, 5)
+        self._process_picking(sale_order2.picking_ids, self.product, 5)
+        self._process_picking(sale_order2.picking_ids, self.product2, 6)
+        rma = self._create_rma(self.partner, self.product, 5, self.operation)
+
+        rma.action_link_rma_to_sale_line()
+
+        self.assertEqual(
+            rma.sale_line_id,
+            sale_order2.order_line.filtered(lambda sol: sol.product_id == self.product),
+        )
