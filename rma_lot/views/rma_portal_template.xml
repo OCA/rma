@@ -3,12 +3,12 @@
         <th name="th_product" position="after">
             <th name="th_lot_id">
                 <t
-                    t-if="rmas and all(rma.product_id.tracking=='serial' for rma in rmas)"
+                    t-if="rmas and all(rma.sudo().product_id.tracking=='serial' for rma in rmas)"
                 >
                     Serial Number
                 </t>
                 <t
-                    t-elif="rmas and all(rma.product_id.tracking=='lot' for rma in rmas)"
+                    t-elif="rmas and all(rma.sudo().product_id.tracking=='lot' for rma in rmas)"
                 >
                     Lot
                 </t>

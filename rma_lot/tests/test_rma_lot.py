@@ -12,6 +12,7 @@ class TestRMALot(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("stock.group_production_lot")
         cls.picking_obj = cls.env["stock.picking"]
         cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
@@ -36,8 +37,13 @@ class TestRMALot(BaseCommon):
         cls.lot_2 = cls.env["stock.lot"].create(
             {"name": "000002", "product_id": cls.product.id}
         )
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        warehouse = cls.env["stock.warehouse"].search(
+            [
+                ("company_id", "=", cls.env.company.id),
+            ]
+        )
+        cls.picking_type_out = warehouse.out_type_id
+        cls.stock_location = warehouse.lot_stock_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.lot_extra = cls.env["stock.lot"].create(
             {"name": "000003", "product_id": cls.product_extra.id}
@@ -60,7 +66,6 @@ class TestRMALot(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 3,
                             "product_uom": cls.product.uom_id.id,
@@ -140,7 +145,6 @@ class TestRMALot(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": self.product.name,
                             "product_id": self.product.id,
                             "product_uom_qty": 1,
                             "product_uom": self.product.uom_id.id,
@@ -151,7 +155,6 @@ class TestRMALot(BaseCommon):
                     ),
                     Command.create(
                         {
-                            "name": self.product.name,
                             "product_id": self.product.id,
                             "product_uom_qty": 2,
                             "product_uom": self.product.uom_id.id,
@@ -180,7 +183,14 @@ class TestRMALot(BaseCommon):
         self.assertFalse(rma_form.product_id)
         rma_form.lot_id = self.lot_1
         self.assertEqual(rma_form.product_id, self.product)
-        rma_form.product_id = self.env.ref("product.product_product_4")
+        extra_product = self.env["product.product"].create(
+            {
+                "name": "test_product (without lots)",
+                "type": "consu",
+                "is_storable": True,
+            }
+        )
+        rma_form.product_id = extra_product
         self.assertFalse(rma_form.lot_id)
 
     def test_deliver_same_lot_as_received(self):
