@@ -14,6 +14,7 @@
                 <field name="color" />
                 <field name="count_rma_draft" />
                 <field name="count_rma_awaiting_action" />
+                <field name="count_rma_pending_reception" />
                 <field name="count_rma_processed" />
                 <templates>
                     <t t-name="kanban-box">
@@ -86,6 +87,26 @@
                                         >
                                             <span
                                                 t-esc="record.count_rma_awaiting_action.value"
+                                            />
+                                        </button>
+                                    </div>
+                                    <div class="col-9 o_kanban_primary_left">
+                                        <button
+                                            class="btn btn-link"
+                                            name="get_action_rma_tree_pending_reception"
+                                            type="object"
+                                        >
+                                            <span>Pending reception</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-3 o_kanban_primary_right">
+                                        <button
+                                            class="btn btn-link"
+                                            name="get_action_rma_tree_pending_reception"
+                                            type="object"
+                                        >
+                                            <span
+                                                t-esc="record.count_rma_pending_reception.value"
                                             />
                                         </button>
                                     </div>
