@@ -114,6 +114,7 @@ msgid "Allowed Quantity"
 msgstr ""
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.rma_sale_order_link_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr ""
@@ -151,6 +152,11 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.rma_sale_order_link_wizard_form_view
+msgid "Confirm"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
 msgid ""
 "Conversion between Units of Measure can only occur if they belong to the "
@@ -171,12 +177,14 @@ msgid "Create RMAs"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__create_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__create_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__create_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__create_date
 msgid "Created on"
@@ -185,6 +193,11 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__custom_description
 msgid "Custom Description"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__partner_id
+msgid "Customer"
 msgstr ""
 
 #. module: rma_sale
@@ -208,6 +221,7 @@ msgid "Different Return Product"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
 msgid "Display Name"
@@ -228,6 +242,7 @@ msgid "Full page RMA creation"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
 msgid "ID"
@@ -251,18 +266,21 @@ msgid "Journal Entry"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard____last_update
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__write_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_uid
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__write_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_date
 msgid "Last Updated on"
@@ -271,6 +289,14 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
 msgid "Lines"
+msgstr ""
+
+#. module: rma_sale
+#. odoo-python
+#: code:addons/rma_sale/models/rma.py:0
+#: model_terms:ir.ui.view,arch_db:rma_sale.rma_view_form
+#, python-format
+msgid "Link to sale order"
 msgstr ""
 
 #. module: rma_sale
@@ -372,6 +398,16 @@ msgid "Return Product"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__rma_id
+msgid "Rma"
+msgstr ""
+
+#. module: rma_sale
+#: model_terms:ir.ui.view,arch_db:rma_sale.rma_sale_order_link_wizard_form_view
+msgid "Rma Sale Order Link Wizard"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -379,7 +415,20 @@ msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__order_id
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__sale_order_id
 msgid "Sale Order"
+msgstr ""
+
+#. module: rma_sale
+#. odoo-python
+#: code:addons/rma_sale/wizard/rma_sale_order_link_wizard.py:0
+#, python-format
+msgid "Sale Order %(order)s linked manually."
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__sale_line_id
+msgid "Sale Order Line"
 msgstr ""
 
 #. module: rma_sale
@@ -464,6 +513,11 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
 msgid "Wizard"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_rma_sale_order_link_wizard
+msgid "Wizard to link existing rma to sale order"
 msgstr ""
 
 #. module: rma_sale
