@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_batch_sale_auto_detect
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: rma_batch_sale_auto_detect
+#: model_terms:ir.ui.view,arch_db:rma_batch_sale_auto_detect.rma_batch_form_view
+msgid "Eligibility Days"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model_terms:ir.ui.view,arch_db:rma_batch_sale_auto_detect.rma_batch_form_view
+msgid "Ignore sale link"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model:ir.model.fields.selection,name:rma_batch_sale_auto_detect.selection__rma_batch__state__manual
+msgid "Manual Treatment"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model_terms:ir.ui.view,arch_db:rma_batch_sale_auto_detect.rma_batch_form_view
+msgid "Mark as Ready"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model_terms:ir.ui.view,arch_db:rma_batch_sale_auto_detect.rma_batch_form_view
+msgid "Outside the eligibility period"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model:ir.model,name:rma_batch_sale_auto_detect.model_rma
+msgid "RMA"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model:ir.model,name:rma_batch_sale_auto_detect.model_rma_batch
+msgid "RMA Batch"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model:ir.model.fields,help:rma_batch_sale_auto_detect.field_rma_batch__state
+msgid ""
+"Represents the preparation and validation progress of the RMA batch:\n"
+"- Draft: RMAs are being prepared\n"
+"- Manual Treatment: One or more RMAs require manual matching\n"
+"- Ready: All RMAs are completed and batch is ready to be confirmed\n"
+"- Confirmed: The batch is validated and all RMAs are confirmed\n"
+"- Cancelled: The batch is cancelled"
+msgstr ""
+
+#. module: rma_batch_sale_auto_detect
+#: model:ir.model.fields,field_description:rma_batch_sale_auto_detect.field_rma_batch__state
+msgid "Status"
+msgstr ""
