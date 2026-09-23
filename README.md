@@ -37,6 +37,7 @@ addon | version | maintainers | summary
 [rma_sale_lot](rma_sale_lot/) | 18.0.1.1.1 |  | Manage sale returns with lot.
 [rma_sale_mrp](rma_sale_mrp/) | 18.0.1.1.0 | <a href='https://github.com/chienandalu'><img src='https://github.com/chienandalu.png' width='32' height='32' style='border-radius:50%;' alt='chienandalu'/></a> | Allow doing RMAs from MRP kits
 [rma_sale_reason](rma_sale_reason/) | 18.0.1.0.2 | <a href='https://github.com/sbejaoui'><img src='https://github.com/sbejaoui.png' width='32' height='32' style='border-radius:50%;' alt='sbejaoui'/></a> | Rma Sale Reason
+[rma_sale_stock_restocking_fee_invoicing](rma_sale_stock_restocking_fee_invoicing/) | 18.0.1.0.0 | <a href='https://github.com/sbejaoui'><img src='https://github.com/sbejaoui.png' width='32' height='32' style='border-radius:50%;' alt='sbejaoui'/></a> | Extends the RMA flow to automatically apply fixed or percentage restocking fees.
 
 [//]: # (end addons)
 
