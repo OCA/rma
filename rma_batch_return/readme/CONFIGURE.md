@@ -1,0 +1,4 @@
+- Go to Inventory > Configuration > Operation types
+- Choose the RMA receipt
+- Check the 'Create RMA At Confirm' box.
+- Select the default operation that will be used for RMA batch creation
