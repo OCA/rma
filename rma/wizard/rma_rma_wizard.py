@@ -43,6 +43,11 @@ class RmaRmaWizard(models.TransientModel):
         picking = fields.first(pickings)
         return_wizard = (
             self.env["stock.return.picking"]
+            .with_context(
+                active_model="stock.picking",
+                active_id=picking.id,
+                active_ids=picking.ids,
+            )
             .sudo()
             .create(self._stock_return_picking_vals(picking))
         )
