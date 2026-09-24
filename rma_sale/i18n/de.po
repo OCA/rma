@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-03 16:45+0000\n"
+"PO-Revision-Date: 2026-09-24 19:49+0000\n"
 "Last-Translator: jans23 <jan@suhr.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -57,7 +57,7 @@ msgstr "<i class=\"fa fa-truck\"/> Wähle eine Lieferadresse"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<option value=\"\">---</option>"
-msgstr ""
+msgstr "<option value=\"\">---</option>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
@@ -107,7 +107,7 @@ msgstr "Erlaubte Menge"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__can_be_refunded_with_invoice
 msgid "Can Be Refunded With Invoice"
-msgstr ""
+msgstr "Kann mit Rechnung erstattet werden"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
@@ -276,7 +276,7 @@ msgstr "Zeilen"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.rma_view_form
 msgid "Mark To Refund"
-msgstr ""
+msgstr "Zur Erstattung markieren"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
