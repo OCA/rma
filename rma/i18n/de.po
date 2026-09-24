@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-03 16:45+0000\n"
+"PO-Revision-Date: 2026-09-24 19:49+0000\n"
 "Last-Translator: jans23 <jan@suhr.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -439,7 +439,7 @@ msgstr "<strong>Reklamations-Notiz:</strong>"
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Requested operation</strong>"
-msgstr ""
+msgstr "<strong>Angefragte Operation</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -474,7 +474,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_rma_wizard_form_view
 msgid "Accept"
-msgstr ""
+msgstr "akzeptieren"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.rma_team_view_form
