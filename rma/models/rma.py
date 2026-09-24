@@ -220,8 +220,20 @@ class Rma(models.Model):
     )
     can_be_refunded = fields.Boolean(compute="_compute_can_be_refunded")
     # RMAs that were created from a rma
-    rma_count = fields.Integer(
-        string="RMA count", compute="_compute_rma_count", compute_sudo=True
+    parent_rma_id = fields.Many2one(
+        comodel_name="rma",
+        string="Parent RMA",
+        related="move_id.rma_id",
+        store=True,
+    )
+    child_rma_ids = fields.One2many(
+        comodel_name="rma",
+        inverse_name="parent_rma_id",
+        string="Child rmas",
+        copy=False,
+    )
+    child_rma_count = fields.Integer(
+        string="RMA child count", compute="_compute_child_rma_count", compute_sudo=True
     )
     can_be_new_rma = fields.Boolean(
         compute="_compute_can_be_new_rma", compute_sudo=True
@@ -455,13 +467,12 @@ class Rma(models.Model):
                 and record.state in ("confirmed", "received")
             )
 
-    @api.depends("delivery_move_ids.rma_ids")
-    def _compute_rma_count(self):
+    @api.depends("child_rma_ids")
+    def _compute_child_rma_count(self):
         for item in self:
-            rmas = item.delivery_move_ids.mapped("rma_ids")
-            item.rma_count = len(rmas)
+            item.child_rma_count = len(item.child_rma_ids)
 
-    @api.depends("company_id", "state", "delivery_move_ids.rma_ids")
+    @api.depends("company_id", "state", "child_rma_ids")
     def _compute_can_be_new_rma(self):
         for item in self:
             item.can_be_new_rma = bool(
@@ -469,8 +480,13 @@ class Rma(models.Model):
                 and item.company_id.rma_new_rma_button_from_rma
                 and item.delivery_move_ids
                 and all(m.state in ("done", "cancel") for m in item.delivery_move_ids)
-                and not any(m.rma_ids for m in item.delivery_move_ids)
+                and not item.child_rma_ids
             )
+
+    @api.depends("delivery_move_ids", "delivery_move_ids.rma_ids")
+    def _compute_child_rma_ids(self):
+        for item in self.filtered(lambda x: x.delivery_move_ids):
+            item.child_rma_ids = item.delivery_move_ids.rma_ids
 
     @api.depends(
         "remaining_qty", "state", "operation_id", "operation_id.action_create_delivery"
@@ -750,9 +766,9 @@ class Rma(models.Model):
         )
         return action
 
-    def action_view_rma(self):
+    def action_view_child_rmas(self):
         self.ensure_one()
-        rma = self.sudo().delivery_move_ids.mapped("rma_ids")
+        rma = self.sudo().child_rma_ids
         action = rma._get_records_action()
         # reset context to show all related rma without default filters
         action["context"] = {}
