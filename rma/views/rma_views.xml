@@ -272,13 +272,17 @@
                             groups="account.group_account_invoice"
                         />
                         <button
-                            name="action_view_rma"
+                            name="action_view_child_rmas"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-reply"
-                            invisible="rma_count==0"
+                            invisible="child_rma_count==0"
                         >
-                            <field name="rma_count" widget="statinfo" string="RMA" />
+                            <field
+                                name="child_rma_count"
+                                widget="statinfo"
+                                string="RMA"
+                            />
                         </button>
                     </div>
                     <div class="oe_title">
@@ -305,6 +309,7 @@
                                 readonly="state not in ['draft', 'confirmed', 'received']"
                                 force_save="1"
                             />
+                            <field name="parent_rma_id" invisible="not parent_rma_id" />
                             <field
                                 name="picking_id"
                                 options="{'no_create': True}"
