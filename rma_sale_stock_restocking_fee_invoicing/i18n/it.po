@@ -1,0 +1,123 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rma_sale_stock_restocking_fee_invoicing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:rma_sale_stock_restocking_fee_invoicing.field_restocking_fee_mixin__restocking_fee_type
+#: model:ir.model.fields,help:rma_sale_stock_restocking_fee_invoicing.field_rma__restocking_fee_type
+#: model:ir.model.fields,help:rma_sale_stock_restocking_fee_invoicing.field_rma_operation__restocking_fee_type
+msgid "Define whether the restocking fee is a fixed amount or a percentage."
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__restocking_fee_mixin__restocking_fee_type__fixed
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__rma__restocking_fee_type__fixed
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__rma_operation__restocking_fee_type__fixed
+msgid "Fixed Amount"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/rma_sale_stock_restocking_fee_invoicing/models/rma.py:0
+#: model_terms:ir.ui.view,arch_db:rma_sale_stock_restocking_fee_invoicing.rma_form_view
+msgid "Invoice"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma__manual_restocking_fee_invoice_needed
+msgid "Manual Restocking Fee Invoice Needed"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/rma_sale_stock_restocking_fee_invoicing/models/rma.py:0
+msgid ""
+"No product configured for restocking fee. Please fix the configuration into "
+"stock settings or contact you administrator."
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__restocking_fee_mixin__restocking_fee_type__percent
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__rma__restocking_fee_type__percent
+#: model:ir.model.fields.selection,name:rma_sale_stock_restocking_fee_invoicing.selection__rma_operation__restocking_fee_type__percent
+msgid "Percentage"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:rma_sale_stock_restocking_fee_invoicing.model_rma
+msgid "RMA"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:rma_sale_stock_restocking_fee_invoicing.model_rma_operation
+msgid "RMA requested operation"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_restocking_fee_mixin__restocking_fee_amount
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma__restocking_fee_amount
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma_operation__restocking_fee_amount
+msgid "Restocking Fee Amount"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma__restocking_fee_invoice_id
+msgid "Restocking Fee Invoice"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:rma_sale_stock_restocking_fee_invoicing.model_restocking_fee_mixin
+msgid "Restocking Fee Mixin"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_restocking_fee_mixin__restocking_fee_type
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma__restocking_fee_type
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma_operation__restocking_fee_type
+msgid "Restocking Fee Type"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:rma_sale_stock_restocking_fee_invoicing.field_rma__restocking_fee_visibility
+msgid "Restocking Fee Visibility"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/rma_sale_stock_restocking_fee_invoicing/models/restocking_fee_mixin.py:0
+msgid "Restocking fee amount must be greater than zero."
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/rma_sale_stock_restocking_fee_invoicing/models/rma.py:0
+msgid "Restocking fee for %(prod_uom_qty)s %(prod_uom)s. RMA %(rma)s"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/rma_sale_stock_restocking_fee_invoicing/models/restocking_fee_mixin.py:0
+msgid "Restocking fee percentage cannot exceed 100%."
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:rma_sale_stock_restocking_fee_invoicing.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: rma_sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:rma_sale_stock_restocking_fee_invoicing.model_stock_move
+msgid "Stock Move"
+msgstr ""
