@@ -155,11 +155,12 @@ class Rma(models.Model):
         """
         res = super()._action_refund_after_hook()
         for rma in self.filtered(lambda x: x.state == "refunded"):
+            rma_orig = rma._get_rma_orig()
             if rma.sale_line_id:
                 rma._link_refund_with_reception_move()
-            elif not rma.sale_line_id and rma.move_id.rma_id.sudo().sale_line_id:
+            elif not rma.sale_line_id and rma_orig.sudo().sale_line_id:
                 # If there is no sales line, we must apply it to the original RMA
-                rma.move_id.rma_id._link_refund_with_reception_move()
+                rma_orig._link_refund_with_reception_move()
         return res
 
     def _get_refund_origin_invoice_line(self, sale_line):
@@ -170,13 +171,33 @@ class Rma(models.Model):
         )
         return invoice_lines if len(invoice_lines) == 1 else invoice_lines.browse()
 
+    def _get_rma_orig(self):
+        """This method returns the original RMA (useful if it is an RMA for
+        another RMA).
+        """
+        self.ensure_one()
+        rma_orig = self.move_id.rma_id
+        while rma_orig.move_id.rma_id:
+            rma_orig = rma_orig.move_id.rma_id
+        return rma_orig
+
+    def _get_sale_line(self):
+        """This method returns the associated sales order line or the original one
+        if it is an RMA for another RMA.
+        """
+        self.ensure_one()
+        line = self.sudo().sale_line_id
+        rma_orig = self._get_rma_orig()
+        if not line and rma_orig:
+            # We use the RMA from which it was created
+            line = rma_orig.sudo().sale_line_id
+        return line
+
     def _prepare_refund_vals(self, origin=False):
         """Inject fiscal_position_id + salesman from sales order (if any)"""
         vals = super()._prepare_refund_vals(origin=origin)
-        order = self.sudo().order_id
-        if not order and self.move_id.rma_id:
-            # We use the RMA from which it was created
-            order = self.move_id.rma_id.sudo().order_id
+        sale_line = self._get_sale_line()
+        order = sale_line.order_id
         if order:
             vals["invoice_user_id"] = order.user_id.id
             # It is important to set the correct fiscal position for the sales order
@@ -187,7 +208,6 @@ class Rma(models.Model):
                     self.partner_invoice_id
                 )
             ).id
-        sale_line = self.sudo().sale_line_id or self.move_id.rma_id.sudo().sale_line_id
         invoice = self._get_refund_origin_invoice_line(sale_line).move_id
         if invoice:
             # Rectify the invoice the same way the reversal wizard does: keep its
@@ -203,10 +223,7 @@ class Rma(models.Model):
         logged on the sales order, so better to let the operations not linked.
         """
         vals = super()._prepare_refund_line_vals()
-        line = self.sudo().sale_line_id
-        if not line and self.move_id.rma_id:
-            # We use the RMA from which it was created
-            line = self.move_id.rma_id.sudo().sale_line_id
+        line = self._get_sale_line()
         if line:
             vals["product_id"] = line.product_id.id
             vals["price_unit"] = line.price_unit
