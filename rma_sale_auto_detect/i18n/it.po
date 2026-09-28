@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-29 13:46+0000\n"
+"PO-Revision-Date: 2026-09-28 08:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -54,7 +54,7 @@ msgstr ""
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields.selection,name:rma_sale_auto_detect.selection__rma_operation__return_eligibility_order__older_first
 msgid "Older First"
-msgstr ""
+msgstr "Prima i meno recenti"
 
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields,help:rma_sale_auto_detect.field_stock_move__rma_returnable_uom_qty
@@ -82,12 +82,12 @@ msgstr "Operazione richiesta RMA"
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields.selection,name:rma_sale_auto_detect.selection__rma_operation__return_eligibility_order__recent_first
 msgid "Recent First"
-msgstr ""
+msgstr "Prima i recenti"
 
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields,field_description:rma_sale_auto_detect.field_rma_operation__return_eligibility_order
 msgid "Return Eligibility Order"
-msgstr ""
+msgstr "Ordine idoneità reso"
 
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields,field_description:rma_sale_auto_detect.field_rma__return_eligibility_period_exceeded
@@ -132,4 +132,4 @@ msgstr ""
 #. module: rma_sale_auto_detect
 #: model:ir.model.fields,help:rma_sale_auto_detect.field_rma_operation__return_eligibility_order
 msgid "This will change the way of eligible sale orders are retrieved."
-msgstr ""
+msgstr "Ciò modificherà la modalità di recupero degli ordini di vendita idonei."
