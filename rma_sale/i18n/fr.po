@@ -442,6 +442,11 @@ msgid "Sale Order %(order)s linked manually."
 msgstr "Commande client %(order)s liée manuellement."
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__sale_line_id
+msgid "Sale Order Line"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
 msgstr ""
