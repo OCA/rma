@@ -76,13 +76,9 @@ class StockMove(models.Model):
                     self.env._(
                         "The quantity done for the product '%(id)s' must "
                         "be equal to its initial demand because the "
-                        "stock move is linked to an RMA (%(name)s)."
-                    )
-                    % (
-                        {
-                            "id": move.product_id.name,
-                            "name": ", ".join(move.rma_receiver_ids.mapped("name")),
-                        }
+                        "stock move is linked to an RMA (%(name)s).",
+                        id=move.product_id.name,
+                        name=", ".join(move.rma_receiver_ids.mapped("name")),
                     )
                 )
         res = super()._action_done(cancel_backorder=cancel_backorder)
