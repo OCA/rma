@@ -62,11 +62,12 @@ class StockMove(models.Model):
             qty_prec = self.env["decimal.precision"].precision_get(
                 "Product Unit of Measure"
             )
+            rma_received_qty = sum(rma_receiver.mapped("product_uom_qty"))
             if (
-                rma_receiver
+                rma_received_qty
                 and float_compare(
                     move.quantity,
-                    rma_receiver.product_uom_qty,
+                    rma_received_qty,
                     precision_digits=qty_prec,
                 )
                 != 0
@@ -80,7 +81,7 @@ class StockMove(models.Model):
                     % (
                         {
                             "id": move.product_id.name,
-                            "name": move.rma_receiver_ids.name,
+                            "name": ", ".join(move.rma_receiver_ids.mapped("name")),
                         }
                     )
                 )
