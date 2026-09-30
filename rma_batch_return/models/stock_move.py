@@ -12,9 +12,7 @@ _logger = logging.getLogger(__name__)
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _prepare_rma_vals(
-        self, group_id: ProcurementGroup | bool = False
-    ) -> list[dict]:
+    def _prepare_rma_vals(self, group_id: ProcurementGroup) -> list[dict]:
         vals_list = []
         group_obj = self.env["procurement.group"]
         for move in self:
@@ -23,23 +21,10 @@ class StockMove(models.Model):
                 continue
             if not group_id:
                 group_id = group_obj.create({})
-            vals_list.append(
-                {
-                    "move_id": move.id,
-                    "product_id": move.product_id.id,
-                    "product_uom_qty": move.quantity,
-                    "product_uom": move.product_id.uom_id.id,
-                    "location_id": move.location_dest_id.id,
-                    "partner_id": move.partner_id.id,
-                    "lot_id": move.lot_ids.id,
-                    "batch_id": move.picking_id.rma_batch_id.id,
-                    "operation_id": move.picking_id.rma_batch_id.operation_id.id
-                    if move.picking_id.rma_batch_id
-                    else move.picking_type_id.rma_create_operation_id.id,
-                    "reception_move_id": move.id,
-                    "procurement_group_id": group_id.id,
-                }
-            )
+            # Create an RMA per move line as characteristics can be different
+            # (lot, packaging, ...)
+            for move_line in move.move_line_ids:
+                vals_list.append(move_line._prepare_rma_vals(group_id=group_id))
         return vals_list
 
     def _action_done(self, cancel_backorder=False):
