@@ -62,11 +62,12 @@ class StockMove(models.Model):
             qty_prec = self.env["decimal.precision"].precision_get(
                 "Product Unit of Measure"
             )
+            rma_received_qty = sum(rma_receiver.mapped("product_uom_qty"))
             if (
-                rma_receiver
+                rma_received_qty
                 and float_compare(
                     move.quantity,
-                    rma_receiver.product_uom_qty,
+                    rma_received_qty,
                     precision_digits=qty_prec,
                 )
                 != 0
@@ -75,13 +76,9 @@ class StockMove(models.Model):
                     self.env._(
                         "The quantity done for the product '%(id)s' must "
                         "be equal to its initial demand because the "
-                        "stock move is linked to an RMA (%(name)s)."
-                    )
-                    % (
-                        {
-                            "id": move.product_id.name,
-                            "name": move.rma_receiver_ids.name,
-                        }
+                        "stock move is linked to an RMA (%(name)s).",
+                        id=move.product_id.name,
+                        name=", ".join(move.rma_receiver_ids.mapped("name")),
                     )
                 )
         res = super()._action_done(cancel_backorder=cancel_backorder)
