@@ -11,7 +11,9 @@ class Rma(models.Model):
         comodel_name="delivery.carrier",
         string="Carrier",
     )
-    rma_delivery_strategy = fields.Selection(related="company_id.rma_delivery_strategy")
+    rma_delivery_strategy = fields.Selection(
+        related="company_id.rma_delivery_strategy",
+    )
     reception_carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Reception Carrier",
