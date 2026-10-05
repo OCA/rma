@@ -6,42 +6,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-10-05 08:54+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: rma_repair_location
 #: model:ir.model.fields,help:rma_repair_location.field_rma_operation__repair_location_id
 msgid ""
 "If set, repair orders created from this operation will use this location."
 msgstr ""
+"Se impostata, gli ordini di riparazione create di questa operazione useranno "
+"questa ubicazione."
 
 #. module: rma_repair_location
 #: model:ir.model.fields,help:rma_repair_location.field_rma_operation__repair_warehouse_id
 msgid ""
 "If set, repair orders created from this operation will use this warehouse."
 msgstr ""
+"Se impostata, gli ordini di riparazione creati da questa operazione useranno "
+"questo magazzino."
 
 #. module: rma_repair_location
 #: model:ir.model,name:rma_repair_location.model_rma
 msgid "RMA"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_repair_location
 #: model:ir.model,name:rma_repair_location.model_rma_operation
 msgid "RMA requested operation"
-msgstr ""
+msgstr "Operazione richiesta RMA"
 
 #. module: rma_repair_location
 #: model:ir.model.fields,field_description:rma_repair_location.field_rma_operation__repair_location_id
 msgid "Repair Location"
-msgstr ""
+msgstr "Ubicazione riparazione"
 
 #. module: rma_repair_location
 #: model:ir.model.fields,field_description:rma_repair_location.field_rma_operation__repair_warehouse_id
 msgid "Repair Warehouse"
-msgstr ""
+msgstr "Magazzino riparazione"
