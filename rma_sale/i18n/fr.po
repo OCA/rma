@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-15 08:00+0000\n"
+"PO-Revision-Date: 2026-10-05 08:54+0000\n"
 "Last-Translator: SupportSNDC <support@sndc.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -60,7 +60,7 @@ msgstr "<i class=\"fa fa-truck\"/> Sélectionner une adresse de livraison"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
 msgid "<option value=\"\">---</option>"
-msgstr ""
+msgstr "<option value=\"\">---</option>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.res_config_settings_view_form
@@ -76,11 +76,12 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 msgstr ""
+"<span class=\"fa fa-reply\" role=\"img\" aria-label=\"RMA\" title=\"RMA\"/>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_content
 msgid "<span>RMA</span>"
-msgstr ""
+msgstr "<span>RMA</span>"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.portal_rma_page
@@ -117,7 +118,7 @@ msgstr "Produit autorisé"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_quantity
 msgid "Allowed Quantity"
-msgstr ""
+msgstr "Quantité autorisée"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.rma_sale_order_link_wizard_form_view
@@ -229,7 +230,7 @@ msgstr "Description"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__different_return_product
 msgid "Different Return Product"
-msgstr ""
+msgstr "Produit de retour différent"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__display_name
@@ -259,7 +260,7 @@ msgstr "Création RMA pleine page"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: rma_sale
 #: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__different_return_product
@@ -267,6 +268,9 @@ msgid ""
 "If checked, allows the return of a product different from the one originally "
 "ordered. Used if the delivery is created automatically"
 msgstr ""
+"Si cette case est cochée, cela autorise le retour d'un produit différent de "
+"celui commandé à l'origine. À utiliser si la livraison est créée "
+"automatiquement"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -299,7 +303,7 @@ msgstr "Dernière modification par"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__write_date
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__line_ids
@@ -347,6 +351,7 @@ msgstr "Produit"
 msgid ""
 "Product to be returned if it's different from the originally delivered item."
 msgstr ""
+"Le produit doit être retourné s'il diffère de l'article initialement livré."
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__quantity
@@ -400,27 +405,27 @@ msgstr "Demande d'opération"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__is_return_all
 msgid "Return All?"
-msgstr ""
+msgstr "Tout renvoyer ?"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Retour de BL"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__return_product_id
 msgid "Return Product"
-msgstr ""
+msgstr "Retour de produit"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__rma_id
 msgid "Rma"
-msgstr ""
+msgstr "RMA"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.rma_sale_order_link_wizard_form_view
 msgid "Rma Sale Order Link Wizard"
-msgstr ""
+msgstr "Assistant de création de lien vers une commande de vente RMA"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
@@ -444,22 +449,22 @@ msgstr "Commande client %(order)s liée manuellement."
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma_sale_order_link_wizard__sale_line_id
 msgid "Sale Order Line"
-msgstr ""
+msgstr "Ligne de commande de vente"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_line_rma_wizard
 msgid "Sale Order Line Rma Wizard"
-msgstr ""
+msgstr "Assistant de création de lignes de commande de vente RMA"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order_rma_wizard
 msgid "Sale Order Rma Wizard"
-msgstr ""
+msgstr "Assistant de commande de vente (RMA)"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
-msgstr ""
+msgstr "Commande de vente"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
@@ -536,12 +541,12 @@ msgstr "Sera utilisé pour retourner les marchandises une fois le RMA terminé"
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Assistant"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_rma_sale_order_link_wizard
 msgid "Wizard to link existing rma to sale order"
-msgstr ""
+msgstr "Assistant permettant de lier une RMA existante à une commande client"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -563,6 +568,8 @@ msgstr "Vous pouvez envoyer un message dans chaque RMA envoyé"
 msgid ""
 "You can't exceed the allowed quantity for returning product %(product)s."
 msgstr ""
+"Vous ne pouvez pas dépasser la quantité autorisée pour le retour du ou des "
+"produits %(product)s."
 
 #. module: rma_sale
 #. odoo-python
