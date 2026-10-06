@@ -12,25 +12,21 @@ class SaleOrderLine(models.Model):
 
     def _get_qty_done_by_product_lot(self, moves):
         res = defaultdict(float)
-        for group in self.env["stock.move.line"].read_group(
+        for product, lot, quantity in self.env["stock.move.line"]._read_group(
             [
                 ("move_id", "in", moves.ids),
                 ("state", "=", "done"),
-                ("move_id.scrapped", "=", False),
+                ("move_id.scrap_id", "=", False),
             ],
-            ["quantity:sum"],
             ["product_id", "lot_id"],
-            lazy=False,
+            ["quantity:sum"],
         ):
-            lot_id = group.get("lot_id")[0] if group.get("lot_id") else False
-            product_id = group.get("product_id")[0]
-            quantity = group.get("quantity")
-            res[(product_id, lot_id)] += quantity
+            res[(product.id, lot.id if lot else False)] += quantity
         return res
 
     def prepare_sale_rma_data(self):
         self.ensure_one()
-        if self.product_id.type not in ["product", "consu"]:
+        if not self.product_id.is_storable:
             return {}
         if not self.product_id.tracking or self.product_id.tracking == "none":
             return super().prepare_sale_rma_data()
