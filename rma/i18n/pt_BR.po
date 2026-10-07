@@ -1242,6 +1242,11 @@ msgid "Manage tags to better classify them for tracking and analysis purposes."
 msgstr ""
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
+msgid "Manage your RMA Orders"
+msgstr ""
+
+#. module: rma
 #: model:res.groups,name:rma.rma_group_manager
 msgid "Manager"
 msgstr "Gerente"

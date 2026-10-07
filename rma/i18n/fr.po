@@ -1270,6 +1270,11 @@ msgstr ""
 "Gérez les étiquettes pour mieux les classer à des fins de suivi et d'analyse."
 
 #. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
+msgid "Manage your RMA Orders"
+msgstr ""
+
+#. module: rma
 #: model:res.groups,name:rma.rma_group_manager
 msgid "Manager"
 msgstr "Responsable"
