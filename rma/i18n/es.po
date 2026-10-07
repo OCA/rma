@@ -687,16 +687,6 @@ msgid "Canceled"
 msgstr "Cancelado"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__uom_category_id
-msgid "Category"
-msgstr "Categoría"
-
-#. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
-msgid "Category UoM"
-msgstr "Categoría de la UdM"
-
-#. module: rma
 #: model_terms:ir.actions.act_window,help:rma.rma_action
 msgid "Click to add a new RMA."
 msgstr "Click para agregar un nuevo RMA."
@@ -771,17 +761,6 @@ msgstr "Confirmado"
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "Contact"
 msgstr "Contacto"
-
-#. module: rma
-#: model:ir.model.fields,help:rma.field_rma__uom_category_id
-#: model:ir.model.fields,help:rma.field_rma_delivery_wizard__uom_category_id
-msgid ""
-"Conversion between Units of Measure can only occur if they belong to the "
-"same category. The conversion will be made based on the ratios."
-msgstr ""
-"La conversión entre Unidades de Medida sólo puede producirse si pertenecen a "
-"la misma categoría. La conversión se realizará en función de las "
-"proporciones."
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_operation__count_rma_awaiting_action
@@ -864,8 +843,6 @@ msgid "Custom Bounced Message"
 msgstr "Mensaje de rebote personalizado"
 
 #. module: rma
-#. odoo-python
-#: code:addons/rma/models/rma.py:0
 #: model:ir.model.fields,field_description:rma.field_rma__partner_id
 msgid "Customer"
 msgstr "Cliente"
@@ -926,6 +903,11 @@ msgid "Delivered Qty"
 msgstr "Ctd. entregada"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
+msgid "Delivered Qty Done"
+msgstr ""
+
+#. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
 msgid "Delivered Quantity"
 msgstr "Cantidad entregada"
@@ -964,6 +946,12 @@ msgid "Different Return Product"
 msgstr "Producto devuelto diferente"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_account_move__display_name
+#: model:ir.model.fields,field_description:rma.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:rma.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma.field_res_partner__display_name
+#: model:ir.model.fields,field_description:rma.field_res_users__display_name
 #: model:ir.model.fields,field_description:rma.field_rma__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__display_name
@@ -973,6 +961,12 @@ msgstr "Producto devuelto diferente"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_tag__display_name
 #: model:ir.model.fields,field_description:rma.field_rma_team__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_move__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -1135,11 +1129,6 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icono de fuente impresionante, por ejemplo fa-tasks"
 
 #. module: rma
-#: model_terms:ir.ui.view,arch_db:rma.rma_view_search
-msgid "Group By"
-msgstr "Agrupar por"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_company__rma_return_grouping
 #: model:ir.model.fields,field_description:rma.field_res_config_settings__rma_return_grouping
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__rma_return_grouping
@@ -1160,6 +1149,12 @@ msgid "Has Message"
 msgstr "Tiene mensaje"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_account_move__id
+#: model:ir.model.fields,field_description:rma.field_account_move_line__id
+#: model:ir.model.fields,field_description:rma.field_res_company__id
+#: model:ir.model.fields,field_description:rma.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma.field_res_partner__id
+#: model:ir.model.fields,field_description:rma.field_res_users__id
 #: model:ir.model.fields,field_description:rma.field_rma__id
 #: model:ir.model.fields,field_description:rma.field_rma_delivery_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_finalization__id
@@ -1169,6 +1164,12 @@ msgstr "Tiene mensaje"
 #: model:ir.model.fields,field_description:rma.field_rma_split_wizard__id
 #: model:ir.model.fields,field_description:rma.field_rma_tag__id
 #: model:ir.model.fields,field_description:rma.field_rma_team__id
+#: model:ir.model.fields,field_description:rma.field_stock_move__id
+#: model:ir.model.fields,field_description:rma.field_stock_picking__id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:rma.field_stock_return_picking_line__id
+#: model:ir.model.fields,field_description:rma.field_stock_rule__id
+#: model:ir.model.fields,field_description:rma.field_stock_warehouse__id
 msgid "ID"
 msgstr "ID"
 
@@ -1371,6 +1372,11 @@ msgid "Manage tags to better classify them for tracking and analysis purposes."
 msgstr ""
 "Administrar etiquetas para clasificarlos de modo que mejore el seguimiento y "
 "análisis de los mismos."
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
+msgid "Manage your RMA Orders"
+msgstr ""
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -1618,11 +1624,6 @@ msgid "Processed"
 msgstr "Procesado"
 
 #. module: rma
-#: model:ir.model.fields,field_description:rma.field_rma__procurement_group_id
-msgid "Procurement group"
-msgstr "Grupo de abastecimiento"
-
-#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__product_id
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_rmas
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -1690,6 +1691,7 @@ msgstr "Cantidad a extraer en nuevo RMA."
 #: model:ir.model.fields,field_description:rma.field_stock_warehouse__rma
 #: model:ir.module.category,name:rma.rma_module_category
 #: model:ir.ui.menu,name:rma.rma_menu
+#: model:res.groups.privilege,name:rma.rma_groups_privilege
 #: model_terms:ir.ui.view,arch_db:rma.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_form
 #: model_terms:ir.ui.view,arch_db:rma.view_partner_form
@@ -2009,6 +2011,11 @@ msgid "Remaining delivered qty"
 msgstr "Ctd. entregada restante"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
+msgid "Remaining delivered qty to done"
+msgstr ""
+
+#. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
 msgid "Repair"
 msgstr "Reparar"
@@ -2323,6 +2330,11 @@ msgstr "Movimiento de existencias"
 #: model:ir.model,name:rma.model_stock_rule
 msgid "Stock Rule"
 msgstr "Regla de Inventario"
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__stock_reference_id
+msgid "Stock reference"
+msgstr ""
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__name
@@ -2713,6 +2725,26 @@ msgid ""
 msgstr ""
 "{{object.company_id.name}} Su RMA se ha creado con éxito (Ref {{object.name "
 "or 'n/a' }})"
+
+#~ msgid "Category"
+#~ msgstr "Categoría"
+
+#~ msgid "Category UoM"
+#~ msgstr "Categoría de la UdM"
+
+#~ msgid ""
+#~ "Conversion between Units of Measure can only occur if they belong to the "
+#~ "same category. The conversion will be made based on the ratios."
+#~ msgstr ""
+#~ "La conversión entre Unidades de Medida sólo puede producirse si "
+#~ "pertenecen a la misma categoría. La conversión se realizará en función de "
+#~ "las proporciones."
+
+#~ msgid "Group By"
+#~ msgstr "Agrupar por"
+
+#~ msgid "Procurement group"
+#~ msgstr "Grupo de abastecimiento"
 
 #~ msgid "Refunded"
 #~ msgstr "Reembolsado"
