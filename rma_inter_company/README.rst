@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Inter Company Module for RMA
 ============================
@@ -17,7 +13,7 @@ Inter Company Module for RMA
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frma-lightgray.png?logo=github
@@ -34,6 +30,9 @@ Inter Company Module for RMA
 
 Automatically create an Inter Company RMA so that it can be managed
 independently but still remain linked.
+
+A dropshipping workflow with intercompany and an MTO+Buy workflow with
+intercompany have been set up.
 
 **Table of contents**
 
@@ -106,10 +105,10 @@ Authors
 Contributors
 ------------
 
-- \`Tecnativa <https://www.tecnativa.com>\`:
+-  \`Tecnativa <https://www.tecnativa.com>\`:
 
-  - Víctor Martínez
-  - Pedro M. Baeza
+   -  Víctor Martínez
+   -  Pedro M. Baeza
 
 Maintainers
 -----------
