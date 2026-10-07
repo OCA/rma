@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_redelivery_wizard_view_form" model="ir.ui.view">
+        <field name="model">rma.delivery.wizard</field>
+        <field name="inherit_id" ref="rma.rma_redelivery_wizard_view_form" />
+        <field name="arch" type="xml">
+            <label for="product_uom_qty" position="before">
+                <label
+                    for="lot_id"
+                    string="Lot"
+                    invisible="(type != 'replace' or rma_count &gt; 1) or not product_tracking or product_tracking != 'lot'"
+                />
+                <label
+                    for="lot_id"
+                    string="Serial Number"
+                    invisible="(type != 'replace' or rma_count &gt; 1) or not product_tracking or product_tracking != 'serial'"
+                />
+                <label
+                    for="lot_id"
+                    string="Lot/Serial Number"
+                    invisible="(type != 'replace' or rma_count &gt; 1) or not product_tracking or product_id"
+                />
+                <field
+                    name="lot_id"
+                    nolabel="1"
+                    groups="stock.group_production_lot"
+                    invisible="(type != 'replace' or rma_count &gt; 1) or product_tracking not in ('lot', 'serial')"
+                />
+            </label>
+        </field>
+    </record>
+</odoo>
