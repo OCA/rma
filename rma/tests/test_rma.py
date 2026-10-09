@@ -410,8 +410,8 @@ class TestRmaCase(TestRma):
         self.assertEqual(new_rma.partner_shipping_id, rma.partner_shipping_id)
         self.assertEqual(new_rma.state, "confirmed")
         self.assertEqual(new_rma.operation_id, rma.operation_id)
-        self.assertEqual(rma.rma_count, 1)
-        res = rma.action_view_rma()
+        self.assertEqual(rma.child_rma_count, 1)
+        res = rma.action_view_child_rmas()
         self.assertEqual(res["res_model"], "rma")
         self.assertEqual(res["res_id"], new_rma.id)
 
