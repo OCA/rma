@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-01 08:46+0000\n"
+"PO-Revision-Date: 2026-10-09 14:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -905,7 +905,7 @@ msgstr "Q.tà consegnata"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__delivered_qty_done
 msgid "Delivered Qty Done"
-msgstr ""
+msgstr "Quantità consegnata fatta"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.report_rma_document
@@ -1373,7 +1373,7 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_my_home_rma
 msgid "Manage your RMA Orders"
-msgstr ""
+msgstr "Gestisci i tuoi ordini RMA"
 
 #. module: rma
 #: model:res.groups,name:rma.rma_group_manager
@@ -2008,7 +2008,7 @@ msgstr "Quantità da consegnare rimanenti"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__remaining_qty_to_done
 msgid "Remaining delivered qty to done"
-msgstr ""
+msgstr "Quantità consegnata rimanente da fare"
 
 #. module: rma
 #: model:rma.operation,name:rma.rma_operation_return
@@ -2329,7 +2329,7 @@ msgstr "Regola di giacenza"
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__stock_reference_id
 msgid "Stock reference"
-msgstr ""
+msgstr "Riferimento giacenza"
 
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_tag__name
