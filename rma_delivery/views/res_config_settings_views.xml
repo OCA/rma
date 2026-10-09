@@ -4,25 +4,51 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="stock.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <block name="operations_setting_container" position="inside">
-                <setting id="rma_delivery_strategy" title="RMA delivery strategy">
-                    <field name="rma_delivery_strategy" />
-                </setting>
-                <setting
-                    id="rma_fixed_delivery_method"
-                    invisible="rma_delivery_strategy in ('customer_method', 'rma_method')"
-                >
-                    <field name="rma_fixed_delivery_method" widget="selection" />
-                </setting>
-                <setting id="rma_reception_strategy" title="RMA reception strategy">
-                    <field name="rma_reception_strategy" />
-                </setting>
-                <setting
-                    id="rma_fixed_reception_strategy"
-                    invisible="rma_reception_strategy in ('customer_method', 'rma_method')"
-                >
-                    <field name="rma_fixed_reception_strategy" widget="selection" />
-                </setting>
+            <block name="operations_setting_container" position="after">
+                <block title="RMA" name="rma_delivery_setting_container">
+                    <setting id="rma_delivery_strategy">
+                        <field
+                            name="rma_delivery_strategy"
+                            string="Delivery strategy"
+                        />
+                        <div
+                            class="content-group"
+                            invisible="not rma_delivery_strategy or rma_delivery_strategy in ('customer_method', 'rma_method')"
+                        >
+                            <div class="row mt16">
+                                <label
+                                    for="rma_fixed_delivery_method"
+                                    string="Default delivery method"
+                                />
+                                <field
+                                    name="rma_fixed_delivery_method"
+                                    widget="selection"
+                                />
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="rma_reception_strategy">
+                        <field
+                            name="rma_reception_strategy"
+                            string="Reception strategy"
+                        />
+                        <div
+                            class="content-group"
+                            invisible="not rma_reception_strategy or rma_reception_strategy in ('customer_method', 'rma_method')"
+                        >
+                            <div class="row mt16">
+                                <label
+                                    for="rma_fixed_reception_strategy"
+                                    string="Default reception method"
+                                />
+                                <field
+                                    name="rma_fixed_reception_strategy"
+                                    widget="selection"
+                                />
+                            </div>
+                        </div>
+                    </setting>
+                </block>
             </block>
         </field>
     </record>
