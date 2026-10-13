@@ -106,6 +106,22 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
+    rma_ids = fields.One2many(
+        comodel_name="rma",
+        inverse_name="sale_line_id",
+        string="RMAs",
+        copy=False,
+    )
+    rma_count = fields.Integer(
+        compute="_compute_rma_count",
+        store=True,
+    )
+
+    @api.depends("rma_ids")
+    def _compute_rma_count(self):
+        for line in self:
+            line.rma_count = len(line.rma_ids)
+
     def get_delivery_move(self):
         self.ensure_one()
         outgoing_moves, _incoming_moves = self._get_outgoing_incoming_moves()
