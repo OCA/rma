@@ -9,7 +9,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["purchase_sale_stock_inter_company", "rma_sale", "stock_dropshipping"],
+    "depends": ["purchase_sale_stock_inter_company", "rma_sale"],
     "data": [
         "views/rma_views.xml",
     ],
