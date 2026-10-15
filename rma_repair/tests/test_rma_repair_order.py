@@ -19,7 +19,7 @@ class RMARepairOrderTest(TestRma):
             cls.env["repair.order"].with_context(
                 default_product_id=cls.rma.product_id.id,
                 default_rma_ids=[cls.rma.id],
-                default_location_id=cls.rma.location_id.id,
+                default_product_location_src_id=cls.rma.location_id.id,
             )
         )
         cls.repair_order = repair_form.save()
@@ -37,7 +37,7 @@ class RMARepairOrderTest(TestRma):
         expected = {
             "default_rma_ids": [self.rma.id],
             "default_product_id": self.rma.product_id.id,
-            "default_location_id": self.rma.location_id.id,
+            "default_product_location_src_id": self.rma.location_id.id,
             "default_partner_id": self.rma.partner_id.id,
             "default_product_qty": self.rma.product_uom_qty,
             "default_product_uom": self.rma.product_uom.id,
