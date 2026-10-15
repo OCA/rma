@@ -149,5 +149,6 @@ class StockRule(models.Model):
             "origin_returned_move_id",
             "move_orig_ids",
             "rma_receiver_ids",
+            "to_refund",
         ]
         return move_fields
