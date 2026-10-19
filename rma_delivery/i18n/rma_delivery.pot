@@ -102,8 +102,23 @@ msgid "Default RMA reception method"
 msgstr ""
 
 #. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Default delivery method"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Default reception method"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__delivery
 msgid "Delivery"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Delivery strategy"
 msgstr ""
 
 #. module: rma_delivery
@@ -134,6 +149,7 @@ msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "RMA"
 msgstr ""
 
@@ -147,11 +163,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__rma_delivery_strategy
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_delivery_strategy
 msgid "RMA delivery method strategy"
-msgstr ""
-
-#. module: rma_delivery
-#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
-msgid "RMA delivery strategy"
 msgstr ""
 
 #. module: rma_delivery
@@ -170,11 +181,6 @@ msgid "RMA reception method strategy"
 msgstr ""
 
 #. module: rma_delivery
-#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
-msgid "RMA reception strategy"
-msgstr ""
-
-#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__reception
 msgid "Reception"
 msgstr ""
@@ -184,6 +190,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__reception_carrier_id
 #: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__reception_carrier_id
 msgid "Reception Carrier"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Reception strategy"
 msgstr ""
 
 #. module: rma_delivery
