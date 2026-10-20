@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [rma_batch_sale_auto_detect](rma_batch_sale_auto_detect/) | 18.0.1.0.0 |  | This addon add an action to rma batch automatically detect rmas sale order
 [rma_delivery](rma_delivery/) | 18.0.1.4.2 | <a href='https://github.com/chienandalu'><img src='https://github.com/chienandalu.png' width='32' height='32' style='border-radius:50%;' alt='chienandalu'/></a> | Allow to choose a default delivery carrier for returns
 [rma_inter_company](rma_inter_company/) | 18.0.1.0.2 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Inter Company Module for RMA
-[rma_lot](rma_lot/) | 18.0.1.4.0 |  | Manage lot in RMA
+[rma_lot](rma_lot/) | 18.0.1.4.1 |  | Manage lot in RMA
 [rma_reason](rma_reason/) | 18.0.1.2.0 | <a href='https://github.com/sbejaoui'><img src='https://github.com/sbejaoui.png' width='32' height='32' style='border-radius:50%;' alt='sbejaoui'/></a> | Rma Reason
 [rma_repair](rma_repair/) | 18.0.1.0.1 | <a href='https://github.com/peluko00'><img src='https://github.com/peluko00.png' width='32' height='32' style='border-radius:50%;' alt='peluko00'/></a> | Create a repair order from rma
 [rma_repair_lot](rma_repair_lot/) | 18.0.1.0.1 | <a href='https://github.com/peluko00'><img src='https://github.com/peluko00.png' width='32' height='32' style='border-radius:50%;' alt='peluko00'/></a> | RMA Repair Lot
