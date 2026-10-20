@@ -35,6 +35,8 @@ class Rma(models.Model):
     move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
     sale_line_id = fields.Many2one(
         related="move_id.sale_line_id",
+        store=True,
+        index=True,
     )
     allowed_product_ids = fields.Many2many(
         comodel_name="product.product",
