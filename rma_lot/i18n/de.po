@@ -38,8 +38,8 @@ msgstr ""
 #. module: rma_lot
 #: model:ir.model.fields,help:rma_lot.field_rma_operation__deliver_same_lot
 msgid ""
-"If enabled, the replacement or delivery product will use the exact "
-"lot/serial number received from the customer. Disable if a different lot or "
+"If enabled, the replacement or delivery product will use the exact lot/"
+"serial number received from the customer. Disable if a different lot or "
 "serial number should be assigned."
 msgstr ""
 "Wenn diese Option aktiviert ist, wird für das Ersatz- oder Lieferprodukt "
@@ -96,6 +96,12 @@ msgstr "Retouren-Kommissionierungszeile"
 #: model_terms:ir.ui.view,arch_db:rma_lot.rma_redelivery_wizard_view_form
 msgid "Serial Number"
 msgstr "Seriennummer"
+
+#. module: rma_lot
+#. odoo-python
+#: code:addons/rma_lot/models/rma.py:0
+msgid "The serial number %(serial)s is not available"
+msgstr ""
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__product_tracking
