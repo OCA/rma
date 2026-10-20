@@ -273,6 +273,11 @@ msgid "Move"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__rma_count
+msgid "Number of RMAs"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__order_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__order_id
 msgid "Order"
@@ -330,6 +335,7 @@ msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_ids
 msgid "RMAs"
 msgstr "RMA's"
 
@@ -372,6 +378,11 @@ msgid "Return Product"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_count
+msgid "Rma Count"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -395,6 +406,11 @@ msgstr "Verkooporder retour gids"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_report
+msgid "Sales Analysis Report"
 msgstr ""
 
 #. module: rma_sale
