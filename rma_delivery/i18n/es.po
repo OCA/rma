@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-22 19:46+0000\n"
-"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
+"PO-Revision-Date: 2026-10-20 06:23+0000\n"
+"Last-Translator: Víctor Martínez <victor.martinez@tecnativa.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -107,12 +107,12 @@ msgstr "Método de recepción de RMA predeterminado"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Default delivery method"
-msgstr ""
+msgstr "Método de envío (entrega) por defecto"
 
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Default reception method"
-msgstr ""
+msgstr "Método de envío (recepción) por defecto"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__delivery
@@ -122,7 +122,7 @@ msgstr "Entrega"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Delivery strategy"
-msgstr ""
+msgstr "Estrategia de envío"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__display_name
@@ -198,7 +198,7 @@ msgstr "Transportista de recepción"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Reception strategy"
-msgstr ""
+msgstr "Estrategia de recepción"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_return_picking
