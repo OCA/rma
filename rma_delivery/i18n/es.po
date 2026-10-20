@@ -22,18 +22,6 @@ msgid "Accept"
 msgstr "Aceptar"
 
 #. module: rma_delivery
-#: model:ir.model.fields,field_description:rma_delivery.field_rma__available_carrier_ids
-#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__available_carrier_ids
-msgid "Available Carrier"
-msgstr "Transportista disponible"
-
-#. module: rma_delivery
-#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__available_reception_carrier_ids
-#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__available_reception_carrier_ids
-msgid "Available Reception Carrier"
-msgstr "Transportista de recepción disponible"
-
-#. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.rma_choose_delivery_carrier_form_view
 msgid "Cancel"
 msgstr "Cancelar"
@@ -105,14 +93,50 @@ msgid "Default RMA reception method"
 msgstr "Método de recepción de RMA predeterminado"
 
 #. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Default delivery method"
+msgstr ""
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Default reception method"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__delivery
 msgid "Delivery"
 msgstr "Entrega"
 
 #. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Delivery strategy"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_carrier_mixin__display_name
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_move__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking_line__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__domain_carrier_id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__domain_carrier_id
+msgid "Domain Carrier"
+msgstr ""
+
+#. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__domain_reception_carrier_id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__domain_reception_carrier_id
+msgid "Domain Reception Carrier"
+msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
@@ -121,7 +145,16 @@ msgid "Fixed method"
 msgstr "Método fijo"
 
 #. module: rma_delivery
+#: model:ir.model.fields,field_description:rma_delivery.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:rma_delivery.field_res_company__id
+#: model:ir.model.fields,field_description:rma_delivery.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_carrier_mixin__id
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__id
+#: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_move__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -136,7 +169,13 @@ msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: rma_delivery
+#: model:ir.model,name:rma_delivery.model_rma_carrier_mixin
+msgid "Mixin to use RMA Carrier"
+msgstr ""
+
+#. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "RMA"
 msgstr "RMA"
 
@@ -151,11 +190,6 @@ msgstr "Asistente de selección de transportista para la entrega de RMA"
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__rma_delivery_strategy
 msgid "RMA delivery method strategy"
 msgstr "Estrategia de método de entrega de RMA"
-
-#. module: rma_delivery
-#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
-msgid "RMA delivery strategy"
-msgstr "Estrategia de entrega de RMA"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__rma_method
@@ -173,11 +207,6 @@ msgid "RMA reception method strategy"
 msgstr "Estrategia del método de recepción de RMA"
 
 #. module: rma_delivery
-#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
-msgid "RMA reception strategy"
-msgstr "Estrategia de recepción de RMA"
-
-#. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__reception
 msgid "Reception"
 msgstr "Recepción"
@@ -188,6 +217,11 @@ msgstr "Recepción"
 #: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__reception_carrier_id
 msgid "Reception Carrier"
 msgstr "Transportista de recepción"
+
+#. module: rma_delivery
+#: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
+msgid "Reception strategy"
+msgstr ""
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_return_picking
@@ -240,3 +274,15 @@ msgstr "Actualizar envío"
 #: model:ir.actions.act_window,name:rma_delivery.rma_choose_delivery_carrier_action
 msgid "Update shipping"
 msgstr "Actualizar envío"
+
+#~ msgid "Available Carrier"
+#~ msgstr "Transportista disponible"
+
+#~ msgid "Available Reception Carrier"
+#~ msgstr "Transportista de recepción disponible"
+
+#~ msgid "RMA delivery strategy"
+#~ msgstr "Estrategia de entrega de RMA"
+
+#~ msgid "RMA reception strategy"
+#~ msgstr "Estrategia de recepción de RMA"
