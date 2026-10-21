@@ -27,6 +27,7 @@
                     nolabel="1"
                     groups="stock.group_production_lot"
                     invisible="not lots_visible"
+                    readonly="lot_id_readonly"
                 />
             </xpath>
         </field>

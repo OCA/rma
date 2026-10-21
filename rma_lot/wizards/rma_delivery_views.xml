@@ -25,6 +25,7 @@
                     nolabel="1"
                     groups="stock.group_production_lot"
                     invisible="(type != 'replace' or rma_count &gt; 1) or product_tracking not in ('lot', 'serial')"
+                    required="type == 'replace' and rma_count &lt;= 1 and product_tracking in ('lot', 'serial')"
                 />
             </label>
         </field>
