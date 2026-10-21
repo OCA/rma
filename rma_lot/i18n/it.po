@@ -53,6 +53,11 @@ msgid "Lot"
 msgstr "Lotto"
 
 #. module: rma_lot
+#: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id_readonly
+msgid "Lot Id Readonly"
+msgstr ""
+
+#. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__lot_id
 #: model_terms:ir.ui.view,arch_db:rma_lot.portal_my_rmas_lot
@@ -95,6 +100,11 @@ msgid "Serial Number"
 msgstr "Numero seriale"
 
 #. module: rma_lot
+#: model:ir.model,name:rma_lot.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: rma_lot
 #. odoo-python
 #: code:addons/rma_lot/models/rma.py:0
 msgid "The serial number %(serial)s is not available"
@@ -105,3 +115,11 @@ msgstr "Il numero di serie %(serial)s non è disponibile"
 #: model:ir.model.fields,field_description:rma_lot.field_rma_delivery_wizard__product_tracking
 msgid "Tracking"
 msgstr "Tracciamento"
+
+#. module: rma_lot
+#. odoo-python
+#: code:addons/rma_lot/models/rma.py:0
+msgid ""
+"You can't modify the Lot/Serial number because all the stock moves have "
+"already been done."
+msgstr ""
