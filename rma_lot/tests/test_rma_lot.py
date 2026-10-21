@@ -201,6 +201,56 @@ class TestRMALot(BaseCommon):
         self.assertFalse(rma_lot_1.delivery_move_ids.restrict_lot_id)
         self.assertFalse(rma_lot_2.delivery_move_ids.restrict_lot_id, self.lot_2)
 
+    @mute_logger("odoo.models.unlink")
+    def test_replace_full_process_change_lot(self):
+        self.product.tracking = "serial"
+        self.operation.action_create_delivery = "manual_after_receipt"
+        self.warehouse.rma_out_replace_route_id = self.warehouse.rma_out_route_id
+        lot_a = self.env["stock.lot"].create(
+            {"name": "lot-a", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_a
+        )
+        lot_b = self.env["stock.lot"].create(
+            {"name": "lot-b", "product_id": self.product.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 1, lot_id=lot_b
+        )
+        # create picking
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_a.id), (self.product.id, 1, lot_b.id)]
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+        # create rms
+        rma_lot_a, rma_lot_b = self._create_rmas(picking, lot_a, lot_b)
+        reception_picking = rma_lot_a.reception_move_id.picking_id
+        reception_picking.button_validate()
+        self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_a.state, "received")
+        self.assertEqual(rma_lot_b.state, "received")
+        res = rma_lot_a.action_replace()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.product_id = self.product
+        wizard_form.lot_id = lot_a
+        wizard = wizard_form.save()
+        wizard.action_deliver()
+        self.assertEqual(rma_lot_a.state, "waiting_replacement")
+        self.assertEqual(rma_lot_a.delivery_move_ids.restrict_lot_id, lot_a)
+        self.assertEqual(rma_lot_a.delivery_move_ids.move_line_ids.lot_id, lot_a)
+        rma_lot_a.delivery_move_ids.move_line_ids.picked = True
+        rma_lot_a.lot_id = lot_b
+        self.assertEqual(rma_lot_a.delivery_move_ids.restrict_lot_id, lot_b)
+        self.assertEqual(rma_lot_a.delivery_move_ids.move_line_ids.lot_id, lot_b)
+        delivery_picking = rma_lot_a.delivery_move_ids.picking_id
+        delivery_picking.button_validate()
+        self.assertEqual(delivery_picking.state, "done")
+        self.assertEqual(rma_lot_a.state, "replaced")
+
     def test_replace_wizard_lot_change(self):
         self.operation.action_create_delivery = "manual_after_receipt"
         rma_lot_1, rma_lot_2 = self._create_rmas(self.picking, self.lot_1, self.lot_2)
