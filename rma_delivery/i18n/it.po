@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-13 09:45+0000\n"
+"PO-Revision-Date: 2026-10-21 15:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -95,12 +95,12 @@ msgstr "Metodo ricezione RMA predefinito"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Default delivery method"
-msgstr ""
+msgstr "Metodo di consegna predefinito"
 
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Default reception method"
-msgstr ""
+msgstr "Metodo ricezione predefinito"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__rma_choose_delivery_carrier__carrier_type__delivery
@@ -110,7 +110,7 @@ msgstr "Consegna"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Delivery strategy"
-msgstr ""
+msgstr "Strategia di consegna"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_delivery_carrier__display_name
@@ -130,13 +130,13 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:rma_delivery.field_rma__domain_carrier_id
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_choose_delivery_carrier__domain_carrier_id
 msgid "Domain Carrier"
-msgstr ""
+msgstr "Corriere dominio"
 
 #. module: rma_delivery
 #: model:ir.model.fields,field_description:rma_delivery.field_rma_rma_wizard__domain_reception_carrier_id
 #: model:ir.model.fields,field_description:rma_delivery.field_stock_return_picking__domain_reception_carrier_id
 msgid "Domain Reception Carrier"
-msgstr ""
+msgstr "Corriere ricezione dominio"
 
 #. module: rma_delivery
 #: model:ir.model.fields.selection,name:rma_delivery.selection__res_company__rma_delivery_strategy__fixed_method
@@ -171,7 +171,7 @@ msgstr "Ultimo aggiornamento il"
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma_carrier_mixin
 msgid "Mixin to use RMA Carrier"
-msgstr ""
+msgstr "Mixin per usare corriere RMA"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_rma
@@ -221,7 +221,7 @@ msgstr "Corriere ricevimento"
 #. module: rma_delivery
 #: model_terms:ir.ui.view,arch_db:rma_delivery.res_config_settings_view_form
 msgid "Reception strategy"
-msgstr ""
+msgstr "Strategia di ricezione"
 
 #. module: rma_delivery
 #: model:ir.model,name:rma_delivery.model_stock_return_picking
