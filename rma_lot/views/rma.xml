@@ -11,22 +11,26 @@
                     for="lot_id"
                     string="Lot"
                     invisible="not lots_visible or product_tracking != 'lot'"
+                    readonly="state not in ('draft', 'confirmed', 'received', 'waiting_replacement')"
                 />
                 <label
                     for="lot_id"
                     string="Serial Number"
                     invisible="not lots_visible or product_tracking != 'serial'"
+                    readonly="state not in ('draft', 'confirmed', 'received', 'waiting_replacement')"
                 />
                 <label
                     for="lot_id"
                     string="Lot/Serial Number"
                     invisible="not lots_visible or product_id"
+                    readonly="state not in ('draft', 'confirmed', 'received', 'waiting_replacement')"
                 />
                 <field
                     name="lot_id"
                     nolabel="1"
                     groups="stock.group_production_lot"
                     invisible="not lots_visible"
+                    readonly="state not in ('draft', 'confirmed', 'received', 'waiting_replacement')"
                 />
             </xpath>
         </field>
