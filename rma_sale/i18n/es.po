@@ -26,14 +26,14 @@ msgstr " (Portal)"
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-msgid " has been created."
-msgstr " ha sido creado."
+msgid "%s has been created."
+msgstr ""
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-msgid " have been created."
-msgstr " han sido creados."
+msgid "%s have been created."
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -105,6 +105,11 @@ msgid "Allowed Quantity"
 msgstr "Cantidad permitida"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_uom_ids
+msgid "Allowed Uom"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__can_be_refunded_with_invoice
 msgid "Can Be Refunded With Invoice"
 msgstr "Se puede reembolsar mediante factura"
@@ -113,11 +118,6 @@ msgstr "Se puede reembolsar mediante factura"
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr "Cancelar"
-
-#. module: rma_sale
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
-msgid "Category"
-msgstr "Categoría"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -147,16 +147,6 @@ msgstr "Compañías"
 #: model:ir.model,name:rma_sale.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
-
-#. module: rma_sale
-#: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
-msgid ""
-"Conversion between Units of Measure can only occur if they belong to the "
-"same category. The conversion will be made based on the ratios."
-msgstr ""
-"La conversión entre las unidades de medidas sólo pueden ocurrir si "
-"pertenecen a la misma categoría. La conversión se basará en los ratios "
-"establecidos."
 
 #. module: rma_sale
 #. odoo-python
@@ -208,8 +198,16 @@ msgid "Different Return Product"
 msgstr "Producto de devolución diferente"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_account_move__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_stock_return_picking__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -230,8 +228,16 @@ msgid "Full page RMA creation"
 msgstr "Creación de RMA de página completa"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_account_move__id
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__id
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma_sale.field_rma__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__id
+#: model:ir.model.fields,field_description:rma_sale.field_stock_return_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -281,6 +287,11 @@ msgstr "Marcar a reembolsar"
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
 msgid "Move"
 msgstr "Movimiento"
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__rma_count
+msgid "Number of RMAs"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__order_id
@@ -342,6 +353,7 @@ msgstr "Solicitud de pedido RMA"
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_ids
 msgid "RMAs"
 msgstr "RMAs"
 
@@ -378,6 +390,11 @@ msgid "Return Product"
 msgstr "Producto de devolución"
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_count
+msgid "Rma Count"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -402,6 +419,11 @@ msgstr "Asistente de Orden de Venta - RMA"
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
 msgstr "Pedido de venta"
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_report
+msgid "Sales Analysis Report"
+msgstr ""
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
@@ -510,6 +532,23 @@ msgid ""
 msgstr ""
 "Va a realizar una petición de RMA. Nuestro equipo la procesará y se pondrá "
 "en contacto con usted una vez validad. Tenga en cuenta que:"
+
+#~ msgid " has been created."
+#~ msgstr " ha sido creado."
+
+#~ msgid " have been created."
+#~ msgstr " han sido creados."
+
+#~ msgid "Category"
+#~ msgstr "Categoría"
+
+#~ msgid ""
+#~ "Conversion between Units of Measure can only occur if they belong to the "
+#~ "same category. The conversion will be made based on the ratios."
+#~ msgstr ""
+#~ "La conversión entre las unidades de medidas sólo pueden ocurrir si "
+#~ "pertenecen a la misma categoría. La conversión se basará en los ratios "
+#~ "establecidos."
 
 #~ msgid "<strong>Requested operation</strong>"
 #~ msgstr "<strong>Operación solicitada:</strong>"

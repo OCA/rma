@@ -25,14 +25,14 @@ msgstr " (Portal)"
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-msgid " has been created."
-msgstr " is aangemaakt."
+msgid "%s has been created."
+msgstr ""
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-msgid " have been created."
-msgstr " is aangemaakt."
+msgid "%s have been created."
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -103,6 +103,11 @@ msgid "Allowed Quantity"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__allowed_uom_ids
+msgid "Allowed Uom"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__can_be_refunded_with_invoice
 msgid "Can Be Refunded With Invoice"
 msgstr ""
@@ -111,11 +116,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_rma_wizard_form_view
 msgid "Cancel"
 msgstr "Annuleren"
-
-#. module: rma_sale
-#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
-msgid "Category"
-msgstr "Categorie"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -144,13 +144,6 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
-
-#. module: rma_sale
-#: model:ir.model.fields,help:rma_sale.field_sale_order_line_rma_wizard__uom_category_id
-msgid ""
-"Conversion between Units of Measure can only occur if they belong to the "
-"same category. The conversion will be made based on the ratios."
 msgstr ""
 
 #. module: rma_sale
@@ -203,8 +196,16 @@ msgid "Different Return Product"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_account_move__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_rma__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__display_name
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__display_name
+#: model:ir.model.fields,field_description:rma_sale.field_stock_return_picking__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -223,8 +224,16 @@ msgid "Full page RMA creation"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_account_move__id
+#: model:ir.model.fields,field_description:rma_sale.field_res_company__id
+#: model:ir.model.fields,field_description:rma_sale.field_res_config_settings__id
+#: model:ir.model.fields,field_description:rma_sale.field_rma__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_rma_wizard__id
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__id
+#: model:ir.model.fields,field_description:rma_sale.field_stock_return_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -270,6 +279,11 @@ msgstr ""
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__move_id
 msgid "Move"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_report__rma_count
+msgid "Number of RMAs"
 msgstr ""
 
 #. module: rma_sale
@@ -330,6 +344,7 @@ msgstr ""
 
 #. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order__rma_ids
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_ids
 msgid "RMAs"
 msgstr "RMA's"
 
@@ -367,6 +382,11 @@ msgid "Return Product"
 msgstr ""
 
 #. module: rma_sale
+#: model:ir.model.fields,field_description:rma_sale.field_sale_order_line__rma_count
+msgid "Rma Count"
+msgstr ""
+
+#. module: rma_sale
 #: model:ir.model.fields,field_description:rma_sale.field_rma__sale_line_id
 #: model:ir.model.fields,field_description:rma_sale.field_sale_order_line_rma_wizard__sale_line_id
 msgid "Sale Line"
@@ -390,6 +410,11 @@ msgstr "Verkooporder retour gids"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
+msgstr ""
+
+#. module: rma_sale
+#: model:ir.model,name:rma_sale.model_sale_report
+msgid "Sales Analysis Report"
 msgstr ""
 
 #. module: rma_sale
@@ -495,6 +520,15 @@ msgid ""
 msgstr ""
 "U staat op het punt een RMA verzoek in te dienen. Ons team zal de aanvraag "
 "verwerken. Let op dat:"
+
+#~ msgid " has been created."
+#~ msgstr " is aangemaakt."
+
+#~ msgid " have been created."
+#~ msgstr " is aangemaakt."
+
+#~ msgid "Category"
+#~ msgstr "Categorie"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Laatst bijgewerkt op"
