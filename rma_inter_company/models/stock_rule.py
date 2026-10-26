@@ -37,13 +37,9 @@ class StockRule(models.Model):
                 # that no rule was found in the RMA IN route. Creating a rule with the
                 # Intercompany destination location would not be a solution, as it would
                 # have many unintended consequences.
-                location = rma.intercompany_rma_id._get_location_final()
-                move_values["location_dest_id"] = location.id
+                move_values["location_dest_id"] = rma.move_id.location_id.id
             elif rma.intercompany_origin_rma_id:
-                intercompany_rma = (
-                    rma.intercompany_origin_rma_id.sudo().intercompany_rma_id
-                )
-                move_values["location_id"] = intercompany_rma._get_location_final().id
+                move_values["location_id"] = rma.move_id.location_dest_id.id
         elif values.get("rma_id"):
             rma = self.env["rma"].browse(values.get("rma_id"))
             if rma.intercompany_rma_id:
