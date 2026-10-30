@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare, float_is_zero
 
 
@@ -15,11 +15,13 @@ class Rma(models.Model):
         string="Lot/Serial Number",
         domain="domain_lot_id",
         compute="_compute_lot_id",
+        inverse="_inverse_lot_id",
         store=True,
         readonly=False,
     )
     product_tracking = fields.Selection(related="product_id.tracking")
     lots_visible = fields.Boolean(compute="_compute_lots_visible")
+    lot_id_readonly = fields.Boolean(compute="_compute_lot_id_readonly")
 
     def _get_lot_id_quant_domain_locations(self):
         """This method retrieves the location(s) that will later be used in
@@ -44,12 +46,32 @@ class Rma(models.Model):
             ("location_id", "child_of", locations.ids),
         ]
 
-    @api.depends("product_id", "product_uom_qty", "warehouse_id")
+    @api.depends(
+        "product_id",
+        "product_uom_qty",
+        "warehouse_id",
+        "move_id",
+        "move_id.lot_ids",
+        "state",
+    )
     def _compute_domain_lot_id(self):
         dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         for rec in self:
             domain = []
-            if rec.product_id and rec.product_tracking != "none":
+            if (
+                rec.product_id
+                and rec.product_tracking != "none"
+                and rec.state == "draft"
+            ):
+                if rec.move_id:
+                    domain = [("id", "in", rec.move_id.lot_ids.ids)]
+                else:
+                    domain = [("product_id", "=", rec.product_id.id)]
+            elif (
+                rec.product_id
+                and rec.product_tracking != "none"
+                and rec.state != "draft"
+            ):
                 # Only available lots should be displayed. In pickings, the
                 # corresponding stock.quant record is selected directly, so we
                 # use the same filters that are used.
@@ -71,6 +93,15 @@ class Rma(models.Model):
     def _compute_lots_visible(self):
         for rec in self:
             rec.lots_visible = rec.product_id.tracking != "none"
+
+    @api.depends("state", "operation_id")
+    def _compute_lot_id_readonly(self):
+        for rec in self:
+            rec.lot_id_readonly = bool(
+                rec.state
+                not in ("draft", "confirmed", "received", "waiting_replacement")
+                or (rec.operation_id and rec.operation_id.deliver_same_lot)
+            )
 
     def _prepare_delivery_procurement_vals(self, scheduled_date=None):
         vals = super()._prepare_delivery_procurement_vals(scheduled_date=scheduled_date)
@@ -97,17 +128,38 @@ class Rma(models.Model):
             vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
-    @api.depends("move_id", "lot_id")
+    @api.depends("lot_id")
     def _compute_product_id(self):
         res = super()._compute_product_id()
-        for rec in self:
-            if not rec.move_id and rec.lot_id:
-                self.product_id = rec.lot_id.product_id
+        for rec in self.filtered(
+            lambda x: x.lot_id
+            and (
+                (x.product_id and x.lot_id.product_id != x.product_id)
+                or not x.product_id
+            )
+        ):
+            # We should only change the product if the lot does not match the
+            # product or is not set
+            rec.product_id = rec.lot_id.product_id
         return res
 
     @api.depends("product_id")
     def _compute_lot_id(self):
         self.update({"lot_id": False})
+
+    def _inverse_lot_id(self):
+        for item in self.filtered(lambda x: x.delivery_move_ids):
+            moves = item.delivery_move_ids.filtered(lambda x: x.restrict_lot_id)
+            if moves and all(move.state == "done" for move in moves):
+                raise ValidationError(
+                    self.env._(
+                        "You can't modify the Lot/Serial number "
+                        "because all the stock moves have already been done."
+                    )
+                )
+            pending_moves = moves.filtered(lambda x: x.state not in ("cancel", "done"))
+            if pending_moves:
+                pending_moves._set_restrict_lot_id_from_rma(item.lot_id)
 
     def _get_lot_available_locations(self, lot, action):
         """This method will return the locations where you should search for
