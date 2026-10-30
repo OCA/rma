@@ -131,6 +131,14 @@ class Rma(models.Model):
             lot = self.env.context.get("rma_replace_lot_id") or item.lot_id
             if not lot:
                 continue
+            # It is important to use .sudo() because the lot may be linked to another
+            # company or the lot's location may be in another company
+            # (rma_inter_company process); in that case, you should NOT check the lot's
+            # availability—this will be done in the RMA of the appropriate company.
+            lot = lot.sudo()
+            lot_company = lot.company_id or lot.location_id.company_id
+            if lot_company and lot_company != item.company_id:
+                continue
             product = lot.product_id
             if product.tracking != "serial":
                 continue
