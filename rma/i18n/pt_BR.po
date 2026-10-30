@@ -159,6 +159,12 @@ msgstr ""
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid ""
+"<i class=\"fa fa-reply mr-1\" role=\"img\" aria-label=\"Rma\" title=\"RMA\"/>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid ""
 "<i class=\"fa fa-truck mr-1\" role=\"img\" aria-label=\"Download\" "
 "title=\"Download\"/>"
 msgstr ""
@@ -269,6 +275,11 @@ msgstr "<strong class=\"d-block mb-1\">Restituição</strong>"
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong class=\"d-block mb-1\">Rmas</strong>"
+msgstr ""
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Customer:</strong>"
 msgstr "<strong>Cliente:</strong>"
 
@@ -306,6 +317,11 @@ msgstr "<strong>Origem:</strong>"
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
 msgid "<strong>Origin</strong>"
 msgstr "<strong>Origem</strong>"
+
+#. module: rma
+#: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
+msgid "<strong>Parent RMA</strong>"
+msgstr ""
 
 #. module: rma
 #: model_terms:ir.ui.view,arch_db:rma.portal_rma_page
@@ -585,6 +601,11 @@ msgstr ""
 #. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma__uom_category_id
 msgid "Category UoM"
+msgstr ""
+
+#. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__child_rma_ids
+msgid "Child rmas"
 msgstr ""
 
 #. module: rma
@@ -1433,6 +1454,11 @@ msgid "Parent Model"
 msgstr "Modelo Pai"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__parent_rma_id
+msgid "Parent RMA"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_rma_team__alias_parent_thread_id
 msgid "Parent Record Thread ID"
 msgstr "ID do Encadeamento do Registro Pai"
@@ -1731,9 +1757,13 @@ msgid "RMA automatic customer notifications"
 msgstr ""
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__child_rma_count
+msgid "RMA child count"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields,field_description:rma.field_res_partner__rma_count
 #: model:ir.model.fields,field_description:rma.field_res_users__rma_count
-#: model:ir.model.fields,field_description:rma.field_rma__rma_count
 #: model:ir.model.fields,field_description:rma.field_stock_picking__rma_count
 msgid "RMA count"
 msgstr "Contagem de RMA"
