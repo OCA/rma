@@ -27,6 +27,9 @@ class TestRmaInterCompanyBase(TestPurchaseSaleInterCompany):
         cls.warehouse_b.rma_out_replace_route_id = cls.warehouse_b.rma_out_route_id
         customer_loc, _supplier_loc = cls.warehouse_a._get_partner_locations()
         cls.customer_loc = customer_loc
+        cls.company_a._set_per_company_inter_company_locations(
+            cls.intercompany_location
+        )
         cls.rma_user_a = new_test_user(
             cls.env,
             login="test-rma_user-a",
