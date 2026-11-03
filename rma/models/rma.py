@@ -201,6 +201,10 @@ class Rma(models.Model):
         string="Reception move",
         copy=False,
     )
+    receipt_picking_count = fields.Integer(
+        string="Receipt count",
+        compute="_compute_receipt_picking_count",
+    )
     # Refund fields
     refund_id = fields.Many2one(
         comodel_name="account.move",
@@ -362,12 +366,51 @@ class Rma(models.Model):
                 and rec.can_be_refunded
             )
 
+    def _get_delivery_moves(self):
+        self.ensure_one()
+        moves = self.delivery_move_ids | self.env["stock.move"].browse(
+            self.delivery_move_ids._rollup_move_dests()
+        )
+        # It is important to filter by "outgoing" to avoid displaying incoming pickings
+        # if the delivery has already been generated.
+        moves = moves.filtered(lambda x: x.picking_code != "incoming")
+        # It is important that we filter moves from other RMAs so that they are
+        # excluded (for example, do not include moves from an RMA2—created from an
+        # RMA1).
+        if any(m.rma_id and self != m.rma_id for m in moves):
+            for rma in moves.filtered(lambda x: x.rma_id and self != x.rma_id).mapped(
+                "rma_id"
+            ):
+                moves -= rma._get_delivery_moves()
+        return moves
+
     def _compute_delivery_picking_count(self):
         for rma in self:
-            moves = rma.delivery_move_ids | self.env["stock.move"].browse(
-                rma.delivery_move_ids._rollup_move_dests()
-            )
+            moves = rma._get_delivery_moves()
             rma.delivery_picking_count = len(moves.picking_id)
+
+    def _get_reception_moves(self):
+        self.ensure_one()
+        moves = self.reception_move_id | self.env["stock.move"].browse(
+            self.reception_move_id._rollup_move_dests()
+        )
+        # It is important to filter by "incoming" to avoid displaying outgoing pickings
+        # if the delivery has already been generated.
+        moves = moves.filtered(lambda x: x.picking_code != "outgoing")
+        # It is important that we filter moves from other RMAs so that they are
+        # excluded (for example, do not include moves from an RMA2—created from an
+        # RMA1).
+        if any(m.rma_receiver_ids and self not in m.rma_receiver_ids for m in moves):
+            for rma in moves.filtered(
+                lambda x: x.rma_receiver_ids and self not in x.rma_receiver_ids
+            ).mapped("rma_receiver_ids"):
+                moves -= rma._get_reception_moves()
+        return moves
+
+    def _compute_receipt_picking_count(self):
+        for rma in self:
+            moves = rma._get_reception_moves()
+            rma.receipt_picking_count = len(moves.picking_id)
 
     @api.depends(
         "delivery_move_ids",
@@ -1081,7 +1124,8 @@ class Rma(models.Model):
 
     def action_view_receipt(self):
         """Invoked when 'Receipt' smart button in rma form view is clicked."""
-        return self._action_view_pickings(self.mapped("reception_move_id.picking_id"))
+        moves = self._get_reception_moves()
+        return self._action_view_pickings(moves.mapped("picking_id"))
 
     def action_view_refund(self):
         """Invoked when 'Refund' smart button in rma form view is clicked."""
@@ -1098,9 +1142,7 @@ class Rma(models.Model):
 
     def action_view_delivery(self):
         """Invoked when 'Delivery' smart button in rma form view is clicked."""
-        moves = self.delivery_move_ids | self.env["stock.move"].browse(
-            self.delivery_move_ids._rollup_move_dests()
-        )
+        moves = self._get_delivery_moves()
         return self._action_view_pickings(moves.mapped("picking_id"))
 
     # Validation business methods
