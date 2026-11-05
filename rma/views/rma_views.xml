@@ -242,12 +242,17 @@
                         <button
                             type="object"
                             name="action_view_receipt"
-                            string="Receipt"
                             class="oe_stat_button"
                             icon="fa-truck"
-                            invisible="not reception_move_id"
+                            invisible="receipt_picking_count == 0"
                             groups="stock.group_stock_user"
-                        />
+                        >
+                            <field
+                                name="receipt_picking_count"
+                                widget="statinfo"
+                                string="Receipt"
+                            />
+                        </button>
                         <button
                             type="object"
                             name="action_view_delivery"

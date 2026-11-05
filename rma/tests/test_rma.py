@@ -258,6 +258,7 @@ class TestRmaCase(TestRma):
         rma.reception_move_id.quantity = 1
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
+        self.assertEqual(rma.receipt_picking_count, 1)
         self.assertEqual(rma.state, "received")
         res = rma.action_replace()
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
@@ -281,6 +282,7 @@ class TestRmaCase(TestRma):
         rma.reception_move_id.quantity = 1
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(rma.reception_move_id.picking_id.state, "done")
+        self.assertEqual(rma.receipt_picking_count, 1)
         self.assertEqual(rma.state, "received")
         res = rma.action_replace()
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
