@@ -1873,6 +1873,11 @@ msgid "Receipt"
 msgstr "Réception"
 
 #. module: rma
+#: model:ir.model.fields,field_description:rma.field_rma__receipt_picking_count
+msgid "Receipt count"
+msgstr ""
+
+#. module: rma
 #: model:ir.model.fields.selection,name:rma.selection__rma__state__received
 #: model_terms:ir.ui.view,arch_db:rma.rma_view_search
 msgid "Received"
