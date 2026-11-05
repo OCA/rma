@@ -26,13 +26,27 @@ class Rma(models.Model):
             return self.env.ref("stock.stock_location_inter_company")
         return super()._get_location_final()
 
+    def _get_purchase_line(self):
+        """This method will retrieve the purchase line whether the purchase was done
+        through a dropshipping workflow or via MTO+Buy.
+        """
+        self.ensure_one()
+        return (
+            self.move_id.purchase_line_id or self.move_id.move_orig_ids.purchase_line_id
+        )
+
     def _get_intercompany_sale_line(self):
         self.ensure_one()
-        return self.move_id.purchase_line_id.intercompany_sale_line_id
+        po_line = self._get_purchase_line()
+        return po_line.intercompany_sale_line_id
 
     def _get_intercompany_origin_sale_line(self):
         self.ensure_one()
-        return self.move_id.sale_line_id.auto_purchase_line_id.sudo().sale_line_id
+        auto_purchase_line = self.move_id.sale_line_id.auto_purchase_line_id.sudo()
+        return (
+            auto_purchase_line.sale_line_id
+            or auto_purchase_line.move_ids.move_dest_ids.sale_line_id
+        )
 
     def _create_common_intercompany_rma_from_sale_order_line(self, sol):
         """Process that creates an RMA based on the sales order line
