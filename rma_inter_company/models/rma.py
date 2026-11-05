@@ -23,7 +23,9 @@ class Rma(models.Model):
 
     def _get_location_final(self):
         if self.sudo().intercompany_origin_rma_id:
-            return self.env.ref("stock.stock_location_inter_company")
+            intercompany_origin_rma = self.sudo().intercompany_origin_rma_id
+            partner = intercompany_origin_rma.company_id.partner_id
+            return partner.with_company(self.company_id).property_stock_customer
         return super()._get_location_final()
 
     def _get_intercompany_sale_line(self):
