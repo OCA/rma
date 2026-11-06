@@ -34,7 +34,7 @@ class TestRmaSaleBase(BaseCommon):
             {"name": "Product test 2", "type": "product"}
         )
         cls.partner = cls.res_partner.create(
-            {"name": "Partner test", "email": "partner@rma"}
+            {"name": "Partner test", "email": "partner@rma.example.com"}
         )
         cls.report_model = cls.env["ir.actions.report"]
         cls.rma_operation_model = cls.env["rma.operation"]
@@ -184,7 +184,7 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertEqual(self.order_line.qty_delivered, 0)
         self.assertEqual(self.order_line.qty_invoiced, -5)
 
-    @users("partner@rma")
+    @users("partner@rma.example.com")
     def test_create_rma_from_so_portal_user(self):
         order = self.sale_order
         wizard_obj = (
