@@ -31,7 +31,7 @@ class TestRmaSaleReason(TestRmaSaleBase):
         wizard.operation_id = self.operation
         return wizard
 
-    @users("partner@rma")
+    @users("partner@rma.example.com")
     def test_create_rma_from_wizard(self):
         order = self.sale_order
         wizard = self._create_wizard()
