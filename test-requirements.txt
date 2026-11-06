@@ -1,0 +1,1 @@
+odoo-addon-stock_restrict_lot @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2561/head#subdirectory=stock_restrict_lot
