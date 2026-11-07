@@ -1,0 +1,40 @@
+<odoo>
+    <template
+        id="sale_rma_lot_request_form"
+        inherit_id="rma_sale.sale_rma_request_form"
+    >
+        <th name="th_product" position="after">
+            <t
+                t-if="any('lots_visible' in data and data['lots_visible'] for data in data_list)"
+            >
+                <th
+                    t-if="all('product_tracking' in data and data['product_tracking'] == 'lot' for data in data_list)"
+                    class="text-start"
+                    name="th_lot"
+                >Lot</th>
+                <th
+                    t-elif="all('product_tracking' in data and data['product_tracking'] == 'serial' for data in data_list)"
+                    class="text-start"
+                    name="th_lot"
+                >Serial Number</th>
+                <th t-else="" class="text-start" name="th_lot">Lot/Serial Number</th>
+            </t>
+        </th>
+        <td name="td_product" position="after">
+            <td
+                t-if="any('lots_visible' in data and data['lots_visible'] for data in data_list)"
+                class="text-start"
+                name="td_lot"
+            >
+                <t t-if="'lots_visible' in data and data['lots_visible']">
+                    <span t-out="data['lot_id'] and data['lot_id'].name" />
+                    <input
+                        type="hidden"
+                        t-attf-name="#{data_index}-lot_id"
+                        t-att-value="data['lot_id'] and data['lot_id'].id"
+                    />
+                </t>
+            </td>
+        </td>
+    </template>
+</odoo>
