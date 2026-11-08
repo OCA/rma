@@ -5,6 +5,7 @@ from .test_rma import TestRma
 
 PROCESSED_STATES = ["received", "refunded", "replaced", "finished"]
 AWAITING_ACTION_STATES = ["waiting_return", "waiting_replacement", "confirmed"]
+PENDING_RECEPTION_STATUS = "pending"
 
 
 class TestRmaDashboard(TestRma):
@@ -38,14 +39,17 @@ class TestRmaDashboard(TestRma):
 
         self.assertEqual(operation_replace.count_rma_draft, 2)
         self.assertEqual(operation_replace.count_rma_awaiting_action, 3)
+        self.assertEqual(operation_replace.count_rma_pending_reception, 4)
         self.assertEqual(operation_replace.count_rma_processed, 1)
 
         self.assertEqual(operation_return.count_rma_draft, 1)
         self.assertEqual(operation_return.count_rma_awaiting_action, 2)
+        self.assertEqual(operation_return.count_rma_pending_reception, 4)
         self.assertEqual(operation_return.count_rma_processed, 1)
 
         self.assertEqual(operation_refund.count_rma_draft, 1)
         self.assertEqual(operation_refund.count_rma_awaiting_action, 0)
+        self.assertEqual(operation_refund.count_rma_pending_reception, 1)
         self.assertEqual(operation_refund.count_rma_processed, 1)
 
         action = operation_replace.get_action_rma_tree_draft()
@@ -59,6 +63,15 @@ class TestRmaDashboard(TestRma):
                 "&",
                 ("operation_id", "=", operation_replace.id),
                 ("state", "in", AWAITING_ACTION_STATES),
+            ],
+            action.get("domain"),
+        )
+        action = operation_replace.get_action_rma_tree_pending_reception()
+        self.assertListEqual(
+            [
+                "&",
+                ("operation_id", "=", operation_replace.id),
+                ("reception_status", "=", PENDING_RECEPTION_STATUS),
             ],
             action.get("domain"),
         )

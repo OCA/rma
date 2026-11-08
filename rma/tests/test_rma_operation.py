@@ -85,6 +85,28 @@ class TestRmaOperation(TestRma):
         self.assertEqual(rma.delivery_move_ids.product_id, self.product)
         self.assertEqual(rma.delivery_move_ids.product_uom_qty, 10)
 
+    def test_reception_status_after_delivery_done_before_reception(self):
+        """keep pending reception visible after outbound delivery is done"""
+        operation = self.operation.copy(
+            {
+                "name": "%s (pending reception)" % self.operation.name,
+                "action_create_delivery": "automatic_on_confirm",
+            }
+        )
+        rma = self._create_rma(
+            self.partner, self.product, 10, self.rma_loc, operation=operation
+        )
+        self.assertEqual(rma.reception_status, "not_required")
+        rma.action_confirm()
+        self.assertEqual(rma.reception_status, "pending")
+        rma.delivery_move_ids.quantity_done = 10
+        rma.delivery_move_ids.picking_id.button_validate()
+        self.assertEqual(rma.state, "replaced")
+        self.assertEqual(rma.reception_status, "pending")
+        rma.reception_move_id.quantity_done = 10
+        rma.reception_move_id.picking_id._action_done()
+        self.assertEqual(rma.reception_status, "received")
+
     def test_05(self):
         """
         test delivery button visibility based on operation settings.
