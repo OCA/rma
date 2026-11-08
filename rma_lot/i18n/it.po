@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-21 16:46+0000\n"
+"PO-Revision-Date: 2026-11-08 17:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -55,7 +55,7 @@ msgstr "Lotto"
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id_readonly
 msgid "Lot Id Readonly"
-msgstr ""
+msgstr "ID lotto solo lettura"
 
 #. module: rma_lot
 #: model:ir.model.fields,field_description:rma_lot.field_rma__lot_id
@@ -102,7 +102,7 @@ msgstr "Numero seriale"
 #. module: rma_lot
 #: model:ir.model,name:rma_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: rma_lot
 #. odoo-python
@@ -123,3 +123,5 @@ msgid ""
 "You can't modify the Lot/Serial number because all the stock moves have "
 "already been done."
 msgstr ""
+"Non è possibile modificare il numero di lotto/serie perché tutti i movimenti "
+"di magazzino sono già stati effettuati."
