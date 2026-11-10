@@ -137,7 +137,7 @@ class Rma(models.Model):
         string="Quantity",
         required=True,
         default=1.0,
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         compute="_compute_product_uom_qty",
         store=True,
         readonly=False,
@@ -246,12 +246,12 @@ class Rma(models.Model):
         compute="_compute_delivery_picking_count",
     )
     delivered_qty = fields.Float(
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         compute="_compute_delivered_qty",
         store=True,
     )
     delivered_qty_done = fields.Float(
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         compute="_compute_delivered_qty_done",
         store=True,
     )
@@ -269,12 +269,12 @@ class Rma(models.Model):
     )
     remaining_qty = fields.Float(
         string="Remaining delivered qty",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         compute="_compute_remaining_qty",
     )
     remaining_qty_to_done = fields.Float(
         string="Remaining delivered qty to done",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         compute="_compute_remaining_qty",
     )
     # Split fields

@@ -23,7 +23,7 @@ class RmaReDeliveryWizard(models.TransientModel):
     )
     product_uom_qty = fields.Float(
         string="Product qty",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure")
     scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now)
@@ -56,8 +56,10 @@ class RmaReDeliveryWizard(models.TransientModel):
         )
         delivery_type = self.env.context.get("rma_delivery_type")
         product_id = False
+        product_uom = False
         if len(rma) == 1 and delivery_type == "return":
             product_id = rma.product_id.id
+            product_uom = rma.product_id.uom_id.id
         product_uom_qty = 0.0
         if len(rma) == 1 and rma.remaining_qty > 0.0:
             product_uom_qty = rma.remaining_qty
@@ -67,6 +69,7 @@ class RmaReDeliveryWizard(models.TransientModel):
             warehouse_id=warehouse_id,
             type=delivery_type,
             product_id=product_id,
+            product_uom=product_uom,
             product_uom_qty=product_uom_qty,
         )
         return res

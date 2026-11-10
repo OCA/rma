@@ -59,9 +59,7 @@ class StockMove(models.Model):
         """
         for move in self.filtered(lambda r: r.state not in ("done", "cancel")):
             rma_receiver = move.sudo().rma_receiver_ids
-            qty_prec = self.env["decimal.precision"].precision_get(
-                "Product Unit of Measure"
-            )
+            qty_prec = self.env["decimal.precision"].precision_get("Product Unit")
             if (
                 rma_receiver
                 and float_compare(

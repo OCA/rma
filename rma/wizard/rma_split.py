@@ -14,7 +14,7 @@ class RmaReSplitWizard(models.TransientModel):
     )
     product_uom_qty = fields.Float(
         string="Quantity to extract",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         required=True,
         help="Quantity to extract to a new RMA.",
     )
