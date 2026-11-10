@@ -352,3 +352,51 @@ class TestRmaOperation(TestRma):
         self.assertEqual(rma.reception_move_id.state, "done")
         rma.action_finish()
         self.assertEqual(rma.state, "finished")
+
+    def test_different_return_product_valuation(self):
+        """
+        Create a delivery for Product 1 (Cost 9.0) and deliver it
+        Create an RMA for that product choosing the operation as a different product
+        return. Choose the 'return Product 1' product (Cost 30.0).
+        Confirm the RMA
+        Confirm the reception.
+
+        The valuation layer cost for the return should be at 30.0
+        (and not at 9.0 - standard in stock_account).
+        """
+
+        self.product.cost_method = "average"
+        # Create original delivery
+        picking = self._create_delivery()
+
+        self.operation.action_create_delivery = "automatic_on_confirm"
+        self.operation.different_return_product = True
+        rma = self._create_rma(self.partner, self.product, 10, self.rma_loc)
+        rma.move_id = picking.move_ids[0]
+        with self.assertRaises(AssertionError, msg="Replacement fields are required"):
+            with Form(rma) as rma_form:
+                rma_form.save()
+        with self.assertRaises(
+            ValidationError, msg="Complete the replacement information"
+        ):
+            rma.action_confirm()
+        rma.return_product_id = self.product_product.create(
+            {
+                "name": "return Product test 1",
+                "type": "product",
+                "standard_price": 30.0,
+            }
+        )
+        rma.return_product_id.cost_method = "average"
+        rma.action_confirm()
+        self.assertEqual(rma.delivery_move_ids.product_id, rma.product_id)
+        self.assertEqual(rma.reception_move_id.product_id, rma.return_product_id)
+        self.assertEqual(rma.state, "waiting_replacement")
+
+        rma.reception_move_id.quantity_done = 10.0
+        rma.reception_move_id.picking_id._action_done()
+
+        valuation = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", rma.return_product_id.id)]
+        )
+        self.assertEqual(valuation.unit_cost, 30.0)
