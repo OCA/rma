@@ -12,9 +12,7 @@ class AccountMove(models.Model):
     def _check_rma_invoice_lines_qty(self):
         """We can't refund a different qty than the stated in the RMA.
         Extend to change criteria"""
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         return (
             self.sudo()
             .mapped("invoice_line_ids")

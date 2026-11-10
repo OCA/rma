@@ -23,7 +23,7 @@ class RmaReDeliveryWizard(models.TransientModel):
     )
     product_uom_qty = fields.Float(
         string="Product qty",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     product_uom = fields.Many2one(comodel_name="uom.uom", string="Unit of measure")
     scheduled_date = fields.Datetime(required=True, default=fields.Datetime.now)
