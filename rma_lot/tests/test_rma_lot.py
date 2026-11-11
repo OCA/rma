@@ -189,9 +189,12 @@ class TestRMALot(BaseCommon):
         reception_picking = rma_lot_1.reception_move_id.picking_id
         reception_picking.button_validate()
         self.assertEqual(reception_picking.state, "done")
+        self.assertEqual(rma_lot_1.product_uom_qty, 1)
         self.assertEqual(rma_lot_1.state, "received")
+        self.assertEqual(rma_lot_2.product_uom_qty, 2)
         self.assertEqual(rma_lot_2.state, "received")
         rma_lot_1.lot_id = self.lot_2
+        self.assertEqual(rma_lot_1.product_uom_qty, 1)
         rma_lot_1.create_return(
             fields.Datetime.now(),
             rma_lot_1.product_uom_qty,
@@ -449,7 +452,9 @@ class TestRMALot(BaseCommon):
         reception_picking.button_validate()
         self.assertEqual(reception_picking.state, "done")
         self.assertEqual(rma_lot_a.state, "received")
+        self.assertEqual(rma_lot_a.product_uom_qty, 1)
         self.assertEqual(rma_lot_b.state, "received")
+        self.assertEqual(rma_lot_b.product_uom_qty, 1)
         # return rma_a
         res = rma_lot_a.action_return()
         wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
