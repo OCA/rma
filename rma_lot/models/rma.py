@@ -184,6 +184,11 @@ class Rma(models.Model):
 
     def _error_message_lot_available(self, action, qty, uom):
         for item in self:
+            # When processing a return with +1 RMA selected, neither the quantity not
+            # the unit of measure is specified; you must use the details from the RMA
+            # (similar to what is done, in _prepare_delivery_procurements())
+            qty = qty or item.product_uom_qty
+            uom = uom or item.product_uom
             lot = self.env.context.get("rma_replace_lot_id") or item.lot_id
             if not lot:
                 continue
