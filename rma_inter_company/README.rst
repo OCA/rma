@@ -35,6 +35,9 @@ Inter Company Module for RMA
 Automatically create an Inter Company RMA so that it can be managed
 independently but still remain linked.
 
+A dropshipping workflow with intercompany and an MTO+Buy workflow with
+intercompany have been set up.
+
 **Table of contents**
 
 .. contents::
@@ -106,10 +109,10 @@ Authors
 Contributors
 ------------
 
-- \`Tecnativa <https://www.tecnativa.com>\`:
+-  \`Tecnativa <https://www.tecnativa.com>\`:
 
-  - Víctor Martínez
-  - Pedro M. Baeza
+   -  Víctor Martínez
+   -  Pedro M. Baeza
 
 Maintainers
 -----------
