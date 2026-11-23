@@ -34,8 +34,11 @@ class Rma(models.Model):
     )
     move_id = fields.Many2one(domain="[('id', 'in', allowed_move_ids)]")
     sale_line_id = fields.Many2one(
-        related="move_id.sale_line_id",
+        comodel_name="sale.order.line",
+        compute="_compute_sale_line_id",
+        compute_sudo=True,
         store=True,
+        readonly=False,
         index=True,
     )
     allowed_product_ids = fields.Many2many(
@@ -68,6 +71,21 @@ class Rma(models.Model):
             rec.can_be_refunded_with_invoice = bool(
                 rec.can_be_refunded and sale_line.invoice_lines
             )
+
+    @api.depends("move_id", "order_id", "product_id")
+    def _compute_sale_line_id(self):
+        """The line comes from the delivery move. An order line delivered without
+        stock moves has no move to take it from, so the line set on creation is kept
+        while it still belongs to the order and the product.
+        """
+        for rec in self:
+            if rec.move_id:
+                rec.sale_line_id = rec.move_id.sale_line_id
+            elif (
+                rec.sale_line_id.order_id != rec.order_id
+                or rec.sale_line_id.product_id != rec.product_id
+            ):
+                rec.sale_line_id = False
 
     @api.depends("partner_id", "order_id")
     def _compute_allowed_picking_ids(self):
@@ -123,6 +141,7 @@ class Rma(models.Model):
         move = self.sudo().reception_move_id
         if (
             move
+            and self._is_sale_line_delivered_by_stock_moves(self.sale_line_id)
             and float_compare(
                 self.product_uom_qty,
                 move.product_uom_qty,
@@ -169,6 +188,14 @@ class Rma(models.Model):
             and aml.move_id.state == "posted"
         )
         return invoice_lines if len(invoice_lines) == 1 else invoice_lines.browse()
+
+    def _is_sale_line_delivered_by_stock_moves(self, sale_line):
+        """The reception only decreases the delivered quantity of a line properly
+        when it was delivered through stock moves. A line delivered without them
+        (e.g. a sale recorded in a previous system) would get a negative delivered
+        quantity, so neither the reception nor the refund are linked to it.
+        """
+        return bool(sale_line and sale_line.sudo().get_delivery_move())
 
     def _get_rma_orig(self):
         """This method returns the original RMA (useful if it is an RMA for
@@ -219,7 +246,8 @@ class Rma(models.Model):
     def _prepare_refund_line_vals(self):
         """Add line data and link to the sales order, only if the RMA is for the whole
         move quantity. In other cases, incorrect delivered/invoiced quantities will be
-        logged on the sales order, so better to let the operations not linked.
+        logged on the sales order, so better to let the operations not linked. The
+        same goes for a line delivered without stock moves.
         """
         vals = super()._prepare_refund_line_vals()
         line = self._get_sale_line()
@@ -241,6 +269,7 @@ class Rma(models.Model):
             move = self.sudo().reception_move_id
             if (
                 move
+                and self._is_sale_line_delivered_by_stock_moves(line)
                 and float_compare(
                     self.product_uom_qty,
                     move.product_uom_qty,
