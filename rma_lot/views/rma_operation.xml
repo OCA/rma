@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="rma_operation_form_view">
+        <field name="model">rma.operation</field>
+        <field name="inherit_id" ref="rma.rma_operation_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='action_create_delivery']//parent::group/following-sibling::group[1]"
+                position="inside"
+            >
+                <field name="deliver_same_lot" invisible="not action_create_delivery" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
