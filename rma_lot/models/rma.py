@@ -1,4 +1,5 @@
 # Copyright 2024 ACSONE SA/NV
+# Copyright 2026 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command, api, fields, models
@@ -165,6 +166,16 @@ class Rma(models.Model):
             if pending_moves:
                 pending_moves._set_restrict_lot_id_from_rma(item.lot_id)
 
+    def _get_lot_internal_locations(self, lot):
+        """Internal locations where the lot currently is. ``lot.location_id`` can't
+        be used: it is empty as soon as the lot has positive quants in more than one
+        location, e.g. after an intercompany dropshipping the serial is delivered to
+        the customers location once per company, so a positive quant remains there.
+        """
+        return lot.quant_ids.filtered(
+            lambda q: q.quantity > 0 and q.location_id.usage == "internal"
+        ).location_id
+
     def _get_lot_available_locations(self, lot, action):
         """This method will return the locations where you should search for
         the lot stock to determine if there is any free_qty.
@@ -176,7 +187,8 @@ class Rma(models.Model):
         locations = self.env["stock.location"]
         # It's important to note the warehouse for the lot, because it may not be
         # the same as the one listed on the RMA if it has been moved
-        warehouse = lot.location_id.warehouse_id or self.warehouse_id
+        lot_warehouse = self._get_lot_internal_locations(lot).warehouse_id
+        warehouse = lot_warehouse if len(lot_warehouse) == 1 else self.warehouse_id
         locations += warehouse.rma_loc_id
         if action == "replace":
             locations += warehouse.lot_stock_id
@@ -186,6 +198,16 @@ class Rma(models.Model):
         for item in self:
             lot = self.env.context.get("rma_replace_lot_id") or item.lot_id
             if not lot:
+                continue
+            # It is important to use .sudo() because the lot may be linked to another
+            # company or the lot's location may be in another company
+            # (rma_inter_company process); in that case, you should NOT check the lot's
+            # availability—this will be done in the RMA of the appropriate company.
+            lot = lot.sudo()
+            lot_company = (
+                lot.company_id or item._get_lot_internal_locations(lot).company_id
+            )
+            if lot_company and item.company_id not in lot_company:
                 continue
             product = lot.product_id
             if product.tracking != "serial":

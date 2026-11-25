@@ -1,4 +1,5 @@
 # Copyright 2020 Iryna Vyshnevska Camptocamp
+# Copyright 2026 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import Command, fields
@@ -467,3 +468,50 @@ class TestRMALot(BaseCommon):
         rma_lot_b.lot_id = lot_b
         wizard.action_deliver()
         self.assertEqual(rma_lot_b.state, "waiting_return")
+
+    def test_return_lot_in_other_company(self):
+        """The serial was received in the RMA location of another company (e.g. the
+        intercompany RMA of a dropshipping) and a positive quant remains in the
+        customers location, so ``lot.location_id`` is empty. Its availability must
+        be checked in the RMA of that other company, not in this one.
+        """
+        self.product.tracking = "serial"
+        self.operation.action_create_delivery = "manual_after_receipt"
+        lot_a = self.env["stock.lot"].create(
+            {"name": "lot-a", "product_id": self.product.id}
+        )
+        lot_b = self.env["stock.lot"].create(
+            {"name": "lot-b", "product_id": self.product.id}
+        )
+        for lot in lot_a + lot_b:
+            self.env["stock.quant"]._update_available_quantity(
+                self.product, self.stock_location, 1, lot_id=lot
+            )
+        picking = self._create_picking(
+            [(self.product.id, 1, lot_a.id), (self.product.id, 1, lot_b.id)]
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        picking.button_validate()
+        rma_lot_a = self._create_rmas(picking, lot_a, lot_b)[0]
+        rma_lot_a.reception_move_id.picking_id.button_validate()
+        self.assertEqual(rma_lot_a.state, "received")
+        other_company = self.env["res.company"].create({"name": "Other company"})
+        other_warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", other_company.id)], limit=1
+        )
+        quant_model = self.env["stock.quant"].sudo()
+        quant_model._update_available_quantity(
+            self.product, self.rma_location, -1, lot_id=lot_a
+        )
+        quant_model._update_available_quantity(
+            self.product, other_warehouse.rma_loc_id, 1, lot_id=lot_a
+        )
+        quant_model._update_available_quantity(
+            self.product, self.customer_location, 1, lot_id=lot_a
+        )
+        self.assertFalse(lot_a.location_id)
+        res = rma_lot_a.action_return()
+        wizard_form = Form(self.env[res["res_model"]].with_context(**res["context"]))
+        wizard_form.save().action_deliver()
+        self.assertEqual(rma_lot_a.state, "waiting_return")
