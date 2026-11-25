@@ -1,6 +1,8 @@
 # Copyright 2022 Tecnativa - David Vidal
 # Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from unittest.mock import patch
+
 from odoo.tests import Form
 
 from odoo.addons.rma.tests.test_rma import TestRma
@@ -260,3 +262,41 @@ class TestRmaDelivery(TestRmaDeliveryBase):
         self.assertTrue(reception_moves.rma_receiver_ids)
         rma = reception_moves.rma_receiver_ids
         self.assertEqual(rma.reception_carrier_id, self.carrier_customer)
+
+    def test_send_to_shipper_keeps_origin_tracking_ref(self):
+        """The tracking number of the RMA delivery must not be propagated to the
+        returned origin delivery nor to the RMA reception"""
+        origin_delivery = self._create_delivery()
+        origin_delivery.write({"carrier_id": self.carrier.id})
+        origin_delivery.carrier_tracking_ref = "ORIGIN-REF"
+        origin_move = origin_delivery.move_ids[0]
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=origin_delivery.ids,
+                active_id=origin_delivery.id,
+                active_model="stock.picking",
+            )
+        )
+        stock_return_picking_form.create_rma = True
+        stock_return_picking_form.rma_operation_id = self.operation
+        return_wizard = stock_return_picking_form.save()
+        for return_line in return_wizard.product_return_moves:
+            return_line.quantity = (
+                origin_move.quantity if return_line.move_id == origin_move else 0
+            )
+        picking_action = return_wizard.action_create_returns()
+        reception = self.env["stock.picking"].browse(picking_action["res_id"])
+        reception.move_ids.quantity = origin_move.quantity
+        reception.button_validate()
+        rma = reception.move_ids.rma_receiver_ids
+        delivery = self._return_to_customer(rma)
+        delivery.carrier_id = self.carrier_customer
+        with patch.object(
+            type(self.carrier_customer),
+            "send_shipping",
+            return_value=[{"exact_price": 0.0, "tracking_number": "RMA-REF"}],
+        ):
+            delivery.send_to_shipper()
+        self.assertEqual(delivery.carrier_tracking_ref, "RMA-REF")
+        self.assertEqual(origin_delivery.carrier_tracking_ref, "ORIGIN-REF")
+        self.assertFalse(reception.carrier_tracking_ref)
