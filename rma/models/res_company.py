@@ -26,6 +26,12 @@ class ResCompany(models.Model):
         except ValueError:
             return False
 
+    def _default_rma_mail_delivery_template(self):
+        try:
+            return self.env.ref("rma.mail_template_rma_delivery_notification").id
+        except ValueError:
+            return False
+
     rma_return_grouping = fields.Boolean(
         string="Group RMA returns by customer address and warehouse",
         default=True,
@@ -43,6 +49,10 @@ class ResCompany(models.Model):
     send_rma_draft_confirmation = fields.Boolean(
         string="Send RMA draft Confirmation",
         help="When a customer places an RMA, send a notification with it",
+    )
+    send_rma_delivery_confirmation = fields.Boolean(
+        string="Send RMA product delivery Confirmation",
+        help="When repaired / replacement product is delivered, send a notification with it",
     )
     rma_mail_confirmation_template_id = fields.Many2one(
         comodel_name="mail.template",
@@ -64,6 +74,14 @@ class ResCompany(models.Model):
         domain="[('model', '=', 'rma')]",
         default=_default_rma_mail_draft_template,
         help="Email sent to the customer when they place " "an RMA from the portal",
+    )
+    rma_mail_delivery_confirmation_template_id = fields.Many2one(
+        comodel_name="mail.template",
+        string="Email Template product delivery notification for RMA",
+        domain="[('model', '=', 'rma')]",
+        default=_default_rma_mail_delivery_template,
+        help="Email sent to the customer when repaired / replacement product "
+        "is delivered",
     )
 
     @api.model_create_multi
