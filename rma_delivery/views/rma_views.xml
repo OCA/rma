@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Tecnativa - Víctor Martínez
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="rma_view_form" model="ir.ui.view">
+        <field name="name">rma.view.form</field>
+        <field name="model">rma</field>
+        <field name="inherit_id" ref="rma.rma_view_form" />
+        <field name="arch" type="xml">
+            <field name="procurement_group_id" position="after">
+                <field name="rma_delivery_strategy" invisible="1" />
+                <field
+                    name="carrier_id"
+                    invisible="rma_delivery_strategy!='rma_method'"
+                    readonly="not show_create_refund and not show_create_replace and not show_create_return"
+                />
+                <field name="rma_reception_strategy" invisible="1" />
+                <field
+                    name="reception_carrier_id"
+                    invisible="rma_reception_strategy!='rma_method'"
+                    readonly="state not in ['draft', 'confirmed'] or reception_move_id"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
