@@ -24,6 +24,27 @@ class Rma(models.Model):
     lots_visible = fields.Boolean(compute="_compute_lots_visible")
     lot_id_readonly = fields.Boolean(compute="_compute_lot_id_readonly")
 
+    @api.depends("lot_id", "product_tracking")
+    def _compute_product_uom_qty(self):
+        with_lots = self.filtered(
+            lambda x: x.lot_id
+            and (x.move_id or (not x.move_id and x.product_tracking == "serial"))
+        )
+        for record in with_lots:
+            if record.reception_move_id.state == "done":
+                # If the reception move has already been done, the quantity will not be
+                # changed; furthermore, the compute's super() method will not be called,
+                # so the quantity will not be reset
+                continue
+            if record.move_id:
+                smls = record.move_id.move_line_ids.filtered(
+                    lambda x, lot=record.lot_id: x.lot_id == lot
+                )
+                record.product_uom_qty = sum(smls.mapped("quantity"))
+            elif record.product_tracking == "serial":
+                record.product_uom_qty = 1
+        return super(Rma, (self - with_lots))._compute_product_uom_qty()
+
     def _get_lot_id_quant_domain_locations(self):
         """This method retrieves the location(s) that will later be used in
         _domain_lot_id_quant_domain(). It will be useful to extend this method if,
@@ -184,6 +205,11 @@ class Rma(models.Model):
 
     def _error_message_lot_available(self, action, qty, uom):
         for item in self:
+            # When processing a return with +1 RMA selected, neither the quantity not
+            # the unit of measure is specified; you must use the details from the RMA
+            # (similar to what is done, in _prepare_delivery_procurements())
+            qty = qty or item.product_uom_qty
+            uom = uom or item.product_uom
             lot = self.env.context.get("rma_replace_lot_id") or item.lot_id
             if not lot:
                 continue
