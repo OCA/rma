@@ -38,7 +38,7 @@ class TestRma(BaseCommon):
         )
         cls.rma_loc = cls.warehouse_company.rma_loc_id
         cls.product = cls.product_product.create(
-            {"name": "Product test 1", "type": "product"}
+            {"name": "Product test 1", "type": "product", "standard_price": 9.0}
         )
         cls.product_2 = cls.product_product.create(
             {"name": "Product test 2", "type": "product"}
