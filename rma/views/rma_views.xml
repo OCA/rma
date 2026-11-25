@@ -44,6 +44,11 @@
                     string="Received"
                     domain="[('state','=', 'received')]"
                 />
+                <filter
+                    name="pending_reception_filter"
+                    string="Pending Reception"
+                    domain="[('reception_status', '=', 'pending')]"
+                />
                 <separator />
                 <filter
                     string="Unresolved RMAs"
@@ -118,6 +123,7 @@
                 <field name="date" />
                 <field name="deadline" />
                 <field name="finalization_id" optional="hide" />
+                <field name="reception_status" />
                 <field name="state" />
             </tree>
         </field>

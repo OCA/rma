@@ -249,6 +249,17 @@ class Rma(models.Model):
         string="Reception move",
         copy=False,
     )
+    reception_status = fields.Selection(
+        [
+            ("not_required", "Not required"),
+            ("pending", "Pending reception"),
+            ("received", "Received"),
+        ],
+        compute="_compute_reception_status",
+        store=True,
+        index=True,
+        copy=False,
+    )
     # Refund fields
     refund_id = fields.Many2one(
         comodel_name="account.move",
@@ -361,6 +372,23 @@ class Rma(models.Model):
                 or rma.operation_id.action_create_delivery
                 or rma.operation_id.action_create_refund
             )
+
+    @api.depends(
+        "operation_id.action_create_receipt",
+        "reception_move_id.state",
+        "state",
+    )
+    def _compute_reception_status(self):
+        """compute the dedicated reception progress, independent from delivery"""
+        for rma in self:
+            if not rma.operation_id.action_create_receipt:
+                rma.reception_status = "not_required"
+            elif rma.reception_move_id.state == "done":
+                rma.reception_status = "received"
+            elif rma.state in ("draft", "cancelled"):
+                rma.reception_status = "not_required"
+            else:
+                rma.reception_status = "pending"
 
     @api.depends("operation_id.action_create_receipt", "state", "reception_move_id")
     def _compute_show_create_receipt(self):

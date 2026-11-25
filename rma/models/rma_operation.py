@@ -25,6 +25,7 @@ class RmaOperation(models.Model):
     color = fields.Integer()
     count_rma_draft = fields.Integer(compute="_compute_count_rma")
     count_rma_awaiting_action = fields.Integer(compute="_compute_count_rma")
+    count_rma_pending_reception = fields.Integer(compute="_compute_count_rma")
     count_rma_processed = fields.Integer(compute="_compute_count_rma")
     action_create_receipt = fields.Selection(
         [
@@ -80,6 +81,10 @@ class RmaOperation(models.Model):
         return [("state", "in", AWAITING_ACTION_STATES)]
 
     @api.model
+    def _get_rma_pending_reception_domain(self):
+        return [("reception_status", "=", "pending")]
+
+    @api.model
     def _get_rma_processed_domain(self):
         return [("state", "in", PROCESSED_STATES)]
 
@@ -89,17 +94,19 @@ class RmaOperation(models.Model):
                 "count_rma_draft": 0,
                 "count_rma_processed": 0,
                 "count_rma_awaiting_action": 0,
+                "count_rma_pending_reception": 0,
             }
         )
         state_by_op = defaultdict(int)
         for group in self.env["rma"].read_group(
             AND([[("operation_id", "!=", False)]]),
-            groupby=["operation_id", "state"],
+            groupby=["operation_id", "state", "reception_status"],
             fields=["id"],
             lazy=False,
         ):
             operation_id = group.get("operation_id")[0]
             state = group.get("state")
+            reception_status = group.get("reception_status")
             count = group.get("__count")
             if state == "draft":
                 state_by_op[(operation_id, "count_rma_draft")] += count
@@ -107,6 +114,8 @@ class RmaOperation(models.Model):
                 state_by_op[(operation_id, "count_rma_processed")] += count
             if state in AWAITING_ACTION_STATES:
                 state_by_op[(operation_id, "count_rma_awaiting_action")] += count
+            if reception_status == "pending":
+                state_by_op[(operation_id, "count_rma_pending_reception")] += count
         for (operation_id, field), count in state_by_op.items():
             self.browse(operation_id).update({field: count})
 
@@ -158,6 +167,19 @@ class RmaOperation(models.Model):
                 [
                     [("operation_id", "=", self.id)],
                     self._get_rma_processed_domain(),
+                ]
+            ),
+        )
+
+    def get_action_rma_tree_pending_reception(self):
+        self.ensure_one()
+        name = self.display_name + ": " + _("Pending Reception")
+        return self._get_action(
+            name,
+            domain=AND(
+                [
+                    [("operation_id", "=", self.id)],
+                    self._get_rma_pending_reception_domain(),
                 ]
             ),
         )
