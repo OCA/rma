@@ -254,7 +254,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
         description = (self.description or "") + (
             self.wizard_id.custom_description or ""
         )
-        return {
+        vals = {
             "partner_id": self.order_id.partner_id.id,
             "partner_invoice_id": self.order_id.partner_invoice_id.id,
             "partner_shipping_id": partner_shipping.id,
@@ -271,3 +271,7 @@ class SaleOrderLineRmaWizard(models.TransientModel):
             "description": description,
             "return_product_id": self.return_product_id.id,
         }
+        if not self.move_id:
+            # Without a delivery move, the RMA can't get the line from it
+            vals["sale_line_id"] = self.sale_line_id.id
+        return vals

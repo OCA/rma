@@ -673,3 +673,54 @@ class TestRmaSale(TestRmaSaleBase):
         self.assertFalse(rma.delivery_move_ids.sale_line_id)
         self.assertFalse(rma.procurement_group_id.sale_id)
         self.assertEqual(len(order.order_line), 1)
+
+
+class TestRmaSaleLineWithoutStockMoves(TestRmaSaleBase):
+    """Order lines delivered outside the stock flow, as sales recorded in a previous
+    system: there is no delivery move to return.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.operation = cls.operation_refund
+        cls.sale_order = cls._create_sale_order([[cls.product_1, 5]])
+        cls.order_line = cls.sale_order.order_line
+        cls.order_line.write({"price_unit": 20, "discount": 10})
+        cls.sale_order.action_confirm()
+        cls.sale_order.picking_ids.action_cancel()
+        cls.order_line.qty_delivered = 5
+
+    def _create_and_receive_rma(self, quantity):
+        wizard = self._rma_sale_wizard(self.sale_order)
+        wizard.line_ids.quantity = quantity
+        rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
+        rma.reception_move_id.quantity = quantity
+        rma.reception_move_id.picking_id.button_validate()
+        return rma
+
+    def test_refund_takes_the_order_line_data(self):
+        rma = self._create_and_receive_rma(2)
+        self.assertEqual(rma.sale_line_id, self.order_line)
+        self.assertFalse(rma.move_id)
+        rma.action_refund()
+        self.assertEqual(rma.refund_line_id.price_unit, 20)
+        self.assertEqual(rma.refund_line_id.discount, 10)
+        # The line was not delivered through stock moves, so neither the
+        # reception nor the refund are linked to it
+        self.assertFalse(rma.refund_line_id.sale_line_ids)
+        self.assertFalse(rma.reception_move_id.sale_line_id)
+        self.assertEqual(self.order_line.qty_delivered, 5)
+        self.assertEqual(self.order_line.qty_invoiced, 0)
+
+    def test_refund_rectifies_the_order_invoice(self):
+        invoice = self.sale_order._create_invoices()
+        invoice.action_post()
+        rma = self._create_and_receive_rma(5)
+        rma.action_refund()
+        self.assertEqual(rma.refund_id.reversed_entry_id, invoice)
+        self.assertEqual(rma.refund_line_id.price_unit, 20)
+        self.assertEqual(rma.refund_line_id.discount, 10)
+        self.assertFalse(rma.refund_line_id.sale_line_ids)
+        self.assertEqual(self.order_line.qty_invoiced, 5)
+        self.assertEqual(self.sale_order.invoice_status, "invoiced")
