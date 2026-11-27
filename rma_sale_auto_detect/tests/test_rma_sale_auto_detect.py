@@ -318,3 +318,48 @@ class TestRmaSaleAutoDetect(TestRmaSaleAutoDetectBase):
             rma.sale_line_id,
             sale_order2.order_line.filtered(lambda sol: sol.product_id == self.product),
         )
+
+    def test_link_to_backorder_after_first_delivery_returned(self):
+        """the delivery already returned is skipped, the rma is linked to the
+        backorder delivery without being split"""
+        sale_order = self._create_and_confirm_sale_order(
+            self.partner, [(self.product, 2)], 30
+        )
+        self._process_picking(sale_order.picking_ids, self.product, 1)
+        self._process_picking(sale_order.picking_ids, self.product, 1)
+        first_move, backorder_move = sale_order.order_line.move_ids.sorted("id")
+        rma = self._create_rma(self.partner, self.product, 1, self.operation)
+        rma.action_link_rma_to_sale_line()
+        self.assertEqual(rma.move_id, first_move)
+        rma2 = self._create_rma(self.partner, self.product, 1, self.operation)
+        rma2.action_link_rma_to_sale_line()
+        self.assertEqual(rma2.move_id, backorder_move)
+        self.assertEqual(sale_order.rma_ids, rma + rma2)
+
+    def test_link_to_ship_move_of_two_steps_delivery(self):
+        """the pick move of a 2 steps delivery is skipped, the rma is linked to
+        the ship move"""
+        self.loc_stock.warehouse_id.delivery_steps = "pick_ship"
+        sale_order = self._create_and_confirm_sale_order(
+            self.partner, [(self.product, 1)], 30
+        )
+        self._process_picking(sale_order.picking_ids, self.product, 1)
+        ship_move = sale_order.order_line.move_ids.filtered(
+            lambda m: m.state == "assigned"
+        )
+        self._process_picking(ship_move.picking_id, self.product, 1)
+        rma = self._create_rma(self.partner, self.product, 1, self.operation)
+        rma.action_link_rma_to_sale_line()
+        self.assertEqual(rma.move_id, ship_move)
+
+    def test_link_to_delivery_without_returnable_qty(self):
+        """an rma is not linked to a delivery already fully returned"""
+        sale_order = self._create_and_confirm_sale_order(
+            self.partner, [(self.product, 1)], 30
+        )
+        self._process_picking(sale_order.picking_ids, self.product, 1)
+        rma = self._create_rma(self.partner, self.product, 1, self.operation)
+        rma.action_link_rma_to_sale_line()
+        rma2 = self._create_rma(self.partner, self.product, 1, self.operation)
+        rma2._link_rma_to_delivery_move(sale_order.order_line)
+        self.assertFalse(rma2.move_id)
