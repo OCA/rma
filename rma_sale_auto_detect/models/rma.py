@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_is_zero
 
 
 class Rma(models.Model):
@@ -182,36 +182,49 @@ class Rma(models.Model):
             for line in sale_lines
         }
 
-    def _link_rma_to_delivery_move(self, sale_line, qty_limit=None):
-        """assign stock moves from a sale line to an rma
-        qty_limit can be used to cap the total assigned quantity
+    @api.model
+    def _get_returnable_moves(self, sale_line, qty_limit=None):
+        """Yield the (move, qty) pairs still returnable on sale_line, oldest first.
+
+        The quantities add up to qty_limit at most.
         """
-        self.ensure_one()
+        precision = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
         delivery_moves = sale_line.move_ids.filtered(
             lambda m: m.state == "done"
+            and float_compare(m.rma_returnable_uom_qty, 0, precision_digits=precision)
+            > 0
         ).sorted(lambda m: (m.date, m.id))
-        if not delivery_moves:
-            return
+        remaining_qty = qty_limit or sum(
+            delivery_moves.mapped("rma_returnable_uom_qty")
+        )
+        for move in delivery_moves:
+            if float_is_zero(remaining_qty, precision_digits=precision):
+                return
+            qty = min(move.rma_returnable_uom_qty, remaining_qty)
+            remaining_qty -= qty
+            yield move, qty
 
-        total_assigned = 0.0
-        for i, move in enumerate(delivery_moves):
-            move_qty = move.rma_returnable_uom_qty
-            if qty_limit and total_assigned + move_qty > qty_limit:
-                move_qty = qty_limit - total_assigned
-            total_assigned += move_qty
-            if not move_qty or qty_limit and total_assigned > qty_limit:
-                break
-            values = {
-                "move_id": move.id,
-                "picking_id": move.picking_id.id,
-                "product_uom_qty": move_qty,
-                "order_id": sale_line.order_id.id,
-            }
-            if i == 0:
-                self.write(values)
-            else:
-                # duplicate for each additional move
-                self.copy(values)
+    @api.model
+    def _prepare_delivery_move_vals(self, move, qty):
+        """Return the values linking an RMA to a delivery move."""
+        return {
+            "move_id": move.id,
+            "picking_id": move.picking_id.id,
+            "product_uom_qty": qty,
+            "order_id": move.sale_line_id.order_id.id,
+        }
+
+    def _link_rma_to_delivery_move(self, sale_line, qty_limit=None):
+        """Link the RMA to the returnable moves of sale_line, one RMA per move."""
+        self.ensure_one()
+        returnable_moves = self._get_returnable_moves(sale_line, qty_limit=qty_limit)
+        # next() consumes the oldest move: the loop resumes after it
+        if first := next(returnable_moves, None):
+            self.write(self._prepare_delivery_move_vals(*first))
+        for move_tuple in returnable_moves:
+            self.copy(self._prepare_delivery_move_vals(*move_tuple))
 
     def action_draft(self):
         res = super().action_draft()
